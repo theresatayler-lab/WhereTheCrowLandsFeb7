@@ -184,3 +184,42 @@ The Spell Personalization System is **FULLY FUNCTIONAL** and meets all requireme
 - Verify Corrie Tarot button navigation (appears working in screenshot)
 - Theresa archetype enrichment
 
+
+---
+
+## Visual System V1.1 Implementation Complete
+
+### Backend Updates:
+1. **CROWLANDS_ART_BIBLE** - Enhanced with:
+   - 8 style tokens (silk scarf, tapestry, engraved linework, filigree, medallion, collector plate, velvet sheen)
+   - 5 motif families (british_folklore, planetary, alchemical, occult_tools, gothic_botanicals)
+   - Hard negatives including NO 3D render, NO messy collage
+
+2. **ASSET_ROLE_LOCKS** - New system to prevent repetition:
+   - header: SCENE/STILL-LIFE (wide) - NOT a medallion
+   - tarot: EMBLEM/SIGIL PLATE (square) - NOT a scene
+   - sigil: MINIMAL LINEWORK (1-2 colors)
+   - divider: HORIZONTAL STRIP
+
+3. **Persona Visual DNA** - All aligned to scarf/tapestry rendering:
+   - Shigg: warmer sepia/cream, domestic birds, hedgerow rosehip
+   - Cathleen: deeper crimson/gold, raven feathers, candlelit altar
+   - Katherine: cooler steel/silver/oxblood, atelier desk scene
+
+### Frontend Updates:
+1. **OrnateElements.js** - Full V1.1 component library:
+   - PageHero, ParchmentPanel, OrnateCard, LightOrnateCard
+   - SectionDivider, BorderFrame
+   - BestiaryGlyph, OccultGlyph
+   - SpellSectionHeader, PrintablesBlock
+
+### Pages Updated:
+- /upgrade - ornate hero + parchment pricing
+- /ai-chat - ornate hero + chat container
+- /profile - ornate hero + settings cards
+
+### Testing:
+- Backend config validated via Python
+- Screenshot verification of key pages
+- Ready for comprehensive testing
+
