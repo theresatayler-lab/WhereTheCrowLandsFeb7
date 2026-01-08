@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate, Link } from 'react-router-dom';
 import { GlassCard } from '../components/GlassCard';
 import { ARCHETYPES, getArchetypeById } from '../data/archetypes';
 import { setCurrentArchetype, getCurrentArchetype } from '../components/OnboardingModal';
-import { Feather, BookOpen, Sparkles, Heart, ArrowRight, Check, Hand, Users } from 'lucide-react';
+import { Feather, BookOpen, Sparkles, Heart, ArrowRight, Check, Hand, Users, ChevronDown, ChevronUp } from 'lucide-react';
 import { toast } from 'sonner';
 import { DarkSection, LightSection, GrandDivider, MysticalDivider, ElaborateCorner, PageHeader } from '../components/OrnateElements';
 
 export const Guides = () => {
   const [selectedGuide, setSelectedGuide] = useState(null);
+  const [expandedBio, setExpandedBio] = useState(null);
   const currentArchetypeId = getCurrentArchetype();
   const navigate = useNavigate();
 
@@ -77,7 +78,9 @@ export const Guides = () => {
                 index={index}
                 isCurrentGuide={currentArchetypeId === archetype.id}
                 isExpanded={selectedGuide === archetype.id}
+                isBioExpanded={expandedBio === archetype.id}
                 onToggle={() => setSelectedGuide(selectedGuide === archetype.id ? null : archetype.id)}
+                onToggleBio={() => setExpandedBio(expandedBio === archetype.id ? null : archetype.id)}
                 onSelectAsGuide={() => handleSelectAsGuide(archetype.id)}
               />
             ))}
@@ -122,8 +125,12 @@ export const Guides = () => {
   );
 };
 
-const GuideCard = ({ archetype, index, isCurrentGuide, isExpanded, onToggle, onSelectAsGuide }) => {
+const GuideCard = ({ archetype, index, isCurrentGuide, isExpanded, isBioExpanded, onToggle, onToggleBio, onSelectAsGuide }) => {
   const navigate = useNavigate();
+  
+  // Truncate bio for preview
+  const bioPreview = archetype.bio.split('\n\n')[0]; // First paragraph only
+  const hasMoreBio = archetype.bio.length > bioPreview.length;
   
   return (
     <motion.div
@@ -222,10 +229,41 @@ const GuideCard = ({ archetype, index, isCurrentGuide, isExpanded, onToggle, onS
           </div>
         </div>
 
-        {/* Bio */}
-        <p className="font-montserrat text-sm text-navy-dark/80 leading-relaxed mb-4">
-          {archetype.bio}
-        </p>
+        {/* Bio - Collapsible */}
+        <div className="mb-4">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={isBioExpanded ? 'expanded' : 'collapsed'}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              <p className="font-montserrat text-sm text-navy-dark/80 leading-relaxed whitespace-pre-line">
+                {isBioExpanded ? archetype.bio : bioPreview}
+              </p>
+            </motion.div>
+          </AnimatePresence>
+          
+          {hasMoreBio && (
+            <button
+              onClick={onToggleBio}
+              className="mt-2 flex items-center gap-1 text-crimson hover:text-crimson-bright transition-colors font-montserrat text-xs"
+            >
+              {isBioExpanded ? (
+                <>
+                  <ChevronUp className="w-4 h-4" />
+                  <span>Show less</span>
+                </>
+              ) : (
+                <>
+                  <ChevronDown className="w-4 h-4" />
+                  <span>Read full story</span>
+                </>
+              )}
+            </button>
+          )}
+        </div>
 
         {/* Empowerment Message */}
         <div className="p-4 bg-crimson/5 border-l-2 border-crimson rounded-r-sm mb-4">
@@ -237,78 +275,76 @@ const GuideCard = ({ archetype, index, isCurrentGuide, isExpanded, onToggle, onS
         {/* Expandable Details */}
         <button
           onClick={onToggle}
-          className="w-full text-left font-montserrat text-xs text-crimson uppercase tracking-wider flex items-center gap-2 mb-4"
+          className="w-full text-left font-montserrat text-xs text-crimson uppercase tracking-wider flex items-center gap-2 mb-4 hover:text-crimson-bright transition-colors"
         >
-          <span>{isExpanded ? 'Show Less' : 'Show Details'}</span>
-          <ArrowRight className={`w-3 h-3 transition-transform ${isExpanded ? 'rotate-90' : ''}`} />
+          <span>{isExpanded ? 'Hide Specialties & Details' : 'Show Specialties & Details'}</span>
+          {isExpanded ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
         </button>
 
-        {isExpanded && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="space-y-4 border-t border-border pt-4"
-          >
-            {/* Ritual Style */}
-            <div>
-              <h4 className="font-cinzel text-sm text-crimson mb-2">Ritual Style</h4>
-              <p className="font-montserrat text-xs text-navy-dark/70">{archetype.ritualStyle}</p>
-            </div>
+        <AnimatePresence>
+          {isExpanded && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+              className="space-y-4 border-t border-border pt-4 overflow-hidden"
+            >
+              {/* Ritual Style */}
+              <CollapsibleSection title="Ritual Style" defaultOpen={true}>
+                <p className="font-montserrat text-xs text-navy-dark/70">{archetype.ritualStyle}</p>
+              </CollapsibleSection>
 
-            {/* Specialties */}
-            <div>
-              <h4 className="font-cinzel text-sm text-crimson mb-2">Specialties</h4>
-              <div className="flex flex-wrap gap-2">
-                {archetype.specialties.map((specialty, i) => (
-                  <span
-                    key={i}
-                    className="px-2 py-1 bg-gold/20 border border-gold/30 text-xs font-montserrat text-navy-dark/70 rounded-sm"
-                  >
-                    {specialty}
-                  </span>
-                ))}
-              </div>
-            </div>
+              {/* Specialties */}
+              <CollapsibleSection title="Specialties" defaultOpen={true}>
+                <div className="flex flex-wrap gap-2">
+                  {archetype.specialties.map((specialty, i) => (
+                    <span
+                      key={i}
+                      className="px-2 py-1 bg-gold/20 border border-gold/30 text-xs font-montserrat text-navy-dark/70 rounded-sm"
+                    >
+                      {specialty}
+                    </span>
+                  ))}
+                </div>
+              </CollapsibleSection>
 
-            {/* Best For */}
-            <div>
-              <h4 className="font-cinzel text-sm text-crimson mb-2">Best For</h4>
-              <ul className="space-y-1">
-                {archetype.bestFor.map((item, i) => (
-                  <li key={i} className="font-montserrat text-xs text-navy-dark/70 flex items-start gap-2">
-                    <Sparkles className="w-3 h-3 text-gold-dark flex-shrink-0 mt-0.5" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+              {/* Best For */}
+              <CollapsibleSection title="Best For">
+                <ul className="space-y-1">
+                  {archetype.bestFor.map((item, i) => (
+                    <li key={i} className="font-montserrat text-xs text-navy-dark/70 flex items-start gap-2">
+                      <Sparkles className="w-3 h-3 text-gold-dark flex-shrink-0 mt-0.5" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </CollapsibleSection>
 
-            {/* Tenets */}
-            <div>
-              <h4 className="font-cinzel text-sm text-crimson mb-2">Core Tenets</h4>
-              <ul className="space-y-1">
-                {archetype.tenets.slice(0, 4).map((tenet, i) => (
-                  <li key={i} className="font-crimson text-xs text-navy-dark/70 italic">
-                    &ldquo;{tenet}&rdquo;
-                  </li>
-                ))}
-              </ul>
-            </div>
+              {/* Tenets */}
+              <CollapsibleSection title="Core Tenets">
+                <ul className="space-y-1">
+                  {archetype.tenets.slice(0, 5).map((tenet, i) => (
+                    <li key={i} className="font-crimson text-xs text-navy-dark/70 italic">
+                      &ldquo;{tenet}&rdquo;
+                    </li>
+                  ))}
+                </ul>
+              </CollapsibleSection>
 
-            {/* Historical Sources */}
-            <div>
-              <h4 className="font-cinzel text-sm text-crimson mb-2">Historical Sources</h4>
-              <ul className="space-y-1">
-                {archetype.historicalSources.map((source, i) => (
-                  <li key={i} className="font-montserrat text-xs text-navy-dark/70">
-                    • {source}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </motion.div>
-        )}
+              {/* Historical Sources */}
+              <CollapsibleSection title="Historical Sources">
+                <ul className="space-y-1">
+                  {archetype.historicalSources.map((source, i) => (
+                    <li key={i} className="font-montserrat text-xs text-navy-dark/70">
+                      • {source}
+                    </li>
+                  ))}
+                </ul>
+              </CollapsibleSection>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* Action Button */}
         {!isCurrentGuide && (
@@ -348,5 +384,40 @@ const GuideCard = ({ archetype, index, isCurrentGuide, isExpanded, onToggle, onS
         )}
       </div>
     </motion.div>
+  );
+};
+
+// Collapsible section component for nested content
+const CollapsibleSection = ({ title, children, defaultOpen = false }) => {
+  const [isOpen, setIsOpen] = useState(defaultOpen);
+  
+  return (
+    <div className="border-b border-gold/20 pb-3 last:border-b-0">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full flex items-center justify-between text-left"
+      >
+        <h4 className="font-cinzel text-sm text-crimson">{title}</h4>
+        {isOpen ? (
+          <ChevronUp className="w-4 h-4 text-crimson/60" />
+        ) : (
+          <ChevronDown className="w-4 h-4 text-crimson/60" />
+        )}
+      </button>
+      
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.2 }}
+            className="mt-2 overflow-hidden"
+          >
+            {children}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 };
