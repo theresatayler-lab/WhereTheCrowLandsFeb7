@@ -727,19 +727,28 @@ PERSONA_CONFIG = {
         
         "visual_dna": {
             "constants": {
-                "primary_motif": "mirrors, shadows, candles, thread",
-                "secondary_motif": "Victorian spiritualism, documented records, wax seals",
-                "era_aesthetic": "Late Victorian through WWII spiritualism, Huguenot precision",
-                "art_style": "Spirit photography influenced, double exposures, sepia documentation, precise line work"
+                "primary_motif": "geometric diagrams, engraved plates, Qabalistic trees, abstract sigils",
+                "secondary_motif": "atelier research notes, compass-drawn circles, annotated margins, wax seals, ink-splattered documents",
+                "era_aesthetic": "Golden Dawn scholar's atelier - Victorian occult research meets Huguenot precision craftsmanship",
+                "art_style": "Fine-line engraving style, architectural precision, abstract sacred geometry, aged copper-plate etching quality"
             },
-            "motif_library": ["mirror", "candle", "shadow", "document", "seal", "threshold", "clock", "key", "ink", "wax", "letter", "photograph", "needle", "thread"],
+            "motif_library": [
+                "tree of life diagram", "geometric sigil", "compass rose", "annotated margin", 
+                "wax seal", "ink bottle", "quill", "bound grimoire", "sephirotic path", 
+                "hexagram", "pentagram", "engraved border", "thread spool", "needle", 
+                "folded letter", "sacred geometry", "alchemical symbol", "threshold diagram"
+            ],
             "palette_variants": {
-                "gentle": ["sepia", "cream", "soft grey", "amber"],
-                "practical": ["black", "white", "grey", "touches of red"],
-                "intense": ["deep black", "stark white", "blood red", "silver"]
+                "gentle": ["aged parchment", "faded sepia ink", "soft graphite grey", "warm cream"],
+                "practical": ["black ink", "crisp white", "steel grey", "copper accent"],
+                "intense": ["deep black", "stark white", "oxidized copper", "blood red wax"]
             },
-            "avoid": ["Celtic imagery", "Morrigan", "bird oracle", "domestic kitchen scenes", "bright colors", "photorealistic"],
-            "dall_e_rules": "pen-and-ink with spirit photography influence, Victorian occult aesthetic, precise geometric elements, NO text, NO letters, NO words, print-friendly, sepia tones optional"
+            "avoid": [
+                "Celtic imagery", "Morrigan", "bird oracle", "domestic kitchen scenes", 
+                "bright colors", "photorealistic", "spirit photography", "double exposures",
+                "ghostly figures", "ectoplasm", "séance imagery", "soft focus"
+            ],
+            "dall_e_rules": "fine-line engraving style like antique copper plates, abstract Golden Dawn and Qabalistic sacred geometry, architectural precision, annotated atelier research aesthetic, clean geometric diagrams, NO text, NO letters, NO words, NO spirit photography, NO ghostly figures, print-friendly, aged parchment or stark white backgrounds"
         },
         
         "allowed_sources": [
