@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { GlassCard } from '../components/GlassCard';
 import { sitesAPI } from '../utils/api';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../components/ui/dialog';
-import { MapPin } from 'lucide-react';
+import { MapPin, Compass } from 'lucide-react';
+import { DarkSection, ElaborateCorner, PageHeader, OrnateCard, GrandDivider } from '../components/OrnateElements';
 
 export const SacredSites = () => {
   const [sites, setSites] = useState([]);
@@ -27,27 +27,33 @@ export const SacredSites = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <MapPin className="w-12 h-12 text-primary animate-pulse" />
-      </div>
+      <DarkSection className="min-h-screen flex items-center justify-center" variant="warm">
+        <MapPin className="w-12 h-12 text-gold animate-pulse" />
+      </DarkSection>
     );
   }
 
   return (
-    <div className="min-h-screen py-24 px-6">
-      <div className="max-w-7xl mx-auto">
+    <DarkSection className="min-h-screen py-12 sm:py-20 px-4 sm:px-6" variant="warm">
+      {/* Corner Ornaments */}
+      <ElaborateCorner className="absolute top-3 left-3 w-16 h-16 sm:w-24 sm:h-24" variant="gold" />
+      <ElaborateCorner className="absolute top-3 right-3 w-16 h-16 sm:w-24 sm:h-24 rotate-90" variant="gold" />
+      
+      <div className="max-w-7xl mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-16"
         >
-          <h1 className="font-italiana text-4xl md:text-6xl text-primary mb-4">Sacred Sites</h1>
-          <p className="font-montserrat text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
-            Power places across the UK and Europe that anchored occult practice
-          </p>
+          <PageHeader 
+            icon={MapPin}
+            title="Sacred Sites"
+            subtitle="Power places across the UK and Europe that anchored occult practice"
+          />
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <GrandDivider variant="moon" />
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {sites.map((site, index) => (
             <motion.div
               key={site.id}
@@ -55,75 +61,72 @@ export const SacredSites = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
             >
-              <GlassCard
-                testId={`site-card-${site.id}`}
+              <OrnateCard
+                className="cursor-pointer"
                 onClick={() => setSelectedSite(site)}
               >
                 <div
-                  className="h-48 -m-8 mb-6 bg-cover bg-center relative"
+                  className="h-48 -m-4 sm:-m-6 mb-4 sm:mb-6 bg-cover bg-center relative rounded-t-lg"
                   style={{ backgroundImage: `url(${site.image_url})` }}
                 >
-                  <div className="absolute inset-0 bg-gradient-to-t from-card via-card/50 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-navy-mid via-navy-mid/60 to-transparent rounded-t-lg" />
                 </div>
-                <h3 className="font-cinzel text-2xl font-bold text-secondary mb-2">
+                <h3 className="font-cinzel text-xl sm:text-2xl text-gold mb-2" style={{ textShadow: '0 2px 10px rgba(212, 168, 75, 0.3)' }}>
                   {site.name}
                 </h3>
-                <p className="font-montserrat text-xs uppercase tracking-widest text-primary mb-3">
+                <p className="font-montserrat text-xs uppercase tracking-widest text-crimson-bright mb-3 flex items-center gap-1">
+                  <MapPin className="w-3 h-3" />
                   {site.location}, {site.country}
                 </p>
-                <p className="font-montserrat text-sm text-muted-foreground leading-relaxed line-clamp-3">
+                <p className="font-montserrat text-sm text-silver-mist/85 leading-relaxed line-clamp-3">
                   {site.historical_significance}
                 </p>
-              </GlassCard>
+              </OrnateCard>
             </motion.div>
           ))}
         </div>
       </div>
 
+      {/* Bottom Corners */}
+      <ElaborateCorner className="absolute bottom-3 left-3 w-16 h-16 sm:w-24 sm:h-24 -rotate-90" variant="gold" />
+      <ElaborateCorner className="absolute bottom-3 right-3 w-16 h-16 sm:w-24 sm:h-24 rotate-180" variant="gold" />
+
+      {/* Detail Modal */}
       <Dialog open={!!selectedSite} onOpenChange={() => setSelectedSite(null)}>
-        <DialogContent className="max-w-3xl bg-card border-border" data-testid="site-detail-modal">
+        <DialogContent className="max-w-3xl bg-navy-mid border-gold/30" data-testid="site-detail-modal">
           {selectedSite && (
             <>
               <DialogHeader>
-                <DialogTitle className="font-cinzel text-3xl text-primary">
+                <DialogTitle className="font-cinzel text-2xl sm:text-3xl text-gold">
                   {selectedSite.name}
                 </DialogTitle>
               </DialogHeader>
               <div className="space-y-6">
                 <div
-                  className="h-64 bg-cover bg-center rounded-sm"
+                  className="h-48 sm:h-64 bg-cover bg-center rounded-sm"
                   style={{ backgroundImage: `url(${selectedSite.image_url})` }}
                 />
                 <div>
-                  <h4 className="font-montserrat text-xs uppercase tracking-widest text-primary mb-2">
-                    Location
-                  </h4>
-                  <p className="font-montserrat text-base text-foreground">
-                    {selectedSite.location}, {selectedSite.country}
-                  </p>
-                  <p className="font-montserrat text-sm text-muted-foreground mt-1">
-                    Coordinates: {selectedSite.coordinates.lat}, {selectedSite.coordinates.lng}
+                  <h4 className="font-montserrat text-xs uppercase tracking-widest text-crimson-bright mb-2">Location</h4>
+                  <p className="font-montserrat text-base text-cream/90">{selectedSite.location}, {selectedSite.country}</p>
+                  <p className="font-montserrat text-sm text-silver-mist/60 mt-1 flex items-center gap-1">
+                    <Compass className="w-3 h-3" />
+                    {selectedSite.coordinates?.lat}, {selectedSite.coordinates?.lng}
                   </p>
                 </div>
                 <div>
-                  <h4 className="font-montserrat text-xs uppercase tracking-widest text-primary mb-2">
-                    Historical Significance (1910-1945)
-                  </h4>
-                  <p className="font-montserrat text-base text-foreground leading-relaxed">
-                    {selectedSite.historical_significance}
-                  </p>
+                  <h4 className="font-montserrat text-xs uppercase tracking-widest text-crimson-bright mb-2">Historical Significance (1910-1945)</h4>
+                  <p className="font-crimson text-base text-cream/90 leading-relaxed">{selectedSite.historical_significance}</p>
                 </div>
                 <div>
-                  <h4 className="font-montserrat text-xs uppercase tracking-widest text-primary mb-2">
-                    Period of Activity
-                  </h4>
-                  <p className="font-montserrat text-base text-foreground">{selectedSite.time_period}</p>
+                  <h4 className="font-montserrat text-xs uppercase tracking-widest text-crimson-bright mb-2">Period of Activity</h4>
+                  <p className="font-montserrat text-base text-gold-light">{selectedSite.time_period}</p>
                 </div>
               </div>
             </>
           )}
         </DialogContent>
       </Dialog>
-    </div>
+    </DarkSection>
   );
 };
