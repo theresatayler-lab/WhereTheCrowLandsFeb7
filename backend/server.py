@@ -2769,9 +2769,13 @@ async def generate_personalized_spell(request: PersonalizedSpellRequest, user = 
     1. Planner - selects scenario, format, sources, generates variation_tokens, builds AssetPlan
     2. Spell Writer - writes the actual spell content with strict citations
     
-    Then generates 6 images: header, tarot, sigil, 3 dividers
+    Image generation is controlled by generate_images flag (default false for speed)
     Uses static micro-icons (no generation needed)
     """
+    import time
+    total_start = time.time()
+    timing_log = {}
+    
     try:
         spell_spec = request.spell_spec
         
