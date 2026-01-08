@@ -146,13 +146,11 @@ export const MyGrimoire = () => {
   }
 
   return (
-    <div className="min-h-screen">
-      {/* Dark Hero Section */}
-      <DarkSection className="py-12 sm:py-16 md:py-20 px-4 sm:px-6" variant="warm">
-        <ElaborateCorner className="absolute top-3 left-3 w-16 h-16 sm:w-20 sm:h-20" variant="gold" />
-        <ElaborateCorner className="absolute top-3 right-3 w-16 h-16 sm:w-20 sm:h-20 rotate-90" variant="gold" />
-        
-        <div className="max-w-6xl mx-auto relative z-10">
+    <PageBorderFrame>
+      <div className="min-h-screen">
+        {/* Dark Hero Section */}
+        <DarkSection className="py-12 sm:py-16 md:py-20 px-4 sm:px-6" variant="warm">
+          <div className="max-w-6xl mx-auto relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
