@@ -138,7 +138,7 @@ const Step1 = ({ spellSpec, updateSpec }) => (
 
     <div>
       <h3 className="font-cinzel text-lg text-gold-light mb-2">What do you need?</h3>
-      <p className="font-montserrat text-xs text-cream/60 mb-3">Tell me in your own words what you're facing or seeking.</p>
+      <p className="font-montserrat text-xs text-cream/60 mb-3">Tell me in your own words what you&apos;re facing or seeking.</p>
       <textarea
         value={spellSpec.user_query || ''}
         onChange={(e) => updateSpec({ user_query: e.target.value })}
