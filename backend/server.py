@@ -2215,31 +2215,30 @@ NO text, NO letters, NO words, NO watermark, NO photorealism, NO neon, NO modern
 ARCHETYPE_IMAGE_STYLE_DESCRIPTIONS = {
     'shiggy': {
         'name': 'Shigg - The Birds of Parliament',
-        'description': 'Edmund J. Sullivan pen-and-ink style, Rubáiyát illustrations, Victorian engravings with birds, roses, and celestial symbols',
-        'keywords': ['black and white', 'cross-hatching', 'Art Nouveau', 'birds', 'roses', 'celestial']
+        'description': 'Ornate silk scarf tapestry with Victorian book plate style, birds (crow, robin, sparrow), teacup and windowsill, hedgerow botanicals',
+        'keywords': ['tapestry', 'engraved', 'birds', 'domestic hearth', 'sepia', 'gold accents']
     },
     'kathleen': {
         'name': 'Cathleen - The Singer of Strength', 
-        'description': 'Celtic goddess aesthetic with the Morrigan, candlelit séances, Pre-Raphaelite oil painting quality, silver and midnight blue',
-        'keywords': ['Morrigan', 'crows', 'séance', 'Celtic', 'moonlight', 'protective']
+        'description': 'Ornate silk scarf tapestry with candlelit altar scenes, raven feathers, protective circles, Brigid cross motifs, devotional mystery',
+        'keywords': ['candlelit', 'raven', 'protective', 'crimson gold', 'Celtic', 'altar']
     },
     'catherine': {
         'name': 'Katherine - The Weaver of Hidden Knowledge',
-        'description': 'Victorian spiritualist photography, Spitalfields textiles, shadow work, spirit photography with double exposures',
-        'keywords': ['Victorian', 'séance', 'spirit photography', 'textiles', 'shadow', 'Golden Dawn']
+        'description': 'Ornate silk scarf tapestry with atelier desk scene, needle and thread, mirrors, geometric diagrams, cool steel and silver tones',
+        'keywords': ['atelier', 'geometric', 'mirror', 'compass', 'silver oxblood', 'tailoring']
     },
     'theresa': {
         'name': 'Theresa - The Seer & Storyteller',
-        'description': 'Modern collage with vintage elements, genealogy imagery, investigative documentary style, past meeting present',
-        'keywords': ['collage', 'photographs', 'ancestry', 'documentary', 'truth-seeking', 'liminal']
+        'description': 'Ornate silk scarf tapestry with ancestral imagery, genealogical trees, family artifacts, truth-seeking symbolism',
+        'keywords': ['ancestry', 'tapestry', 'photographs', 'crow messenger', 'gold navy', 'mirrors']
     },
     'neutral': {
         'name': 'Classic Grimoire',
-        'description': 'Traditional occult illustration, woodcut engravings, aged parchment, alchemical symbols',
-        'keywords': ['grimoire', 'woodcut', 'alchemical', 'vintage', 'mystical', 'parchment']
+        'description': 'Ornate silk scarf tapestry with British folklore animals, alchemical symbols, midnight navy and oxblood and gold',
+        'keywords': ['tapestry', 'folklore', 'alchemical', 'gold', 'engraved', 'occult']
     }
 }
-
 # Enhanced spell generation endpoint with structured output
 @api_router.post('/ai/generate-spell')
 async def generate_spell(
