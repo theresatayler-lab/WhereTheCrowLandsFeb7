@@ -39,18 +39,18 @@ MICRO_ICONS = {
         "sister": "👭"
     },
     "katherine": {
+        "tree": "🌳",
+        "compass": "🧭",
+        "hexagram": "✡️",
+        "seal": "🔏",
+        "quill": "🪶",
+        "scroll": "📜",
+        "inkwell": "🖋️",
+        "triangle": "🔺",
+        "circle": "⭕",
         "needle": "🪡",
         "thread": "🧵",
-        "knot": "🪢",
-        "seal": "🔏",
-        "mirror": "🪞",
-        "compass": "🧭",
-        "salt": "🧂",
-        "triangle": "🔺",
-        "grid": "▦",
-        "keyhole": "🔐",
-        "eye": "👁️",
-        "notebook": "📓"
+        "grimoire": "📖"
     }
 }
 
