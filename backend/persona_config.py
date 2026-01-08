@@ -788,28 +788,30 @@ PERSONA_CONFIG = {
         
         "visual_dna": {
             "constants": {
-                "primary_motif": "geometric diagrams, engraved plates, Qabalistic trees, abstract sigils",
-                "secondary_motif": "atelier research notes, compass-drawn circles, annotated margins, wax seals, ink-splattered documents",
-                "era_aesthetic": "Golden Dawn scholar's atelier - Victorian occult research meets Huguenot precision craftsmanship",
-                "art_style": "Fine-line engraving style, architectural precision, abstract sacred geometry, aged copper-plate etching quality"
+                "primary_motif": "needle and thread, mirror, compass, sealed letter, astrolabe, measuring tape",
+                "secondary_motif": "abstract Golden Dawn geometry, Qabalistic tree diagrams, atelier desk scene, wax seals, annotated margins",
+                "era_aesthetic": "Victorian occult research atelier - tailoring precision meets diagrammatic magic",
+                "art_style": "high-contrast engraved plate aesthetic, steel and silver tones, architectural precision, copper-plate etching quality"
             },
             "motif_library": [
-                "tree of life diagram", "geometric sigil", "compass rose", "annotated margin", 
-                "wax seal", "ink bottle", "quill", "bound grimoire", "sephirotic path", 
-                "hexagram", "pentagram", "engraved border", "thread spool", "needle", 
-                "folded letter", "sacred geometry", "alchemical symbol", "threshold diagram"
+                "needle", "thread spool", "scrying mirror", "brass compass", "sealed letter",
+                "astrolabe", "measuring tape", "geometric sigil", "tree of life diagram",
+                "compass rose", "wax seal", "bound grimoire", "hexagram", "sephirotic path",
+                "atelier desk", "annotated margin", "scissors", "thimble"
             ],
             "palette_variants": {
-                "gentle": ["aged parchment", "faded sepia ink", "soft graphite grey", "warm cream"],
-                "practical": ["black ink", "crisp white", "steel grey", "copper accent"],
-                "intense": ["deep black", "stark white", "oxidized copper", "blood red wax"]
+                "gentle": ["cool silver", "soft steel grey", "aged parchment", "faded ink"],
+                "practical": ["steel grey", "oxblood crimson", "midnight navy", "crisp white"],
+                "intense": ["polished silver", "blood red wax", "deep navy", "stark black"]
             },
             "avoid": [
-                "Celtic imagery", "Morrigan", "bird oracle", "domestic kitchen scenes", 
-                "bright colors", "photorealistic", "spirit photography", "double exposures",
-                "ghostly figures", "ectoplasm", "séance imagery", "soft focus"
+                "teacups", "domestic kitchen", "devotional hymn styling", "candle-heavy scenes",
+                "Celtic imagery", "Morrigan", "bird oracle", "bright colors", "photorealistic",
+                "spirit photography", "ghostly figures", "soft focus", "warm amber tones"
             ],
-            "dall_e_rules": "fine-line engraving style like antique copper plates, abstract Golden Dawn and Qabalistic sacred geometry, architectural precision, annotated atelier research aesthetic, clean geometric diagrams, NO text, NO letters, NO words, NO spirit photography, NO ghostly figures, print-friendly, aged parchment or stark white backgrounds"
+            "dall_e_rules": "high-contrast engraved plate aesthetic, atelier desk scene with mirror and thread and sealed notes, cool steel silver and oxblood and navy palette, abstracted Golden Dawn Qabalistic geometry, compass rose and geometric sigils, tailoring precision motifs needle thread measuring tape, architectural engraving style",
+            "header_scene": "atelier desk scene with scrying mirror, thread spools, sealed letters, compass, and geometric diagrams",
+            "tarot_emblem": "geometric sigil plate with compass rose emblem, needle and thread crossed"
         },
         
         "allowed_sources": [
