@@ -18,6 +18,12 @@ Where The Crowlands is a sophisticated full-stack application for building DIY r
 - Static ornament library (corners, dividers, glyphs)
 - Consistent color system: navy, oxblood, gold, bone; serif fonts
 
+### Progressive Loading System (NEW - December 8, 2024)
+- **Fast spell text**: Spell content loads in ~10 seconds (vs 30-60+ previously)
+- **Background image generation**: Images generated in parallel after text displays
+- **Skeleton placeholders**: Animated loading states for header image, dividers, tarot, sigil
+- **Lazy image API**: `/api/ai/generate-image` endpoint for individual image generation
+
 ### Spell Generation System
 - Multi-step wizard for spell personalization
 - Three AI archetypes: Shigg, Cathleen, Katherine (+ Theresa pending)
@@ -33,11 +39,19 @@ Where The Crowlands is a sophisticated full-stack application for building DIY r
 ## Completed Work (December 2024)
 
 ### December 8, 2024
+- **Progressive Loading Implementation**: 
+  - `SpellRequest.js` now sends `generate_images: false` to get spell text fast
+  - `lazyLoadImages()` function generates images in background after text displays
+  - `GrimoirePage.js` shows animated skeleton placeholders while images load
+  - Added `isLoadingImages` prop to control loading states
+  - Header image, dividers, and printables all show loading skeletons
+
 - **GrimoirePage Contrast Fix (P0)**: Fixed critical readability issues on completed spell page
-  - Changed all light text colors (`text-muted-foreground`, `text-foreground`) to dark colors (`text-amber-900`, `text-stone-800`, `text-stone-700`, `text-stone-600`)
-  - Fixed "null" bug by adding proper null checks for `spell.subtitle`
-  - Updated all sections: Materials, The Working, Words of Power, Historical Context, Warnings, Closing, Aftercare, Printables
-  - Updated button styling and border colors for beige background (#D8CBB3)
+  - Changed all light text colors to dark colors (`text-amber-900`, `text-stone-800`, etc.)
+  - Fixed "null" bug with proper null checks for `spell.subtitle`
+  - Updated all sections for maximum contrast on beige background
+
+- **MyGrimoire Enhancement**: Now passes `assetPlan` to GrimoirePage for saved spells
 
 ### Previous Session Work
 - Visual System V1.1 integration (CROWLANDS_ART_BIBLE, persona visual_dna)
@@ -79,9 +93,10 @@ Add full backend config in persona_config.py including visual_dna, formats, scen
 - Refactor server.py into modular structure
 
 ## Key Files
-- `/app/frontend/src/components/GrimoirePage.js` - Completed spell display
+- `/app/frontend/src/components/GrimoirePage.js` - Completed spell display (with progressive loading)
 - `/app/frontend/src/components/OrnateElements.js` - UI component library
-- `/app/frontend/src/pages/SpellRequest.js` - Spell builder wizard
+- `/app/frontend/src/pages/SpellRequest.js` - Spell builder wizard (progressive loading flow)
+- `/app/frontend/src/pages/MyGrimoire.js` - User's saved spells (passes assetPlan)
 - `/app/backend/persona_config.py` - CROWLANDS_ART_BIBLE and persona configs
 - `/app/backend/spell_prompts.py` - AI prompt generation
 - `/app/backend/server.py` - API endpoints
