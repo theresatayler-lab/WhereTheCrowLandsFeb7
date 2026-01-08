@@ -23,6 +23,12 @@ from cobbles_oracle import (
     COBBLES_ORACLE_DECK, CARD_ROUTING_RULES, ORACLE_SPREADS,
     get_all_cards, get_card_by_id, get_cards_by_suit, get_major_arcana, get_minor_arcana
 )
+from archetype_reference_data import (
+    ARCHETYPE_REFERENCE_DATA, THREAD_CORRESPONDENCES, BIRD_CORRESPONDENCES, 
+    TALISMAN_CORRESPONDENCES, get_archetype_data, get_random_movements,
+    get_bird_oracle, get_talisman_suggestion, get_thread_color
+)
+import random
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
