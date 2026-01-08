@@ -705,19 +705,20 @@ export const SpellRequest = () => {
                 <button
                   onClick={handleGenerate}
                   disabled={loading || !canProceed()}
-                  className="px-6 py-3 bg-gradient-to-r from-gold-dark via-gold to-gold-dark text-navy-dark rounded-sm font-montserrat text-sm font-bold disabled:opacity-50 disabled:cursor-not-allowed hover:from-gold hover:via-gold-light hover:to-gold transition-all flex items-center gap-2 border border-crimson/30"
+                  className="btn-ritual px-8 py-4 rounded-sm disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-3"
                 >
                   {loading ? (
                     <>
                       <Loader2 className="w-5 h-5 animate-spin" />
-                      Crafting your spell...
+                      <span>Crafting...</span>
                     </>
                   ) : (
                     <>
                       <Sparkles className="w-5 h-5" />
-                      Generate My Spell
+                      <span>So Mote It Be</span>
                     </>
                   )}
+                </button>
                 </button>
               )}
             </div>
