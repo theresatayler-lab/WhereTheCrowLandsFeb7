@@ -6,7 +6,7 @@ import { toast } from 'sonner';
 import axios from 'axios';
 import { 
   DarkSection, LightSection, GrandDivider, MysticalDivider, 
-  LightOrnateCard, CornerFlourish, DividerStrip 
+  LightOrnateCard, CornerFlourish, SectionDivider 
 } from '../components/OrnateElements';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
