@@ -26,7 +26,7 @@ from cobbles_oracle import (
 from archetype_reference_data import (
     ARCHETYPE_REFERENCE_DATA, THREAD_CORRESPONDENCES, BIRD_CORRESPONDENCES, 
     TALISMAN_CORRESPONDENCES, get_archetype_data, get_random_movements,
-    get_bird_oracle, get_talisman_suggestion, get_thread_color
+    get_bird_oracle as get_bird_oracle_data, get_talisman_suggestion, get_thread_color
 )
 import random
 
