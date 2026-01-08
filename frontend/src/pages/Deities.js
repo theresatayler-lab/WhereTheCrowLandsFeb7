@@ -84,6 +84,7 @@ export const Deities = () => {
             </motion.div>
           ))}
         </div>
+      </div>
 
       {/* Detail Modal */}
       <Dialog open={!!selectedDeity} onOpenChange={() => setSelectedDeity(null)}>
