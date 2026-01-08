@@ -1,185 +1,156 @@
 <analysis>**original_problem_statement:**
-The user's goal is to create Where The Crowlands, a sophisticated full-stack application for building DIY rituals. The app is guided by four AI archetypes (Sheila, Kathleen, Catherine, Theresa) and is designed with an 18th-century grimoire aesthetic.
+The user's goal is to create Where The Crowlands, a sophisticated full-stack application for building DIY rituals guided by AI archetypes with an 18th-century grimoire aesthetic.
 
-The primary focus of this session was to:
-1.  Finalize and launch a standalone Early Access page to capture emails.
-2.  Put the entire site into an Early Access Mode where all traffic is directed to the sign-up page.
-3.  Conduct a deep enrichment of the AI archetypes (Shigg, Cathleen, Katherine) by integrating extensive personal stories, family history, and researched historical/spiritual movements provided by the user.
-4.  Remove all family last names from the application to maintain privacy.
-5.  Create a new Library page to showcase the book list that inspires the project.
+The most recent and critical request is a complete **Spell Personalization Overhaul**. The user found the generated spells to be bland, repetitive, and not distinct enough between personas. They have provided a detailed specification for a new system to address this, which includes:
+- A 3-step wizard UI on  to build a structured  object.
+- A new configuration file () to define each persona's formats, scenarios, and visual DNA.
+- A three-stage prompt chain (Planner, Writer, Image Generator) to create varied spells.
+- An  to generate an Image Kit (header, tarot card, sigil, dividers, micro-icons) for each spell, ensuring the spell page feels illustrated throughout.
+- Strict acceptance criteria focusing on variety, personalization, distinct imagery, and accurate citations.
 
 **User's preferred language**: English
 
 **what currently exists?**
-The application is a functional React/FastAPI/MongoDB project. It is currently in a live Early Access Mode, where all routes automatically redirect to the  page. This page is successfully capturing email sign-ups into the MongoDB database.
+The application is a functional React/FastAPI/MongoDB project. A secret preview mode () is in place to bypass the live Early Access page.
 
-The backend prompts in  for the three main archetypes (Shigg, Cathleen, Katherine) have been heavily updated with rich personal and historical details provided by the user. A new structured data file, , has been created containing detailed information on spiritual movements, deities, and key texts for each archetype.
+The agent has just completed the foundational work for the **Spell Personalization Overhaul**:
+- A new 3-step wizard UI has been created at .
+- A new configuration file, , has been created with initial data for archetypes, scenarios, and visual styles.
+- A new prompt template file, , defines the three-stage prompt chain.
+- The backend () has been updated with a new  endpoint to handle the new logic.
+- Most pages, including the AI Image Generator, now feature an ornate, Victorian/Art Deco theme.
 
-A new, functional Library page has been created at  with a bookshelf UI, but it has not yet been styled to match the site's ornate aesthetic. A backup of the full site's routing configuration is saved in .
+The user's advisor has reviewed this initial implementation and provided a detailed list of refinements to improve variety and quality.
 
 **Last working item**:
--   **Last item agent was working**: The user requested that the newly created Library page be redesigned to match the beautiful, ornate aesthetic of the homepage, using the established design system of alternating light and dark sections, decorative elements, and custom fonts for better readability.
+-   **Last item agent was working**: The agent was in the process of responding to detailed feedback from the user's advisor on the initial implementation of the Spell Personalization Overhaul. The last action was gathering the  and  configuration blocks and the full prompt templates to send to the advisor before beginning the refinement work.
 -   **Status**: IN PROGRESS
--   **Agent Testing Done**: N
--   **Which testing method agent to use?**: screenshot tool. The agent needs to apply the ornate design to  and take screenshots to verify the visual changes.
+-   **Agent Testing Done**: Y (for the initial implementation)
+-   **Which testing method agent to use?**: backend testing agent (using curl) to test the  endpoint with various  inputs to verify variety and correct  generation. A  should be used to verify the final, fully-illustrated spell result page.
 -   **User Testing Done**: N
 
 **All Pending/In progress Issue list**:
--   Issue 1: Redesign the Library page to match the ornate site theme (P0)
--   Issue 2: Apply the new ornate, light/dark theme to all remaining pages (P1)
--   Issue 3: User cannot see design/CSS changes on the preview URL (P2, Recurring Blocker)
+-   Issue 1: Bland and Repetitive Spells / Implement Advisor Feedback (P0)
+-   Issue 2: Apply Ornate Theme to Remaining Pages (P1)
+-   Issue 3: Theresa Archetype Enrichment (P2)
 -   Issue 4: Fix button navigation on the Corrie Tarot page (P3)
 
 **Issues Detail**:
--   **Issue 1: Redesign the Library page to match the ornate site theme**
-    -   **Attempted fixes**: A functional, but plain, Library page was created at .
-    -   **Next debug checklist**:
-        1.  View  to analyze the structure and components used for the ornate, light/dark section design (, , dividers, etc.).
-        2.  Edit  to wrap the content in these established components.
-        3.  Ensure the bookshelf UI is integrated seamlessly into the new, more beautiful layout.
-        4.  Temporarily disable the early access redirect in  to test the page.
-        5.  Take screenshots to verify the new design.
-        6.  Re-enable the early access redirect.
-    -   **Why fix this issue and what will be achieved with the fix?**: To ensure the new Library page is visually consistent with the high-quality, ornate aesthetic the user wants for the entire site.
+-   **Issue 1: Bland and Repetitive Spells / Implement Advisor Feedback**
+    -   **Attempted fixes**: The agent built the foundational system for personalized spells (new wizard, config files, backend endpoint). However, it doesn't yet meet the user's standards for variety.
+    -   **Next debug checklist**: Implement the detailed feedback from the user's advisor (from chat message #276):
+        1.  In :
+            -   Standardize persona IDs (, , ).
+            -   Restructure  to include IDs, links, and a .
+            -   Add a  library for each persona to drive procedural variety.
+            -   Define multiple  with ordered sections and link scenarios to them.
+        2.  In  and :
+            -   Enhance the **Planner prompt** to generate variation knobs (e.g., , ) and strict  to prevent image repetition.
+            -   Add a STRICT citation rule to the writer prompt to prevent hallucinations.
+            -   Refine DALL-E prompts to include No text, size constraints, and hard art style rules (e.g., pen-and-ink line illustration).
+        3.  Update the **Asset Plan** to generate exactly 6 images (header, tarot, sigil, 3 dividers) and use a static library for micro-icons instead of generating them.
+        4.  Update the frontend spell result page () to render all elements of the Image Kit (dividers, printables block, static micro-icons).
+    -   **Why fix this issue and what will be achieved with the fix?**: This is the highest priority user-facing issue. Fixing it will fulfill the core promise of the app: creating unique, personal, and visually rich rituals.
     -   **Status**: IN PROGRESS
+    -   **Is recurring issue?**: Y
+    -   **Should Test frontend/backend/both after fix?**: both
+    -   **Blocked on other issue**: None
+
+-   **Issue 2: Apply Ornate Theme to Remaining Pages**
+    -   **Next debug checklist**: Apply the established ornate theme (, ) to the 9 pages that are still unstyled: , , , , , , , , , .
+    -   **Why fix this issue and what will be achieved with the fix?**: To achieve a cohesive, high-quality visual experience across the entire site.
+    -   **Status**: NOT STARTED
     -   **Is recurring issue?**: N
     -   **Should Test frontend/backend/both after fix?**: frontend
     -   **Blocked on other issue**: None
 
--   **Issue 2: Apply the new ornate, light/dark theme to all remaining pages**
-    -   **Attempted fixes**: This is a carry-over task. The theme has been applied to Home, SpellRequest, Guides, and CorrieTarot.
-    -   **Next debug checklist**:
-        1.  Systematically redesign the following pages using the established  and  components: , , , , .
-        2.  Use screenshots to verify the new design on each page.
-    -   **Why fix this issue and what will be achieved with the fix?**: Fulfills the user's core request for a cohesive, beautiful, and highly aesthetic site-wide user experience.
-    -   **Status**: NOT STARTED
-    -   **Is recurring issue?**: N
-    -   **Should Test frontend/backend/both after fix?**: frontend
-    -   **Blocked on other issue**: None.
-
--   **Issue 3: User cannot see design/CSS changes on the preview URL**
-    -   **Attempted fixes**: This occurred again during the session. The agent restarted the frontend service, and instructing the user to do a hard refresh (Cmd+Shift+R) and visit the direct URL in an incognito window resolved it.
-    -   **Next debug checklist**: If the user reports this again, first ask for a hard refresh. If that fails, immediately call the  to investigate platform-level caching issues. Do not spend time re-implementing code.
-    -   **Why fix this issue and what will be achieved with the fix?**: This is a critical development blocker that prevents the user from verifying visual progress.
-    -   **Status**: RESOLVED (for now)
-    -   **Is recurring issue?**: Y
-    -   **Should Test frontend/backend/both after fix?**: frontend
-    -   **Blocked on other issue**: None.
-
--   **Issue 4: Fix button navigation on the Corrie Tarot page**
-    -   **Attempted fixes**: A fix was implemented in a previous session.
-    -   **Next debug checklist**: Await user confirmation that the button now navigates correctly. This can only be tested when the site is not in early-access mode.
-    -   **Why fix this issue and what will be achieved with the fix?**: Ensures a seamless user journey from the oracle feature back to the core spell-creation flow.
-    -   **Status**: USER VERIFICATION PENDING
-    -   **Is recurring issue?**: N
-    -   **Should Test frontend/backend/both after fix?**: frontend
-    -   **Blocked on other issue**: Site is currently in early-access mode, preventing testing of this page.
-
 **In progress Task List**:
--   **Task 1: Complete Site-wide UI Overhaul**
-    -   **Where to resume**: Start with redesigning  (Issue 1), then continue with the remaining pages listed in Issue 2.
-    -   **What will be achieved with this?**: A visually consistent and aesthetically pleasing application that matches the user's detailed vision.
+-   **Task 1: Complete Spell Personalization Overhaul**
+    -   **Where to resume**: The agent needs to first provide the requested config blocks and prompt strings to the user/advisor. Then, begin implementing the advisor's detailed feedback, starting with the changes to .
+    -   **What will be achieved with this?**: A highly dynamic, non-repetitive, and visually rich spell generation experience that meets all user acceptance criteria.
     -   **Status**: IN PROGRESS
-    -   **Should Test frontend/backend/both after fix?**: frontend
+    -   **Should Test frontend/backend/both after fix?**: both
     -   **Blocked on something**: None.
 
 **Upcoming and Future Tasks**
 -   **Upcoming Tasks**:
-    -   (P0) **Implement Dynamic Spell Prompt Generation**: Update the spell creation endpoint in  to use the new structured data in . This involves implementing the logic from the user's  pseudo-code.
-    -   (P1) **Build Frontend for Spell Personalization**: Build the UI for the leading questions to customize spells (backend is being prepared for this).
-    -   (P2) **Enhance Final Archetype (Theresa)**: Apply the deep enrichment process to the final guide.
-    -   (P3) **Build Premium Spell Book Compiler**: A core premium feature to compile selected spells/wards into a downloadable PDF.
+    -   (P1) **Enrich Theresa Archetype**: The final archetype needs deep enrichment with personal story and themes, similar to the other three.
+    -   (P2) **Apply Ornate Theme**: Finish the site-wide visual overhaul for the remaining 9 pages.
 -   **Future Tasks**:
-    -   Implement Image Integration for Spells.
+    -   Build Premium Spell Book Compiler (PDF generation).
     -   Activate Stripe Integration for live payments.
     -   Implement a Print-on-Demand service integration.
     -   Add tooltips for esoteric terms.
-    -   Refactor  into a modular structure.
+    -   Refactor  into a more modular structure.
 
 **Completed work in this session**
--   **Early Access Mode LAUNCHED**:
-    -   Created and finalized a standalone sign-up page at  with multiple rounds of user-directed copy and layout edits.
-    -   Implemented a site-wide redirect in  so that all traffic is sent to the  page. A backup of the full site routing is stored at .
-    -   Verified that email capture is fully functional, with multiple real sign-ups recorded in the database.
--   **Deep Archetype Enrichment**:
-    -   Updated the core prompts in  for Shigg, Cathleen, and Katherine with extensive personal details (phrases, stories, relationships) provided by the user.
-    -   Created  to store a structured library of spiritual movements, deities, and texts for each archetype.
-    -   Updated bios and family relationships in .
--   **Data Privacy**:
-    -   Scanned and removed all last names (Tayler, Foy, Cosgrove, Malzard, etc.) from all frontend and backend files to ensure privacy.
--   **New Library Page (V1)**:
-    -   Created  with a bookshelf UI, book data, and an animated modal for viewing book details. Added routing for this page.
--   **Collaborative Documentation**:
-    -   Created , , and  to help the user provide structured data for the archetypes.
+-   **Secret Preview Mode**: Implemented a  URL parameter to bypass the Early Access page.
+-   **Library & Guides Page Enhancements**: Redesigned Library with an ornate theme and improved Guides with collapsible bios.
+-   **Katherine Archetype Update**: Corrected her historical era in all relevant files.
+-   **Site-wide UI Overhaul (Partial)**: Applied the ornate theme to , , , , and  pages.
+-   **AI Image Generator Overhaul**:
+    -   Applied the ornate theme to the UI.
+    -   Added archetype-specific image style presets.
+    -   Created a flippable tarot card component for spell images in the grimoire.
+-   **Spell Personalization Overhaul (Foundation)**:
+    -   Created  and .
+    -   Rebuilt  into a 3-step wizard.
+    -   Added a new  endpoint and logic to .
 
 **Earlier issues found/mentioned but not fixed**
--   ** lint errors**:  and  persist but are low-priority.
--   ** compile error**: A  warning persists and is low-priority.
+-   **Linting**: Persistent  and  errors in , plus numerous other errors in existing frontend files.
 
 **Known issue recurrence from previous fork**
 -   **Issue recurrence in previous fork**: The user's inability to see CSS/design changes on the preview URL.
 -   **Recurrence count**: 4+
--   **Status**: RESOLVED (for now, via user-side hard refresh). This remains a high-risk issue.
+-   **Status**: RESOLVED (for now, via user-side hard refresh). This remains a high-risk issue. The agent knows to first suggest a hard refresh, then call  if it persists.
 
 **Code Architecture**
 
 
 **Key Technical Concepts**
--   **Frontend**: React, Tailwind CSS, ,  (for Library animations).
--   **Backend**: FastAPI, Pydantic. Heavy focus on prompt engineering using detailed historical and personal data.
--   **Database**: MongoDB (used for the  collection).
--   **Deployment Strategy**: Early Access Mode implemented via client-side routing redirects in React.
+-   **Frontend**: React, Tailwind CSS, , .
+-   **Backend**: FastAPI, Pydantic, multi-stage prompt chaining.
+-   **Database**: MongoDB.
+-   **Core Logic**: A configuration-driven, three-stage prompt chain (Planner -> Writer -> Image Prompt Generator) that uses a  from the UI to generate a dynamic spell and a corresponding Image Kit.
 
 **key DB schema**
--   **waitlist**: 
-
-**changes in tech stack**
--   None.
+-   **users**: The user document will now need to store saved spells, where each spell includes the structured spell JSON, an  array, the , and generated asset URLs.
 
 **All files of reference**
 -   **Created**:
-    -   : New page for displaying a bookshelf of inspirational books.
-    -   : A backup of the full application's routing before Early Access Mode was enabled.
-    -   : A structured Python file containing historical movements, deities, and texts for each archetype to be used for dynamic spell generation.
-    -   , , : Documents created to facilitate collaboration with the user on archetype development.
+    -   : The new configuration file for spell generation logic.
+    -   : The new file containing the three-stage prompt templates.
 -   **Updated Heavily**:
-    -   : Underwent multiple revisions to become a polished, standalone sign-up page.
-    -   : The system prompts for Shigg, Cathleen, and Katherine were completely rewritten with rich personal and historical detail.
-    -   : Modified to implement the Early Access Mode by redirecting all routes.
-    -   : Bios and family relationships were corrected and updated.
-
-**Areas that need refactoring**:
--   ****: The main endpoint for spell generation needs to be refactored to incorporate the new data from , following the user's  logic.
-
-**key api endpoints**
--   : Confirmed working for email capture.
+    -   : Completely rewritten into a multi-step wizard UI.
+    -   : Significantly modified to include the new personalized spell generation endpoint, new Pydantic models, and supporting logic.
+    -   : Overhauled with the ornate theme and archetype-specific style presets.
+    -   : The rendering component for spells, updated with a flippable tarot card feature. It will need further updates to render the full image kit.
 
 **Critical Info for New Agent**
--   **The app is in Early Access Mode**. All routes redirect to . To work on any other page, you must temporarily modify  and restore it from the backup at . Remember to revert to early access mode before finishing.
--   Your immediate task is to **redesign the Library page** to match the site's ornate aesthetic.
--   The user has provided a massive amount of data to make the AI personas more authentic. The next major backend task is to **implement the user's  logic** in  to make spell creation dynamic and historically grounded, using the new  file.
--   The user is highly focused on visual quality and consistency. Pay close attention to design details and use the established components from  as a reference.
+-   You are mid-way through a critical feature: the **Spell Personalization Overhaul**. Your immediate task is to implement the detailed feedback provided by the user's advisor in chat message #276.
+-   Do not start coding immediately. First, provide the advisor with the requested code snippets: the  and  blocks from  and the full prompt strings from .
+-   The user's top priority is **variety**. The new system must produce obviously different spells and images, even with similar inputs, by using the refined config, variation knobs, and procedural practices.
+-   The app is in Early Access Mode. You must use the  URL parameter to view and test all pages.
 
 **documents and test reports created in this job**
--   
--   
--   
--   
+-   /app/backend/persona_config.py
+-   /app/backend/spell_prompts.py
 
 **Last 10 User Messages and any pending HUMAN messages**
-1.  **User**: Asks how to build out the prompts for spell creation to be historically accurate.
-2.  **Agent**: Explains the layered approach and provides a detailed breakdown of historical movements (Spiritualism, Folk Magic, etc.) relevant to each archetype.
-3.  **User**: Asks for a clearer breakdown of what specific movements, leaders, and books each woman follows.
-4.  **Agent**: Provides a concise table-like summary for Shigg, Cathleen, and Katherine.
-5.  **User**: Provides a huge amount of rich personal data for each archetype by filling out the template, plus an extensive book list.
-6.  **Agent**: Confirms understanding and updates the backend prompts and frontend bios.
-7.  **User**: Asks if there is a books page.
-8.  **Agent**: Confirms there isn't and proposes creating a Library page with an animated bookshelf design.
-9.  **User**: Agrees to the Library page and provides a new, even more detailed JSON structure for the archetype's historical movements, deities, and texts, along with pseudo-code for a  function.
-10. **User**: After seeing the functional Library page, asks the agent to make it as beautiful and ornate as the homepage, with alternating light/dark colors for readability.
+1.  **User**: (Long prompt) Submits a detailed specification for the P0 Spell Personalization Overhaul, defining the wizard, , persona config, prompt skeletons, , and acceptance criteria.
+2.  **Agent**: Acknowledges and begins implementing the foundational files.
+3.  **Agent**: (Finish tool) Summarizes the completion of the initial implementation and the successful test of the basic flow.
+4.  **User**: Requests the raw outputs (config file, prompts, example JSON) for their advisor and asks about image generation constraints.
+5.  **Agent**: Provides all requested code and data, explaining the image generation capacity.
+6.  **User**: (Advisor feedback) Provides a detailed list of required refinements for , prompt logic, the , and DALL-E prompts to improve variety and quality.
+7.  **User**: Asks agent to implement the changes.
+8.  **Agent**: Acknowledges the feedback and states it will first gather the specific code snippets the advisor requested.
+9.  **Agent**: Locates the Kathleen/Katherine config blocks.
+10. **Agent**: Locates the spell prompt strings. **The next action is to present this information to the user/advisor.**
 
 **Project Health Check:**
--   **Broken**: The recurring issue where the user cannot see CSS changes without a hard refresh is a persistent risk to the development feedback loop.
+-   **Broken**: The core spell generation experience is considered bland and redundant by the user. The current overhaul task is in progress to fix this.
 -   **Mocked**: None.
 
 **3rd Party Integrations**
@@ -221,19 +192,18 @@ options:
                         us/security/business/identity-access/microsoft-entra-
                         id
   -V, --version         show program's version number and exit Python library — requires User API Key.
--   **html2pdf.js**: Frontend library for client-side PDF generation.
 -   **Stripe**:  library — requires User API Key (currently using a test key).
+-   **html2pdf.js**: Frontend library for client-side PDF generation.
 
 **Testing status**
--   **Testing agent used after significant changes**: NO
--   **Troubleshoot agent used after agent stuck in loop**: NO
+-   **Testing agent used after significant changes**: YES (for the initial wizard implementation).
+-   **Troubleshoot agent used after agent stuck in loop**: NO.
 -   **Test files created**: None.
--   **Known regressions**: The user-facing CSS visibility issue persists from previous sessions.
+-   **Known regressions**: The user-facing CSS visibility issue is a known recurring risk.
 
 **Credentials to test flow:**
--   A paid Pro user exists for testing premium features:
 -   **Email**: 
 -   **Password**: 
 
 **What agent forgot to execute**
--   The agent has not yet implemented the user's suggested  logic in the backend. It has stored the required data in  but the main spell generation endpoint in  still uses the older, static prompt-injection method and does not reference this new file. This is the most critical pending backend task.</analysis>
+-   The agent has not yet implemented the critical refinements requested by the user's advisor in chat message #276. The immediate next step is to present the requested code snippets to the user, and then proceed with implementing the feedback.</analysis>
