@@ -136,3 +136,51 @@ Test the enhanced spell generation system with the following requirements:
 
 ### Conclusion
 The Spell Personalization System is **FULLY FUNCTIONAL** and meets all requirements specified in the review request. The 2-stage prompt chain (Planner + Writer) is working correctly, citations are properly validated against allowed sources, and all response structures match the expected format.
+
+---
+
+## Session Update - January 8, 2025
+
+### Changes Made:
+1. **CROWLANDS_ART_BIBLE** - Added global visual tokens to `persona_config.py`:
+   - Silk scarf/tapestry aesthetic
+   - Palette: midnight navy, oxblood, antique gold, aged bone
+   - British folklore animals + planetary/alchemical/occult tools
+   - Hard negatives for all image prompts
+
+2. **Cathleen visual_dna** - Updated from WWII propaganda to:
+   - Raven feathers, candles, bells, protective circles
+   - Brigid-cross motifs, prayer beads
+   - Deep crimson + antique gold + midnight navy palette
+   - Header: candlelit altar vignette (NOT portrait)
+
+3. **Katherine visual_dna** - Refined atelier aesthetic:
+   - Needle/thread, mirror, compass, astrolabe, sealed letters
+   - Abstract Golden Dawn/Qabalah geometry
+   - Cool steel/silver + oxblood + navy palette
+   - Header: atelier desk scene
+
+4. **Shigg visual_dna** - Removed black & white restriction:
+   - Now allows sepia with gold/navy accents
+   - Maintains Victorian ink illustration style
+
+5. **OrnateElements.js** - Added static ornament library:
+   - BestiaryGlyph, OccultGlyph
+   - CornerFlourish, DividerStrip
+   - HeroBanner, ParchmentWell, PageSection
+   - SectionHeader, InlineOrnament
+
+6. **Pages Updated with Ornate Theme:**
+   - `/upgrade` - Hero + parchment pricing cards
+   - `/ai-chat` - Hero + parchment chat container
+   - `/profile` - Hero + parchment settings cards
+
+### Pages Already Themed (from previous session):
+- `/deities`, `/rituals`, `/figures`, `/sites`, `/timeline`, `/auth`
+- `/corrie-tarot`, `/guides`
+
+### Pending:
+- Test spell generation with updated visual_dna
+- Verify Corrie Tarot button navigation (appears working in screenshot)
+- Theresa archetype enrichment
+
