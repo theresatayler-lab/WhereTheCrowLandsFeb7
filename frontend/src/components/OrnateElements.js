@@ -195,6 +195,190 @@ export const LightOrnateCard = ({ children, className = '', hover = true }) => (
   </div>
 );
 
+// ============================================================================
+// STATIC ORNAMENT LIBRARY - Corner Flourishes, Dividers, Bestiary Glyphs
+// ============================================================================
+
+// Bestiary Glyphs - British folklore animals
+export const BestiaryGlyph = ({ animal = 'raven', className = '', size = 'md' }) => {
+  const sizes = { sm: 'text-lg', md: 'text-2xl', lg: 'text-4xl' };
+  const glyphs = {
+    raven: '🐦‍⬛',
+    crow: '🐦‍⬛',
+    owl: '🦉',
+    hare: '🐇',
+    fox: '🦊',
+    moth: '🦋',
+    serpent: '🐍',
+    stag: '🦌',
+    wolf: '🐺',
+    badger: '🦡'
+  };
+  return <span className={`${sizes[size]} ${className}`}>{glyphs[animal] || glyphs.raven}</span>;
+};
+
+// Occult Tool Glyphs
+export const OccultGlyph = ({ symbol = 'pentacle', className = '', size = 'md' }) => {
+  const sizes = { sm: 'text-lg', md: 'text-2xl', lg: 'text-4xl' };
+  const glyphs = {
+    pentacle: '⛤',
+    moon: '☽',
+    sun: '☀',
+    star: '✦',
+    eye: '👁',
+    key: '🗝️',
+    chalice: '🏆',
+    bell: '🔔',
+    candle: '🕯️',
+    crystal: '💎',
+    ouroboros: '🐍',
+    triquetra: '☘️'
+  };
+  return <span className={`${sizes[size]} ${className}`}>{glyphs[symbol] || glyphs.pentacle}</span>;
+};
+
+// Corner Flourish SVG - More elaborate version
+export const CornerFlourish = ({ position = 'top-left', variant = 'gold', className = '' }) => {
+  const colors = variant === 'gold' 
+    ? { primary: '#d4a84b', secondary: '#b82330' }
+    : { primary: '#b82330', secondary: '#d4a84b' };
+  
+  const rotations = {
+    'top-left': '',
+    'top-right': 'rotate-90',
+    'bottom-left': '-rotate-90',
+    'bottom-right': 'rotate-180'
+  };
+  
+  return (
+    <svg viewBox="0 0 80 80" className={`${rotations[position]} ${className}`} fill="none">
+      <path d="M0,40 Q0,0 40,0" stroke={colors.primary} strokeWidth="2" opacity="0.8" />
+      <path d="M0,28 Q0,0 28,0" stroke={colors.primary} strokeWidth="1.5" opacity="0.5" />
+      <path d="M8,48 Q8,8 48,8" stroke={colors.secondary} strokeWidth="1" opacity="0.4" />
+      <circle cx="20" cy="20" r="3" fill={colors.primary} opacity="0.7" />
+      <circle cx="8" cy="8" r="2" fill={colors.secondary} opacity="0.6" />
+      <path d="M12,12 L18,6 L24,12 L18,18 Z" fill={colors.secondary} opacity="0.5" />
+    </svg>
+  );
+};
+
+// Section Divider Strip - Decorative band
+export const DividerStrip = ({ variant = 'default', className = '' }) => {
+  const patterns = {
+    default: '❧ ◆ ❧',
+    stars: '✦ ✧ ⭐ ✧ ✦',
+    moons: '☾ ✦ ☽ ✦ ☾',
+    celtic: '☘️ ◆ ☘️',
+    eyes: '✦ 👁 ✦',
+    feathers: '🪶 ◆ 🪶'
+  };
+  
+  return (
+    <div className={`flex items-center justify-center gap-2 py-3 ${className}`}>
+      <div className="h-px flex-1 max-w-16 bg-gradient-to-r from-transparent to-gold/40" />
+      <span className="text-gold/60 text-sm tracking-widest">{patterns[variant]}</span>
+      <div className="h-px flex-1 max-w-16 bg-gradient-to-l from-transparent to-gold/40" />
+    </div>
+  );
+};
+
+// Hero Banner Component - Standardized hero section
+export const HeroBanner = ({ 
+  icon: Icon, 
+  title, 
+  subtitle, 
+  children,
+  variant = 'dark',
+  showCorners = true 
+}) => {
+  const isDark = variant === 'dark';
+  
+  return (
+    <DarkSection className="py-12 sm:py-16 md:py-20 px-4 sm:px-6" variant="warm">
+      {showCorners && (
+        <>
+          <CornerFlourish position="top-left" className="absolute top-3 left-3 w-12 h-12 sm:w-16 sm:h-16" />
+          <CornerFlourish position="top-right" className="absolute top-3 right-3 w-12 h-12 sm:w-16 sm:h-16" />
+        </>
+      )}
+      
+      <div className="max-w-4xl mx-auto relative z-10">
+        <div className="text-center">
+          {Icon && (
+            <Icon className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 mx-auto mb-4 text-crimson-bright"
+              style={{ filter: 'drop-shadow(0 0 15px rgba(184, 35, 48, 0.5))' }} />
+          )}
+          <h1 className="font-italiana text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-gold-light mb-3"
+            style={{ textShadow: '0 2px 30px rgba(212, 168, 75, 0.5)' }}>
+            {title}
+          </h1>
+          {subtitle && (
+            <p className="font-montserrat text-sm sm:text-base text-silver-mist/80 max-w-2xl mx-auto">
+              {subtitle}
+            </p>
+          )}
+        </div>
+        {children}
+      </div>
+    </DarkSection>
+  );
+};
+
+// Parchment Content Well - Standardized content section
+export const ParchmentWell = ({ children, className = '', showDivider = true }) => (
+  <LightSection className={`py-10 sm:py-14 px-4 sm:px-6 ${className}`}>
+    <div className="max-w-5xl mx-auto">
+      {showDivider && <MysticalDivider light />}
+      {children}
+    </div>
+  </LightSection>
+);
+
+// Page Section - Combines Hero + Content pattern
+export const PageSection = ({ 
+  icon: Icon,
+  title,
+  subtitle,
+  heroContent,
+  children 
+}) => (
+  <div className="min-h-screen">
+    <HeroBanner icon={Icon} title={title} subtitle={subtitle}>
+      {heroContent}
+    </HeroBanner>
+    <ParchmentWell>
+      {children}
+    </ParchmentWell>
+  </div>
+);
+
+// Inline Ornament - Small decorative elements for text
+export const InlineOrnament = ({ type = 'diamond' }) => {
+  const ornaments = {
+    diamond: '◆',
+    star: '✦',
+    dot: '•',
+    fleur: '❧',
+    leaf: '❦'
+  };
+  return <span className="text-gold/60 mx-2">{ornaments[type]}</span>;
+};
+
+// Section Header with ornaments
+export const SectionHeader = ({ title, subtitle, light = false, variant = 'default' }) => (
+  <div className={`text-center mb-8 ${light ? 'text-navy-dark' : ''}`}>
+    <DividerStrip variant={variant} className="mb-4" />
+    <h2 className={`font-italiana text-2xl sm:text-3xl mb-2 ${light ? 'text-crimson' : 'text-gold-light'}`}>
+      {title}
+    </h2>
+    {subtitle && (
+      <p className={`font-montserrat text-sm ${light ? 'text-navy-dark/70' : 'text-silver-mist/70'}`}>
+        {subtitle}
+      </p>
+    )}
+  </div>
+);
+
 export default {
   ElaborateCorner,
   GrandDivider,
@@ -204,4 +388,14 @@ export default {
   PageHeader,
   OrnateCard,
   LightOrnateCard,
+  // New exports
+  BestiaryGlyph,
+  OccultGlyph,
+  CornerFlourish,
+  DividerStrip,
+  HeroBanner,
+  ParchmentWell,
+  PageSection,
+  InlineOrnament,
+  SectionHeader,
 };
