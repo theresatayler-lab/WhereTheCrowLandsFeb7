@@ -506,6 +506,9 @@ export default {
   OccultGlyph,
   // Frames
   BorderFrame,
+  PersonaBorderFrame,
+  TarotCardFrame,
+  PERSONA_BORDER_URLS,
   // Spell Components
   SpellSectionHeader,
   PrintablesBlock,
