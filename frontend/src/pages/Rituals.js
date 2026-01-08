@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ritualsAPI } from '../utils/api';
 import { Scroll, Sparkles } from 'lucide-react';
-import { DarkSection, ElaborateCorner, PageHeader, OrnateCard, GrandDivider, MysticalDivider } from '../components/OrnateElements';
+import { DarkSection, PageBorderFrame, PageHeader, OrnateCard, GrandDivider, MysticalDivider } from '../components/OrnateElements';
 
 export const Rituals = () => {
   const [rituals, setRituals] = useState([]);
@@ -35,12 +35,9 @@ export const Rituals = () => {
   }
 
   return (
-    <DarkSection className="min-h-screen py-12 sm:py-20 px-4 sm:px-6" variant="warm">
-      {/* Corner Ornaments */}
-      <ElaborateCorner className="absolute top-3 left-3 w-16 h-16 sm:w-24 sm:h-24" variant="gold" />
-      <ElaborateCorner className="absolute top-3 right-3 w-16 h-16 sm:w-24 sm:h-24 rotate-90" variant="gold" />
-      
-      <div className="max-w-7xl mx-auto relative z-10">
+    <PageBorderFrame>
+      <DarkSection className="min-h-screen py-12 sm:py-20 px-4 sm:px-6" variant="warm">
+        <div className="max-w-7xl mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
