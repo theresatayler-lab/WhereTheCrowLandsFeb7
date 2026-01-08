@@ -583,36 +583,84 @@ export const SpellRequest = () => {
         </div>
       </LightSection>
 
-      {/* Loading Overlay */}
+      {/* Loading Overlay with Archetype Video */}
       <AnimatePresence>
         {loading && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-navy-dark/90 backdrop-blur-md z-50 flex items-center justify-center"
+            className="fixed inset-0 bg-navy-dark z-50 flex items-center justify-center overflow-hidden"
           >
-            <div className="text-center">
+            {/* Background video for the selected archetype */}
+            {spellSpec.persona_id !== 'choose_for_me' && ARCHETYPE_VIDEOS[spellSpec.persona_id] && (
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="absolute inset-0 w-full h-full object-cover opacity-40"
+                style={{ filter: 'saturate(0.8) contrast(1.1)' }}
+              >
+                <source src={ARCHETYPE_VIDEOS[spellSpec.persona_id]} type="video/mp4" />
+              </video>
+            )}
+            
+            {/* Gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-navy-dark via-navy-dark/70 to-navy-dark/50" />
+            <div className="absolute inset-0 bg-gradient-radial from-transparent via-transparent to-navy-dark" />
+            
+            {/* Corner ornaments */}
+            <ElaborateCorner className="absolute top-4 left-4 w-16 h-16 sm:w-24 sm:h-24" variant="gold" />
+            <ElaborateCorner className="absolute top-4 right-4 w-16 h-16 sm:w-24 sm:h-24 rotate-90" variant="gold" />
+            <ElaborateCorner className="absolute bottom-4 left-4 w-16 h-16 sm:w-24 sm:h-24 -rotate-90" variant="gold" />
+            <ElaborateCorner className="absolute bottom-4 right-4 w-16 h-16 sm:w-24 sm:h-24 rotate-180" variant="gold" />
+            
+            {/* Content */}
+            <div className="relative z-10 text-center px-6 max-w-lg">
               <motion.div
                 animate={{ 
-                  rotate: [0, 360],
-                  scale: [1, 1.1, 1]
+                  scale: [1, 1.05, 1],
+                  opacity: [0.8, 1, 0.8]
                 }}
                 transition={{ 
-                  rotate: { repeat: Infinity, duration: 3, ease: 'linear' },
-                  scale: { repeat: Infinity, duration: 1.5, ease: 'easeInOut' }
+                  repeat: Infinity, 
+                  duration: 2, 
+                  ease: 'easeInOut' 
                 }}
-                className="w-20 h-20 mx-auto mb-6"
+                className="w-24 h-24 mx-auto mb-8 relative"
               >
-                <Sparkles className="w-full h-full text-gold" />
+                <div className="absolute inset-0 rounded-full border-2 border-gold/40 animate-pulse" />
+                <div className="absolute inset-2 rounded-full border border-crimson/30" />
+                <Sparkles className="w-full h-full text-gold p-4" style={{ filter: 'drop-shadow(0 0 20px rgba(212, 168, 75, 0.5))' }} />
               </motion.div>
-              <h2 className="font-italiana text-2xl text-gold-light mb-2">Weaving your spell...</h2>
-              <p className="font-montserrat text-sm text-cream/60">
+              
+              <h2 className="font-cinzel text-2xl sm:text-3xl text-gold mb-3" style={{ textShadow: '0 2px 20px rgba(212, 168, 75, 0.4)' }}>
+                Weaving Your Spell
+              </h2>
+              
+              <p className="font-crimson text-lg text-cream/80 mb-2">
                 {spellSpec.persona_id !== 'choose_for_me' 
-                  ? `${PERSONAS.find(p => p.id === spellSpec.persona_id)?.name} is crafting something special`
-                  : 'Finding the right guide for you'
+                  ? `${PERSONAS.find(p => p.id === spellSpec.persona_id)?.name} is crafting something special for you`
+                  : 'Finding the perfect guide for your intention'
                 }
               </p>
+              
+              <p className="font-montserrat text-xs text-gold/50 tracking-widest uppercase mt-6">
+                This may take a moment...
+              </p>
+              
+              {/* Animated loading dots */}
+              <div className="flex items-center justify-center gap-2 mt-4">
+                {[0, 1, 2].map((i) => (
+                  <motion.div
+                    key={i}
+                    animate={{ opacity: [0.3, 1, 0.3], scale: [0.8, 1.2, 0.8] }}
+                    transition={{ repeat: Infinity, duration: 1.5, delay: i * 0.2 }}
+                    className="w-2 h-2 rounded-full bg-gold"
+                  />
+                ))}
+              </div>
             </div>
           </motion.div>
         )}
