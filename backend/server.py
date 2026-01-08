@@ -2988,23 +2988,29 @@ async def generate_personalized_spell(request: PersonalizedSpellRequest, user = 
                     generated_assets['sigil'] = sigil_response.data[0].b64_json
                     asset_plan['sigil_generated'] = True
                 
-                # 4-6. Generate 3 dividers
-                for i in range(1, 4):
-                    divider_prompt = build_image_prompt(f"divider_{i}", asset_plan, persona_config, spell.get('title', 'Spell'))
-                    logging.info(f"Generating divider {i}...")
+                # 4. Generate 1 divider only (will be reused 3x in frontend)
+                divider_prompt = build_image_prompt("divider_1", asset_plan, persona_config, spell.get('title', 'Spell'))
+                logging.info(f"Generating single divider (reused 3x)...")
+                
+                divider_response = await openai_client.images.generate(
+                    model="dall-e-3",
+                    prompt=divider_prompt,
+                    size="1792x1024",  # Wide format for dividers
+                    quality="standard",
+                    n=1,
+                    response_format="b64_json"
+                )
+                
+                if divider_response.data and len(divider_response.data) > 0:
+                    divider_b64 = divider_response.data[0].b64_json
+                    # Reuse single divider for all 3 positions
+                    generated_assets['divider_1'] = divider_b64
+                    generated_assets['divider_2'] = divider_b64
+                    generated_assets['divider_3'] = divider_b64
+                    asset_plan['divider_1_generated'] = True
                     
-                    divider_response = await openai_client.images.generate(
-                        model="dall-e-3",
-                        prompt=divider_prompt,
-                        size="1792x1024",  # Wide format for dividers
-                        quality="standard",
-                        n=1,
-                        response_format="b64_json"
-                    )
-                    
-                    if divider_response.data and len(divider_response.data) > 0:
-                        generated_assets[f'divider_{i}'] = divider_response.data[0].b64_json
-                        asset_plan[f'divider_{i}_generated'] = True
+                timing_log['images_ms'] = int((time.time() - images_start) * 1000)
+                logging.info(f"[TIMING] Images (4 total): {timing_log['images_ms']}ms")
                     
             except Exception as img_error:
                 logging.error(f"Image generation error: {str(img_error)}")
@@ -3025,6 +3031,10 @@ async def generate_personalized_spell(request: PersonalizedSpellRequest, user = 
         if user:
             await increment_spell_count(user['id'])
         
+        # Calculate total time
+        timing_log['total_ms'] = int((time.time() - total_start) * 1000)
+        logging.info(f"[TIMING] TOTAL: {timing_log['total_ms']}ms (planner={timing_log.get('planner_ms', 0)}ms, writer={timing_log.get('writer_ms', 0)}ms, images={timing_log.get('images_ms', 0)}ms)")
+        
         return {
             'spell': spell,
             'archetype': archetype_info,
@@ -3034,7 +3044,8 @@ async def generate_personalized_spell(request: PersonalizedSpellRequest, user = 
                 'id': scenario['scenario_id'],
                 'name': scenario['name']
             },
-            'spell_spec': spell_spec
+            'spell_spec': spell_spec,
+            'timing': timing_log  # Include timing in response for debugging
         }
         
     except HTTPException:
