@@ -2891,6 +2891,13 @@ def main():
     if not tester.test_auth_register():
         print("❌ Registration failed, continuing with other tests...")
     
+    # === PERSONA CONFIG TESTS (REVIEW REQUEST PRIORITY) ===
+    print("\n⚙️ Testing Persona Configuration (REVIEW REQUEST)...")
+    tester.test_persona_config_crowlands_art_bible()
+    tester.test_cathleen_visual_dna_updated()
+    tester.test_katherine_visual_dna_updated()
+    tester.test_shigg_visual_dna_color_accents()
+    
     # === PERSONALIZED SPELL GENERATION TESTS (REVIEW REQUEST PRIORITY) ===
     print("\n🌟 Testing Personalized Spell Generation (REVIEW REQUEST)...")
     tester.test_personalized_spell_kathleen_protection()
