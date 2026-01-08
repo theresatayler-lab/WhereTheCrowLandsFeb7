@@ -77,17 +77,17 @@ MICRO_ICONS = {
     },
     "cathleen": {
         "candle": "🕯️",
-        "lantern": "🪔",
-        "badge": "🎖️",
-        "uniform": "👔",
         "raven": "🐦‍⬛",
+        "feather": "🪶",
+        "bell": "🔔",
         "moon": "🌙",
-        "letter": "✉️",
-        "radio": "📻",
-        "heart": "❤️",
         "flame": "🔥",
-        "shield": "🛡️",
-        "sister": "👭"
+        "heart": "❤️",
+        "cross": "✚",
+        "circle": "⭕",
+        "beads": "📿",
+        "star": "⭐",
+        "shield": "🛡️"
     },
     "katherine": {
         "tree": "🌳",
