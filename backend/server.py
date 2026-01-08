@@ -246,6 +246,243 @@ async def increment_spell_count(user_id: str):
         }
     )
 
+def generate_dynamic_spell_context(archetype_id: str, intention: str) -> str:
+    """
+    Generate dynamic spell context by pulling from archetype reference data.
+    This creates rich, historically-grounded prompts based on the archetype and intention.
+    """
+    if not archetype_id:
+        return ""
+    
+    archetype_data = get_archetype_data(archetype_id)
+    if not archetype_data:
+        return ""
+    
+    context_parts = []
+    archetype_name = archetype_data.get('name', 'Guide')
+    
+    # Analyze intention for keywords to select relevant data
+    intention_lower = intention.lower()
+    
+    # Keyword categories for matching
+    grief_keywords = ['grief', 'loss', 'death', 'mourning', 'passed', 'died', 'gone', 'miss', 'remember']
+    protection_keywords = ['protect', 'safety', 'safe', 'ward', 'shield', 'guard', 'defend', 'secure']
+    courage_keywords = ['courage', 'brave', 'fear', 'scared', 'anxious', 'nervous', 'worried', 'strength']
+    love_keywords = ['love', 'relationship', 'heart', 'romance', 'partner', 'attract', 'connection']
+    healing_keywords = ['heal', 'health', 'sick', 'illness', 'recovery', 'better', 'pain', 'hurt']
+    transformation_keywords = ['change', 'transform', 'new', 'begin', 'start', 'ending', 'transition', 'shift']
+    shadow_keywords = ['shadow', 'dark', 'anger', 'rage', 'fear', 'hidden', 'secret', 'face', 'confront']
+    divination_keywords = ['future', 'guidance', 'answer', 'question', 'know', 'see', 'reveal', 'truth']
+    
+    # Determine primary intention category
+    intention_category = 'general'
+    if any(kw in intention_lower for kw in grief_keywords):
+        intention_category = 'grief'
+    elif any(kw in intention_lower for kw in protection_keywords):
+        intention_category = 'protection'
+    elif any(kw in intention_lower for kw in courage_keywords):
+        intention_category = 'courage'
+    elif any(kw in intention_lower for kw in love_keywords):
+        intention_category = 'love'
+    elif any(kw in intention_lower for kw in healing_keywords):
+        intention_category = 'healing'
+    elif any(kw in intention_lower for kw in transformation_keywords):
+        intention_category = 'transformation'
+    elif any(kw in intention_lower for kw in shadow_keywords):
+        intention_category = 'shadow'
+    elif any(kw in intention_lower for kw in divination_keywords):
+        intention_category = 'divination'
+    
+    # === SHIGG-SPECIFIC DYNAMIC CONTENT ===
+    if archetype_id == 'shiggy':
+        # Select relevant birds based on intention
+        bird_selections = {
+            'grief': ['robin', 'dove', 'crow'],
+            'protection': ['crow', 'magpie', 'wren'],
+            'courage': ['crow', 'raven', 'sparrow'],
+            'healing': ['dove', 'robin', 'goldfinch'],
+            'transformation': ['raven', 'blackbird', 'crow'],
+            'general': list(BIRD_CORRESPONDENCES.keys())
+        }
+        
+        selected_birds = bird_selections.get(intention_category, bird_selections['general'])
+        chosen_bird = random.choice(selected_birds)
+        bird_data = BIRD_CORRESPONDENCES.get(chosen_bird, {})
+        
+        if bird_data:
+            context_parts.append(f"""
+BIRD ORACLE FOR THIS SPELL - THE {chosen_bird.upper().replace('_', ' ')}:
+Meaning: {', '.join(bird_data.get('meanings', []))}
+Appears when: {', '.join(bird_data.get('appears_when', []))}
+Shigg says: "{bird_data.get('shigg_voice', '')}"
+
+INCLUDE THIS BIRD in the spell - as a message, a sign to watch for, or an oracle element.
+""")
+        
+        # Add relevant movements
+        movements = archetype_data.get('movements', [])
+        if movements:
+            selected_movements = random.sample(movements, min(2, len(movements)))
+            movement_text = "\n".join([
+                f"- {m['name']}: {m['description']} (Source: {m.get('key_texts', ['Traditional'])[0]})"
+                for m in selected_movements
+            ])
+            context_parts.append(f"""
+SHIGG'S RELEVANT MAGICAL TRADITIONS:
+{movement_text}
+
+Draw from these traditions when crafting the spell's historical context.
+""")
+        
+        # Add cultural references
+        cultural = archetype_data.get('cultural_references', [])
+        if cultural:
+            context_parts.append(f"""
+SHIGG'S CULTURAL TOUCHSTONES (weave these in naturally):
+{', '.join(cultural)}
+""")
+    
+    # === CATHLEEN-SPECIFIC DYNAMIC CONTENT ===
+    elif archetype_id == 'kathleen':
+        # Select appropriate talisman
+        talisman_selections = {
+            'grief': ['crow_feather', 'significant_stone', 'lucky_button'],
+            'protection': ['silver_rabbit', 'brooch', 'silver_owl'],
+            'courage': ['silver_owl', 'brooch', 'crow_feather'],
+            'healing': ['silver_rabbit', 'significant_stone', 'lucky_button'],
+            'love': ['brooch', 'lucky_button', 'silver_rabbit'],
+            'general': list(TALISMAN_CORRESPONDENCES.keys())
+        }
+        
+        selected_talismans = talisman_selections.get(intention_category, talisman_selections['general'])
+        chosen_talisman = random.choice(selected_talismans)
+        talisman_data = TALISMAN_CORRESPONDENCES.get(chosen_talisman, {})
+        
+        if talisman_data:
+            context_parts.append(f"""
+SUGGESTED WARD FOR THIS SPELL - {talisman_data.get('name', chosen_talisman).upper()}:
+Meanings: {', '.join(talisman_data.get('meanings', []))}
+Where to find: {talisman_data.get('find_where', 'Antique shops, charity shops')}
+How to use: {talisman_data.get('how_to_use', 'Carry close to heart')}
+Cathleen says: "{talisman_data.get('cathleen_voice', '')}"
+
+YOU MUST include a "suggested_ward" object in your JSON response using this talisman.
+""")
+        
+        # Add relevant deities/figures
+        deities = archetype_data.get('deities_figures', [])
+        if deities and intention_category in ['transformation', 'shadow', 'courage', 'grief']:
+            morrigan = next((d for d in deities if d['name'] == 'The Morrigan'), None)
+            if morrigan:
+                context_parts.append(f"""
+THE MORRIGAN'S PRESENCE (invoke if appropriate):
+{morrigan['description']}
+Cathleen's relationship: The Morrigan teaches that darkness transforms, it doesn't destroy.
+""")
+        
+        # Add movements
+        movements = archetype_data.get('movements', [])
+        if movements:
+            selected_movements = random.sample(movements, min(2, len(movements)))
+            movement_text = "\n".join([
+                f"- {m['name']}: {m['description']}"
+                for m in selected_movements
+            ])
+            context_parts.append(f"""
+CATHLEEN'S SPIRITUAL TRADITIONS:
+{movement_text}
+""")
+    
+    # === KATHERINE-SPECIFIC DYNAMIC CONTENT ===
+    elif archetype_id == 'catherine':
+        # Select thread color based on intention
+        thread_selections = {
+            'grief': ['black', 'white', 'purple'],
+            'protection': ['red', 'black', 'white'],
+            'courage': ['red', 'gold'],
+            'healing': ['green', 'white', 'blue'],
+            'love': ['red', 'green'],
+            'transformation': ['purple', 'black'],
+            'shadow': ['black', 'purple', 'red'],
+            'divination': ['silver', 'purple', 'white'],
+            'general': list(THREAD_CORRESPONDENCES.keys())
+        }
+        
+        selected_threads = thread_selections.get(intention_category, thread_selections['general'])
+        chosen_thread = random.choice(selected_threads)
+        thread_data = THREAD_CORRESPONDENCES.get(chosen_thread, {})
+        
+        if thread_data:
+            context_parts.append(f"""
+THREAD COLOR FOR THIS SPELL - {chosen_thread.upper()}:
+Meanings: {', '.join(thread_data.get('meanings', []))}
+Use for: {', '.join(thread_data.get('use_for', []))}
+
+INCORPORATE this thread color into Katherine's textile-based magic.
+""")
+        
+        # Add relevant movements (especially SPR, Golden Dawn, etc.)
+        movements = archetype_data.get('movements', [])
+        if movements:
+            # Prioritize certain movements for certain intentions
+            if intention_category in ['shadow', 'transformation']:
+                priority = ['Chaos Magic', 'Occult Revival / Hermetic Order of the Golden Dawn']
+            elif intention_category in ['divination', 'spirit']:
+                priority = ['Society for Psychical Research (SPR)', 'Theosophy']
+            else:
+                priority = []
+            
+            # Select movements, prioritizing relevant ones
+            selected = []
+            for m in movements:
+                if m['name'] in priority:
+                    selected.append(m)
+            
+            # Fill remaining with random
+            remaining = [m for m in movements if m not in selected]
+            selected.extend(random.sample(remaining, min(2 - len(selected), len(remaining))))
+            
+            if selected:
+                movement_text = "\n".join([
+                    f"- {m['name']}: {m['description']} (Ref: {m.get('reference_link', 'N/A')})"
+                    for m in selected
+                ])
+                context_parts.append(f"""
+KATHERINE'S OCCULT TRADITIONS FOR THIS WORKING:
+{movement_text}
+""")
+        
+        # Add deities/figures
+        deities = archetype_data.get('deities_figures', [])
+        if deities:
+            relevant_figure = random.choice(deities)
+            context_parts.append(f"""
+HISTORICAL FIGURE TO REFERENCE - {relevant_figure['name'].upper()}:
+Type: {relevant_figure.get('type', 'Figure')}
+{relevant_figure.get('description', '')}
+""")
+    
+    # === COMMON ELEMENTS FOR ALL ARCHETYPES ===
+    # Add primary tools
+    tools = archetype_data.get('primary_tools', [])
+    if tools:
+        context_parts.append(f"""
+{archetype_name.upper()}'S PRIMARY TOOLS (incorporate these):
+{', '.join(tools)}
+""")
+    
+    # Add spell types this archetype excels at
+    spell_types = archetype_data.get('spell_types', [])
+    if spell_types:
+        context_parts.append(f"""
+{archetype_name.upper()}'S SPELL SPECIALTIES:
+{', '.join(spell_types)}
+
+If the seeker's intention aligns with these, lean into this expertise.
+""")
+    
+    return "\n".join(context_parts)
+
 async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
     try:
         token = credentials.credentials
