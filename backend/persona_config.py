@@ -474,19 +474,19 @@ PERSONA_CONFIG = {
         
         "visual_dna": {
             "constants": {
-                "primary_motif": "crows, ravens, the Morrigan",
-                "secondary_motif": "candles, circles, protective symbols, voice waves",
-                "era_aesthetic": "Celtic mysticism meets Blitz-era London",
-                "art_style": "Pre-Raphaelite influenced, dramatic chiaroscuro, rich but print-friendly"
+                "primary_motif": "Land Army women, WRENS, wartime sisterhood, protective circles",
+                "secondary_motif": "candles in blackout windows, morse code patterns, signal flags, uniform buttons, ration books, victory gardens",
+                "era_aesthetic": "WWII homefront Britain - Land Army, WRENS, secret service, Celtic-Irish wartime resilience",
+                "art_style": "Muted wartime palette with selective color accents, 1940s propaganda poster influence, dramatic but restrained, sepia undertones with occasional crimson or gold highlight"
             },
-            "motif_library": ["crow", "raven", "triple goddess", "candle flame", "salt circle", "silver talisman", "brooch", "voice waves", "moonlight", "doorway", "threshold"],
+            "motif_library": ["land army woman", "WRENS uniform", "blackout curtain", "candle in window", "morse lamp", "victory garden", "wartime sisterhood", "celtic knot badge", "raven messenger", "protective circle", "signal flags", "ration book", "gas mask bag repurposed", "doorway threshold", "moonlight through blackout"],
             "palette_variants": {
-                "gentle": ["soft silver", "midnight blue", "candlelight gold"],
-                "practical": ["warm amber", "deep brown", "cream"],
-                "intense": ["black", "blood red", "silver", "storm grey"]
+                "gentle": ["sepia", "muted olive", "soft cream", "faded navy"],
+                "practical": ["khaki", "navy blue", "earth brown", "brass button gold"],
+                "intense": ["blackout black", "air raid siren red", "searchlight white", "storm grey"]
             },
-            "avoid": ["Rubáiyát imagery", "bird oracle specifics", "Victorian séance tables", "textile/weaving patterns", "photorealistic"],
-            "dall_e_rules": "pen-and-ink with dramatic shadows, Celtic-influenced borders, candle-lit atmosphere, NO text, NO letters, NO words, print-friendly line work"
+            "avoid": ["bright saturated colors", "modern imagery", "Rubáiyát imagery", "Victorian séance tables", "photorealistic", "overly Celtic fantasy"],
+            "dall_e_rules": "muted wartime palette, selective color only (crimson or gold accents on sepia/grey), 1940s homefront aesthetic, Land Army or WRENS style women, pen-and-ink with watercolor wash, NO text, NO letters, NO words, atmospheric and nostalgic, sisterhood and strength"
         },
         
         "allowed_sources": [
