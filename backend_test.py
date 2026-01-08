@@ -2648,6 +2648,13 @@ def main():
     if not tester.test_auth_register():
         print("❌ Registration failed, continuing with other tests...")
     
+    # === PERSONALIZED SPELL GENERATION TESTS (REVIEW REQUEST PRIORITY) ===
+    print("\n🌟 Testing Personalized Spell Generation (REVIEW REQUEST)...")
+    tester.test_personalized_spell_kathleen_protection()
+    tester.test_personalized_spell_kathleen_grief_rotation()
+    tester.test_personalized_spell_choose_for_me()
+    tester.test_personalized_spell_with_images()
+    
     # === COBBLES ORACLE TESTS (REVIEW REQUEST PRIORITY) ===
     print("\n🎴 Testing Cobbles Oracle Features (REVIEW REQUEST)...")
     tester.test_cobbles_oracle_deck_info()
