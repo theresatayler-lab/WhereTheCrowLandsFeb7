@@ -4,6 +4,7 @@ import { BookOpen, Trash2, Eye, Loader2, Calendar, Sparkles, Hand, Heart, MapPin
 import { grimoireAPI } from '../utils/api';
 import { GrimoirePage } from '../components/GrimoirePage';
 import { toast } from 'sonner';
+import { DarkSection, LightSection, GrandDivider, MysticalDivider, ElaborateCorner, PageHeader, LightOrnateCard, OrnateCard } from '../components/OrnateElements';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -118,324 +119,361 @@ export const MyGrimoire = () => {
   // If viewing a specific spell, show the full grimoire page
   if (selectedSpell) {
     return (
-      <div className="min-h-screen py-24 px-6">
-        <div className="max-w-4xl mx-auto">
-          <button
-            onClick={handleBackToList}
-            className="mb-6 px-4 py-2 bg-transparent text-primary border border-primary/30 rounded-sm font-montserrat tracking-widest uppercase text-xs hover:bg-primary/10 transition-all"
-          >
-            ← Back to Grimoire
-          </button>
-          <GrimoirePage 
-            spell={selectedSpell.spell_data}
-            archetype={{
-              id: selectedSpell.archetype_id,
-              name: selectedSpell.archetype_name,
-              title: selectedSpell.archetype_title
-            }}
-            imageBase64={selectedSpell.image_base64}
-            onNewSpell={handleBackToList}
-          />
-        </div>
+      <div className="min-h-screen">
+        <DarkSection className="py-12 px-4 sm:px-6" variant="warm">
+          <div className="max-w-4xl mx-auto">
+            <button
+              onClick={handleBackToList}
+              className="mb-6 px-4 py-2 bg-navy-mid/50 text-gold border border-gold/30 rounded-sm font-montserrat tracking-widest uppercase text-xs hover:bg-gold/10 transition-all"
+            >
+              ← Back to Grimoire
+            </button>
+            <GrimoirePage 
+              spell={selectedSpell.spell_data}
+              archetype={{
+                id: selectedSpell.archetype_id,
+                name: selectedSpell.archetype_name,
+                title: selectedSpell.archetype_title
+              }}
+              imageBase64={selectedSpell.image_base64}
+              onNewSpell={handleBackToList}
+            />
+          </div>
+        </DarkSection>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen py-24 px-6">
-      <div className="max-w-6xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-8"
-        >
-          <BookOpen className="w-16 h-16 text-primary mx-auto mb-4" />
-          <h1 className="font-italiana text-4xl md:text-6xl text-primary mb-4">My Grimoire</h1>
-          <p className="font-montserrat text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
-            Your personal collection of spells, rituals, and wards
-          </p>
-        </motion.div>
+    <div className="min-h-screen">
+      {/* Dark Hero Section */}
+      <DarkSection className="py-12 sm:py-16 md:py-20 px-4 sm:px-6" variant="warm">
+        <ElaborateCorner className="absolute top-3 left-3 w-16 h-16 sm:w-20 sm:h-20" variant="gold" />
+        <ElaborateCorner className="absolute top-3 right-3 w-16 h-16 sm:w-20 sm:h-20 rotate-90" variant="gold" />
+        
+        <div className="max-w-6xl mx-auto relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <PageHeader 
+              icon={BookOpen}
+              title="My Grimoire"
+              subtitle="Your personal collection of spells, rituals, and wards"
+            />
+          </motion.div>
+          
+          <GrandDivider variant="moon" />
 
-        {/* What is a Grimoire - Expandable Introduction */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-          className="max-w-3xl mx-auto mb-10"
-        >
-          <details className="group bg-card/30 border border-border/50 rounded-lg overflow-hidden">
-            <summary className="px-6 py-4 cursor-pointer flex items-center justify-between hover:bg-card/50 transition-colors">
-              <span className="font-cinzel text-sm text-secondary flex items-center gap-2">
-                <Sparkles className="w-4 h-4" />
-                What is a Grimoire?
-              </span>
-              <span className="text-muted-foreground text-xs font-montserrat group-open:hidden">Click to discover</span>
-              <span className="text-muted-foreground text-xs font-montserrat hidden group-open:inline">Click to close</span>
-            </summary>
-            <div className="px-6 pb-6 pt-2">
-              <p className="font-crimson text-base text-foreground/80 leading-relaxed italic">
-                A grimoire is more than just a spellbook—it&apos;s a living archive of wonder, wisdom, and the wild unknown. 
-                Think of it as the storyteller&apos;s toolkit for the magical world: a collection of rituals, symbols, and 
-                secret recipes passed down through generations, each page humming with the memory of those who dared to 
-                seek deeper truths.
-              </p>
-              <p className="font-crimson text-base text-foreground/80 leading-relaxed italic mt-4">
-                Grimoires gather spells and incantations, astrological charts, talismans, and the instructions for weaving 
-                the invisible threads between worlds. Their roots trace back to the French word for &ldquo;grammar,&rdquo; a reminder 
-                that every symbol and ritual has its own language—a precise way of shaping reality.
-              </p>
-              <p className="font-crimson text-base text-foreground/70 leading-relaxed mt-4">
-                Some say these books hold power on their own, but their real magic lies in the hands and hearts of those 
-                who use them to explore the mysteries that connect us all.
-              </p>
-              <div className="mt-4 pt-4 border-t border-border/30 flex flex-wrap gap-4 text-xs font-montserrat text-muted-foreground">
-                <span className="flex items-center gap-1"><Sparkles className="w-3 h-3 text-primary" /> Save spells from your guides</span>
-                <span className="flex items-center gap-1"><Hand className="w-3 h-3 text-secondary" /> Collect wards from Cathleen</span>
-                <span className="flex items-center gap-1"><Heart className="w-3 h-3 text-red-400" /> Build your personal practice</span>
-              </div>
+          {/* What is a Grimoire - Expandable Introduction */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            className="max-w-3xl mx-auto"
+          >
+            <details className="group">
+              <summary className="cursor-pointer">
+                <OrnateCard hover={false} className="cursor-pointer">
+                  <div className="flex items-center justify-between">
+                    <span className="font-cinzel text-sm text-gold-light flex items-center gap-2">
+                      <Sparkles className="w-4 h-4 text-crimson-bright" />
+                      What is a Grimoire?
+                    </span>
+                    <span className="text-cream/50 text-xs font-montserrat group-open:hidden">Click to discover</span>
+                    <span className="text-cream/50 text-xs font-montserrat hidden group-open:inline">Click to close</span>
+                  </div>
+                  <div className="hidden group-open:block mt-4">
+                    <p className="font-crimson text-base text-cream/80 leading-relaxed italic">
+                      A grimoire is more than just a spellbook—it&apos;s a living archive of wonder, wisdom, and the wild unknown. 
+                      Think of it as the storyteller&apos;s toolkit for the magical world: a collection of rituals, symbols, and 
+                      secret recipes passed down through generations.
+                    </p>
+                    <p className="font-crimson text-base text-cream/70 leading-relaxed italic mt-4">
+                      Some say these books hold power on their own, but their real magic lies in the hands and hearts of those 
+                      who use them to explore the mysteries that connect us all.
+                    </p>
+                    <div className="mt-4 pt-4 border-t border-gold/20 flex flex-wrap gap-4 text-xs font-montserrat text-cream/60">
+                      <span className="flex items-center gap-1"><Sparkles className="w-3 h-3 text-crimson-bright" /> Save spells from your guides</span>
+                      <span className="flex items-center gap-1"><Hand className="w-3 h-3 text-gold" /> Collect wards from Cathleen</span>
+                      <span className="flex items-center gap-1"><Heart className="w-3 h-3 text-crimson" /> Build your personal practice</span>
+                    </div>
+                  </div>
+                </OrnateCard>
+              </summary>
+            </details>
+          </motion.div>
+        </div>
+      </DarkSection>
+
+      {/* Light Section - Tabs and Content */}
+      <LightSection className="py-12 sm:py-16 px-4 sm:px-6">
+        <div className="max-w-6xl mx-auto">
+          {loading ? (
+            <div className="flex flex-col items-center justify-center py-20">
+              <Loader2 className="w-12 h-12 text-crimson animate-spin mb-4" />
+              <p className="font-montserrat text-navy-dark/60">Loading your grimoire...</p>
             </div>
-          </details>
-        </motion.div>
-
-        {loading ? (
-          <div className="flex flex-col items-center justify-center py-20">
-            <Loader2 className="w-12 h-12 text-primary animate-spin mb-4" />
-            <p className="font-montserrat text-muted-foreground">Loading your grimoire...</p>
-          </div>
-        ) : (
-          <>
-            {/* Tabs */}
-            <div className="flex justify-center gap-4 mb-8">
-              <button
-                onClick={() => setActiveTab('spells')}
-                className={`px-6 py-3 font-montserrat text-sm uppercase tracking-wider rounded-sm transition-all flex items-center gap-2 ${
-                  activeTab === 'spells'
-                    ? 'bg-primary text-primary-foreground'
-                    : 'bg-card/50 text-muted-foreground hover:bg-card border border-border'
-                }`}
-              >
-                <Sparkles className="w-4 h-4" />
-                Spells ({spells.length})
-              </button>
-              <button
-                onClick={() => setActiveTab('wards')}
-                className={`px-6 py-3 font-montserrat text-sm uppercase tracking-wider rounded-sm transition-all flex items-center gap-2 ${
-                  activeTab === 'wards'
-                    ? 'bg-secondary text-secondary-foreground'
-                    : 'bg-card/50 text-muted-foreground hover:bg-card border border-border'
-                }`}
-              >
-                <Hand className="w-4 h-4" />
-                Wards ({wards.length})
-              </button>
-            </div>
-
-            {/* Spells Tab */}
-            {activeTab === 'spells' && (
-              spells.length === 0 ? (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="text-center py-20"
+          ) : (
+            <>
+              {/* Tabs */}
+              <div className="flex justify-center gap-4 mb-10">
+                <button
+                  onClick={() => setActiveTab('spells')}
+                  className={`px-6 py-3 font-montserrat text-sm uppercase tracking-wider rounded-sm transition-all flex items-center gap-2 ${
+                    activeTab === 'spells'
+                      ? 'bg-gradient-to-r from-crimson-deep via-crimson to-crimson-deep text-cream border border-gold/30'
+                      : 'bg-cream border-2 border-crimson/30 text-crimson hover:bg-crimson/5'
+                  }`}
                 >
-                  <BookOpen className="w-20 h-20 text-primary/30 mx-auto mb-6" />
-                  <h2 className="font-cinzel text-2xl text-secondary mb-4">No spells saved yet</h2>
-                  <p className="font-montserrat text-muted-foreground mb-6 max-w-md mx-auto">
-                    Start building your personal collection by generating spells and saving them to your grimoire.
-                  </p>
-                  <a
-                    href="/spell-request"
-                    className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-sm font-montserrat tracking-widest uppercase text-sm hover:bg-primary/90 transition-all"
-                  >
-                    <Sparkles className="w-5 h-5" />
-                    Create Your First Spell
-                  </a>
-                </motion.div>
-              ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {spells.map((spell, index) => (
-                    <motion.div
-                      key={spell.id}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: index * 0.05 }}
-                      className="bg-card/80 border-2 border-border rounded-sm overflow-hidden hover:border-primary/30 transition-all group"
-                    >
-                      {/* Spell Image */}
-                      {spell.image_base64 ? (
-                        <div className="relative h-48 overflow-hidden">
-                          <img
-                            src={`data:image/png;base64,${spell.image_base64}`}
-                            alt={spell.title}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-card to-transparent" />
-                        </div>
-                      ) : (
-                        <div className="h-48 bg-muted/20 flex items-center justify-center">
-                          <BookOpen className="w-16 h-16 text-primary/30" />
-                        </div>
-                      )}
+                  <Sparkles className="w-4 h-4" />
+                  Spells ({spells.length})
+                </button>
+                <button
+                  onClick={() => setActiveTab('wards')}
+                  className={`px-6 py-3 font-montserrat text-sm uppercase tracking-wider rounded-sm transition-all flex items-center gap-2 ${
+                    activeTab === 'wards'
+                      ? 'bg-gradient-to-r from-gold-dark via-gold to-gold-dark text-navy-dark border border-crimson/30'
+                      : 'bg-cream border-2 border-gold/50 text-gold-dark hover:bg-gold/5'
+                  }`}
+                >
+                  <Hand className="w-4 h-4" />
+                  Wards ({wards.length})
+                </button>
+              </div>
 
-                      {/* Spell Info */}
-                      <div className="p-4">
-                        <h3 className="font-italiana text-xl text-primary mb-2 line-clamp-2">
-                          {spell.title}
-                        </h3>
-                        
-                        {spell.archetype_name && (
-                          <p className="font-montserrat text-xs text-muted-foreground mb-3">
-                            by {spell.archetype_name}
-                          </p>
+              <MysticalDivider light />
+
+              {/* Spells Tab */}
+              {activeTab === 'spells' && (
+                spells.length === 0 ? (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="text-center py-16"
+                  >
+                    <LightOrnateCard hover={false} className="max-w-md mx-auto">
+                      <BookOpen className="w-16 h-16 text-crimson/30 mx-auto mb-4" />
+                      <h2 className="font-cinzel text-xl text-crimson mb-3">No spells saved yet</h2>
+                      <p className="font-montserrat text-sm text-navy-dark/60 mb-6">
+                        Start building your personal collection by generating spells and saving them to your grimoire.
+                      </p>
+                      <a
+                        href="/spell-request"
+                        className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-crimson-deep via-crimson to-crimson-deep text-cream rounded-sm font-montserrat tracking-widest uppercase text-xs hover:from-crimson hover:via-crimson-bright hover:to-crimson transition-all border border-gold/30"
+                      >
+                        <Sparkles className="w-4 h-4" />
+                        Create Your First Spell
+                      </a>
+                    </LightOrnateCard>
+                  </motion.div>
+                ) : (
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {spells.map((spell, index) => (
+                      <motion.div
+                        key={spell.id}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: index * 0.05 }}
+                        className="bg-cream/80 border-2 border-crimson/20 rounded-sm overflow-hidden hover:border-crimson/40 transition-all group"
+                      >
+                        {/* Spell Image */}
+                        {spell.image_base64 ? (
+                          <div className="relative h-48 overflow-hidden">
+                            <img
+                              src={`data:image/png;base64,${spell.image_base64}`}
+                              alt={spell.title}
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-cream to-transparent" />
+                          </div>
+                        ) : (
+                          <div className="h-48 bg-crimson/5 flex items-center justify-center">
+                            <BookOpen className="w-16 h-16 text-crimson/20" />
+                          </div>
                         )}
 
-                        <div className="flex items-center gap-2 text-xs text-muted-foreground mb-4">
-                          <Calendar className="w-3 h-3" />
-                          <span className="font-montserrat">
-                            {new Date(spell.created_at).toLocaleDateString('en-US', {
-                              year: 'numeric',
-                              month: 'short',
-                              day: 'numeric'
-                            })}
-                          </span>
+                        {/* Spell Info */}
+                        <div className="p-4">
+                          <h3 className="font-italiana text-xl text-crimson mb-2 line-clamp-2">
+                            {spell.title}
+                          </h3>
+                          
+                          {spell.archetype_name && (
+                            <p className="font-montserrat text-xs text-navy-dark/50 mb-3">
+                              by {spell.archetype_name}
+                            </p>
+                          )}
+
+                          <div className="flex items-center gap-2 text-xs text-navy-dark/50 mb-4">
+                            <Calendar className="w-3 h-3" />
+                            <span className="font-montserrat">
+                              {new Date(spell.created_at).toLocaleDateString('en-US', {
+                                year: 'numeric',
+                                month: 'short',
+                                day: 'numeric'
+                              })}
+                            </span>
+                          </div>
+
+                          {/* Actions */}
+                          <div className="flex gap-2">
+                            <button
+                              onClick={() => handleViewSpell(spell)}
+                              className="flex-1 px-3 py-2 bg-crimson/10 text-crimson rounded-sm font-montserrat text-xs uppercase tracking-wider hover:bg-crimson/20 transition-colors flex items-center justify-center gap-2"
+                            >
+                              <Eye className="w-3 h-3" />
+                              View
+                            </button>
+                            <button
+                              onClick={() => handleDeleteSpell(spell.id)}
+                              disabled={deleting === spell.id}
+                              className="px-3 py-2 bg-red-500/10 text-red-600 rounded-sm font-montserrat text-xs uppercase tracking-wider hover:bg-red-500/20 transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+                            >
+                              {deleting === spell.id ? (
+                                <Loader2 className="w-3 h-3 animate-spin" />
+                              ) : (
+                                <Trash2 className="w-3 h-3" />
+                              )}
+                            </button>
+                          </div>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                )
+              )}
+
+              {/* Wards Tab */}
+              {activeTab === 'wards' && (
+                wards.length === 0 ? (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="text-center py-16"
+                  >
+                    <LightOrnateCard hover={false} className="max-w-md mx-auto">
+                      <Hand className="w-16 h-16 text-gold/30 mx-auto mb-4" />
+                      <h2 className="font-cinzel text-xl text-gold-dark mb-3">No wards saved yet</h2>
+                      <p className="font-montserrat text-sm text-navy-dark/60 mb-6">
+                        Ask Cathleen to help you find the perfect ward for your situation.
+                      </p>
+                      <a
+                        href="/ward-finder"
+                        className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-gold-dark via-gold to-gold-dark text-navy-dark rounded-sm font-montserrat tracking-widest uppercase text-xs hover:from-gold hover:via-gold-light hover:to-gold transition-all border border-crimson/30"
+                      >
+                        <Hand className="w-4 h-4" />
+                        Find Your Ward
+                      </a>
+                    </LightOrnateCard>
+                  </motion.div>
+                ) : (
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {wards.map((ward, index) => (
+                      <motion.div
+                        key={ward.id}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: index * 0.05 }}
+                        className="bg-cream/80 border-2 border-gold/30 rounded-sm overflow-hidden hover:border-gold/50 transition-all"
+                      >
+                        {/* Ward Header */}
+                        <div className="p-5 bg-gold/10 border-b border-gold/20">
+                          <div className="flex items-center gap-4">
+                            <div className="p-3 bg-gold/20 rounded-full">
+                              <span className="text-3xl">{ward.symbol || ward.ward_data?.symbol || '🪶'}</span>
+                            </div>
+                            <div>
+                              <h3 className="font-cinzel text-xl text-crimson">
+                                {ward.name || ward.ward_data?.name}
+                              </h3>
+                              <p className="font-montserrat text-xs text-gold-dark/70 uppercase tracking-wider">
+                                {ward.ward_data?.category || 'Personal Ward'}
+                              </p>
+                            </div>
+                          </div>
                         </div>
 
-                        {/* Actions */}
-                        <div className="flex gap-2">
+                        {/* Ward Info */}
+                        <div className="p-4 space-y-3">
+                          <p className="font-montserrat text-xs text-navy-dark/50">
+                            <span className="font-medium">Asked about:</span> {ward.situation?.substring(0, 80)}...
+                          </p>
+                          
+                          {ward.ward_data?.meaning && (
+                            <div className="flex items-start gap-2">
+                              <Heart className="w-4 h-4 text-crimson mt-0.5 flex-shrink-0" />
+                              <p className="font-montserrat text-sm text-navy-dark/70 line-clamp-2">
+                                {ward.ward_data.meaning}
+                              </p>
+                            </div>
+                          )}
+
+                          {ward.ward_data?.where_to_find && (
+                            <div className="flex items-start gap-2">
+                              <MapPin className="w-4 h-4 text-gold-dark mt-0.5 flex-shrink-0" />
+                              <p className="font-montserrat text-sm text-navy-dark/70 line-clamp-2">
+                                {ward.ward_data.where_to_find}
+                              </p>
+                            </div>
+                          )}
+
+                          <div className="flex items-center gap-2 text-xs text-navy-dark/50 pt-2">
+                            <Calendar className="w-3 h-3" />
+                            <span className="font-montserrat">
+                              {new Date(ward.created_at).toLocaleDateString('en-US', {
+                                year: 'numeric',
+                                month: 'short',
+                                day: 'numeric'
+                              })}
+                            </span>
+                            <span className="text-gold-dark">• from Cathleen</span>
+                          </div>
+
+                          {/* Delete Button */}
                           <button
-                            onClick={() => handleViewSpell(spell)}
-                            className="flex-1 px-3 py-2 bg-primary/10 text-primary rounded-sm font-montserrat text-xs uppercase tracking-wider hover:bg-primary/20 transition-colors flex items-center justify-center gap-2"
+                            onClick={() => handleDeleteWard(ward.id)}
+                            disabled={deleting === ward.id}
+                            className="w-full mt-2 px-3 py-2 bg-red-500/10 text-red-600 rounded-sm font-montserrat text-xs uppercase tracking-wider hover:bg-red-500/20 transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
                           >
-                            <Eye className="w-3 h-3" />
-                            View
-                          </button>
-                          <button
-                            onClick={() => handleDeleteSpell(spell.id)}
-                            disabled={deleting === spell.id}
-                            className="px-3 py-2 bg-destructive/10 text-destructive rounded-sm font-montserrat text-xs uppercase tracking-wider hover:bg-destructive/20 transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
-                          >
-                            {deleting === spell.id ? (
+                            {deleting === ward.id ? (
                               <Loader2 className="w-3 h-3 animate-spin" />
                             ) : (
-                              <Trash2 className="w-3 h-3" />
+                              <>
+                                <Trash2 className="w-3 h-3" />
+                                Remove
+                              </>
                             )}
                           </button>
                         </div>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-              )
-            )}
+                      </motion.div>
+                    ))}
+                  </div>
+                )
+              )}
+            </>
+          )}
+        </div>
+      </LightSection>
 
-            {/* Wards Tab */}
-            {activeTab === 'wards' && (
-              wards.length === 0 ? (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="text-center py-20"
-                >
-                  <Hand className="w-20 h-20 text-secondary/30 mx-auto mb-6" />
-                  <h2 className="font-cinzel text-2xl text-secondary mb-4">No wards saved yet</h2>
-                  <p className="font-montserrat text-muted-foreground mb-6 max-w-md mx-auto">
-                    Ask Cathleen to help you find the perfect ward for your situation.
-                  </p>
-                  <a
-                    href="/ward-finder"
-                    className="inline-flex items-center gap-2 px-6 py-3 bg-secondary text-secondary-foreground rounded-sm font-montserrat tracking-widest uppercase text-sm hover:bg-secondary/90 transition-all"
-                  >
-                    <Hand className="w-5 h-5" />
-                    Find Your Ward
-                  </a>
-                </motion.div>
-              ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {wards.map((ward, index) => (
-                    <motion.div
-                      key={ward.id}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: index * 0.05 }}
-                      className="bg-card/80 border-2 border-secondary/30 rounded-lg overflow-hidden hover:border-secondary/50 transition-all"
-                    >
-                      {/* Ward Header */}
-                      <div className="p-5 bg-secondary/10">
-                        <div className="flex items-center gap-4">
-                          <div className="p-3 bg-secondary/20 rounded-full">
-                            <span className="text-3xl">{ward.symbol || ward.ward_data?.symbol || '🪶'}</span>
-                          </div>
-                          <div>
-                            <h3 className="font-cinzel text-xl text-foreground">
-                              {ward.name || ward.ward_data?.name}
-                            </h3>
-                            <p className="font-montserrat text-xs text-secondary/70 uppercase tracking-wider">
-                              {ward.ward_data?.category || 'Personal Ward'}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Ward Info */}
-                      <div className="p-4 space-y-3">
-                        <p className="font-montserrat text-xs text-muted-foreground">
-                          <span className="font-medium">Asked about:</span> {ward.situation?.substring(0, 80)}...
-                        </p>
-                        
-                        {ward.ward_data?.meaning && (
-                          <div className="flex items-start gap-2">
-                            <Heart className="w-4 h-4 text-secondary mt-0.5 flex-shrink-0" />
-                            <p className="font-montserrat text-sm text-foreground/80 line-clamp-2">
-                              {ward.ward_data.meaning}
-                            </p>
-                          </div>
-                        )}
-
-                        {ward.ward_data?.where_to_find && (
-                          <div className="flex items-start gap-2">
-                            <MapPin className="w-4 h-4 text-secondary mt-0.5 flex-shrink-0" />
-                            <p className="font-montserrat text-sm text-foreground/80 line-clamp-2">
-                              {ward.ward_data.where_to_find}
-                            </p>
-                          </div>
-                        )}
-
-                        <div className="flex items-center gap-2 text-xs text-muted-foreground pt-2">
-                          <Calendar className="w-3 h-3" />
-                          <span className="font-montserrat">
-                            {new Date(ward.created_at).toLocaleDateString('en-US', {
-                              year: 'numeric',
-                              month: 'short',
-                              day: 'numeric'
-                            })}
-                          </span>
-                          <span className="text-secondary">• from Cathleen</span>
-                        </div>
-
-                        {/* Delete Button */}
-                        <button
-                          onClick={() => handleDeleteWard(ward.id)}
-                          disabled={deleting === ward.id}
-                          className="w-full mt-2 px-3 py-2 bg-destructive/10 text-destructive rounded-sm font-montserrat text-xs uppercase tracking-wider hover:bg-destructive/20 transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
-                        >
-                          {deleting === ward.id ? (
-                            <Loader2 className="w-3 h-3 animate-spin" />
-                          ) : (
-                            <>
-                              <Trash2 className="w-3 h-3" />
-                              Remove
-                            </>
-                          )}
-                        </button>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-              )
-            )}
-          </>
-        )}
-      </div>
+      {/* Dark Footer */}
+      <DarkSection className="py-8 px-4" variant="warm">
+        <ElaborateCorner className="absolute bottom-3 left-3 w-16 h-16 sm:w-20 sm:h-20 -rotate-90" variant="gold" />
+        <ElaborateCorner className="absolute bottom-3 right-3 w-16 h-16 sm:w-20 sm:h-20 rotate-180" variant="gold" />
+        
+        <div className="max-w-2xl mx-auto text-center relative z-10">
+          <p className="font-crimson text-sm text-cream/60 italic mb-4">
+            Each spell is a doorway. Each ward is a guardian.
+          </p>
+          <div className="flex items-center justify-center gap-4 text-gold/50">
+            <span>☽</span>
+            <span className="text-crimson/60">❦</span>
+            <span>📖</span>
+            <span className="text-crimson/60">❦</span>
+            <span>☾</span>
+          </div>
+        </div>
+      </DarkSection>
     </div>
   );
 };
