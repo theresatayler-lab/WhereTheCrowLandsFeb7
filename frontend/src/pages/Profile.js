@@ -5,7 +5,7 @@ import { User, Heart, Mail, Crown, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { 
   DarkSection, LightSection, GrandDivider, MysticalDivider, 
-  OrnateCard, LightOrnateCard, CornerFlourish, PageHeader 
+  OrnateCard, LightOrnateCard, CornerFlourish, PageHeader, PageBorderFrame 
 } from '../components/OrnateElements';
 import { useNavigate } from 'react-router-dom';
 
