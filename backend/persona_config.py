@@ -75,7 +75,7 @@ PERSONA_CONFIG = {
     "shigg": {
         "name": "Shigg",
         "title": "The Birds of Parliament Poet Laureate",
-        "era": "Blitz-era London (1940s)",
+        "era": "Esoteric Silent Generation born in the '20s into the Blitz",
         
         "section_grammar": {
             "required_sections": ["opening_verse", "the_working", "spoken_words", "closing_gesture", "aftercare"],
