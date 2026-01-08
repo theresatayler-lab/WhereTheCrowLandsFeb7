@@ -174,7 +174,7 @@ const Step1 = ({ spellSpec, updateSpec }) => (
     </div>
 
     <div>
-      <h3 className="font-cinzel text-lg text-gold-light mb-3">How do you want to feel after?</h3>
+      <h3 className="font-cinzel text-lg text-crimson mb-3">How do you want to feel after?</h3>
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
         {FEELINGS.map((f) => {
           const Icon = f.icon;
@@ -184,10 +184,11 @@ const Step1 = ({ spellSpec, updateSpec }) => (
               selected={spellSpec.desired_feeling === f.id}
               onClick={() => updateSpec({ desired_feeling: f.id })}
               className="py-3"
+              light={true}
             >
               <div className="flex items-center justify-center gap-2">
-                <Icon className={`w-4 h-4 ${f.color}`} />
-                <span className="font-montserrat text-sm text-cream">{f.label}</span>
+                <Icon className={`w-4 h-4 ${spellSpec.desired_feeling === f.id ? 'text-crimson' : 'text-navy-dark/60'}`} />
+                <span className="font-montserrat text-sm text-navy-dark">{f.label}</span>
               </div>
             </OptionCard>
           );
@@ -197,22 +198,23 @@ const Step1 = ({ spellSpec, updateSpec }) => (
   </div>
 );
 
-// Step 2: Time, Tone, Belief
+// Step 2: Time, Tone, Belief - NOW WITH PROPER CONTRAST
 const Step2 = ({ spellSpec, updateSpec }) => (
   <div className="space-y-6">
     <div>
-      <h3 className="font-cinzel text-lg text-gold-light mb-3">How much time do you have?</h3>
+      <h3 className="font-cinzel text-lg text-crimson mb-3">How much time do you have?</h3>
       <div className="grid grid-cols-3 gap-3">
         {TIMES.map((t) => (
           <OptionCard
             key={t.id}
             selected={spellSpec.time === t.id}
             onClick={() => updateSpec({ time: t.id })}
+            light={true}
           >
             <div className="text-center">
-              <Clock className={`w-5 h-5 mx-auto mb-1 ${spellSpec.time === t.id ? 'text-crimson' : 'text-cream/60'}`} />
-              <p className="font-montserrat text-sm text-cream">{t.label}</p>
-              <p className="font-montserrat text-xs text-cream/50">{t.description}</p>
+              <Clock className={`w-5 h-5 mx-auto mb-1 ${spellSpec.time === t.id ? 'text-crimson' : 'text-navy-dark/60'}`} />
+              <p className="font-montserrat text-sm text-navy-dark">{t.label}</p>
+              <p className="font-montserrat text-xs text-navy-dark/60">{t.description}</p>
             </div>
           </OptionCard>
         ))}
@@ -220,17 +222,18 @@ const Step2 = ({ spellSpec, updateSpec }) => (
     </div>
 
     <div>
-      <h3 className="font-cinzel text-lg text-gold-light mb-3">What tone feels right?</h3>
+      <h3 className="font-cinzel text-lg text-crimson mb-3">What tone feels right?</h3>
       <div className="grid grid-cols-3 gap-3">
         {TONES.map((t) => (
           <OptionCard
             key={t.id}
             selected={spellSpec.tone === t.id}
             onClick={() => updateSpec({ tone: t.id })}
+            light={true}
           >
             <div className="text-center">
-              <p className="font-montserrat text-sm text-cream mb-1">{t.label}</p>
-              <p className="font-montserrat text-xs text-cream/50">{t.description}</p>
+              <p className="font-montserrat text-sm text-navy-dark mb-1">{t.label}</p>
+              <p className="font-montserrat text-xs text-navy-dark/60">{t.description}</p>
             </div>
           </OptionCard>
         ))}
@@ -238,16 +241,17 @@ const Step2 = ({ spellSpec, updateSpec }) => (
     </div>
 
     <div>
-      <h3 className="font-cinzel text-lg text-gold-light mb-3">Your belief comfort zone</h3>
+      <h3 className="font-cinzel text-lg text-crimson mb-3">Your belief comfort zone</h3>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {BELIEF_BOUNDARIES.map((b) => (
           <OptionCard
             key={b.id}
             selected={spellSpec.belief_boundary === b.id}
             onClick={() => updateSpec({ belief_boundary: b.id })}
+            light={true}
           >
-            <p className="font-montserrat text-sm text-cream">{b.label}</p>
-            <p className="font-montserrat text-xs text-cream/50 mt-1">{b.description}</p>
+            <p className="font-montserrat text-sm text-navy-dark">{b.label}</p>
+            <p className="font-montserrat text-xs text-navy-dark/60 mt-1">{b.description}</p>
           </OptionCard>
         ))}
       </div>
