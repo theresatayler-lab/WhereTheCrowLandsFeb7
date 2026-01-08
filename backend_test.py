@@ -1593,6 +1593,249 @@ class SpiritualAppAPITester:
         
         return False
 
+    # ===== REVIEW REQUEST TESTS - PERSONA CONFIG & ORNATE THEME =====
+    
+    def test_persona_config_crowlands_art_bible(self):
+        """Test that persona_config.py loads correctly with CROWLANDS_ART_BIBLE - REVIEW REQUEST TEST"""
+        try:
+            # Import the persona config to test it loads
+            import sys
+            sys.path.append('/app/backend')
+            from persona_config import CROWLANDS_ART_BIBLE, get_art_bible_prompt_suffix, PERSONA_CONFIG
+            
+            print(f"   ✅ persona_config.py imported successfully")
+            
+            # Test CROWLANDS_ART_BIBLE structure
+            required_keys = ['style_tokens', 'palette', 'motif_families', 'composition_rules', 'hard_negatives', 'dall_e_global_suffix']
+            missing_keys = [key for key in required_keys if key not in CROWLANDS_ART_BIBLE]
+            
+            if missing_keys:
+                print(f"   ❌ Missing CROWLANDS_ART_BIBLE keys: {missing_keys}")
+                return False
+            
+            print(f"   ✅ CROWLANDS_ART_BIBLE has all required keys")
+            
+            # Test palette colors
+            palette = CROWLANDS_ART_BIBLE['palette']
+            expected_colors = ['primary', 'secondary', 'accent', 'neutral']
+            missing_colors = [color for color in expected_colors if color not in palette]
+            
+            if missing_colors:
+                print(f"   ❌ Missing palette colors: {missing_colors}")
+                return False
+            
+            # Verify specific colors from review request
+            if palette['primary'] != 'midnight navy (#0e1629)':
+                print(f"   ❌ Primary color incorrect: {palette['primary']}")
+                return False
+            
+            if palette['secondary'] != 'oxblood crimson (#8b2232)':
+                print(f"   ❌ Secondary color incorrect: {palette['secondary']}")
+                return False
+            
+            if palette['accent'] != 'antique gold (#d4a84b)':
+                print(f"   ❌ Accent color incorrect: {palette['accent']}")
+                return False
+            
+            print(f"   ✅ Palette colors match review request specifications")
+            
+            # Test global suffix function
+            suffix = get_art_bible_prompt_suffix()
+            if not suffix or len(suffix) < 50:
+                print(f"   ❌ Global suffix too short or empty: {suffix}")
+                return False
+            
+            print(f"   ✅ Global art bible suffix generated: {len(suffix)} characters")
+            
+            return True
+            
+        except ImportError as e:
+            print(f"   ❌ Failed to import persona_config: {e}")
+            return False
+        except Exception as e:
+            print(f"   ❌ Error testing persona config: {e}")
+            return False
+
+    def test_cathleen_visual_dna_updated(self):
+        """Test Cathleen's visual_dna is properly configured - REVIEW REQUEST TEST"""
+        try:
+            import sys
+            sys.path.append('/app/backend')
+            from persona_config import PERSONA_CONFIG
+            
+            cathleen_config = PERSONA_CONFIG.get('cathleen', {})
+            if not cathleen_config:
+                print(f"   ❌ Cathleen config not found")
+                return False
+            
+            visual_dna = cathleen_config.get('visual_dna', {})
+            if not visual_dna:
+                print(f"   ❌ Cathleen visual_dna not found")
+                return False
+            
+            constants = visual_dna.get('constants', {})
+            primary_motif = constants.get('primary_motif', '').lower()
+            
+            # Check for required motifs from review request
+            required_motifs = ['raven', 'crow', 'feather', 'candle', 'bell', 'protective circle']
+            found_motifs = [motif for motif in required_motifs if motif in primary_motif]
+            
+            if len(found_motifs) < 4:  # Should have most of these
+                print(f"   ❌ Cathleen missing required motifs. Found: {found_motifs}")
+                print(f"   Primary motif: {primary_motif}")
+                return False
+            
+            print(f"   ✅ Cathleen has required motifs: {found_motifs}")
+            
+            # Check avoid list - should NOT have WWII/Land Army
+            avoid_list = visual_dna.get('avoid', [])
+            avoid_text = ' '.join(avoid_list).lower()
+            
+            wwii_terms = ['wwii', 'land army', 'military', 'propaganda']
+            wwii_avoided = [term for term in wwii_terms if term in avoid_text]
+            
+            if wwii_avoided:
+                print(f"   ✅ Cathleen correctly avoids WWII imagery: {wwii_avoided}")
+            else:
+                print(f"   ⚠️  Cathleen avoid list may not explicitly exclude WWII imagery")
+            
+            # Check palette
+            palette_variants = visual_dna.get('palette_variants', {})
+            practical_palette = palette_variants.get('practical', [])
+            palette_text = ' '.join(practical_palette).lower()
+            
+            if 'crimson' in palette_text and 'gold' in palette_text and 'navy' in palette_text:
+                print(f"   ✅ Cathleen has correct palette: deep crimson + antique gold + midnight navy")
+            else:
+                print(f"   ⚠️  Cathleen palette may not match specifications: {practical_palette}")
+            
+            # Check header scene - should NOT be portrait
+            header_scene = visual_dna.get('header_scene', '').lower()
+            if 'portrait' in header_scene:
+                print(f"   ❌ Cathleen header scene should NOT be portrait: {header_scene}")
+                return False
+            
+            if 'altar' in header_scene and 'candle' in header_scene:
+                print(f"   ✅ Cathleen header scene is altar vignette (not portrait)")
+            else:
+                print(f"   ⚠️  Cathleen header scene may not match specification: {header_scene}")
+            
+            return True
+            
+        except Exception as e:
+            print(f"   ❌ Error testing Cathleen visual_dna: {e}")
+            return False
+
+    def test_katherine_visual_dna_updated(self):
+        """Test Katherine's visual_dna is properly configured - REVIEW REQUEST TEST"""
+        try:
+            import sys
+            sys.path.append('/app/backend')
+            from persona_config import PERSONA_CONFIG
+            
+            katherine_config = PERSONA_CONFIG.get('katherine', {})
+            if not katherine_config:
+                print(f"   ❌ Katherine config not found")
+                return False
+            
+            visual_dna = katherine_config.get('visual_dna', {})
+            if not visual_dna:
+                print(f"   ❌ Katherine visual_dna not found")
+                return False
+            
+            constants = visual_dna.get('constants', {})
+            primary_motif = constants.get('primary_motif', '').lower()
+            
+            # Check for required motifs from review request
+            required_motifs = ['needle', 'thread', 'mirror', 'compass', 'atelier', 'desk']
+            found_motifs = [motif for motif in required_motifs if motif in primary_motif]
+            
+            if len(found_motifs) < 4:  # Should have most of these
+                print(f"   ❌ Katherine missing required motifs. Found: {found_motifs}")
+                print(f"   Primary motif: {primary_motif}")
+                return False
+            
+            print(f"   ✅ Katherine has required motifs: {found_motifs}")
+            
+            # Check avoid list - should NOT have spirit photography
+            avoid_list = visual_dna.get('avoid', [])
+            avoid_text = ' '.join(avoid_list).lower()
+            
+            if 'spirit photography' in avoid_text:
+                print(f"   ✅ Katherine correctly avoids spirit photography")
+            else:
+                print(f"   ⚠️  Katherine avoid list may not explicitly exclude spirit photography")
+            
+            # Check palette - should be cool steel/silver + oxblood + navy
+            palette_variants = visual_dna.get('palette_variants', {})
+            practical_palette = palette_variants.get('practical', [])
+            palette_text = ' '.join(practical_palette).lower()
+            
+            if ('steel' in palette_text or 'silver' in palette_text) and 'oxblood' in palette_text and 'navy' in palette_text:
+                print(f"   ✅ Katherine has correct palette: cool steel/silver + oxblood + navy")
+            else:
+                print(f"   ⚠️  Katherine palette may not match specifications: {practical_palette}")
+            
+            # Check header scene - should be atelier desk scene
+            header_scene = visual_dna.get('header_scene', '').lower()
+            if 'atelier' in header_scene and 'desk' in header_scene:
+                print(f"   ✅ Katherine header scene is atelier desk scene")
+            else:
+                print(f"   ⚠️  Katherine header scene may not match specification: {header_scene}")
+            
+            return True
+            
+        except Exception as e:
+            print(f"   ❌ Error testing Katherine visual_dna: {e}")
+            return False
+
+    def test_shigg_visual_dna_color_accents(self):
+        """Test Shigg's visual_dna allows color accents - REVIEW REQUEST TEST"""
+        try:
+            import sys
+            sys.path.append('/app/backend')
+            from persona_config import PERSONA_CONFIG
+            
+            shigg_config = PERSONA_CONFIG.get('shigg', {})
+            if not shigg_config:
+                print(f"   ❌ Shigg config not found")
+                return False
+            
+            visual_dna = shigg_config.get('visual_dna', {})
+            if not visual_dna:
+                print(f"   ❌ Shigg visual_dna not found")
+                return False
+            
+            # Check palette variants for color options
+            palette_variants = visual_dna.get('palette_variants', {})
+            
+            # Check if there are color accents allowed (not just black & white)
+            has_color_accents = False
+            for tone, colors in palette_variants.items():
+                color_text = ' '.join(colors).lower()
+                if any(color in color_text for color in ['gold', 'navy', 'sepia', 'brown', 'amber']):
+                    has_color_accents = True
+                    print(f"   ✅ Shigg {tone} palette allows color accents: {colors}")
+                    break
+            
+            if not has_color_accents:
+                print(f"   ❌ Shigg palette appears to be black & white only: {palette_variants}")
+                return False
+            
+            # Check DALL-E rules don't restrict to black & white only
+            dalle_rules = visual_dna.get('dall_e_rules', '').lower()
+            if 'black and white only' in dalle_rules or 'monochrome only' in dalle_rules:
+                print(f"   ❌ Shigg DALL-E rules restrict to black & white only: {dalle_rules}")
+                return False
+            
+            print(f"   ✅ Shigg visual_dna allows color accents (not black & white only)")
+            
+            return True
+            
+        except Exception as e:
+            print(f"   ❌ Error testing Shigg visual_dna: {e}")
+            return False
+
     def test_favorites(self):
         """Test favorites functionality (requires authentication)"""
         if not self.token:
