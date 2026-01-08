@@ -118,12 +118,12 @@ const PrintablesBlock = ({ tarotImageBase64, sigilImageBase64, spellTitle, tarot
   if (!tarotImageBase64 && !sigilImageBase64) return null;
   
   return (
-    <section className="my-8 p-6 bg-muted/20 border-2 border-dashed border-border rounded-sm">
-      <h3 className="font-cinzel text-lg text-secondary mb-4 text-center flex items-center justify-center gap-2">
+    <section className="my-8 p-6 bg-amber-900/10 border-2 border-dashed border-amber-800/40 rounded-sm">
+      <h3 className="font-cinzel text-lg text-amber-900 mb-4 text-center flex items-center justify-center gap-2">
         <Download className="w-5 h-5" />
         Printable Elements
       </h3>
-      <p className="font-montserrat text-xs text-muted-foreground text-center mb-4">
+      <p className="font-montserrat text-xs text-stone-700 text-center mb-4">
         Right-click to save these images for your physical grimoire
       </p>
       
@@ -131,13 +131,13 @@ const PrintablesBlock = ({ tarotImageBase64, sigilImageBase64, spellTitle, tarot
         {/* Tarot Card - Front */}
         {tarotImageBase64 && (
           <div className="text-center">
-            <p className="font-montserrat text-xs text-muted-foreground mb-2 uppercase tracking-wider">
+            <p className="font-montserrat text-xs text-stone-600 mb-2 uppercase tracking-wider">
               Tarot Card (Front)
             </p>
             <img 
               src={`data:image/png;base64,${tarotImageBase64}`}
               alt={`${spellTitle} - Tarot Card Front`}
-              className="w-full max-w-[180px] mx-auto rounded-sm border border-border shadow-md"
+              className="w-full max-w-[180px] mx-auto rounded-sm border border-amber-800/30 shadow-md"
             />
           </div>
         )}
@@ -145,10 +145,10 @@ const PrintablesBlock = ({ tarotImageBase64, sigilImageBase64, spellTitle, tarot
         {/* Tarot Card - Back (Text version with essence) */}
         {tarotCard && (
           <div className="text-center">
-            <p className="font-montserrat text-xs text-muted-foreground mb-2 uppercase tracking-wider">
+            <p className="font-montserrat text-xs text-stone-600 mb-2 uppercase tracking-wider">
               Tarot Card (Back)
             </p>
-            <div className="w-full max-w-[180px] mx-auto aspect-[2/3] rounded-sm border border-border shadow-md bg-gradient-to-br from-navy-dark via-navy-mid to-navy-dark p-3 flex flex-col justify-between">
+            <div className="w-full max-w-[180px] mx-auto aspect-[2/3] rounded-sm border border-amber-800/30 shadow-md bg-gradient-to-br from-navy-dark via-navy-mid to-navy-dark p-3 flex flex-col justify-between">
               <div className="text-center">
                 <span className="text-2xl text-gold/80">{tarotCard.symbol || '✧'}</span>
               </div>
@@ -174,13 +174,13 @@ const PrintablesBlock = ({ tarotImageBase64, sigilImageBase64, spellTitle, tarot
         {/* Sigil */}
         {sigilImageBase64 && (
           <div className="text-center">
-            <p className="font-montserrat text-xs text-muted-foreground mb-2 uppercase tracking-wider">
+            <p className="font-montserrat text-xs text-stone-600 mb-2 uppercase tracking-wider">
               Sigil
             </p>
             <img 
               src={`data:image/png;base64,${sigilImageBase64}`}
               alt={`${spellTitle} - Sigil`}
-              className="w-full max-w-[150px] mx-auto rounded-sm border border-border shadow-md bg-white"
+              className="w-full max-w-[150px] mx-auto rounded-sm border border-amber-800/30 shadow-md bg-white"
             />
           </div>
         )}
@@ -191,7 +191,7 @@ const PrintablesBlock = ({ tarotImageBase64, sigilImageBase64, spellTitle, tarot
 
 // Section Header with Micro-Icon
 const SectionHeader = ({ icon: Icon, title, microIcon, accentColor }) => (
-  <h2 className={`font-cinzel text-xl text-secondary mb-4 flex items-center gap-2`}>
+  <h2 className={`font-cinzel text-xl text-amber-900 mb-4 flex items-center gap-2`}>
     {microIcon && <span className="text-xl">{microIcon}</span>}
     {Icon && !microIcon && <Icon className="w-5 h-5" />}
     {title}
@@ -680,13 +680,13 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
     >
       {/* View Toggle - Show only if tarot_card exists */}
       {spell.tarot_card && (
-        <div className="flex justify-center gap-2 p-4 bg-muted/30 border-b border-border">
+        <div className="flex justify-center gap-2 p-4 bg-amber-900/15 border-b border-amber-800/30">
           <button
             onClick={() => setViewMode('card')}
             className={`px-4 py-2 rounded-sm font-montserrat tracking-wider text-xs transition-all ${
               viewMode === 'card' 
-                ? 'bg-primary text-primary-foreground' 
-                : 'bg-transparent text-muted-foreground hover:text-primary'
+                ? 'bg-amber-800 text-amber-50' 
+                : 'bg-transparent text-stone-700 hover:text-amber-900'
             }`}
           >
             ✧ Card View
@@ -695,8 +695,8 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
             onClick={() => setViewMode('full')}
             className={`px-4 py-2 rounded-sm font-montserrat tracking-wider text-xs transition-all ${
               viewMode === 'full' 
-                ? 'bg-primary text-primary-foreground' 
-                : 'bg-transparent text-muted-foreground hover:text-primary'
+                ? 'bg-amber-800 text-amber-50' 
+                : 'bg-transparent text-stone-700 hover:text-amber-900'
             }`}
           >
             📖 Full Grimoire
@@ -715,10 +715,10 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
           <div className={`absolute inset-0 bg-gradient-to-t ${style.headerGradient}`} />
           <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-card to-transparent">
             <h1 className="font-italiana text-3xl md:text-4xl text-primary drop-shadow-lg">
-              {spell.title}
+              {spell.title || 'Untitled Spell'}
             </h1>
-            {spell.subtitle && (
-              <p className="font-montserrat text-sm text-foreground/80 mt-1">{spell.subtitle}</p>
+            {spell.subtitle && spell.subtitle !== 'null' && (
+              <p className="font-montserrat text-sm text-amber-100/90 mt-1">{spell.subtitle}</p>
             )}
           </div>
         </div>
@@ -726,10 +726,10 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
 
       {/* No image header */}
       {!imageBase64 && (
-        <div className={`p-6 ${style.bgAccent} border-b border-border`}>
-          <h1 className="font-italiana text-3xl md:text-4xl text-primary">{spell.title}</h1>
-          {spell.subtitle && (
-            <p className="font-montserrat text-sm text-muted-foreground mt-1">{spell.subtitle}</p>
+        <div className={`p-6 ${style.bgAccent} border-b border-amber-800/30`}>
+          <h1 className="font-italiana text-3xl md:text-4xl text-amber-900">{spell.title || 'Untitled Spell'}</h1>
+          {spell.subtitle && spell.subtitle !== 'null' && (
+            <p className="font-montserrat text-sm text-stone-700 mt-1">{spell.subtitle}</p>
           )}
         </div>
       )}
@@ -737,19 +737,19 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
       <div className="p-6 md:p-8 space-y-8">
         {/* Archetype Attribution */}
         {archetype && (
-          <div className="flex items-center gap-3 pb-4 border-b border-border">
+          <div className="flex items-center gap-3 pb-4 border-b border-amber-800/30">
             <span className="text-2xl">{archetype.id === 'shiggy' ? '🪶' : archetype.id === 'kathleen' ? '🦉' : archetype.id === 'catherine' ? '🐦' : '🪽'}</span>
             <div>
-              <p className="font-cinzel text-sm text-secondary">Crafted by {archetype.name}</p>
-              <p className="font-montserrat text-xs text-muted-foreground">{archetype.title}</p>
+              <p className="font-cinzel text-sm text-amber-900">Crafted by {archetype.name}</p>
+              <p className="font-montserrat text-xs text-stone-600">{archetype.title}</p>
             </div>
           </div>
         )}
 
         {/* Introduction */}
         {spell.introduction && (
-          <div className={`p-4 ${style.bgAccent} border-l-4 ${style.borderColor} rounded-r-sm`}>
-            <p className="font-crimson text-base md:text-lg text-foreground italic leading-relaxed">
+          <div className={`p-4 bg-amber-900/10 border-l-4 border-amber-800 rounded-r-sm`}>
+            <p className="font-crimson text-base md:text-lg text-stone-800 italic leading-relaxed">
               {spell.introduction}
             </p>
           </div>
@@ -758,58 +758,58 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
         {/* Timing */}
         {spell.timing && (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <TimingCard icon={Moon} label="Moon Phase" value={spell.timing.moon_phase} />
-            <TimingCard icon={Sun} label="Time" value={spell.timing.time_of_day} />
-            <TimingCard icon={Calendar} label="Day" value={spell.timing.day} />
-            <TimingCard icon={Clock} label="Note" value={spell.timing.note} small />
+            <TimingCard icon={Moon} label="Moon Phase" value={spell.timing?.moon_phase} />
+            <TimingCard icon={Sun} label="Time" value={spell.timing?.time_of_day} />
+            <TimingCard icon={Calendar} label="Day" value={spell.timing?.day} />
+            <TimingCard icon={Clock} label="Note" value={spell.timing?.note} small />
           </div>
         )}
 
         {/* Cathleen's Suggested Ward - Special feature for her spells */}
         {spell.suggested_ward && (
           <section className="relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-slate-800/30 via-slate-700/20 to-slate-800/30 rounded-lg" />
-            <div className="relative p-6 border-2 border-secondary/40 rounded-lg bg-background/50">
+            <div className="absolute inset-0 bg-gradient-to-r from-slate-600/20 via-slate-500/10 to-slate-600/20 rounded-lg" />
+            <div className="relative p-6 border-2 border-slate-600/40 rounded-lg bg-stone-100/80">
               <div className="flex items-center gap-3 mb-4">
-                <div className="p-3 bg-secondary/20 rounded-full">
+                <div className="p-3 bg-slate-600/20 rounded-full">
                   <span className="text-3xl">{spell.suggested_ward.symbol || '🪶'}</span>
                 </div>
                 <div>
-                  <p className="font-cinzel text-xs text-secondary/70 uppercase tracking-wider">Cathleen&apos;s Gift</p>
-                  <h3 className="font-cinzel text-xl text-secondary">Your Ward: {spell.suggested_ward.name}</h3>
+                  <p className="font-cinzel text-xs text-slate-700 uppercase tracking-wider">Cathleen&apos;s Gift</p>
+                  <h3 className="font-cinzel text-xl text-slate-800">Your Ward: {spell.suggested_ward.name}</h3>
                 </div>
               </div>
               
               <div className="space-y-4 font-montserrat text-sm">
                 <div className="flex items-start gap-2">
-                  <Heart className="w-4 h-4 text-secondary mt-1 flex-shrink-0" />
+                  <Heart className="w-4 h-4 text-slate-600 mt-1 flex-shrink-0" />
                   <div>
-                    <p className="text-xs text-muted-foreground uppercase tracking-wide mb-1">What It Means</p>
-                    <p className="text-foreground/90">{spell.suggested_ward.meaning}</p>
+                    <p className="text-xs text-slate-600 uppercase tracking-wide mb-1">What It Means</p>
+                    <p className="text-stone-800">{spell.suggested_ward.meaning}</p>
                   </div>
                 </div>
                 
                 <div className="flex items-start gap-2">
-                  <Eye className="w-4 h-4 text-secondary mt-1 flex-shrink-0" />
+                  <Eye className="w-4 h-4 text-slate-600 mt-1 flex-shrink-0" />
                   <div>
-                    <p className="text-xs text-muted-foreground uppercase tracking-wide mb-1">How to Find It</p>
-                    <p className="text-foreground/90">{spell.suggested_ward.how_to_find}</p>
+                    <p className="text-xs text-slate-600 uppercase tracking-wide mb-1">How to Find It</p>
+                    <p className="text-stone-800">{spell.suggested_ward.how_to_find}</p>
                   </div>
                 </div>
                 
                 {spell.suggested_ward.activation && (
                   <div className="flex items-start gap-2">
-                    <Sparkles className="w-4 h-4 text-secondary mt-1 flex-shrink-0" />
+                    <Sparkles className="w-4 h-4 text-slate-600 mt-1 flex-shrink-0" />
                     <div>
-                      <p className="text-xs text-muted-foreground uppercase tracking-wide mb-1">Awakening Your Ward</p>
-                      <p className="text-foreground/90">{spell.suggested_ward.activation}</p>
+                      <p className="text-xs text-slate-600 uppercase tracking-wide mb-1">Awakening Your Ward</p>
+                      <p className="text-stone-800">{spell.suggested_ward.activation}</p>
                     </div>
                   </div>
                 )}
               </div>
               
-              <div className="mt-4 pt-4 border-t border-secondary/20">
-                <p className="font-montserrat text-xs text-muted-foreground italic text-center">
+              <div className="mt-4 pt-4 border-t border-slate-400/30">
+                <p className="font-montserrat text-xs text-slate-600 italic text-center">
                   &ldquo;Carry your ward close—a physical anchor for invisible magic.&rdquo; — Cathleen
                 </p>
               </div>
@@ -894,19 +894,19 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                 return (
                   <div 
                     key={idx}
-                    className="flex items-start gap-3 p-3 bg-muted/20 border border-border rounded-sm"
+                    className="flex items-start gap-3 p-3 bg-amber-900/10 border border-amber-800/30 rounded-sm"
                   >
-                    <div className={`p-2 ${style.bgAccent} rounded-sm`}>
+                    <div className={`p-2 bg-amber-800/20 rounded-sm`}>
                       {material.icon ? (
                         <span className="text-lg">{material.icon}</span>
                       ) : (
-                        <IconComponent className={`w-5 h-5 ${style.accentColor}`} />
+                        <IconComponent className={`w-5 h-5 text-amber-800`} />
                       )}
                     </div>
                     <div>
-                      <p className="font-montserrat text-sm font-medium text-foreground">{material.name}</p>
+                      <p className="font-montserrat text-sm font-medium text-stone-800">{material.name}</p>
                       {material.note && (
-                        <p className="font-montserrat text-xs text-muted-foreground mt-0.5">{material.note}</p>
+                        <p className="font-montserrat text-xs text-stone-600 mt-0.5">{material.note}</p>
                       )}
                     </div>
                   </div>
@@ -932,8 +932,8 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                 onClick={() => setChecklistMode(!checklistMode)}
                 className={`px-3 py-1 rounded-sm text-xs font-montserrat tracking-wider transition-all ${
                   checklistMode 
-                    ? 'bg-primary text-primary-foreground' 
-                    : 'bg-muted/30 text-muted-foreground hover:bg-muted/50'
+                    ? 'bg-amber-800 text-amber-50' 
+                    : 'bg-amber-900/20 text-stone-700 hover:bg-amber-900/30'
                 }`}
               >
                 {checklistMode ? 'Checklist On' : 'Track Progress'}
@@ -942,7 +942,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
             
             {/* Working description */}
             {spell.the_working?.description && (
-              <p className="font-montserrat text-sm text-foreground mb-4">{spell.the_working.description}</p>
+              <p className="font-montserrat text-sm text-stone-800 mb-4">{spell.the_working.description}</p>
             )}
             
             <div className="space-y-4">
@@ -952,14 +952,14 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                 return (
                   <motion.div 
                     key={stepNum}
-                    className={`relative pl-12 pb-4 ${stepNum < (spell.the_working?.steps || spell.steps).length ? 'border-l-2 border-border ml-4' : 'ml-4'}`}
+                    className={`relative pl-12 pb-4 ${stepNum < (spell.the_working?.steps || spell.steps).length ? 'border-l-2 border-amber-800/30 ml-4' : 'ml-4'}`}
                   >
                     {/* Step number circle */}
                     <div 
                       className={`absolute left-0 -translate-x-1/2 w-8 h-8 rounded-full flex items-center justify-center text-sm font-cinzel cursor-pointer transition-all ${
                         completedSteps.has(stepNum)
-                          ? 'bg-accent text-accent-foreground'
-                          : `${style.bgAccent} ${style.accentColor} border-2 ${style.borderColor}`
+                          ? 'bg-amber-700 text-amber-50'
+                          : `bg-amber-800/20 text-amber-900 border-2 border-amber-800/40`
                       }`}
                       onClick={() => checklistMode && toggleStep(stepNum)}
                     >
@@ -971,18 +971,18 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                     </div>
                     
                     <div className={`transition-opacity ${checklistMode && completedSteps.has(stepNum) ? 'opacity-50' : ''}`}>
-                      <h3 className="font-cinzel text-base text-secondary mb-1">{step.title}</h3>
-                      <p className="font-montserrat text-sm text-foreground leading-relaxed">{step.instruction}</p>
+                      <h3 className="font-cinzel text-base text-amber-900 mb-1">{step.title}</h3>
+                      <p className="font-montserrat text-sm text-stone-800 leading-relaxed">{step.instruction}</p>
                       {step.spoken_words && (
-                        <p className="font-crimson text-sm text-accent italic mt-2">&ldquo;{step.spoken_words}&rdquo;</p>
+                        <p className="font-crimson text-sm text-amber-800 italic mt-2">&ldquo;{step.spoken_words}&rdquo;</p>
                       )}
                       {step.duration && (
-                        <p className="font-montserrat text-xs text-muted-foreground mt-2 flex items-center gap-1">
+                        <p className="font-montserrat text-xs text-stone-600 mt-2 flex items-center gap-1">
                           <Clock className="w-3 h-3" /> {step.duration}
                         </p>
                       )}
                       {step.note && (
-                        <p className="font-crimson text-xs text-accent italic mt-1">✦ {step.note}</p>
+                        <p className="font-crimson text-xs text-amber-800 italic mt-1">✦ {step.note}</p>
                       )}
                     </div>
                   </motion.div>
@@ -997,7 +997,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
 
         {/* Spoken Words */}
         {spell.spoken_words && (
-          <section className={`p-6 ${style.bgAccent} border ${style.borderColor} rounded-sm`}>
+          <section className={`p-6 bg-amber-900/10 border border-amber-800/40 rounded-sm`}>
             <SectionHeader 
               icon={Quote} 
               title="Words of Power" 
@@ -1007,15 +1007,15 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
             <div className="space-y-4">
               {spell.spoken_words.invocation && (
                 <div>
-                  <p className="font-montserrat text-xs text-muted-foreground uppercase tracking-wider mb-1">Opening Invocation</p>
-                  <p className="font-crimson text-base text-foreground italic">&ldquo;{spell.spoken_words.invocation}&rdquo;</p>
+                  <p className="font-montserrat text-xs text-stone-600 uppercase tracking-wider mb-1">Opening Invocation</p>
+                  <p className="font-crimson text-base text-stone-800 italic">&ldquo;{spell.spoken_words.invocation}&rdquo;</p>
                 </div>
               )}
               
               {spell.spoken_words.main_incantation && (
-                <div className="py-4 border-y border-border/50">
-                  <p className="font-montserrat text-xs text-muted-foreground uppercase tracking-wider mb-2">Main Incantation</p>
-                  <p className="font-crimson text-lg text-primary text-center leading-relaxed">
+                <div className="py-4 border-y border-amber-800/30">
+                  <p className="font-montserrat text-xs text-stone-600 uppercase tracking-wider mb-2">Main Incantation</p>
+                  <p className="font-crimson text-lg text-amber-900 text-center leading-relaxed">
                     &ldquo;{spell.spoken_words.main_incantation}&rdquo;
                   </p>
                 </div>
@@ -1023,8 +1023,8 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
               
               {spell.spoken_words.closing && (
                 <div>
-                  <p className="font-montserrat text-xs text-muted-foreground uppercase tracking-wider mb-1">Closing Words</p>
-                  <p className="font-crimson text-base text-foreground italic">&ldquo;{spell.spoken_words.closing}&rdquo;</p>
+                  <p className="font-montserrat text-xs text-stone-600 uppercase tracking-wider mb-1">Closing Words</p>
+                  <p className="font-crimson text-base text-stone-800 italic">&ldquo;{spell.spoken_words.closing}&rdquo;</p>
                 </div>
               )}
             </div>
@@ -1033,16 +1033,16 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
 
         {/* Historical Context (Collapsible) */}
         {spell.historical_context && (
-          <section className="border border-border rounded-sm overflow-hidden">
+          <section className="border border-amber-800/30 rounded-sm overflow-hidden">
             <button
               onClick={() => setShowHistoricalContext(!showHistoricalContext)}
-              className="w-full p-4 flex items-center justify-between bg-muted/20 hover:bg-muted/30 transition-all"
+              className="w-full p-4 flex items-center justify-between bg-amber-900/10 hover:bg-amber-900/20 transition-all"
             >
-              <span className="font-cinzel text-base text-secondary flex items-center gap-2">
+              <span className="font-cinzel text-base text-amber-900 flex items-center gap-2">
                 <History className="w-5 h-5" />
                 Historical Context & Sources
               </span>
-              {showHistoricalContext ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
+              {showHistoricalContext ? <ChevronUp className="w-5 h-5 text-stone-700" /> : <ChevronDown className="w-5 h-5 text-stone-700" />}
             </button>
             
             <AnimatePresence>
@@ -1053,29 +1053,29 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                   exit={{ height: 0, opacity: 0 }}
                   className="overflow-hidden"
                 >
-                  <div className="p-4 space-y-4 border-t border-border">
+                  <div className="p-4 space-y-4 border-t border-amber-800/30">
                     {spell.historical_context.tradition && (
                       <div>
-                        <p className="font-montserrat text-xs text-muted-foreground uppercase tracking-wider">Tradition</p>
-                        <p className="font-montserrat text-sm text-foreground">{spell.historical_context.tradition}</p>
+                        <p className="font-montserrat text-xs text-stone-600 uppercase tracking-wider">Tradition</p>
+                        <p className="font-montserrat text-sm text-stone-800">{spell.historical_context.tradition}</p>
                       </div>
                     )}
                     
                     {spell.historical_context.time_period && (
                       <div>
-                        <p className="font-montserrat text-xs text-muted-foreground uppercase tracking-wider">Time Period</p>
-                        <p className="font-montserrat text-sm text-foreground">{spell.historical_context.time_period}</p>
+                        <p className="font-montserrat text-xs text-stone-600 uppercase tracking-wider">Time Period</p>
+                        <p className="font-montserrat text-sm text-stone-800">{spell.historical_context.time_period}</p>
                       </div>
                     )}
                     
                     {spell.historical_context.practitioners && spell.historical_context.practitioners.length > 0 && (
                       <div>
-                        <p className="font-montserrat text-xs text-muted-foreground uppercase tracking-wider flex items-center gap-1">
+                        <p className="font-montserrat text-xs text-stone-600 uppercase tracking-wider flex items-center gap-1">
                           <Users className="w-3 h-3" /> Historical Practitioners
                         </p>
                         <div className="flex flex-wrap gap-2 mt-1">
                           {spell.historical_context.practitioners.map((name, idx) => (
-                            <span key={idx} className="px-2 py-1 bg-muted/30 rounded-sm text-xs font-montserrat">
+                            <span key={idx} className="px-2 py-1 bg-amber-900/15 text-stone-800 rounded-sm text-xs font-montserrat">
                               {name}
                             </span>
                           ))}
@@ -1085,15 +1085,15 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                     
                     {spell.historical_context.sources && spell.historical_context.sources.length > 0 && (
                       <div>
-                        <p className="font-montserrat text-xs text-muted-foreground uppercase tracking-wider mb-2">Sources & References</p>
+                        <p className="font-montserrat text-xs text-stone-600 uppercase tracking-wider mb-2">Sources & References</p>
                         <div className="space-y-2">
                           {spell.historical_context.sources.map((source, idx) => (
-                            <div key={idx} className="p-3 bg-muted/20 rounded-sm">
-                              <p className="font-montserrat text-sm text-foreground">
+                            <div key={idx} className="p-3 bg-amber-900/10 rounded-sm">
+                              <p className="font-montserrat text-sm text-stone-800">
                                 <strong>{source.author}</strong>, <em>{source.work}</em> ({source.year})
                               </p>
                               {source.relevance && (
-                                <p className="font-montserrat text-xs text-muted-foreground mt-1">{source.relevance}</p>
+                                <p className="font-montserrat text-xs text-stone-600 mt-1">{source.relevance}</p>
                               )}
                             </div>
                           ))}
@@ -1102,9 +1102,9 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                     )}
                     
                     {spell.historical_context.cultural_notes && (
-                      <div className="p-3 bg-accent/10 border-l-2 border-accent rounded-r-sm">
-                        <p className="font-montserrat text-xs text-muted-foreground uppercase tracking-wider mb-1">Cultural Notes</p>
-                        <p className="font-crimson text-sm text-foreground italic">{spell.historical_context.cultural_notes}</p>
+                      <div className="p-3 bg-amber-800/10 border-l-2 border-amber-800 rounded-r-sm">
+                        <p className="font-montserrat text-xs text-stone-600 uppercase tracking-wider mb-1">Cultural Notes</p>
+                        <p className="font-crimson text-sm text-stone-800 italic">{spell.historical_context.cultural_notes}</p>
                       </div>
                     )}
                   </div>
@@ -1117,16 +1117,16 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
         {/* Variations */}
         {spell.variations && spell.variations.length > 0 && (
           <section>
-            <h2 className="font-cinzel text-lg text-secondary mb-3">Variations & Adaptations</h2>
+            <h2 className="font-cinzel text-lg text-amber-900 mb-3">Variations & Adaptations</h2>
             <div className="space-y-2">
               {spell.variations.map((variation, idx) => (
-                <div key={idx} className="p-3 bg-muted/20 rounded-sm">
+                <div key={idx} className="p-3 bg-amber-900/10 rounded-sm">
                   {typeof variation === 'string' ? (
-                    <p className="font-montserrat text-sm text-foreground">{variation}</p>
+                    <p className="font-montserrat text-sm text-stone-800">{variation}</p>
                   ) : (
                     <>
-                      <p className="font-montserrat text-sm font-medium text-foreground">{variation.name}</p>
-                      <p className="font-montserrat text-xs text-muted-foreground">{variation.description}</p>
+                      <p className="font-montserrat text-sm font-medium text-stone-800">{variation.name}</p>
+                      <p className="font-montserrat text-xs text-stone-600">{variation.description}</p>
                     </>
                   )}
                 </div>
@@ -1137,16 +1137,16 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
         
         {/* Inspired By / Sources - new format */}
         {spell.inspired_by && spell.inspired_by.length > 0 && (
-          <section className="border border-border rounded-sm overflow-hidden">
+          <section className="border border-amber-800/30 rounded-sm overflow-hidden">
             <button
               onClick={() => setShowHistoricalContext(!showHistoricalContext)}
-              className="w-full p-4 flex items-center justify-between bg-muted/20 hover:bg-muted/30 transition-all"
+              className="w-full p-4 flex items-center justify-between bg-amber-900/10 hover:bg-amber-900/20 transition-all"
             >
-              <span className="font-cinzel text-base text-secondary flex items-center gap-2">
+              <span className="font-cinzel text-base text-amber-900 flex items-center gap-2">
                 <BookOpen className="w-5 h-5" />
                 Inspired By
               </span>
-              {showHistoricalContext ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
+              {showHistoricalContext ? <ChevronUp className="w-5 h-5 text-stone-700" /> : <ChevronDown className="w-5 h-5 text-stone-700" />}
             </button>
             
             <AnimatePresence>
@@ -1157,21 +1157,21 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                   exit={{ height: 0, opacity: 0 }}
                   className="overflow-hidden"
                 >
-                  <div className="p-4 space-y-3 border-t border-border">
+                  <div className="p-4 space-y-3 border-t border-amber-800/30">
                     {spell.inspired_by.map((source, idx) => (
-                      <div key={idx} className="p-3 bg-muted/20 rounded-sm">
+                      <div key={idx} className="p-3 bg-amber-900/10 rounded-sm">
                         <div className="flex items-start gap-3">
                           <span className="text-lg">{source.source_type === 'book' ? '📖' : source.source_type === 'tradition' ? '🏛️' : source.source_type === 'practice' ? '✨' : '📜'}</span>
                           <div className="flex-1">
-                            <p className="font-montserrat text-sm font-medium text-foreground">
+                            <p className="font-montserrat text-sm font-medium text-stone-800">
                               {source.name}
-                              {source.author && <span className="text-muted-foreground"> — {source.author}</span>}
+                              {source.author && <span className="text-stone-600"> — {source.author}</span>}
                             </p>
                             {source.connection && (
-                              <p className="font-montserrat text-xs text-muted-foreground mt-1">{source.connection}</p>
+                              <p className="font-montserrat text-xs text-stone-600 mt-1">{source.connection}</p>
                             )}
                             {source.archive_link && (
-                              <a href={source.archive_link} className="font-montserrat text-xs text-accent hover:underline mt-1 inline-block">
+                              <a href={source.archive_link} className="font-montserrat text-xs text-amber-800 hover:underline mt-1 inline-block">
                                 View in Archive →
                               </a>
                             )}
@@ -1188,13 +1188,13 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
 
         {/* Warnings */}
         {spell.warnings && spell.warnings.length > 0 && (
-          <div className="p-4 bg-destructive/10 border border-destructive/30 rounded-sm">
-            <p className="font-montserrat text-xs text-destructive uppercase tracking-wider mb-2 flex items-center gap-1">
+          <div className="p-4 bg-red-900/10 border border-red-800/30 rounded-sm">
+            <p className="font-montserrat text-xs text-red-800 uppercase tracking-wider mb-2 flex items-center gap-1">
               <AlertTriangle className="w-4 h-4" /> Important Considerations
             </p>
             <ul className="space-y-1">
               {spell.warnings.map((warning, idx) => (
-                <li key={idx} className="font-montserrat text-sm text-foreground">• {warning}</li>
+                <li key={idx} className="font-montserrat text-sm text-stone-800">• {warning}</li>
               ))}
             </ul>
           </div>
@@ -1202,8 +1202,8 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
 
         {/* Closing Message */}
         {spell.closing_message && (
-          <div className={`p-4 ${style.bgAccent} border-l-4 ${style.borderColor} rounded-r-sm`}>
-            <p className="font-crimson text-base text-foreground italic">{spell.closing_message}</p>
+          <div className={`p-4 bg-amber-900/10 border-l-4 border-amber-800 rounded-r-sm`}>
+            <p className="font-crimson text-base text-stone-800 italic">{spell.closing_message}</p>
           </div>
         )}
         
@@ -1216,20 +1216,20 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
               microIcon={getMicroIconForSection('closing')}
             />
             {spell.closing.description && (
-              <p className="font-montserrat text-sm text-foreground mb-3">{spell.closing.description}</p>
+              <p className="font-montserrat text-sm text-stone-800 mb-3">{spell.closing.description}</p>
             )}
             {spell.closing.steps && spell.closing.steps.length > 0 && (
               <ul className="space-y-2 mb-3">
                 {spell.closing.steps.map((step, idx) => (
-                  <li key={idx} className="font-montserrat text-sm text-foreground flex items-start gap-2">
-                    <span className="text-accent">✦</span>
+                  <li key={idx} className="font-montserrat text-sm text-stone-800 flex items-start gap-2">
+                    <span className="text-amber-800">✦</span>
                     {step}
                   </li>
                 ))}
               </ul>
             )}
             {spell.closing.final_words && (
-              <p className="font-crimson text-base text-accent italic text-center">
+              <p className="font-crimson text-base text-amber-800 italic text-center">
                 &ldquo;{spell.closing.final_words}&rdquo;
               </p>
             )}
@@ -1238,7 +1238,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
         
         {/* Aftercare section */}
         {spell.aftercare && (
-          <section className="p-4 bg-muted/20 border border-border rounded-sm">
+          <section className="p-4 bg-amber-900/10 border border-amber-800/30 rounded-sm">
             <SectionHeader 
               icon={Heart} 
               title="Aftercare" 
@@ -1246,14 +1246,14 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
             />
             {spell.aftercare.immediate && (
               <div className="mb-3">
-                <p className="font-montserrat text-xs text-muted-foreground uppercase tracking-wider mb-1">Immediately After</p>
-                <p className="font-montserrat text-sm text-foreground">{spell.aftercare.immediate}</p>
+                <p className="font-montserrat text-xs text-stone-600 uppercase tracking-wider mb-1">Immediately After</p>
+                <p className="font-montserrat text-sm text-stone-800">{spell.aftercare.immediate}</p>
               </div>
             )}
             {spell.aftercare.ongoing && (
               <div>
-                <p className="font-montserrat text-xs text-muted-foreground uppercase tracking-wider mb-1">Ongoing Practice</p>
-                <p className="font-montserrat text-sm text-foreground">{spell.aftercare.ongoing}</p>
+                <p className="font-montserrat text-xs text-stone-600 uppercase tracking-wider mb-1">Ongoing Practice</p>
+                <p className="font-montserrat text-sm text-stone-800">{spell.aftercare.ongoing}</p>
               </div>
             )}
           </section>
@@ -1286,18 +1286,18 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
         </div>
 
         {/* Action Buttons */}
-        <div className="flex flex-wrap gap-3 pt-4 border-t border-border">
+        <div className="flex flex-wrap gap-3 pt-4 border-t border-amber-800/30">
           <button
             onClick={saveToGrimoire}
             disabled={isSaving}
-            className="px-4 py-2 bg-accent text-accent-foreground hover:bg-accent/90 rounded-sm font-montserrat tracking-widest uppercase text-xs transition-all flex items-center gap-2 disabled:opacity-50"
+            className="px-4 py-2 bg-amber-700 text-amber-50 hover:bg-amber-800 rounded-sm font-montserrat tracking-widest uppercase text-xs transition-all flex items-center gap-2 disabled:opacity-50"
           >
             <Save className={`w-4 h-4 ${isSaving ? 'animate-pulse' : ''}`} />
             {isSaving ? 'Saving...' : 'Save to Grimoire'}
           </button>
           <button
             onClick={copySpellToClipboard}
-            className="px-4 py-2 bg-transparent text-primary border border-primary/30 rounded-sm font-montserrat tracking-widest uppercase text-xs hover:bg-primary/10 transition-all flex items-center gap-2"
+            className="px-4 py-2 bg-transparent text-amber-900 border border-amber-800/40 rounded-sm font-montserrat tracking-widest uppercase text-xs hover:bg-amber-900/10 transition-all flex items-center gap-2"
           >
             <Copy className="w-4 h-4" />
             Copy Spell
@@ -1305,14 +1305,14 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
           <button
             onClick={downloadAsPdf}
             disabled={isGeneratingPdf}
-            className="px-4 py-2 bg-transparent text-primary border border-primary/30 hover:bg-primary/10 rounded-sm font-montserrat tracking-widest uppercase text-xs transition-all flex items-center gap-2 disabled:opacity-50"
+            className="px-4 py-2 bg-transparent text-amber-900 border border-amber-800/40 hover:bg-amber-900/10 rounded-sm font-montserrat tracking-widest uppercase text-xs transition-all flex items-center gap-2 disabled:opacity-50"
           >
             <Download className={`w-4 h-4 ${isGeneratingPdf ? 'animate-bounce' : ''}`} />
             {isGeneratingPdf ? 'Generating...' : 'Save as PDF'}
           </button>
           <button
             onClick={onNewSpell}
-            className="px-4 py-2 bg-primary text-primary-foreground rounded-sm font-montserrat tracking-widest uppercase text-xs hover:bg-primary/90 transition-all"
+            className="px-4 py-2 bg-amber-900 text-amber-50 rounded-sm font-montserrat tracking-widest uppercase text-xs hover:bg-amber-800 transition-all"
           >
             New Spell
           </button>
@@ -1323,9 +1323,9 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
 };
 
 const TimingCard = ({ icon: Icon, label, value, small = false }) => (
-  <div className="p-3 bg-muted/20 border border-border rounded-sm text-center">
-    <Icon className="w-5 h-5 text-primary mx-auto mb-1" />
-    <p className="font-montserrat text-xs text-muted-foreground uppercase tracking-wider">{label}</p>
-    <p className={`font-cinzel ${small ? 'text-xs' : 'text-sm'} text-foreground`}>{value || 'Any'}</p>
+  <div className="p-3 bg-amber-900/10 border border-amber-800/30 rounded-sm text-center">
+    <Icon className="w-5 h-5 text-amber-800 mx-auto mb-1" />
+    <p className="font-montserrat text-xs text-stone-600 uppercase tracking-wider">{label}</p>
+    <p className={`font-cinzel ${small ? 'text-xs' : 'text-sm'} text-stone-800`}>{value || 'Any'}</p>
   </div>
 );
