@@ -12,25 +12,28 @@ from typing import List, Dict, Any, Optional
 
 CROWLANDS_ART_BIBLE = {
     "style_tokens": [
-        "ornate occult silk scarf design",
+        "ornate occult silk scarf illustration",
         "luxurious tapestry aesthetic",
-        "ultra-detailed engraved texture",
-        "symmetrical medallion composition",
-        "antique copper-plate engraving quality",
-        "collectible art print worthy"
+        "ultra-detailed engraved linework",
+        "etched texture with art nouveau filigree border",
+        "symmetrical medallion layout",
+        "collector plate finish",
+        "velvet silk sheen with faint parchment undertone",
+        "antique print finish"
     ],
     "palette": {
         "primary": "midnight navy (#0e1629)",
-        "secondary": "oxblood crimson (#8b2232)",
+        "secondary": "oxblood burgundy (#8b2232)",
         "accent": "antique gold (#d4a84b)",
-        "neutral": "aged bone/parchment (#f5f0e6)",
+        "neutral": "bone ivory (#f5f0e6)",
         "highlight": "burnished copper"
     },
     "motif_families": {
-        "british_folklore": ["raven", "crow", "hare", "fox", "badger", "owl", "moth", "serpent"],
+        "british_folklore": ["crow", "magpie", "robin", "hare", "stag", "owl", "fox", "moth", "toad", "serpent"],
         "planetary": ["sun disc", "crescent moon", "seven-pointed star", "saturn sigil", "venus mirror"],
-        "alchemical": ["ouroboros", "caduceus", "philosopher's stone", "elemental triangles", "mercury glyph"],
-        "occult_tools": ["athame", "chalice", "pentacle", "wand", "crystal ball", "scrying mirror", "bell"]
+        "alchemical": ["ouroboros", "caduceus", "elemental triangles", "mercury glyph", "philosopher's stone"],
+        "occult_tools": ["compass", "chalice", "candle", "key", "bell", "athame", "pentacle", "wand"],
+        "gothic_botanicals": ["rosehip", "ivy", "hawthorn", "blackthorn", "holly", "mistletoe"]
     },
     "composition_rules": [
         "central medallion focus",
@@ -41,18 +44,54 @@ CROWLANDS_ART_BIBLE = {
     "hard_negatives": [
         "NO text", "NO letters", "NO words", "NO watermarks",
         "NO photorealism", "NO neon colors", "NO modern logos",
-        "NO stock photo aesthetic", "NO clipart", "NO cartoon style"
+        "NO messy collage", "NO 3D render look", "NO clipart", "NO cartoon style"
     ],
-    "dall_e_global_suffix": "ornate occult silk scarf tapestry design, ultra-detailed engraved texture, symmetrical medallion layout, midnight navy and oxblood and antique gold and aged bone palette, British folklore motifs, NO text, NO letters, NO words, NO watermark, NO photorealism, NO neon, NO modern logos"
+    "dall_e_global_suffix": "ornate occult silk scarf tapestry illustration, ultra-detailed engraved linework, etched texture, art nouveau filigree border, symmetrical medallion layout, collector plate finish, velvet silk sheen, midnight navy and oxblood and antique gold and bone ivory palette, British folklore motifs, NO text, NO letters, NO words, NO watermark, NO photorealism, NO neon, NO modern logos, NO 3D render"
+}
+
+# ============================================================================
+# ASSET ROLE LOCKS - Prevents repetition and "same-y" images
+# ============================================================================
+
+ASSET_ROLE_LOCKS = {
+    "header": {
+        "type": "SCENE / STILL-LIFE",
+        "aspect": "wide (16:9 or 3:1)",
+        "rule": "Never an emblem. Never a tarot-like medallion. Must show environment/setting.",
+        "prompt_suffix": "wide scene composition, environmental still-life, NOT a medallion or emblem"
+    },
+    "tarot": {
+        "type": "EMBLEM / SIGIL PLATE",
+        "aspect": "square (1:1)",
+        "rule": "No environment/room. Symmetrical. Must NOT reuse header's central object.",
+        "prompt_suffix": "square emblem sigil plate, symmetrical medallion, isolated on dark background, NOT a scene"
+    },
+    "sigil": {
+        "type": "MINIMAL LINEWORK",
+        "aspect": "square (1:1)",
+        "rule": "1-2 colors max, printable at small size, on parchment background.",
+        "prompt_suffix": "minimal linework sigil on aged parchment, black ink only, simple geometric, printable"
+    },
+    "divider": {
+        "type": "HORIZONTAL STRIP",
+        "aspect": "wide strip (8:1)",
+        "rule": "Decorative band, can be static library or generated.",
+        "prompt_suffix": "horizontal decorative divider strip, ornate filigree band, symmetrical"
+    }
 }
 
 def get_art_bible_prompt_suffix() -> str:
     """Get the global art bible suffix to append to ALL DALL-E prompts"""
     return CROWLANDS_ART_BIBLE["dall_e_global_suffix"]
 
-def build_image_prompt(persona_prompt: str) -> str:
-    """Build a complete image prompt with persona-specific + global art bible tokens"""
-    return f"{persona_prompt}, {get_art_bible_prompt_suffix()}"
+def build_image_prompt(persona_prompt: str, asset_type: str = "header") -> str:
+    """Build a complete image prompt with persona-specific + global art bible + asset role lock"""
+    role_lock = ASSET_ROLE_LOCKS.get(asset_type, ASSET_ROLE_LOCKS["header"])
+    return f"{persona_prompt}, {role_lock['prompt_suffix']}, {get_art_bible_prompt_suffix()}"
+
+def get_asset_role_lock(asset_type: str) -> dict:
+    """Get the role lock constraints for a specific asset type"""
+    return ASSET_ROLE_LOCKS.get(asset_type, ASSET_ROLE_LOCKS["header"])
 
 
 # ============================================================================
