@@ -836,30 +836,30 @@ PERSONA_CONFIG = {
         
         "visual_dna": {
             "constants": {
-                "primary_motif": "needle and thread, mirror, compass, sealed letter, astrolabe, measuring tape",
-                "secondary_motif": "abstract Golden Dawn geometry, Qabalistic tree diagrams, atelier desk scene, wax seals, annotated margins",
-                "era_aesthetic": "Victorian occult research atelier - tailoring precision meets diagrammatic magic",
-                "art_style": "high-contrast engraved plate aesthetic, steel and silver tones, architectural precision, copper-plate etching quality"
+                "primary_motif": "needle/thread, mirror, compass, sealed letter, astrolabe, wax seal, measuring tape",
+                "secondary_motif": "abstracted Golden Dawn geometric diagrams, Qabalistic tree, atelier desk scene, annotated margins",
+                "era_aesthetic": "Victorian occult research atelier, tailoring precision meets diagrammatic magic",
+                "art_style": "ornate silk scarf tapestry illustration with cooler steel silver and oxblood tones, high-contrast engraved plate feel, engraved linework"
             },
             "motif_library": [
                 "needle", "thread spool", "scrying mirror", "brass compass", "sealed letter",
                 "astrolabe", "measuring tape", "geometric sigil", "tree of life diagram",
                 "compass rose", "wax seal", "bound grimoire", "hexagram", "sephirotic path",
-                "atelier desk", "annotated margin", "scissors", "thimble"
+                "scissors", "thimble", "annotated margin"
             ],
             "palette_variants": {
                 "gentle": ["cool silver", "soft steel grey", "aged parchment", "faded ink"],
-                "practical": ["steel grey", "oxblood crimson", "midnight navy", "crisp white"],
+                "practical": ["steel grey", "oxblood burgundy", "midnight navy", "crisp white"],
                 "intense": ["polished silver", "blood red wax", "deep navy", "stark black"]
             },
             "avoid": [
-                "teacups", "domestic kitchen", "devotional hymn styling", "candle-heavy scenes",
-                "Celtic imagery", "Morrigan", "bird oracle", "bright colors", "photorealistic",
-                "spirit photography", "ghostly figures", "soft focus", "warm amber tones"
+                "teacups", "domestic kitchen", "devotional hymn styling", "overt Morrigan/Celtic flourishes",
+                "bird oracle", "photorealistic", "spirit photography", "ghostly figures",
+                "warm amber tones", "neon colors", "3D render look"
             ],
-            "dall_e_rules": "high-contrast engraved plate aesthetic, atelier desk scene with mirror and thread and sealed notes, cool steel silver and oxblood and navy palette, abstracted Golden Dawn Qabalistic geometry, compass rose and geometric sigils, tailoring precision motifs needle thread measuring tape, architectural engraving style",
-            "header_scene": "atelier desk scene with scrying mirror, thread spools, sealed letters, compass, and geometric diagrams",
-            "tarot_emblem": "geometric sigil plate with compass rose emblem, needle and thread crossed"
+            "dall_e_rules": "ornate silk scarf tapestry illustration, atelier desk scene with mirror thread sealed notes tools, cooler steel silver and oxblood and navy palette, abstracted Golden Dawn Qabalistic geometry, compass rose and geometric sigils, tailoring precision motifs needle thread measuring tape, high-contrast engraved plate feel",
+            "header_scene": "atelier desk scene still-life with scrying mirror, thread spools, sealed letters, compass, geometric diagrams, ornate tapestry style - NOT a medallion",
+            "tarot_emblem": "geometric sigil plate with compass rose emblem, needle and thread crossed, symmetrical medallion on dark background"
         },
         
         "allowed_sources": [
