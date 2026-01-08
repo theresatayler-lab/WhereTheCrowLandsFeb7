@@ -331,6 +331,15 @@ export const SpellRequest = () => {
   const [subscriptionStatus, setSubscriptionStatus] = useState(null);
 
   useEffect(() => {
+    // Normalize legacy archetype IDs
+    const currentArchetype = getCurrentArchetype();
+    const idMap = { 'shiggy': 'shigg', 'kathleen': 'cathleen', 'catherine': 'katherine' };
+    const normalizedArchetype = idMap[currentArchetype] || currentArchetype || 'choose_for_me';
+    
+    setSpellSpec(prev => ({
+      ...prev,
+      persona_id: normalizedArchetype
+    }));
     const loadSubscriptionStatus = async () => {
       const token = localStorage.getItem('token');
       if (token) {
