@@ -38,12 +38,12 @@ TAROT_COMPOSITIONS = {
         {"focal": "single feather detailed", "framing": "mandala pattern", "symbols": ["star points", "steam wisps"]}
     ],
     "cathleen": [
-        {"focal": "single candle flame close-up", "framing": "Celtic knotwork border", "symbols": ["moon phases", "voice waves"]},
-        {"focal": "raven with spread wings", "framing": "triple goddess symbol frame", "symbols": ["salt circle", "brooch"]},
-        {"focal": "protective circle from above", "framing": "simple round border", "symbols": ["candle points", "silver thread"]},
-        {"focal": "woman's silhouette singing", "framing": "arched window frame", "symbols": ["sound waves", "stars"]},
-        {"focal": "silver talisman detailed", "framing": "medallion style", "symbols": ["crow feather", "protective runes"]},
-        {"focal": "doorway threshold", "framing": "keyhole shape", "symbols": ["salt line", "candle glow"]}
+        {"focal": "Land Army woman with candle in blackout window", "framing": "wartime poster border with Celtic knot corners", "symbols": ["moon through curtain", "raven silhouette"]},
+        {"focal": "WRENS women forming protective circle", "framing": "signal flag bunting frame", "symbols": ["morse lamp", "sisterhood hands"]},
+        {"focal": "woman singing by firelight in uniform", "framing": "arched Anderson shelter doorway", "symbols": ["sound waves", "protective ward"]},
+        {"focal": "hands holding talisman over ration book", "framing": "medallion with uniform buttons", "symbols": ["celtic brooch", "candle flame"]},
+        {"focal": "raven messenger on wartime allotment fence", "framing": "victory garden border", "symbols": ["moon phases", "dig for victory"]},
+        {"focal": "silhouette of women at dawn, arms linked", "framing": "simple wartime frame with brass corners", "symbols": ["threshold", "strength in unity"]}
     ],
     "katherine": [
         {"focal": "hand mirror reflecting shadow", "framing": "Victorian oval frame", "symbols": ["candle", "wax seal"]},
