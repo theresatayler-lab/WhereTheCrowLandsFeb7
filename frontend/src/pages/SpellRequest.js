@@ -551,6 +551,11 @@ export const SpellRequest = () => {
       toast.success('Your spell has been crafted!');
       window.scrollTo({ top: 0, behavior: 'smooth' });
       
+      // PHASE 2: Lazy load images in background
+      if (data.asset_plan) {
+        lazyLoadImages(data.asset_plan, data.archetype?.id || spellSpec.persona_id);
+      }
+      
       // Update subscription status if limits changed
       if (data.limit_info) {
         const token = localStorage.getItem('token');
@@ -562,13 +567,13 @@ export const SpellRequest = () => {
     } catch (error) {
       console.error('Spell generation error:', error);
       toast.error('Something went wrong. Please try again.');
-    } finally {
       setLoading(false);
     }
   };
 
   const handleNewSpell = () => {
     setSpellResult(null);
+    setLoadingImages(false);
     setStep(0);
     setSpellSpec(prev => ({
       ...prev,
@@ -590,6 +595,15 @@ export const SpellRequest = () => {
             >
               ← Create Another Spell
             </button>
+            
+            {/* Images loading indicator */}
+            {loadingImages && (
+              <div className="mb-4 p-3 bg-gold/10 border border-gold/30 rounded-sm flex items-center gap-3">
+                <Loader2 className="w-4 h-4 text-gold animate-spin" />
+                <span className="font-montserrat text-sm text-gold">Generating spell imagery...</span>
+              </div>
+            )}
+            
             <GrimoirePage 
               spell={spellResult.spell}
               archetype={spellResult.archetype}
