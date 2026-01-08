@@ -297,5 +297,6 @@ export const Profile = ({ user }) => {
         </div>
       </LightSection>
     </div>
+    </PageBorderFrame>
   );
 };
