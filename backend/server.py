@@ -2191,6 +2191,9 @@ async def generate_spell(
             archetype_name = 'The Crowlands Guide'
             archetype_title = 'Keeper of Ancestral Wisdom'
         
+        # Generate dynamic context from archetype reference data
+        dynamic_archetype_context = generate_dynamic_spell_context(archetype_id, request.intention)
+        
         # Fetch related content from database for context
         deities = await db.deities.find({}, {'_id': 0, 'name': 1, 'description': 1}).to_list(10)
         rituals = await db.rituals.find({}, {'_id': 0, 'name': 1, 'description': 1}).to_list(10)
