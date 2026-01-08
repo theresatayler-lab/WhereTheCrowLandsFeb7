@@ -112,7 +112,7 @@ She was her granddaughter's greatest ally and friend, staying up all night telli
       { name: 'Starling', meaning: 'Group harmony, synchronicity, adaptability' }
     ],
     image: 'https://customer-assets.emergentagent.com/job_diywizardry/artifacts/127im9d9_Shig50.png',
-    video: 'https://customer-assets.emergentagent.com/job_witchcrowland/artifacts/u0re0oda_ShiggVideo.mp4',
+    video: 'https://customer-assets.emergentagent.com/job_witchcrowland/artifacts/u0re0oda_SheilaVideo.mp4',
     galleryImages: [
       'https://customer-assets.emergentagent.com/job_diywizardry/artifacts/d1pes21d_Shig19.png',
       'https://customer-assets.emergentagent.com/job_diywizardry/artifacts/38tunfde_Shig22.png',
