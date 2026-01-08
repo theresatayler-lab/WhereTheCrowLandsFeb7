@@ -83,10 +83,6 @@ export const HistoricalFigures = () => {
         </div>
       </div>
 
-      {/* Bottom Corners */}
-      <ElaborateCorner className="absolute bottom-3 left-3 w-16 h-16 sm:w-24 sm:h-24 -rotate-90" variant="gold" />
-      <ElaborateCorner className="absolute bottom-3 right-3 w-16 h-16 sm:w-24 sm:h-24 rotate-180" variant="gold" />
-
       {/* Detail Modal */}
       <Dialog open={!!selectedFigure} onOpenChange={() => setSelectedFigure(null)}>
         <DialogContent className="max-w-3xl bg-navy-mid border-gold/30" data-testid="figure-detail-modal">
@@ -130,5 +126,6 @@ export const HistoricalFigures = () => {
         </DialogContent>
       </Dialog>
     </DarkSection>
+    </PageBorderFrame>
   );
 };
