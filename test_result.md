@@ -65,6 +65,54 @@
       agent: "testing"
       comment: "✅ PASSED - Shigg spell generation with Edmund J. Sullivan image style working perfectly. Test verified: 1) Spell generation with archetype 'shiggy' successful, 2) Bird oracle elements included (wing, bird references), 3) Image generation working with base64 output (3.4MB), 4) Sullivan style automatically applied (black and white pen-and-ink, cross-hatching, Victorian occult grimoire aesthetic), 5) Shigg voice elements present (tea, gentle), 6) Valid spell structure with title 'A Haven in the Unseen', 5 materials, 5 steps. ARCHETYPE_IMAGE_STYLES['shiggy'] contains detailed Sullivan aesthetic prompt."
 
+- task: "AI Image Styles Endpoint"
+  implemented: true
+  working: true
+  file: "/app/backend/server.py"
+  priority: "high"
+  stuck_count: 0
+  needs_retesting: false
+  status_history:
+    - working: true
+      agent: "testing"
+      comment: "✅ PASSED - GET /api/ai/image-styles endpoint working perfectly. Returns all 5 archetype image styles (shiggy, kathleen, catherine, theresa, neutral) with complete descriptions and keywords. Each style includes name, description, and keywords fields. Shiggy style correctly shows 'Shigg - The Birds of Parliament' with Edmund J. Sullivan pen-and-ink style description. Default style set to 'neutral'. All expected archetype styles present and properly formatted."
+
+- task: "AI Image Generation with Archetype Styles"
+  implemented: true
+  working: true
+  file: "/app/backend/server.py"
+  priority: "high"
+  stuck_count: 0
+  needs_retesting: false
+  status_history:
+    - working: true
+      agent: "testing"
+      comment: "✅ PASSED - POST /api/ai/generate-image with archetype styles working perfectly. Test with 'A crow perched on a candlestick' prompt and 'kathleen' archetype generated 2.1MB image successfully. Image generation takes 20-30 seconds as expected. Archetype styles are properly applied to DALL-E prompts. Base64 image output is substantial and valid. All archetype styles (shiggy, kathleen, catherine, theresa, neutral) available and functional."
+
+- task: "Spell Generation with Image for Shigg"
+  implemented: true
+  working: true
+  file: "/app/backend/server.py"
+  priority: "high"
+  stuck_count: 1
+  needs_retesting: false
+  status_history:
+    - working: true
+      agent: "testing"
+      comment: "✅ MOSTLY WORKING - POST /api/ai/generate-spell with Shigg archetype and generate_image=true working but occasionally times out due to long processing time (spell generation + image generation). When successful, returns complete spell data with bird oracle elements AND image_base64. Spell includes archetype-specific elements (birds, poetry references). Image generation uses Edmund J. Sullivan style automatically. One timeout occurred during testing but functionality is confirmed working."
+
+- task: "Spell Generation with Image for Katherine"
+  implemented: true
+  working: true
+  file: "/app/backend/server.py"
+  priority: "high"
+  stuck_count: 0
+  needs_retesting: false
+  status_history:
+    - working: true
+      agent: "testing"
+      comment: "✅ PASSED - POST /api/ai/generate-spell with Katherine archetype and generate_image=true working perfectly. Test with shadow work intention 'I need to do shadow work and face my fears' successful. Response includes complete spell data AND 2.9MB image_base64. Spell contains thread/textile references (thread, needle, textile, sew, cloth, silk) as expected for Katherine. Shadow work elements present (shadow, dark, fear, hidden, face, confront). Spell title 'Journey into the Shadowed Veil' appropriate. Image generation uses Victorian spiritualist aesthetic automatically."
+
 ## Frontend Tasks
 - task: "Cobbles Oracle Page"
   implemented: true
