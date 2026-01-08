@@ -964,56 +964,15 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
 
         {/* Divider after working */}
         <GeneratedDivider imageBase64={generatedAssets?.divider_2} />
-              </button>
-            </div>
-            
-            <div className="space-y-4">
-              {spell.steps.map((step) => (
-                <motion.div 
-                  key={step.number}
-                  className={`relative pl-12 pb-4 ${step.number < spell.steps.length ? 'border-l-2 border-border ml-4' : 'ml-4'}`}
-                >
-                  {/* Step number circle */}
-                  <div 
-                    className={`absolute left-0 -translate-x-1/2 w-8 h-8 rounded-full flex items-center justify-center text-sm font-cinzel cursor-pointer transition-all ${
-                      completedSteps.has(step.number)
-                        ? 'bg-accent text-accent-foreground'
-                        : `${style.bgAccent} ${style.accentColor} border-2 ${style.borderColor}`
-                    }`}
-                    onClick={() => checklistMode && toggleStep(step.number)}
-                  >
-                    {checklistMode && completedSteps.has(step.number) ? (
-                      <CheckCircle2 className="w-5 h-5" />
-                    ) : (
-                      step.number
-                    )}
-                  </div>
-                  
-                  <div className={`transition-opacity ${checklistMode && completedSteps.has(step.number) ? 'opacity-50' : ''}`}>
-                    <h3 className="font-cinzel text-base text-secondary mb-1">{step.title}</h3>
-                    <p className="font-montserrat text-sm text-foreground leading-relaxed">{step.instruction}</p>
-                    {step.duration && (
-                      <p className="font-montserrat text-xs text-muted-foreground mt-2 flex items-center gap-1">
-                        <Clock className="w-3 h-3" /> {step.duration}
-                      </p>
-                    )}
-                    {step.note && (
-                      <p className="font-crimson text-xs text-accent italic mt-1">✦ {step.note}</p>
-                    )}
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </section>
-        )}
 
         {/* Spoken Words */}
         {spell.spoken_words && (
           <section className={`p-6 ${style.bgAccent} border ${style.borderColor} rounded-sm`}>
-            <h2 className="font-cinzel text-xl text-secondary mb-4 flex items-center gap-2">
-              <Quote className="w-5 h-5" />
-              Words of Power
-            </h2>
+            <SectionHeader 
+              icon={Quote} 
+              title="Words of Power" 
+              microIcon={getMicroIconForSection('spoken_words')}
+            />
             
             <div className="space-y-4">
               {spell.spoken_words.invocation && (
