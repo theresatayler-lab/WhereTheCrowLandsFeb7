@@ -339,14 +339,23 @@ export const SpellRequest = () => {
     avoid: ''
   });
   const [loading, setLoading] = useState(false);
+  const [loadingImages, setLoadingImages] = useState(false);
   const [spellResult, setSpellResult] = useState(null);
   const [subscriptionStatus, setSubscriptionStatus] = useState(null);
+  
+  // Track last selected persona for video fallback (for choose_for_me)
+  const lastSelectedPersonaRef = useRef('shigg');
 
   useEffect(() => {
     // Normalize legacy archetype IDs
     const currentArchetype = getCurrentArchetype();
     const idMap = { 'shiggy': 'shigg', 'kathleen': 'cathleen', 'catherine': 'katherine' };
     const normalizedArchetype = idMap[currentArchetype] || currentArchetype || 'choose_for_me';
+    
+    // Track last selected persona
+    if (normalizedArchetype && normalizedArchetype !== 'choose_for_me') {
+      lastSelectedPersonaRef.current = normalizedArchetype;
+    }
     
     setSpellSpec(prev => ({
       ...prev,
@@ -366,6 +375,13 @@ export const SpellRequest = () => {
     loadSubscriptionStatus();
   }, []);
 
+  // Update lastSelectedPersonaRef when persona changes
+  useEffect(() => {
+    if (spellSpec.persona_id && spellSpec.persona_id !== 'choose_for_me') {
+      lastSelectedPersonaRef.current = spellSpec.persona_id;
+    }
+  }, [spellSpec.persona_id]);
+
   const updateSpec = (updates) => {
     setSpellSpec(prev => ({ ...prev, ...updates }));
   };
@@ -383,6 +399,115 @@ export const SpellRequest = () => {
     return true;
   };
 
+  // Helper to get video URL for loading overlay (always returns a video)
+  const getLoadingVideoUrl = () => {
+    const personaId = spellSpec.persona_id;
+    
+    // If specific persona selected, use their video
+    if (personaId && personaId !== 'choose_for_me') {
+      const video = getArchetypeVideo(personaId);
+      if (video) return video;
+    }
+    
+    // For choose_for_me, use last selected persona's video
+    if (lastSelectedPersonaRef.current) {
+      const video = getArchetypeVideo(lastSelectedPersonaRef.current);
+      if (video) return video;
+    }
+    
+    // Fallback: random archetype video
+    return ALL_ARCHETYPE_VIDEOS[Math.floor(Math.random() * ALL_ARCHETYPE_VIDEOS.length)];
+  };
+
+  // Lazy load images after spell text is displayed
+  const lazyLoadImages = async (assetPlan, archetypeId) => {
+    if (!assetPlan) return;
+    
+    setLoadingImages(true);
+    const generatedAssets = {};
+    
+    try {
+      // Generate only 1 divider (reused 3x in UI) + header + tarot + sigil = 4 images total
+      const imagePrompts = [];
+      
+      // Header image
+      if (assetPlan.header_image) {
+        imagePrompts.push({
+          key: 'header_image',
+          prompt: `${assetPlan.header_image.scene_description || 'mystical ritual scene'}, ${assetPlan.header_image.mood || 'atmospheric'}, pen-and-ink illustration, NO text, NO letters`
+        });
+      }
+      
+      // Tarot card
+      if (assetPlan.tarot_card_image) {
+        imagePrompts.push({
+          key: 'tarot_card_image',
+          prompt: `symbolic emblem, ${assetPlan.tarot_card_image.must_include_focal || 'mystical symbol'}, ${assetPlan.tarot_card_image.must_use_framing || 'circular border'}, medallion style, NO text, NO letters`
+        });
+      }
+      
+      // Sigil
+      if (assetPlan.sigil) {
+        imagePrompts.push({
+          key: 'sigil',
+          prompt: `black and white sigil, ${assetPlan.sigil.design_concept || 'mystical protective symbol'}, high contrast, geometric, printable, NO text`
+        });
+      }
+      
+      // Single divider (will be reused)
+      if (assetPlan.dividers && assetPlan.dividers.length > 0) {
+        imagePrompts.push({
+          key: 'divider',
+          prompt: `horizontal decorative divider, ornamental border, ${assetPlan.dividers[0].motif || 'scrollwork'}, pen-and-ink, NO text`
+        });
+      }
+      
+      // Generate images in parallel
+      const results = await Promise.allSettled(
+        imagePrompts.map(async ({ key, prompt }) => {
+          const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/ai/generate-image`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ prompt, archetype: archetypeId })
+          });
+          if (response.ok) {
+            const data = await response.json();
+            return { key, image: data.image_base64 };
+          }
+          return null;
+        })
+      );
+      
+      // Collect successful results
+      results.forEach(result => {
+        if (result.status === 'fulfilled' && result.value) {
+          generatedAssets[result.value.key] = result.value.image;
+          // Reuse single divider for all 3 positions
+          if (result.value.key === 'divider') {
+            generatedAssets['divider_1'] = result.value.image;
+            generatedAssets['divider_2'] = result.value.image;
+            generatedAssets['divider_3'] = result.value.image;
+          }
+        }
+      });
+      
+      // Update spell result with generated assets
+      setSpellResult(prev => ({
+        ...prev,
+        asset_plan: {
+          ...prev.asset_plan,
+          generated_assets: generatedAssets
+        },
+        image_base64: generatedAssets.header_image || prev.image_base64
+      }));
+      
+    } catch (error) {
+      console.error('Error lazy loading images:', error);
+    } finally {
+      setLoadingImages(false);
+    }
+  };
+
   const handleGenerate = async () => {
     if (!canProceed()) {
       toast.error('Please complete all required fields');
@@ -392,7 +517,7 @@ export const SpellRequest = () => {
     setLoading(true);
     
     try {
-      // Use the new personalized spell endpoint
+      // PHASE 1: Get spell text FAST (no images)
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/ai/generate-personalized-spell`, {
         method: 'POST',
         headers: { 
@@ -401,7 +526,7 @@ export const SpellRequest = () => {
         },
         body: JSON.stringify({
           spell_spec: spellSpec,
-          generate_images: true
+          generate_images: false  // Text first for perceived speed
         })
       });
       
@@ -416,6 +541,7 @@ export const SpellRequest = () => {
       
       const data = await response.json();
       setSpellResult(data);
+      setLoading(false);  // Stop loading - show spell text immediately
       
       // Update persona if it was chosen for them
       if (spellSpec.persona_id === 'choose_for_me' && data.archetype?.id) {
