@@ -97,15 +97,15 @@ const StepIndicator = ({ currentStep, totalSteps }) => (
       <div key={i} className="flex items-center">
         <div className={`w-8 h-8 rounded-full flex items-center justify-center font-cinzel text-sm transition-all ${
           i < currentStep 
-            ? 'bg-gold text-navy-dark' 
+            ? 'bg-crimson text-cream' 
             : i === currentStep 
               ? 'bg-crimson text-cream border-2 border-gold' 
-              : 'bg-navy-mid/50 text-cream/50'
+              : 'bg-gold/20 text-navy-dark/50 border border-gold/40'
         }`}>
           {i < currentStep ? <Check className="w-4 h-4" /> : i + 1}
         </div>
         {i < totalSteps - 1 && (
-          <div className={`w-8 h-0.5 mx-1 ${i < currentStep ? 'bg-gold' : 'bg-navy-mid/50'}`} />
+          <div className={`w-8 h-0.5 mx-1 ${i < currentStep ? 'bg-crimson' : 'bg-gold/30'}`} />
         )}
       </div>
     ))}
