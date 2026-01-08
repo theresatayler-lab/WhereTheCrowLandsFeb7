@@ -134,7 +134,7 @@ export const favoritesAPI = {
 };
 
 export const grimoireAPI = {
-  saveSpell: async (spellData, archetypeId, archetypeName, archetypeTitle, imageBase64) => {
+  saveSpell: async (spellData, archetypeId, archetypeName, archetypeTitle, imageBase64, assetPlan = null) => {
     const response = await axios.post(
       `${API}/grimoire/save`,
       {
@@ -143,6 +143,7 @@ export const grimoireAPI = {
         archetype_name: archetypeName,
         archetype_title: archetypeTitle,
         image_base64: imageBase64,
+        asset_plan: assetPlan,  // Include tarot, sigil, dividers, micro_icons
       },
       { headers: getAuthHeader() }
     );
