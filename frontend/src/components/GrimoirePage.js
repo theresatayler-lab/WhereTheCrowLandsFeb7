@@ -1047,7 +1047,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
         ) : null}
 
         {/* Divider after working */}
-        <GeneratedDivider imageBase64={generatedAssets?.divider_2} />
+        <GeneratedDivider imageBase64={generatedAssets?.divider_2} isLoading={isLoadingImages} />
 
         {/* Spoken Words */}
         {spell.spoken_words && (
@@ -1314,7 +1314,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
         )}
 
         {/* Divider before printables */}
-        <GeneratedDivider imageBase64={generatedAssets?.divider_3} />
+        <GeneratedDivider imageBase64={generatedAssets?.divider_3} isLoading={isLoadingImages} />
         
         {/* Printables Block - Tarot Card (front & back) and Sigil */}
         <PrintablesBlock 
