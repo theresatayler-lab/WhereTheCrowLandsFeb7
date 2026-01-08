@@ -13,6 +13,14 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 
+// ===== ARCHETYPE VIDEOS FOR LOADING STATE =====
+const ARCHETYPE_VIDEOS = {
+  shigg: 'https://customer-assets.emergentagent.com/job_witchcrowland/artifacts/u0re0oda_ShiggVideo.mp4',
+  cathleen: 'https://customer-assets.emergentagent.com/job_witchcrowland/artifacts/gsq61t9z_CathleenSpell.mp4',
+  katherine: 'https://customer-assets.emergentagent.com/job_witchcrowland/artifacts/6q5iwmtx_3KatherineSpellWork.mp4',
+  theresa: 'https://customer-assets.emergentagent.com/job_witchcrowland/artifacts/v6otbwkr_Theresa4421_Have_the_woman_open_her_purse_and_a_bird_fly_out%2C_as_the_bird_fly.mp4'
+};
+
 // ===== WIZARD CONFIGURATION =====
 
 const PERSONAS = [
