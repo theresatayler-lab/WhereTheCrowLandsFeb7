@@ -174,7 +174,7 @@ const Step1 = ({ spellSpec, updateSpec }) => (
     </div>
 
     <div>
-      <h3 className="font-cinzel text-lg text-crimson mb-3">How do you want to feel after?</h3>
+      <h3 className="font-cinzel text-xl text-crimson mb-3 font-semibold">How do you want to feel after?</h3>
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
         {FEELINGS.map((f) => {
           const Icon = f.icon;
@@ -187,8 +187,8 @@ const Step1 = ({ spellSpec, updateSpec }) => (
               light={true}
             >
               <div className="flex items-center justify-center gap-2">
-                <Icon className={`w-4 h-4 ${spellSpec.desired_feeling === f.id ? 'text-crimson' : 'text-navy-dark/60'}`} />
-                <span className="font-montserrat text-sm text-navy-dark">{f.label}</span>
+                <Icon className={`w-5 h-5 ${spellSpec.desired_feeling === f.id ? 'text-crimson' : 'text-navy-dark'}`} />
+                <span className="font-montserrat text-sm text-navy-dark font-medium">{f.label}</span>
               </div>
             </OptionCard>
           );
@@ -202,7 +202,7 @@ const Step1 = ({ spellSpec, updateSpec }) => (
 const Step2 = ({ spellSpec, updateSpec }) => (
   <div className="space-y-6">
     <div>
-      <h3 className="font-cinzel text-lg text-crimson mb-3">How much time do you have?</h3>
+      <h3 className="font-cinzel text-xl text-crimson mb-3 font-semibold">How much time do you have?</h3>
       <div className="grid grid-cols-3 gap-3">
         {TIMES.map((t) => (
           <OptionCard
@@ -212,9 +212,9 @@ const Step2 = ({ spellSpec, updateSpec }) => (
             light={true}
           >
             <div className="text-center">
-              <Clock className={`w-5 h-5 mx-auto mb-1 ${spellSpec.time === t.id ? 'text-crimson' : 'text-navy-dark/60'}`} />
-              <p className="font-montserrat text-sm text-navy-dark">{t.label}</p>
-              <p className="font-montserrat text-xs text-navy-dark/60">{t.description}</p>
+              <Clock className={`w-6 h-6 mx-auto mb-2 ${spellSpec.time === t.id ? 'text-crimson' : 'text-navy-dark'}`} />
+              <p className="font-montserrat text-sm text-navy-dark font-bold">{t.label}</p>
+              <p className="font-montserrat text-xs text-navy-dark/70 mt-1">{t.description}</p>
             </div>
           </OptionCard>
         ))}
@@ -222,7 +222,7 @@ const Step2 = ({ spellSpec, updateSpec }) => (
     </div>
 
     <div>
-      <h3 className="font-cinzel text-lg text-crimson mb-3">What tone feels right?</h3>
+      <h3 className="font-cinzel text-xl text-crimson mb-3 font-semibold">What tone feels right?</h3>
       <div className="grid grid-cols-3 gap-3">
         {TONES.map((t) => (
           <OptionCard
@@ -232,8 +232,8 @@ const Step2 = ({ spellSpec, updateSpec }) => (
             light={true}
           >
             <div className="text-center">
-              <p className="font-montserrat text-sm text-navy-dark mb-1">{t.label}</p>
-              <p className="font-montserrat text-xs text-navy-dark/60">{t.description}</p>
+              <p className="font-montserrat text-sm text-navy-dark font-bold mb-1">{t.label}</p>
+              <p className="font-montserrat text-xs text-navy-dark/70">{t.description}</p>
             </div>
           </OptionCard>
         ))}
@@ -241,7 +241,7 @@ const Step2 = ({ spellSpec, updateSpec }) => (
     </div>
 
     <div>
-      <h3 className="font-cinzel text-lg text-crimson mb-3">Your belief comfort zone</h3>
+      <h3 className="font-cinzel text-xl text-crimson mb-3 font-semibold">Your belief comfort zone</h3>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {BELIEF_BOUNDARIES.map((b) => (
           <OptionCard
@@ -250,8 +250,8 @@ const Step2 = ({ spellSpec, updateSpec }) => (
             onClick={() => updateSpec({ belief_boundary: b.id })}
             light={true}
           >
-            <p className="font-montserrat text-sm text-navy-dark">{b.label}</p>
-            <p className="font-montserrat text-xs text-navy-dark/60 mt-1">{b.description}</p>
+            <p className="font-montserrat text-sm text-navy-dark font-bold">{b.label}</p>
+            <p className="font-montserrat text-xs text-navy-dark/70 mt-1">{b.description}</p>
           </OptionCard>
         ))}
       </div>
