@@ -15,12 +15,13 @@ import { toast } from 'sonner';
 
 // ===== DERIVE VIDEOS FROM ARCHETYPES.JS (single source of truth) =====
 const getArchetypeVideo = (personaId) => {
-  // Map new IDs to legacy IDs in archetypes.js
-  const idMap = { 'shigg': 'shiggy', 'cathleen': 'kathleen', 'katherine': 'catherine' };
-  const legacyId = idMap[personaId] || personaId;
-  const archetype = ARCHETYPES.find(a => a.id === legacyId || a.id === personaId);
+  // Map persona IDs to archetype IDs
+  const archetype = ARCHETYPES.find(a => a.id === personaId || a.id === personaId.replace('shigg', 'shiggy'));
   return archetype?.video || null;
 };
+
+// Generic fallback video for non-persona spells
+const GENERIC_SPELL_VIDEO = 'https://customer-assets.emergentagent.com/job_mystic-grimoire-1/artifacts/sl3euh2k_GenericSpellWaitingVid.MOV';
 
 // Get all available videos for random selection (for choose_for_me fallback)
 const ALL_ARCHETYPE_VIDEOS = ARCHETYPES.filter(a => a.video).map(a => a.video);
