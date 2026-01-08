@@ -573,29 +573,29 @@ PERSONA_CONFIG = {
         
         "visual_dna": {
             "constants": {
-                "primary_motif": "raven/crow feathers, devotional candles, protective circles, bells",
-                "secondary_motif": "subtle Brigid-cross motifs, prayer beads (neutral/non-denominational), altar vignettes, home-circle gatherings",
-                "era_aesthetic": "candlelit devotional mystery - protection magic meets Celtic-Irish hearth spirituality",
-                "art_style": "rich tapestry aesthetic with deep crimson and gold, candlelight warmth, feathered textures, devotional intimacy"
+                "primary_motif": "raven/crow feathers, candlelight, bell, protective circle, threshold/doorway",
+                "secondary_motif": "beads/rosary-like (non-denominational), subtle Brigid-cross motif, altar vignettes",
+                "era_aesthetic": "candlelit devotional mystery, protection magic, Celtic-Irish hearth spirituality",
+                "art_style": "ornate silk scarf tapestry illustration with deeper crimson and gold tones, candleglow warmth, engraved linework"
             },
             "motif_library": [
                 "raven feather", "crow silhouette", "devotional candle", "protective circle",
                 "brass bell", "Brigid cross", "prayer beads", "altar cloth", "crescent moon",
-                "candlelit threshold", "feather bundle", "wax seal", "home hearth", "sacred flame"
+                "threshold doorway", "feather bundle", "wax seal", "sacred flame", "ivy"
             ],
             "palette_variants": {
                 "gentle": ["warm candlelight amber", "soft cream", "dove grey", "muted rose"],
-                "practical": ["deep crimson", "antique gold", "midnight navy", "warm bronze"],
-                "intense": ["oxblood red", "burnished gold", "raven black", "altar flame orange"]
+                "practical": ["deep crimson", "antique gold", "midnight blue", "warm bronze"],
+                "intense": ["oxblood burgundy", "burnished gold", "raven black", "candle glow orange"]
             },
             "avoid": [
-                "kitchen objects", "tailoring tools", "strict geometric diagrams",
-                "WWII propaganda", "Land Army women", "military uniforms", "teacups",
-                "bright saturated colors", "modern imagery", "photorealistic"
+                "kitchen objects", "tailoring tools", "strict geometric diagrams", "teacups",
+                "WWII propaganda", "Land Army women", "military uniforms",
+                "photorealistic", "neon colors", "modern imagery", "3D render look"
             ],
-            "dall_e_rules": "devotional candlelit altar scene, raven feathers and protective circles, deep crimson and antique gold and midnight navy palette, Brigid cross motifs, brass bells, prayer beads, home-circle vignette NOT portrait, warm candleglow highlights, feathered textures",
-            "header_scene": "candlelit home-circle altar vignette with raven feathers, candles, and protective symbols - NOT a portrait",
-            "tarot_emblem": "raven feather crossed with crescent moon inside protective ring emblem"
+            "dall_e_rules": "ornate silk scarf tapestry illustration, candlelit home-circle altar vignette, raven feathers and protective circles, deeper crimson and antique gold and midnight blue palette, Brigid cross motifs, brass bells, prayer beads, candle glow highlights, feathered textures, NOT a portrait",
+            "header_scene": "candlelit home-circle altar vignette with raven feathers, candles, bells, protective symbols, threshold doorway, ornate tapestry style - NOT a portrait",
+            "tarot_emblem": "raven feather crossed with crescent moon inside protective ring emblem, symmetrical medallion on dark background"
         },
         
         "allowed_sources": [
