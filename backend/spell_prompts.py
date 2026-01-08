@@ -422,7 +422,6 @@ def build_image_prompt(asset_type: str, asset_plan: dict, persona_config: dict, 
     base_style = persona_config['visual_dna']['constants']['art_style']
     dall_e_rules = persona_config['visual_dna'].get('dall_e_rules', 'pen-and-ink illustration, NO text')
     avoid_list = persona_config['visual_dna']['avoid']
-    palette = persona_config['visual_dna']['palette_variants'].get('practical', ['black', 'white'])
     
     if asset_type == "header_image":
         asset_info = asset_plan.get("header_image", {})
