@@ -116,6 +116,42 @@
       agent: "testing"
       comment: "✅ PASSED - POST /api/ai/generate-spell with Katherine archetype and generate_image=true working perfectly. Test with shadow work intention 'I need to do shadow work and face my fears' successful. Response includes complete spell data AND 2.9MB image_base64. Spell contains thread/textile references (thread, needle, textile, sew, cloth, silk) as expected for Katherine. Shadow work elements present (shadow, dark, fear, hidden, face, confront). Spell title 'Journey into the Shadowed Veil' appropriate. Image generation uses Victorian spiritualist aesthetic automatically."
 
+- task: "Personalized Spell Generation with Kathleen Protection"
+  implemented: true
+  working: true
+  file: "/app/backend/server.py"
+  priority: "high"
+  stuck_count: 0
+  needs_retesting: false
+  status_history:
+    - working: true
+      agent: "testing"
+      comment: "✅ PASSED - POST /api/ai/generate-personalized-spell with Kathleen persona for protection working perfectly. Test verified: 1) Spell generation with persona_id='kathleen' successful, 2) Response contains spell object with title, materials, the_working, spoken_words, 3) Response has archetype info (id: kathleen, name: Cathleen), 4) Response has scenario info (id: token_talisman, name: The Token Talisman), 5) Spell mentions user name 'Sarah' integrated correctly, 6) Spell integrates anchor object 'candle' throughout content, 7) Spell is tailored to 'desk' setting as requested. Personalization system working as designed."
+
+- task: "Personalized Spell Generation with Scenario Rotation"
+  implemented: true
+  working: true
+  file: "/app/backend/server.py"
+  priority: "high"
+  stuck_count: 0
+  needs_retesting: false
+  status_history:
+    - working: true
+      agent: "testing"
+      comment: "✅ PASSED - Scenario rotation system working correctly. Second spell with same persona (Kathleen) but different feeling (softened vs protected) generated different scenario (keening_container vs token_talisman). Spell structure is different with different section focus. Spell correctly integrates voice/song elements (song, sing, hum, music) instead of candle elements. Setting 'bedroom' properly integrated. Spell title 'Whispers of the Gentle Dawn' appropriate for grief work. Scenario rotation prevents repetitive spell structures."
+
+- task: "Personalized Spell Generation Choose-For-Me Persona"
+  implemented: true
+  working: true
+  file: "/app/backend/server.py"
+  priority: "high"
+  stuck_count: 0
+  needs_retesting: false
+  status_history:
+    - working: true
+      agent: "testing"
+      comment: "✅ PASSED - Choose-for-me persona selection working perfectly. System correctly chose Shigg archetype for bird anchor object. Test verified: 1) persona_id='choose_for_me' processed correctly, 2) System selected 'shiggy' archetype based on anchor_object='bird', 3) Spell contains bird-related content (bird, wing, feather, flight, song), 4) Outdoor setting elements properly integrated (outdoor, nature, tree, garden), 5) Spell title 'Whispers on the Wing' appropriate for bird guidance. Intelligent persona selection algorithm working as designed."
+
 ## Frontend Tasks
 - task: "Cobbles Oracle Page"
   implemented: true
