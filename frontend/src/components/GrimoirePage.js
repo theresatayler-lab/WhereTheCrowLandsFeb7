@@ -1262,11 +1262,12 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
         {/* Divider before printables */}
         <GeneratedDivider imageBase64={generatedAssets?.divider_3} />
         
-        {/* Printables Block - Tarot Card and Sigil */}
+        {/* Printables Block - Tarot Card (front & back) and Sigil */}
         <PrintablesBlock 
           tarotImageBase64={generatedAssets?.tarot_card_image}
           sigilImageBase64={generatedAssets?.sigil}
           spellTitle={spell.title}
+          tarotCard={spell.tarot_card}
         />
 
         {/* Embossed Seal Stamp */}
