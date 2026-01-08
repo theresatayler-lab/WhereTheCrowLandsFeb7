@@ -131,7 +131,7 @@ She was her granddaughter's greatest ally and friend, staying up all night telli
     name: 'Cathleen',
     title: 'The Singer of Strength',
     shortName: 'Cathleen',
-    era: 'Edwardian through WWII (1900-1945)',
+    era: 'WWII Homefront - Land Army, WRENS & Celtic-Irish Resistance (1940s)',
     birdSymbol: 'Crows & Ravens',
     birdEmoji: '🪶',
     colorScheme: {
