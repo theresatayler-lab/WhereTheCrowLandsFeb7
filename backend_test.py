@@ -1954,7 +1954,7 @@ class SpiritualAppAPITester:
         
         print(f"   ✅ Shigg persona elements found: {', '.join(found_elements)}")
         
-        return Truen CROWLANDS_ART_BIBLE]
+        return True
             
             if missing_keys:
                 print(f"   ❌ Missing keys in CROWLANDS_ART_BIBLE: {missing_keys}")
