@@ -712,13 +712,14 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      ref={grimoireRef}
-      className={`bg-card/80 border-2 ${style.borderColor} rounded-sm overflow-hidden shadow-xl`}
-      style={{ backgroundColor: '#D8CBB3' }}
-    >
+    <SpellBorderFrame persona={archetype?.id || 'site'}>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        ref={grimoireRef}
+        className={`bg-card/80 border-2 ${style.borderColor} rounded-sm overflow-hidden shadow-xl`}
+        style={{ backgroundColor: '#D8CBB3' }}
+      >
       {/* View Toggle - Show only if tarot_card exists */}
       {spell.tarot_card && (
         <div className="flex justify-center gap-2 p-4 bg-amber-900/15 border-b border-amber-800/30">
