@@ -290,19 +290,28 @@ PERSONA_CONFIG = {
         
         "visual_dna": {
             "constants": {
-                "primary_motif": "birds (especially crows, robins, sparrows)",
-                "secondary_motif": "teacups, kettles, domestic items",
-                "era_aesthetic": "1940s Blitz-era London, wartime resilience",
-                "art_style": "Edmund J. Sullivan pen-and-ink, Victorian book illustration, NO color, black and white only"
+                "primary_motif": "birds (especially crows, robins, sparrows), feathers, nests",
+                "secondary_motif": "teacups, kettles, windowsills, morning light, domestic hearth wisdom",
+                "era_aesthetic": "1940s Blitz-era London, East End warmth, wartime resilience, poetic domestic magic",
+                "art_style": "Edmund J. Sullivan pen-and-ink with sepia wash, Victorian book illustration, ink and aged paper tones with subtle warmth"
             },
-            "motif_library": ["crow", "robin", "sparrow", "teacup", "kettle", "windowsill", "rose", "morning light", "steam", "nest", "feather", "breadcrumb"],
+            "motif_library": [
+                "crow", "robin", "sparrow", "raven silhouette", "feather", "nest", 
+                "teacup", "kettle", "windowsill", "morning light", "steam curls",
+                "breadcrumb", "rose", "key", "threshold", "dawn sky"
+            ],
             "palette_variants": {
-                "gentle": ["warm sepia", "cream", "soft brown"],
-                "practical": ["black ink", "cream paper"],
-                "intense": ["high contrast black/white", "deep shadows"]
+                "gentle": ["warm sepia", "aged cream", "soft dove grey", "tea-stain brown"],
+                "practical": ["ink black", "parchment cream", "antique gold accent", "midnight navy"],
+                "intense": ["deep crow black", "burnished gold", "oxblood accent", "storm grey"]
             },
-            "avoid": ["Celtic knots", "Morrigan imagery", "séance elements", "Victorian mourning", "color", "photorealistic"],
-            "dall_e_rules": "pen-and-ink line illustration, Victorian book plate style, cross-hatching, NO text, NO letters, NO words, black and white only, print-friendly"
+            "avoid": [
+                "Celtic knots", "Morrigan imagery", "séance elements", "Victorian mourning",
+                "photorealistic", "neon colors", "modern imagery", "bright saturated colors"
+            ],
+            "dall_e_rules": "pen-and-ink line illustration with sepia and antique gold accents, Victorian book plate style, cross-hatching, bird silhouettes and feathers, domestic hearth motifs, warm ink tones on aged parchment, subtle gold and navy highlights permitted",
+            "header_scene": "crow perched on windowsill with teacup and morning light, Victorian ink illustration style",
+            "tarot_emblem": "crow silhouette with teacup and feather arrangement, circular border"
         },
         
         # ALLOWED SOURCES with IDs, links, and reference_class
