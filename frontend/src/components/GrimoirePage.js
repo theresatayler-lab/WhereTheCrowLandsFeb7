@@ -36,8 +36,31 @@ const MATERIAL_ICONS = {
   bowl: Circle,
 };
 
-// Archetype-specific styling
+// Archetype-specific styling (supporting both legacy and new IDs)
 const ARCHETYPE_STYLES = {
+  // New standardized IDs
+  shigg: {
+    borderColor: 'border-primary',
+    accentColor: 'text-primary',
+    bgAccent: 'bg-primary/5',
+    headerGradient: 'from-primary/20 to-transparent',
+    cardGradient: 'from-amber-900/90 via-amber-800/80 to-amber-900/90',
+  },
+  cathleen: {
+    borderColor: 'border-secondary',
+    accentColor: 'text-secondary',
+    bgAccent: 'bg-secondary/5',
+    headerGradient: 'from-secondary/20 to-transparent',
+    cardGradient: 'from-slate-800/90 via-slate-700/80 to-slate-800/90',
+  },
+  katherine: {
+    borderColor: 'border-accent',
+    accentColor: 'text-accent',
+    bgAccent: 'bg-accent/5',
+    headerGradient: 'from-accent/20 to-transparent',
+    cardGradient: 'from-stone-800/90 via-stone-700/80 to-stone-800/90',
+  },
+  // Legacy IDs (for backwards compatibility)
   shiggy: {
     borderColor: 'border-primary',
     accentColor: 'text-primary',
@@ -74,6 +97,77 @@ const ARCHETYPE_STYLES = {
     cardGradient: 'from-zinc-800/90 via-zinc-700/80 to-zinc-800/90',
   },
 };
+
+// Generated Divider Component - displays DALL-E generated divider images
+const GeneratedDivider = ({ imageBase64, className = '' }) => {
+  if (!imageBase64) return null;
+  
+  return (
+    <div className={`w-full my-6 ${className}`}>
+      <img 
+        src={`data:image/png;base64,${imageBase64}`}
+        alt="Section divider"
+        className="w-full h-auto max-h-16 object-contain opacity-70"
+      />
+    </div>
+  );
+};
+
+// Printables Block - Shows tarot card and sigil for printing
+const PrintablesBlock = ({ tarotImageBase64, sigilImageBase64, spellTitle }) => {
+  if (!tarotImageBase64 && !sigilImageBase64) return null;
+  
+  return (
+    <section className="my-8 p-6 bg-muted/20 border-2 border-dashed border-border rounded-sm">
+      <h3 className="font-cinzel text-lg text-secondary mb-4 text-center flex items-center justify-center gap-2">
+        <Download className="w-5 h-5" />
+        Printable Elements
+      </h3>
+      <p className="font-montserrat text-xs text-muted-foreground text-center mb-4">
+        Right-click to save these images for your physical grimoire
+      </p>
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Tarot Card */}
+        {tarotImageBase64 && (
+          <div className="text-center">
+            <p className="font-montserrat text-xs text-muted-foreground mb-2 uppercase tracking-wider">
+              Tarot Card
+            </p>
+            <img 
+              src={`data:image/png;base64,${tarotImageBase64}`}
+              alt={`${spellTitle} - Tarot Card`}
+              className="w-full max-w-[200px] mx-auto rounded-sm border border-border shadow-md"
+            />
+          </div>
+        )}
+        
+        {/* Sigil */}
+        {sigilImageBase64 && (
+          <div className="text-center">
+            <p className="font-montserrat text-xs text-muted-foreground mb-2 uppercase tracking-wider">
+              Sigil
+            </p>
+            <img 
+              src={`data:image/png;base64,${sigilImageBase64}`}
+              alt={`${spellTitle} - Sigil`}
+              className="w-full max-w-[150px] mx-auto rounded-sm border border-border shadow-md bg-white"
+            />
+          </div>
+        )}
+      </div>
+    </section>
+  );
+};
+
+// Section Header with Micro-Icon
+const SectionHeader = ({ icon: Icon, title, microIcon, accentColor }) => (
+  <h2 className={`font-cinzel text-xl text-secondary mb-4 flex items-center gap-2`}>
+    {microIcon && <span className="text-xl">{microIcon}</span>}
+    {Icon && !microIcon && <Icon className="w-5 h-5" />}
+    {title}
+  </h2>
+);
 
 // Enhanced Tarot Card View with Image and Flip Functionality
 const TarotCardView = ({ spell, archetype, style, imageBase64, onViewFull, onCopy, onSave, onNewSpell, isSaving }) => {
