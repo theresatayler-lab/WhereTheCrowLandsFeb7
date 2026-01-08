@@ -479,6 +479,105 @@ export const PrintablesBlock = ({ tarotUrl, sigilUrl }) => (
 );
 
 // ============================================================================
+// PAGE-LEVEL BORDER FRAME - Site-wide crow border for major containers
+// ============================================================================
+
+export const PageBorderFrame = ({ children, className = '', variant = 'dark' }) => {
+  const borderUrl = PERSONA_BORDER_URLS.site;
+  
+  return (
+    <div className={`relative ${className}`}>
+      {/* Corner ornaments */}
+      <div className="absolute top-0 left-0 w-20 h-20 sm:w-28 sm:h-28 pointer-events-none z-30 opacity-80"
+        style={{
+          backgroundImage: `url(${borderUrl})`,
+          backgroundSize: '400%',
+          backgroundPosition: 'top left',
+        }}
+      />
+      <div className="absolute top-0 right-0 w-20 h-20 sm:w-28 sm:h-28 pointer-events-none z-30 opacity-80"
+        style={{
+          backgroundImage: `url(${borderUrl})`,
+          backgroundSize: '400%',
+          backgroundPosition: 'top right',
+        }}
+      />
+      <div className="absolute bottom-0 left-0 w-20 h-20 sm:w-28 sm:h-28 pointer-events-none z-30 opacity-80"
+        style={{
+          backgroundImage: `url(${borderUrl})`,
+          backgroundSize: '400%',
+          backgroundPosition: 'bottom left',
+        }}
+      />
+      <div className="absolute bottom-0 right-0 w-20 h-20 sm:w-28 sm:h-28 pointer-events-none z-30 opacity-80"
+        style={{
+          backgroundImage: `url(${borderUrl})`,
+          backgroundSize: '400%',
+          backgroundPosition: 'bottom right',
+        }}
+      />
+      {/* Content */}
+      <div className="relative z-10">{children}</div>
+    </div>
+  );
+};
+
+// ============================================================================
+// SECTION BORDER FRAME - Gold keyline for content sections
+// ============================================================================
+
+export const SectionBorderFrame = ({ children, className = '', variant = 'gold' }) => {
+  const colors = {
+    gold: { border: 'border-gold/40', corner: 'text-gold/60', hover: 'group-hover:border-gold/60' },
+    crimson: { border: 'border-crimson/40', corner: 'text-crimson/60', hover: 'group-hover:border-crimson/60' },
+    silver: { border: 'border-silver-mist/40', corner: 'text-silver-mist/60', hover: 'group-hover:border-silver-mist/60' }
+  };
+  const style = colors[variant] || colors.gold;
+  
+  return (
+    <div className={`relative group ${className}`}>
+      {/* Outer border */}
+      <div className={`absolute inset-0 border ${style.border} rounded-sm ${style.hover} transition-all duration-300`} />
+      {/* Inner keyline */}
+      <div className="absolute inset-1.5 border border-gold/20 rounded-sm" />
+      {/* Corner diamonds */}
+      <span className={`absolute -top-1 -left-1 ${style.corner} text-xs`}>◆</span>
+      <span className={`absolute -top-1 -right-1 ${style.corner} text-xs`}>◆</span>
+      <span className={`absolute -bottom-1 -left-1 ${style.corner} text-xs`}>◆</span>
+      <span className={`absolute -bottom-1 -right-1 ${style.corner} text-xs`}>◆</span>
+      {/* Content */}
+      <div className="relative z-10 p-4">{children}</div>
+    </div>
+  );
+};
+
+// ============================================================================
+// SPELL PERSONA BORDER - Full decorative border based on archetype
+// ============================================================================
+
+export const SpellBorderFrame = ({ persona = 'site', children, className = '' }) => {
+  const borderUrl = PERSONA_BORDER_URLS[persona] || PERSONA_BORDER_URLS.site;
+  
+  return (
+    <div className={`relative ${className}`}>
+      {/* Full border overlay - positioned at corners */}
+      <div 
+        className="absolute inset-0 pointer-events-none z-20"
+        style={{
+          backgroundImage: `url(${borderUrl})`,
+          backgroundSize: 'contain',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center',
+          opacity: 0.9
+        }}
+      />
+      {/* Content with padding to avoid border overlap */}
+      <div className="relative z-10 p-4 sm:p-8">{children}</div>
+    </div>
+  );
+};
+
+// ============================================================================
 // EXPORTS
 // ============================================================================
 
@@ -509,6 +608,9 @@ export default {
   BorderFrame,
   PersonaBorderFrame,
   TarotCardFrame,
+  PageBorderFrame,
+  SectionBorderFrame,
+  SpellBorderFrame,
   PERSONA_BORDER_URLS,
   // Spell Components
   SpellSectionHeader,
