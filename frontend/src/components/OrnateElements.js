@@ -382,6 +382,7 @@ export const BorderFrame = ({ children, variant = 'gold', className = '' }) => {
 // Persona-specific border frames using uploaded assets
 export const PERSONA_BORDER_URLS = {
   site: 'https://customer-assets.emergentagent.com/job_mystic-grimoire-1/artifacts/jcxzlb20_SiteOverallCorners%20and%20any%20borders.png',
+  shigg: 'https://customer-assets.emergentagent.com/job_mystic-grimoire-1/artifacts/jcxzlb20_SiteOverallCorners%20and%20any%20borders.png', // Shigg uses site border (crow/Celtic)
   cathleen: 'https://customer-assets.emergentagent.com/job_mystic-grimoire-1/artifacts/12ds6wfx_CathleenBorder.png',
   katherine: 'https://customer-assets.emergentagent.com/job_mystic-grimoire-1/artifacts/85szfipf_KateBorder.png',
   theresa: 'https://customer-assets.emergentagent.com/job_mystic-grimoire-1/artifacts/8jgu6o97_TheresaBorder.png'
