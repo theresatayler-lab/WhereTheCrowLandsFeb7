@@ -1,6 +1,24 @@
 import React from 'react';
 
-// Elaborate corner ornament
+// ============================================================================
+// CROWLANDS VISUAL SYSTEM V1.1 - REUSABLE COMPONENTS
+// Make every page feel like a collectible grimoire
+// ============================================================================
+
+// Color tokens from Art Bible
+const COLORS = {
+  navy: '#0e1629',
+  oxblood: '#8b2232',
+  gold: '#d4a84b',
+  bone: '#f5f0e6',
+  crimson: '#b82330',
+  copper: '#b87333'
+};
+
+// ============================================================================
+// CORNER ORNAMENTS
+// ============================================================================
+
 export const ElaborateCorner = ({ className, variant = 'gold' }) => {
   const colors = variant === 'gold' 
     ? { primary: '#d4a84b', secondary: '#b82330', tertiary: '#e6c068' }
@@ -21,7 +39,34 @@ export const ElaborateCorner = ({ className, variant = 'gold' }) => {
   );
 };
 
-// Grand section divider
+export const CornerFlourish = ({ position = 'top-left', variant = 'gold', className = '' }) => {
+  const colors = variant === 'gold' 
+    ? { primary: '#d4a84b', secondary: '#b82330' }
+    : { primary: '#b82330', secondary: '#d4a84b' };
+  
+  const rotations = {
+    'top-left': '',
+    'top-right': 'rotate-90',
+    'bottom-left': '-rotate-90',
+    'bottom-right': 'rotate-180'
+  };
+  
+  return (
+    <svg viewBox="0 0 80 80" className={`${rotations[position]} ${className}`} fill="none">
+      <path d="M0,40 Q0,0 40,0" stroke={colors.primary} strokeWidth="2" opacity="0.8" />
+      <path d="M0,28 Q0,0 28,0" stroke={colors.primary} strokeWidth="1.5" opacity="0.5" />
+      <path d="M8,48 Q8,8 48,8" stroke={colors.secondary} strokeWidth="1" opacity="0.4" />
+      <circle cx="20" cy="20" r="3" fill={colors.primary} opacity="0.7" />
+      <circle cx="8" cy="8" r="2" fill={colors.secondary} opacity="0.6" />
+      <path d="M12,12 L18,6 L24,12 L18,18 Z" fill={colors.secondary} opacity="0.5" />
+    </svg>
+  );
+};
+
+// ============================================================================
+// DIVIDERS & SECTION BREAKS
+// ============================================================================
+
 export const GrandDivider = ({ variant = 'default', light = false }) => {
   const lineColor = light ? 'from-navy-dark/30 via-crimson/50 to-navy-dark/30' : 'from-transparent via-gold/80 to-transparent';
   const accentColor = light ? 'text-crimson' : 'text-crimson-bright';
@@ -72,7 +117,6 @@ export const GrandDivider = ({ variant = 'default', light = false }) => {
   );
 };
 
-// Simple divider
 export const MysticalDivider = ({ variant = 'default', light = false }) => {
   const lineColor = light ? 'via-crimson/40' : 'via-gold/60';
   const accentColor = light ? 'text-crimson' : 'text-crimson-bright';
@@ -103,15 +147,62 @@ export const MysticalDivider = ({ variant = 'default', light = false }) => {
   );
 };
 
-// Dark section wrapper with background imagery
+// Section Divider Strip - for page sections
+export const SectionDivider = ({ variant = 'default', className = '' }) => {
+  const patterns = {
+    default: '❧ ◆ ❧',
+    stars: '✦ ✧ ⭐ ✧ ✦',
+    moons: '☾ ✦ ☽ ✦ ☾',
+    celtic: '☘️ ◆ ☘️',
+    eyes: '✦ 👁 ✦',
+    feathers: '🪶 ◆ 🪶',
+    birds: '🐦‍⬛ ✦ 🐦‍⬛'
+  };
+  
+  return (
+    <div className={`flex items-center justify-center gap-2 py-4 ${className}`}>
+      <div className="h-px flex-1 max-w-20 bg-gradient-to-r from-transparent to-gold/40" />
+      <span className="text-gold/60 text-sm tracking-widest">{patterns[variant]}</span>
+      <div className="h-px flex-1 max-w-20 bg-gradient-to-l from-transparent to-gold/40" />
+    </div>
+  );
+};
+
+// ============================================================================
+// STATIC ORNAMENT LIBRARY - Bestiary & Occult Glyphs
+// ============================================================================
+
+export const BestiaryGlyph = ({ animal = 'raven', className = '', size = 'md' }) => {
+  const sizes = { sm: 'text-lg', md: 'text-2xl', lg: 'text-4xl' };
+  const glyphs = {
+    raven: '🐦‍⬛', crow: '🐦‍⬛', owl: '🦉', hare: '🐇', fox: '🦊',
+    moth: '🦋', serpent: '🐍', stag: '🦌', wolf: '🐺', badger: '🦡',
+    magpie: '🐦', robin: '🐦', toad: '🐸', sparrow: '🐦'
+  };
+  return <span className={`${sizes[size]} ${className}`}>{glyphs[animal] || glyphs.raven}</span>;
+};
+
+export const OccultGlyph = ({ symbol = 'pentacle', className = '', size = 'md' }) => {
+  const sizes = { sm: 'text-lg', md: 'text-2xl', lg: 'text-4xl' };
+  const glyphs = {
+    pentacle: '⛤', moon: '☽', sun: '☀', star: '✦', eye: '👁',
+    key: '🗝️', chalice: '🏆', bell: '🔔', candle: '🕯️', crystal: '💎',
+    ouroboros: '🐍', compass: '🧭', mirror: '🪞', feather: '🪶',
+    needle: '🪡', thread: '🧵', seal: '🔏', scroll: '📜'
+  };
+  return <span className={`${sizes[size]} ${className}`}>{glyphs[symbol] || glyphs.pentacle}</span>;
+};
+
+// ============================================================================
+// PAGE SECTIONS - Dark & Light Wrappers
+// ============================================================================
+
 export const DarkSection = ({ children, className = '', variant = 'default' }) => (
   <div className={`relative bg-navy-dark ${className}`}>
-    {/* Background imagery */}
     <div className="absolute inset-0 z-0" style={{
       backgroundImage: 'url(https://customer-assets.emergentagent.com/job_mystic-circle-2/artifacts/t5tfc6i3_COuld_we_creatre_more_of_these_--profile_bsfwy2d_--v_7_d08b86ee-a6ac-4cf3-a814-1344b45b3380_1.png)',
       backgroundSize: 'cover', backgroundPosition: 'center', opacity: '0.05', filter: 'hue-rotate(200deg) saturate(0.5)',
     }} />
-    {/* Radial glows */}
     <div className="absolute inset-0 z-0" style={{
       background: variant === 'warm' 
         ? 'radial-gradient(ellipse at 50% 30%, rgba(184, 35, 48, 0.1) 0%, transparent 50%), radial-gradient(ellipse at 70% 80%, rgba(212, 168, 75, 0.08) 0%, transparent 40%)'
@@ -121,30 +212,108 @@ export const DarkSection = ({ children, className = '', variant = 'default' }) =
   </div>
 );
 
-// Light parchment section wrapper
 export const LightSection = ({ children, className = '' }) => (
   <div className={`relative ${className}`} style={{ background: 'linear-gradient(135deg, #f5f0e6 0%, #e8e0d0 50%, #f5f0e6 100%)' }}>
-    {/* Subtle pattern */}
     <div className="absolute inset-0 opacity-[0.02]" style={{
       backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 30L45 15M30 30L15 45M30 30L45 45M30 30L15 15' stroke='%230e1629' stroke-width='0.5' fill='none'/%3E%3C/svg%3E")`,
     }} />
-    {/* Ornate borders */}
     <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-crimson to-transparent" />
     <div className="absolute top-1 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-gold/60 to-transparent" />
     <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-gold/60 to-transparent" />
     <div className="absolute bottom-0.5 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-crimson to-transparent" />
-    
-    {/* Corners */}
     <ElaborateCorner className="absolute top-2 left-2 w-12 h-12 sm:w-16 sm:h-16" variant="crimson" />
     <ElaborateCorner className="absolute top-2 right-2 w-12 h-12 sm:w-16 sm:h-16 rotate-90" variant="crimson" />
     <ElaborateCorner className="absolute bottom-2 left-2 w-12 h-12 sm:w-16 sm:h-16 -rotate-90" variant="crimson" />
     <ElaborateCorner className="absolute bottom-2 right-2 w-12 h-12 sm:w-16 sm:h-16 rotate-180" variant="crimson" />
-    
     <div className="relative z-10">{children}</div>
   </div>
 );
 
-// Page header with ornate styling
+// ============================================================================
+// V1.1 STANDARD COMPONENTS - PageHero, ParchmentPanel, OrnateCard
+// ============================================================================
+
+// PageHero - Dark navy hero section with subtle map texture
+export const PageHero = ({ 
+  icon: Icon, 
+  title, 
+  subtitle, 
+  children,
+  showCorners = true,
+  dividerVariant = 'default'
+}) => (
+  <DarkSection className="py-12 sm:py-16 md:py-20 px-4 sm:px-6" variant="warm">
+    {showCorners && (
+      <>
+        <CornerFlourish position="top-left" className="absolute top-3 left-3 w-14 h-14 sm:w-18 sm:h-18" />
+        <CornerFlourish position="top-right" className="absolute top-3 right-3 w-14 h-14 sm:w-18 sm:h-18" />
+      </>
+    )}
+    
+    <div className="max-w-4xl mx-auto relative z-10">
+      <div className="text-center">
+        {Icon && (
+          <Icon className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 mx-auto mb-4 text-crimson-bright"
+            style={{ filter: 'drop-shadow(0 0 15px rgba(184, 35, 48, 0.5))' }} />
+        )}
+        <h1 className="font-italiana text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-gold-light mb-3"
+          style={{ textShadow: '0 2px 30px rgba(212, 168, 75, 0.5)' }}>
+          {title}
+        </h1>
+        {subtitle && (
+          <p className="font-montserrat text-sm sm:text-base text-silver-mist/80 max-w-2xl mx-auto">
+            {subtitle}
+          </p>
+        )}
+      </div>
+      {dividerVariant && <GrandDivider variant={dividerVariant} />}
+      {children}
+    </div>
+  </DarkSection>
+);
+
+// ParchmentPanel - Bone/ivory content card with soft shadow and gold keyline
+export const ParchmentPanel = ({ children, className = '', showDivider = true }) => (
+  <LightSection className={`py-10 sm:py-14 px-4 sm:px-6 ${className}`}>
+    <div className="max-w-5xl mx-auto">
+      {showDivider && <MysticalDivider light />}
+      {children}
+    </div>
+  </LightSection>
+);
+
+// OrnateCard - For grids (My Grimoire, Archives) - gold keyline + corner ornaments
+export const OrnateCard = ({ children, className = '', hover = true }) => (
+  <div className={`relative ${hover ? 'group' : ''} ${className}`}>
+    <div className="absolute inset-0 border-2 border-gold/40 rounded-lg group-hover:border-gold/60 transition-all duration-300" />
+    <div className="absolute inset-1.5 border border-crimson/20 rounded-md group-hover:border-crimson/40 transition-all duration-300" />
+    <div className="absolute inset-0 bg-navy-mid/60 rounded-lg backdrop-blur-sm" />
+    <span className="absolute -top-1.5 -left-1.5 text-crimson text-sm opacity-60 group-hover:opacity-100 transition-opacity">◆</span>
+    <span className="absolute -top-1.5 -right-1.5 text-crimson text-sm opacity-60 group-hover:opacity-100 transition-opacity">◆</span>
+    <span className="absolute -bottom-1.5 -left-1.5 text-crimson text-sm opacity-60 group-hover:opacity-100 transition-opacity">◆</span>
+    <span className="absolute -bottom-1.5 -right-1.5 text-crimson text-sm opacity-60 group-hover:opacity-100 transition-opacity">◆</span>
+    <div className="relative z-10 p-4 sm:p-6">{children}</div>
+  </div>
+);
+
+// LightOrnateCard - For parchment sections
+export const LightOrnateCard = ({ children, className = '', hover = true }) => (
+  <div className={`relative ${hover ? 'group' : ''} ${className}`}>
+    <div className="absolute inset-0 border-2 border-crimson/30 rounded-lg group-hover:border-crimson/50 transition-all duration-300" />
+    <div className="absolute inset-1.5 border border-gold/30 rounded-md group-hover:border-gold/50 transition-all duration-300" />
+    <div className="absolute inset-0 bg-cream/80 rounded-lg backdrop-blur-sm" />
+    <span className="absolute -top-1.5 -left-1.5 text-gold-dark text-sm opacity-60 group-hover:opacity-100 transition-opacity">◆</span>
+    <span className="absolute -top-1.5 -right-1.5 text-gold-dark text-sm opacity-60 group-hover:opacity-100 transition-opacity">◆</span>
+    <span className="absolute -bottom-1.5 -left-1.5 text-gold-dark text-sm opacity-60 group-hover:opacity-100 transition-opacity">◆</span>
+    <span className="absolute -bottom-1.5 -right-1.5 text-gold-dark text-sm opacity-60 group-hover:opacity-100 transition-opacity">◆</span>
+    <div className="relative z-10 p-4 sm:p-6">{children}</div>
+  </div>
+);
+
+// ============================================================================
+// HEADERS & TEXT ELEMENTS
+// ============================================================================
+
 export const PageHeader = ({ icon: Icon, title, subtitle, light = false }) => (
   <div className={`text-center mb-6 sm:mb-8 ${light ? 'text-navy-dark' : ''}`}>
     {Icon && <Icon className={`w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 mx-auto mb-3 sm:mb-4 ${light ? 'text-crimson' : 'text-crimson-bright'}`} 
@@ -161,216 +330,16 @@ export const PageHeader = ({ icon: Icon, title, subtitle, light = false }) => (
   </div>
 );
 
-// Ornate card frame
-export const OrnateCard = ({ children, className = '', hover = true }) => (
-  <div className={`relative ${hover ? 'group' : ''} ${className}`}>
-    <div className="absolute inset-0 border-2 border-gold/40 rounded-lg group-hover:border-gold/60 transition-all duration-300" />
-    <div className="absolute inset-1.5 border border-crimson/20 rounded-md group-hover:border-crimson/40 transition-all duration-300" />
-    <div className="absolute inset-0 bg-navy-mid/60 rounded-lg backdrop-blur-sm" />
-    
-    {/* Corner diamonds */}
-    <span className="absolute -top-1.5 -left-1.5 text-crimson text-sm opacity-60 group-hover:opacity-100 transition-opacity">◆</span>
-    <span className="absolute -top-1.5 -right-1.5 text-crimson text-sm opacity-60 group-hover:opacity-100 transition-opacity">◆</span>
-    <span className="absolute -bottom-1.5 -left-1.5 text-crimson text-sm opacity-60 group-hover:opacity-100 transition-opacity">◆</span>
-    <span className="absolute -bottom-1.5 -right-1.5 text-crimson text-sm opacity-60 group-hover:opacity-100 transition-opacity">◆</span>
-    
-    <div className="relative z-10 p-4 sm:p-6">{children}</div>
-  </div>
-);
-
-// Light ornate card for parchment sections
-export const LightOrnateCard = ({ children, className = '', hover = true }) => (
-  <div className={`relative ${hover ? 'group' : ''} ${className}`}>
-    <div className="absolute inset-0 border-2 border-crimson/30 rounded-lg group-hover:border-crimson/50 transition-all duration-300" />
-    <div className="absolute inset-1.5 border border-gold/30 rounded-md group-hover:border-gold/50 transition-all duration-300" />
-    <div className="absolute inset-0 bg-cream/80 rounded-lg backdrop-blur-sm" />
-    
-    {/* Corner diamonds */}
-    <span className="absolute -top-1.5 -left-1.5 text-gold-dark text-sm opacity-60 group-hover:opacity-100 transition-opacity">◆</span>
-    <span className="absolute -top-1.5 -right-1.5 text-gold-dark text-sm opacity-60 group-hover:opacity-100 transition-opacity">◆</span>
-    <span className="absolute -bottom-1.5 -left-1.5 text-gold-dark text-sm opacity-60 group-hover:opacity-100 transition-opacity">◆</span>
-    <span className="absolute -bottom-1.5 -right-1.5 text-gold-dark text-sm opacity-60 group-hover:opacity-100 transition-opacity">◆</span>
-    
-    <div className="relative z-10 p-4 sm:p-6">{children}</div>
-  </div>
-);
-
-// ============================================================================
-// STATIC ORNAMENT LIBRARY - Corner Flourishes, Dividers, Bestiary Glyphs
-// ============================================================================
-
-// Bestiary Glyphs - British folklore animals
-export const BestiaryGlyph = ({ animal = 'raven', className = '', size = 'md' }) => {
-  const sizes = { sm: 'text-lg', md: 'text-2xl', lg: 'text-4xl' };
-  const glyphs = {
-    raven: '🐦‍⬛',
-    crow: '🐦‍⬛',
-    owl: '🦉',
-    hare: '🐇',
-    fox: '🦊',
-    moth: '🦋',
-    serpent: '🐍',
-    stag: '🦌',
-    wolf: '🐺',
-    badger: '🦡'
-  };
-  return <span className={`${sizes[size]} ${className}`}>{glyphs[animal] || glyphs.raven}</span>;
-};
-
-// Occult Tool Glyphs
-export const OccultGlyph = ({ symbol = 'pentacle', className = '', size = 'md' }) => {
-  const sizes = { sm: 'text-lg', md: 'text-2xl', lg: 'text-4xl' };
-  const glyphs = {
-    pentacle: '⛤',
-    moon: '☽',
-    sun: '☀',
-    star: '✦',
-    eye: '👁',
-    key: '🗝️',
-    chalice: '🏆',
-    bell: '🔔',
-    candle: '🕯️',
-    crystal: '💎',
-    ouroboros: '🐍',
-    triquetra: '☘️'
-  };
-  return <span className={`${sizes[size]} ${className}`}>{glyphs[symbol] || glyphs.pentacle}</span>;
-};
-
-// Corner Flourish SVG - More elaborate version
-export const CornerFlourish = ({ position = 'top-left', variant = 'gold', className = '' }) => {
-  const colors = variant === 'gold' 
-    ? { primary: '#d4a84b', secondary: '#b82330' }
-    : { primary: '#b82330', secondary: '#d4a84b' };
-  
-  const rotations = {
-    'top-left': '',
-    'top-right': 'rotate-90',
-    'bottom-left': '-rotate-90',
-    'bottom-right': 'rotate-180'
-  };
-  
-  return (
-    <svg viewBox="0 0 80 80" className={`${rotations[position]} ${className}`} fill="none">
-      <path d="M0,40 Q0,0 40,0" stroke={colors.primary} strokeWidth="2" opacity="0.8" />
-      <path d="M0,28 Q0,0 28,0" stroke={colors.primary} strokeWidth="1.5" opacity="0.5" />
-      <path d="M8,48 Q8,8 48,8" stroke={colors.secondary} strokeWidth="1" opacity="0.4" />
-      <circle cx="20" cy="20" r="3" fill={colors.primary} opacity="0.7" />
-      <circle cx="8" cy="8" r="2" fill={colors.secondary} opacity="0.6" />
-      <path d="M12,12 L18,6 L24,12 L18,18 Z" fill={colors.secondary} opacity="0.5" />
-    </svg>
-  );
-};
-
-// Section Divider Strip - Decorative band
-export const DividerStrip = ({ variant = 'default', className = '' }) => {
-  const patterns = {
-    default: '❧ ◆ ❧',
-    stars: '✦ ✧ ⭐ ✧ ✦',
-    moons: '☾ ✦ ☽ ✦ ☾',
-    celtic: '☘️ ◆ ☘️',
-    eyes: '✦ 👁 ✦',
-    feathers: '🪶 ◆ 🪶'
-  };
-  
-  return (
-    <div className={`flex items-center justify-center gap-2 py-3 ${className}`}>
-      <div className="h-px flex-1 max-w-16 bg-gradient-to-r from-transparent to-gold/40" />
-      <span className="text-gold/60 text-sm tracking-widest">{patterns[variant]}</span>
-      <div className="h-px flex-1 max-w-16 bg-gradient-to-l from-transparent to-gold/40" />
-    </div>
-  );
-};
-
-// Hero Banner Component - Standardized hero section
-export const HeroBanner = ({ 
-  icon: Icon, 
-  title, 
-  subtitle, 
-  children,
-  variant = 'dark',
-  showCorners = true 
-}) => {
-  const isDark = variant === 'dark';
-  
-  return (
-    <DarkSection className="py-12 sm:py-16 md:py-20 px-4 sm:px-6" variant="warm">
-      {showCorners && (
-        <>
-          <CornerFlourish position="top-left" className="absolute top-3 left-3 w-12 h-12 sm:w-16 sm:h-16" />
-          <CornerFlourish position="top-right" className="absolute top-3 right-3 w-12 h-12 sm:w-16 sm:h-16" />
-        </>
-      )}
-      
-      <div className="max-w-4xl mx-auto relative z-10">
-        <div className="text-center">
-          {Icon && (
-            <Icon className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 mx-auto mb-4 text-crimson-bright"
-              style={{ filter: 'drop-shadow(0 0 15px rgba(184, 35, 48, 0.5))' }} />
-          )}
-          <h1 className="font-italiana text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-gold-light mb-3"
-            style={{ textShadow: '0 2px 30px rgba(212, 168, 75, 0.5)' }}>
-            {title}
-          </h1>
-          {subtitle && (
-            <p className="font-montserrat text-sm sm:text-base text-silver-mist/80 max-w-2xl mx-auto">
-              {subtitle}
-            </p>
-          )}
-        </div>
-        {children}
-      </div>
-    </DarkSection>
-  );
-};
-
-// Parchment Content Well - Standardized content section
-export const ParchmentWell = ({ children, className = '', showDivider = true }) => (
-  <LightSection className={`py-10 sm:py-14 px-4 sm:px-6 ${className}`}>
-    <div className="max-w-5xl mx-auto">
-      {showDivider && <MysticalDivider light />}
-      {children}
-    </div>
-  </LightSection>
-);
-
-// Page Section - Combines Hero + Content pattern
-export const PageSection = ({ 
-  icon: Icon,
-  title,
-  subtitle,
-  heroContent,
-  children 
-}) => (
-  <div className="min-h-screen">
-    <HeroBanner icon={Icon} title={title} subtitle={subtitle}>
-      {heroContent}
-    </HeroBanner>
-    <ParchmentWell>
-      {children}
-    </ParchmentWell>
-  </div>
-);
-
-// Inline Ornament - Small decorative elements for text
-export const InlineOrnament = ({ type = 'diamond' }) => {
-  const ornaments = {
-    diamond: '◆',
-    star: '✦',
-    dot: '•',
-    fleur: '❧',
-    leaf: '❦'
-  };
-  return <span className="text-gold/60 mx-2">{ornaments[type]}</span>;
-};
-
-// Section Header with ornaments
-export const SectionHeader = ({ title, subtitle, light = false, variant = 'default' }) => (
+export const SectionHeader = ({ title, subtitle, light = false, variant = 'default', glyph }) => (
   <div className={`text-center mb-8 ${light ? 'text-navy-dark' : ''}`}>
-    <DividerStrip variant={variant} className="mb-4" />
-    <h2 className={`font-italiana text-2xl sm:text-3xl mb-2 ${light ? 'text-crimson' : 'text-gold-light'}`}>
-      {title}
-    </h2>
+    <SectionDivider variant={variant} className="mb-4" />
+    <div className="flex items-center justify-center gap-3 mb-2">
+      {glyph && <OccultGlyph symbol={glyph} size="sm" className={light ? 'text-crimson' : 'text-gold'} />}
+      <h2 className={`font-italiana text-2xl sm:text-3xl ${light ? 'text-crimson' : 'text-gold-light'}`}>
+        {title}
+      </h2>
+      {glyph && <OccultGlyph symbol={glyph} size="sm" className={light ? 'text-crimson' : 'text-gold'} />}
+    </div>
     {subtitle && (
       <p className={`font-montserrat text-sm ${light ? 'text-navy-dark/70' : 'text-silver-mist/70'}`}>
         {subtitle}
@@ -379,23 +348,101 @@ export const SectionHeader = ({ title, subtitle, light = false, variant = 'defau
   </div>
 );
 
+// Inline ornament for text
+export const InlineOrnament = ({ type = 'diamond' }) => {
+  const ornaments = { diamond: '◆', star: '✦', dot: '•', fleur: '❧', leaf: '❦' };
+  return <span className="text-gold/60 mx-2">{ornaments[type]}</span>;
+};
+
+// ============================================================================
+// BORDER FRAMES - For special content blocks
+// ============================================================================
+
+export const BorderFrame = ({ children, variant = 'gold', className = '' }) => {
+  const borderColors = {
+    gold: 'border-gold/50',
+    crimson: 'border-crimson/50',
+    silver: 'border-silver-mist/50'
+  };
+  
+  return (
+    <div className={`relative ${className}`}>
+      <div className={`absolute inset-0 border-2 ${borderColors[variant]} rounded-sm`} />
+      <div className="absolute inset-2 border border-gold/20 rounded-sm" />
+      {/* Corner ornaments */}
+      <span className="absolute -top-2 -left-2 text-gold text-lg">✦</span>
+      <span className="absolute -top-2 -right-2 text-gold text-lg">✦</span>
+      <span className="absolute -bottom-2 -left-2 text-gold text-lg">✦</span>
+      <span className="absolute -bottom-2 -right-2 text-gold text-lg">✦</span>
+      <div className="relative z-10 p-6">{children}</div>
+    </div>
+  );
+};
+
+// ============================================================================
+// SPELL PAGE SPECIFIC COMPONENTS
+// ============================================================================
+
+export const SpellSectionHeader = ({ title, glyph, light = false }) => (
+  <div className={`flex items-center gap-2 mb-3 ${light ? 'text-navy-dark' : 'text-gold'}`}>
+    {glyph && <OccultGlyph symbol={glyph} size="sm" />}
+    <h3 className={`font-cinzel text-lg ${light ? 'text-crimson' : 'text-gold-light'}`}>{title}</h3>
+    <div className={`flex-1 h-px ${light ? 'bg-crimson/30' : 'bg-gold/30'}`} />
+  </div>
+);
+
+export const PrintablesBlock = ({ tarotUrl, sigilUrl }) => (
+  <div className="bg-navy-mid/40 border border-gold/30 rounded-sm p-4">
+    <div className="text-center mb-3">
+      <span className="font-cinzel text-sm text-gold/80 uppercase tracking-wider">Printables</span>
+    </div>
+    <div className="flex gap-4 justify-center">
+      {tarotUrl && (
+        <div className="text-center">
+          <img src={tarotUrl} alt="Tarot" className="w-24 h-32 object-cover border border-gold/40 rounded-sm" />
+          <span className="text-xs text-silver-mist/60 mt-1 block">Tarot Card</span>
+        </div>
+      )}
+      {sigilUrl && (
+        <div className="text-center">
+          <img src={sigilUrl} alt="Sigil" className="w-24 h-24 object-cover border border-gold/40 rounded-sm" />
+          <span className="text-xs text-silver-mist/60 mt-1 block">Sigil</span>
+        </div>
+      )}
+    </div>
+  </div>
+);
+
+// ============================================================================
+// EXPORTS
+// ============================================================================
+
 export default {
+  // Corners
   ElaborateCorner,
+  CornerFlourish,
+  // Dividers
   GrandDivider,
   MysticalDivider,
+  SectionDivider,
+  // Sections
   DarkSection,
   LightSection,
-  PageHeader,
+  // V1.1 Standard Components
+  PageHero,
+  ParchmentPanel,
   OrnateCard,
   LightOrnateCard,
-  // New exports
+  // Headers
+  PageHeader,
+  SectionHeader,
+  InlineOrnament,
+  // Glyphs
   BestiaryGlyph,
   OccultGlyph,
-  CornerFlourish,
-  DividerStrip,
-  HeroBanner,
-  ParchmentWell,
-  PageSection,
-  InlineOrnament,
-  SectionHeader,
+  // Frames
+  BorderFrame,
+  // Spell Components
+  SpellSectionHeader,
+  PrintablesBlock,
 };
