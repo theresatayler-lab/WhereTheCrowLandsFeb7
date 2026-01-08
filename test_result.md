@@ -179,6 +179,9 @@ agent_communication:
 5. Safety routing with "threats" keyword - ✅ WORKING
 6. Card routing intelligence for money situations - ✅ WORKING
 7. POST /api/ai/generate-spell with Shigg archetype and image generation - ✅ WORKING
+8. GET /api/ai/image-styles - ✅ WORKING
+9. POST /api/ai/generate-image with archetype style - ✅ WORKING
+10. POST /api/ai/generate-spell with Katherine archetype and image generation - ✅ WORKING
 
 ## Features Tested ✅
 1. One-card "Quick Draw" reading - ✅ WORKING
