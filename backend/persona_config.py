@@ -839,7 +839,7 @@ PERSONA_CONFIG = {
                 "primary_motif": "needle/thread, mirror, compass, sealed letter, astrolabe, wax seal, measuring tape",
                 "secondary_motif": "abstracted Golden Dawn geometric diagrams, Qabalistic tree, atelier desk scene, annotated margins",
                 "era_aesthetic": "Victorian occult research atelier, tailoring precision meets diagrammatic magic",
-                "art_style": "ornate silk scarf tapestry illustration with cooler steel silver and oxblood tones, high-contrast engraved plate feel, engraved linework"
+                "art_style": "ornate silk scarf tapestry illustration with cooler steel silver and oxblood tones, atelier desk scene, high-contrast engraved plate feel, engraved linework"
             },
             "motif_library": [
                 "needle", "thread spool", "scrying mirror", "brass compass", "sealed letter",
