@@ -175,6 +175,11 @@ class ImageGenerationRequest(BaseModel):
     prompt: str
     archetype: Optional[str] = None  # Optional archetype style (shiggy, kathleen, catherine, theresa, neutral)
 
+class PersonalizedSpellRequest(BaseModel):
+    """Request for the new personalized spell wizard"""
+    spell_spec: dict  # SpellSpec from the wizard
+    generate_images: bool = True
+
 class FavoriteRequest(BaseModel):
     item_type: str
     item_id: str
