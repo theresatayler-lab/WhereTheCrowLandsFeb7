@@ -4,7 +4,7 @@ import { BookOpen, Trash2, Eye, Loader2, Calendar, Sparkles, Hand, Heart, MapPin
 import { grimoireAPI } from '../utils/api';
 import { GrimoirePage } from '../components/GrimoirePage';
 import { toast } from 'sonner';
-import { DarkSection, LightSection, GrandDivider, MysticalDivider, ElaborateCorner, PageHeader, LightOrnateCard, OrnateCard } from '../components/OrnateElements';
+import { DarkSection, LightSection, GrandDivider, MysticalDivider, PageBorderFrame, PageHeader, LightOrnateCard, OrnateCard } from '../components/OrnateElements';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
