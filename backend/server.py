@@ -30,7 +30,9 @@ from archetype_reference_data import (
 )
 from persona_config import (
     PERSONA_CONFIG, get_persona_config, select_scenario_for_spell,
-    BELIEF_BOUNDARY_DESCRIPTIONS, FEELING_SCENARIO_MAP
+    BELIEF_BOUNDARY_DESCRIPTIONS, FEELING_SCENARIO_MAP,
+    get_format_for_scenario, get_practices_for_scenario,
+    get_micro_icons_for_persona, get_random_micro_icons, MICRO_ICONS
 )
 from spell_prompts import (
     build_planner_prompt, build_spell_writer_prompt, 
