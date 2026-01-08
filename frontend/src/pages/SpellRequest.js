@@ -625,6 +625,7 @@ export const SpellRequest = () => {
               assetPlan={spellResult.asset_plan}
               inspirations={spellResult.spell?.inspired_by}
               onNewSpell={handleNewSpell}
+              isLoadingImages={loadingImages}
             />
           </div>
         </DarkSection>
