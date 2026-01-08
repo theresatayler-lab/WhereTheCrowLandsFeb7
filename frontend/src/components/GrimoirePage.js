@@ -593,7 +593,8 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
         archetype?.id,
         archetype?.name,
         archetype?.title,
-        imageBase64
+        imageBase64,
+        assetPlan  // Include tarot, sigil, dividers, micro_icons
       );
       toast.success('Spell saved to your grimoire!');
     } catch (error) {
