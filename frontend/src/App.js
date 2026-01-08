@@ -39,6 +39,35 @@ function ScrollToTop() {
   return null;
 }
 
+// Early Access Redirect - redirects all traffic to /early-access unless preview mode is active
+function EarlyAccessRedirect() {
+  const location = useLocation();
+  
+  useEffect(() => {
+    // Check for preview mode in URL params or localStorage
+    const params = new URLSearchParams(location.search);
+    const previewParam = params.get('preview');
+    
+    // If preview=crowlands is in URL, save to localStorage and allow full site access
+    if (previewParam === 'crowlands') {
+      localStorage.setItem('crowlands_preview_mode', 'true');
+      return;
+    }
+    
+    // If preview mode is saved in localStorage, allow full site access
+    if (localStorage.getItem('crowlands_preview_mode') === 'true') {
+      return;
+    }
+    
+    // Otherwise, redirect to early-access page (except if already there)
+    if (location.pathname !== '/early-access') {
+      window.location.href = '/early-access';
+    }
+  }, [location]);
+  
+  return null;
+}
+
 // Conditional Navigation - hide on /early-access
 function ConditionalNavigation({ user, onLogout }) {
   const { pathname } = useLocation();
