@@ -502,6 +502,7 @@ const TarotCardView = ({ spell, archetype, style, imageBase64, onViewFull, onCop
         </div>
       </div>
     </motion.div>
+    </SpellBorderFrame>
   );
 };
 
