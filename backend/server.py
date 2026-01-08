@@ -201,6 +201,7 @@ class SaveSpellRequest(BaseModel):
     archetype_name: Optional[str] = None
     archetype_title: Optional[str] = None
     image_base64: Optional[str] = None
+    asset_plan: Optional[dict] = None  # Contains generated_assets (tarot, sigil, dividers) and micro_icons
 
 class SavedSpellResponse(BaseModel):
     model_config = ConfigDict(extra="ignore")
@@ -211,6 +212,7 @@ class SavedSpellResponse(BaseModel):
     archetype_name: Optional[str] = None
     archetype_title: Optional[str] = None
     image_base64: Optional[str] = None
+    asset_plan: Optional[dict] = None
     created_at: str
     title: str
 
