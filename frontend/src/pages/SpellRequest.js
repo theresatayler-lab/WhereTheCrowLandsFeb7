@@ -16,9 +16,9 @@ import { toast } from 'sonner';
 // ===== WIZARD CONFIGURATION =====
 
 const PERSONAS = [
-  { id: 'shiggy', name: 'Shigg', emoji: '🐦', title: 'Birds of Parliament', description: 'Gentle domestic magic, bird omens, tea rituals, poetry' },
-  { id: 'kathleen', name: 'Cathleen', emoji: '🪶', title: 'Singer of Strength', description: 'Voice magic, protection, Celtic mysticism, the Morrigan' },
-  { id: 'catherine', name: 'Katherine', emoji: '🪡', title: 'Weaver of Hidden Knowledge', description: 'Shadow work, mirrors, Victorian spiritualism, protocols' },
+  { id: 'shigg', name: 'Shigg', emoji: '🐦', title: 'Birds of Parliament', description: 'Gentle domestic magic, bird omens, tea rituals, poetry' },
+  { id: 'cathleen', name: 'Cathleen', emoji: '🪶', title: 'Singer of Strength', description: 'Voice magic, protection, Celtic mysticism, the Morrigan' },
+  { id: 'katherine', name: 'Katherine', emoji: '🪡', title: 'Weaver of Hidden Knowledge', description: 'Shadow work, mirrors, Victorian spiritualism, protocols' },
   { id: 'choose_for_me', name: 'Choose for me', emoji: '✨', title: 'Let the spell decide', description: 'Based on your needs, the right guide will emerge' }
 ];
 
