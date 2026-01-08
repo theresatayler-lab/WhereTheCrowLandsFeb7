@@ -8,7 +8,8 @@ from typing import Dict, List, Any
 from persona_config import (
     get_persona_config, select_scenario_for_spell, get_format_for_scenario,
     get_practices_for_scenario, get_micro_icons_for_persona,
-    BELIEF_BOUNDARY_DESCRIPTIONS, ASSET_TYPES
+    BELIEF_BOUNDARY_DESCRIPTIONS, ASSET_TYPES,
+    CROWLANDS_ART_BIBLE, ASSET_ROLE_LOCKS, get_art_bible_prompt_suffix
 )
 
 # ============================================================================
