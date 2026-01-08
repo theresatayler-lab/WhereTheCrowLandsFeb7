@@ -2084,6 +2084,13 @@ def main():
     tester.test_ai_chat_kathleen()
     tester.test_ai_chat_catherine()
     tester.test_ai_chat_theresa()
+    
+    # Test Image Generation Features (REVIEW REQUEST PRIORITY)
+    print("\n🎨 Testing Image Generation Features (REVIEW REQUEST)...")
+    tester.test_ai_image_styles_endpoint()
+    tester.test_ai_image_generation_with_archetype_kathleen()
+    tester.test_ai_spell_generation_shigg_with_image()
+    tester.test_ai_spell_generation_catherine_with_image()
     tester.test_ai_image_generation()
     
     # Test favorites (requires auth)
