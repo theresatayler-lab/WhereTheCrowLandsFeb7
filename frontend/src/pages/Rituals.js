@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { GlassCard } from '../components/GlassCard';
 import { ritualsAPI } from '../utils/api';
-import { Scroll } from 'lucide-react';
+import { Scroll, Sparkles } from 'lucide-react';
+import { DarkSection, ElaborateCorner, PageHeader, OrnateCard, GrandDivider, MysticalDivider } from '../components/OrnateElements';
 
 export const Rituals = () => {
   const [rituals, setRituals] = useState([]);
@@ -28,55 +28,62 @@ export const Rituals = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <Scroll className="w-12 h-12 text-primary animate-pulse" />
-      </div>
+      <DarkSection className="min-h-screen flex items-center justify-center" variant="warm">
+        <Scroll className="w-12 h-12 text-gold animate-pulse" />
+      </DarkSection>
     );
   }
 
   return (
-    <div className="min-h-screen py-24 px-6">
-      <div className="max-w-7xl mx-auto">
+    <DarkSection className="min-h-screen py-12 sm:py-20 px-4 sm:px-6" variant="warm">
+      {/* Corner Ornaments */}
+      <ElaborateCorner className="absolute top-3 left-3 w-16 h-16 sm:w-24 sm:h-24" variant="gold" />
+      <ElaborateCorner className="absolute top-3 right-3 w-16 h-16 sm:w-24 sm:h-24 rotate-90" variant="gold" />
+      
+      <div className="max-w-7xl mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-16"
         >
-          <h1 className="font-italiana text-4xl md:text-6xl text-primary mb-4">Documented Rituals</h1>
-          <p className="font-montserrat text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
-            Ceremonial practices preserved from the occult revival era
-          </p>
-
-          <div className="flex flex-wrap gap-3 justify-center">
-            <button
-              data-testid="category-all"
-              onClick={() => setSelectedCategory(null)}
-              className={`px-6 py-2 rounded-sm font-montserrat text-sm tracking-wider transition-all duration-300 ${
-                selectedCategory === null
-                  ? 'bg-primary text-primary-foreground'
-                  : 'bg-transparent text-primary border border-primary/30 hover:bg-primary/10'
-              }`}
-            >
-              All
-            </button>
-            {categories.map((category) => (
-              <button
-                key={category}
-                data-testid={`category-${category.toLowerCase()}`}
-                onClick={() => setSelectedCategory(category)}
-                className={`px-6 py-2 rounded-sm font-montserrat text-sm tracking-wider transition-all duration-300 ${
-                  selectedCategory === category
-                    ? 'bg-primary text-primary-foreground'
-                    : 'bg-transparent text-primary border border-primary/30 hover:bg-primary/10'
-                }`}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
+          <PageHeader 
+            icon={Scroll}
+            title="Documented Rituals"
+            subtitle="Ceremonial practices preserved from the occult revival era"
+          />
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Category Filters */}
+        <div className="flex flex-wrap gap-2 sm:gap-3 justify-center mb-8 sm:mb-12">
+          <button
+            data-testid="category-all"
+            onClick={() => setSelectedCategory(null)}
+            className={`px-4 sm:px-6 py-2 rounded-sm font-montserrat text-xs sm:text-sm tracking-wider transition-all duration-300 ${
+              selectedCategory === null
+                ? 'bg-gradient-to-r from-gold-dark via-gold to-gold-dark text-navy-dark border border-crimson/30'
+                : 'bg-transparent text-gold border border-gold/30 hover:bg-gold/10'
+            }`}
+          >
+            All
+          </button>
+          {categories.map((category) => (
+            <button
+              key={category}
+              data-testid={`category-${category.toLowerCase()}`}
+              onClick={() => setSelectedCategory(category)}
+              className={`px-4 sm:px-6 py-2 rounded-sm font-montserrat text-xs sm:text-sm tracking-wider transition-all duration-300 ${
+                selectedCategory === category
+                  ? 'bg-gradient-to-r from-gold-dark via-gold to-gold-dark text-navy-dark border border-crimson/30'
+                  : 'bg-transparent text-gold border border-gold/30 hover:bg-gold/10'
+              }`}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
+
+        <GrandDivider variant="default" />
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
           {rituals.map((ritual, index) => (
             <motion.div
               key={ritual.id}
@@ -84,39 +91,54 @@ export const Rituals = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
             >
-              <GlassCard hover={false} testId={`ritual-card-${ritual.id}`}>
+              <OrnateCard hover={false} testId={`ritual-card-${ritual.id}`}>
                 <div className="flex items-start justify-between mb-4">
-                  <h3 className="font-cinzel text-xl font-bold text-secondary flex-1">
+                  {/* Title in gold for visibility */}
+                  <h3 className="font-cinzel text-lg sm:text-xl text-gold flex-1" style={{ textShadow: '0 2px 10px rgba(212, 168, 75, 0.3)' }}>
                     {ritual.name}
                   </h3>
-                  <span className="px-3 py-1 bg-primary/10 border border-primary/30 rounded-sm font-montserrat text-xs text-primary">
+                  {/* Category badge */}
+                  <span className="px-3 py-1 bg-crimson/20 border border-crimson/40 rounded-sm font-montserrat text-xs text-crimson-bright">
                     {ritual.category}
                   </span>
                 </div>
-                <p className="font-montserrat text-sm text-foreground leading-relaxed mb-4">
+                {/* Description in cream for readability */}
+                <p className="font-montserrat text-sm text-cream/85 leading-relaxed mb-4">
                   {ritual.description}
                 </p>
                 {ritual.deity_association && (
                   <div className="mb-3">
-                    <span className="font-montserrat text-xs uppercase tracking-widest text-primary">Associated: </span>
-                    <span className="font-montserrat text-sm text-accent">{ritual.deity_association}</span>
+                    <span className="font-montserrat text-xs uppercase tracking-widest text-crimson-bright">Associated: </span>
+                    <span className="font-montserrat text-sm text-gold-light">{ritual.deity_association}</span>
                   </div>
                 )}
-                <div className="flex flex-wrap gap-4 text-xs font-montserrat text-muted-foreground">
+                <MysticalDivider />
+                <div className="flex flex-wrap gap-4 text-xs font-montserrat text-silver-mist/70">
                   <div>
-                    <span className="uppercase tracking-wider">Period: </span>
-                    <span>{ritual.time_period}</span>
+                    <span className="uppercase tracking-wider text-gold/60">Period: </span>
+                    <span className="text-cream/80">{ritual.time_period}</span>
                   </div>
                   <div>
-                    <span className="uppercase tracking-wider">Source: </span>
-                    <span>{ritual.source}</span>
+                    <span className="uppercase tracking-wider text-gold/60">Source: </span>
+                    <span className="text-cream/80">{ritual.source}</span>
                   </div>
                 </div>
-              </GlassCard>
+              </OrnateCard>
             </motion.div>
           ))}
         </div>
+
+        {rituals.length === 0 && (
+          <div className="text-center py-12">
+            <Sparkles className="w-12 h-12 text-gold/50 mx-auto mb-4" />
+            <p className="font-montserrat text-silver-mist/60">No rituals found for this category</p>
+          </div>
+        )}
       </div>
-    </div>
+
+      {/* Bottom Corners */}
+      <ElaborateCorner className="absolute bottom-3 left-3 w-16 h-16 sm:w-24 sm:h-24 -rotate-90" variant="gold" />
+      <ElaborateCorner className="absolute bottom-3 right-3 w-16 h-16 sm:w-24 sm:h-24 rotate-180" variant="gold" />
+    </DarkSection>
   );
 };
