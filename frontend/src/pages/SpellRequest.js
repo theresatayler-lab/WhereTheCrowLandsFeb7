@@ -686,7 +686,7 @@ export const SpellRequest = () => {
               <button
                 onClick={() => setStep(s => s - 1)}
                 disabled={step === 0}
-                className="px-4 py-2 bg-parchment border border-crimson/30 text-crimson rounded-sm font-montserrat text-sm disabled:opacity-30 disabled:cursor-not-allowed hover:bg-crimson/5 transition-all flex items-center gap-2"
+                className="btn-ritual-ghost px-4 py-2 rounded-sm disabled:opacity-30 disabled:cursor-not-allowed flex items-center gap-2"
               >
                 <ChevronLeft className="w-4 h-4" />
                 Back
@@ -696,7 +696,7 @@ export const SpellRequest = () => {
                 <button
                   onClick={() => setStep(s => s + 1)}
                   disabled={!canProceed()}
-                  className="px-6 py-2 bg-gradient-to-r from-crimson-deep via-crimson to-crimson-deep text-cream rounded-sm font-montserrat text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:from-crimson hover:via-crimson-bright hover:to-crimson transition-all flex items-center gap-2 border border-gold/30"
+                  className="btn-ritual-secondary px-6 py-3 rounded-sm disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                 >
                   Continue
                   <ChevronRight className="w-4 h-4" />
