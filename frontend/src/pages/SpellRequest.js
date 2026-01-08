@@ -612,9 +612,14 @@ export const SpellRequest = () => {
             
             {/* Images loading indicator */}
             {loadingImages && (
-              <div className="mb-4 p-3 bg-gold/10 border border-gold/30 rounded-sm flex items-center gap-3">
-                <Loader2 className="w-4 h-4 text-gold animate-spin" />
-                <span className="font-montserrat text-sm text-gold">Generating spell imagery...</span>
+              <div className="mb-4 p-4 bg-gold/10 border border-gold/30 rounded-sm">
+                <div className="flex items-center gap-3 mb-2">
+                  <Loader2 className="w-5 h-5 text-gold animate-spin" />
+                  <span className="font-cinzel text-base text-gold">Crafting Your Spell Imagery</span>
+                </div>
+                <p className="font-montserrat text-xs text-silver-mist/80 ml-8">
+                  Generating tarot card, sigil, and decorative elements... Your spell is ready to read while we paint the details.
+                </p>
               </div>
             )}
             
