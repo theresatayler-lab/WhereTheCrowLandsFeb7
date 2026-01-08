@@ -2719,6 +2719,15 @@ async def generate_image(request: ImageGenerationRequest):
         logging.error(f'Image generation error: {str(e)}')
         raise HTTPException(status_code=500, detail='Failed to generate image')
 
+# Get archetype image style descriptions for frontend
+@api_router.get('/ai/image-styles')
+async def get_image_styles():
+    """Get available archetype image styles for the frontend"""
+    return {
+        'styles': ARCHETYPE_IMAGE_STYLE_DESCRIPTIONS,
+        'default': 'neutral'
+    }
+
 # Favorites endpoints
 @api_router.post('/favorites')
 async def add_favorite(request: FavoriteRequest, user = Depends(get_current_user)):
