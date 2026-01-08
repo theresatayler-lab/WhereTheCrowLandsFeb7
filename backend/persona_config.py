@@ -5,6 +5,57 @@
 from typing import List, Dict, Any, Optional
 
 # ============================================================================
+# CROWLANDS ART BIBLE - GLOBAL VISUAL TOKENS
+# This is the SINGLE SOURCE OF TRUTH for the "collectible scarf/tapestry" aesthetic
+# Inject these tokens into ALL image prompts (header, tarot, sigil, divider)
+# ============================================================================
+
+CROWLANDS_ART_BIBLE = {
+    "style_tokens": [
+        "ornate occult silk scarf design",
+        "luxurious tapestry aesthetic",
+        "ultra-detailed engraved texture",
+        "symmetrical medallion composition",
+        "antique copper-plate engraving quality",
+        "collectible art print worthy"
+    ],
+    "palette": {
+        "primary": "midnight navy (#0e1629)",
+        "secondary": "oxblood crimson (#8b2232)",
+        "accent": "antique gold (#d4a84b)",
+        "neutral": "aged bone/parchment (#f5f0e6)",
+        "highlight": "burnished copper"
+    },
+    "motif_families": {
+        "british_folklore": ["raven", "crow", "hare", "fox", "badger", "owl", "moth", "serpent"],
+        "planetary": ["sun disc", "crescent moon", "seven-pointed star", "saturn sigil", "venus mirror"],
+        "alchemical": ["ouroboros", "caduceus", "philosopher's stone", "elemental triangles", "mercury glyph"],
+        "occult_tools": ["athame", "chalice", "pentacle", "wand", "crystal ball", "scrying mirror", "bell"]
+    },
+    "composition_rules": [
+        "central medallion focus",
+        "symmetrical border frames",
+        "corner flourishes",
+        "interstitial decorative bands"
+    ],
+    "hard_negatives": [
+        "NO text", "NO letters", "NO words", "NO watermarks",
+        "NO photorealism", "NO neon colors", "NO modern logos",
+        "NO stock photo aesthetic", "NO clipart", "NO cartoon style"
+    ],
+    "dall_e_global_suffix": "ornate occult silk scarf tapestry design, ultra-detailed engraved texture, symmetrical medallion layout, midnight navy and oxblood and antique gold and aged bone palette, British folklore motifs, NO text, NO letters, NO words, NO watermark, NO photorealism, NO neon, NO modern logos"
+}
+
+def get_art_bible_prompt_suffix() -> str:
+    """Get the global art bible suffix to append to ALL DALL-E prompts"""
+    return CROWLANDS_ART_BIBLE["dall_e_global_suffix"]
+
+def build_image_prompt(persona_prompt: str) -> str:
+    """Build a complete image prompt with persona-specific + global art bible tokens"""
+    return f"{persona_prompt}, {get_art_bible_prompt_suffix()}"
+
+
+# ============================================================================
 # STATIC MICRO-ICONS LIBRARY (per persona, ~12 each, simple silhouettes)
 # These are NOT generated - they're static SVG icon IDs or emoji placeholders
 # ============================================================================
