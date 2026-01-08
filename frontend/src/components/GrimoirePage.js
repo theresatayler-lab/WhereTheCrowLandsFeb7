@@ -971,7 +971,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
         )}
 
         {/* Divider after materials */}
-        <GeneratedDivider imageBase64={generatedAssets?.divider_1} />
+        <GeneratedDivider imageBase64={generatedAssets?.divider_1} isLoading={isLoadingImages} />
 
         {/* Ritual Steps / The Working */}
         {(spell.steps && spell.steps.length > 0) || spell.the_working ? (
