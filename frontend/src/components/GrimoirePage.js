@@ -820,15 +820,15 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
         {/* Cathleen's Concealment Suggestion - WWII Spy Tradecraft inspired */}
         {spell.concealment_suggestion && (
           <section className="relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-slate-900/40 via-slate-800/30 to-slate-900/40 rounded-lg" />
-            <div className="relative p-6 border-2 border-slate-600/40 rounded-lg bg-background/50">
+            <div className="absolute inset-0 bg-gradient-to-r from-slate-600/20 via-slate-500/10 to-slate-600/20 rounded-lg" />
+            <div className="relative p-6 border-2 border-slate-600/40 rounded-lg bg-stone-100/80">
               <div className="flex items-center gap-3 mb-4">
-                <div className="p-3 bg-slate-700/30 rounded-full">
-                  <Lock className="w-6 h-6 text-slate-300" />
+                <div className="p-3 bg-slate-600/20 rounded-full">
+                  <Lock className="w-6 h-6 text-slate-700" />
                 </div>
                 <div>
-                  <p className="font-cinzel text-xs text-slate-400 uppercase tracking-wider">Cathleen&apos;s Secret</p>
-                  <h3 className="font-cinzel text-xl text-slate-200">{spell.concealment_suggestion.title || 'Keep Your Secrets Close'}</h3>
+                  <p className="font-cinzel text-xs text-slate-600 uppercase tracking-wider">Cathleen&apos;s Secret</p>
+                  <h3 className="font-cinzel text-xl text-slate-800">{spell.concealment_suggestion.title || 'Keep Your Secrets Close'}</h3>
                 </div>
               </div>
               
@@ -836,10 +836,10 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                 {/* Historical Inspiration */}
                 {spell.concealment_suggestion.historical_inspiration && (
                   <div className="flex items-start gap-2">
-                    <History className="w-4 h-4 text-slate-400 mt-1 flex-shrink-0" />
+                    <History className="w-4 h-4 text-slate-600 mt-1 flex-shrink-0" />
                     <div>
-                      <p className="text-xs text-slate-500 uppercase tracking-wide mb-1">From the Secret History</p>
-                      <p className="text-slate-300 italic">{spell.concealment_suggestion.historical_inspiration}</p>
+                      <p className="text-xs text-slate-600 uppercase tracking-wide mb-1">From the Secret History</p>
+                      <p className="text-stone-800 italic">{spell.concealment_suggestion.historical_inspiration}</p>
                     </div>
                   </div>
                 )}
@@ -847,10 +847,10 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                 {/* Your Adaptation */}
                 {spell.concealment_suggestion.your_adaptation && (
                   <div className="flex items-start gap-2">
-                    <Key className="w-4 h-4 text-slate-400 mt-1 flex-shrink-0" />
+                    <Key className="w-4 h-4 text-slate-600 mt-1 flex-shrink-0" />
                     <div>
-                      <p className="text-xs text-slate-500 uppercase tracking-wide mb-1">Your Hidden Place</p>
-                      <p className="text-slate-300">{spell.concealment_suggestion.your_adaptation}</p>
+                      <p className="text-xs text-slate-600 uppercase tracking-wide mb-1">Your Hidden Place</p>
+                      <p className="text-stone-800">{spell.concealment_suggestion.your_adaptation}</p>
                     </div>
                   </div>
                 )}
@@ -859,7 +859,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                 {spell.concealment_suggestion.suggested_items && spell.concealment_suggestion.suggested_items.length > 0 && (
                   <div className="flex flex-wrap gap-2 mt-3">
                     {spell.concealment_suggestion.suggested_items.map((item, idx) => (
-                      <span key={idx} className="px-3 py-1 bg-slate-700/50 text-slate-300 rounded-full text-xs">
+                      <span key={idx} className="px-3 py-1 bg-slate-600/20 text-stone-800 rounded-full text-xs">
                         {item}
                       </span>
                     ))}
@@ -868,11 +868,11 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                 
                 {/* Cathleen's Note */}
                 {spell.concealment_suggestion.cathleen_note && (
-                  <div className="mt-4 pt-4 border-t border-slate-600/30">
-                    <p className="text-slate-400 italic text-center text-xs">
+                  <div className="mt-4 pt-4 border-t border-slate-400/30">
+                    <p className="text-slate-700 italic text-center text-xs">
                       &ldquo;{spell.concealment_suggestion.cathleen_note}&rdquo;
                     </p>
-                    <p className="text-slate-500 text-xs text-center mt-1">— Cathleen</p>
+                    <p className="text-slate-600 text-xs text-center mt-1">— Cathleen</p>
                   </div>
                 )}
               </div>
