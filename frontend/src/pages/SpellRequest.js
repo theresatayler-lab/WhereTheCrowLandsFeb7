@@ -719,7 +719,6 @@ export const SpellRequest = () => {
                     </>
                   )}
                 </button>
-                </button>
               )}
             </div>
           </LightOrnateCard>
