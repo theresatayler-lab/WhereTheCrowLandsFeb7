@@ -1322,6 +1322,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
           sigilImageBase64={generatedAssets?.sigil}
           spellTitle={spell.title}
           tarotCard={spell.tarot_card}
+          isLoading={isLoadingImages}
         />
 
         {/* Embossed Seal Stamp */}
