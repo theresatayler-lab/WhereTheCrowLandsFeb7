@@ -6,7 +6,7 @@ export const ARCHETYPES = [
     name: 'Shigg',
     title: 'The Birds of Parliament Poet Laureate',
     shortName: 'Shigg',
-    era: 'Dagenham/Romford, Pre/During/Post-WWII (1927-)',
+    era: 'Esoteric Silent Generation born in the \'20s into the Blitz',
     birdSymbol: 'Parliament of Birds',
     birdEmoji: '🐦',
     colorScheme: {
