@@ -423,19 +423,13 @@ export const SpellRequest = () => {
   const getLoadingVideoUrl = () => {
     const personaId = spellSpec.persona_id;
     
-    // If specific persona selected, use their video
+    // If specific persona selected (NOT choose_for_me), use their video
     if (personaId && personaId !== 'choose_for_me') {
       const video = getArchetypeVideo(personaId);
       if (video) return video;
     }
     
-    // For choose_for_me, use last selected persona's video if available
-    if (lastSelectedPersonaRef.current) {
-      const video = getArchetypeVideo(lastSelectedPersonaRef.current);
-      if (video) return video;
-    }
-    
-    // Fallback: use the generic spell video
+    // For "choose_for_me" or no selection, ALWAYS use the generic spell video
     return GENERIC_SPELL_VIDEO;
   };
 
