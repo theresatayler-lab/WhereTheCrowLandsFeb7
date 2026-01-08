@@ -259,7 +259,7 @@ const Step2 = ({ spellSpec, updateSpec }) => (
   </div>
 );
 
-// Step 3: Anchor, Setting, Name, Avoid
+// Step 3: Anchor, Setting, Name, Avoid - NOW WITH PROPER CONTRAST
 const Step3 = ({ spellSpec, updateSpec }) => {
   const relevantAnchors = ANCHORS.filter(a => 
     !a.forPersonas || 
@@ -270,8 +270,8 @@ const Step3 = ({ spellSpec, updateSpec }) => {
   return (
     <div className="space-y-6">
       <div>
-        <h3 className="font-cinzel text-lg text-gold-light mb-3">Choose an anchor object</h3>
-        <p className="font-montserrat text-xs text-cream/60 mb-3">This will be central to your ritual.</p>
+        <h3 className="font-cinzel text-lg text-crimson mb-3">Choose an anchor object</h3>
+        <p className="font-montserrat text-xs text-navy-dark/70 mb-3">This will be central to your ritual.</p>
         <div className="flex flex-wrap gap-2">
           {relevantAnchors.map((a) => (
             <OptionCard
@@ -279,10 +279,11 @@ const Step3 = ({ spellSpec, updateSpec }) => {
               selected={spellSpec.anchor_object === a.id}
               onClick={() => updateSpec({ anchor_object: a.id })}
               className="px-4 py-2"
+              light={true}
             >
               <div className="flex items-center gap-2">
                 <span className="text-lg">{a.emoji}</span>
-                <span className="font-montserrat text-sm text-cream">{a.label}</span>
+                <span className="font-montserrat text-sm text-navy-dark">{a.label}</span>
               </div>
             </OptionCard>
           ))}
@@ -290,7 +291,7 @@ const Step3 = ({ spellSpec, updateSpec }) => {
       </div>
 
       <div>
-        <h3 className="font-cinzel text-lg text-gold-light mb-3">Where will you perform this?</h3>
+        <h3 className="font-cinzel text-lg text-crimson mb-3">Where will you perform this?</h3>
         <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
           {SETTINGS.map((s) => {
             const Icon = s.icon;
@@ -300,10 +301,11 @@ const Step3 = ({ spellSpec, updateSpec }) => {
                 selected={spellSpec.setting === s.id}
                 onClick={() => updateSpec({ setting: s.id })}
                 className="py-3"
+                light={true}
               >
                 <div className="text-center">
-                  <Icon className={`w-5 h-5 mx-auto mb-1 ${spellSpec.setting === s.id ? 'text-crimson' : 'text-cream/60'}`} />
-                  <p className="font-montserrat text-xs text-cream">{s.label}</p>
+                  <Icon className={`w-5 h-5 mx-auto mb-1 ${spellSpec.setting === s.id ? 'text-crimson' : 'text-navy-dark/60'}`} />
+                  <p className="font-montserrat text-xs text-navy-dark">{s.label}</p>
                 </div>
               </OptionCard>
             );
@@ -313,26 +315,26 @@ const Step3 = ({ spellSpec, updateSpec }) => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <h3 className="font-cinzel text-lg text-gold-light mb-2">Your name (optional)</h3>
-          <p className="font-montserrat text-xs text-cream/60 mb-2">For a more personal spell.</p>
+          <h3 className="font-cinzel text-lg text-crimson mb-2">Your name (optional)</h3>
+          <p className="font-montserrat text-xs text-navy-dark/70 mb-2">For a more personal spell.</p>
           <input
             type="text"
             value={spellSpec.user_name || ''}
             onChange={(e) => updateSpec({ user_name: e.target.value })}
             placeholder="Name or nickname..."
-            className="w-full bg-navy-dark/50 border border-gold/30 focus:border-gold/60 rounded-sm px-4 py-2 text-cream font-montserrat text-sm placeholder:text-cream/30"
+            className="w-full bg-white/80 border-2 border-gold/40 focus:border-crimson/60 rounded-sm px-4 py-2 text-navy-dark font-montserrat text-sm placeholder:text-navy-dark/40"
           />
         </div>
 
         <div>
-          <h3 className="font-cinzel text-lg text-gold-light mb-2">Anything to avoid? (optional)</h3>
-          <p className="font-montserrat text-xs text-cream/60 mb-2">Topics or elements to exclude.</p>
+          <h3 className="font-cinzel text-lg text-crimson mb-2">Anything to avoid? (optional)</h3>
+          <p className="font-montserrat text-xs text-navy-dark/70 mb-2">Topics or elements to exclude.</p>
           <input
             type="text"
             value={spellSpec.avoid || ''}
             onChange={(e) => updateSpec({ avoid: e.target.value })}
             placeholder="e.g., fire, spirit contact, blood..."
-            className="w-full bg-navy-dark/50 border border-gold/30 focus:border-gold/60 rounded-sm px-4 py-2 text-cream font-montserrat text-sm placeholder:text-cream/30"
+            className="w-full bg-white/80 border-2 border-gold/40 focus:border-crimson/60 rounded-sm px-4 py-2 text-navy-dark font-montserrat text-sm placeholder:text-navy-dark/40"
           />
         </div>
       </div>
