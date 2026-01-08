@@ -276,7 +276,7 @@ export const Profile = ({ user }) => {
               </div>
             ) : favorites.length === 0 ? (
               <p className="font-montserrat text-sm text-navy-dark/70">
-                You haven't saved any favorites yet. Explore deities, figures, sites, and rituals to save your favorites.
+                You haven&apos;t saved any favorites yet. Explore deities, figures, sites, and rituals to save your favorites.
               </p>
             ) : (
               <div className="grid gap-3 sm:grid-cols-2">
