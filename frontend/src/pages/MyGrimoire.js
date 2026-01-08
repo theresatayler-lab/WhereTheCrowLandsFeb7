@@ -457,9 +457,6 @@ export const MyGrimoire = () => {
 
       {/* Dark Footer */}
       <DarkSection className="py-8 px-4" variant="warm">
-        <ElaborateCorner className="absolute bottom-3 left-3 w-16 h-16 sm:w-20 sm:h-20 -rotate-90" variant="gold" />
-        <ElaborateCorner className="absolute bottom-3 right-3 w-16 h-16 sm:w-20 sm:h-20 rotate-180" variant="gold" />
-        
         <div className="max-w-2xl mx-auto text-center relative z-10">
           <p className="font-crimson text-sm text-cream/60 italic mb-4">
             Each spell is a doorway. Each ward is a guardian.
@@ -474,5 +471,6 @@ export const MyGrimoire = () => {
         </div>
       </DarkSection>
     </div>
+    </PageBorderFrame>
   );
 };
