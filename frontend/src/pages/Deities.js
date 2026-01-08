@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { GlassCard } from '../components/GlassCard';
 import { deitiesAPI } from '../utils/api';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../components/ui/dialog';
-import { Moon } from 'lucide-react';
+import { Moon, ExternalLink } from 'lucide-react';
+import { DarkSection, ElaborateCorner, PageHeader, OrnateCard, GrandDivider } from '../components/OrnateElements';
 
 export const Deities = () => {
   const [deities, setDeities] = useState([]);
@@ -27,27 +27,33 @@ export const Deities = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <Moon className="w-12 h-12 text-primary animate-pulse" />
-      </div>
+      <DarkSection className="min-h-screen flex items-center justify-center" variant="warm">
+        <Moon className="w-12 h-12 text-gold animate-pulse" />
+      </DarkSection>
     );
   }
 
   return (
-    <div className="min-h-screen py-24 px-6">
-      <div className="max-w-7xl mx-auto">
+    <DarkSection className="min-h-screen py-12 sm:py-20 px-4 sm:px-6" variant="warm">
+      {/* Corner Ornaments */}
+      <ElaborateCorner className="absolute top-3 left-3 w-16 h-16 sm:w-24 sm:h-24" variant="gold" />
+      <ElaborateCorner className="absolute top-3 right-3 w-16 h-16 sm:w-24 sm:h-24 rotate-90" variant="gold" />
+      
+      <div className="max-w-7xl mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-16"
         >
-          <h1 className="font-italiana text-4xl md:text-6xl text-primary mb-4">Divine Pantheon</h1>
-          <p className="font-montserrat text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
-            The goddesses who guided the occult revival of 1910-1945
-          </p>
+          <PageHeader 
+            icon={Moon}
+            title="Divine Pantheon"
+            subtitle="The goddesses who guided the occult revival of 1910-1945"
+          />
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <GrandDivider variant="moon" />
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {deities.map((deity, index) => (
             <motion.div
               key={deity.id}
@@ -55,87 +61,88 @@ export const Deities = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
             >
-              <GlassCard
-                testId={`deity-card-${deity.id}`}
+              <OrnateCard 
+                className="cursor-pointer"
                 onClick={() => setSelectedDeity(deity)}
               >
                 <div
-                  className="h-48 -m-8 mb-6 bg-cover bg-center relative"
+                  className="h-48 -m-4 sm:-m-6 mb-4 sm:mb-6 bg-cover bg-center relative rounded-t-lg"
                   style={{ backgroundImage: `url(${deity.image_url})` }}
                 >
-                  <div className="absolute inset-0 bg-gradient-to-t from-card via-card/50 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-navy-mid via-navy-mid/60 to-transparent rounded-t-lg" />
                 </div>
-                <h3 className="font-cinzel text-2xl font-bold text-secondary mb-2">
+                {/* Title with better contrast - gold on dark */}
+                <h3 className="font-cinzel text-xl sm:text-2xl text-gold mb-2" style={{ textShadow: '0 2px 10px rgba(212, 168, 75, 0.3)' }}>
                   {deity.name}
                 </h3>
-                <p className="font-montserrat text-xs uppercase tracking-widest text-primary mb-3">
+                {/* Subtitle in crimson-bright for visibility */}
+                <p className="font-montserrat text-xs uppercase tracking-widest text-crimson-bright mb-3">
                   {deity.origin}
                 </p>
-                <p className="font-montserrat text-sm text-muted-foreground leading-relaxed line-clamp-3">
+                {/* Description in silver-mist for readability */}
+                <p className="font-montserrat text-sm text-silver-mist/85 leading-relaxed line-clamp-3">
                   {deity.description}
                 </p>
-              </GlassCard>
+              </OrnateCard>
             </motion.div>
           ))}
         </div>
       </div>
 
+      {/* Bottom Corners */}
+      <ElaborateCorner className="absolute bottom-3 left-3 w-16 h-16 sm:w-24 sm:h-24 -rotate-90" variant="gold" />
+      <ElaborateCorner className="absolute bottom-3 right-3 w-16 h-16 sm:w-24 sm:h-24 rotate-180" variant="gold" />
+
+      {/* Detail Modal */}
       <Dialog open={!!selectedDeity} onOpenChange={() => setSelectedDeity(null)}>
-        <DialogContent className="max-w-3xl bg-card border-border" data-testid="deity-detail-modal">
+        <DialogContent className="max-w-3xl bg-navy-mid border-gold/30" data-testid="deity-detail-modal">
           {selectedDeity && (
             <>
               <DialogHeader>
-                <DialogTitle className="font-cinzel text-3xl text-primary">
+                <DialogTitle className="font-cinzel text-2xl sm:text-3xl text-gold">
                   {selectedDeity.name}
                 </DialogTitle>
               </DialogHeader>
               <div className="space-y-6">
                 <div
-                  className="h-64 bg-cover bg-center rounded-sm"
+                  className="h-48 sm:h-64 bg-cover bg-center rounded-sm"
                   style={{ backgroundImage: `url(${selectedDeity.image_url})` }}
                 />
                 <div>
-                  <h4 className="font-montserrat text-xs uppercase tracking-widest text-primary mb-2">
+                  <h4 className="font-montserrat text-xs uppercase tracking-widest text-crimson-bright mb-2">
                     Origin
                   </h4>
-                  <p className="font-montserrat text-base text-foreground">{selectedDeity.origin}</p>
+                  <p className="font-montserrat text-sm text-silver-mist">
+                    {selectedDeity.origin}
+                  </p>
                 </div>
                 <div>
-                  <h4 className="font-montserrat text-xs uppercase tracking-widest text-primary mb-2">
+                  <h4 className="font-montserrat text-xs uppercase tracking-widest text-crimson-bright mb-2">
                     Description
                   </h4>
-                  <p className="font-montserrat text-base text-foreground leading-relaxed">
+                  <p className="font-crimson text-base text-cream/90 leading-relaxed">
                     {selectedDeity.description}
                   </p>
                 </div>
-                <div>
-                  <h4 className="font-montserrat text-xs uppercase tracking-widest text-primary mb-2">
-                    Historical Context (1910-1945)
-                  </h4>
-                  <p className="font-montserrat text-base text-foreground leading-relaxed">
-                    {selectedDeity.history}
-                  </p>
-                </div>
-                <div>
-                  <h4 className="font-montserrat text-xs uppercase tracking-widest text-primary mb-2">
-                    Associated Practices
-                  </h4>
-                  <div className="flex flex-wrap gap-2">
-                    {selectedDeity.associated_practices.map((practice, idx) => (
-                      <span
-                        key={idx}
-                        className="px-3 py-1 bg-primary/10 border border-primary/30 rounded-sm font-montserrat text-xs text-primary"
-                      >
-                        {practice}
-                      </span>
-                    ))}
+                {selectedDeity.associations && selectedDeity.associations.length > 0 && (
+                  <div>
+                    <h4 className="font-montserrat text-xs uppercase tracking-widest text-crimson-bright mb-2">
+                      Associations
+                    </h4>
+                    <div className="flex flex-wrap gap-2">
+                      {selectedDeity.associations.map((assoc, idx) => (
+                        <span key={idx} className="px-3 py-1 bg-gold/10 border border-gold/30 rounded-sm text-sm text-gold-light">
+                          {assoc}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
             </>
           )}
         </DialogContent>
       </Dialog>
-    </div>
+    </DarkSection>
   );
 };
