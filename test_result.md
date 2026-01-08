@@ -148,6 +148,91 @@ The Spell Personalization System is **FULLY FUNCTIONAL** and meets all requireme
    - British folklore animals + planetary/alchemical/occult tools
    - Hard negatives for all image prompts
 
+---
+
+## VISUAL SYSTEM V1.1 TESTING - REVIEW REQUEST COMPLETED
+
+### Backend Testing Status: ✅ MOSTLY PASSED (5/6 tests)
+
+**Test Date:** January 8, 2025
+**Tester:** Testing Agent
+**Total Tests:** 6 Visual System V1.1 validation tests
+**Passed:** 5/6
+**Failed:** 1/6 (sigil generation by design)
+
+### Detailed Test Results
+
+#### Test 1: CROWLANDS_ART_BIBLE Structure ✅ PASSED
+- **Validation:** CROWLANDS_ART_BIBLE configuration
+- **Results:**
+  - ✅ 8 style tokens verified including 'silk scarf', 'tapestry', 'ultra-detailed engraved linework'
+  - ✅ 5 motif families verified: british_folklore, planetary, alchemical, occult_tools, gothic_botanicals
+  - ✅ Hard negatives include 'NO 3D render' requirement
+  - ✅ All required keys present: style_tokens, palette, motif_families, composition_rules, hard_negatives, dall_e_global_suffix
+
+#### Test 2: ASSET_ROLE_LOCKS System ✅ PASSED
+- **Validation:** Asset role locks prevent image repetition
+- **Results:**
+  - ✅ header: SCENE/STILL-LIFE verified
+  - ✅ tarot: EMBLEM/SIGIL PLATE verified
+  - ✅ sigil: MINIMAL LINEWORK verified
+  - ✅ divider: HORIZONTAL STRIP verified
+  - ✅ All asset types have required fields: type, aspect, rule, prompt_suffix
+
+#### Test 3: Persona Visual DNA Scarf/Tapestry ✅ PASSED
+- **Validation:** All 3 personas contain scarf/tapestry aesthetic
+- **Results:**
+  - ✅ shigg: Contains 'ornate silk scarf tapestry illustration' + warmer sepia/cream tones
+  - ✅ cathleen: Contains 'ornate silk scarf tapestry illustration' + deeper crimson tones
+  - ✅ katherine: Contains 'ornate silk scarf tapestry illustration' + cooler steel silver tones
+
+#### Test 4: build_image_prompt Function ⚠️ PARTIAL PASS
+- **Validation:** Image prompt generation with asset role locks
+- **Results:**
+  - ✅ header_image: Contains silk scarf/tapestry tokens
+  - ✅ tarot_card_image: Contains silk scarf/tapestry tokens
+  - ❌ sigil: Missing silk scarf/tapestry tokens (BY DESIGN - black ink only per ASSET_ROLE_LOCKS)
+  - ✅ All prompts are different (no repetition)
+  - ✅ Prompt lengths appropriate (100-1000 characters)
+
+#### Test 5: ARCHETYPE_IMAGE_STYLES Endpoint ✅ PASSED
+- **Validation:** /api/ai/image-styles contains required tokens
+- **Results:**
+  - ✅ All 5 archetype styles present: shiggy, kathleen, catherine, theresa, neutral
+  - ✅ All styles contain 'tapestry' keyword in description/keywords
+  - ✅ Shiggy style name correct: "Shigg - The Birds of Parliament"
+  - ✅ API endpoint responding correctly (200 status)
+
+#### Test 6: Spell Generation with Shigg Visual DNA ✅ PASSED
+- **Validation:** Personalized spell generation with Shigg persona
+- **Results:**
+  - ✅ Authentication successful with test credentials (sub_test@test.com)
+  - ✅ Archetype correctly identified as Shigg
+  - ✅ Asset plan contains required assets: header_image, tarot_card_image, sigil
+  - ✅ Shigg persona elements found: bird, teacup, hedgerow, parliament, feather
+  - ✅ Spell generation API responding correctly (200 status)
+
+### Critical Findings
+
+#### ✅ WORKING CORRECTLY:
+1. **CROWLANDS_ART_BIBLE** - All 8 style tokens and 5 motif families implemented
+2. **Persona Visual DNA** - All 3 personas have scarf/tapestry aesthetic with persona-specific color tones
+3. **ARCHETYPE_IMAGE_STYLES** - API endpoint returns all 5 styles with tapestry keywords
+4. **Asset Role Locks** - Prevents image repetition with proper type constraints
+5. **Spell Generation Flow** - Shigg persona correctly generates spells with visual DNA elements
+
+#### ⚠️ BY DESIGN (NOT AN ERROR):
+1. **Sigil Generation** - Intentionally excludes scarf/tapestry tokens as sigils are "black ink only, simple geometric, printable" per ASSET_ROLE_LOCKS specification
+
+### System Performance
+- **Response Times:** All API tests completed within 30-90 seconds
+- **API Stability:** No timeouts or connection errors
+- **Authentication:** Test credentials working correctly
+- **Data Integrity:** All JSON responses properly formatted
+
+### Conclusion
+The Visual System V1.1 is **FULLY FUNCTIONAL** and meets all requirements specified in the review request. The silk scarf/tapestry aesthetic is properly implemented across all personas, ARCHETYPE_IMAGE_STYLES contains the required tokens, and the spell generation flow correctly incorporates visual DNA elements. The sigil generation exclusion is by design per the ASSET_ROLE_LOCKS specification.
+
 2. **Cathleen visual_dna** - Updated from WWII propaganda to:
    - Raven feathers, candles, bells, protective circles
    - Brigid-cross motifs, prayer beads
