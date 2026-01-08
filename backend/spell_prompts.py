@@ -1,19 +1,97 @@
-# Spell Generation Prompts - Three-stage prompt system
-# 1. Planner - selects scenario, format, sources, builds AssetPlan
-# 2. Spell Writer - writes the actual spell content
-# 3. Image Prompt Generator - creates prompts for each asset
+# Spell Generation Prompts - Two-stage prompt system (Planner + Writer)
+# 1. Planner - selects scenario, format, sources, generates variation_tokens, builds AssetPlan
+# 2. Spell Writer - writes the actual spell content with strict citations
 
 import json
+import random
 from typing import Dict, List, Any
 from persona_config import (
-    get_persona_config, select_scenario_for_spell, 
+    get_persona_config, select_scenario_for_spell, get_format_for_scenario,
+    get_practices_for_scenario, get_micro_icons_for_persona,
     BELIEF_BOUNDARY_DESCRIPTIONS, ASSET_TYPES
 )
+
+# ============================================================================
+# VARIATION KNOBS - These drive procedural variety
+# ============================================================================
+
+VARIATION_KNOBS = {
+    "time_of_day": ["dawn", "morning", "noon", "dusk", "evening", "midnight", "whenever needed"],
+    "gesture_type": ["circular motion", "linear gesture", "tapping three times", "breath work", "stillness", "swaying"],
+    "repetition_pattern": ["three times", "seven times", "once with intention", "until it feels complete", "in rhythm with breath"],
+    "material_placement": ["in center", "at edges", "carried close", "buried", "burned", "given to water", "left in moonlight"],
+    "closing_action": ["extinguish candle", "bow head", "speak thanks", "ring bell", "clap hands", "deep exhale", "fold paper"],
+    "energy_direction": ["inward (receiving)", "outward (projecting)", "grounding (down)", "lifting (up)", "circular (containing)"]
+}
+
+# ============================================================================
+# TAROT COMPOSITION LIBRARY - Prevents repetitive imagery
+# ============================================================================
+
+TAROT_COMPOSITIONS = {
+    "shigg": [
+        {"focal": "single crow on branch", "framing": "circular wreath border", "symbols": ["tea leaves", "morning star"]},
+        {"focal": "open window with birds", "framing": "rectangular frame with corners", "symbols": ["kettle steam", "feather"]},
+        {"focal": "teacup from above", "framing": "octagonal seal", "symbols": ["bird silhouettes", "herb sprig"]},
+        {"focal": "three birds in flight formation", "framing": "Art Nouveau curves", "symbols": ["nest", "key"]},
+        {"focal": "windowsill with offerings", "framing": "simple line border", "symbols": ["breadcrumbs", "rose"]},
+        {"focal": "single feather detailed", "framing": "mandala pattern", "symbols": ["star points", "steam wisps"]}
+    ],
+    "cathleen": [
+        {"focal": "single candle flame close-up", "framing": "Celtic knotwork border", "symbols": ["moon phases", "voice waves"]},
+        {"focal": "raven with spread wings", "framing": "triple goddess symbol frame", "symbols": ["salt circle", "brooch"]},
+        {"focal": "protective circle from above", "framing": "simple round border", "symbols": ["candle points", "silver thread"]},
+        {"focal": "woman's silhouette singing", "framing": "arched window frame", "symbols": ["sound waves", "stars"]},
+        {"focal": "silver talisman detailed", "framing": "medallion style", "symbols": ["crow feather", "protective runes"]},
+        {"focal": "doorway threshold", "framing": "keyhole shape", "symbols": ["salt line", "candle glow"]}
+    ],
+    "katherine": [
+        {"focal": "hand mirror reflecting shadow", "framing": "Victorian oval frame", "symbols": ["candle", "wax seal"]},
+        {"focal": "needle piercing fabric", "framing": "square geometric grid", "symbols": ["thread lines", "key"]},
+        {"focal": "sealed letter with wax", "framing": "rectangular document border", "symbols": ["clock hands", "ink drops"]},
+        {"focal": "salt line at threshold", "framing": "doorway arch", "symbols": ["shadow figure", "keyhole"]},
+        {"focal": "open notebook with writing", "framing": "simple ruled border", "symbols": ["candle", "pen nib"]},
+        {"focal": "eye reflected in mirror", "framing": "double circle (eye shape)", "symbols": ["thread pattern", "seal"]}
+    ]
+}
+
+def select_tarot_composition(persona_id: str, used_compositions: List[str] = None) -> dict:
+    """Select a tarot composition, avoiding recently used ones"""
+    if used_compositions is None:
+        used_compositions = []
+    
+    persona_comps = TAROT_COMPOSITIONS.get(persona_id, TAROT_COMPOSITIONS["shigg"])
+    
+    # Try to find unused composition
+    for comp in persona_comps:
+        if comp["focal"] not in used_compositions:
+            return comp
+    
+    # If all used, return random
+    return random.choice(persona_comps)
+
+
+def generate_variation_tokens() -> dict:
+    """Generate random variation tokens for spell variety"""
+    return {
+        "time_of_day": random.choice(VARIATION_KNOBS["time_of_day"]),
+        "gesture_type": random.choice(VARIATION_KNOBS["gesture_type"]),
+        "repetition_pattern": random.choice(VARIATION_KNOBS["repetition_pattern"]),
+        "material_placement": random.choice(VARIATION_KNOBS["material_placement"]),
+        "closing_action": random.choice(VARIATION_KNOBS["closing_action"]),
+        "energy_direction": random.choice(VARIATION_KNOBS["energy_direction"])
+    }
+
+
+# ============================================================================
+# STAGE 1: PLANNER PROMPT
+# ============================================================================
 
 def build_planner_prompt(spell_spec: dict, persona_config: dict, scenario: dict) -> str:
     """
     Stage 1: Planner Prompt
-    Selects the specific approach, sources to cite, and builds the AssetPlan
+    Generates: variation_tokens, tarot_constraints, source selections, asset_plan
+    CRITICAL: Only cites from allowed_sources
     """
     
     belief_guidance = BELIEF_BOUNDARY_DESCRIPTIONS.get(
@@ -21,19 +99,43 @@ def build_planner_prompt(spell_spec: dict, persona_config: dict, scenario: dict)
         BELIEF_BOUNDARY_DESCRIPTIONS["spiritual_grounded"]
     )
     
+    # Build allowed sources text with IDs
     allowed_sources_text = "\n".join([
-        f"- {s['author']}: \"{s['work']}\" ({s['year'] or 'Traditional'})"
+        f"- [{s['source_id']}] {s['author']}: \"{s['work']}\" ({s['year'] or 'Traditional'}) — {s['reference_class']}"
         for s in persona_config.get("allowed_sources", [])
     ])
+    
+    # Get practices linked to this scenario
+    practices = get_practices_for_scenario(
+        spell_spec.get("persona_id", "shigg"), 
+        scenario["scenario_id"]
+    )
+    practices_text = "\n".join([
+        f"- [{p['practice_id']}]: {p['name']} — {p['description']}"
+        for p in practices
+    ])
+    
+    # Get format for this scenario
+    linked_format = get_format_for_scenario(
+        spell_spec.get("persona_id", "shigg"),
+        scenario["scenario_id"]
+    )
+    format_section_order = linked_format["section_order"] if linked_format else scenario.get("required_sections", [])
+    
+    # Generate variation tokens
+    variation_tokens = generate_variation_tokens()
+    
+    # Select tarot composition constraints
+    tarot_comp = select_tarot_composition(spell_spec.get("persona_id", "shigg"))
     
     prompt = f"""You are the Spell Planner for {persona_config['name']}, {persona_config['title']}.
 
 ## YOUR TASK
-Create a detailed spell plan based on the seeker's needs. You must:
-1. Adapt the scenario to their specific situation
-2. Select 2-3 sources to cite from the allowed list ONLY
-3. Create an AssetPlan for visual elements
-4. Ensure the spell feels PERSONAL and UNIQUE
+Create a detailed spell plan. You MUST:
+1. Use the provided variation_tokens to ensure uniqueness
+2. Select sources ONLY from allowed_sources (cite by source_id)
+3. Follow the tarot_constraints to ensure distinct imagery
+4. Create an asset_plan for exactly 6 generated images
 
 ## SEEKER'S REQUEST (SpellSpec)
 - Query: "{spell_spec.get('user_query', 'No specific query')}"
@@ -50,86 +152,106 @@ Create a detailed spell plan based on the seeker's needs. You must:
 {belief_guidance}
 
 ## SELECTED SCENARIO
-Scenario: {scenario['name']}
+Scenario ID: {scenario['scenario_id']}
+Name: {scenario['name']}
 Description: {scenario['description']}
 Best For: {', '.join(scenario['best_for'])}
-Required Sections: {', '.join(scenario['required_sections'])}
 
-## ALLOWED SOURCES (cite ONLY from this list)
+## SECTION ORDER (from linked format)
+{', '.join(format_section_order)}
+
+## LINKED PRACTICES (incorporate 1-2 of these)
+{practices_text if practices_text else "No specific practices linked - use general approach"}
+
+## VARIATION TOKENS (USE THESE for uniqueness)
+- time_of_day: {variation_tokens['time_of_day']}
+- gesture_type: {variation_tokens['gesture_type']}
+- repetition_pattern: {variation_tokens['repetition_pattern']}
+- material_placement: {variation_tokens['material_placement']}
+- closing_action: {variation_tokens['closing_action']}
+- energy_direction: {variation_tokens['energy_direction']}
+
+## TAROT CONSTRAINTS (to prevent image repetition)
+- FOCAL ELEMENT: {tarot_comp['focal']}
+- FRAMING STYLE: {tarot_comp['framing']}
+- SUPPORTING SYMBOLS: {', '.join(tarot_comp['symbols'])}
+The tarot card image MUST use these constraints. Do NOT deviate.
+
+## ALLOWED SOURCES (cite ONLY by source_id from this list)
 {allowed_sources_text}
 
 ## PERSONA VOICE STYLE
 {persona_config['section_grammar']['voice_style']}
 
-## VISUAL DNA FOR ASSETS
+## VISUAL DNA
 Primary Motif: {persona_config['visual_dna']['constants']['primary_motif']}
-Secondary Motif: {persona_config['visual_dna']['constants']['secondary_motif']}
 Art Style: {persona_config['visual_dna']['constants']['art_style']}
-Motif Library: {', '.join(persona_config['visual_dna']['motif_library'][:8])}
 AVOID in visuals: {', '.join(persona_config['visual_dna']['avoid'])}
 
 ## OUTPUT FORMAT
-Return a JSON object with this structure:
+Return ONLY this JSON (no markdown, no explanation):
 {{
-    "spell_title": "A unique, evocative title for this specific spell",
-    "spell_subtitle": "A short poetic line that captures the essence",
-    "personalization_hooks": {{
-        "name_usage": "How/where to use the seeker's name",
-        "anchor_integration": "How the anchor object is central to the working",
-        "setting_details": "Specific details about performing in their setting",
-        "feeling_arc": "How the spell moves them toward their desired feeling"
-    }},
+    "spell_title": "A unique, evocative title",
+    "spell_subtitle": "A short poetic line",
+    "format_id": "{linked_format['format_id'] if linked_format else 'general'}",
+    "section_order": {json.dumps(format_section_order)},
+    "variation_tokens": {json.dumps(variation_tokens)},
+    "selected_practices": ["practice_id_1", "practice_id_2"],
     "selected_sources": [
-        {{"author": "...", "work": "...", "usage": "How this source informs this spell"}}
+        {{"source_id": "...", "usage": "How this source informs this spell"}}
     ],
-    "section_plan": [
-        {{"section_name": "...", "purpose": "...", "key_elements": ["..."]}}
-    ],
+    "personalization_hooks": {{
+        "name_usage": "How/where to use seeker's name",
+        "anchor_integration": "How anchor object is central",
+        "setting_details": "Specific setting adaptations",
+        "feeling_arc": "How spell moves toward desired feeling"
+    }},
+    "tarot_constraints": {{
+        "focal_element": "{tarot_comp['focal']}",
+        "framing_style": "{tarot_comp['framing']}",
+        "supporting_symbols": {json.dumps(tarot_comp['symbols'])}
+    }},
     "asset_plan": {{
         "header_image": {{
-            "scene_description": "Detailed description of the header scene",
-            "composition": "scene/portrait/still_life",
+            "scene_description": "Detailed scene (NOT the tarot focal)",
             "mood": "...",
-            "key_elements": ["motif1", "motif2", "motif3"]
+            "key_elements": ["..."]
         }},
         "tarot_card_image": {{
-            "symbol_description": "Symbolic/emblematic image - DIFFERENT from header",
-            "composition": "emblem/sigil_plate/diagram",
-            "central_symbol": "...",
-            "supporting_elements": ["..."]
+            "must_include_focal": "{tarot_comp['focal']}",
+            "must_use_framing": "{tarot_comp['framing']}",
+            "must_include_symbols": {json.dumps(tarot_comp['symbols'])}
         }},
         "sigil": {{
-            "design_description": "Simple geometric/organic design for the sigil",
+            "design_concept": "Simple black/white geometric design",
             "elements": ["..."]
         }},
         "dividers": [
-            {{"placement": "after_section_name", "motif": "..."}},
-            {{"placement": "after_section_name", "motif": "..."}}
-        ],
-        "micro_icons": [
-            {{"for_section": "materials", "icon": "..."}},
-            {{"for_section": "the_working", "icon": "..."}},
-            {{"for_section": "spoken_words", "icon": "..."}},
-            {{"for_section": "closing", "icon": "..."}},
-            {{"for_section": "inspired_by", "icon": "..."}}
+            {{"placement": "after_introduction", "motif": "simple motif 1"}},
+            {{"placement": "after_working", "motif": "different motif 2"}},
+            {{"placement": "before_closing", "motif": "different motif 3"}}
         ]
-    }},
-    "variation_notes": "What makes THIS spell different from others using the same scenario"
+    }}
 }}
 
-CRITICAL RULES:
-1. The tarot_card_image MUST be visually distinct from header_image (different composition, different focus)
-2. Only cite sources from the ALLOWED SOURCES list
-3. Personalize heavily based on the seeker's name, anchor object, and setting
-4. The spell must feel like it was created specifically for THIS person and THIS moment
+STRICT RULES:
+1. selected_sources MUST only contain source_ids from ALLOWED SOURCES list
+2. tarot_card_image MUST use the tarot_constraints provided
+3. header_image MUST be different from tarot (scene vs emblem)
+4. Use variation_tokens to make this spell unique
 """
     return prompt
 
+
+# ============================================================================
+# STAGE 2: SPELL WRITER PROMPT
+# ============================================================================
 
 def build_spell_writer_prompt(spell_spec: dict, persona_config: dict, scenario: dict, plan: dict) -> str:
     """
     Stage 2: Spell Writer Prompt
     Takes the plan and writes the full spell content
+    CRITICAL: Only cites from selected_sources in plan
     """
     
     belief_guidance = BELIEF_BOUNDARY_DESCRIPTIONS.get(
@@ -138,25 +260,36 @@ def build_spell_writer_prompt(spell_spec: dict, persona_config: dict, scenario: 
     )
     
     time_guidance = {
-        "2_min": "This is a QUICK spell. 3-4 steps maximum. No elaborate setup. Something they can do right now.",
-        "10_min": "This is a focused spell. 5-6 steps. Some setup but not elaborate. Clear and purposeful.",
-        "30_min": "This is a full ritual. 7-9 steps. Allow for proper setup, working, and closing. Can include meditation."
-    }.get(spell_spec.get("time", "10_min"), "5-6 steps, focused and clear.")
+        "2_min": "QUICK spell: 3-4 steps maximum. No setup. Immediate action.",
+        "10_min": "FOCUSED spell: 5-6 steps. Brief setup, clear working.",
+        "30_min": "FULL ritual: 7-9 steps. Proper setup, deep working, thorough closing."
+    }.get(spell_spec.get("time", "10_min"), "5-6 steps, focused.")
     
     tone_guidance = {
-        "gentle": "Use soft, nurturing language. Offer reassurance. Frame everything as invitation, not instruction.",
-        "practical": "Be clear and direct. Focus on what to do, not elaborate explanation. Efficient and grounded.",
-        "intense": "Use powerful, evocative language. Don't shy from darkness or difficulty. This is serious work."
+        "gentle": "Soft, nurturing language. Invitation, not instruction.",
+        "practical": "Clear, direct. Focus on what to do. Efficient.",
+        "intense": "Powerful, evocative. Don't shy from darkness."
     }.get(spell_spec.get("tone", "practical"), "Clear and grounded.")
     
-    prompt = f"""You are {persona_config['name']}, {persona_config['title']}.
+    # Build selected sources reference
+    selected_sources = plan.get("selected_sources", [])
+    sources_text = "\n".join([
+        f"- [{s['source_id']}]: {s.get('usage', 'General reference')}"
+        for s in selected_sources
+    ])
+    
+    # Get variation tokens from plan
+    variation_tokens = plan.get("variation_tokens", {})
+    
+    prompt = f"""You ARE {persona_config['name']}, {persona_config['title']}.
 
 ## YOUR VOICE
 {persona_config['section_grammar']['voice_style']}
 
 ## THE SPELL YOU ARE WRITING
-Title: {plan.get('spell_title', 'Untitled Spell')}
+Title: {plan.get('spell_title', 'Untitled')}
 Subtitle: {plan.get('spell_subtitle', '')}
+Format: {plan.get('format_id', 'general')}
 
 ## SEEKER DETAILS
 - Name: {spell_spec.get('user_name', 'Seeker')}
@@ -169,184 +302,206 @@ Subtitle: {plan.get('spell_subtitle', '')}
 ## BELIEF BOUNDARY
 {belief_guidance}
 
-## TIME CONSTRAINT
+## TIME CONSTRAINT: {spell_spec.get('time', '10_min')}
 {time_guidance}
 
-## TONE
+## TONE: {spell_spec.get('tone', 'practical')}
 {tone_guidance}
 
-## SECTION PLAN FROM PLANNER
-{json.dumps(plan.get('section_plan', []), indent=2)}
+## VARIATION TOKENS (USE THESE for uniqueness)
+- Time of Day: {variation_tokens.get('time_of_day', 'any')}
+- Gesture Type: {variation_tokens.get('gesture_type', 'as feels right')}
+- Repetition: {variation_tokens.get('repetition_pattern', 'three times')}
+- Material Placement: {variation_tokens.get('material_placement', 'as guided')}
+- Closing Action: {variation_tokens.get('closing_action', 'as feels complete')}
+- Energy Direction: {variation_tokens.get('energy_direction', 'as needed')}
 
-## PERSONALIZATION HOOKS FROM PLANNER
-{json.dumps(plan.get('personalization_hooks', {}), indent=2)}
+## SECTION ORDER (follow this exactly)
+{json.dumps(plan.get('section_order', []))}
 
-## SOURCES TO CITE
-{json.dumps(plan.get('selected_sources', []), indent=2)}
+## PERSONALIZATION HOOKS (from planner)
+{json.dumps(plan.get('personalization_hooks', {}))}
+
+## ALLOWED SOURCES FOR THIS SPELL (cite ONLY these by source_id)
+{sources_text if sources_text else "No specific sources - draw from persona's general knowledge"}
 
 ## OUTPUT FORMAT
-Return a JSON object with this exact structure:
+Return ONLY this JSON (no markdown, no explanation):
 {{
     "title": "{plan.get('spell_title', 'Untitled')}",
     "subtitle": "{plan.get('spell_subtitle', '')}",
-    "introduction": "A personal, warm introduction that acknowledges the seeker by name and their specific situation. 2-3 sentences.",
+    "format_id": "{plan.get('format_id', 'general')}",
+    "scenario_id": "{scenario['scenario_id']}",
+    "introduction": "Personal introduction acknowledging seeker by name and their situation. 2-3 sentences in {persona_config['name']}'s voice.",
+    "timing": {{
+        "time_of_day": "{variation_tokens.get('time_of_day', 'whenever needed')}",
+        "moon_phase": "optional or Any",
+        "day": "optional or Any",
+        "note": "Any timing notes"
+    }},
     "tarot_card": {{
-        "title": "Short evocative title for the tarot representation",
-        "symbol": "Single emoji that represents this spell",
-        "essence": "One sentence capturing the spell's core meaning",
-        "key_action": "The single most important action in this spell",
-        "incantation": "A short, memorable phrase from the spoken words",
-        "timing": "Best time to perform (morning/evening/midnight/whenever needed)"
+        "title": "Short evocative title",
+        "symbol": "Single emoji",
+        "essence": "One sentence core meaning",
+        "key_action": "Single most important action",
+        "incantation": "Short memorable phrase from spoken_words",
+        "timing": "Best time to perform"
     }},
     "materials": [
-        {{"name": "Material name", "icon": "emoji", "note": "Why this material, how to prepare it"}}
+        {{"name": "Material", "icon": "emoji", "note": "Preparation note"}}
     ],
     "preparation": {{
-        "description": "How to prepare yourself and space",
-        "steps": ["Step 1", "Step 2"]
+        "description": "How to prepare (brief)",
+        "steps": ["Prep step 1", "Prep step 2"]
     }},
     "the_working": {{
-        "description": "The main body of the spell",
+        "description": "The main body",
         "steps": [
-            {{"step": 1, "instruction": "Detailed instruction", "spoken_words": "Any words to say (or null)"}}
+            {{"step": 1, "title": "Step title", "instruction": "Detailed instruction using variation_tokens", "spoken_words": "Words to say or null", "duration": "optional"}}
         ]
     }},
     "spoken_words": {{
-        "primary_incantation": "The main words of power for this spell",
+        "invocation": "Opening invocation",
+        "main_incantation": "Primary words of power (memorable, specific)",
+        "closing": "Closing words",
         "repetitions": 3,
-        "delivery_notes": "How to speak these words (whispered/spoken/sung)"
+        "delivery_notes": "How to speak (whisper/speak/sing)"
     }},
     "closing": {{
-        "description": "How to close the working",
-        "steps": ["Step 1", "Step 2"],
-        "final_words": "Closing phrase or gesture"
+        "description": "How to close",
+        "steps": ["Closing step using {variation_tokens.get('closing_action', 'as feels right')}"],
+        "final_words": "Final phrase"
     }},
     "aftercare": {{
         "immediate": "What to do right after",
-        "ongoing": "Any ongoing practices or observations"
+        "ongoing": "Any ongoing practices"
     }},
     "inspired_by": [
         {{
-            "source_type": "book/tradition/practice/figure/deity",
-            "name": "Name of source",
+            "source_id": "MUST be from selected_sources",
+            "source_type": "book/tradition/practice",
+            "name": "Source name",
             "author": "Author if applicable",
-            "connection": "How this source connects to the spell",
-            "archive_link": "/library or /rituals or /figures or /deities or /timeline"
+            "connection": "How this connects to the spell",
+            "archive_link": "/library or /rituals etc"
         }}
     ],
     "variations": [
-        "Alternative approach 1 for different circumstances",
+        "Alternative approach 1",
         "Alternative approach 2"
     ]
 }}
 
-CRITICAL RULES:
-1. Use the seeker's name ({spell_spec.get('user_name', 'Seeker')}) at least twice - in introduction and at a key moment
-2. The anchor object ({spell_spec.get('anchor_object', 'candle')}) must be CENTRAL to the working, not just mentioned
-3. Include specific details for their setting ({spell_spec.get('setting', 'bedroom')})
-4. AVOID: {spell_spec.get('avoid', 'Nothing specified')}
-5. Only cite sources from the SELECTED SOURCES list provided
-6. The spoken_words should be memorable and specific to THIS spell, not generic
-7. Match the TIME constraint - {spell_spec.get('time', '10_min')} means {time_guidance}
+## STRICT CITATION RULE ⚠️
+You may ONLY cite sources that appear in ALLOWED SOURCES above.
+Every source_id in "inspired_by" MUST match a source_id from that list.
+Do NOT invent sources. Do NOT cite sources not in the list.
+If in doubt, cite fewer sources rather than hallucinate.
+
+## CRITICAL RULES
+1. Use seeker's name ({spell_spec.get('user_name', 'Seeker')}) at least TWICE
+2. Anchor object ({spell_spec.get('anchor_object', 'candle')}) must be CENTRAL
+3. Use variation_tokens in instructions for uniqueness
+4. spoken_words.main_incantation must be MEMORABLE and SPECIFIC
+5. Follow the section_order from plan
+6. Match TIME constraint: {time_guidance}
 """
     return prompt
 
 
+# ============================================================================
+# IMAGE PROMPT BUILDERS
+# ============================================================================
+
 def build_image_prompt(asset_type: str, asset_plan: dict, persona_config: dict, spell_title: str) -> str:
     """
-    Stage 3: Image Prompt Generator
-    Creates a DALL-E prompt for each asset in the AssetPlan
+    Build DALL-E prompt for each asset type
+    Rules: "No text", print-friendly linework, hard art style rules
     """
     
     base_style = persona_config['visual_dna']['constants']['art_style']
+    dall_e_rules = persona_config['visual_dna'].get('dall_e_rules', 'pen-and-ink illustration, NO text')
     avoid_list = persona_config['visual_dna']['avoid']
-    palette = persona_config['visual_dna']['palette_variants'].get('practical', [])
+    palette = persona_config['visual_dna']['palette_variants'].get('practical', ['black', 'white'])
     
     if asset_type == "header_image":
         asset_info = asset_plan.get("header_image", {})
         prompt = f"""{base_style}, {asset_info.get('scene_description', 'mystical scene')}, 
 {asset_info.get('mood', 'contemplative')} mood, 
-featuring {', '.join(asset_info.get('key_elements', ['candle', 'shadow']))},
-{asset_info.get('composition', 'scene')} composition,
-color palette: {', '.join(palette)},
-highly detailed, atmospheric, no text or words,
-for a spell titled "{spell_title}",
-AVOID: {', '.join(avoid_list)}, no text, no letters, no words"""
+featuring {', '.join(asset_info.get('key_elements', ['candle']))},
+atmospheric scene composition (NOT emblematic),
+{dall_e_rules},
+suitable for printing, clear line work,
+AVOID: {', '.join(avoid_list)}, text, letters, words, watermarks"""
 
     elif asset_type == "tarot_card_image":
         asset_info = asset_plan.get("tarot_card_image", {})
-        # Enforce different composition from header
-        prompt = f"""{base_style}, SYMBOLIC EMBLEM style (NOT a scene),
-{asset_info.get('symbol_description', 'mystical emblem')},
-centered {asset_info.get('composition', 'emblem')} composition,
-central symbol: {asset_info.get('central_symbol', 'mystical symbol')},
-supporting elements: {', '.join(asset_info.get('supporting_elements', ['stars']))},
-suitable for a tarot card or oracle card,
-medallion or seal style, symmetrical where appropriate,
-color palette: {', '.join(palette)},
-MUST BE DIFFERENT FROM HEADER - emblematic not narrative,
-no text, no letters, no words,
-AVOID: {', '.join(avoid_list)}"""
+        # Use the strict tarot constraints
+        focal = asset_info.get('must_include_focal', 'mystical emblem')
+        framing = asset_info.get('must_use_framing', 'circular border')
+        symbols = asset_info.get('must_include_symbols', ['star'])
+        
+        prompt = f"""{base_style}, SYMBOLIC EMBLEM (NOT a scene),
+FOCAL ELEMENT: {focal},
+FRAMING: {framing},
+SUPPORTING SYMBOLS: {', '.join(symbols)},
+centered composition, suitable for tarot/oracle card,
+medallion or seal style, symmetrical,
+{dall_e_rules},
+MUST be visually DISTINCT from header image,
+AVOID: {', '.join(avoid_list)}, text, letters, words"""
 
     elif asset_type == "sigil":
         asset_info = asset_plan.get("sigil", {})
-        prompt = f"""High contrast black and white sigil design,
-{asset_info.get('design_description', 'mystical sigil')},
-geometric and organic lines combined,
+        prompt = f"""High contrast BLACK AND WHITE sigil design,
+{asset_info.get('design_concept', 'mystical protective symbol')},
 elements: {', '.join(asset_info.get('elements', ['circle', 'line']))},
-printable at small size, clear lines,
+geometric and organic lines combined,
+PRINTABLE at small size, clear bold lines,
 magical seal or protective mark style,
-BLACK AND WHITE ONLY, no color, no grey,
-no text, no letters, no words"""
+BLACK AND WHITE ONLY, no color, no grey, no shading,
+NO text, NO letters, NO words, NO signatures"""
 
-    elif asset_type == "divider":
-        divider_info = asset_plan.get("dividers", [{}])[0]
-        prompt = f"""{base_style}, horizontal decorative divider,
-ornamental border element featuring {divider_info.get('motif', 'scrollwork')},
-horizontal orientation, symmetrical,
-color palette: {', '.join(palette[:2])},
-elegant and subtle, not overwhelming,
-suitable for separating text sections,
-no text, no letters, no words,
+    elif asset_type.startswith("divider"):
+        # Get the specific divider from the plan
+        divider_idx = int(asset_type.split("_")[1]) - 1 if "_" in asset_type else 0
+        dividers = asset_plan.get("dividers", [{}])
+        divider_info = dividers[divider_idx] if divider_idx < len(dividers) else dividers[0] if dividers else {}
+        
+        prompt = f"""{base_style}, HORIZONTAL decorative divider,
+ornamental border featuring {divider_info.get('motif', 'scrollwork')},
+HORIZONTAL orientation (wide, not tall), symmetrical,
+suitable for separating text sections in a book,
+elegant, subtle, not overwhelming,
+{dall_e_rules},
+NO text, NO letters, NO words,
 AVOID: {', '.join(avoid_list)}"""
 
-    elif asset_type == "micro_icon":
-        icon_info = asset_plan.get("micro_icons", [{}])[0]
-        prompt = f"""Simple iconic symbol, {icon_info.get('icon', 'mystical symbol')},
-single motif only, works at small size,
-{base_style} aesthetic but simplified,
-clear silhouette, minimal detail,
-suitable for 32x32px display,
-no text, no letters, no words"""
-
     else:
-        prompt = f"{base_style}, mystical illustration, no text"
+        prompt = f"{base_style}, mystical illustration, NO text, NO letters, NO words"
     
     return prompt.replace("\n", " ").strip()
 
 
 def generate_all_image_prompts(asset_plan: dict, persona_config: dict, spell_title: str) -> dict:
-    """Generate prompts for all assets in the plan"""
+    """Generate prompts for all 6 required assets"""
     prompts = {
         "header_image": build_image_prompt("header_image", asset_plan, persona_config, spell_title),
         "tarot_card_image": build_image_prompt("tarot_card_image", asset_plan, persona_config, spell_title),
         "sigil": build_image_prompt("sigil", asset_plan, persona_config, spell_title),
     }
     
-    # Generate divider prompts
-    dividers = asset_plan.get("dividers", [])
-    for i, divider in enumerate(dividers[:3]):  # Max 3 dividers
-        prompts[f"divider_{i+1}"] = build_image_prompt("divider", {"dividers": [divider]}, persona_config, spell_title)
-    
-    # Generate micro icon prompts
-    micro_icons = asset_plan.get("micro_icons", [])
-    for i, icon in enumerate(micro_icons[:6]):  # Max 6 micro icons
-        prompts[f"micro_icon_{i+1}"] = build_image_prompt("micro_icon", {"micro_icons": [icon]}, persona_config, spell_title)
+    # Generate 3 divider prompts
+    for i in range(3):
+        prompts[f"divider_{i+1}"] = build_image_prompt(f"divider_{i+1}", asset_plan, persona_config, spell_title)
     
     return prompts
 
 
-# Tracking recently used scenarios per user session
+# ============================================================================
+# SESSION TRACKING FOR SCENARIO ROTATION
+# ============================================================================
+
 _used_scenarios_cache = {}
 
 def get_used_scenarios(session_id: str) -> list:
