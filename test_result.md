@@ -221,6 +221,9 @@ agent_communication:
 8. GET /api/ai/image-styles - ✅ WORKING
 9. POST /api/ai/generate-image with archetype style - ✅ WORKING
 10. POST /api/ai/generate-spell with Katherine archetype and image generation - ✅ WORKING
+11. POST /api/ai/generate-personalized-spell with Kathleen protection - ✅ WORKING
+12. POST /api/ai/generate-personalized-spell with scenario rotation - ✅ WORKING
+13. POST /api/ai/generate-personalized-spell with choose-for-me persona - ✅ WORKING
 
 ## Features Tested ✅
 1. One-card "Quick Draw" reading - ✅ WORKING
