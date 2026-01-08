@@ -136,6 +136,7 @@ export const MyGrimoire = () => {
                 title: selectedSpell.archetype_title
               }}
               imageBase64={selectedSpell.image_base64}
+              assetPlan={selectedSpell.asset_plan}
               onNewSpell={handleBackToList}
             />
           </div>
