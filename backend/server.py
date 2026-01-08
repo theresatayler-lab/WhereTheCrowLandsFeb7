@@ -173,6 +173,7 @@ class SpellContextQuestions(BaseModel):
 
 class ImageGenerationRequest(BaseModel):
     prompt: str
+    archetype: Optional[str] = None  # Optional archetype style (shiggy, kathleen, catherine, theresa, neutral)
 
 class FavoriteRequest(BaseModel):
     item_type: str
