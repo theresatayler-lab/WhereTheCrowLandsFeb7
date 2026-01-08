@@ -469,6 +469,234 @@ class SpiritualAppAPITester:
             return True
         return False
 
+    def test_ai_image_styles_endpoint(self):
+        """Test AI Image styles endpoint - REVIEW REQUEST TEST"""
+        success, response = self.run_test(
+            "AI Image Styles - Get All Archetype Styles",
+            "GET",
+            "ai/image-styles",
+            200
+        )
+        
+        if success and isinstance(response, dict):
+            # Verify response structure
+            if 'styles' not in response:
+                print(f"   ❌ Missing 'styles' field in response")
+                return False
+            
+            styles = response.get('styles', {})
+            expected_archetypes = ['shiggy', 'kathleen', 'catherine', 'theresa', 'neutral']
+            
+            # Check all expected archetypes are present
+            missing_archetypes = [arch for arch in expected_archetypes if arch not in styles]
+            if missing_archetypes:
+                print(f"   ❌ Missing archetype styles: {missing_archetypes}")
+                return False
+            
+            # Verify each style has required fields
+            for archetype, style_data in styles.items():
+                required_fields = ['name', 'description', 'keywords']
+                missing_fields = [field for field in required_fields if field not in style_data]
+                if missing_fields:
+                    print(f"   ❌ Missing fields in {archetype} style: {missing_fields}")
+                    return False
+            
+            print(f"   ✅ Found {len(styles)} archetype image styles")
+            print(f"   ✅ All expected archetypes present: {', '.join(expected_archetypes)}")
+            
+            # Check specific archetype details
+            shiggy_style = styles.get('shiggy', {})
+            if 'Birds of Parliament' not in shiggy_style.get('name', ''):
+                print(f"   ❌ Shiggy style name incorrect: {shiggy_style.get('name')}")
+                return False
+            
+            print(f"   ✅ Shiggy style: {shiggy_style.get('name')}")
+            print(f"   ✅ Default style: {response.get('default')}")
+            
+            return True
+        
+        return False
+
+    def test_ai_image_generation_with_archetype_kathleen(self):
+        """Test AI Image generation with Kathleen archetype style - REVIEW REQUEST TEST"""
+        image_data = {
+            "prompt": "A crow perched on a candlestick",
+            "archetype": "kathleen"
+        }
+        
+        success, response = self.run_test(
+            "AI Image Generation - Kathleen Archetype Style",
+            "POST",
+            "ai/generate-image",
+            200,
+            data=image_data,
+            timeout=45  # Image generation can take time
+        )
+        
+        if success and isinstance(response, dict):
+            # Verify image was generated
+            image_base64 = response.get('image_base64')
+            if not image_base64:
+                print(f"   ❌ No image_base64 returned")
+                return False
+            
+            # Verify image size (should be substantial)
+            if len(image_base64) < 10000:  # Reasonable minimum for base64 image
+                print(f"   ❌ Image seems too small: {len(image_base64)} characters")
+                return False
+            
+            print(f"   ✅ Image generated successfully")
+            print(f"   ✅ Image base64 length: {len(image_base64)} characters")
+            print(f"   ✅ Estimated image size: ~{len(image_base64) * 3 // 4 // 1024}KB")
+            
+            # Check if archetype style was applied (response should indicate this)
+            archetype_used = response.get('archetype_style')
+            if archetype_used:
+                print(f"   ✅ Archetype style applied: {archetype_used}")
+            
+            return True
+        
+        return False
+
+    def test_ai_spell_generation_shigg_with_image(self):
+        """Test spell generation with Shigg archetype and image - REVIEW REQUEST TEST"""
+        spell_data = {
+            "intention": "I need courage to start a new chapter",
+            "archetype": "shiggy",
+            "generate_image": True
+        }
+        
+        success, response = self.run_test(
+            "Spell Generation - Shigg with Image",
+            "POST",
+            "ai/generate-spell",
+            200,
+            data=spell_data,
+            timeout=90  # Spell + image generation takes time
+        )
+        
+        if success and isinstance(response, dict):
+            # Verify response structure
+            required_fields = ['spell', 'archetype', 'session_id']
+            missing_fields = [field for field in required_fields if field not in response]
+            
+            if missing_fields:
+                print(f"   ❌ Missing top-level fields: {missing_fields}")
+                return False
+            
+            # Verify archetype info
+            archetype = response.get('archetype', {})
+            if archetype.get('name') != 'Shigg':
+                print(f"   ❌ Expected archetype name 'Shigg', got '{archetype.get('name')}'")
+                return False
+            
+            # Verify spell structure
+            spell = response.get('spell', {})
+            spell_required_fields = ['title', 'materials', 'steps', 'spoken_words']
+            missing_spell_fields = [field for field in spell_required_fields if field not in spell]
+            
+            if missing_spell_fields:
+                print(f"   ❌ Missing spell fields: {missing_spell_fields}")
+                return False
+            
+            # Verify image was generated
+            image_base64 = response.get('image_base64')
+            if not image_base64:
+                print(f"   ❌ Image generation was requested but no image returned")
+                return False
+            
+            # Check for bird oracle elements (Shigg's signature)
+            full_spell_text = json.dumps(spell).lower()
+            bird_oracle_indicators = ['bird', 'oracle', 'parliament', 'feather', 'wing', 'flight', 'nest', 'song', 'crow', 'robin', 'dove']
+            bird_found = [indicator for indicator in bird_oracle_indicators if indicator in full_spell_text]
+            
+            if bird_found:
+                print(f"   ✅ Bird oracle elements found: {', '.join(bird_found)}")
+            else:
+                print(f"   ⚠️  No bird oracle elements detected - this should be Shigg's unique feature")
+            
+            print(f"   ✅ Spell generated successfully")
+            print(f"   ✅ Spell title: {spell.get('title')}")
+            print(f"   ✅ Image generated (base64 length: {len(image_base64)})")
+            print(f"   ✅ Archetype: {archetype.get('name')} - {archetype.get('title')}")
+            
+            return True
+        
+        return False
+
+    def test_ai_spell_generation_catherine_with_image(self):
+        """Test spell generation with Catherine archetype and image - REVIEW REQUEST TEST"""
+        spell_data = {
+            "intention": "I need to do shadow work and face my fears",
+            "archetype": "catherine",
+            "generate_image": True
+        }
+        
+        success, response = self.run_test(
+            "Spell Generation - Catherine with Image",
+            "POST",
+            "ai/generate-spell",
+            200,
+            data=spell_data,
+            timeout=90  # Spell + image generation takes time
+        )
+        
+        if success and isinstance(response, dict):
+            # Verify response structure
+            required_fields = ['spell', 'archetype', 'session_id']
+            missing_fields = [field for field in required_fields if field not in response]
+            
+            if missing_fields:
+                print(f"   ❌ Missing top-level fields: {missing_fields}")
+                return False
+            
+            # Verify archetype info
+            archetype = response.get('archetype', {})
+            if archetype.get('name') != 'Katherine':
+                print(f"   ❌ Expected archetype name 'Katherine', got '{archetype.get('name')}'")
+                return False
+            
+            # Verify spell structure
+            spell = response.get('spell', {})
+            spell_required_fields = ['title', 'materials', 'steps', 'spoken_words']
+            missing_spell_fields = [field for field in spell_required_fields if field not in spell]
+            
+            if missing_spell_fields:
+                print(f"   ❌ Missing spell fields: {missing_spell_fields}")
+                return False
+            
+            # Verify image was generated
+            image_base64 = response.get('image_base64')
+            if not image_base64:
+                print(f"   ❌ Image generation was requested but no image returned")
+                return False
+            
+            # Check for thread/textile references (Catherine's signature)
+            full_spell_text = json.dumps(spell).lower()
+            textile_indicators = ['thread', 'needle', 'fabric', 'weave', 'stitch', 'textile', 'sew', 'cloth', 'silk', 'cotton']
+            textile_found = [indicator for indicator in textile_indicators if indicator in full_spell_text]
+            
+            if textile_found:
+                print(f"   ✅ Thread/textile elements found: {', '.join(textile_found)}")
+            else:
+                print(f"   ⚠️  No thread/textile elements detected - this should be Catherine's signature")
+            
+            # Check for shadow work elements
+            shadow_indicators = ['shadow', 'dark', 'fear', 'hidden', 'face', 'confront', 'integrate']
+            shadow_found = [indicator for indicator in shadow_indicators if indicator in full_spell_text]
+            
+            if shadow_found:
+                print(f"   ✅ Shadow work elements found: {', '.join(shadow_found)}")
+            
+            print(f"   ✅ Spell generated successfully")
+            print(f"   ✅ Spell title: {spell.get('title')}")
+            print(f"   ✅ Image generated (base64 length: {len(image_base64)})")
+            print(f"   ✅ Archetype: {archetype.get('name')} - {archetype.get('title')}")
+            
+            return True
+        
+        return False
+
     def test_cathleen_spell_generation(self):
         """Test Cathleen spell generation with transformation intention - REVIEW REQUEST TEST"""
         spell_data = {
