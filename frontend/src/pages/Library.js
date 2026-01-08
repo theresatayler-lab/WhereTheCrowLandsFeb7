@@ -909,8 +909,8 @@ const Library = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
           >
-            "The moving finger writes, and having writ, moves on..." 
-            <span className="block mt-1 text-xs text-cream/50">— these books have written on us all</span>
+            &ldquo;The moving finger writes, and having writ, moves on...&rdquo; 
+            <span className="block mt-1 text-xs text-cream/50">&mdash; these books have written on us all</span>
           </motion.p>
         </div>
         
