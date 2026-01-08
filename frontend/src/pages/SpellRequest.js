@@ -140,7 +140,7 @@ const OptionCard = ({ selected, onClick, children, className = '', light = false
 const Step1 = ({ spellSpec, updateSpec }) => (
   <div className="space-y-6">
     <div>
-      <h3 className="font-cinzel text-lg text-crimson mb-4">Who will guide your spell?</h3>
+      <h3 className="font-cinzel text-xl text-crimson mb-4 font-semibold">Who will guide your spell?</h3>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {PERSONAS.map((p) => (
           <OptionCard
@@ -152,24 +152,24 @@ const Step1 = ({ spellSpec, updateSpec }) => (
             <div className="flex items-center gap-3">
               <span className="text-2xl">{p.emoji}</span>
               <div>
-                <p className="font-cinzel text-navy-dark">{p.name}</p>
-                <p className="font-montserrat text-xs text-crimson">{p.title}</p>
+                <p className="font-cinzel text-navy-dark font-bold">{p.name}</p>
+                <p className="font-montserrat text-xs text-crimson font-medium">{p.title}</p>
               </div>
             </div>
-            <p className="font-montserrat text-xs text-navy-dark/70 mt-2">{p.description}</p>
+            <p className="font-montserrat text-sm text-navy-dark/80 mt-2">{p.description}</p>
           </OptionCard>
         ))}
       </div>
     </div>
 
     <div>
-      <h3 className="font-cinzel text-lg text-crimson mb-2">What do you need?</h3>
-      <p className="font-montserrat text-xs text-navy-dark/70 mb-3">Tell me in your own words what you&apos;re facing or seeking.</p>
+      <h3 className="font-cinzel text-xl text-crimson mb-2 font-semibold">What do you need?</h3>
+      <p className="font-montserrat text-sm text-navy-dark/80 mb-3">Tell me in your own words what you&apos;re facing or seeking.</p>
       <textarea
         value={spellSpec.user_query || ''}
         onChange={(e) => updateSpec({ user_query: e.target.value })}
         placeholder="I need courage to speak up at work... / I'm grieving and need comfort... / I want to protect my home... / I need clarity about a decision..."
-        className="w-full h-28 bg-white/80 border-2 border-gold/40 focus:border-crimson/60 rounded-sm px-4 py-3 text-navy-dark font-montserrat text-sm placeholder:text-navy-dark/40 resize-none"
+        className="w-full h-28 bg-white border-2 border-navy-dark/20 focus:border-crimson focus:ring-2 focus:ring-crimson/20 rounded-sm px-4 py-3 text-navy-dark font-montserrat text-sm placeholder:text-navy-dark/50 resize-none"
       />
     </div>
 
