@@ -3099,6 +3099,7 @@ async def save_spell_to_grimoire(request: SaveSpellRequest, user = Depends(get_c
         'archetype_name': request.archetype_name,
         'archetype_title': request.archetype_title,
         'image_base64': request.image_base64,
+        'asset_plan': request.asset_plan,  # Save tarot, sigil, dividers, micro_icons
         'title': title,
         'created_at': datetime.now(timezone.utc).isoformat()
     }
