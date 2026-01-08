@@ -28,6 +28,15 @@ from archetype_reference_data import (
     TALISMAN_CORRESPONDENCES, get_archetype_data, get_random_movements,
     get_bird_oracle as get_bird_oracle_data, get_talisman_suggestion, get_thread_color
 )
+from persona_config import (
+    PERSONA_CONFIG, get_persona_config, select_scenario_for_spell,
+    BELIEF_BOUNDARY_DESCRIPTIONS, FEELING_SCENARIO_MAP
+)
+from spell_prompts import (
+    build_planner_prompt, build_spell_writer_prompt, 
+    build_image_prompt, generate_all_image_prompts,
+    get_used_scenarios, record_used_scenario
+)
 import random
 
 ROOT_DIR = Path(__file__).parent
