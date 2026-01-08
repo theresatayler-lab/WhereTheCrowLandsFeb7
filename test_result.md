@@ -258,3 +258,9 @@ agent_communication:
 30. Archetype-specific image styles (Edmund J. Sullivan for Shigg) - ✅ WORKING
 31. Thread/textile references in Katherine spells - ✅ WORKING
 32. Bird oracle elements in Shigg spells - ✅ WORKING
+33. Personalized spell generation with user name integration - ✅ WORKING
+34. Personalized spell generation with anchor object integration - ✅ WORKING
+35. Personalized spell generation with setting integration - ✅ WORKING
+36. Scenario rotation system for varied spell structures - ✅ WORKING
+37. Choose-for-me persona selection algorithm - ✅ WORKING
+38. Intelligent persona mapping based on anchor objects - ✅ WORKING
