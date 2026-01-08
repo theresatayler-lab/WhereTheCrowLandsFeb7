@@ -2765,10 +2765,12 @@ async def get_image_styles():
 @api_router.post('/ai/generate-personalized-spell')
 async def generate_personalized_spell(request: PersonalizedSpellRequest, user = Depends(get_optional_user)):
     """
-    Generate a highly personalized spell using the 3-stage prompt system:
-    1. Planner - selects scenario, format, sources, builds AssetPlan
-    2. Spell Writer - writes the actual spell content
-    3. Image Prompt Generator - creates prompts for each asset
+    Generate a highly personalized spell using the 2-stage prompt system:
+    1. Planner - selects scenario, format, sources, generates variation_tokens, builds AssetPlan
+    2. Spell Writer - writes the actual spell content with strict citations
+    
+    Then generates 6 images: header, tarot, sigil, 3 dividers
+    Uses static micro-icons (no generation needed)
     """
     try:
         spell_spec = request.spell_spec
@@ -2788,38 +2790,44 @@ async def generate_personalized_spell(request: PersonalizedSpellRequest, user = 
                     })
         
         # Resolve "choose_for_me" persona based on feeling and anchor
-        persona_id = spell_spec.get('persona_id', 'shiggy')
+        # Use standardized IDs: shigg, cathleen, katherine
+        persona_id = spell_spec.get('persona_id', 'shigg')
+        
+        # Normalize legacy IDs
+        id_map = {'shiggy': 'shigg', 'kathleen': 'cathleen', 'catherine': 'katherine'}
+        persona_id = id_map.get(persona_id, persona_id)
+        
         if persona_id == 'choose_for_me':
             feeling = spell_spec.get('desired_feeling', 'calm')
             anchor = spell_spec.get('anchor_object', 'candle')
             
-            # Map feelings and anchors to personas
+            # Map feelings and anchors to personas (using standardized IDs)
             if feeling in ['calm', 'softened'] and anchor in ['tea', 'bird']:
-                persona_id = 'shiggy'
+                persona_id = 'shigg'
             elif feeling in ['protected', 'brave'] and anchor in ['song', 'candle']:
-                persona_id = 'kathleen'
+                persona_id = 'cathleen'
             elif feeling in ['clear', 'brave'] and anchor in ['mirror', 'thread']:
-                persona_id = 'catherine'
+                persona_id = 'katherine'
             elif anchor == 'song':
-                persona_id = 'kathleen'
+                persona_id = 'cathleen'
             elif anchor == 'tea' or anchor == 'bird':
-                persona_id = 'shiggy'
+                persona_id = 'shigg'
             elif anchor == 'mirror':
-                persona_id = 'catherine'
+                persona_id = 'katherine'
             else:
                 # Default based on feeling
                 persona_map = {
-                    'calm': 'shiggy', 'brave': 'kathleen', 'clear': 'catherine',
-                    'protected': 'kathleen', 'softened': 'shiggy', 'energized': 'kathleen'
+                    'calm': 'shigg', 'brave': 'cathleen', 'clear': 'katherine',
+                    'protected': 'cathleen', 'softened': 'shigg', 'energized': 'cathleen'
                 }
-                persona_id = persona_map.get(feeling, 'shiggy')
+                persona_id = persona_map.get(feeling, 'shigg')
         
         spell_spec['persona_id'] = persona_id
         
         # Get persona configuration
         persona_config = get_persona_config(persona_id)
         if not persona_config:
-            persona_config = get_persona_config('shiggy')  # Fallback
+            persona_config = get_persona_config('shigg')  # Fallback
         
         # Get session ID for scenario rotation
         session_id = str(uuid.uuid4())
@@ -2834,17 +2842,20 @@ async def generate_personalized_spell(request: PersonalizedSpellRequest, user = 
         # Record this scenario as used
         record_used_scenario(session_id, scenario['scenario_id'])
         
+        # Get static micro-icons for this persona (no generation needed)
+        micro_icons = get_random_micro_icons(persona_id, count=6)
+        
         # === STAGE 1: PLANNER ===
         planner_prompt = build_planner_prompt(spell_spec, persona_config, scenario)
         
         planner_response = await openai_client.chat.completions.create(
             model="gpt-4o",
             messages=[
-                {"role": "system", "content": "You are a spell planner. Return ONLY valid JSON, no markdown."},
+                {"role": "system", "content": "You are a spell planner. Return ONLY valid JSON, no markdown, no explanation."},
                 {"role": "user", "content": planner_prompt}
             ],
             temperature=0.8,
-            max_tokens=2000
+            max_tokens=2500
         )
         
         # Parse planner output
@@ -2862,11 +2873,14 @@ async def generate_personalized_spell(request: PersonalizedSpellRequest, user = 
             plan = {
                 "spell_title": "A Personal Working",
                 "spell_subtitle": "Crafted for your intention",
-                "personalization_hooks": {},
+                "format_id": "general",
+                "section_order": scenario.get("required_sections", []),
+                "variation_tokens": {},
+                "selected_practices": [],
                 "selected_sources": [],
-                "section_plan": [],
-                "asset_plan": {},
-                "variation_notes": ""
+                "personalization_hooks": {},
+                "tarot_constraints": {},
+                "asset_plan": {}
             }
         
         # === STAGE 2: SPELL WRITER ===
@@ -2875,11 +2889,11 @@ async def generate_personalized_spell(request: PersonalizedSpellRequest, user = 
         writer_response = await openai_client.chat.completions.create(
             model="gpt-4o",
             messages=[
-                {"role": "system", "content": f"You are {persona_config['name']}, {persona_config['title']}. Write spells in your unique voice. Return ONLY valid JSON."},
+                {"role": "system", "content": f"You are {persona_config['name']}, {persona_config['title']}. Write spells in your unique voice. Return ONLY valid JSON, no markdown."},
                 {"role": "user", "content": writer_prompt}
             ],
             temperature=0.85,
-            max_tokens=3000
+            max_tokens=3500
         )
         
         # Parse spell output
@@ -2899,15 +2913,20 @@ async def generate_personalized_spell(request: PersonalizedSpellRequest, user = 
         spell['scenario_id'] = scenario['scenario_id']
         spell['scenario_name'] = scenario['name']
         spell['persona_id'] = persona_id
+        spell['format_id'] = plan.get('format_id', 'general')
+        spell['variation_tokens'] = plan.get('variation_tokens', {})
         
-        # === STAGE 3: IMAGE GENERATION ===
+        # === IMAGE GENERATION: 6 images ===
+        # header, tarot, sigil, divider_1, divider_2, divider_3
         image_base64 = None
         asset_plan = plan.get('asset_plan', {})
+        generated_assets = {}
         
         if request.generate_images and asset_plan:
             try:
-                # Generate header image
+                # 1. Generate header image
                 header_prompt = build_image_prompt("header_image", asset_plan, persona_config, spell.get('title', 'Spell'))
+                logging.info(f"Generating header image...")
                 
                 header_response = await openai_client.images.generate(
                     model="dall-e-3",
@@ -2920,10 +2939,12 @@ async def generate_personalized_spell(request: PersonalizedSpellRequest, user = 
                 
                 if header_response.data and len(header_response.data) > 0:
                     image_base64 = header_response.data[0].b64_json
+                    generated_assets['header_image'] = image_base64
                     asset_plan['header_image_generated'] = True
                 
-                # Generate tarot card image (different style)
+                # 2. Generate tarot card image (with constraints for distinct composition)
                 tarot_prompt = build_image_prompt("tarot_card_image", asset_plan, persona_config, spell.get('title', 'Spell'))
+                logging.info(f"Generating tarot card image...")
                 
                 tarot_response = await openai_client.images.generate(
                     model="dall-e-3",
@@ -2935,12 +2956,51 @@ async def generate_personalized_spell(request: PersonalizedSpellRequest, user = 
                 )
                 
                 if tarot_response.data and len(tarot_response.data) > 0:
-                    asset_plan['tarot_card_image_base64'] = tarot_response.data[0].b64_json
+                    generated_assets['tarot_card_image'] = tarot_response.data[0].b64_json
                     asset_plan['tarot_card_image_generated'] = True
+                
+                # 3. Generate sigil (black and white only)
+                sigil_prompt = build_image_prompt("sigil", asset_plan, persona_config, spell.get('title', 'Spell'))
+                logging.info(f"Generating sigil...")
+                
+                sigil_response = await openai_client.images.generate(
+                    model="dall-e-3",
+                    prompt=sigil_prompt,
+                    size="1024x1024",
+                    quality="standard",
+                    n=1,
+                    response_format="b64_json"
+                )
+                
+                if sigil_response.data and len(sigil_response.data) > 0:
+                    generated_assets['sigil'] = sigil_response.data[0].b64_json
+                    asset_plan['sigil_generated'] = True
+                
+                # 4-6. Generate 3 dividers
+                for i in range(1, 4):
+                    divider_prompt = build_image_prompt(f"divider_{i}", asset_plan, persona_config, spell.get('title', 'Spell'))
+                    logging.info(f"Generating divider {i}...")
+                    
+                    divider_response = await openai_client.images.generate(
+                        model="dall-e-3",
+                        prompt=divider_prompt,
+                        size="1792x1024",  # Wide format for dividers
+                        quality="standard",
+                        n=1,
+                        response_format="b64_json"
+                    )
+                    
+                    if divider_response.data and len(divider_response.data) > 0:
+                        generated_assets[f'divider_{i}'] = divider_response.data[0].b64_json
+                        asset_plan[f'divider_{i}_generated'] = True
                     
             except Exception as img_error:
                 logging.error(f"Image generation error: {str(img_error)}")
-                # Continue without images
+                # Continue with whatever images we managed to generate
+        
+        # Add static micro-icons to asset plan (no generation needed)
+        asset_plan['micro_icons'] = micro_icons
+        asset_plan['generated_assets'] = generated_assets
         
         # Get archetype info for response
         archetype_info = {
