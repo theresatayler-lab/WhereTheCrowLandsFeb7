@@ -118,8 +118,8 @@ const OptionCard = ({ selected, onClick, children, className = '', light = false
     className={`relative p-4 rounded-sm text-left transition-all ${
       light 
         ? selected 
-          ? 'bg-crimson/10 border-2 border-crimson shadow-lg' 
-          : 'bg-white/60 border-2 border-gold/30 hover:border-crimson/50'
+          ? 'bg-crimson/15 border-2 border-crimson shadow-md' 
+          : 'bg-white border-2 border-navy-dark/20 hover:border-crimson/40 hover:shadow-sm'
         : selected 
           ? 'bg-gradient-to-br from-crimson/20 to-crimson/10 border-2 border-crimson shadow-lg' 
           : 'bg-navy-mid/30 border border-gold/20 hover:border-gold/40'
@@ -129,7 +129,7 @@ const OptionCard = ({ selected, onClick, children, className = '', light = false
   >
     {selected && (
       <div className="absolute top-2 right-2">
-        <Check className={`w-4 h-4 ${light ? 'text-crimson' : 'text-crimson'}`} />
+        <Check className={`w-5 h-5 ${light ? 'text-crimson' : 'text-crimson'}`} />
       </div>
     )}
     {children}
