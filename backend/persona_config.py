@@ -90,17 +90,17 @@ MICRO_ICONS = {
         "shield": "🛡️"
     },
     "katherine": {
-        "tree": "🌳",
-        "compass": "🧭",
-        "hexagram": "✡️",
-        "seal": "🔏",
-        "quill": "🪶",
-        "scroll": "📜",
-        "inkwell": "🖋️",
-        "triangle": "🔺",
-        "circle": "⭕",
         "needle": "🪡",
         "thread": "🧵",
+        "mirror": "🪞",
+        "compass": "🧭",
+        "seal": "🔏",
+        "scissors": "✂️",
+        "scroll": "📜",
+        "hexagram": "✡️",
+        "triangle": "🔺",
+        "circle": "⭕",
+        "key": "🔑",
         "grimoire": "📖"
     }
 }
