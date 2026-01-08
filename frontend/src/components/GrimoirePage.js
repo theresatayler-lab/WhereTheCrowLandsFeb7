@@ -1119,6 +1119,68 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
             <p className="font-crimson text-base text-foreground italic">{spell.closing_message}</p>
           </div>
         )}
+        
+        {/* Closing section from new format */}
+        {spell.closing && (
+          <section>
+            <SectionHeader 
+              icon={CheckCircle2} 
+              title="Closing" 
+              microIcon={getMicroIconForSection('closing')}
+            />
+            {spell.closing.description && (
+              <p className="font-montserrat text-sm text-foreground mb-3">{spell.closing.description}</p>
+            )}
+            {spell.closing.steps && spell.closing.steps.length > 0 && (
+              <ul className="space-y-2 mb-3">
+                {spell.closing.steps.map((step, idx) => (
+                  <li key={idx} className="font-montserrat text-sm text-foreground flex items-start gap-2">
+                    <span className="text-accent">✦</span>
+                    {step}
+                  </li>
+                ))}
+              </ul>
+            )}
+            {spell.closing.final_words && (
+              <p className="font-crimson text-base text-accent italic text-center">
+                &ldquo;{spell.closing.final_words}&rdquo;
+              </p>
+            )}
+          </section>
+        )}
+        
+        {/* Aftercare section */}
+        {spell.aftercare && (
+          <section className="p-4 bg-muted/20 border border-border rounded-sm">
+            <SectionHeader 
+              icon={Heart} 
+              title="Aftercare" 
+              microIcon={getMicroIconForSection('aftercare')}
+            />
+            {spell.aftercare.immediate && (
+              <div className="mb-3">
+                <p className="font-montserrat text-xs text-muted-foreground uppercase tracking-wider mb-1">Immediately After</p>
+                <p className="font-montserrat text-sm text-foreground">{spell.aftercare.immediate}</p>
+              </div>
+            )}
+            {spell.aftercare.ongoing && (
+              <div>
+                <p className="font-montserrat text-xs text-muted-foreground uppercase tracking-wider mb-1">Ongoing Practice</p>
+                <p className="font-montserrat text-sm text-foreground">{spell.aftercare.ongoing}</p>
+              </div>
+            )}
+          </section>
+        )}
+
+        {/* Divider before printables */}
+        <GeneratedDivider imageBase64={generatedAssets?.divider_3} />
+        
+        {/* Printables Block - Tarot Card and Sigil */}
+        <PrintablesBlock 
+          tarotImageBase64={generatedAssets?.tarot_card_image}
+          sigilImageBase64={generatedAssets?.sigil}
+          spellTitle={spell.title}
+        />
 
         {/* Embossed Seal Stamp */}
         <div className="flex justify-center py-6">
