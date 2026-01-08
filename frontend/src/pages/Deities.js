@@ -84,11 +84,6 @@ export const Deities = () => {
             </motion.div>
           ))}
         </div>
-      </div>
-
-      {/* Bottom Corners */}
-      <ElaborateCorner className="absolute bottom-3 left-3 w-16 h-16 sm:w-24 sm:h-24 -rotate-90" variant="gold" />
-      <ElaborateCorner className="absolute bottom-3 right-3 w-16 h-16 sm:w-24 sm:h-24 rotate-180" variant="gold" />
 
       {/* Detail Modal */}
       <Dialog open={!!selectedDeity} onOpenChange={() => setSelectedDeity(null)}>
