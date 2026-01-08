@@ -78,8 +78,9 @@ def test_personalized_spell_generation():
     
     # Check archetype
     archetype = spell_result.get('archetype', {})
-    if archetype.get('id') != 'kathleen':
-        print(f"❌ Expected archetype 'kathleen', got '{archetype.get('id')}'")
+    expected_ids = ['kathleen', 'cathleen']  # Handle both legacy and new IDs
+    if archetype.get('id') not in expected_ids:
+        print(f"❌ Expected archetype 'kathleen/cathleen', got '{archetype.get('id')}'")
         return False
     
     print(f"✅ Archetype correct: {archetype.get('name')} ({archetype.get('id')})")
