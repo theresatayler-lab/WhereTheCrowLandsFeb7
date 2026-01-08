@@ -152,8 +152,13 @@ def test_persona_visual_dna_scarf_tapestry():
                 print(f"✅ Cathleen: Has deeper crimson tones and candlelit elements")
             
             elif persona_id == 'katherine':
-                if ("cooler steel" not in art_style and "silver" not in art_style) or "atelier desk" not in art_style:
-                    print(f"❌ Katherine missing 'cooler steel/silver' or 'atelier desk'")
+                has_cooler_steel = "cooler steel" in art_style and "silver" in art_style
+                has_atelier_desk = "atelier desk" in art_style
+                
+                if not has_cooler_steel or not has_atelier_desk:
+                    print(f"❌ Katherine missing required elements")
+                    print(f"   Has cooler steel/silver: {has_cooler_steel}")
+                    print(f"   Has atelier desk: {has_atelier_desk}")
                     print(f"   Current art_style: {art_style}")
                     return False
                 print(f"✅ Katherine: Has cooler steel/silver tones and atelier desk scene")
