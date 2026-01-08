@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { GlassCard } from '../components/GlassCard';
 import { ChevronDown, HelpCircle } from 'lucide-react';
+import { DarkSection, LightSection, GrandDivider, MysticalDivider, ElaborateCorner, PageHeader } from '../components/OrnateElements';
 
 const faqs = [
   {
@@ -17,7 +17,7 @@ const faqs = [
       },
       {
         q: 'Do I have to choose a guide?',
-        a: 'No. You can generate spells with neutral Crowlands guidance, or you can work with any of the four guides. Each guide brings their own personality, historical context, and ritual style to the spells they craft. You can change guides anytime or work with all of them.'
+        a: "No. You can generate spells with neutral Crowlands guidance, or you can work with any of the four guides. Each guide brings their own personality, historical context, and ritual style to the spells they craft. You can change guides anytime or work with all of them."
       }
     ]
   },
@@ -26,18 +26,18 @@ const faqs = [
     questions: [
       {
         q: 'How does spell generation work?',
-        a: 'You describe your intention or need (e.g., "I need courage for a new beginning"). Our AI, informed by historical sources and your chosen guide\'s persona, creates a complete ritual including materials, timing, step-by-step instructions, spoken words, and historical context. Each spell is personalized to your specific situation.'
+        a: "You describe your intention or need (e.g., \"I need courage for a new beginning\"). Our AI, informed by historical sources and your chosen guide's persona, creates a complete ritual including materials, timing, step-by-step instructions, spoken words, and historical context. Each spell is personalized to your specific situation."
       },
       {
         q: 'Are these real historical spells?',
-        a: 'The spells are based on documented patterns and practices from the occult revival period (1910-1945), synthesized by figures like Gerald Gardner, Dion Fortune, and Aleister Crowley. They\'re adapted and personalized for modern practitioners. All historical sources are cited within each spell.'
+        a: "The spells are based on documented patterns and practices from the occult revival period (1910-1945), synthesized by figures like Gerald Gardner, Dion Fortune, and Aleister Crowley. They're adapted and personalized for modern practitioners. All historical sources are cited within each spell."
       },
       {
         q: 'Can I save my spells?',
         a: 'Yes! Pro members can save unlimited spells to their personal grimoire, download them as PDFs, and access them anytime. Free users can generate and view spells but cannot save or download them.'
       },
       {
-        q: 'What\'s included in each spell?',
+        q: "What's included in each spell?",
         a: 'Every spell includes: a title and introduction, required materials with icons, optimal timing (moon phase, time of day), step-by-step instructions, spoken words and incantations, historical context with sources, variations and adaptations, ethical considerations, and optional custom imagery.'
       }
     ]
@@ -55,132 +55,167 @@ const faqs = [
       },
       {
         q: 'Can I cancel my subscription?',
-        a: 'Yes, you can cancel anytime through your account profile. You\'ll retain Pro access until the end of your billing period. No refunds for partial years, but you keep everything you\'ve saved.'
-      },
-      {
-        q: 'What payment methods do you accept?',
-        a: 'We use Stripe for secure payment processing and accept all major credit cards. Your payment information is never stored on our servers.'
+        a: "Yes, you can cancel anytime through your account profile. You'll retain Pro access until the end of your billing period. No refunds for partial years, but you keep everything you've saved."
       }
     ]
   },
   {
-    category: 'Magic & Practice',
+    category: 'Privacy & Ethics',
     questions: [
       {
-        q: 'Do I have to believe in magic for this to work?',
-        a: 'No. Magic is a framework for focusing intention and creating ritual around your goals. Like affirmations, meditation, or any practice that combines focused attention with symbolic action, it works through repetition and commitment—not belief. The historical practitioners we reference were experimenters, not mystics.'
+        q: 'Is my data private?',
+        a: "Yes. Your grimoire entries, saved spells, and personal notes are private to your account. We don't sell data, don't share spell content, and don't analyze your rituals. Payment is handled by Stripe—we never see your card details."
       },
       {
-        q: 'Are these spells safe to practice?',
-        a: 'Yes. These are based on documented historical practices. Each spell includes warnings about ethical considerations and cautions. We focus on empowerment, protection, clarity, and healing—not manipulation or harm. You are responsible for how you use these formulas.'
+        q: 'What about AI and privacy?',
+        a: "Spell generation uses AI to create personalized content. Your intentions are processed but not stored beyond your session. We don't train models on your personal rituals or share your queries with third parties."
       },
       {
-        q: 'Can I modify the spells?',
-        a: 'Absolutely! Every spell includes variations and adaptations. The whole point is that YOU have the power—these are just formulas others have used. Adapt them, break them, build your own. No intermediaries necessary.'
-      },
-      {
-        q: 'What if I\'m new to this?',
-        a: 'Perfect! Each spell is designed to be accessible to beginners. We include detailed instructions, material substitutions, and historical context. The guides are here to teach and empower, not to gatekeep. Start with simple intentions and build from there.'
+        q: 'Is this a real religion or cult?',
+        a: "No. Where The Crowlands is a creative and educational tool, not a religious organization. We present historical practices from documented sources. You decide what to believe, what to practice, and what to ignore. We're a library, not a church."
       }
     ]
   }
 ];
 
-const FAQItem = ({ question, answer }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="border-b border-border last:border-b-0"
+const FAQItem = ({ question, answer, isOpen, onToggle, isLight }) => (
+  <div className={`border-b ${isLight ? 'border-crimson/20' : 'border-gold/20'} last:border-b-0`}>
+    <button
+      className="w-full py-4 flex items-start justify-between text-left"
+      onClick={onToggle}
     >
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-full text-left py-4 flex items-center justify-between gap-4 hover:text-primary transition-colors"
-      >
-        <h3 className="font-cinzel text-sm sm:text-base text-secondary">{question}</h3>
-        <ChevronDown
-          className={`w-5 h-5 text-primary flex-shrink-0 transition-transform duration-300 ${
-            isOpen ? 'rotate-180' : ''
-          }`}
-        />
-      </button>
+      <span className={`font-cinzel text-sm sm:text-base ${isLight ? 'text-crimson' : 'text-gold-light'} pr-4`}>
+        {question}
+      </span>
+      <ChevronDown 
+        className={`w-5 h-5 flex-shrink-0 transition-transform ${isLight ? 'text-crimson/60' : 'text-gold/60'} ${isOpen ? 'rotate-180' : ''}`} 
+      />
+    </button>
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          initial={{ height: 0, opacity: 0 }}
+          animate={{ height: 'auto', opacity: 1 }}
+          exit={{ height: 0, opacity: 0 }}
+          transition={{ duration: 0.3 }}
+          className="overflow-hidden"
+        >
+          <p className={`pb-4 font-montserrat text-sm leading-relaxed ${isLight ? 'text-navy-dark/70' : 'text-cream/70'}`}>
+            {answer}
+          </p>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  </div>
+);
 
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="overflow-hidden"
-          >
-            <p className="font-montserrat text-sm sm:text-base text-foreground/80 pb-4 leading-relaxed">
-              {answer}
-            </p>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.div>
+const FAQCategory = ({ category, questions, isLight }) => {
+  const [openIndex, setOpenIndex] = useState(null);
+  
+  return (
+    <div className={`rounded-lg overflow-hidden ${isLight ? 'bg-cream/60 border-2 border-crimson/20' : 'bg-navy-mid/40 border-2 border-gold/30'}`}>
+      <div className={`px-5 py-3 ${isLight ? 'bg-crimson/10 border-b border-crimson/20' : 'bg-gold/10 border-b border-gold/20'}`}>
+        <h3 className={`font-cinzel text-lg ${isLight ? 'text-crimson' : 'text-gold-light'}`}>
+          {category}
+        </h3>
+      </div>
+      <div className="px-5">
+        {questions.map((item, index) => (
+          <FAQItem
+            key={index}
+            question={item.q}
+            answer={item.a}
+            isOpen={openIndex === index}
+            onToggle={() => setOpenIndex(openIndex === index ? null : index)}
+            isLight={isLight}
+          />
+        ))}
+      </div>
+    </div>
   );
 };
 
 export const FAQ = () => {
   return (
-    <div className="min-h-screen py-16 sm:py-20 md:py-24 px-4 sm:px-6">
-      <div className="max-w-4xl mx-auto">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-12"
-        >
-          <HelpCircle className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 text-primary mx-auto mb-4" />
-          <h1 className="font-italiana text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-primary mb-4">
-            Frequently Asked Questions
-          </h1>
-          <p className="font-montserrat text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto">
-            Everything you need to know about Where The Crowlands, magic as practice, and how to use this archive
-          </p>
-        </motion.div>
-
-        {/* FAQ Categories */}
-        <div className="space-y-6">
-          {faqs.map((category, idx) => (
-            <GlassCard key={idx} hover={false}>
-              <h2 className="font-cinzel text-lg sm:text-xl text-secondary mb-4">{category.category}</h2>
-              <div>
-                {category.questions.map((faq, qIdx) => (
-                  <FAQItem key={qIdx} question={faq.q} answer={faq.a} />
-                ))}
-              </div>
-            </GlassCard>
-          ))}
+    <div className="min-h-screen">
+      {/* Dark Hero Section */}
+      <DarkSection className="py-12 sm:py-16 md:py-20 px-4 sm:px-6" variant="warm">
+        <ElaborateCorner className="absolute top-3 left-3 w-16 h-16 sm:w-20 sm:h-20" variant="gold" />
+        <ElaborateCorner className="absolute top-3 right-3 w-16 h-16 sm:w-20 sm:h-20 rotate-90" variant="gold" />
+        
+        <div className="max-w-4xl mx-auto relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <PageHeader 
+              icon={HelpCircle}
+              title="Frequently Asked Questions"
+              subtitle="Everything you need to know about Where The Crowlands"
+            />
+          </motion.div>
+          
+          <GrandDivider variant="eye" />
         </div>
+      </DarkSection>
 
-        {/* Still have questions */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-          className="mt-12 text-center"
-        >
-          <GlassCard hover={false}>
-            <h3 className="font-cinzel text-lg text-secondary mb-2">Still have questions?</h3>
-            <p className="font-montserrat text-sm text-muted-foreground mb-4">
-              The best way to understand is to try it. Generate your first spell and see how it works.
-            </p>
-            <a
-              href="/spell-request"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-sm font-montserrat tracking-widest uppercase text-xs sm:text-sm hover:bg-primary/90 transition-all"
-            >
-              <Sparkles className="w-4 h-4" />
-              Try It Now
-            </a>
-          </GlassCard>
-        </motion.div>
-      </div>
+      {/* Alternating FAQ Sections */}
+      {faqs.map((section, index) => (
+        index % 2 === 0 ? (
+          <LightSection key={section.category} className="py-10 sm:py-14 px-4 sm:px-6">
+            <div className="max-w-3xl mx-auto">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <FAQCategory 
+                  category={section.category} 
+                  questions={section.questions} 
+                  isLight={true}
+                />
+              </motion.div>
+              {index < faqs.length - 1 && <MysticalDivider light />}
+            </div>
+          </LightSection>
+        ) : (
+          <DarkSection key={section.category} className="py-10 sm:py-14 px-4 sm:px-6">
+            <div className="max-w-3xl mx-auto">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <FAQCategory 
+                  category={section.category} 
+                  questions={section.questions} 
+                  isLight={false}
+                />
+              </motion.div>
+              {index < faqs.length - 1 && <GrandDivider />}
+            </div>
+          </DarkSection>
+        )
+      ))}
+
+      {/* Footer */}
+      <DarkSection className="py-10 px-4 sm:px-6" variant="warm">
+        <ElaborateCorner className="absolute bottom-3 left-3 w-16 h-16 sm:w-20 sm:h-20 -rotate-90" variant="gold" />
+        <ElaborateCorner className="absolute bottom-3 right-3 w-16 h-16 sm:w-20 sm:h-20 rotate-180" variant="gold" />
+        
+        <div className="max-w-2xl mx-auto text-center relative z-10">
+          <p className="font-crimson text-sm text-cream/60 italic mb-4">
+            Still have questions? Your guides are always here to help.
+          </p>
+          <div className="flex items-center justify-center gap-4 text-gold/50">
+            <span>☽</span>
+            <span className="text-crimson/60">❦</span>
+            <span>❓</span>
+            <span className="text-crimson/60">❦</span>
+            <span>☾</span>
+          </div>
+        </div>
+      </DarkSection>
     </div>
   );
 };

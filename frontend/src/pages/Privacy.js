@@ -1,181 +1,204 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { GlassCard } from '../components/GlassCard';
-import { Shield, Lock, Eye, Database } from 'lucide-react';
+import { Shield, Lock, Eye, Database, Mail } from 'lucide-react';
+import { DarkSection, LightSection, GrandDivider, MysticalDivider, ElaborateCorner, PageHeader, LightOrnateCard, OrnateCard } from '../components/OrnateElements';
 
 export const Privacy = () => {
   return (
-    <div className="min-h-screen py-16 sm:py-20 md:py-24 px-4 sm:px-6">
-      <div className="max-w-4xl mx-auto">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-12"
-        >
-          <Shield className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 text-primary mx-auto mb-4" />
-          <h1 className="font-italiana text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-primary mb-4">
-            Privacy Policy
-          </h1>
-          <p className="font-montserrat text-sm sm:text-base text-muted-foreground">
-            Last updated: January 4, 2026
-          </p>
-        </motion.div>
-
-        {/* Introduction */}
-        <GlassCard hover={false}>
-          <p className="font-montserrat text-sm sm:text-base text-foreground/80 leading-relaxed">
-            At Where The Crowlands, we respect your privacy and the sacred nature of your practice. 
-            This policy explains how we collect, use, and protect your information.
-          </p>
-        </GlassCard>
-
-        {/* Information We Collect */}
-        <GlassCard hover={false}>
-          <h2 className="font-cinzel text-lg sm:text-xl text-secondary mb-4 flex items-center gap-2">
-            <Database className="w-5 h-5 sm:w-6 sm:h-6" />
-            Information We Collect
-          </h2>
-          <div className="space-y-4 font-montserrat text-sm sm:text-base text-foreground/80 leading-relaxed">
-            <div>
-              <h3 className="font-cinzel text-base text-primary mb-2">Account Information</h3>
-              <p>When you register, we collect your email address, name, and encrypted password. Your password is hashed and never stored in plain text.</p>
-            </div>
-            <div>
-              <h3 className="font-cinzel text-base text-primary mb-2">Usage Data</h3>
-              <p>We track how many spells you generate, what you save to your grimoire, and your subscription status. This helps us improve the service and enforce fair usage limits.</p>
-            </div>
-            <div>
-              <h3 className="font-cinzel text-base text-primary mb-2">Payment Information</h3>
-              <p>Payment processing is handled by Stripe. We never see or store your credit card information. We only receive confirmation that payment succeeded and your Stripe customer ID.</p>
-            </div>
-            <div>
-              <h3 className="font-cinzel text-base text-primary mb-2">Spell Content</h3>
-              <p>Your saved spells, grimoire entries, and personal notes are stored privately in your account. We do not share, sell, or analyze the content of your rituals.</p>
-            </div>
-          </div>
-        </GlassCard>
-
-        {/* How We Use Your Information */}
-        <GlassCard hover={false}>
-          <h2 className="font-cinzel text-lg sm:text-xl text-secondary mb-4 flex items-center gap-2">
-            <Eye className="w-5 h-5 sm:w-6 sm:h-6" />
-            How We Use Your Information
-          </h2>
-          <ul className="space-y-3 font-montserrat text-sm sm:text-base text-foreground/80">
-            <li className="flex items-start gap-2">
-              <span className="text-primary mt-1">•</span>
-              <span>To provide and improve our spell generation and grimoire services</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-primary mt-1">•</span>
-              <span>To manage your subscription and process payments</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-primary mt-1">•</span>
-              <span>To send important updates about your account or service changes</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-primary mt-1">•</span>
-              <span>To enforce usage limits for free vs. paid tiers</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-primary mt-1">•</span>
-              <span>To analyze aggregate usage patterns (never individual spell content)</span>
-            </li>
-          </ul>
-        </GlassCard>
-
-        {/* Data Security */}
-        <GlassCard hover={false}>
-          <h2 className="font-cinzel text-lg sm:text-xl text-secondary mb-4 flex items-center gap-2">
-            <Lock className="w-5 h-5 sm:w-6 sm:h-6" />
-            Data Security
-          </h2>
-          <div className="space-y-4 font-montserrat text-sm sm:text-base text-foreground/80 leading-relaxed">
-            <p>
-              Your data is encrypted in transit (HTTPS) and at rest. Passwords are hashed using bcrypt. 
-              We use industry-standard security practices and regularly update our systems.
+    <div className="min-h-screen">
+      {/* Dark Hero Section */}
+      <DarkSection className="py-12 sm:py-16 md:py-20 px-4 sm:px-6" variant="warm">
+        <ElaborateCorner className="absolute top-3 left-3 w-16 h-16 sm:w-20 sm:h-20" variant="gold" />
+        <ElaborateCorner className="absolute top-3 right-3 w-16 h-16 sm:w-20 sm:h-20 rotate-90" variant="gold" />
+        
+        <div className="max-w-4xl mx-auto relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <PageHeader 
+              icon={Shield}
+              title="Privacy Policy"
+              subtitle="Your practice is sacred. So is your privacy."
+            />
+            <p className="font-montserrat text-xs sm:text-sm text-silver-mist/60 text-center">
+              Last updated: January 4, 2026
             </p>
-            <p>
-              Your grimoire is private. We do not read, analyze, or share the content of your spells. 
-              They belong to you.
-            </p>
-          </div>
-        </GlassCard>
-
-        {/* Your Rights */}
-        <GlassCard hover={false}>
-          <h2 className="font-cinzel text-lg sm:text-xl text-secondary mb-4">Your Rights</h2>
-          <div className="space-y-4 font-montserrat text-sm sm:text-base text-foreground/80 leading-relaxed">
-            <p>You have the right to:</p>
-            <ul className="space-y-2">
-              <li className="flex items-start gap-2">
-                <span className="text-primary mt-1">•</span>
-                <span>Access all your personal data</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-primary mt-1">•</span>
-                <span>Update your email or account information</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-primary mt-1">•</span>
-                <span>Delete your account and all associated data</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-primary mt-1">•</span>
-                <span>Export your grimoire and saved spells</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-primary mt-1">•</span>
-                <span>Opt out of marketing emails (we rarely send them)</span>
-              </li>
-            </ul>
-          </div>
-        </GlassCard>
-
-        {/* Third Party Services */}
-        <GlassCard hover={false}>
-          <h2 className="font-cinzel text-lg sm:text-xl text-secondary mb-4">Third-Party Services</h2>
-          <div className="space-y-4 font-montserrat text-sm sm:text-base text-foreground/80 leading-relaxed">
-            <p>
-              <strong>Stripe:</strong> Handles payment processing. See Stripe's privacy policy at stripe.com/privacy.
-            </p>
-            <p>
-              <strong>OpenAI:</strong> Powers spell generation. We send your intention/request to OpenAI's API. 
-              They do not store or train on your prompts per our agreement.
-            </p>
-            <p>
-              We do not share your email, personal information, or grimoire content with any other third parties.
-            </p>
-          </div>
-        </GlassCard>
-
-        {/* Cookies */}
-        <GlassCard hover={false}>
-          <h2 className="font-cinzel text-lg sm:text-xl text-secondary mb-4">Cookies & Tracking</h2>
-          <p className="font-montserrat text-sm sm:text-base text-foreground/80 leading-relaxed">
-            We use minimal cookies: one for authentication (your login token) and one for your selected guide preference. 
-            We use PostHog for basic analytics (page views, feature usage). You can opt out of analytics through 
-            your browser settings.
-          </p>
-        </GlassCard>
-
-        {/* Contact */}
-        <GlassCard hover={false}>
-          <h2 className="font-cinzel text-lg sm:text-xl text-secondary mb-4">Questions or Concerns?</h2>
-          <p className="font-montserrat text-sm sm:text-base text-foreground/80 leading-relaxed">
-            If you have questions about this privacy policy or how we handle your data, please contact us at: <strong>privacy@wherethecrowlands.com</strong>
-          </p>
-        </GlassCard>
-
-        {/* Last Updated Note */}
-        <div className="mt-8 text-center">
-          <p className="font-montserrat text-xs text-muted-foreground italic">
-            We may update this policy as we add features. Major changes will be announced via email.
-          </p>
+          </motion.div>
+          
+          <GrandDivider variant="eye" />
         </div>
-      </div>
+      </DarkSection>
+
+      {/* Light Section - Introduction */}
+      <LightSection className="py-10 sm:py-14 px-4 sm:px-6">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <p className="font-montserrat text-sm sm:text-base text-navy-dark/80 leading-relaxed text-center max-w-2xl mx-auto">
+              At Where The Crowlands, we respect your privacy and the sacred nature of your practice. 
+              This policy explains how we collect, use, and protect your information.
+            </p>
+          </motion.div>
+          <MysticalDivider light />
+        </div>
+      </LightSection>
+
+      {/* Dark Section - Information We Collect */}
+      <DarkSection className="py-10 sm:py-14 px-4 sm:px-6">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <OrnateCard hover={false}>
+              <h2 className="font-cinzel text-lg sm:text-xl text-gold-light mb-6 flex items-center gap-2">
+                <Database className="w-5 h-5 sm:w-6 sm:h-6 text-crimson-bright" />
+                Information We Collect
+              </h2>
+              <div className="space-y-5">
+                <div className="border-l-2 border-gold/40 pl-4">
+                  <h3 className="font-cinzel text-base text-crimson-bright mb-2">Account Information</h3>
+                  <p className="font-montserrat text-sm text-cream/70 leading-relaxed">
+                    When you register, we collect your email address, name, and encrypted password. 
+                    Your password is hashed and never stored in plain text.
+                  </p>
+                </div>
+                <div className="border-l-2 border-gold/40 pl-4">
+                  <h3 className="font-cinzel text-base text-crimson-bright mb-2">Usage Data</h3>
+                  <p className="font-montserrat text-sm text-cream/70 leading-relaxed">
+                    We track how many spells you generate, what you save to your grimoire, and your 
+                    subscription status. This helps us improve the service and enforce fair usage limits.
+                  </p>
+                </div>
+                <div className="border-l-2 border-gold/40 pl-4">
+                  <h3 className="font-cinzel text-base text-crimson-bright mb-2">Payment Information</h3>
+                  <p className="font-montserrat text-sm text-cream/70 leading-relaxed">
+                    Payment processing is handled by Stripe. We never see or store your credit card 
+                    information. We only receive confirmation that payment succeeded and your Stripe customer ID.
+                  </p>
+                </div>
+                <div className="border-l-2 border-gold/40 pl-4">
+                  <h3 className="font-cinzel text-base text-crimson-bright mb-2">Spell Content</h3>
+                  <p className="font-montserrat text-sm text-cream/70 leading-relaxed">
+                    Your saved spells, grimoire entries, and personal notes are stored privately in your 
+                    account. We do not share, sell, or analyze the content of your rituals.
+                  </p>
+                </div>
+              </div>
+            </OrnateCard>
+          </motion.div>
+          <GrandDivider />
+        </div>
+      </DarkSection>
+
+      {/* Light Section - How We Use Your Information */}
+      <LightSection className="py-10 sm:py-14 px-4 sm:px-6">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <LightOrnateCard hover={false}>
+              <h2 className="font-cinzel text-lg sm:text-xl text-crimson mb-6 flex items-center gap-2">
+                <Lock className="w-5 h-5 sm:w-6 sm:h-6" />
+                How We Use Your Information
+              </h2>
+              <div className="space-y-4 font-montserrat text-sm text-navy-dark/80 leading-relaxed">
+                <p>
+                  <strong className="text-crimson">Service Delivery:</strong> To provide spell generation, 
+                  grimoire storage, and account management.
+                </p>
+                <p>
+                  <strong className="text-crimson">Communication:</strong> To send important updates about your 
+                  account, subscription, or service changes. We don&apos;t send marketing emails unless you opt in.
+                </p>
+                <p>
+                  <strong className="text-crimson">Improvement:</strong> Aggregated, anonymized data helps us 
+                  understand usage patterns and improve the service. We never analyze individual spell content.
+                </p>
+                <p>
+                  <strong className="text-crimson">Legal Compliance:</strong> We may disclose information if 
+                  required by law, but we&apos;ll notify you when legally permitted.
+                </p>
+              </div>
+            </LightOrnateCard>
+          </motion.div>
+          <MysticalDivider light />
+        </div>
+      </LightSection>
+
+      {/* Dark Section - Your Rights */}
+      <DarkSection className="py-10 sm:py-14 px-4 sm:px-6">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <OrnateCard hover={false}>
+              <h2 className="font-cinzel text-lg sm:text-xl text-gold-light mb-6 flex items-center gap-2">
+                <Eye className="w-5 h-5 sm:w-6 sm:h-6 text-crimson-bright" />
+                Your Rights
+              </h2>
+              <div className="space-y-4 font-montserrat text-sm text-cream/70 leading-relaxed">
+                <p>
+                  <strong className="text-gold-light">Access:</strong> You can view and download all data 
+                  associated with your account at any time.
+                </p>
+                <p>
+                  <strong className="text-gold-light">Correction:</strong> You can update your profile 
+                  information, email, and password through your account settings.
+                </p>
+                <p>
+                  <strong className="text-gold-light">Deletion:</strong> You can request complete deletion 
+                  of your account and all associated data. This is irreversible.
+                </p>
+                <p>
+                  <strong className="text-gold-light">Portability:</strong> You can export your grimoire 
+                  entries as PDFs to keep a personal copy of your work.
+                </p>
+              </div>
+            </OrnateCard>
+          </motion.div>
+          <GrandDivider variant="moon" />
+        </div>
+      </DarkSection>
+
+      {/* Light Footer Section */}
+      <LightSection className="py-10 sm:py-14 px-4 sm:px-6">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <LightOrnateCard hover={false}>
+              <h2 className="font-cinzel text-lg sm:text-xl text-crimson mb-4 flex items-center gap-2">
+                <Mail className="w-5 h-5 sm:w-6 sm:h-6" />
+                Contact Us
+              </h2>
+              <p className="font-montserrat text-sm text-navy-dark/80 leading-relaxed">
+                If you have questions about this policy or your data, contact us through your account 
+                settings or email. We typically respond within 48 hours.
+              </p>
+            </LightOrnateCard>
+          </motion.div>
+          
+          <div className="text-center mt-8">
+            <p className="font-crimson text-sm text-navy-dark/50 italic mb-4">
+              Your secrets are safe. Your practice is yours.
+            </p>
+            <div className="flex items-center justify-center gap-4 text-crimson/40">
+              <span>☽</span>
+              <span className="text-gold-dark/60">❦</span>
+              <span>🔒</span>
+              <span className="text-gold-dark/60">❦</span>
+              <span>☾</span>
+            </div>
+          </div>
+        </div>
+      </LightSection>
     </div>
   );
 };
