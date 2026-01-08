@@ -2686,14 +2686,24 @@ Respond ONLY with the JSON object, no other text."""
         logging.error(f'Spell generation error: {str(e)}')
         raise HTTPException(status_code=500, detail=f'Failed to generate spell: {str(e)}')
 
-# AI Image Generation endpoint
+# AI Image Generation endpoint with archetype style support
 @api_router.post('/ai/generate-image')
 async def generate_image(request: ImageGenerationRequest):
     try:
+        # Get archetype style if specified
+        archetype_style = ""
+        if hasattr(request, 'archetype') and request.archetype:
+            archetype_style = ARCHETYPE_IMAGE_STYLES.get(request.archetype, ARCHETYPE_IMAGE_STYLES['neutral'])
+        else:
+            archetype_style = ARCHETYPE_IMAGE_STYLES['neutral']
+        
+        # Build the full prompt with archetype styling
+        full_prompt = f"{archetype_style}, {request.prompt}, mystical ritual scene, highly detailed, no text or words"
+        
         # Use direct OpenAI API for image generation
         image_response = await openai_client.images.generate(
             model="dall-e-3",
-            prompt=f"1920s-1940s mystical art style, {request.prompt}, art deco influences, rich jewel tones, Bloomsbury aesthetic",
+            prompt=full_prompt,
             size="1024x1024",
             quality="standard",
             n=1,
