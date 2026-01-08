@@ -379,6 +379,70 @@ export const BorderFrame = ({ children, variant = 'gold', className = '' }) => {
   );
 };
 
+// Persona-specific border frames using uploaded assets
+export const PERSONA_BORDER_URLS = {
+  site: 'https://customer-assets.emergentagent.com/job_mystic-grimoire-1/artifacts/jcxzlb20_SiteOverallCorners%20and%20any%20borders.png',
+  cathleen: 'https://customer-assets.emergentagent.com/job_mystic-grimoire-1/artifacts/12ds6wfx_CathleenBorder.png',
+  katherine: 'https://customer-assets.emergentagent.com/job_mystic-grimoire-1/artifacts/85szfipf_KateBorder.png',
+  theresa: 'https://customer-assets.emergentagent.com/job_mystic-grimoire-1/artifacts/8jgu6o97_TheresaBorder.png'
+};
+
+export const PersonaBorderFrame = ({ persona = 'site', children, className = '' }) => {
+  const borderUrl = PERSONA_BORDER_URLS[persona] || PERSONA_BORDER_URLS.site;
+  
+  return (
+    <div className={`relative ${className}`}>
+      {/* Border image overlay */}
+      <div 
+        className="absolute inset-0 pointer-events-none z-20"
+        style={{
+          backgroundImage: `url(${borderUrl})`,
+          backgroundSize: 'contain',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center',
+          mixBlendMode: 'multiply'
+        }}
+      />
+      {/* Content */}
+      <div className="relative z-10">{children}</div>
+    </div>
+  );
+};
+
+// Tarot Card Frame with persona border
+export const TarotCardFrame = ({ imageUrl, persona = 'site', title, className = '' }) => {
+  const borderUrl = PERSONA_BORDER_URLS[persona] || PERSONA_BORDER_URLS.site;
+  
+  return (
+    <div className={`relative aspect-[2/3] ${className}`}>
+      {/* Background image */}
+      {imageUrl && (
+        <img 
+          src={imageUrl} 
+          alt={title || 'Tarot card'} 
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+      )}
+      {/* Border overlay */}
+      <div 
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: `url(${borderUrl})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          mixBlendMode: 'screen'
+        }}
+      />
+      {/* Title */}
+      {title && (
+        <div className="absolute bottom-0 inset-x-0 p-3 bg-gradient-to-t from-navy-dark/90 to-transparent">
+          <p className="font-cinzel text-sm text-gold text-center">{title}</p>
+        </div>
+      )}
+    </div>
+  );
+};
+
 // ============================================================================
 // SPELL PAGE SPECIFIC COMPONENTS
 // ============================================================================
