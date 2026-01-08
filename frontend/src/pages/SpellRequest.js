@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GrimoirePage } from '../components/GrimoirePage';
 import { aiAPI, subscriptionAPI } from '../utils/api';
@@ -13,13 +13,17 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 
-// ===== ARCHETYPE VIDEOS FOR LOADING STATE =====
-const ARCHETYPE_VIDEOS = {
-  shigg: 'https://customer-assets.emergentagent.com/job_witchcrowland/artifacts/u0re0oda_ShiggVideo.mp4',
-  cathleen: 'https://customer-assets.emergentagent.com/job_witchcrowland/artifacts/gsq61t9z_CathleenSpell.mp4',
-  katherine: 'https://customer-assets.emergentagent.com/job_witchcrowland/artifacts/6q5iwmtx_3KatherineSpellWork.mp4',
-  theresa: 'https://customer-assets.emergentagent.com/job_witchcrowland/artifacts/v6otbwkr_Theresa4421_Have_the_woman_open_her_purse_and_a_bird_fly_out%2C_as_the_bird_fly.mp4'
+// ===== DERIVE VIDEOS FROM ARCHETYPES.JS (single source of truth) =====
+const getArchetypeVideo = (personaId) => {
+  // Map new IDs to legacy IDs in archetypes.js
+  const idMap = { 'shigg': 'shiggy', 'cathleen': 'kathleen', 'katherine': 'catherine' };
+  const legacyId = idMap[personaId] || personaId;
+  const archetype = ARCHETYPES.find(a => a.id === legacyId || a.id === personaId);
+  return archetype?.video || null;
 };
+
+// Get all available videos for random selection (for choose_for_me fallback)
+const ALL_ARCHETYPE_VIDEOS = ARCHETYPES.filter(a => a.video).map(a => a.video);
 
 // ===== WIZARD CONFIGURATION =====
 
