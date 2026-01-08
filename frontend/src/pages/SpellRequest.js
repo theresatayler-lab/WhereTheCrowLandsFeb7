@@ -591,7 +591,7 @@ export const SpellRequest = () => {
           <div className="max-w-4xl mx-auto">
             <button
               onClick={handleNewSpell}
-              className="mb-6 px-4 py-2 bg-navy-mid/50 text-gold border border-gold/30 rounded-sm font-montserrat tracking-widest uppercase text-xs hover:bg-gold/10 transition-all"
+              className="btn-ritual-ghost mb-6 px-5 py-2.5 rounded-sm flex items-center gap-2"
             >
               ← Create Another Spell
             </button>
