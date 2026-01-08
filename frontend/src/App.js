@@ -128,6 +128,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <ScrollToTop />
+        <EarlyAccessRedirect />
         {/* OnboardingModal disabled - users go straight to site */}
         {/* <OnboardingModal onSelectArchetype={handleSelectArchetype} /> */}
         <ConditionalNavigation user={user} onLogout={handleLogout} />
