@@ -55,13 +55,13 @@ CROWLANDS_ART_BIBLE = {
 
 ASSET_ROLE_LOCKS = {
     "header": {
-        "type": "SCENE / STILL-LIFE",
+        "type": "SCENE/STILL-LIFE",
         "aspect": "wide (16:9 or 3:1)",
         "rule": "Never an emblem. Never a tarot-like medallion. Must show environment/setting.",
         "prompt_suffix": "wide scene composition, environmental still-life, NOT a medallion or emblem"
     },
     "tarot": {
-        "type": "EMBLEM / SIGIL PLATE",
+        "type": "EMBLEM/SIGIL PLATE",
         "aspect": "square (1:1)",
         "rule": "No environment/room. Symmetrical. Must NOT reuse header's central object.",
         "prompt_suffix": "square emblem sigil plate, symmetrical medallion, isolated on dark background, NOT a scene"
