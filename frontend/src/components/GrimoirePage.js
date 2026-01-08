@@ -853,10 +853,11 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
         {/* Materials */}
         {spell.materials && spell.materials.length > 0 && (
           <section>
-            <h2 className="font-cinzel text-xl text-secondary mb-4 flex items-center gap-2">
-              <Sparkles className="w-5 h-5" />
-              Materials Needed
-            </h2>
+            <SectionHeader 
+              icon={Sparkles} 
+              title="Materials Needed" 
+              microIcon={getMicroIconForSection('materials')}
+            />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {spell.materials.map((material, idx) => {
                 const IconComponent = MATERIAL_ICONS[material.icon] || Circle;
@@ -866,7 +867,11 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                     className="flex items-start gap-3 p-3 bg-muted/20 border border-border rounded-sm"
                   >
                     <div className={`p-2 ${style.bgAccent} rounded-sm`}>
-                      <IconComponent className={`w-5 h-5 ${style.accentColor}`} />
+                      {material.icon ? (
+                        <span className="text-lg">{material.icon}</span>
+                      ) : (
+                        <IconComponent className={`w-5 h-5 ${style.accentColor}`} />
+                      )}
                     </div>
                     <div>
                       <p className="font-montserrat text-sm font-medium text-foreground">{material.name}</p>
@@ -881,14 +886,18 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
           </section>
         )}
 
-        {/* Ritual Steps */}
-        {spell.steps && spell.steps.length > 0 && (
+        {/* Divider after materials */}
+        <GeneratedDivider imageBase64={generatedAssets?.divider_1} />
+
+        {/* Ritual Steps / The Working */}
+        {(spell.steps && spell.steps.length > 0) || spell.the_working ? (
           <section>
             <div className="flex items-center justify-between mb-4">
-              <h2 className="font-cinzel text-xl text-secondary flex items-center gap-2">
-                <BookOpen className="w-5 h-5" />
-                The Ritual
-              </h2>
+              <SectionHeader 
+                icon={BookOpen} 
+                title="The Working" 
+                microIcon={getMicroIconForSection('the_working')}
+              />
               <button
                 onClick={() => setChecklistMode(!checklistMode)}
                 className={`px-3 py-1 rounded-sm text-xs font-montserrat tracking-wider transition-all ${
@@ -898,6 +907,63 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                 }`}
               >
                 {checklistMode ? 'Checklist On' : 'Track Progress'}
+              </button>
+            </div>
+            
+            {/* Working description */}
+            {spell.the_working?.description && (
+              <p className="font-montserrat text-sm text-foreground mb-4">{spell.the_working.description}</p>
+            )}
+            
+            <div className="space-y-4">
+              {/* Support both old 'steps' format and new 'the_working.steps' format */}
+              {(spell.the_working?.steps || spell.steps || []).map((step, idx) => {
+                const stepNum = step.step || step.number || idx + 1;
+                return (
+                  <motion.div 
+                    key={stepNum}
+                    className={`relative pl-12 pb-4 ${stepNum < (spell.the_working?.steps || spell.steps).length ? 'border-l-2 border-border ml-4' : 'ml-4'}`}
+                  >
+                    {/* Step number circle */}
+                    <div 
+                      className={`absolute left-0 -translate-x-1/2 w-8 h-8 rounded-full flex items-center justify-center text-sm font-cinzel cursor-pointer transition-all ${
+                        completedSteps.has(stepNum)
+                          ? 'bg-accent text-accent-foreground'
+                          : `${style.bgAccent} ${style.accentColor} border-2 ${style.borderColor}`
+                      }`}
+                      onClick={() => checklistMode && toggleStep(stepNum)}
+                    >
+                      {checklistMode && completedSteps.has(stepNum) ? (
+                        <CheckCircle2 className="w-5 h-5" />
+                      ) : (
+                        stepNum
+                      )}
+                    </div>
+                    
+                    <div className={`transition-opacity ${checklistMode && completedSteps.has(stepNum) ? 'opacity-50' : ''}`}>
+                      <h3 className="font-cinzel text-base text-secondary mb-1">{step.title}</h3>
+                      <p className="font-montserrat text-sm text-foreground leading-relaxed">{step.instruction}</p>
+                      {step.spoken_words && (
+                        <p className="font-crimson text-sm text-accent italic mt-2">&ldquo;{step.spoken_words}&rdquo;</p>
+                      )}
+                      {step.duration && (
+                        <p className="font-montserrat text-xs text-muted-foreground mt-2 flex items-center gap-1">
+                          <Clock className="w-3 h-3" /> {step.duration}
+                        </p>
+                      )}
+                      {step.note && (
+                        <p className="font-crimson text-xs text-accent italic mt-1">✦ {step.note}</p>
+                      )}
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </section>
+        ) : null}
+
+        {/* Divider after working */}
+        <GeneratedDivider imageBase64={generatedAssets?.divider_2} />
               </button>
             </div>
             
