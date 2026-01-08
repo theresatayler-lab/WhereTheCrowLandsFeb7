@@ -512,6 +512,22 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(s
     except Exception:
         raise HTTPException(status_code=401, detail='Invalid token')
 
+# Optional security for endpoints that work with or without auth
+optional_security = HTTPBearer(auto_error=False)
+
+async def get_optional_user(credentials: HTTPAuthorizationCredentials = Depends(optional_security)):
+    """Get user if token provided, otherwise return None"""
+    if not credentials:
+        return None
+    try:
+        token = credentials.credentials
+        payload = jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALGORITHM])
+        user_id = payload.get('user_id')
+        user = await db.users.find_one({'id': user_id}, {'_id': 0})
+        return user
+    except:
+        return None
+
 # Auth endpoints
 @api_router.post('/auth/register', response_model=AuthResponse)
 async def register(user_data: UserRegister):
