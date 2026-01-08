@@ -201,7 +201,7 @@ export const Upgrade = () => {
             </motion.div>
           </div>
 
-          <DividerStrip variant="stars" />
+          <SectionDivider variant="stars" />
 
           {/* Features Grid */}
           <motion.div
