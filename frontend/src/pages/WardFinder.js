@@ -6,13 +6,14 @@ import {
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
+import { DarkSection, LightSection, GrandDivider, MysticalDivider, ElaborateCorner, PageHeader, LightOrnateCard, OrnateCard } from '../components/OrnateElements';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 // Cathleen's image
 const CATHLEEN_IMAGE = "https://customer-assets.emergentagent.com/job_diywizardry/artifacts/2yrmxbqx_Cathleen16.png";
 
-const WardCard = ({ ward, index, situation, onSave, isSaving, isSaved }) => {
+const WardCard = ({ ward, index, situation, onSave, isSaving, isSaved, isLight }) => {
   const [expanded, setExpanded] = useState(false);
   
   return (
@@ -20,30 +21,32 @@ const WardCard = ({ ward, index, situation, onSave, isSaving, isSaved }) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.2 }}
-      className="bg-card border border-secondary/30 rounded-lg overflow-hidden"
+      className={`rounded-lg overflow-hidden ${isLight 
+        ? 'bg-cream/60 border-2 border-crimson/20' 
+        : 'bg-navy-mid/40 border-2 border-gold/30'}`}
     >
       {/* Header */}
       <div 
-        className="p-5 cursor-pointer hover:bg-secondary/5 transition-colors"
+        className={`p-5 cursor-pointer transition-colors ${isLight ? 'hover:bg-crimson/5' : 'hover:bg-gold/5'}`}
         onClick={() => setExpanded(!expanded)}
       >
         <div className="flex items-start gap-4">
-          <div className="p-3 bg-secondary/20 rounded-full flex-shrink-0">
+          <div className={`p-3 rounded-full flex-shrink-0 ${isLight ? 'bg-crimson/10' : 'bg-gold/10'}`}>
             <span className="text-3xl">{ward.symbol}</span>
           </div>
           <div className="flex-1">
-            <p className="font-montserrat text-xs text-secondary/70 uppercase tracking-wider mb-1">
+            <p className={`font-montserrat text-xs uppercase tracking-wider mb-1 ${isLight ? 'text-crimson/70' : 'text-gold/70'}`}>
               {ward.category}
             </p>
-            <h3 className="font-cinzel text-xl text-foreground mb-2">{ward.name}</h3>
-            <p className="font-montserrat text-sm text-muted-foreground leading-relaxed">
+            <h3 className={`font-cinzel text-xl mb-2 ${isLight ? 'text-crimson' : 'text-gold-light'}`}>{ward.name}</h3>
+            <p className={`font-montserrat text-sm leading-relaxed ${isLight ? 'text-navy-dark/70' : 'text-cream/70'}`}>
               {ward.why_for_you}
             </p>
           </div>
         </div>
         
         <div className="mt-3 text-center">
-          <span className="font-montserrat text-xs text-secondary/60">
+          <span className={`font-montserrat text-xs ${isLight ? 'text-crimson/60' : 'text-gold/60'}`}>
             {expanded ? 'Click to collapse' : 'Click to learn more'}
           </span>
         </div>
@@ -57,17 +60,17 @@ const WardCard = ({ ward, index, situation, onSave, isSaving, isSaved }) => {
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="border-t border-secondary/20 overflow-hidden"
+            className={`border-t overflow-hidden ${isLight ? 'border-crimson/20' : 'border-gold/20'}`}
           >
-            <div className="p-5 space-y-4 bg-secondary/5">
+            <div className={`p-5 space-y-4 ${isLight ? 'bg-crimson/5' : 'bg-gold/5'}`}>
               {/* Meaning */}
               <div className="flex items-start gap-3">
-                <Heart className="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" />
+                <Heart className={`w-5 h-5 mt-0.5 flex-shrink-0 ${isLight ? 'text-crimson' : 'text-crimson-bright'}`} />
                 <div>
-                  <p className="font-montserrat text-xs text-muted-foreground uppercase tracking-wide mb-1">
+                  <p className={`font-montserrat text-xs uppercase tracking-wide mb-1 ${isLight ? 'text-navy-dark/50' : 'text-cream/50'}`}>
                     Deeper Meaning
                   </p>
-                  <p className="font-montserrat text-sm text-foreground/90">
+                  <p className={`font-montserrat text-sm ${isLight ? 'text-navy-dark/80' : 'text-cream/80'}`}>
                     {ward.meaning}
                   </p>
                 </div>
@@ -75,12 +78,12 @@ const WardCard = ({ ward, index, situation, onSave, isSaving, isSaved }) => {
               
               {/* Where to Find */}
               <div className="flex items-start gap-3">
-                <MapPin className="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" />
+                <MapPin className={`w-5 h-5 mt-0.5 flex-shrink-0 ${isLight ? 'text-crimson' : 'text-crimson-bright'}`} />
                 <div>
-                  <p className="font-montserrat text-xs text-muted-foreground uppercase tracking-wide mb-1">
+                  <p className={`font-montserrat text-xs uppercase tracking-wide mb-1 ${isLight ? 'text-navy-dark/50' : 'text-cream/50'}`}>
                     Where to Find It
                   </p>
-                  <p className="font-montserrat text-sm text-foreground/90">
+                  <p className={`font-montserrat text-sm ${isLight ? 'text-navy-dark/80' : 'text-cream/80'}`}>
                     {ward.where_to_find}
                   </p>
                 </div>
@@ -89,12 +92,12 @@ const WardCard = ({ ward, index, situation, onSave, isSaving, isSaved }) => {
               {/* How to Choose */}
               {ward.how_to_choose && (
                 <div className="flex items-start gap-3">
-                  <Eye className="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" />
+                  <Eye className={`w-5 h-5 mt-0.5 flex-shrink-0 ${isLight ? 'text-crimson' : 'text-crimson-bright'}`} />
                   <div>
-                    <p className="font-montserrat text-xs text-muted-foreground uppercase tracking-wide mb-1">
+                    <p className={`font-montserrat text-xs uppercase tracking-wide mb-1 ${isLight ? 'text-navy-dark/50' : 'text-cream/50'}`}>
                       How to Know It&apos;s The One
                     </p>
-                    <p className="font-montserrat text-sm text-foreground/90">
+                    <p className={`font-montserrat text-sm ${isLight ? 'text-navy-dark/80' : 'text-cream/80'}`}>
                       {ward.how_to_choose}
                     </p>
                   </div>
@@ -103,12 +106,12 @@ const WardCard = ({ ward, index, situation, onSave, isSaving, isSaved }) => {
               
               {/* Activation */}
               <div className="flex items-start gap-3">
-                <Sparkles className="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" />
+                <Sparkles className={`w-5 h-5 mt-0.5 flex-shrink-0 ${isLight ? 'text-crimson' : 'text-crimson-bright'}`} />
                 <div>
-                  <p className="font-montserrat text-xs text-muted-foreground uppercase tracking-wide mb-1">
+                  <p className={`font-montserrat text-xs uppercase tracking-wide mb-1 ${isLight ? 'text-navy-dark/50' : 'text-cream/50'}`}>
                     How to Activate & Bond
                   </p>
-                  <p className="font-montserrat text-sm text-foreground/90">
+                  <p className={`font-montserrat text-sm ${isLight ? 'text-navy-dark/80' : 'text-cream/80'}`}>
                     {ward.activation}
                   </p>
                 </div>
@@ -117,12 +120,12 @@ const WardCard = ({ ward, index, situation, onSave, isSaving, isSaved }) => {
               {/* How to Carry */}
               {ward.how_to_carry && (
                 <div className="flex items-start gap-3">
-                  <Package className="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" />
+                  <Package className={`w-5 h-5 mt-0.5 flex-shrink-0 ${isLight ? 'text-crimson' : 'text-crimson-bright'}`} />
                   <div>
-                    <p className="font-montserrat text-xs text-muted-foreground uppercase tracking-wide mb-1">
+                    <p className={`font-montserrat text-xs uppercase tracking-wide mb-1 ${isLight ? 'text-navy-dark/50' : 'text-cream/50'}`}>
                       How to Carry It
                     </p>
-                    <p className="font-montserrat text-sm text-foreground/90">
+                    <p className={`font-montserrat text-sm ${isLight ? 'text-navy-dark/80' : 'text-cream/80'}`}>
                       {ward.how_to_carry}
                     </p>
                   </div>
@@ -130,17 +133,19 @@ const WardCard = ({ ward, index, situation, onSave, isSaving, isSaved }) => {
               )}
               
               {/* Save Button */}
-              <div className="pt-4 border-t border-secondary/20">
+              <div className={`pt-4 border-t ${isLight ? 'border-crimson/20' : 'border-gold/20'}`}>
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
                     onSave(ward);
                   }}
                   disabled={isSaving || isSaved}
-                  className={`w-full px-4 py-2 rounded-lg font-montserrat text-sm transition-all flex items-center justify-center gap-2 ${
+                  className={`w-full px-4 py-2 rounded-sm font-montserrat text-sm transition-all flex items-center justify-center gap-2 ${
                     isSaved 
                       ? 'bg-green-500/20 text-green-400 border border-green-500/30 cursor-default'
-                      : 'bg-secondary/20 text-secondary border border-secondary/40 hover:bg-secondary/30'
+                      : isLight
+                        ? 'bg-crimson/10 text-crimson border border-crimson/40 hover:bg-crimson/20'
+                        : 'bg-gold/10 text-gold border border-gold/40 hover:bg-gold/20'
                   } ${isSaving ? 'opacity-50 cursor-wait' : ''}`}
                 >
                   {isSaved ? (
@@ -175,8 +180,8 @@ const WardFinder = () => {
   const [personality, setPersonality] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [result, setResult] = useState(null);
-  const [savingWards, setSavingWards] = useState({});  // Track which wards are being saved
-  const [savedWards, setSavedWards] = useState({});    // Track which wards have been saved
+  const [savingWards, setSavingWards] = useState({});
+  const [savedWards, setSavedWards] = useState({});
   
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -188,7 +193,7 @@ const WardFinder = () => {
     
     setIsLoading(true);
     setResult(null);
-    setSavedWards({});  // Reset saved state for new results
+    setSavedWards({});
     
     try {
       const response = await fetch(`${API_URL}/api/ai/suggest-ward`, {
@@ -207,8 +212,6 @@ const WardFinder = () => {
       const data = await response.json();
       setResult(data.result);
       toast.success('Cathleen has chosen your wards');
-      
-      // Scroll to top to show the results
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch (error) {
       console.error('Ward finder error:', error);
@@ -276,19 +279,21 @@ const WardFinder = () => {
   };
   
   return (
-    <div className="min-h-screen bg-background pt-16">
-      
-      <main className="pt-24 pb-16">
-        <div className="max-w-4xl mx-auto px-4">
-          {/* Header */}
+    <div className="min-h-screen">
+      {/* Dark Hero Section */}
+      <DarkSection className="py-12 sm:py-16 md:py-20 px-4 sm:px-6" variant="warm">
+        <ElaborateCorner className="absolute top-3 left-3 w-16 h-16 sm:w-20 sm:h-20" variant="gold" />
+        <ElaborateCorner className="absolute top-3 right-3 w-16 h-16 sm:w-20 sm:h-20 rotate-90" variant="gold" />
+        
+        <div className="max-w-4xl mx-auto relative z-10">
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-center mb-12"
+            className="text-center"
           >
             <button
               onClick={() => navigate('/guides')}
-              className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground mb-6 transition-colors"
+              className="inline-flex items-center gap-2 text-cream/60 hover:text-cream mb-6 transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
               <span className="font-montserrat text-sm">Back to Guides</span>
@@ -296,79 +301,85 @@ const WardFinder = () => {
             
             <div className="flex justify-center mb-6">
               <div className="relative">
-                <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-secondary/50">
+                <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-gold/50 shadow-lg">
                   <img 
                     src={CATHLEEN_IMAGE} 
                     alt="Cathleen" 
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <div className="absolute -bottom-1 -right-1 bg-secondary text-secondary-foreground p-1.5 rounded-full">
+                <div className="absolute -bottom-1 -right-1 bg-crimson text-cream p-1.5 rounded-full border border-gold/50">
                   <Hand className="w-4 h-4" />
                 </div>
               </div>
             </div>
             
-            <h1 className="font-cinzel text-3xl md:text-4xl text-foreground mb-3">
-              Find Your Ward
-            </h1>
-            <p className="font-montserrat text-lg text-secondary mb-2">
-              with Cathleen, The Singer of Strength
-            </p>
-            <p className="font-montserrat text-sm text-muted-foreground max-w-xl mx-auto">
-              Tell me what weighs on your heart, and I&apos;ll help you find the perfect talisman to carry. 
-              Every ward chooses its keeper as much as the keeper chooses it.
+            <PageHeader 
+              icon={null}
+              title="Find Your Ward"
+              subtitle="with Cathleen, The Singer of Strength"
+            />
+            <p className="font-crimson text-base text-gold/80 italic max-w-xl mx-auto mt-2">
+              &ldquo;Tell me what weighs on your heart, and I&apos;ll help you find the perfect talisman to carry. 
+              Every ward chooses its keeper as much as the keeper chooses it.&rdquo;
             </p>
           </motion.div>
           
-          {/* Form or Results */}
-          <AnimatePresence mode="wait">
-            {!result ? (
+          <GrandDivider variant="moon" />
+        </div>
+      </DarkSection>
+
+      {/* Form or Results Section */}
+      <AnimatePresence mode="wait">
+        {!result ? (
+          /* Light Section - Form */
+          <LightSection className="py-12 sm:py-16 px-4 sm:px-6">
+            <div className="max-w-2xl mx-auto">
               <motion.form
                 key="form"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 onSubmit={handleSubmit}
-                className="space-y-6 max-w-2xl mx-auto"
+                className="space-y-6"
               >
-                {/* Situation Input */}
-                <div>
-                  <label className="block font-montserrat text-sm text-foreground mb-2">
-                    What do you need help with? <span className="text-secondary">*</span>
-                  </label>
-                  <textarea
-                    value={situation}
-                    onChange={(e) => setSituation(e.target.value)}
-                    placeholder="I'm facing a difficult decision... / I need protection during... / I want to feel more confident when... / I'm grieving and need comfort..."
-                    className="w-full h-32 px-4 py-3 bg-card border border-border rounded-lg font-montserrat text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary resize-none"
-                    disabled={isLoading}
-                  />
-                </div>
-                
-                {/* Personality Input (Optional) */}
-                <div>
-                  <label className="block font-montserrat text-sm text-foreground mb-2">
-                    Tell me a bit about yourself <span className="text-muted-foreground">(optional)</span>
-                  </label>
-                  <textarea
-                    value={personality}
-                    onChange={(e) => setPersonality(e.target.value)}
-                    placeholder="I'm introverted and love nature... / I work with my hands... / I'm drawn to the sea... / I'm a mother of two..."
-                    className="w-full h-24 px-4 py-3 bg-card border border-border rounded-lg font-montserrat text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary resize-none"
-                    disabled={isLoading}
-                  />
-                  <p className="font-montserrat text-xs text-muted-foreground mt-1">
-                    This helps me choose something that truly resonates with your spirit.
-                  </p>
-                </div>
-                
-                {/* Submit Button */}
-                <div className="pt-4">
+                <LightOrnateCard hover={false}>
+                  {/* Situation Input */}
+                  <div className="mb-6">
+                    <label className="block font-cinzel text-sm text-crimson mb-2">
+                      What do you need help with? <span className="text-gold-dark">*</span>
+                    </label>
+                    <textarea
+                      value={situation}
+                      onChange={(e) => setSituation(e.target.value)}
+                      placeholder="I'm facing a difficult decision... / I need protection during... / I want to feel more confident when... / I'm grieving and need comfort..."
+                      className="w-full h-32 px-4 py-3 bg-parchment border border-crimson/30 rounded-sm font-montserrat text-sm text-navy-dark placeholder:text-navy-dark/40 focus:outline-none focus:ring-2 focus:ring-crimson/50 focus:border-crimson resize-none"
+                      disabled={isLoading}
+                    />
+                  </div>
+                  
+                  {/* Personality Input (Optional) */}
+                  <div className="mb-6">
+                    <label className="block font-cinzel text-sm text-crimson mb-2">
+                      Tell me a bit about yourself <span className="text-navy-dark/50 font-montserrat text-xs">(optional)</span>
+                    </label>
+                    <textarea
+                      value={personality}
+                      onChange={(e) => setPersonality(e.target.value)}
+                      placeholder="I'm introverted and love nature... / I work with my hands... / I'm drawn to the sea... / I'm a mother of two..."
+                      className="w-full h-24 px-4 py-3 bg-parchment border border-crimson/30 rounded-sm font-montserrat text-sm text-navy-dark placeholder:text-navy-dark/40 focus:outline-none focus:ring-2 focus:ring-crimson/50 focus:border-crimson resize-none"
+                      disabled={isLoading}
+                    />
+                    <p className="font-montserrat text-xs text-navy-dark/50 mt-1">
+                      This helps Cathleen choose something that truly resonates with your spirit.
+                    </p>
+                  </div>
+                  
+                  {/* Submit Button */}
                   <button
                     type="submit"
                     disabled={isLoading || !situation.trim()}
-                    className="w-full px-6 py-4 bg-secondary text-secondary-foreground rounded-lg font-montserrat tracking-wider uppercase text-sm hover:bg-secondary/90 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
+                    className="w-full px-6 py-4 bg-gradient-to-r from-crimson-deep via-crimson to-crimson-deep text-cream rounded-sm font-montserrat tracking-wider uppercase text-sm hover:from-crimson hover:via-crimson-bright hover:to-crimson transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3 border border-gold/30"
                   >
                     {isLoading ? (
                       <>
@@ -382,28 +393,55 @@ const WardFinder = () => {
                       </>
                     )}
                   </button>
-                </div>
+                </LightOrnateCard>
               </motion.form>
-            ) : (
+              
+              <MysticalDivider light />
+              
+              {/* Info Section */}
               <motion.div
-                key="results"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="space-y-8"
+                transition={{ delay: 0.3 }}
               >
-                {/* Greeting */}
-                <div className="bg-card/50 border border-secondary/20 rounded-lg p-6 text-center">
-                  <p className="font-crimson text-lg text-foreground/90 italic leading-relaxed">
+                <LightOrnateCard hover={false}>
+                  <h3 className="font-cinzel text-lg text-crimson mb-3">About Wards & Talismans</h3>
+                  <p className="font-montserrat text-sm text-navy-dark/70 leading-relaxed">
+                    A ward is a physical object that carries your intention and offers protection or support. 
+                    Unlike spells which are performed, a ward is <em className="text-crimson">carried</em>—in your pocket, on a chain, 
+                    sewn into your coat lining. It becomes a silent companion, a touchstone for your magic.
+                  </p>
+                </LightOrnateCard>
+              </motion.div>
+            </div>
+          </LightSection>
+        ) : (
+          /* Results - Alternating Sections */
+          <motion.div
+            key="results"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            {/* Light Section - Greeting */}
+            <LightSection className="py-10 sm:py-14 px-4 sm:px-6">
+              <div className="max-w-3xl mx-auto">
+                <LightOrnateCard hover={false}>
+                  <p className="font-crimson text-lg text-navy-dark/90 italic leading-relaxed text-center">
                     &ldquo;{result.greeting}&rdquo;
                   </p>
-                </div>
-                
-                {/* Ward Cards */}
+                </LightOrnateCard>
+                <MysticalDivider light />
+              </div>
+            </LightSection>
+            
+            {/* Dark Section - Ward Cards */}
+            <DarkSection className="py-10 sm:py-14 px-4 sm:px-6">
+              <div className="max-w-3xl mx-auto">
+                <h2 className="font-cinzel text-xl text-center text-gold-light mb-8">
+                  Your Suggested Wards
+                </h2>
                 <div className="space-y-4">
-                  <h2 className="font-cinzel text-xl text-center text-secondary mb-6">
-                    Your Suggested Wards
-                  </h2>
                   {result.wards?.map((ward, index) => (
                     <WardCard 
                       key={index} 
@@ -413,57 +451,62 @@ const WardFinder = () => {
                       onSave={handleSaveWard}
                       isSaving={savingWards[ward.name]}
                       isSaved={savedWards[ward.name]}
+                      isLight={false}
                     />
                   ))}
                 </div>
-                
-                {/* Closing */}
-                <div className="bg-card/50 border border-secondary/20 rounded-lg p-6 text-center">
-                  <p className="font-crimson text-lg text-foreground/90 italic leading-relaxed">
+                <GrandDivider />
+              </div>
+            </DarkSection>
+            
+            {/* Light Section - Closing & Actions */}
+            <LightSection className="py-10 sm:py-14 px-4 sm:px-6">
+              <div className="max-w-3xl mx-auto">
+                <LightOrnateCard hover={false}>
+                  <p className="font-crimson text-lg text-navy-dark/90 italic leading-relaxed text-center">
                     &ldquo;{result.closing}&rdquo;
                   </p>
-                  <p className="font-montserrat text-xs text-secondary/60 mt-3">— Cathleen</p>
-                </div>
+                  <p className="font-montserrat text-xs text-crimson/60 mt-3 text-center">— Cathleen</p>
+                </LightOrnateCard>
                 
                 {/* Action Buttons */}
-                <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+                <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
                   <button
                     onClick={handleReset}
-                    className="px-6 py-3 bg-card border border-border rounded-lg font-montserrat text-sm hover:bg-muted/50 transition-colors flex items-center justify-center gap-2"
+                    className="px-6 py-3 bg-cream border-2 border-crimson/30 rounded-sm font-montserrat text-sm text-crimson hover:bg-crimson/5 transition-colors flex items-center justify-center gap-2"
                   >
                     <RefreshCw className="w-4 h-4" />
                     Ask About Something Else
                   </button>
                   <button
-                    onClick={() => navigate('/grimoire')}
-                    className="px-6 py-3 bg-secondary text-secondary-foreground rounded-lg font-montserrat text-sm hover:bg-secondary/90 transition-colors flex items-center justify-center gap-2"
+                    onClick={() => navigate('/spell-request')}
+                    className="px-6 py-3 bg-gradient-to-r from-crimson-deep via-crimson to-crimson-deep text-cream rounded-sm font-montserrat text-sm hover:from-crimson hover:via-crimson-bright hover:to-crimson transition-colors flex items-center justify-center gap-2 border border-gold/30"
                   >
                     <Sparkles className="w-4 h-4" />
                     Create a Spell with Cathleen
                   </button>
                 </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-          
-          {/* Info Section */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
-            className="mt-16 text-center"
-          >
-            <div className="inline-block bg-card/30 border border-border/50 rounded-lg p-6 max-w-lg">
-              <h3 className="font-cinzel text-lg text-foreground mb-3">About Wards & Talismans</h3>
-              <p className="font-montserrat text-sm text-muted-foreground leading-relaxed">
-                A ward is a physical object that carries your intention and offers protection or support. 
-                Unlike spells which are performed, a ward is <em>carried</em>—in your pocket, on a chain, 
-                sewn into your coat lining. It becomes a silent companion, a touchstone for your magic.
-              </p>
-            </div>
+              </div>
+            </LightSection>
           </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Dark Footer */}
+      <DarkSection className="py-8 px-4" variant="warm">
+        <ElaborateCorner className="absolute bottom-3 left-3 w-16 h-16 sm:w-20 sm:h-20 -rotate-90" variant="gold" />
+        <ElaborateCorner className="absolute bottom-3 right-3 w-16 h-16 sm:w-20 sm:h-20 rotate-180" variant="gold" />
+        
+        <div className="max-w-2xl mx-auto text-center relative z-10">
+          <div className="flex items-center justify-center gap-4 text-gold/50">
+            <span>☽</span>
+            <span className="text-crimson/60">❦</span>
+            <span>🪬</span>
+            <span className="text-crimson/60">❦</span>
+            <span>☾</span>
+          </div>
         </div>
-      </main>
+      </DarkSection>
     </div>
   );
 };
