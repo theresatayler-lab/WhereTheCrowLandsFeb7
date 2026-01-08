@@ -503,7 +503,7 @@ const TarotCardView = ({ spell, archetype, style, imageBase64, onViewFull, onCop
   );
 };
 
-export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSpell }) => {
+export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSpell, isLoadingImages = false }) => {
   const [showHistoricalContext, setShowHistoricalContext] = useState(false);
   const [checklistMode, setChecklistMode] = useState(false);
   const [completedSteps, setCompletedSteps] = useState(new Set());
