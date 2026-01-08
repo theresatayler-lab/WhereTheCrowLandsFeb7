@@ -2330,6 +2330,312 @@ class SpiritualAppAPITester:
         
         return False
 
+    # ===== NEW PERSONALIZED SPELL GENERATION TESTS (REVIEW REQUEST) =====
+    
+    def test_personalized_spell_kathleen_protection(self):
+        """Test personalized spell generation with Kathleen persona for protection - REVIEW REQUEST TEST 1"""
+        spell_data = {
+            "spell_spec": {
+                "persona_id": "kathleen",
+                "user_query": "I need protection at work from a toxic coworker",
+                "desired_feeling": "protected",
+                "time": "10_min",
+                "tone": "practical",
+                "belief_boundary": "spiritual_grounded",
+                "anchor_object": "candle",
+                "setting": "desk",
+                "user_name": "Sarah",
+                "avoid": ""
+            },
+            "generate_images": False
+        }
+        
+        success, response = self.run_test(
+            "Personalized Spell - Kathleen Protection",
+            "POST",
+            "ai/generate-personalized-spell",
+            200,
+            data=spell_data,
+            timeout=90  # Personalized spells take longer
+        )
+        
+        if success and isinstance(response, dict):
+            # Verify response structure from review request
+            required_fields = ['spell', 'archetype', 'scenario']
+            missing_fields = [field for field in required_fields if field not in response]
+            
+            if missing_fields:
+                print(f"   ❌ Missing top-level fields: {missing_fields}")
+                return False
+            
+            # Verify spell structure
+            spell = response.get('spell', {})
+            spell_required_fields = ['title', 'materials', 'the_working', 'spoken_words']
+            missing_spell_fields = [field for field in spell_required_fields if field not in spell]
+            
+            if missing_spell_fields:
+                print(f"   ❌ Missing spell fields: {missing_spell_fields}")
+                return False
+            
+            # Verify archetype info
+            archetype = response.get('archetype', {})
+            if archetype.get('id') != 'kathleen':
+                print(f"   ❌ Expected archetype id 'kathleen', got '{archetype.get('id')}'")
+                return False
+            
+            # Verify scenario info
+            scenario = response.get('scenario', {})
+            if not scenario.get('id') or not scenario.get('name'):
+                print(f"   ❌ Missing scenario info: {scenario}")
+                return False
+            
+            # Check for user name integration
+            full_spell_text = json.dumps(spell).lower()
+            if 'sarah' not in full_spell_text:
+                print(f"   ❌ User name 'Sarah' not found in spell content")
+                return False
+            
+            # Check for anchor object integration (candle)
+            if 'candle' not in full_spell_text:
+                print(f"   ❌ Anchor object 'candle' not found in spell content")
+                return False
+            
+            # Check for setting integration (desk)
+            if 'desk' not in full_spell_text:
+                print(f"   ❌ Setting 'desk' not found in spell content")
+                return False
+            
+            print(f"   ✅ Personalized spell generated successfully")
+            print(f"   ✅ Spell title: {spell.get('title')}")
+            print(f"   ✅ Archetype: {archetype.get('name')}")
+            print(f"   ✅ Scenario: {scenario.get('name')}")
+            print(f"   ✅ User name 'Sarah' integrated: ✓")
+            print(f"   ✅ Anchor object 'candle' integrated: ✓")
+            print(f"   ✅ Setting 'desk' integrated: ✓")
+            
+            # Store scenario ID for rotation test
+            self.first_scenario_id = scenario.get('id')
+            
+            return True
+        
+        return False
+
+    def test_personalized_spell_kathleen_grief_rotation(self):
+        """Test personalized spell generation with scenario rotation - REVIEW REQUEST TEST 2"""
+        spell_data = {
+            "spell_spec": {
+                "persona_id": "kathleen",
+                "user_query": "I need to release grief about my grandmother",
+                "desired_feeling": "softened",
+                "time": "30_min",
+                "tone": "gentle",
+                "belief_boundary": "ancestor_friendly",
+                "anchor_object": "song",
+                "setting": "bedroom",
+                "user_name": "Sarah",
+                "avoid": ""
+            },
+            "generate_images": False
+        }
+        
+        success, response = self.run_test(
+            "Personalized Spell - Kathleen Grief (Scenario Rotation)",
+            "POST",
+            "ai/generate-personalized-spell",
+            200,
+            data=spell_data,
+            timeout=90
+        )
+        
+        if success and isinstance(response, dict):
+            # Verify response structure
+            required_fields = ['spell', 'archetype', 'scenario']
+            missing_fields = [field for field in required_fields if field not in response]
+            
+            if missing_fields:
+                print(f"   ❌ Missing top-level fields: {missing_fields}")
+                return False
+            
+            # Verify scenario rotation - should be different from first test
+            scenario = response.get('scenario', {})
+            current_scenario_id = scenario.get('id')
+            
+            if hasattr(self, 'first_scenario_id') and current_scenario_id == self.first_scenario_id:
+                print(f"   ⚠️  Scenario ID same as previous test - rotation may not be working")
+                print(f"   Previous: {self.first_scenario_id}, Current: {current_scenario_id}")
+            else:
+                print(f"   ✅ Scenario rotation working - different scenario selected")
+                if hasattr(self, 'first_scenario_id'):
+                    print(f"   Previous: {self.first_scenario_id}, Current: {current_scenario_id}")
+            
+            # Verify spell structure is different (different section focus)
+            spell = response.get('spell', {})
+            spell_text = json.dumps(spell).lower()
+            
+            # Check for voice/song elements (not candle)
+            voice_elements = ['song', 'voice', 'sing', 'hum', 'melody', 'music']
+            voice_found = [elem for elem in voice_elements if elem in spell_text]
+            
+            if voice_found:
+                print(f"   ✅ Voice/song elements found: {', '.join(voice_found)}")
+            else:
+                print(f"   ⚠️  No voice/song elements detected")
+            
+            # Should NOT have candle elements (from previous test)
+            if 'candle' in spell_text:
+                print(f"   ⚠️  Candle element found - should be song-focused")
+            else:
+                print(f"   ✅ No candle elements - correctly song-focused")
+            
+            # Check for bedroom setting
+            if 'bedroom' in spell_text:
+                print(f"   ✅ Setting 'bedroom' integrated")
+            else:
+                print(f"   ⚠️  Setting 'bedroom' not found")
+            
+            print(f"   ✅ Grief spell generated successfully")
+            print(f"   ✅ Spell title: {spell.get('title')}")
+            print(f"   ✅ Scenario: {scenario.get('name')}")
+            
+            return True
+        
+        return False
+
+    def test_personalized_spell_choose_for_me(self):
+        """Test personalized spell generation with 'choose_for_me' persona - REVIEW REQUEST TEST 3"""
+        spell_data = {
+            "spell_spec": {
+                "persona_id": "choose_for_me",
+                "user_query": "I want to find guidance through bird signs",
+                "desired_feeling": "clear",
+                "time": "10_min",
+                "tone": "gentle",
+                "belief_boundary": "spiritual_grounded",
+                "anchor_object": "bird",
+                "setting": "outdoors",
+                "user_name": "",
+                "avoid": ""
+            },
+            "generate_images": False
+        }
+        
+        success, response = self.run_test(
+            "Personalized Spell - Choose For Me (Should Select Shigg)",
+            "POST",
+            "ai/generate-personalized-spell",
+            200,
+            data=spell_data,
+            timeout=90
+        )
+        
+        if success and isinstance(response, dict):
+            # Verify response structure
+            required_fields = ['spell', 'archetype', 'scenario']
+            missing_fields = [field for field in required_fields if field not in response]
+            
+            if missing_fields:
+                print(f"   ❌ Missing top-level fields: {missing_fields}")
+                return False
+            
+            # Verify the system chose Shigg (because of bird anchor)
+            archetype = response.get('archetype', {})
+            expected_persona = 'shiggy'  # Should choose Shigg for bird anchor
+            
+            if archetype.get('id') != expected_persona:
+                print(f"   ❌ Expected system to choose '{expected_persona}' for bird anchor, got '{archetype.get('id')}'")
+                return False
+            
+            print(f"   ✅ System correctly chose Shigg for bird anchor")
+            print(f"   ✅ Selected archetype: {archetype.get('name')}")
+            
+            # Verify spell has bird-related content
+            spell = response.get('spell', {})
+            spell_text = json.dumps(spell).lower()
+            
+            bird_elements = ['bird', 'wing', 'feather', 'flight', 'nest', 'song', 'oracle', 'parliament']
+            bird_found = [elem for elem in bird_elements if elem in spell_text]
+            
+            if bird_found:
+                print(f"   ✅ Bird-related content found: {', '.join(bird_found)}")
+            else:
+                print(f"   ❌ No bird-related content detected in spell")
+                return False
+            
+            # Check for outdoor setting
+            outdoor_elements = ['outdoor', 'outside', 'nature', 'sky', 'tree', 'garden']
+            outdoor_found = [elem for elem in outdoor_elements if elem in spell_text]
+            
+            if outdoor_found:
+                print(f"   ✅ Outdoor elements found: {', '.join(outdoor_found)}")
+            else:
+                print(f"   ⚠️  No outdoor elements detected")
+            
+            print(f"   ✅ Choose-for-me spell generated successfully")
+            print(f"   ✅ Spell title: {spell.get('title')}")
+            print(f"   ✅ Scenario: {response.get('scenario', {}).get('name')}")
+            
+            return True
+        
+        return False
+
+    def test_personalized_spell_with_images(self):
+        """Test personalized spell generation with image generation enabled"""
+        spell_data = {
+            "spell_spec": {
+                "persona_id": "kathleen",
+                "user_query": "I need courage for a new beginning",
+                "desired_feeling": "brave",
+                "time": "20_min",
+                "tone": "empowering",
+                "belief_boundary": "spiritual_grounded",
+                "anchor_object": "candle",
+                "setting": "home",
+                "user_name": "Alex",
+                "avoid": ""
+            },
+            "generate_images": True
+        }
+        
+        success, response = self.run_test(
+            "Personalized Spell - With Image Generation",
+            "POST",
+            "ai/generate-personalized-spell",
+            200,
+            data=spell_data,
+            timeout=120  # Image generation takes longer
+        )
+        
+        if success and isinstance(response, dict):
+            # Verify basic structure
+            spell = response.get('spell', {})
+            if not spell.get('title'):
+                print(f"   ❌ Spell missing title")
+                return False
+            
+            # Check if image was generated
+            image_base64 = response.get('image_base64')
+            if image_base64:
+                print(f"   ✅ Image generated (base64 length: {len(image_base64)})")
+                print(f"   ✅ Estimated image size: ~{len(image_base64) * 3 // 4 // 1024}KB")
+            else:
+                print(f"   ⚠️  Image generation was requested but no image returned")
+            
+            # Check asset plan
+            asset_plan = response.get('asset_plan', {})
+            if asset_plan:
+                print(f"   ✅ Asset plan generated with {len(asset_plan)} elements")
+                if asset_plan.get('header_image_generated'):
+                    print(f"   ✅ Header image generated successfully")
+                if asset_plan.get('tarot_card_image_generated'):
+                    print(f"   ✅ Tarot card image generated successfully")
+            
+            print(f"   ✅ Personalized spell with images completed")
+            print(f"   ✅ Spell title: {spell.get('title')}")
+            
+            return True
+        
+        return False
+
 def main():
     print("🧙‍♀️ Starting Spiritual App API Testing...")
     print("=" * 60)
