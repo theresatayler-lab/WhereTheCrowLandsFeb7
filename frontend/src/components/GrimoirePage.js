@@ -1091,11 +1091,68 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
             <div className="space-y-2">
               {spell.variations.map((variation, idx) => (
                 <div key={idx} className="p-3 bg-muted/20 rounded-sm">
-                  <p className="font-montserrat text-sm font-medium text-foreground">{variation.name}</p>
-                  <p className="font-montserrat text-xs text-muted-foreground">{variation.description}</p>
+                  {typeof variation === 'string' ? (
+                    <p className="font-montserrat text-sm text-foreground">{variation}</p>
+                  ) : (
+                    <>
+                      <p className="font-montserrat text-sm font-medium text-foreground">{variation.name}</p>
+                      <p className="font-montserrat text-xs text-muted-foreground">{variation.description}</p>
+                    </>
+                  )}
                 </div>
               ))}
             </div>
+          </section>
+        )}
+        
+        {/* Inspired By / Sources - new format */}
+        {spell.inspired_by && spell.inspired_by.length > 0 && (
+          <section className="border border-border rounded-sm overflow-hidden">
+            <button
+              onClick={() => setShowHistoricalContext(!showHistoricalContext)}
+              className="w-full p-4 flex items-center justify-between bg-muted/20 hover:bg-muted/30 transition-all"
+            >
+              <span className="font-cinzel text-base text-secondary flex items-center gap-2">
+                <BookOpen className="w-5 h-5" />
+                Inspired By
+              </span>
+              {showHistoricalContext ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
+            </button>
+            
+            <AnimatePresence>
+              {showHistoricalContext && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: 'auto', opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  className="overflow-hidden"
+                >
+                  <div className="p-4 space-y-3 border-t border-border">
+                    {spell.inspired_by.map((source, idx) => (
+                      <div key={idx} className="p-3 bg-muted/20 rounded-sm">
+                        <div className="flex items-start gap-3">
+                          <span className="text-lg">{source.source_type === 'book' ? '📖' : source.source_type === 'tradition' ? '🏛️' : source.source_type === 'practice' ? '✨' : '📜'}</span>
+                          <div className="flex-1">
+                            <p className="font-montserrat text-sm font-medium text-foreground">
+                              {source.name}
+                              {source.author && <span className="text-muted-foreground"> — {source.author}</span>}
+                            </p>
+                            {source.connection && (
+                              <p className="font-montserrat text-xs text-muted-foreground mt-1">{source.connection}</p>
+                            )}
+                            {source.archive_link && (
+                              <a href={source.archive_link} className="font-montserrat text-xs text-accent hover:underline mt-1 inline-block">
+                                View in Archive →
+                              </a>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </section>
         )}
 
