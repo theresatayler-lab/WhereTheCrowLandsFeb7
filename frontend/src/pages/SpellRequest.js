@@ -410,14 +410,14 @@ export const SpellRequest = () => {
       if (video) return video;
     }
     
-    // For choose_for_me, use last selected persona's video
+    // For choose_for_me, use last selected persona's video if available
     if (lastSelectedPersonaRef.current) {
       const video = getArchetypeVideo(lastSelectedPersonaRef.current);
       if (video) return video;
     }
     
-    // Fallback: random archetype video
-    return ALL_ARCHETYPE_VIDEOS[Math.floor(Math.random() * ALL_ARCHETYPE_VIDEOS.length)];
+    // Fallback: use the generic spell video
+    return GENERIC_SPELL_VIDEO;
   };
 
   // Lazy load images after spell text is displayed
