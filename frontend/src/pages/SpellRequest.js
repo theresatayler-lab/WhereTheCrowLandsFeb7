@@ -112,59 +112,64 @@ const StepIndicator = ({ currentStep, totalSteps }) => (
   </div>
 );
 
-const OptionCard = ({ selected, onClick, children, className = '' }) => (
+const OptionCard = ({ selected, onClick, children, className = '', light = false }) => (
   <motion.button
     onClick={onClick}
     className={`relative p-4 rounded-sm text-left transition-all ${
-      selected 
-        ? 'bg-gradient-to-br from-crimson/20 to-crimson/10 border-2 border-crimson shadow-lg' 
-        : 'bg-navy-mid/30 border border-gold/20 hover:border-gold/40'
+      light 
+        ? selected 
+          ? 'bg-crimson/10 border-2 border-crimson shadow-lg' 
+          : 'bg-white/60 border-2 border-gold/30 hover:border-crimson/50'
+        : selected 
+          ? 'bg-gradient-to-br from-crimson/20 to-crimson/10 border-2 border-crimson shadow-lg' 
+          : 'bg-navy-mid/30 border border-gold/20 hover:border-gold/40'
     } ${className}`}
     whileHover={{ scale: 1.02 }}
     whileTap={{ scale: 0.98 }}
   >
     {selected && (
       <div className="absolute top-2 right-2">
-        <Check className="w-4 h-4 text-crimson" />
+        <Check className={`w-4 h-4 ${light ? 'text-crimson' : 'text-crimson'}`} />
       </div>
     )}
     {children}
   </motion.button>
 );
 
-// Step 1: Persona & Query
+// Step 1: Persona & Query - NOW WITH PROPER CONTRAST
 const Step1 = ({ spellSpec, updateSpec }) => (
   <div className="space-y-6">
     <div>
-      <h3 className="font-cinzel text-lg text-gold-light mb-4">Who will guide your spell?</h3>
+      <h3 className="font-cinzel text-lg text-crimson mb-4">Who will guide your spell?</h3>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {PERSONAS.map((p) => (
           <OptionCard
             key={p.id}
             selected={spellSpec.persona_id === p.id}
             onClick={() => updateSpec({ persona_id: p.id })}
+            light={true}
           >
             <div className="flex items-center gap-3">
               <span className="text-2xl">{p.emoji}</span>
               <div>
-                <p className="font-cinzel text-cream">{p.name}</p>
-                <p className="font-montserrat text-xs text-cream/60">{p.title}</p>
+                <p className="font-cinzel text-navy-dark">{p.name}</p>
+                <p className="font-montserrat text-xs text-crimson">{p.title}</p>
               </div>
             </div>
-            <p className="font-montserrat text-xs text-cream/50 mt-2">{p.description}</p>
+            <p className="font-montserrat text-xs text-navy-dark/70 mt-2">{p.description}</p>
           </OptionCard>
         ))}
       </div>
     </div>
 
     <div>
-      <h3 className="font-cinzel text-lg text-gold-light mb-2">What do you need?</h3>
-      <p className="font-montserrat text-xs text-cream/60 mb-3">Tell me in your own words what you&apos;re facing or seeking.</p>
+      <h3 className="font-cinzel text-lg text-crimson mb-2">What do you need?</h3>
+      <p className="font-montserrat text-xs text-navy-dark/70 mb-3">Tell me in your own words what you&apos;re facing or seeking.</p>
       <textarea
         value={spellSpec.user_query || ''}
         onChange={(e) => updateSpec({ user_query: e.target.value })}
         placeholder="I need courage to speak up at work... / I'm grieving and need comfort... / I want to protect my home... / I need clarity about a decision..."
-        className="w-full h-28 bg-navy-dark/50 border border-gold/30 focus:border-gold/60 rounded-sm px-4 py-3 text-cream font-montserrat text-sm placeholder:text-cream/30 resize-none"
+        className="w-full h-28 bg-white/80 border-2 border-gold/40 focus:border-crimson/60 rounded-sm px-4 py-3 text-navy-dark font-montserrat text-sm placeholder:text-navy-dark/40 resize-none"
       />
     </div>
 
