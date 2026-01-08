@@ -2903,6 +2903,8 @@ async def generate_personalized_spell(request: PersonalizedSpellRequest, user = 
             temperature=0.85,
             max_tokens=3500
         )
+        timing_log['writer_ms'] = int((time.time() - writer_start) * 1000)
+        logging.info(f"[TIMING] Writer: {timing_log['writer_ms']}ms")
         
         # Parse spell output
         spell_text = writer_response.choices[0].message.content
@@ -2924,13 +2926,15 @@ async def generate_personalized_spell(request: PersonalizedSpellRequest, user = 
         spell['format_id'] = plan.get('format_id', 'general')
         spell['variation_tokens'] = plan.get('variation_tokens', {})
         
-        # === IMAGE GENERATION: 6 images ===
-        # header, tarot, sigil, divider_1, divider_2, divider_3
+        # === IMAGE GENERATION (only if requested) ===
+        # Reduced to 4 images: header, tarot, sigil, 1 divider (reused 3x in frontend)
         image_base64 = None
         asset_plan = plan.get('asset_plan', {})
         generated_assets = {}
+        timing_log['images_ms'] = 0
         
         if request.generate_images and asset_plan:
+            images_start = time.time()
             try:
                 # 1. Generate header image
                 header_prompt = build_image_prompt("header_image", asset_plan, persona_config, spell.get('title', 'Spell'))
