@@ -209,3 +209,10 @@ agent_communication:
 23. Ornate waitlist frame with elaborate decorations - ✅ WORKING
 24. Color balance for readability (light/dark contrast) - ✅ WORKING
 25. Logo with enhanced glow effect - ✅ WORKING
+26. AI Image Styles endpoint with all archetype descriptions - ✅ WORKING
+27. AI Image generation with archetype styles (Kathleen tested) - ✅ WORKING
+28. Spell generation with image for Shigg archetype - ✅ WORKING (occasional timeouts)
+29. Spell generation with image for Katherine archetype - ✅ WORKING
+30. Archetype-specific image styles (Edmund J. Sullivan for Shigg) - ✅ WORKING
+31. Thread/textile references in Katherine spells - ✅ WORKING
+32. Bird oracle elements in Shigg spells - ✅ WORKING
