@@ -310,13 +310,13 @@ PERSONA_CONFIG = {
     "cathleen": {
         "name": "Cathleen",
         "title": "The Singer of Strength",
-        "era": "Blitz-era London & Irish Heritage (1940s)",
+        "era": "WWII Homefront - Land Army, WRENS & Celtic-Irish Resistance (1940s)",
         
         "section_grammar": {
             "required_sections": ["invocation", "the_working", "voice_element", "closing_seal", "aftercare"],
             "optional_sections": ["morrigan_call", "circle_casting", "talisman_charging"],
             "section_order": ["invocation", "morrigan_call", "circle_casting", "the_working", "voice_element", "closing_seal", "aftercare"],
-            "voice_style": "warm, protective, motherly strength, Irish-inflected"
+            "voice_style": "warm, protective, wartime sisterhood, Irish-inflected, quiet strength, 'careless talk costs lives' restraint"
         },
         
         # PRACTICES LIBRARY
