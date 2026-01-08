@@ -75,8 +75,9 @@ const ARCHETYPE_STYLES = {
   },
 };
 
-// Enhanced Tarot Card View with Image
+// Enhanced Tarot Card View with Image and Flip Functionality
 const TarotCardView = ({ spell, archetype, style, imageBase64, onViewFull, onCopy, onSave, onNewSpell, isSaving }) => {
+  const [isFlipped, setIsFlipped] = useState(false);
   const tarot = spell?.tarot_card;
   if (!tarot) return null;
   
@@ -87,145 +88,214 @@ const TarotCardView = ({ spell, archetype, style, imageBase64, onViewFull, onCop
       transition={{ duration: 0.6, ease: "easeOut" }}
       className="max-w-md mx-auto perspective-1000"
     >
-      {/* Main Card */}
+      {/* Main Card with Flip */}
       <div 
-        className="relative rounded-xl overflow-hidden"
+        className="relative cursor-pointer"
         style={{ 
           aspectRatio: '2.5/4',
-          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 40px rgba(139, 90, 43, 0.2)',
+          transformStyle: 'preserve-3d',
         }}
+        onClick={() => imageBase64 && setIsFlipped(!isFlipped)}
       >
-        {/* Gold outer border effect */}
-        <div 
-          className="absolute inset-0 rounded-xl"
-          style={{
-            background: 'linear-gradient(135deg, #B8860B 0%, #DAA520 20%, #FFD700 50%, #DAA520 80%, #B8860B 100%)',
-            padding: '4px',
-          }}
-        />
-        
-        {/* Card inner container */}
-        <div className="absolute inset-1 rounded-lg overflow-hidden bg-[#1a1a1a]">
-          {/* Background Image */}
-          {imageBase64 ? (
-            <div className="absolute inset-0">
-              <img 
-                src={`data:image/png;base64,${imageBase64}`}
-                alt={spell.title}
-                className="w-full h-full object-cover"
-              />
-              {/* Gradient overlays for readability */}
-              <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-transparent to-black/80" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-            </div>
-          ) : (
-            <div className={`absolute inset-0 bg-gradient-to-b ${style.cardGradient}`} />
-          )}
-          
-          {/* Decorative inner borders */}
-          <div className="absolute inset-3 border border-amber-500/30 rounded-md pointer-events-none" />
-          <div className="absolute inset-5 border border-amber-400/20 rounded-sm pointer-events-none" />
-          
-          {/* Corner ornaments */}
-          <div className="absolute top-4 left-4 w-6 h-6 border-t-2 border-l-2 border-amber-500/50" />
-          <div className="absolute top-4 right-4 w-6 h-6 border-t-2 border-r-2 border-amber-500/50" />
-          <div className="absolute bottom-4 left-4 w-6 h-6 border-b-2 border-l-2 border-amber-500/50" />
-          <div className="absolute bottom-4 right-4 w-6 h-6 border-b-2 border-r-2 border-amber-500/50" />
-          
-          {/* Card Content */}
-          <div className="relative h-full flex flex-col p-6 text-white">
-            {/* Top Section - Symbol & Title */}
-            <div className="text-center mb-2">
-              <span className="text-4xl drop-shadow-lg">{tarot.symbol || '✧'}</span>
-            </div>
+        <motion.div
+          className="relative w-full h-full"
+          style={{ transformStyle: 'preserve-3d' }}
+          animate={{ rotateY: isFlipped ? 180 : 0 }}
+          transition={{ duration: 0.6, ease: 'easeInOut' }}
+        >
+          {/* Front - Tarot Card */}
+          <div 
+            className="absolute inset-0 rounded-xl overflow-hidden"
+            style={{ 
+              backfaceVisibility: 'hidden',
+              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 40px rgba(139, 90, 43, 0.2)',
+            }}
+          >
+            {/* Gold outer border effect */}
+            <div 
+              className="absolute inset-0 rounded-xl"
+              style={{
+                background: 'linear-gradient(135deg, #B8860B 0%, #DAA520 20%, #FFD700 50%, #DAA520 80%, #B8860B 100%)',
+                padding: '4px',
+              }}
+            />
             
-            <h2 
-              className="font-italiana text-2xl md:text-3xl text-amber-100 text-center mb-1"
-              style={{ textShadow: '2px 2px 8px rgba(0,0,0,0.8)' }}
-            >
-              {tarot.title || spell.title}
-            </h2>
-            
-            {/* Archetype Attribution */}
-            {archetype && (
-              <p className="font-montserrat text-xs text-amber-300/80 text-center mb-3 tracking-[0.2em] uppercase">
-                {archetype.name}
-              </p>
-            )}
-            
-            {/* Decorative divider */}
-            <div className="flex items-center justify-center gap-2 mb-3">
-              <div className="h-px bg-gradient-to-r from-transparent to-amber-500/50 flex-1" />
-              <Moon className="w-4 h-4 text-amber-400/60" />
-              <div className="h-px bg-gradient-to-l from-transparent to-amber-500/50 flex-1" />
-            </div>
-            
-            {/* Middle Section - Essence & Key Action */}
-            <div className="flex-1 flex flex-col justify-center space-y-3">
-              {/* Essence */}
-              <p 
-                className="font-crimson text-base text-amber-50/90 text-center leading-relaxed"
-                style={{ textShadow: '1px 1px 4px rgba(0,0,0,0.7)' }}
-              >
-                {tarot.essence}
-              </p>
-              
-              {/* Key Action Box */}
-              <div className="bg-black/40 backdrop-blur-sm border border-amber-500/30 rounded-sm p-3">
-                <p className="font-montserrat text-xs text-amber-400/70 uppercase tracking-wider mb-1 text-center">
-                  Key Action
-                </p>
-                <p className="font-crimson text-sm text-amber-50/80 text-center">
-                  {tarot.key_action}
-                </p>
-              </div>
-              
-              {/* Incantation */}
-              <div className="py-3 border-y border-amber-500/30">
-                <p 
-                  className="font-crimson text-lg text-amber-200 italic text-center"
-                  style={{ textShadow: '1px 1px 6px rgba(0,0,0,0.8)' }}
-                >
-                  &ldquo;{tarot.incantation}&rdquo;
-                </p>
-              </div>
-            </div>
-            
-            {/* Bottom Section - Timing & Warning */}
-            <div className="mt-3 space-y-2">
-              {tarot.timing && (
-                <div className="flex items-center justify-center gap-2 text-xs text-amber-300/70">
-                  <Clock className="w-3 h-3" />
-                  <span className="font-montserrat tracking-wider">{tarot.timing}</span>
+            {/* Card inner container */}
+            <div className="absolute inset-1 rounded-lg overflow-hidden bg-[#1a1a1a]">
+              {/* Background Image */}
+              {imageBase64 ? (
+                <div className="absolute inset-0">
+                  <img 
+                    src={`data:image/png;base64,${imageBase64}`}
+                    alt={spell.title}
+                    className="w-full h-full object-cover"
+                  />
+                  {/* Gradient overlays for readability */}
+                  <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-transparent to-black/80" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                 </div>
+              ) : (
+                <div className={`absolute inset-0 bg-gradient-to-b ${style.cardGradient}`} />
               )}
               
-              {tarot.warning && (
-                <p className="font-montserrat text-xs text-red-400/80 text-center italic">
-                  ⚠ {tarot.warning}
-                </p>
-              )}
+              {/* Decorative inner borders */}
+              <div className="absolute inset-3 border border-amber-500/30 rounded-md pointer-events-none" />
+              <div className="absolute inset-5 border border-amber-400/20 rounded-sm pointer-events-none" />
               
-              {/* Cathleen's Ward Preview - shown on card when available */}
-              {spell.suggested_ward && (
-                <div className="bg-slate-800/60 backdrop-blur-sm border border-slate-500/40 rounded-sm p-2 mt-2">
-                  <div className="flex items-center justify-center gap-2">
-                    <span className="text-lg">{spell.suggested_ward.symbol || '🪶'}</span>
-                    <div className="text-center">
-                      <p className="font-montserrat text-[10px] text-slate-400 uppercase tracking-wider">Your Ward</p>
-                      <p className="font-crimson text-sm text-slate-200">{spell.suggested_ward.name}</p>
-                    </div>
+              {/* Corner ornaments */}
+              <div className="absolute top-4 left-4 w-6 h-6 border-t-2 border-l-2 border-amber-500/50" />
+              <div className="absolute top-4 right-4 w-6 h-6 border-t-2 border-r-2 border-amber-500/50" />
+              <div className="absolute bottom-4 left-4 w-6 h-6 border-b-2 border-l-2 border-amber-500/50" />
+              <div className="absolute bottom-4 right-4 w-6 h-6 border-b-2 border-r-2 border-amber-500/50" />
+              
+              {/* Card Content */}
+              <div className="relative h-full flex flex-col p-6 text-white">
+                {/* Top Section - Symbol & Title */}
+                <div className="text-center mb-2">
+                  <span className="text-4xl drop-shadow-lg">{tarot.symbol || '✧'}</span>
+                </div>
+                
+                <h2 
+                  className="font-italiana text-2xl md:text-3xl text-amber-100 text-center mb-1"
+                  style={{ textShadow: '2px 2px 8px rgba(0,0,0,0.8)' }}
+                >
+                  {tarot.title || spell.title}
+                </h2>
+                
+                {/* Archetype Attribution */}
+                {archetype && (
+                  <p className="font-montserrat text-xs text-amber-300/80 text-center mb-3 tracking-[0.2em] uppercase">
+                    {archetype.name}
+                  </p>
+                )}
+                
+                {/* Decorative divider */}
+                <div className="flex items-center justify-center gap-2 mb-3">
+                  <div className="h-px bg-gradient-to-r from-transparent to-amber-500/50 flex-1" />
+                  <Moon className="w-4 h-4 text-amber-400/60" />
+                  <div className="h-px bg-gradient-to-l from-transparent to-amber-500/50 flex-1" />
+                </div>
+                
+                {/* Middle Section - Essence & Key Action */}
+                <div className="flex-1 flex flex-col justify-center space-y-3">
+                  {/* Essence */}
+                  <p 
+                    className="font-crimson text-base text-amber-50/90 text-center leading-relaxed"
+                    style={{ textShadow: '1px 1px 4px rgba(0,0,0,0.7)' }}
+                  >
+                    {tarot.essence}
+                  </p>
+                  
+                  {/* Key Action Box */}
+                  <div className="bg-black/40 backdrop-blur-sm border border-amber-500/30 rounded-sm p-3">
+                    <p className="font-montserrat text-xs text-amber-400/70 uppercase tracking-wider mb-1 text-center">
+                      Key Action
+                    </p>
+                    <p className="font-crimson text-sm text-amber-50/80 text-center">
+                      {tarot.key_action}
+                    </p>
+                  </div>
+                  
+                  {/* Incantation */}
+                  <div className="py-3 border-y border-amber-500/30">
+                    <p 
+                      className="font-crimson text-lg text-amber-200 italic text-center"
+                      style={{ textShadow: '1px 1px 6px rgba(0,0,0,0.8)' }}
+                    >
+                      &ldquo;{tarot.incantation}&rdquo;
+                    </p>
                   </div>
                 </div>
-              )}
-              
-              {/* Bottom symbol */}
-              <div className="text-center pt-2">
-                <span className="text-2xl text-amber-500/40">{tarot.symbol || '✧'}</span>
+                
+                {/* Bottom Section - Timing & Flip Hint */}
+                <div className="mt-3 space-y-2">
+                  {tarot.timing && (
+                    <div className="flex items-center justify-center gap-2 text-xs text-amber-300/70">
+                      <Clock className="w-3 h-3" />
+                      <span className="font-montserrat tracking-wider">{tarot.timing}</span>
+                    </div>
+                  )}
+                  
+                  {tarot.warning && (
+                    <p className="font-montserrat text-xs text-red-400/80 text-center italic">
+                      ⚠ {tarot.warning}
+                    </p>
+                  )}
+                  
+                  {/* Cathleen's Ward Preview */}
+                  {spell.suggested_ward && (
+                    <div className="bg-slate-800/60 backdrop-blur-sm border border-slate-500/40 rounded-sm p-2 mt-2">
+                      <div className="flex items-center justify-center gap-2">
+                        <span className="text-lg">{spell.suggested_ward.symbol || '🪶'}</span>
+                        <div className="text-center">
+                          <p className="font-montserrat text-[10px] text-slate-400 uppercase tracking-wider">Your Ward</p>
+                          <p className="font-crimson text-sm text-slate-200">{spell.suggested_ward.name}</p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* Flip hint - only show if there's an image */}
+                  {imageBase64 && (
+                    <div className="text-center pt-1">
+                      <p className="font-montserrat text-[10px] text-amber-400/60 animate-pulse">
+                        ✨ Click card to see full artwork ✨
+                      </p>
+                    </div>
+                  )}
+                  
+                  {/* Bottom symbol */}
+                  <div className="text-center pt-1">
+                    <span className="text-2xl text-amber-500/40">{tarot.symbol || '✧'}</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+          
+          {/* Back - Full Image */}
+          <div 
+            className="absolute inset-0 rounded-xl overflow-hidden"
+            style={{ 
+              backfaceVisibility: 'hidden', 
+              transform: 'rotateY(180deg)',
+              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 40px rgba(139, 90, 43, 0.2)',
+            }}
+          >
+            {/* Gold border */}
+            <div 
+              className="absolute inset-0 rounded-xl"
+              style={{
+                background: 'linear-gradient(135deg, #B8860B 0%, #DAA520 20%, #FFD700 50%, #DAA520 80%, #B8860B 100%)',
+                padding: '4px',
+              }}
+            />
+            
+            <div className="absolute inset-1 rounded-lg overflow-hidden bg-[#1a1a1a]">
+              {imageBase64 && (
+                <img 
+                  src={`data:image/png;base64,${imageBase64}`}
+                  alt={spell.title}
+                  className="w-full h-full object-contain bg-[#0a0a0a]"
+                />
+              )}
+              
+              {/* Flip back hint */}
+              <div className="absolute bottom-4 left-0 right-0 text-center">
+                <p className="font-montserrat text-xs text-amber-300/80 bg-black/60 inline-block px-3 py-1 rounded-full backdrop-blur-sm">
+                  Click to flip back
+                </p>
+              </div>
+              
+              {/* Title overlay at top */}
+              <div className="absolute top-4 left-0 right-0 text-center">
+                <p className="font-italiana text-lg text-amber-200 bg-black/60 inline-block px-4 py-1 rounded-full backdrop-blur-sm">
+                  {spell.title}
+                </p>
+              </div>
+            </div>
+          </div>
+        </motion.div>
       </div>
       
       {/* Action Buttons Below Card */}
