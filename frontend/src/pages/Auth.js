@@ -190,5 +190,6 @@ export const Auth = ({ onLogin }) => {
         </div>
       </LightSection>
     </div>
+    </PageBorderFrame>
   );
 };
