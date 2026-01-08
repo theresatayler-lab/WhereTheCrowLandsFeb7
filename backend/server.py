@@ -2135,14 +2135,86 @@ ARCHETYPE_IMAGE_STYLES = {
 detailed cross-hatching and fine linework for shading, Victorian occult grimoire aesthetic, 
 memento mori imagery with roses and botanical elements, celestial symbols like armillary spheres and astrological charts, 
 Art Nouveau flowing organic lines in drapery and foliage, mystical figures with halos and wings, 
-birds as spiritual messengers (crows, doves, finches), alchemical and esoteric symbolism, 
+birds as spiritual messengers (crows, doves, finches, robins, sparrows), alchemical and esoteric symbolism, 
 contemplative melancholic mood, late Victorian/Edwardian book illustration quality, 
 high contrast black and white with rich textured cross-hatched shadows, 
-romantic symbolism of mortality and transformation, no color - strictly black ink on aged paper texture""",
-    'kathleen': 'Celtic goddess aesthetic, the Morrigan imagery with crows and ravens, intimate candlelit home circle, East End London 1930s-1940s Blitz era, parachute silk textures, table-tipping séance atmosphere, warm domestic setting with mystical undertones, silver talismans and brooches, protective motherly energy, deep blue and black tones with silver and red accents, voice and song motifs, lace and fine fabric textures',
-    'catherine': '1920s British spiritualist séance aesthetic, Art Deco meets Victorian mourning, Spitalfields weaver imagery, needle and thread motifs, shadow and candlelight, blackout séance room atmosphere, spirit photography aesthetic with ethereal double exposures, crows and magpies as messengers, tarot and scrying mirrors, parchment and textile textures, Huguenot precision meets occult mystery, sepia and deep burgundy tones',
-    'theresa': 'modern collage aesthetic with vintage elements, birds in flight, family photographs and artifacts, investigative journalism style, truth-seeking imagery, contemporary with ancestral echoes',
-    'neutral': 'vintage occult grimoire illustration, woodcut engraving style, parchment texture, mystical symbols, 1920s-1940s esoteric art'
+romantic symbolism of mortality and transformation, East End London domestic warmth,
+Blitz-era resilience imagery, the Parliament of Birds motif, 
+Omar Khayyám poetry visualization, cups of wine and roses motif,
+no color - strictly black ink on aged cream parchment texture""",
+
+    'kathleen': """Celtic goddess aesthetic, the Morrigan in her triple aspect (maiden, mother, crone),
+rich dark imagery with crows and ravens in flight formation, intimate candlelit home circle séance,
+East End London 1930s-1940s Blitz era atmosphere, parachute silk textures and wartime fabric patterns,
+table-tipping séance with hands forming a circle, warm domestic setting with mystical undertones,
+silver talismans, Victorian brooches, and charm objects, protective motherly energy radiating outward,
+deep midnight blue and black tones with silver moonlight and crimson accents,
+voice and song motifs - visible sound waves, musical notation as mystical symbols,
+fine lace and embroidered fabric textures, tailor's tools (scissors, needles, thread) as sacred objects,
+Irish folk magic symbols, protective doorway sigils, crow feathers and found objects as wards,
+oil painting quality with Pre-Raphaelite influence, dramatic chiaroscuro lighting""",
+
+    'catherine': """Late Victorian through Art Deco spiritualist aesthetic (1880s-1940s),
+Spitalfields Huguenot silk weaving imagery with intricate textile patterns,
+shadow work and candlelight séance atmosphere, blackout séance room with single candle,
+spirit photography aesthetic with ethereal double exposures and ectoplasm wisps,
+crows and magpies as messengers between worlds, tarot cards and scrying mirrors,
+parchment textures with handwritten automatic writing, thread and needle motifs woven throughout,
+Society for Psychical Research documentary style mixed with occult mystery,
+sepia, deep burgundy, and purple twilight tones with gold leaf accents,
+Golden Dawn ceremonial magic symbols, Theosophical sacred geometry,
+Jung's Red Book illuminated manuscript influence, shadow and light duality,
+Victorian mourning jewelry and hair art, memento mori photography aesthetic,
+Huguenot precision craftsmanship meets English folk magic mystery""",
+
+    'theresa': """Modern collage aesthetic layered with vintage family photographs and documents,
+birds in flight forming patterns that reveal hidden truths, genealogical tree imagery,
+investigative journalism style - newspaper clippings, magnifying glasses, typewritten notes,
+truth-seeking and veil-lifting symbolism, ancestral echoes in contemporary settings,
+family artifacts as sacred objects - old letters, faded photos, inherited jewelry,
+documentary photography meets magical realism, liminal spaces between past and present,
+cool silver and warm amber tones representing past meeting present,
+digital glitch effects revealing hidden layers of reality,
+mirrors reflecting different time periods, DNA helix as mystical symbol,
+crow messengers carrying secrets across generations""",
+
+    'neutral': """Vintage occult grimoire illustration style, detailed woodcut engraving aesthetic,
+aged parchment texture with foxing and wear, mystical alchemical symbols and sigils,
+1920s-1940s esoteric art quality, Art Deco geometric sacred geometry,
+celestial charts and astrological wheels, botanical specimen illustrations,
+candlelit atmosphere with deep shadows, leather-bound grimoire aesthetic,
+gold leaf illumination on dark backgrounds, medieval manuscript margins,
+pentacles, moons, and star formations, herb bundles and crystal arrangements,
+rich burgundy, forest green, and aged gold color palette"""
+}
+
+# Image style descriptions for the frontend
+ARCHETYPE_IMAGE_STYLE_DESCRIPTIONS = {
+    'shiggy': {
+        'name': 'Shigg - The Birds of Parliament',
+        'description': 'Edmund J. Sullivan pen-and-ink style, Rubáiyát illustrations, Victorian engravings with birds, roses, and celestial symbols',
+        'keywords': ['black and white', 'cross-hatching', 'Art Nouveau', 'birds', 'roses', 'celestial']
+    },
+    'kathleen': {
+        'name': 'Cathleen - The Singer of Strength', 
+        'description': 'Celtic goddess aesthetic with the Morrigan, candlelit séances, Pre-Raphaelite oil painting quality, silver and midnight blue',
+        'keywords': ['Morrigan', 'crows', 'séance', 'Celtic', 'moonlight', 'protective']
+    },
+    'catherine': {
+        'name': 'Katherine - The Weaver of Hidden Knowledge',
+        'description': 'Victorian spiritualist photography, Spitalfields textiles, shadow work, spirit photography with double exposures',
+        'keywords': ['Victorian', 'séance', 'spirit photography', 'textiles', 'shadow', 'Golden Dawn']
+    },
+    'theresa': {
+        'name': 'Theresa - The Seer & Storyteller',
+        'description': 'Modern collage with vintage elements, genealogy imagery, investigative documentary style, past meeting present',
+        'keywords': ['collage', 'photographs', 'ancestry', 'documentary', 'truth-seeking', 'liminal']
+    },
+    'neutral': {
+        'name': 'Classic Grimoire',
+        'description': 'Traditional occult illustration, woodcut engravings, aged parchment, alchemical symbols',
+        'keywords': ['grimoire', 'woodcut', 'alchemical', 'vintage', 'mystical', 'parchment']
+    }
 }
 
 # Enhanced spell generation endpoint with structured output
