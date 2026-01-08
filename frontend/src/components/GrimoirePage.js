@@ -340,7 +340,7 @@ const TarotCardView = ({ spell, archetype, style, imageBase64, onViewFull, onCop
   );
 };
 
-export const GrimoirePage = ({ spell, archetype, imageBase64, onNewSpell }) => {
+export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSpell }) => {
   const [showHistoricalContext, setShowHistoricalContext] = useState(false);
   const [checklistMode, setChecklistMode] = useState(false);
   const [completedSteps, setCompletedSteps] = useState(new Set());
@@ -351,7 +351,35 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, onNewSpell }) => {
   const grimoireRef = useRef(null);
   const navigate = useNavigate();
   
-  const style = ARCHETYPE_STYLES[archetype?.id] || ARCHETYPE_STYLES.neutral;
+  // Normalize archetype ID for styling
+  const normalizeId = (id) => {
+    const map = { 'shiggy': 'shigg', 'kathleen': 'cathleen', 'catherine': 'katherine' };
+    return map[id] || id;
+  };
+  const normalizedArchetypeId = normalizeId(archetype?.id);
+  const style = ARCHETYPE_STYLES[normalizedArchetypeId] || ARCHETYPE_STYLES[archetype?.id] || ARCHETYPE_STYLES.neutral;
+  
+  // Get generated assets from asset plan
+  const generatedAssets = assetPlan?.generated_assets || {};
+  const microIcons = assetPlan?.micro_icons || [];
+  
+  // Helper to get micro-icon for a section
+  const getMicroIconForSection = (sectionName) => {
+    // Map section names to micro-icon types
+    const sectionIconMap = {
+      'materials': 0,
+      'preparation': 1,
+      'the_working': 2,
+      'spoken_words': 3,
+      'closing': 4,
+      'aftercare': 5
+    };
+    const idx = sectionIconMap[sectionName];
+    if (idx !== undefined && microIcons[idx]) {
+      return microIcons[idx].emoji;
+    }
+    return null;
+  };
   
   // Check subscription status
   React.useEffect(() => {
