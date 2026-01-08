@@ -141,5 +141,6 @@ export const Deities = () => {
         </DialogContent>
       </Dialog>
     </DarkSection>
+    </PageBorderFrame>
   );
 };
