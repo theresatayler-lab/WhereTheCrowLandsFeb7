@@ -246,6 +246,7 @@ const TarotCardView = ({ spell, archetype, style, imageBase64, onViewFull, onCop
   if (!tarot) return null;
   
   return (
+    <SpellBorderFrame persona={archetype?.id || 'site'}>
     <motion.div
       initial={{ opacity: 0, scale: 0.95, rotateY: -10 }}
       animate={{ opacity: 1, scale: 1, rotateY: 0 }}
