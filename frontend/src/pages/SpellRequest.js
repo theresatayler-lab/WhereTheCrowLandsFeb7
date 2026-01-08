@@ -15,8 +15,15 @@ import { toast } from 'sonner';
 
 // ===== DERIVE VIDEOS FROM ARCHETYPES.JS (single source of truth) =====
 const getArchetypeVideo = (personaId) => {
-  // Map persona IDs to archetype IDs
-  const archetype = ARCHETYPES.find(a => a.id === personaId || a.id === personaId.replace('shigg', 'shiggy'));
+  // Map persona IDs (from PERSONAS) to archetype IDs (from ARCHETYPES)
+  const idMap = { 
+    'shigg': 'shiggy', 
+    'cathleen': 'kathleen', 
+    'katherine': 'catherine',
+    'theresa': 'theresa'
+  };
+  const archetypeId = idMap[personaId] || personaId;
+  const archetype = ARCHETYPES.find(a => a.id === archetypeId);
   return archetype?.video || null;
 };
 
