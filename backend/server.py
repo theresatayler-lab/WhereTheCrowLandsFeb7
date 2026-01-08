@@ -2743,6 +2743,216 @@ async def get_image_styles():
         'default': 'neutral'
     }
 
+# ===== NEW PERSONALIZED SPELL GENERATION ENDPOINT =====
+@api_router.post('/ai/generate-personalized-spell')
+async def generate_personalized_spell(request: PersonalizedSpellRequest, user = Depends(get_optional_user)):
+    """
+    Generate a highly personalized spell using the 3-stage prompt system:
+    1. Planner - selects scenario, format, sources, builds AssetPlan
+    2. Spell Writer - writes the actual spell content
+    3. Image Prompt Generator - creates prompts for each asset
+    """
+    try:
+        spell_spec = request.spell_spec
+        
+        # Check spell limits for non-pro users
+        if user:
+            user_data = await db.users.find_one({'id': user['id']}, {'_id': 0})
+            if user_data and user_data.get('subscription_tier') != 'pro':
+                spell_count = user_data.get('spell_generation_count', 0)
+                limit = 3  # Free tier limit
+                if spell_count >= limit:
+                    raise HTTPException(status_code=403, detail={
+                        'error': 'spell_limit_reached',
+                        'message': f'You have reached your limit of {limit} free spells. Upgrade to Pro for unlimited spell generation!',
+                        'limit': limit,
+                        'current': spell_count
+                    })
+        
+        # Resolve "choose_for_me" persona based on feeling and anchor
+        persona_id = spell_spec.get('persona_id', 'shiggy')
+        if persona_id == 'choose_for_me':
+            feeling = spell_spec.get('desired_feeling', 'calm')
+            anchor = spell_spec.get('anchor_object', 'candle')
+            
+            # Map feelings and anchors to personas
+            if feeling in ['calm', 'softened'] and anchor in ['tea', 'bird']:
+                persona_id = 'shiggy'
+            elif feeling in ['protected', 'brave'] and anchor in ['song', 'candle']:
+                persona_id = 'kathleen'
+            elif feeling in ['clear', 'brave'] and anchor in ['mirror', 'thread']:
+                persona_id = 'catherine'
+            elif anchor == 'song':
+                persona_id = 'kathleen'
+            elif anchor == 'tea' or anchor == 'bird':
+                persona_id = 'shiggy'
+            elif anchor == 'mirror':
+                persona_id = 'catherine'
+            else:
+                # Default based on feeling
+                persona_map = {
+                    'calm': 'shiggy', 'brave': 'kathleen', 'clear': 'catherine',
+                    'protected': 'kathleen', 'softened': 'shiggy', 'energized': 'kathleen'
+                }
+                persona_id = persona_map.get(feeling, 'shiggy')
+        
+        spell_spec['persona_id'] = persona_id
+        
+        # Get persona configuration
+        persona_config = get_persona_config(persona_id)
+        if not persona_config:
+            persona_config = get_persona_config('shiggy')  # Fallback
+        
+        # Get session ID for scenario rotation
+        session_id = str(uuid.uuid4())
+        used_scenarios = get_used_scenarios(session_id)
+        
+        # Select a scenario that matches the user's preferences
+        scenario = select_scenario_for_spell(persona_id, spell_spec, used_scenarios)
+        if not scenario:
+            # Fallback to first scenario for this persona
+            scenario = persona_config['scenarios'][0]
+        
+        # Record this scenario as used
+        record_used_scenario(session_id, scenario['scenario_id'])
+        
+        # === STAGE 1: PLANNER ===
+        planner_prompt = build_planner_prompt(spell_spec, persona_config, scenario)
+        
+        planner_response = await openai_client.chat.completions.create(
+            model="gpt-4o",
+            messages=[
+                {"role": "system", "content": "You are a spell planner. Return ONLY valid JSON, no markdown."},
+                {"role": "user", "content": planner_prompt}
+            ],
+            temperature=0.8,
+            max_tokens=2000
+        )
+        
+        # Parse planner output
+        planner_text = planner_response.choices[0].message.content
+        # Clean JSON from markdown if present
+        if '```json' in planner_text:
+            planner_text = planner_text.split('```json')[1].split('```')[0]
+        elif '```' in planner_text:
+            planner_text = planner_text.split('```')[1].split('```')[0]
+        
+        try:
+            plan = json.loads(planner_text.strip())
+        except json.JSONDecodeError:
+            logging.error(f"Failed to parse planner JSON: {planner_text[:500]}")
+            plan = {
+                "spell_title": "A Personal Working",
+                "spell_subtitle": "Crafted for your intention",
+                "personalization_hooks": {},
+                "selected_sources": [],
+                "section_plan": [],
+                "asset_plan": {},
+                "variation_notes": ""
+            }
+        
+        # === STAGE 2: SPELL WRITER ===
+        writer_prompt = build_spell_writer_prompt(spell_spec, persona_config, scenario, plan)
+        
+        writer_response = await openai_client.chat.completions.create(
+            model="gpt-4o",
+            messages=[
+                {"role": "system", "content": f"You are {persona_config['name']}, {persona_config['title']}. Write spells in your unique voice. Return ONLY valid JSON."},
+                {"role": "user", "content": writer_prompt}
+            ],
+            temperature=0.85,
+            max_tokens=3000
+        )
+        
+        # Parse spell output
+        spell_text = writer_response.choices[0].message.content
+        if '```json' in spell_text:
+            spell_text = spell_text.split('```json')[1].split('```')[0]
+        elif '```' in spell_text:
+            spell_text = spell_text.split('```')[1].split('```')[0]
+        
+        try:
+            spell = json.loads(spell_text.strip())
+        except json.JSONDecodeError:
+            logging.error(f"Failed to parse spell JSON: {spell_text[:500]}")
+            raise HTTPException(status_code=500, detail="Failed to generate spell content")
+        
+        # Add metadata
+        spell['scenario_id'] = scenario['scenario_id']
+        spell['scenario_name'] = scenario['name']
+        spell['persona_id'] = persona_id
+        
+        # === STAGE 3: IMAGE GENERATION ===
+        image_base64 = None
+        asset_plan = plan.get('asset_plan', {})
+        
+        if request.generate_images and asset_plan:
+            try:
+                # Generate header image
+                header_prompt = build_image_prompt("header_image", asset_plan, persona_config, spell.get('title', 'Spell'))
+                
+                header_response = await openai_client.images.generate(
+                    model="dall-e-3",
+                    prompt=header_prompt,
+                    size="1024x1024",
+                    quality="standard",
+                    n=1,
+                    response_format="b64_json"
+                )
+                
+                if header_response.data and len(header_response.data) > 0:
+                    image_base64 = header_response.data[0].b64_json
+                    asset_plan['header_image_generated'] = True
+                
+                # Generate tarot card image (different style)
+                tarot_prompt = build_image_prompt("tarot_card_image", asset_plan, persona_config, spell.get('title', 'Spell'))
+                
+                tarot_response = await openai_client.images.generate(
+                    model="dall-e-3",
+                    prompt=tarot_prompt,
+                    size="1024x1024",
+                    quality="standard",
+                    n=1,
+                    response_format="b64_json"
+                )
+                
+                if tarot_response.data and len(tarot_response.data) > 0:
+                    asset_plan['tarot_card_image_base64'] = tarot_response.data[0].b64_json
+                    asset_plan['tarot_card_image_generated'] = True
+                    
+            except Exception as img_error:
+                logging.error(f"Image generation error: {str(img_error)}")
+                # Continue without images
+        
+        # Get archetype info for response
+        archetype_info = {
+            'id': persona_id,
+            'name': persona_config['name'],
+            'title': persona_config['title']
+        }
+        
+        # Increment spell count if user is logged in
+        if user:
+            await increment_spell_count(user['id'])
+        
+        return {
+            'spell': spell,
+            'archetype': archetype_info,
+            'image_base64': image_base64,
+            'asset_plan': asset_plan,
+            'scenario': {
+                'id': scenario['scenario_id'],
+                'name': scenario['name']
+            },
+            'spell_spec': spell_spec
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logging.error(f'Personalized spell generation error: {str(e)}')
+        raise HTTPException(status_code=500, detail=f'Failed to generate personalized spell: {str(e)}')
+
 # Favorites endpoints
 @api_router.post('/favorites')
 async def add_favorite(request: FavoriteRequest, user = Depends(get_current_user)):
