@@ -113,8 +113,8 @@ const GeneratedDivider = ({ imageBase64, className = '' }) => {
   );
 };
 
-// Printables Block - Shows tarot card and sigil for printing
-const PrintablesBlock = ({ tarotImageBase64, sigilImageBase64, spellTitle }) => {
+// Printables Block - Shows tarot card (front & back) and sigil for printing
+const PrintablesBlock = ({ tarotImageBase64, sigilImageBase64, spellTitle, tarotCard }) => {
   if (!tarotImageBase64 && !sigilImageBase64) return null;
   
   return (
@@ -127,18 +127,47 @@ const PrintablesBlock = ({ tarotImageBase64, sigilImageBase64, spellTitle }) => 
         Right-click to save these images for your physical grimoire
       </p>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Tarot Card */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* Tarot Card - Front */}
         {tarotImageBase64 && (
           <div className="text-center">
             <p className="font-montserrat text-xs text-muted-foreground mb-2 uppercase tracking-wider">
-              Tarot Card
+              Tarot Card (Front)
             </p>
             <img 
               src={`data:image/png;base64,${tarotImageBase64}`}
-              alt={`${spellTitle} - Tarot Card`}
-              className="w-full max-w-[200px] mx-auto rounded-sm border border-border shadow-md"
+              alt={`${spellTitle} - Tarot Card Front`}
+              className="w-full max-w-[180px] mx-auto rounded-sm border border-border shadow-md"
             />
+          </div>
+        )}
+        
+        {/* Tarot Card - Back (Text version with essence) */}
+        {tarotCard && (
+          <div className="text-center">
+            <p className="font-montserrat text-xs text-muted-foreground mb-2 uppercase tracking-wider">
+              Tarot Card (Back)
+            </p>
+            <div className="w-full max-w-[180px] mx-auto aspect-[2/3] rounded-sm border border-border shadow-md bg-gradient-to-br from-navy-dark via-navy-mid to-navy-dark p-3 flex flex-col justify-between">
+              <div className="text-center">
+                <span className="text-2xl text-gold/80">{tarotCard.symbol || '✧'}</span>
+              </div>
+              <div className="text-center flex-1 flex flex-col justify-center">
+                <p className="font-cinzel text-xs text-gold-light mb-2">{tarotCard.title || spellTitle}</p>
+                {tarotCard.essence && (
+                  <p className="font-montserrat text-[10px] text-silver-mist/80 italic leading-tight">
+                    "{tarotCard.essence}"
+                  </p>
+                )}
+              </div>
+              <div className="text-center">
+                {tarotCard.key_action && (
+                  <p className="font-montserrat text-[9px] text-gold/60 uppercase tracking-wider">
+                    {tarotCard.key_action}
+                  </p>
+                )}
+              </div>
+            </div>
           </div>
         )}
         
