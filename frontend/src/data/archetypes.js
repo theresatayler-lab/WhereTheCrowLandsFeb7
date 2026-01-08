@@ -257,7 +257,7 @@ She gave her great-granddaughter a silver rabbit teething ring that is treasured
     name: 'Katherine',
     title: 'The Weaver of Hidden Knowledge',
     shortName: 'Katherine',
-    era: 'WWI & Interwar Britain (1920s-1930s)',
+    era: 'Late Victorian through WWII (1880s-1945)',
     birdSymbol: 'Crows & Magpies',
     birdEmoji: '🐦',
     colorScheme: {
@@ -317,13 +317,14 @@ Her magic lies in craft: every stitch is intention, every pattern holds knowledg
       'Your lineage carries both wounds and wisdom; reclaim the silenced stories'
     ],
     historicalSources: [
-      'Spitalfields Huguenot weaving traditions',
-      'British Spiritualism (1920s-1930s)',
+      'Spitalfields Huguenot weaving traditions (late 1800s)',
+      'British Spiritualism (1880s-1945)',
       'Society for Psychical Research methodology',
       'Séance practices: automatic writing, spirit photography, table-tapping',
       'Theosophical influences (karma, spiritual evolution)',
       'French Protestant Church traditions',
-      'WWI mourning culture and grief practices'
+      'WWI & WWII mourning culture and grief practices',
+      'Victorian occult revival and Golden Dawn era'
     ],
     signatureRituals: [
       { name: 'Mirror of Truth', category: 'Shadow Integration', description: 'A scrying ritual to confront and integrate hidden aspects of the self' },
