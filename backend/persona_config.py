@@ -525,19 +525,29 @@ PERSONA_CONFIG = {
         
         "visual_dna": {
             "constants": {
-                "primary_motif": "Land Army women, WRENS, wartime sisterhood, protective circles",
-                "secondary_motif": "candles in blackout windows, morse code patterns, signal flags, uniform buttons, ration books, victory gardens",
-                "era_aesthetic": "WWII homefront Britain - Land Army, WRENS, secret service, Celtic-Irish wartime resilience",
-                "art_style": "Muted wartime palette with selective color accents, 1940s propaganda poster influence, dramatic but restrained, sepia undertones with occasional crimson or gold highlight"
+                "primary_motif": "raven/crow feathers, devotional candles, protective circles, bells",
+                "secondary_motif": "subtle Brigid-cross motifs, prayer beads (neutral/non-denominational), altar vignettes, home-circle gatherings",
+                "era_aesthetic": "candlelit devotional mystery - protection magic meets Celtic-Irish hearth spirituality",
+                "art_style": "rich tapestry aesthetic with deep crimson and gold, candlelight warmth, feathered textures, devotional intimacy"
             },
-            "motif_library": ["land army woman", "WRENS uniform", "blackout curtain", "candle in window", "morse lamp", "victory garden", "wartime sisterhood", "celtic knot badge", "raven messenger", "protective circle", "signal flags", "ration book", "gas mask bag repurposed", "doorway threshold", "moonlight through blackout"],
+            "motif_library": [
+                "raven feather", "crow silhouette", "devotional candle", "protective circle",
+                "brass bell", "Brigid cross", "prayer beads", "altar cloth", "crescent moon",
+                "candlelit threshold", "feather bundle", "wax seal", "home hearth", "sacred flame"
+            ],
             "palette_variants": {
-                "gentle": ["sepia", "muted olive", "soft cream", "faded navy"],
-                "practical": ["khaki", "navy blue", "earth brown", "brass button gold"],
-                "intense": ["blackout black", "air raid siren red", "searchlight white", "storm grey"]
+                "gentle": ["warm candlelight amber", "soft cream", "dove grey", "muted rose"],
+                "practical": ["deep crimson", "antique gold", "midnight navy", "warm bronze"],
+                "intense": ["oxblood red", "burnished gold", "raven black", "altar flame orange"]
             },
-            "avoid": ["bright saturated colors", "modern imagery", "Rubáiyát imagery", "Victorian séance tables", "photorealistic", "overly Celtic fantasy"],
-            "dall_e_rules": "muted wartime palette, selective color only (crimson or gold accents on sepia/grey), 1940s homefront aesthetic, Land Army or WRENS style women, pen-and-ink with watercolor wash, NO text, NO letters, NO words, atmospheric and nostalgic, sisterhood and strength"
+            "avoid": [
+                "kitchen objects", "tailoring tools", "strict geometric diagrams",
+                "WWII propaganda", "Land Army women", "military uniforms", "teacups",
+                "bright saturated colors", "modern imagery", "photorealistic"
+            ],
+            "dall_e_rules": "devotional candlelit altar scene, raven feathers and protective circles, deep crimson and antique gold and midnight navy palette, Brigid cross motifs, brass bells, prayer beads, home-circle vignette NOT portrait, warm candleglow highlights, feathered textures",
+            "header_scene": "candlelit home-circle altar vignette with raven feathers, candles, and protective symbols - NOT a portrait",
+            "tarot_emblem": "raven feather crossed with crescent moon inside protective ring emblem"
         },
         
         "allowed_sources": [
