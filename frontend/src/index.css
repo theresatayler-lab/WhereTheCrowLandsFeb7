@@ -120,6 +120,156 @@ body::before {
     background: linear-gradient(to bottom, #d42a3a, #b82330);
 }
 
+/* ============================================================================
+   BOLD BUTTON STYLES - Art Deco / Romantic
+   ============================================================================ */
+
+/* Primary CTA Button - Bold Art Deco Style */
+.btn-ritual {
+    font-family: 'Cinzel Decorative', serif;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.875rem 2rem;
+    background: linear-gradient(135deg, #b82330 0%, #8a1a24 100%);
+    color: #f5f0e6;
+    border: 2px solid #d4a84b;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.btn-ritual::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    right: 2px;
+    bottom: 2px;
+    border: 1px solid rgba(212, 168, 75, 0.3);
+    pointer-events: none;
+}
+
+.btn-ritual:hover {
+    background: linear-gradient(135deg, #d42a3a 0%, #b82330 100%);
+    box-shadow: 0 0 20px rgba(184, 35, 48, 0.4), 0 0 40px rgba(212, 168, 75, 0.2);
+    transform: translateY(-1px);
+}
+
+/* Secondary Button - Outlined Art Deco */
+.btn-ritual-secondary {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.75rem 1.5rem;
+    background: transparent;
+    color: #d4a84b;
+    border: 2px solid #d4a84b;
+    transition: all 0.3s ease;
+}
+
+.btn-ritual-secondary:hover {
+    background: rgba(212, 168, 75, 0.1);
+    box-shadow: 0 0 15px rgba(212, 168, 75, 0.3);
+}
+
+/* Ghost Button - Minimal but Bold */
+.btn-ritual-ghost {
+    font-family: 'Cinzel Decorative', serif;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 0.625rem 1.25rem;
+    background: rgba(14, 22, 41, 0.6);
+    color: #e6c068;
+    border: 1px solid rgba(212, 168, 75, 0.4);
+    transition: all 0.3s ease;
+}
+
+.btn-ritual-ghost:hover {
+    background: rgba(212, 168, 75, 0.1);
+    border-color: #d4a84b;
+}
+
+/* ============================================================================
+   PERSONA-SPECIFIC BORDER FRAMES
+   ============================================================================ */
+
+/* Site-wide crow border frame */
+.border-frame-site {
+    position: relative;
+}
+
+.border-frame-site::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('https://customer-assets.emergentagent.com/job_mystic-grimoire-1/artifacts/jcxzlb20_SiteOverallCorners%20and%20any%20borders.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    pointer-events: none;
+    opacity: 0.9;
+}
+
+/* Cathleen border - ornate Victorian scrollwork */
+.border-frame-cathleen {
+    position: relative;
+}
+
+.border-frame-cathleen::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('https://customer-assets.emergentagent.com/job_mystic-grimoire-1/artifacts/12ds6wfx_CathleenBorder.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    pointer-events: none;
+}
+
+/* Katherine border - abstract modern strokes */
+.border-frame-katherine {
+    position: relative;
+}
+
+.border-frame-katherine::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('https://customer-assets.emergentagent.com/job_mystic-grimoire-1/artifacts/85szfipf_KateBorder.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    pointer-events: none;
+}
+
+/* Theresa border - distressed organic edge */
+.border-frame-theresa {
+    position: relative;
+}
+
+.border-frame-theresa::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('https://customer-assets.emergentagent.com/job_mystic-grimoire-1/artifacts/8jgu6o97_TheresaBorder.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    pointer-events: none;
+}
+
+/* Glow effects for mystical elements */
+.glow-gold {
+    filter: drop-shadow(0 0 8px rgba(212, 168, 75, 0.6));
+}
+
+.glow-crimson {
+    filter: drop-shadow(0 0 8px rgba(184, 35, 48, 0.6));
+}
+
 @layer base {
     [data-debug-wrapper='true'] {
         display: contents !important;
