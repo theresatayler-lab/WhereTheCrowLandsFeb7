@@ -98,8 +98,19 @@ const ARCHETYPE_STYLES = {
   },
 };
 
-// Generated Divider Component - displays DALL-E generated divider images
-const GeneratedDivider = ({ imageBase64, className = '' }) => {
+// Generated Divider Component - displays DALL-E generated divider images OR loading skeleton
+const GeneratedDivider = ({ imageBase64, isLoading = false, className = '' }) => {
+  // Show skeleton while loading
+  if (isLoading && !imageBase64) {
+    return (
+      <div className={`w-full my-6 ${className}`}>
+        <div className="w-full h-12 bg-amber-800/10 rounded animate-pulse flex items-center justify-center">
+          <span className="text-amber-800/30 text-xs font-montserrat">Loading ornament...</span>
+        </div>
+      </div>
+    );
+  }
+  
   if (!imageBase64) return null;
   
   return (
@@ -114,7 +125,36 @@ const GeneratedDivider = ({ imageBase64, className = '' }) => {
 };
 
 // Printables Block - Shows tarot card (front & back) and sigil for printing
-const PrintablesBlock = ({ tarotImageBase64, sigilImageBase64, spellTitle, tarotCard }) => {
+const PrintablesBlock = ({ tarotImageBase64, sigilImageBase64, spellTitle, tarotCard, isLoading = false }) => {
+  // Show loading state if images are being generated
+  if (isLoading && !tarotImageBase64 && !sigilImageBase64) {
+    return (
+      <section className="my-8 p-6 bg-amber-900/10 border-2 border-dashed border-amber-800/40 rounded-sm">
+        <h3 className="font-cinzel text-lg text-amber-900 mb-4 text-center flex items-center justify-center gap-2">
+          <Download className="w-5 h-5" />
+          Printable Elements
+        </h3>
+        <p className="font-montserrat text-xs text-stone-600 text-center mb-4">
+          Generating your personalized tarot card and sigil...
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="text-center">
+            <p className="font-montserrat text-xs text-stone-600 mb-2 uppercase tracking-wider">Tarot Card</p>
+            <div className="w-full max-w-[180px] mx-auto aspect-[2/3] bg-amber-800/10 rounded-sm animate-pulse" />
+          </div>
+          <div className="text-center">
+            <p className="font-montserrat text-xs text-stone-600 mb-2 uppercase tracking-wider">Card Back</p>
+            <div className="w-full max-w-[180px] mx-auto aspect-[2/3] bg-amber-800/10 rounded-sm animate-pulse" />
+          </div>
+          <div className="text-center">
+            <p className="font-montserrat text-xs text-stone-600 mb-2 uppercase tracking-wider">Sigil</p>
+            <div className="w-full max-w-[150px] mx-auto aspect-square bg-amber-800/10 rounded-sm animate-pulse" />
+          </div>
+        </div>
+      </section>
+    );
+  }
+  
   if (!tarotImageBase64 && !sigilImageBase64) return null;
   
   return (
