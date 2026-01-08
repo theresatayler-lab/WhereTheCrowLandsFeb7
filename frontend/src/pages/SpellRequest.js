@@ -51,13 +51,13 @@ const BELIEF_BOUNDARIES = [
 ];
 
 const ANCHORS = [
-  { id: 'tea', label: 'Tea', emoji: '☕', forPersonas: ['shiggy'] },
-  { id: 'thread', label: 'Thread', emoji: '🧵', forPersonas: ['catherine', 'kathleen'] },
-  { id: 'candle', label: 'Candle', emoji: '🕯️', forPersonas: ['shiggy', 'kathleen', 'catherine'] },
-  { id: 'salt', label: 'Salt', emoji: '🧂', forPersonas: ['shiggy', 'kathleen', 'catherine'] },
-  { id: 'bird', label: 'Bird', emoji: '🐦', forPersonas: ['shiggy'] },
-  { id: 'mirror', label: 'Mirror', emoji: '🪞', forPersonas: ['catherine', 'kathleen'] },
-  { id: 'song', label: 'Song/Voice', emoji: '🎵', forPersonas: ['kathleen'] }
+  { id: 'tea', label: 'Tea', emoji: '☕', forPersonas: ['shigg'] },
+  { id: 'thread', label: 'Thread', emoji: '🧵', forPersonas: ['katherine', 'cathleen'] },
+  { id: 'candle', label: 'Candle', emoji: '🕯️', forPersonas: ['shigg', 'cathleen', 'katherine'] },
+  { id: 'salt', label: 'Salt', emoji: '🧂', forPersonas: ['shigg', 'cathleen', 'katherine'] },
+  { id: 'bird', label: 'Bird', emoji: '🐦', forPersonas: ['shigg'] },
+  { id: 'mirror', label: 'Mirror', emoji: '🪞', forPersonas: ['katherine', 'cathleen'] },
+  { id: 'song', label: 'Song/Voice', emoji: '🎵', forPersonas: ['cathleen'] }
 ];
 
 const SETTINGS = [
