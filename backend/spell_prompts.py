@@ -27,32 +27,33 @@ VARIATION_KNOBS = {
 
 # ============================================================================
 # TAROT COMPOSITION LIBRARY - Prevents repetitive imagery
+# Updated for CROWLANDS V1.1 scarf/tapestry aesthetic
 # ============================================================================
 
 TAROT_COMPOSITIONS = {
     "shigg": [
-        {"focal": "single crow on branch", "framing": "circular wreath border", "symbols": ["tea leaves", "morning star"]},
-        {"focal": "open window with birds", "framing": "rectangular frame with corners", "symbols": ["kettle steam", "feather"]},
-        {"focal": "teacup from above", "framing": "octagonal seal", "symbols": ["bird silhouettes", "herb sprig"]},
-        {"focal": "three birds in flight formation", "framing": "Art Nouveau curves", "symbols": ["nest", "key"]},
-        {"focal": "windowsill with offerings", "framing": "simple line border", "symbols": ["breadcrumbs", "rose"]},
-        {"focal": "single feather detailed", "framing": "mandala pattern", "symbols": ["star points", "steam wisps"]}
+        {"focal": "single crow perched with teacup below", "framing": "circular wreath of rosehip and ivy", "symbols": ["hedgerow berries", "morning steam"]},
+        {"focal": "robin on windowsill with kettle", "framing": "art nouveau curved border", "symbols": ["breadcrumbs", "dawn light"]},
+        {"focal": "sparrow nest with feathers", "framing": "octagonal medallion seal", "symbols": ["patchwork pattern", "tea leaves"]},
+        {"focal": "three birds in flight over rooftops", "framing": "engraved plate border with corners", "symbols": ["chimney smoke", "key"]},
+        {"focal": "windowsill still-life with offerings", "framing": "symmetrical filigree frame", "symbols": ["breadcrumbs", "hedgerow rose"]},
+        {"focal": "detailed feather with dewdrops", "framing": "mandala pattern medallion", "symbols": ["star points", "morning mist"]}
     ],
     "cathleen": [
-        {"focal": "Land Army woman with candle in blackout window", "framing": "wartime poster border with Celtic knot corners", "symbols": ["moon through curtain", "raven silhouette"]},
-        {"focal": "WRENS women forming protective circle", "framing": "signal flag bunting frame", "symbols": ["morse lamp", "sisterhood hands"]},
-        {"focal": "woman singing by firelight in uniform", "framing": "arched Anderson shelter doorway", "symbols": ["sound waves", "protective ward"]},
-        {"focal": "hands holding talisman over ration book", "framing": "medallion with uniform buttons", "symbols": ["celtic brooch", "candle flame"]},
-        {"focal": "raven messenger on wartime allotment fence", "framing": "victory garden border", "symbols": ["moon phases", "dig for victory"]},
-        {"focal": "silhouette of women at dawn, arms linked", "framing": "simple wartime frame with brass corners", "symbols": ["threshold", "strength in unity"]}
+        {"focal": "raven feather crossed with crescent moon", "framing": "protective circle with Brigid cross corners", "symbols": ["candleflame", "bell"]},
+        {"focal": "devotional candle with altar cloth", "framing": "Celtic knot border medallion", "symbols": ["prayer beads", "threshold arch"]},
+        {"focal": "crow silhouette in candlelight", "framing": "circular protection ward design", "symbols": ["flame", "sacred heart"]},
+        {"focal": "brass bell with feather bundle", "framing": "arched doorway frame", "symbols": ["moon phases", "ivy vine"]},
+        {"focal": "altar vignette with candles and beads", "framing": "symmetrical devotional border", "symbols": ["raven", "Brigid flame"]},
+        {"focal": "protective circle with feathers", "framing": "engraved medallion with Celtic accents", "symbols": ["candleglow", "threshold"]}
     ],
     "katherine": [
-        {"focal": "hand mirror reflecting shadow", "framing": "Victorian oval frame", "symbols": ["candle", "wax seal"]},
-        {"focal": "needle piercing fabric", "framing": "square geometric grid", "symbols": ["thread lines", "key"]},
-        {"focal": "sealed letter with wax", "framing": "rectangular document border", "symbols": ["clock hands", "ink drops"]},
-        {"focal": "salt line at threshold", "framing": "doorway arch", "symbols": ["shadow figure", "keyhole"]},
-        {"focal": "open notebook with writing", "framing": "simple ruled border", "symbols": ["candle", "pen nib"]},
-        {"focal": "eye reflected in mirror", "framing": "double circle (eye shape)", "symbols": ["thread pattern", "seal"]}
+        {"focal": "needle and thread crossing compass rose", "framing": "geometric sigil plate border", "symbols": ["sealed letter", "mirror reflection"]},
+        {"focal": "scrying mirror with thread spirals", "framing": "square Golden Dawn geometry", "symbols": ["wax seal", "astrolabe"]},
+        {"focal": "sealed letter with compass overlay", "framing": "architectural engraved frame", "symbols": ["measuring tape", "hexagram"]},
+        {"focal": "geometric tree of life diagram", "framing": "sephirotic path border", "symbols": ["needle", "sealed document"]},
+        {"focal": "compass and scissors crossed", "framing": "Victorian atelier border", "symbols": ["thread spool", "annotated margin"]},
+        {"focal": "mirror reflecting geometric sigil", "framing": "double circle occult seal", "symbols": ["thimble", "wax"]}
     ]
 }
 
