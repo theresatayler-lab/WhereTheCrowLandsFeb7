@@ -417,6 +417,7 @@ If in doubt, cite fewer sources rather than hallucinate.
 def build_image_prompt(asset_type: str, asset_plan: dict, persona_config: dict, spell_title: str) -> str:
     """
     Build DALL-E prompt for each asset type
+    CRITICAL: Always inject CROWLANDS_ART_BIBLE tokens for consistent scarf/tapestry aesthetic
     Rules: "No text", print-friendly linework, hard art style rules
     """
     
@@ -424,32 +425,45 @@ def build_image_prompt(asset_type: str, asset_plan: dict, persona_config: dict, 
     dall_e_rules = persona_config['visual_dna'].get('dall_e_rules', 'pen-and-ink illustration, NO text')
     avoid_list = persona_config['visual_dna']['avoid']
     
+    # Get the global art bible suffix - this is CRITICAL for consistent scarf/tapestry aesthetic
+    art_bible_suffix = get_art_bible_prompt_suffix()
+    
+    # Get asset role lock constraints
+    role_lock = ASSET_ROLE_LOCKS.get(asset_type.split("_")[0], ASSET_ROLE_LOCKS.get("header", {}))
+    role_suffix = role_lock.get('prompt_suffix', '')
+    
     if asset_type == "header_image":
         asset_info = asset_plan.get("header_image", {})
-        prompt = f"""{base_style}, {asset_info.get('scene_description', 'mystical scene')}, 
+        # Use persona-specific header_scene if available
+        header_scene = persona_config['visual_dna'].get('header_scene', asset_info.get('scene_description', 'mystical scene'))
+        
+        prompt = f"""{base_style}, {header_scene}, 
 {asset_info.get('mood', 'contemplative')} mood, 
 featuring {', '.join(asset_info.get('key_elements', ['candle']))},
-atmospheric scene composition (NOT emblematic),
+{role_suffix},
 {dall_e_rules},
-suitable for printing, clear line work,
-AVOID: {', '.join(avoid_list)}, text, letters, words, watermarks"""
+{art_bible_suffix},
+AVOID: {', '.join(avoid_list)}"""
 
     elif asset_type == "tarot_card_image":
         asset_info = asset_plan.get("tarot_card_image", {})
-        # Use the strict tarot constraints
+        # Use persona-specific tarot_emblem if available
+        tarot_emblem = persona_config['visual_dna'].get('tarot_emblem', '')
         focal = asset_info.get('must_include_focal', 'mystical emblem')
         framing = asset_info.get('must_use_framing', 'circular border')
         symbols = asset_info.get('must_include_symbols', ['star'])
         
         prompt = f"""{base_style}, SYMBOLIC EMBLEM (NOT a scene),
-FOCAL ELEMENT: {focal},
+{tarot_emblem if tarot_emblem else f'FOCAL ELEMENT: {focal}'},
 FRAMING: {framing},
 SUPPORTING SYMBOLS: {', '.join(symbols)},
 centered composition, suitable for tarot/oracle card,
 medallion or seal style, symmetrical,
+{role_suffix},
 {dall_e_rules},
+{art_bible_suffix},
 MUST be visually DISTINCT from header image,
-AVOID: {', '.join(avoid_list)}, text, letters, words"""
+AVOID: {', '.join(avoid_list)}"""
 
     elif asset_type == "sigil":
         asset_info = asset_plan.get("sigil", {})
@@ -459,8 +473,9 @@ elements: {', '.join(asset_info.get('elements', ['circle', 'line']))},
 geometric and organic lines combined,
 PRINTABLE at small size, clear bold lines,
 magical seal or protective mark style,
+ultra-detailed engraved linework, symmetrical medallion,
 BLACK AND WHITE ONLY, no color, no grey, no shading,
-NO text, NO letters, NO words, NO signatures"""
+NO text, NO letters, NO words, NO signatures, NO watermarks"""
 
     elif asset_type.startswith("divider"):
         # Get the specific divider from the plan
@@ -472,13 +487,13 @@ NO text, NO letters, NO words, NO signatures"""
 ornamental border featuring {divider_info.get('motif', 'scrollwork')},
 HORIZONTAL orientation (wide, not tall), symmetrical,
 suitable for separating text sections in a book,
-elegant, subtle, not overwhelming,
+elegant, art nouveau filigree, engraved texture,
 {dall_e_rules},
-NO text, NO letters, NO words,
+{art_bible_suffix},
 AVOID: {', '.join(avoid_list)}"""
 
     else:
-        prompt = f"{base_style}, mystical illustration, NO text, NO letters, NO words"
+        prompt = f"{base_style}, mystical illustration, {art_bible_suffix}"
     
     return prompt.replace("\n", " ").strip()
 
