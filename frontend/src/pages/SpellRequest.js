@@ -744,19 +744,17 @@ export const SpellRequest = () => {
             exit={{ opacity: 0 }}
             className="fixed inset-0 bg-navy-dark z-50 flex items-center justify-center overflow-hidden"
           >
-            {/* Background video for the selected archetype */}
-            {spellSpec.persona_id !== 'choose_for_me' && ARCHETYPE_VIDEOS[spellSpec.persona_id] && (
-              <video
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="absolute inset-0 w-full h-full object-cover opacity-40"
-                style={{ filter: 'saturate(0.8) contrast(1.1)' }}
-              >
-                <source src={ARCHETYPE_VIDEOS[spellSpec.persona_id]} type="video/mp4" />
-              </video>
-            )}
+            {/* Background video - ALWAYS shows (uses fallback for choose_for_me) */}
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="absolute inset-0 w-full h-full object-cover opacity-40"
+              style={{ filter: 'saturate(0.8) contrast(1.1)' }}
+            >
+              <source src={getLoadingVideoUrl()} type="video/mp4" />
+            </video>
             
             {/* Gradient overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-navy-dark via-navy-dark/70 to-navy-dark/50" />
