@@ -2850,6 +2850,7 @@ async def generate_personalized_spell(request: PersonalizedSpellRequest, user = 
         micro_icons = get_random_micro_icons(persona_id, count=6)
         
         # === STAGE 1: PLANNER ===
+        planner_start = time.time()
         planner_prompt = build_planner_prompt(spell_spec, persona_config, scenario)
         
         planner_response = await openai_client.chat.completions.create(
@@ -2861,6 +2862,8 @@ async def generate_personalized_spell(request: PersonalizedSpellRequest, user = 
             temperature=0.8,
             max_tokens=2500
         )
+        timing_log['planner_ms'] = int((time.time() - planner_start) * 1000)
+        logging.info(f"[TIMING] Planner: {timing_log['planner_ms']}ms")
         
         # Parse planner output
         planner_text = planner_response.choices[0].message.content
@@ -2888,6 +2891,7 @@ async def generate_personalized_spell(request: PersonalizedSpellRequest, user = 
             }
         
         # === STAGE 2: SPELL WRITER ===
+        writer_start = time.time()
         writer_prompt = build_spell_writer_prompt(spell_spec, persona_config, scenario, plan)
         
         writer_response = await openai_client.chat.completions.create(
