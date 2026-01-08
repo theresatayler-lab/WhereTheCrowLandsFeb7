@@ -38,13 +38,11 @@ export const Auth = ({ onLogin }) => {
   };
 
   return (
-    <div className="min-h-screen">
-      {/* Dark Hero Section */}
-      <DarkSection className="py-12 sm:py-16 md:py-20 px-4 sm:px-6" variant="warm">
-        <CornerFlourish position="top-left" className="absolute top-3 left-3 w-14 h-14 sm:w-18 sm:h-18" />
-        <CornerFlourish position="top-right" className="absolute top-3 right-3 w-14 h-14 sm:w-18 sm:h-18" />
-        
-        <div className="max-w-md mx-auto relative z-10">
+    <PageBorderFrame>
+      <div className="min-h-screen">
+        {/* Dark Hero Section */}
+        <DarkSection className="py-12 sm:py-16 md:py-20 px-4 sm:px-6" variant="warm">
+          <div className="max-w-md mx-auto relative z-10">
           <motion.div 
             initial={{ opacity: 0, y: -20 }} 
             animate={{ opacity: 1, y: 0 }}
