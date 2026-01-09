@@ -775,4 +775,17 @@ export default {
   // Spell Components
   SpellSectionHeader,
   PrintablesBlock,
+  // NEW V2 - Page-aware ornament components
+  PageOrnamentCorners,
+  PageDivider,
+  PageGlyph,
+  DecoratedSectionHeader,
+  NavFlourish,
+  StepperOrnament,
+  // Re-export from ornament library
+  COLORS,
+  PAGE_ORNAMENT_CONFIG,
+  CornerOrnaments,
+  DividerStrips,
+  BestiaryGlyphs,
 };
