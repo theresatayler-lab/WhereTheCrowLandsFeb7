@@ -78,6 +78,15 @@ DB_NAME=<from hosting secrets>
   - `/upgrade` - PageBorderFrame, DarkSection, LightOrnateCard ✅
   - Home, Guides, SpellRequest, MyGrimoire - all consistent ✅
 
+- **Static Ornament Library Created**: `/app/frontend/src/assets/ornaments/index.js`
+  - 24 Bestiary Glyphs (crow, raven, owl, hare, stag, fox, moth, etc.)
+  - 20 Corner Ornaments (classic, elaborate, celtic, art_nouveau, etc.)
+  - 12 Divider Strips (moon, stars, diamonds, wave, etc.)
+  - Deterministic selection functions for consistent page theming
+
+- **Full Site QA Complete**: 22 pages tested, 100% visual pass, 95% functionality pass
+  - See `/app/VISUAL_QA_REPORT.md` for full details
+
 - **Early-access gate disabled** for testing (can be re-enabled in App.js)
 
 ### Session December 2024
