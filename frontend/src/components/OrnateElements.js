@@ -563,27 +563,59 @@ export const SectionBorderFrame = ({ children, className = '', variant = 'gold' 
 };
 
 // ============================================================================
-// SPELL PERSONA BORDER - Full decorative border based on archetype
+// SPELL PERSONA BORDER - Corner decorations based on archetype (NOT full overlay)
 // ============================================================================
 
-export const SpellBorderFrame = ({ persona = 'site', children, className = '' }) => {
+export const SpellBorderFrame = ({ persona = 'site', children, className = '', variant = 'light' }) => {
   const borderUrl = PERSONA_BORDER_URLS[persona] || PERSONA_BORDER_URLS.site;
+  
+  // For light backgrounds (parchment), use dark/sepia tint
+  // For dark backgrounds, use gold/crimson tint
+  const filterStyle = variant === 'light'
+    ? 'sepia(1) saturate(0.8) brightness(0.4)' // Dark brown for parchment
+    : 'sepia(1) saturate(3) hue-rotate(330deg) brightness(1.2)'; // Gold for dark
   
   return (
     <div className={`relative ${className}`}>
-      {/* Full border overlay - positioned at corners */}
-      <div 
-        className="absolute inset-0 pointer-events-none z-20"
+      {/* Corner ornaments only - not full overlay */}
+      <div className="absolute top-0 left-0 w-20 h-20 sm:w-28 sm:h-28 pointer-events-none z-20"
         style={{
           backgroundImage: `url(${borderUrl})`,
-          backgroundSize: 'contain',
-          backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'center',
-          opacity: 0.9
+          backgroundSize: '400%',
+          backgroundPosition: 'top left',
+          filter: filterStyle,
+          opacity: 0.7
         }}
       />
-      {/* Content with padding to avoid border overlap */}
-      <div className="relative z-10 p-4 sm:p-8">{children}</div>
+      <div className="absolute top-0 right-0 w-20 h-20 sm:w-28 sm:h-28 pointer-events-none z-20"
+        style={{
+          backgroundImage: `url(${borderUrl})`,
+          backgroundSize: '400%',
+          backgroundPosition: 'top right',
+          filter: filterStyle,
+          opacity: 0.7
+        }}
+      />
+      <div className="absolute bottom-0 left-0 w-20 h-20 sm:w-28 sm:h-28 pointer-events-none z-20"
+        style={{
+          backgroundImage: `url(${borderUrl})`,
+          backgroundSize: '400%',
+          backgroundPosition: 'bottom left',
+          filter: filterStyle,
+          opacity: 0.7
+        }}
+      />
+      <div className="absolute bottom-0 right-0 w-20 h-20 sm:w-28 sm:h-28 pointer-events-none z-20"
+        style={{
+          backgroundImage: `url(${borderUrl})`,
+          backgroundSize: '400%',
+          backgroundPosition: 'bottom right',
+          filter: filterStyle,
+          opacity: 0.7
+        }}
+      />
+      {/* Content - no extra padding needed since corners don't overlap */}
+      <div className="relative z-10">{children}</div>
     </div>
   );
 };
