@@ -96,13 +96,20 @@ function ConditionalFooter() {
 function App() {
   const [user, setUser] = useState(null);
   const [selectedArchetype, setSelectedArchetype] = useState(null);
+  const [isAuthChecked, setIsAuthChecked] = useState(false); // Track if auth check is complete
 
   useEffect(() => {
     // Check if user is logged in
     const token = localStorage.getItem('token');
     const storedUser = localStorage.getItem('user');
     if (token && storedUser) {
-      setUser(JSON.parse(storedUser));
+      try {
+        setUser(JSON.parse(storedUser));
+      } catch (e) {
+        // Invalid stored user, clear it
+        localStorage.removeItem('user');
+        localStorage.removeItem('token');
+      }
     }
     
     // Load saved archetype
@@ -110,6 +117,9 @@ function App() {
     if (savedArchetype) {
       setSelectedArchetype(savedArchetype);
     }
+    
+    // Mark auth check as complete
+    setIsAuthChecked(true);
   }, []);
 
   const handleLogin = (userData) => {
