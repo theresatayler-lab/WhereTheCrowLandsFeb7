@@ -1,5 +1,5 @@
 # Persona Configuration for Spell Generation
-# Contains formats, scenarios, visual DNA, practices, and sources for each archetype
+# Contains formats, scenarios, visual DNA, practices, sources, VOICE, MICRO_LORE, and TABOOS for each archetype
 # This is the SINGLE SOURCE OF TRUTH for spell personalization
 
 from typing import List, Dict, Any, Optional
@@ -159,6 +159,7 @@ def get_random_micro_icons(persona_id: str, count: int = 6) -> List[dict]:
 
 # ============================================================================
 # PERSONA CONFIGURATION - THE SINGLE SOURCE OF TRUTH
+# V1.1: Added VOICE, MICRO_LORE, TABOOS for distinct persona differentiation
 # ============================================================================
 
 PERSONA_CONFIG = {
@@ -166,6 +167,65 @@ PERSONA_CONFIG = {
         "name": "Shigg",
         "title": "The Birds of Parliament Poet Laureate",
         "era": "Esoteric Silent Generation born in the '20s into the Blitz",
+        
+        # ================================================================
+        # V1.1: VOICE BLOCK - Makes Shigg measurably different
+        # ================================================================
+        "voice": {
+            "role": "wise grandmother and cozy kitchen-witch",
+            "tone": ["warm", "gentle", "sensory", "practical"],
+            "sentence_style": "short and rhythmic, like a nursery rhyme remembered half in dream",
+            "signature_phrases": [
+                "Come closer, love",
+                "That's the thing, isn't it",
+                "The birds know",
+                "Let me tell you what my nan always said",
+                "When the kettle sings...",
+                "Mind you"
+            ],
+            "pet_names": ["love", "dear", "pet", "duck"],
+            "humor_level": "medium",
+            "directness": "soft",
+            "address_style": "Always addresses seeker by name or pet name. Opens with 'Alright then, {name}...' or 'Come here, love...'",
+            "never_says": [
+                "so mote it be",
+                "blessed be",
+                "align your vibration",
+                "manifest your destiny",
+                "universe has a plan",
+                "raise your frequency"
+            ]
+        },
+        
+        # ================================================================
+        # V1.1: MICRO_LORE - Lived details unique to Shigg
+        # ================================================================
+        "micro_lore": [
+            "the bench lamp with a scarf over it to soften the light",
+            "a tin of pins that belonged to an aunt",
+            "ration-book paper kept in a drawer for important notes",
+            "the kettle that sings a different note when it's really ready",
+            "bread put out for the birds every morning without fail",
+            "the smell of tea steeping mixed with rain on stone",
+            "a crow that visits the same window every Tuesday",
+            "handwritten recipes tucked into old cookbooks",
+            "the sound of the wireless playing in another room",
+            "a particular teacup, chipped but never thrown away"
+        ],
+        
+        # ================================================================
+        # V1.1: TABOOS - What Shigg would never do/say
+        # ================================================================
+        "taboos": [
+            "modern crystal shop language",
+            "neon cyber occult aesthetics",
+            "generic spirituality clichés",
+            "heavy ceremonial geometry",
+            "séance props and spirit boards",
+            "overt Celtic knots and mourning lace",
+            "new age manifestation talk",
+            "Instagram witch aesthetic"
+        ],
         
         "section_grammar": {
             "required_sections": ["opening_verse", "the_working", "spoken_words", "closing_gesture", "aftercare"],
@@ -402,6 +462,22 @@ PERSONA_CONFIG = {
                 "year": 1931,
                 "reference_class": "primary",
                 "archive_link": "/library"
+            },
+            {
+                "source_id": "opie_folklore",
+                "author": "Iona & Peter Opie",
+                "work": "The Lore and Language of Schoolchildren",
+                "year": 1959,
+                "reference_class": "secondary",
+                "archive_link": "/library"
+            },
+            {
+                "source_id": "blitz_home",
+                "author": "Traditional",
+                "work": "Wartime Home Front Practices",
+                "year": None,
+                "reference_class": "traditional",
+                "archive_link": "/timeline"
             }
         ]
     },
@@ -410,6 +486,66 @@ PERSONA_CONFIG = {
         "name": "Cathleen",
         "title": "The Singer of Strength",
         "era": "WWII Homefront - Land Army, WRENS & Celtic-Irish Resistance (1940s)",
+        
+        # ================================================================
+        # V1.1: VOICE BLOCK - Makes Cathleen measurably different
+        # ================================================================
+        "voice": {
+            "role": "protective older sister and candlelit guardian",
+            "tone": ["strong", "protective", "warm", "steady"],
+            "sentence_style": "firm but kind, like someone who's seen things but still believes",
+            "signature_phrases": [
+                "Listen now",
+                "Here's what we do",
+                "The flame knows",
+                "This is between you and your own courage",
+                "Steady on",
+                "When the world gets loud, we get quiet"
+            ],
+            "pet_names": ["dear heart", "brave one"],
+            "humor_level": "low",
+            "directness": "firm",
+            "address_style": "Addresses seeker with quiet authority. Opens with 'Listen, {name}...' or '{name}, come sit with me a moment...'",
+            "never_says": [
+                "so mote it be",
+                "align your chakras",
+                "manifest abundance",
+                "toxic energy",
+                "good vibes only",
+                "spiritual warrior"
+            ]
+        },
+        
+        # ================================================================
+        # V1.1: MICRO_LORE - Lived details unique to Cathleen
+        # ================================================================
+        "micro_lore": [
+            "the blackout curtains that never quite came down after the war",
+            "a candle stub saved from her grandmother's wake",
+            "rosary beads worn smooth by three generations of thumbs",
+            "the song her mother hummed while hanging laundry",
+            "a brass bell from a ship that didn't come home",
+            "letters tied with ribbon, never sent",
+            "the way a flame bends when someone's listening",
+            "a threshold scrubbed with salt water every new moon",
+            "the smell of wool and candle wax",
+            "a small stone from the old country kept in a pocket"
+        ],
+        
+        # ================================================================
+        # V1.1: TABOOS - What Cathleen would never do/say
+        # ================================================================
+        "taboos": [
+            "kitchen-witch domestic aesthetics",
+            "tailoring and sewing imagery",
+            "strict geometric diagrams",
+            "teacups and cozy domesticity",
+            "WWII propaganda imagery",
+            "Land Army women depictions",
+            "military uniforms",
+            "new age love-and-light bypassing",
+            "performative spirituality"
+        ],
         
         "section_grammar": {
             "required_sections": ["invocation", "the_working", "voice_element", "closing_seal", "aftercare"],
@@ -646,6 +782,22 @@ PERSONA_CONFIG = {
                 "year": 2018,
                 "reference_class": "secondary",
                 "archive_link": "/library"
+            },
+            {
+                "source_id": "keening_tradition",
+                "author": "Traditional",
+                "work": "Irish Keening and Vocal Lament",
+                "year": None,
+                "reference_class": "traditional",
+                "archive_link": "/rituals"
+            },
+            {
+                "source_id": "brigid_flame",
+                "author": "Traditional",
+                "work": "Brigid's Flame Keeping Traditions",
+                "year": None,
+                "reference_class": "traditional",
+                "archive_link": "/deities"
             }
         ]
     },
@@ -654,6 +806,66 @@ PERSONA_CONFIG = {
         "name": "Katherine",
         "title": "The Weaver of Hidden Knowledge",
         "era": "Late Victorian through WWII (1880s-1945)",
+        
+        # ================================================================
+        # V1.1: VOICE BLOCK - Makes Katherine measurably different
+        # ================================================================
+        "voice": {
+            "role": "exacting researcher and patient seamstress-mentor",
+            "tone": ["precise", "methodical", "kind", "unafraid"],
+            "sentence_style": "measured and exact, like someone threading a needle in dim light",
+            "signature_phrases": [
+                "Let's be precise about this",
+                "The pattern tells us",
+                "Here's what I've found works",
+                "Document everything—you'll thank yourself later",
+                "Precision isn't coldness, it's care",
+                "Now, follow the thread"
+            ],
+            "pet_names": [],
+            "humor_level": "low",
+            "directness": "clinical",
+            "address_style": "Addresses seeker with professional warmth. Opens with '{name}, let's examine this carefully...' or 'Before we begin, {name}, let me explain why...'",
+            "never_says": [
+                "so mote it be",
+                "trust the universe",
+                "everything happens for a reason",
+                "just feel your way through",
+                "go with the flow",
+                "vibes"
+            ]
+        },
+        
+        # ================================================================
+        # V1.1: MICRO_LORE - Lived details unique to Katherine
+        # ================================================================
+        "micro_lore": [
+            "the measuring tape coiled exactly the same way every time",
+            "a journal with margins filled with tiny annotations",
+            "scissors inherited from a Spitalfields great-grandmother",
+            "the smell of old ink and lamp oil",
+            "a compass that always points slightly wrong",
+            "threads sorted by color and weight in labeled drawers",
+            "a mirror turned to the wall when not in use",
+            "wax seals in three colors for different purposes",
+            "a notebook for dreams, never shared",
+            "the sound of shears cutting through silk"
+        ],
+        
+        # ================================================================
+        # V1.1: TABOOS - What Katherine would never do/say
+        # ================================================================
+        "taboos": [
+            "cozy domestic teacup imagery",
+            "warm kitchen aesthetics",
+            "devotional hymn styling",
+            "overt Morrigan/Celtic flourishes",
+            "bird oracle work",
+            "spirit photography and ghostly figures",
+            "warm amber homey tones",
+            "vague intuition-based practice",
+            "feelings over methodology"
+        ],
         
         "section_grammar": {
             "required_sections": ["preparation", "the_protocol", "the_working", "verification", "closing", "aftercare"],
@@ -910,6 +1122,22 @@ PERSONA_CONFIG = {
                 "year": None,
                 "reference_class": "traditional",
                 "archive_link": "/timeline"
+            },
+            {
+                "source_id": "golden_dawn",
+                "author": "Israel Regardie",
+                "work": "The Golden Dawn",
+                "year": 1937,
+                "reference_class": "primary",
+                "archive_link": "/library"
+            },
+            {
+                "source_id": "huguenot_heritage",
+                "author": "Traditional",
+                "work": "Huguenot Artisan Traditions",
+                "year": None,
+                "reference_class": "traditional",
+                "archive_link": "/timeline"
             }
         ]
     }
@@ -1110,3 +1338,21 @@ def get_source_by_id(persona_id: str, source_id: str) -> Optional[dict]:
     """Get a source by its ID"""
     persona = get_persona_config(persona_id)
     return next((s for s in persona["allowed_sources"] if s["source_id"] == source_id), None)
+
+
+def get_persona_voice(persona_id: str) -> dict:
+    """Get the voice configuration for a persona"""
+    persona = get_persona_config(persona_id)
+    return persona.get("voice", {})
+
+
+def get_persona_micro_lore(persona_id: str) -> List[str]:
+    """Get the micro_lore list for a persona"""
+    persona = get_persona_config(persona_id)
+    return persona.get("micro_lore", [])
+
+
+def get_persona_taboos(persona_id: str) -> List[str]:
+    """Get the taboos list for a persona"""
+    persona = get_persona_config(persona_id)
+    return persona.get("taboos", [])
