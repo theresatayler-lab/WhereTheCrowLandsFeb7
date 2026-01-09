@@ -2979,29 +2979,21 @@ async def generate_personalized_spell(request: PersonalizedSpellRequest, user = 
                     generated_assets['sigil'] = sigil_response.data[0].b64_json
                     asset_plan['sigil_generated'] = True
                 
-                # 4. Generate 1 divider only (will be reused 3x in frontend)
-                divider_prompt = build_image_prompt("divider_1", asset_plan, persona_config, spell.get('title', 'Spell'))
-                logging.info(f"Generating single divider (reused 3x)...")
-                
-                divider_response = await openai_client.images.generate(
-                    model="dall-e-3",
-                    prompt=divider_prompt,
-                    size="1792x1024",  # Wide format for dividers
-                    quality="standard",
-                    n=1,
-                    response_format="b64_json"
-                )
-                
-                if divider_response.data and len(divider_response.data) > 0:
-                    divider_b64 = divider_response.data[0].b64_json
-                    # Reuse single divider for all 3 positions
-                    generated_assets['divider_1'] = divider_b64
-                    generated_assets['divider_2'] = divider_b64
-                    generated_assets['divider_3'] = divider_b64
-                    asset_plan['divider_1_generated'] = True
+                # DIVIDERS ARE NOW STATIC - No generation needed
+                # Use static divider URLs from image_provider library
+                from image_provider import get_static_divider
+                static_divider_url = get_static_divider(persona_id)
+                if static_divider_url:
+                    # Store as URL reference (frontend will handle display)
+                    generated_assets['divider_url'] = static_divider_url
+                    generated_assets['divider_1'] = f"STATIC:{static_divider_url}"
+                    generated_assets['divider_2'] = f"STATIC:{static_divider_url}"
+                    generated_assets['divider_3'] = f"STATIC:{static_divider_url}"
+                    asset_plan['dividers_static'] = True
+                    logging.info(f"Using static divider for {persona_id}")
                     
                 timing_log['images_ms'] = int((time.time() - images_start) * 1000)
-                logging.info(f"[TIMING] Images (4 total): {timing_log['images_ms']}ms")
+                logging.info(f"[TIMING] Images (3 generated + static dividers): {timing_log['images_ms']}ms")
                     
             except Exception as img_error:
                 logging.error(f"Image generation error: {str(img_error)}")
