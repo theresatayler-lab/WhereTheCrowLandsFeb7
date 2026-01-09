@@ -1,6 +1,7 @@
 # Spell Generation Prompts - Two-stage prompt system (Planner + Writer)
-# 1. Planner - selects scenario, format, sources, generates variation_tokens, builds AssetPlan
-# 2. Spell Writer - writes the actual spell content with strict citations
+# V1.1: SPELL QUALITY UPGRADE - Heirloom Recipe Structure
+# 1. Planner - selects scenario, format, sources, generates text_variation_tokens, builds AssetPlan
+# 2. Spell Writer - writes the actual spell content with Contract enforcement
 
 import json
 import random
@@ -8,12 +9,82 @@ from typing import Dict, List, Any
 from persona_config import (
     get_persona_config, select_scenario_for_spell, get_format_for_scenario,
     get_practices_for_scenario, get_micro_icons_for_persona,
+    get_persona_voice, get_persona_micro_lore, get_persona_taboos,
     BELIEF_BOUNDARY_DESCRIPTIONS, ASSET_TYPES,
     CROWLANDS_ART_BIBLE, ASSET_ROLE_LOCKS, get_art_bible_prompt_suffix
 )
 
 # ============================================================================
-# VARIATION KNOBS - These drive procedural variety
+# V1.1: TEXT VARIATION TOKENS - Behind-the-scenes uniqueness drivers
+# ============================================================================
+
+TEXT_VARIATION_TOKENS = {
+    "setting_detail": [
+        "desk by rain-streaked window",
+        "kitchen before dawn",
+        "blackout-curtained room",
+        "corner by the fire",
+        "chair near an open window",
+        "bed with rumpled sheets",
+        "bath with candles burning",
+        "garden bench at dusk",
+        "floor with cushions",
+        "threshold between rooms"
+    ],
+    "sensory_detail": [
+        "smell of iron and cloth",
+        "kettle-steam rising",
+        "beeswax and paper",
+        "rain on stone",
+        "dust motes in lamplight",
+        "wool and smoke",
+        "ink and old pages",
+        "salt and candlewax",
+        "bread cooling",
+        "lavender and linen"
+    ],
+    "gesture_detail": [
+        "pinning clockwise",
+        "knotting three times",
+        "tracing a circle with thumb",
+        "pressing palm flat",
+        "folding precisely",
+        "stirring counterclockwise",
+        "tapping rhythm on surface",
+        "cupping hands together",
+        "drawing breath slowly",
+        "releasing with exhale"
+    ],
+    "metaphor_detail": [
+        "seam-ripping a bad story",
+        "setting a pot to simmer",
+        "tuning a bell until it rings true",
+        "unraveling a tangled thread",
+        "clearing ash from the grate",
+        "turning soil for planting",
+        "polishing a mirror to see clearly",
+        "opening a window stuck shut",
+        "mending what was torn",
+        "sweeping the threshold clean"
+    ],
+    "folk_reasoning_style": ["practical", "poetic", "historical"],
+    "comfort_level": ["tender", "firm", "uplifting"]
+}
+
+def generate_text_variation_tokens() -> dict:
+    """Generate text variation tokens for spell uniqueness"""
+    return {
+        "setting_detail": random.choice(TEXT_VARIATION_TOKENS["setting_detail"]),
+        "sensory_detail": random.choice(TEXT_VARIATION_TOKENS["sensory_detail"]),
+        "gesture_detail": random.choice(TEXT_VARIATION_TOKENS["gesture_detail"]),
+        "metaphor_detail": random.choice(TEXT_VARIATION_TOKENS["metaphor_detail"]),
+        "folk_reasoning_style": random.choice(TEXT_VARIATION_TOKENS["folk_reasoning_style"]),
+        "comfort_level": random.choice(TEXT_VARIATION_TOKENS["comfort_level"])
+    }
+
+
+# ============================================================================
+# VARIATION KNOBS - Procedural variety for steps/timing
 # ============================================================================
 
 VARIATION_KNOBS = {
@@ -27,7 +98,6 @@ VARIATION_KNOBS = {
 
 # ============================================================================
 # TAROT COMPOSITION LIBRARY - Prevents repetitive imagery
-# Updated for CROWLANDS V1.1 scarf/tapestry aesthetic
 # ============================================================================
 
 TAROT_COMPOSITIONS = {
@@ -86,15 +156,16 @@ def generate_variation_tokens() -> dict:
 
 
 # ============================================================================
-# STAGE 1: PLANNER PROMPT
+# STAGE 1: PLANNER PROMPT (V1.1 - with text_variation_tokens)
 # ============================================================================
 
 def build_planner_prompt(spell_spec: dict, persona_config: dict, scenario: dict) -> str:
     """
     Stage 1: Planner Prompt
-    Generates: variation_tokens, tarot_constraints, source selections, asset_plan
-    CRITICAL: Only cites from allowed_sources
+    V1.1: Now generates text_variation_tokens for behind-the-scenes uniqueness
     """
+    
+    persona_id = spell_spec.get("persona_id", "shigg")
     
     belief_guidance = BELIEF_BOUNDARY_DESCRIPTIONS.get(
         spell_spec.get("belief_boundary", "spiritual_grounded"),
@@ -108,36 +179,36 @@ def build_planner_prompt(spell_spec: dict, persona_config: dict, scenario: dict)
     ])
     
     # Get practices linked to this scenario
-    practices = get_practices_for_scenario(
-        spell_spec.get("persona_id", "shigg"), 
-        scenario["scenario_id"]
-    )
+    practices = get_practices_for_scenario(persona_id, scenario["scenario_id"])
     practices_text = "\n".join([
         f"- [{p['practice_id']}]: {p['name']} — {p['description']}"
         for p in practices
     ])
     
     # Get format for this scenario
-    linked_format = get_format_for_scenario(
-        spell_spec.get("persona_id", "shigg"),
-        scenario["scenario_id"]
-    )
+    linked_format = get_format_for_scenario(persona_id, scenario["scenario_id"])
     format_section_order = linked_format["section_order"] if linked_format else scenario.get("required_sections", [])
     
-    # Generate variation tokens
+    # Generate both variation token types
     variation_tokens = generate_variation_tokens()
+    text_variation_tokens = generate_text_variation_tokens()
     
     # Select tarot composition constraints
-    tarot_comp = select_tarot_composition(spell_spec.get("persona_id", "shigg"))
+    tarot_comp = select_tarot_composition(persona_id)
+    
+    # V1.1: Get voice config for persona-specific guidance
+    voice_config = get_persona_voice(persona_id)
+    micro_lore = get_persona_micro_lore(persona_id)
     
     prompt = f"""You are the Spell Planner for {persona_config['name']}, {persona_config['title']}.
 
 ## YOUR TASK
 Create a detailed spell plan. You MUST:
-1. Use the provided variation_tokens to ensure uniqueness
+1. Use the provided variation_tokens AND text_variation_tokens to ensure uniqueness
 2. Select sources ONLY from allowed_sources (cite by source_id)
 3. Follow the tarot_constraints to ensure distinct imagery
-4. Create an asset_plan for exactly 6 generated images
+4. Create an asset_plan for generated images
+5. Select 2-3 micro_lore items to weave into the spell
 
 ## SEEKER'S REQUEST (SpellSpec)
 - Query: "{spell_spec.get('user_query', 'No specific query')}"
@@ -165,13 +236,24 @@ Best For: {', '.join(scenario['best_for'])}
 ## LINKED PRACTICES (incorporate 1-2 of these)
 {practices_text if practices_text else "No specific practices linked - use general approach"}
 
-## VARIATION TOKENS (USE THESE for uniqueness)
+## PROCEDURAL VARIATION TOKENS
 - time_of_day: {variation_tokens['time_of_day']}
 - gesture_type: {variation_tokens['gesture_type']}
 - repetition_pattern: {variation_tokens['repetition_pattern']}
 - material_placement: {variation_tokens['material_placement']}
 - closing_action: {variation_tokens['closing_action']}
 - energy_direction: {variation_tokens['energy_direction']}
+
+## V1.1: TEXT VARIATION TOKENS (USE ALL of these for uniqueness)
+- setting_detail: {text_variation_tokens['setting_detail']}
+- sensory_detail: {text_variation_tokens['sensory_detail']}
+- gesture_detail: {text_variation_tokens['gesture_detail']}
+- metaphor_detail: {text_variation_tokens['metaphor_detail']}
+- folk_reasoning_style: {text_variation_tokens['folk_reasoning_style']}
+- comfort_level: {text_variation_tokens['comfort_level']}
+
+## PERSONA MICRO_LORE (select 2-3 to include)
+{json.dumps(micro_lore[:6], indent=2)}
 
 ## TAROT CONSTRAINTS (to prevent image repetition)
 - FOCAL ELEMENT: {tarot_comp['focal']}
@@ -198,6 +280,8 @@ Return ONLY this JSON (no markdown, no explanation):
     "format_id": "{linked_format['format_id'] if linked_format else 'general'}",
     "section_order": {json.dumps(format_section_order)},
     "variation_tokens": {json.dumps(variation_tokens)},
+    "text_variation_tokens": {json.dumps(text_variation_tokens)},
+    "selected_micro_lore": ["item 1", "item 2"],
     "selected_practices": ["practice_id_1", "practice_id_2"],
     "selected_sources": [
         {{"source_id": "...", "usage": "How this source informs this spell"}}
@@ -205,7 +289,7 @@ Return ONLY this JSON (no markdown, no explanation):
     "personalization_hooks": {{
         "name_usage": "How/where to use seeker's name",
         "anchor_integration": "How anchor object is central",
-        "setting_details": "Specific setting adaptations",
+        "setting_details": "Specific setting adaptations using text_variation_tokens",
         "feeling_arc": "How spell moves toward desired feeling"
     }},
     "tarot_constraints": {{
@@ -240,21 +324,23 @@ STRICT RULES:
 1. selected_sources MUST only contain source_ids from ALLOWED SOURCES list
 2. tarot_card_image MUST use the tarot_constraints provided
 3. header_image MUST be different from tarot (scene vs emblem)
-4. Use variation_tokens to make this spell unique
+4. Use ALL variation_tokens and text_variation_tokens to make this spell unique
+5. Select 2-3 micro_lore items that fit naturally
 """
     return prompt
 
 
 # ============================================================================
-# STAGE 2: SPELL WRITER PROMPT
+# STAGE 2: SPELL WRITER PROMPT (V1.1 - SPELL WRITER CONTRACT)
 # ============================================================================
 
 def build_spell_writer_prompt(spell_spec: dict, persona_config: dict, scenario: dict, plan: dict) -> str:
     """
     Stage 2: Spell Writer Prompt
-    Takes the plan and writes the full spell content
-    CRITICAL: Only cites from selected_sources in plan
+    V1.1: Implements SPELL WRITER CONTRACT for heirloom quality spells
     """
+    
+    persona_id = spell_spec.get("persona_id", "shigg")
     
     belief_guidance = BELIEF_BOUNDARY_DESCRIPTIONS.get(
         spell_spec.get("belief_boundary", "spiritual_grounded"),
@@ -282,11 +368,66 @@ def build_spell_writer_prompt(spell_spec: dict, persona_config: dict, scenario: 
     
     # Get variation tokens from plan
     variation_tokens = plan.get("variation_tokens", {})
+    text_variation_tokens = plan.get("text_variation_tokens", {})
+    selected_micro_lore = plan.get("selected_micro_lore", [])
+    
+    # V1.1: Get voice config, micro_lore, and taboos
+    voice_config = get_persona_voice(persona_id)
+    taboos = get_persona_taboos(persona_id)
+    
+    # Build voice guidance
+    voice_guidance = f"""
+ROLE: {voice_config.get('role', 'wise guide')}
+TONE: {', '.join(voice_config.get('tone', ['warm']))}
+SENTENCE STYLE: {voice_config.get('sentence_style', 'clear and direct')}
+SIGNATURE PHRASES (use 1-2): {json.dumps(voice_config.get('signature_phrases', [])[:4])}
+PET NAMES: {json.dumps(voice_config.get('pet_names', []))}
+ADDRESS STYLE: {voice_config.get('address_style', 'Address seeker by name')}
+NEVER SAYS: {json.dumps(voice_config.get('never_says', []))}
+"""
     
     prompt = f"""You ARE {persona_config['name']}, {persona_config['title']}.
 
-## YOUR VOICE
-{persona_config['section_grammar']['voice_style']}
+## ⚠️ SPELL WRITER CONTRACT (V1.1) - HARD REQUIREMENTS ⚠️
+
+### A) REQUIRED NEW SECTIONS (must include all)
+1. **why_this_works**: 4-7 short paragraphs in YOUR voice explaining:
+   - "We use X because..." for at least 3 materials (especially the anchor object)
+   - At least 1 folklore/history note ("old house-tradition," "wartime habit," "tailor's trick")
+   - Connect the tradition to the ritual step
+
+2. **substitutions**: 3 items max, practical and kind:
+   - "If you don't have X, use Y because it preserves the same function"
+
+3. **tiny_mistakes_to_avoid**: 3 items max, examples:
+   - Safety concerns
+   - Overcomplication
+   - Wording too long
+   - Setting not ready
+   - Leaving candle unattended
+
+4. **closing_and_aftercare**: Must include:
+   - Clear closing action
+   - Grounding step
+   - 1 line validating the seeker: "If this doesn't land today, that's not failure..."
+
+### B) VOICE + WARMTH RULES (every spell)
+{voice_guidance}
+
+YOU MUST:
+- Speak to seeker like a real person guiding them ("{spell_spec.get('user_name', 'love')}, come closer...")
+- Include 2 "lived details" from micro_lore: {json.dumps(selected_micro_lore)}
+- Include gentle options (quiet voice, shorter version, accessibility-friendly)
+
+### C) SPECIFICITY RULE FOR INCANTATIONS
+Every incantation MUST contain:
+- 3 concrete nouns from the working (e.g., "needle / salt / kettle")
+- 1 emotion word (steady, brave, clear, unbothered, softened)
+
+BAN these filler phrases: {json.dumps(voice_config.get('never_says', ['so mote it be', 'blessed be']))}
+
+### D) TABOOS (never include)
+{json.dumps(taboos)}
 
 ## THE SPELL YOU ARE WRITING
 Title: {plan.get('spell_title', 'Untitled')}
@@ -310,7 +451,15 @@ Format: {plan.get('format_id', 'general')}
 ## TONE: {spell_spec.get('tone', 'practical')}
 {tone_guidance}
 
-## VARIATION TOKENS (USE THESE for uniqueness)
+## TEXT VARIATION TOKENS (MUST use ALL in the spell)
+- Setting Detail: "{text_variation_tokens.get('setting_detail', 'quiet corner')}" — weave into introduction/setting
+- Sensory Detail: "{text_variation_tokens.get('sensory_detail', 'candle smoke')}" — include in working steps
+- Gesture Detail: "{text_variation_tokens.get('gesture_detail', 'three turns')}" — use in ritual actions
+- Metaphor Detail: "{text_variation_tokens.get('metaphor_detail', 'clearing path')}" — use in why_this_works or closing
+- Folk Reasoning Style: {text_variation_tokens.get('folk_reasoning_style', 'practical')} — shapes how you explain WHY
+- Comfort Level: {text_variation_tokens.get('comfort_level', 'tender')} — shapes emotional tone
+
+## PROCEDURAL VARIATION TOKENS
 - Time of Day: {variation_tokens.get('time_of_day', 'any')}
 - Gesture Type: {variation_tokens.get('gesture_type', 'as feels right')}
 - Repetition: {variation_tokens.get('repetition_pattern', 'three times')}
@@ -334,47 +483,67 @@ Return ONLY this JSON (no markdown, no explanation):
     "subtitle": "{plan.get('spell_subtitle', '')}",
     "format_id": "{plan.get('format_id', 'general')}",
     "scenario_id": "{scenario['scenario_id']}",
-    "introduction": "Personal introduction acknowledging seeker by name and their situation. 2-3 sentences in {persona_config['name']}'s voice.",
+    "introduction": "Personal introduction using seeker's name, setting detail from text_variation_tokens, and your signature opening style. 2-3 sentences in YOUR distinct voice.",
     "timing": {{
         "time_of_day": "{variation_tokens.get('time_of_day', 'whenever needed')}",
         "moon_phase": "optional or Any",
         "day": "optional or Any",
         "note": "Any timing notes"
     }},
+    "why_this_works": [
+        "Paragraph 1: Why we use [anchor object] because...",
+        "Paragraph 2: Why we use [material 2] because...",
+        "Paragraph 3: Why we use [material 3] because...",
+        "Paragraph 4: The folklore/history note - 'Old house-tradition says...' or 'In wartime homes...'",
+        "Paragraph 5: How this connects to [seeker's desired feeling]"
+    ],
     "tarot_card": {{
         "title": "Short evocative title",
         "symbol": "Single emoji",
         "essence": "One sentence core meaning",
         "key_action": "Single most important action",
-        "incantation": "Short memorable phrase from spoken_words",
+        "incantation": "Short memorable phrase (3 concrete nouns + emotion word)",
         "timing": "Best time to perform"
     }},
     "materials": [
-        {{"name": "Material", "icon": "emoji", "note": "Preparation note"}}
+        {{"name": "Material", "icon": "emoji", "note": "Why we use this (short)", "substitution": "Alternative if unavailable"}}
     ],
     "preparation": {{
-        "description": "How to prepare (brief)",
-        "steps": ["Prep step 1", "Prep step 2"]
+        "description": "How to prepare (brief, includes sensory_detail)",
+        "steps": ["Prep step 1 using gesture_detail", "Prep step 2"]
     }},
     "the_working": {{
-        "description": "The main body",
+        "description": "The main body using metaphor_detail",
         "steps": [
-            {{"step": 1, "title": "Step title", "instruction": "Detailed instruction using variation_tokens", "spoken_words": "Words to say or null", "duration": "optional"}}
+            {{"step": 1, "title": "Step title", "instruction": "Detailed instruction using variation_tokens and text_variation_tokens", "spoken_words": "Words to say (specific, concrete) or null", "duration": "optional"}}
         ]
     }},
     "spoken_words": {{
-        "invocation": "Opening invocation",
-        "main_incantation": "Primary words of power (memorable, specific)",
+        "invocation": "Opening invocation (use seeker's name)",
+        "main_incantation": "Primary words of power (MUST have 3 concrete nouns + 1 emotion word)",
         "closing": "Closing words",
         "repetitions": 3,
-        "delivery_notes": "How to speak (whisper/speak/sing)"
+        "delivery_notes": "How to speak (whisper/speak/sing) + accessibility option"
     }},
+    "substitutions": [
+        {{"original": "Material X", "substitute": "Material Y", "reason": "Because it preserves the same function"}},
+        {{"original": "Material A", "substitute": "Material B", "reason": "Because..."}},
+        {{"original": "Action X", "substitute": "Action Y", "reason": "For those who cannot..."}}
+    ],
+    "tiny_mistakes_to_avoid": [
+        "Don't [safety concern]",
+        "Avoid [overcomplication]", 
+        "Remember to [preparation note]"
+    ],
     "closing": {{
-        "description": "How to close",
-        "steps": ["Closing step using {variation_tokens.get('closing_action', 'as feels right')}"],
+        "description": "How to close using closing_action from variation_tokens",
+        "steps": ["Closing step 1", "Grounding step"],
         "final_words": "Final phrase"
     }},
-    "aftercare": {{
+    "closing_and_aftercare": {{
+        "closing_action": "The physical closing action",
+        "grounding_step": "How to ground yourself after",
+        "validation": "If this doesn't land today, that's not failure. [Persona-specific encouragement]",
         "immediate": "What to do right after",
         "ongoing": "Any ongoing practices"
     }},
@@ -384,12 +553,12 @@ Return ONLY this JSON (no markdown, no explanation):
             "source_type": "book/tradition/practice",
             "name": "Source name",
             "author": "Author if applicable",
-            "connection": "How this connects to the spell",
+            "connection": "How this connects to the spell (conversational, not academic)",
             "archive_link": "/library or /rituals etc"
         }}
     ],
     "variations": [
-        "Alternative approach 1",
+        "Alternative approach 1 (quieter/shorter/accessibility option)",
         "Alternative approach 2"
     ]
 }}
@@ -400,19 +569,23 @@ Every source_id in "inspired_by" MUST match a source_id from that list.
 Do NOT invent sources. Do NOT cite sources not in the list.
 If in doubt, cite fewer sources rather than hallucinate.
 
-## CRITICAL RULES
+## CRITICAL RULES (Contract Enforcement)
 1. Use seeker's name ({spell_spec.get('user_name', 'Seeker')}) at least TWICE
-2. Anchor object ({spell_spec.get('anchor_object', 'candle')}) must be CENTRAL
-3. Use variation_tokens in instructions for uniqueness
-4. spoken_words.main_incantation must be MEMORABLE and SPECIFIC
-5. Follow the section_order from plan
-6. Match TIME constraint: {time_guidance}
+2. Anchor object ({spell_spec.get('anchor_object', 'candle')}) must be CENTRAL with WHY explanation
+3. Use ALL text_variation_tokens in the spell text
+4. spoken_words.main_incantation MUST have 3 concrete nouns + 1 emotion word
+5. Include 2 micro_lore details: {json.dumps(selected_micro_lore)}
+6. Include why_this_works, substitutions, tiny_mistakes_to_avoid, closing_and_aftercare
+7. Follow the section_order from plan
+8. Match TIME constraint: {time_guidance}
+9. DO NOT use any phrase from the "never_says" list
+10. Spell must feel like an heirloom recipe, not generic instructions
 """
     return prompt
 
 
 # ============================================================================
-# IMAGE PROMPT BUILDERS
+# IMAGE PROMPT BUILDERS (unchanged from previous version)
 # ============================================================================
 
 def build_image_prompt(asset_type: str, asset_plan: dict, persona_config: dict, spell_title: str) -> str:
@@ -435,10 +608,8 @@ def build_image_prompt(asset_type: str, asset_plan: dict, persona_config: dict, 
     
     if asset_type == "header_image":
         asset_info = asset_plan.get("header_image", {})
-        # Use persona-specific header_scene if available
         header_scene = persona_config['visual_dna'].get('header_scene', asset_info.get('scene_description', 'mystical scene'))
         
-        # ART BIBLE PREFIX - dominates the prompt
         prompt = f"""{art_bible_prefix},
 {base_style}, {header_scene}, 
 {asset_info.get('mood', 'contemplative')} mood, 
@@ -449,13 +620,11 @@ AVOID: {', '.join(avoid_list)}"""
 
     elif asset_type == "tarot_card_image":
         asset_info = asset_plan.get("tarot_card_image", {})
-        # Use persona-specific tarot_emblem if available
         tarot_emblem = persona_config['visual_dna'].get('tarot_emblem', '')
         focal = asset_info.get('must_include_focal', 'mystical emblem')
         framing = asset_info.get('must_use_framing', 'circular border')
         symbols = asset_info.get('must_include_symbols', ['star'])
         
-        # ART BIBLE PREFIX - dominates the prompt
         prompt = f"""{art_bible_prefix},
 {base_style}, SYMBOLIC EMBLEM (NOT a scene),
 {tarot_emblem if tarot_emblem else f'FOCAL ELEMENT: {focal}'},
@@ -470,7 +639,6 @@ AVOID: {', '.join(avoid_list)}"""
 
     elif asset_type == "sigil":
         asset_info = asset_plan.get("sigil", {})
-        # Sigil uses a simplified art bible prefix for linework focus
         prompt = f"""Ornate occult engraved linework sigil,
 High contrast BLACK AND WHITE sigil design,
 {asset_info.get('design_concept', 'mystical protective symbol')},
@@ -484,8 +652,6 @@ BLACK AND WHITE ONLY, no color, no grey, no shading,
 NO text, NO letters, NO words, NO signatures, NO watermarks"""
 
     elif asset_type.startswith("divider"):
-        # DIVIDERS ARE NOW STATIC - this code path should not be called
-        # Keeping for backwards compatibility but dividers come from library
         divider_idx = int(asset_type.split("_")[1]) - 1 if "_" in asset_type else 0
         dividers = asset_plan.get("dividers", [{}])
         divider_info = dividers[divider_idx] if divider_idx < len(dividers) else dividers[0] if dividers else {}
@@ -506,18 +672,80 @@ AVOID: {', '.join(avoid_list)}"""
 
 
 def generate_all_image_prompts(asset_plan: dict, persona_config: dict, spell_title: str) -> dict:
-    """Generate prompts for all 6 required assets"""
+    """Generate prompts for all required assets"""
     prompts = {
         "header_image": build_image_prompt("header_image", asset_plan, persona_config, spell_title),
         "tarot_card_image": build_image_prompt("tarot_card_image", asset_plan, persona_config, spell_title),
         "sigil": build_image_prompt("sigil", asset_plan, persona_config, spell_title),
     }
     
-    # Generate 3 divider prompts
     for i in range(3):
         prompts[f"divider_{i+1}"] = build_image_prompt(f"divider_{i+1}", asset_plan, persona_config, spell_title)
     
     return prompts
+
+
+# ============================================================================
+# V1.1: SPELL QUALITY VALIDATOR (optional quality guard)
+# ============================================================================
+
+def validate_spell_contract(spell_json: dict) -> dict:
+    """
+    Validate that a spell meets the V1.1 Contract requirements
+    Returns: {"valid": bool, "issues": [...], "score": int}
+    """
+    issues = []
+    score = 100
+    
+    # Check required sections
+    required_sections = ["why_this_works", "substitutions", "tiny_mistakes_to_avoid", "closing_and_aftercare"]
+    for section in required_sections:
+        if section not in spell_json or not spell_json[section]:
+            issues.append(f"Missing required section: {section}")
+            score -= 20
+    
+    # Check why_this_works has enough content
+    why_this_works = spell_json.get("why_this_works", [])
+    if len(why_this_works) < 4:
+        issues.append(f"why_this_works needs at least 4 paragraphs, has {len(why_this_works)}")
+        score -= 10
+    
+    # Check materials have reasons
+    materials = spell_json.get("materials", [])
+    materials_with_notes = sum(1 for m in materials if m.get("note"))
+    if materials_with_notes < 3:
+        issues.append(f"At least 3 materials need 'why we use this' notes, has {materials_with_notes}")
+        score -= 10
+    
+    # Check incantation specificity (3 concrete nouns + emotion word)
+    main_incantation = spell_json.get("spoken_words", {}).get("main_incantation", "")
+    if len(main_incantation) < 20:
+        issues.append("main_incantation too short - needs 3 concrete nouns + 1 emotion word")
+        score -= 15
+    
+    # Check substitutions count
+    substitutions = spell_json.get("substitutions", [])
+    if len(substitutions) < 2:
+        issues.append(f"Need at least 2 substitutions, has {len(substitutions)}")
+        score -= 5
+    
+    # Check tiny_mistakes_to_avoid count
+    mistakes = spell_json.get("tiny_mistakes_to_avoid", [])
+    if len(mistakes) < 2:
+        issues.append(f"Need at least 2 tiny_mistakes_to_avoid, has {len(mistakes)}")
+        score -= 5
+    
+    # Check closing_and_aftercare has validation line
+    aftercare = spell_json.get("closing_and_aftercare", {})
+    if not aftercare.get("validation"):
+        issues.append("closing_and_aftercare missing validation line")
+        score -= 10
+    
+    return {
+        "valid": len(issues) == 0,
+        "issues": issues,
+        "score": max(0, score)
+    }
 
 
 # ============================================================================
@@ -535,5 +763,4 @@ def record_used_scenario(session_id: str, scenario_id: str):
     if session_id not in _used_scenarios_cache:
         _used_scenarios_cache[session_id] = []
     _used_scenarios_cache[session_id].append(scenario_id)
-    # Keep only last 5
     _used_scenarios_cache[session_id] = _used_scenarios_cache[session_id][-5:]
