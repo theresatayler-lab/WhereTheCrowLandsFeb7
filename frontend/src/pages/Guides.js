@@ -6,7 +6,15 @@ import { ARCHETYPES, getArchetypeById } from '../data/archetypes';
 import { setCurrentArchetype, getCurrentArchetype } from '../components/OnboardingModal';
 import { Feather, BookOpen, Sparkles, Heart, ArrowRight, Check, Hand, Users, ChevronDown, ChevronUp } from 'lucide-react';
 import { toast } from 'sonner';
-import { DarkSection, LightSection, GrandDivider, MysticalDivider, ElaborateCorner, PageHeader } from '../components/OrnateElements';
+import { DarkSection, LightSection, GrandDivider, MysticalDivider, ElaborateCorner, PageHeader, PageDivider, BestiaryGlyph } from '../components/OrnateElements';
+
+// Glyph mapping per guide
+const GUIDE_GLYPHS = {
+  theresa: { main: 'feather', secondary: 'crescent' },
+  corrie: { main: 'owl', secondary: 'crescent' },
+  cathleen: { main: 'triquetra', secondary: 'serpent' },
+  emily: { main: 'candle', secondary: 'key' }
+};
 
 export const Guides = () => {
   const [selectedGuide, setSelectedGuide] = useState(null);
