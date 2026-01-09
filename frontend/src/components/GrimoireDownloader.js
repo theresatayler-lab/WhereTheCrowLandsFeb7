@@ -298,7 +298,7 @@ const SpellPage = ({ spell, index, isLast }) => {
                   paddingLeft: '15px',
                   marginTop: '5px'
                 }}>
-                  "{step.spoken_words}"
+                  &ldquo;{step.spoken_words}&rdquo;
                 </p>
               )}
             </div>
@@ -330,7 +330,7 @@ const SpellPage = ({ spell, index, isLast }) => {
             color: '#4A3728',
             textAlign: 'center'
           }}>
-            "{spellData.spoken_words.main_incantation}"
+            &ldquo;{spellData.spoken_words.main_incantation}&rdquo;
           </p>
         </div>
       )}
