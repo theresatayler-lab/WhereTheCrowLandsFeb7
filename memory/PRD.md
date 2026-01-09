@@ -48,9 +48,16 @@ MONGO_URL=<from hosting secrets>
 DB_NAME=<from hosting secrets>
 ```
 
-## Completed Work (December 2024)
+## Completed Work (January 2025)
 
-### Latest Session
+### Session January 9, 2025
+- **PDF Download Bug Fixed**: Completely rewrote PDF generation to use jsPDF directly instead of html2pdf.js
+  - `GrimoireDownloader.js` - Uses jsPDF for entire grimoire PDF (cover, TOC, spell pages)
+  - `GrimoirePage.js` - Uses jsPDF + html2canvas for single spell PDF
+  - Both downloads now produce valid, non-blank PDFs
+  - Tested and verified: Full grimoire PDF (~6KB) and single spell PDF (~143KB)
+
+### Session December 2024
 - **ImageProvider Abstraction**: Single interface with provider switching
 - **Static Dividers**: No longer generated, use library URLs
 - **ART_BIBLE as PREFIX**: Dominates all image prompts
