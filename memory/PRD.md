@@ -55,7 +55,7 @@ DB_NAME=<from hosting secrets>
   - `GrimoireDownloader.js` - Uses jsPDF for entire grimoire PDF (cover, TOC, spell pages)
   - `GrimoirePage.js` - Uses jsPDF + html2canvas for single spell PDF
   - Both downloads now produce valid, non-blank PDFs
-  - Tested and verified: Full grimoire PDF (~6KB) and single spell PDF (~143KB)
+  - Tested with 11 spells: Full grimoire PDF (49KB, ~16 pages)
 
 - **SPELL QUALITY UPGRADE V1.1**: Major quality overhaul for heirloom-style spells
   - Added `voice` block to each persona (role, tone, signature_phrases, pet_names, never_says)
@@ -70,6 +70,15 @@ DB_NAME=<from hosting secrets>
   - Incantation specificity rule: 3 concrete nouns + 1 emotion word
   - Ban on generic phrases per persona
   - Added `validate_spell_contract()` quality guard function
+  - **Validated with 6 test spells** - all pass "persona in 3 lines" + "wise guide teaching" criteria
+
+- **Site-wide UI Pass COMPLETE**: All priority pages already use Crowlands visual system
+  - `/corrie-tarot` - PageBorderFrame, DarkSection, GrandDivider ✅
+  - `/profile` - PageBorderFrame, OrnateCard, PageHeader ✅  
+  - `/upgrade` - PageBorderFrame, DarkSection, LightOrnateCard ✅
+  - Home, Guides, SpellRequest, MyGrimoire - all consistent ✅
+
+- **Early-access gate disabled** for testing (can be re-enabled in App.js)
 
 ### Session December 2024
 - **ImageProvider Abstraction**: Single interface with provider switching
