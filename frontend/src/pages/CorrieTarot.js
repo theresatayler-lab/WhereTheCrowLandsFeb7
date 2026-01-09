@@ -547,6 +547,7 @@ const CorrieTarot = () => {
         </LightSection>
       )}
     </div>
+    </PageBorderFrame>
   );
 };
 
