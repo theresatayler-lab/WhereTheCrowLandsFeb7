@@ -5,7 +5,7 @@ import { aiAPI, subscriptionAPI } from '../utils/api';
 import { ARCHETYPES, getArchetypeById } from '../data/archetypes';
 import { getCurrentArchetype, setCurrentArchetype } from '../components/OnboardingModal';
 import { SpellLimitBanner } from '../components/UpgradePrompt';
-import { DarkSection, LightSection, GrandDivider, MysticalDivider, ElaborateCorner, PageHeader, OrnateCard, LightOrnateCard } from '../components/OrnateElements';
+import { DarkSection, LightSection, GrandDivider, MysticalDivider, ElaborateCorner, PageHeader, OrnateCard, LightOrnateCard, StepperOrnament, BestiaryGlyph } from '../components/OrnateElements';
 import { 
   Sparkles, ChevronRight, ChevronLeft, Check, Loader2, 
   User, Clock, Heart, Flame, Shield, Eye, Zap, Cloud,
