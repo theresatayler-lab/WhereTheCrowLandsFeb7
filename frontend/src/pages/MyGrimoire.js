@@ -163,6 +163,18 @@ export const MyGrimoire = () => {
             />
           </motion.div>
           
+          {/* Download Grimoire Button - Only show if user has spells */}
+          {spells.length > 0 && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.1 }}
+              className="flex justify-center mb-6"
+            >
+              <GrimoireDownloader spells={spells} userName={null} />
+            </motion.div>
+          )}
+          
           <GrandDivider variant="moon" />
 
           {/* What is a Grimoire - Expandable Introduction */}
