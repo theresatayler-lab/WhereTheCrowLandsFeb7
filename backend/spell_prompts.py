@@ -84,6 +84,53 @@ def generate_text_variation_tokens() -> dict:
 
 
 # ============================================================================
+# V1.2: SETTING CONTEXT - Guidance for contextual settings
+# ============================================================================
+
+SETTING_CONTEXT = {
+    "home_quiet": {
+        "label": "In the quiet of my home",
+        "description": "Private, uninterrupted space where you feel safe",
+        "guidance": "This spell is for a private moment at home. The seeker has full privacy—they can light candles, speak aloud, use mirrors, perform any ritual without concern for observers. Emphasize creating sacred space within their own walls.",
+        "example_spaces": ["bedroom", "private study", "kitchen at quiet hours", "bath sanctuary"],
+        "can_include": ["candles", "incense", "spoken words", "mirrors", "altars", "full rituals"]
+    },
+    "nature": {
+        "label": "Outside in nature",
+        "description": "Garden, park, woods, by water—natural settings",
+        "guidance": "This spell connects to the natural world. The seeker is outdoors where they can observe birds, feel wind, touch earth, be near water. Emphasize elemental connection, seasonal awareness, and the wisdom of the wild.",
+        "example_spaces": ["garden", "woodland path", "park bench", "by a river", "beach"],
+        "can_include": ["bird omens", "gathered materials", "earth contact", "sky observation", "water", "wind"]
+    },
+    "work_daily": {
+        "label": "During my daily routine",
+        "description": "Work, errands, regular tasks—woven into ordinary life",
+        "guidance": "This spell fits into everyday activity. The seeker will perform it during normal tasks—making tea, at their desk, during a break. Keep materials simple and actions subtle. Emphasize how magic can thread through mundane moments.",
+        "example_spaces": ["desk at work", "kitchen during morning routine", "during a tea break"],
+        "can_include": ["tea ritual", "small carried tokens", "breath work", "quiet gestures", "journal notes"]
+    },
+    "transit": {
+        "label": "On the move",
+        "description": "Commute, travel, waiting—liminal spaces between",
+        "guidance": "This spell works in transit—on a train, bus, in a waiting room, walking between places. Everything must be internal or use a tiny carried object. Emphasize breath, visualization, small gestures, and the magic of threshold spaces.",
+        "example_spaces": ["train seat", "bus", "walking path", "waiting room", "airport"],
+        "can_include": ["breath work", "visualization", "small token in pocket", "silent words", "observation"]
+    },
+    "public": {
+        "label": "In public or semi-public",
+        "description": "Café, library, shared space—others nearby",
+        "guidance": "This spell happens where others are present but the seeker has some privacy. They can write, hold an object, sip tea—but nothing that draws attention. Emphasize subtle, internalized practice that looks ordinary to observers.",
+        "example_spaces": ["café corner", "library table", "park bench", "quiet office"],
+        "can_include": ["writing", "tea/coffee ritual", "held object", "silent words", "observation", "journaling"]
+    }
+}
+
+def get_setting_context(setting_id: str) -> dict:
+    """Get the full context for a setting"""
+    return SETTING_CONTEXT.get(setting_id, SETTING_CONTEXT.get("home_quiet"))
+
+
+# ============================================================================
 # VARIATION KNOBS - Procedural variety for steps/timing
 # ============================================================================
 
