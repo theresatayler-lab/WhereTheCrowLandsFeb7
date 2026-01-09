@@ -9,7 +9,7 @@ import sys
 from datetime import datetime
 
 class PersonalizedSpellTester:
-    def __init__(self, base_url="https://grimoire-rituals.preview.emergentagent.com"):
+    def __init__(self, base_url="https://occult-spellbook.preview.emergentagent.com"):
         self.base_url = base_url
         self.token = None
         self.tests_run = 0
