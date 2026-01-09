@@ -105,7 +105,7 @@ const StepIndicator = ({ currentStep, totalSteps }) => (
           {i < currentStep ? <Check className="w-4 h-4" /> : i + 1}
         </div>
         {i < totalSteps - 1 && (
-          <div className={`w-8 h-0.5 mx-1 ${i < currentStep ? 'bg-crimson' : 'bg-gold/30'}`} />
+          <StepperOrnament active={i < currentStep} />
         )}
       </div>
     ))}
