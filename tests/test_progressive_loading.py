@@ -9,7 +9,7 @@ import pytest
 import requests
 import os
 
-BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', 'https://occult-spellbook.preview.emergentagent.com')
+BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', 'https://diy-ritual-ai.preview.emergentagent.com')
 
 class TestProgressiveLoading:
     """Test progressive loading implementation for spell generation"""

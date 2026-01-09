@@ -200,4 +200,4 @@ const topLeftCorner = getCornerForPage('spell-request', 'top-left');
 ---
 
 *Report generated: January 9, 2025*
-*Test environment: https://occult-spellbook.preview.emergentagent.com*
+*Test environment: https://diy-ritual-ai.preview.emergentagent.com*
