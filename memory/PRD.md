@@ -93,6 +93,12 @@ DB_NAME=<from hosting secrets>
   - Added SETTING_CONTEXT in spell_prompts.py with guidance for each setting
   - Backend SETTING_SCENARIO_MAP updated to map new settings to appropriate scenarios
   - Spell Writer prompt now includes setting-specific guidance (what can/cannot be included)
+  - **Tested with 3 settings**: transit, home_quiet, nature - all adapt appropriately
+
+- **Session Persistence Fixed**: Protected routes now wait for auth check before redirecting
+  - Added `isAuthChecked` state to App.js
+  - `/my-grimoire` and `/profile` no longer redirect to `/auth` on direct navigation
+  - User can now bookmark and revisit protected pages without losing session
 
 - **Early-access gate disabled** for testing (can be re-enabled in App.js)
 
