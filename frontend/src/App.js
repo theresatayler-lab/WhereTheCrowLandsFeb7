@@ -172,11 +172,15 @@ function App() {
           <Route path="/ai-image" element={<AIImage />} />
           <Route
             path="/my-grimoire"
-            element={user ? <MyGrimoire /> : <Navigate to="/auth" />}
+            element={
+              !isAuthChecked ? null : (user ? <MyGrimoire /> : <Navigate to="/auth" />)
+            }
           />
           <Route
             path="/profile"
-            element={user ? <Profile user={user} /> : <Navigate to="/auth" />}
+            element={
+              !isAuthChecked ? null : (user ? <Profile user={user} /> : <Navigate to="/auth" />)
+            }
           />
         </Routes>
         <ConditionalFooter />
