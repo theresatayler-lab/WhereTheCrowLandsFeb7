@@ -7,7 +7,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { setCurrentArchetype } from '../components/OnboardingModal';
-import { DarkSection, LightSection, GrandDivider, MysticalDivider, ElaborateCorner, PageHeader } from '../components/OrnateElements';
+import { DarkSection, LightSection, GrandDivider, MysticalDivider, PageBorderFrame, PageHeader } from '../components/OrnateElements';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
