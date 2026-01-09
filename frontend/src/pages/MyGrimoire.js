@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { BookOpen, Trash2, Eye, Loader2, Calendar, Sparkles, Hand, Heart, MapPin } from 'lucide-react';
 import { grimoireAPI } from '../utils/api';
 import { GrimoirePage } from '../components/GrimoirePage';
+import { GrimoireDownloader } from '../components/GrimoireDownloader';
 import { toast } from 'sonner';
 import { DarkSection, LightSection, GrandDivider, MysticalDivider, PageBorderFrame, PageHeader, LightOrnateCard, OrnateCard } from '../components/OrnateElements';
 
