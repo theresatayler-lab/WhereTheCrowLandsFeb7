@@ -483,37 +483,48 @@ export const PrintablesBlock = ({ tarotUrl, sigilUrl }) => (
 // ============================================================================
 
 export const PageBorderFrame = ({ children, className = '', variant = 'dark' }) => {
-  const borderUrl = PERSONA_BORDER_URLS.site;
+  // Color filter based on background - gold/crimson for dark, dark for light
+  const filterStyle = variant === 'light' 
+    ? 'brightness(0.3) sepia(1) hue-rotate(180deg)' // Dark brown for light backgrounds
+    : 'sepia(1) saturate(3) hue-rotate(330deg) brightness(1.2)'; // Gold/crimson tint for dark backgrounds
   
   return (
     <div className={`relative ${className}`}>
-      {/* Corner ornaments */}
-      <div className="absolute top-0 left-0 w-20 h-20 sm:w-28 sm:h-28 pointer-events-none z-30 opacity-80"
+      {/* Corner ornaments - using CSS filter to colorize */}
+      <div className="absolute top-0 left-0 w-24 h-24 sm:w-32 sm:h-32 pointer-events-none z-30"
         style={{
-          backgroundImage: `url(${borderUrl})`,
+          backgroundImage: `url(${PERSONA_BORDER_URLS.site})`,
           backgroundSize: '400%',
           backgroundPosition: 'top left',
+          filter: filterStyle,
+          opacity: 0.85
         }}
       />
-      <div className="absolute top-0 right-0 w-20 h-20 sm:w-28 sm:h-28 pointer-events-none z-30 opacity-80"
+      <div className="absolute top-0 right-0 w-24 h-24 sm:w-32 sm:h-32 pointer-events-none z-30"
         style={{
-          backgroundImage: `url(${borderUrl})`,
+          backgroundImage: `url(${PERSONA_BORDER_URLS.site})`,
           backgroundSize: '400%',
           backgroundPosition: 'top right',
+          filter: filterStyle,
+          opacity: 0.85
         }}
       />
-      <div className="absolute bottom-0 left-0 w-20 h-20 sm:w-28 sm:h-28 pointer-events-none z-30 opacity-80"
+      <div className="absolute bottom-0 left-0 w-24 h-24 sm:w-32 sm:h-32 pointer-events-none z-30"
         style={{
-          backgroundImage: `url(${borderUrl})`,
+          backgroundImage: `url(${PERSONA_BORDER_URLS.site})`,
           backgroundSize: '400%',
           backgroundPosition: 'bottom left',
+          filter: filterStyle,
+          opacity: 0.85
         }}
       />
-      <div className="absolute bottom-0 right-0 w-20 h-20 sm:w-28 sm:h-28 pointer-events-none z-30 opacity-80"
+      <div className="absolute bottom-0 right-0 w-24 h-24 sm:w-32 sm:h-32 pointer-events-none z-30"
         style={{
-          backgroundImage: `url(${borderUrl})`,
+          backgroundImage: `url(${PERSONA_BORDER_URLS.site})`,
           backgroundSize: '400%',
           backgroundPosition: 'bottom right',
+          filter: filterStyle,
+          opacity: 0.85
         }}
       />
       {/* Content */}
