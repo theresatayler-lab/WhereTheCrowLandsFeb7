@@ -44,6 +44,9 @@ function EarlyAccessRedirect() {
   const location = useLocation();
   
   useEffect(() => {
+    // TEMPORARILY DISABLED for testing - allow full site access
+    // To re-enable early-access gate, uncomment the code below
+    
     // Check for preview mode in URL params or localStorage
     const params = new URLSearchParams(location.search);
     const previewParam = params.get('preview');
@@ -51,9 +54,12 @@ function EarlyAccessRedirect() {
     // If preview=crowlands is in URL, save to localStorage and allow full site access
     if (previewParam === 'crowlands') {
       localStorage.setItem('crowlands_preview_mode', 'true');
-      return;
     }
     
+    // Always allow access for now (early-access gate disabled)
+    return;
+    
+    /* EARLY ACCESS GATE - Uncomment to re-enable
     // If preview mode is saved in localStorage, allow full site access
     if (localStorage.getItem('crowlands_preview_mode') === 'true') {
       return;
@@ -63,6 +69,7 @@ function EarlyAccessRedirect() {
     if (location.pathname !== '/early-access') {
       window.location.href = '/early-access';
     }
+    */
   }, [location]);
   
   return null;
