@@ -235,5 +235,6 @@ export const Upgrade = () => {
         </div>
       </LightSection>
     </div>
+    </PageBorderFrame>
   );
 };
