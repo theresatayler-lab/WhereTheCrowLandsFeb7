@@ -99,7 +99,7 @@ const ARCHETYPE_STYLES = {
   },
 };
 
-// Generated Divider Component - displays DALL-E generated divider images OR loading skeleton
+// Generated Divider Component - displays STATIC URL or base64 divider images
 const GeneratedDivider = ({ imageBase64, isLoading = false, className = '' }) => {
   // Show skeleton while loading
   if (isLoading && !imageBase64) {
@@ -114,12 +114,19 @@ const GeneratedDivider = ({ imageBase64, isLoading = false, className = '' }) =>
   
   if (!imageBase64) return null;
   
+  // Handle static URL dividers (prefixed with "STATIC:")
+  const isStaticUrl = imageBase64.startsWith('STATIC:');
+  const imageSrc = isStaticUrl 
+    ? imageBase64.replace('STATIC:', '')
+    : `data:image/png;base64,${imageBase64}`;
+  
   return (
     <div className={`w-full my-6 ${className}`}>
       <img 
-        src={`data:image/png;base64,${imageBase64}`}
+        src={imageSrc}
         alt="Section divider"
         className="w-full h-auto max-h-16 object-contain opacity-70"
+        style={isStaticUrl ? { filter: 'sepia(0.3) saturate(0.8)' } : {}}
       />
     </div>
   );
