@@ -11,24 +11,25 @@
 
 ## Border Application Rules
 
-### 1. PAGE-LEVEL BORDERS (Site Border)
+### 1. PAGE-LEVEL BORDERS (Site Border) ✅ IMPLEMENTED
 Apply to ALL major page containers:
-- Home page hero sections
-- Archive pages (Library, Deities, Figures, Sites, Rituals, Timeline)
-- Profile, Settings, Auth pages
-- My Grimoire list view
+- ✅ Archive pages (Deities, Figures, Sites, Rituals, Timeline)
+- ✅ Profile page
+- ✅ Auth page
+- ✅ My Grimoire page
 
 **Component**: `<PageBorderFrame>` wrapping main content
-**CSS Class**: `border-frame-site`
+**Location**: `/app/frontend/src/components/OrnateElements.js`
 
-### 2. SPELL/GRIMOIRE PAGES (Persona-Specific)
+### 2. SPELL/GRIMOIRE PAGES (Persona-Specific) ✅ IMPLEMENTED
 Apply persona border based on which archetype crafted the spell:
 - Shigg spells -> Site/Shigg border
 - Cathleen spells -> Cathleen border
 - Katherine spells -> Katherine border
 - Theresa spells -> Theresa border
 
-**Component**: `<PersonaBorderFrame persona={archetype.id}>`
+**Component**: `<SpellBorderFrame persona={archetype.id}>`
+**Applied to**: GrimoirePage.js (both TarotCardView and full grimoire view)
 
 ### 3. TAROT CARDS (Persona-Specific)
 Wrap tarot card images with matching persona border:
@@ -44,7 +45,6 @@ Use subtle gold keyline borders for:
 - The Working steps
 - Words of Power
 - Historical Context
-- Warnings
 - Special sections (Wards, Concealment)
 
 **Component**: `<SectionBorderFrame>` or `<BorderFrame variant="gold">`
@@ -58,60 +58,61 @@ Use corner diamond ornaments for:
 **Component**: `<OrnateCard>` (already exists)
 
 ## Z-Index Hierarchy
-- Border overlays: z-20
+- Border overlays: z-30 (PageBorderFrame corners)
+- Border content: z-20 (SpellBorderFrame overlay)
 - Content: z-10
 - Background effects: z-0
 
-## Implementation Checklist
+## Implementation Status
 
-### Pages to Update:
-- [ ] Home.js - Site border on hero
-- [ ] SpellRequest.js - Persona border on result
-- [ ] GrimoirePage.js - Persona border + section borders
-- [ ] MyGrimoire.js - Site border + persona borders on cards
-- [ ] CorrieTarot.js - Site border + tarot card frames
-- [ ] Library.js - Site border
-- [ ] Deities.js - Site border
-- [ ] HistoricalFigures.js - Site border
-- [ ] SacredSites.js - Site border
-- [ ] Rituals.js - Site border
-- [ ] Timeline.js - Site border
-- [ ] Profile.js - Site border
-- [ ] Auth.js - Site border
-- [ ] Upgrade.js - Site border
-- [ ] AIChat.js - Site border
-- [ ] About.js - Site border
-- [ ] FAQ.js - Site border
+### Pages Updated:
+- ✅ Deities.js - PageBorderFrame
+- ✅ HistoricalFigures.js - PageBorderFrame  
+- ✅ SacredSites.js - PageBorderFrame
+- ✅ Rituals.js - PageBorderFrame
+- ✅ Timeline.js - PageBorderFrame
+- ✅ Profile.js - PageBorderFrame
+- ✅ Auth.js - PageBorderFrame
+- ✅ MyGrimoire.js - PageBorderFrame
+- ✅ GrimoirePage.js - SpellBorderFrame (persona-specific)
+
+### Remaining:
+- Library.js - Has own ArtDecoCorner (may keep as-is for variety)
+- Home.js - Has own ElaborateCorner system (may keep as-is)
+- Upgrade.js - Needs update
+- CorrieTarot.js - Needs update with TarotCardFrame
 
 ## Code Patterns
 
 ### Page-Level Border
 ```jsx
-import { PageBorderFrame } from '../components/OrnateElements';
+import { PageBorderFrame, DarkSection } from '../components/OrnateElements';
 
-<PageBorderFrame>
-  <DarkSection>
-    {/* Page content */}
-  </DarkSection>
-</PageBorderFrame>
+return (
+  <PageBorderFrame>
+    <DarkSection>
+      {/* Page content */}
+    </DarkSection>
+  </PageBorderFrame>
+);
 ```
 
 ### Persona Spell Border
 ```jsx
-import { PersonaBorderFrame } from '../components/OrnateElements';
+import { SpellBorderFrame } from '../components/OrnateElements';
 
-<PersonaBorderFrame persona={archetype?.id || 'site'}>
-  <div className="spell-content">
+<SpellBorderFrame persona={archetype?.id || 'site'}>
+  <motion.div className="spell-content">
     {/* Spell content */}
-  </div>
-</PersonaBorderFrame>
+  </motion.div>
+</SpellBorderFrame>
 ```
 
 ### Section Border
 ```jsx
 import { SectionBorderFrame } from '../components/OrnateElements';
 
-<SectionBorderFrame>
+<SectionBorderFrame variant="gold">
   <h3>Materials Needed</h3>
   {/* Section content */}
 </SectionBorderFrame>
