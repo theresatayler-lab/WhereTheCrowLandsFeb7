@@ -170,28 +170,46 @@ export const SectionDivider = ({ variant = 'default', className = '' }) => {
 };
 
 // ============================================================================
-// STATIC ORNAMENT LIBRARY - Bestiary & Occult Glyphs
+// STATIC ORNAMENT LIBRARY - Now uses SVG glyphs from /assets/ornaments
 // ============================================================================
 
-export const BestiaryGlyph = ({ animal = 'raven', className = '', size = 'md' }) => {
-  const sizes = { sm: 'text-lg', md: 'text-2xl', lg: 'text-4xl' };
-  const glyphs = {
+export const BestiaryGlyph = ({ animal = 'crow', className = '', size = 'md', color }) => {
+  const sizes = { sm: 20, md: 28, lg: 40 };
+  const pixelSize = sizes[size] || sizes.md;
+  const glyphColor = color || COLORS.gold;
+  
+  const Glyph = BestiaryGlyphs[animal];
+  if (Glyph) {
+    return <span className={className}><Glyph size={pixelSize} color={glyphColor} /></span>;
+  }
+  // Fallback to emoji if glyph not found
+  const emojiGlyphs = {
     raven: '🐦‍⬛', crow: '🐦‍⬛', owl: '🦉', hare: '🐇', fox: '🦊',
     moth: '🦋', serpent: '🐍', stag: '🦌', wolf: '🐺', badger: '🦡',
     magpie: '🐦', robin: '🐦', toad: '🐸', sparrow: '🐦'
   };
-  return <span className={`${sizes[size]} ${className}`}>{glyphs[animal] || glyphs.raven}</span>;
+  const sizeClasses = { sm: 'text-lg', md: 'text-2xl', lg: 'text-4xl' };
+  return <span className={`${sizeClasses[size]} ${className}`}>{emojiGlyphs[animal] || emojiGlyphs.crow}</span>;
 };
 
-export const OccultGlyph = ({ symbol = 'pentacle', className = '', size = 'md' }) => {
-  const sizes = { sm: 'text-lg', md: 'text-2xl', lg: 'text-4xl' };
-  const glyphs = {
+export const OccultGlyph = ({ symbol = 'pentacle', className = '', size = 'md', color }) => {
+  const sizes = { sm: 20, md: 28, lg: 40 };
+  const pixelSize = sizes[size] || sizes.md;
+  const glyphColor = color || COLORS.gold;
+  
+  const Glyph = BestiaryGlyphs[symbol];
+  if (Glyph) {
+    return <span className={className}><Glyph size={pixelSize} color={glyphColor} /></span>;
+  }
+  // Fallback to emoji if glyph not found
+  const emojiGlyphs = {
     pentacle: '⛤', moon: '☽', sun: '☀', star: '✦', eye: '👁',
     key: '🗝️', chalice: '🏆', bell: '🔔', candle: '🕯️', crystal: '💎',
     ouroboros: '🐍', compass: '🧭', mirror: '🪞', feather: '🪶',
     needle: '🪡', thread: '🧵', seal: '🔏', scroll: '📜'
   };
-  return <span className={`${sizes[size]} ${className}`}>{glyphs[symbol] || glyphs.pentacle}</span>;
+  const sizeClasses = { sm: 'text-lg', md: 'text-2xl', lg: 'text-4xl' };
+  return <span className={`${sizeClasses[size]} ${className}`}>{emojiGlyphs[symbol] || emojiGlyphs.pentacle}</span>;
 };
 
 // ============================================================================
