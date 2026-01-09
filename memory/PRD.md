@@ -87,6 +87,13 @@ DB_NAME=<from hosting secrets>
 - **Full Site QA Complete**: 22 pages tested, 100% visual pass, 95% functionality pass
   - See `/app/VISUAL_QA_REPORT.md` for full details
 
+- **Setting Options Redesigned (V1.2)**: Replaced room-based settings with contextual settings
+  - Old: Kitchen, Bedroom, Outdoors, Bath, Desk/Office
+  - New: In the quiet of my home, Outside in nature, During my daily routine, On the move, In public/semi-public
+  - Added SETTING_CONTEXT in spell_prompts.py with guidance for each setting
+  - Backend SETTING_SCENARIO_MAP updated to map new settings to appropriate scenarios
+  - Spell Writer prompt now includes setting-specific guidance (what can/cannot be included)
+
 - **Early-access gate disabled** for testing (can be re-enabled in App.js)
 
 ### Session December 2024
