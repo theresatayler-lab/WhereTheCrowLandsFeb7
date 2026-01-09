@@ -12,87 +12,82 @@ Where The Crowlands is a sophisticated full-stack application for building DIY r
 ## Core Features
 
 ### Visual System V1.1 (Collectible Grimoire Aesthetic)
-- Global `CROWLANDS_ART_BIBLE` in backend for unified "ornate occult scarf/tapestry" art style
-- Persona-specific `visual_dna` overlays for Shigg, Cathleen, Katherine
-- Reusable UI components: `PageHero`, `ParchmentPanel`, `OrnateCard`, `SectionDivider`
-- Static ornament library (corners, dividers, glyphs)
-- Consistent color system: navy, oxblood, gold, bone; serif fonts
+- Global `CROWLANDS_ART_BIBLE` as **PREFIX** to all image prompts (ornate occult silk scarf/tapestry)
+- Persona-specific `visual_dna` overlays for Shigg, Cathleen, Katherine, Theresa
+- Hard negatives: no text/letters/words/watermarks/logos/photorealism/neon/collage
+- Palette: midnight navy, oxblood, antique gold, bone
 
-### Border Design System (NEW - December 8, 2024)
-- **PageBorderFrame**: Site-wide crow/Celtic border corners for major containers
-- **SpellBorderFrame**: Persona-specific borders (Shigg, Cathleen, Katherine, Theresa)
-- **SectionBorderFrame**: Gold keyline borders for content sections
-- **TarotCardFrame**: Persona-specific tarot card frames
-- Documentation: `/app/frontend/src/styles/BORDER_RULES.md`
+### Image Generation System
+- **ImageProvider abstraction** (`/app/backend/image_provider.py`)
+- Config: `IMAGE_PROVIDER` env var (library|dalle|flux)
+- Static library for dividers (no DALL-E generation)
+- Hash-based caching: `hash(prompt+persona+asset_type)`
+- Generated: header + tarot + sigil only (dividers are STATIC)
 
 ### Progressive Loading System
-- **Fast spell text**: Spell content loads in ~10 seconds (vs 30-60+ previously)
-- **Background image generation**: Images generated in parallel after text displays
-- **Skeleton placeholders**: Animated loading states for header image, dividers, tarot, sigil
+- Text-first: `generate_images: false` returns spell in ~25 seconds
+- Background image generation via `lazyLoadImages()`
+- Skeleton placeholders while images load
+
+### Download Entire Grimoire (NEW)
+- Single PDF with cover page, table of contents, all spells
+- Includes: spell text, header image, tarot card, sigil
+- Component: `/app/frontend/src/components/GrimoireDownloader.js`
+- Button appears on My Grimoire page when user has saved spells
 
 ### Spell Generation System
 - Multi-step wizard for spell personalization
-- Three AI archetypes: Shigg, Cathleen, Katherine (+ Theresa pending)
-- Generated assets: tarot cards, sigils, dividers
-- Spell saving to user's grimoire
+- Four AI archetypes: Shigg, Cathleen, Katherine, Theresa
+- Generated assets: header, tarot, sigil (dividers static)
 
-### User Features
-- Authentication (login/register)
-- Personal grimoire for saved spells
-- Subscription tiers (free/premium)
-- PDF export functionality
+## Environment Variables (Backend)
+```
+OPENAI_API_KEY=<from hosting secrets>
+IMAGE_PROVIDER=dalle  # Options: library|dalle|flux
+MONGO_URL=<from hosting secrets>
+DB_NAME=<from hosting secrets>
+```
 
 ## Completed Work (December 2024)
 
-### December 8, 2024
-- **Border Design System Implementation**:
-  - Created `PageBorderFrame` component for site-wide crow/Celtic borders
-  - Created `SpellBorderFrame` for persona-specific spell page borders
-  - Created `SectionBorderFrame` for content section gold keyline borders
-  - Applied to: Deities, HistoricalFigures, SacredSites, Rituals, Timeline, Profile, Auth, MyGrimoire, Upgrade, GrimoirePage
-  - Created BORDER_RULES.md documentation
+### Latest Session
+- **ImageProvider Abstraction**: Single interface with provider switching
+- **Static Dividers**: No longer generated, use library URLs
+- **ART_BIBLE as PREFIX**: Dominates all image prompts
+- **Download Entire Grimoire**: PDF export with cover, TOC, all spells + images
+- **Security**: Created .gitignore, confirmed env var usage
 
-- **Progressive Loading Implementation**: 
-  - `SpellRequest.js` now sends `generate_images: false` to get spell text fast
-  - `lazyLoadImages()` function generates images in background after text displays
-  - `GrimoirePage.js` shows animated skeleton placeholders while images load
+### Previous Work
+- Border Design System (PageBorderFrame, SpellBorderFrame)
+- Progressive Loading
+- GrimoirePage contrast fixes
+- Visual System V1.1 integration
 
-- **GrimoirePage Contrast Fix (P0)**: Fixed critical readability issues on completed spell page
+## Pending Tasks
 
-### Previous Session Work
-- Visual System V1.1 integration (CROWLANDS_ART_BIBLE, persona visual_dna)
-- UI component overhaul (PageHero, ParchmentPanel, OrnateCard)
-- Fixed spell builder wizard contrast
-- Fixed grimoire saving to store assetPlan (tarot, sigil)
+### NEXT: Site UI Components
+- Build reusable components: PageHero, ParchmentPanel, OrnateCard, SectionDivider, BestiaryGlyph
+- Apply across all pages for consistent Home page quality
+- Static ornament library for running folklore animals + detail
 
-## Pending Issues
-
-### P2 - Fix Corrie Tarot Navigation Bug
-Button/link functionality broken on /corrie-tarot?preview=crowlands
-
-### P2 - BrowserStack Accessibility Issues
-Blocked - waiting for specific report from user
-
-### P3 - Theresa Archetype Enrichment
-Add full backend config in persona_config.py including visual_dna, formats, scenarios, source_materials
-
-## Future Tasks
-- Apply TarotCardFrame to Corrie Tarot page
-- Crawler access solution (sitemap.xml)
-- Premium Spell Book Compiler (PDF generation)
-- Activate Stripe Integration for live payments
-- Print-on-Demand service integration
-- Tooltips for esoteric terms
-- Refactor server.py into modular structure
+### Backlog
+- Fix Corrie Tarot navigation (if still broken)
+- Theresa archetype enrichment
+- Sitemap for crawlers
+- Stripe live activation
 
 ## Key Files
-- `/app/frontend/src/components/OrnateElements.js` - UI components including border frames
-- `/app/frontend/src/components/GrimoirePage.js` - Completed spell display (with SpellBorderFrame)
-- `/app/frontend/src/pages/SpellRequest.js` - Spell builder wizard (progressive loading)
-- `/app/frontend/src/styles/BORDER_RULES.md` - Border system documentation
+- `/app/backend/image_provider.py` - ImageProvider abstraction
+- `/app/backend/spell_prompts.py` - Image prompt building with ART_BIBLE prefix
 - `/app/backend/persona_config.py` - CROWLANDS_ART_BIBLE and persona configs
-- `/app/backend/server.py` - API endpoints
+- `/app/frontend/src/components/GrimoireDownloader.js` - PDF export
+- `/app/frontend/src/components/GrimoirePage.js` - Spell display
+- `/app/frontend/src/components/OrnateElements.js` - UI components
 
 ## Test Credentials
 - Email: sub_test@test.com
 - Password: test123
+
+## Timing Benchmarks
+- Text-only (generate_images: false): ~25 seconds
+- Full with images (3 DALL-E + static dividers): ~90 seconds
