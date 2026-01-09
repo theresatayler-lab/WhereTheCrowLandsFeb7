@@ -265,7 +265,9 @@ export const MyGrimoire = () => {
                     className="text-center py-16"
                   >
                     <LightOrnateCard hover={false} className="max-w-md mx-auto">
-                      <BookOpen className="w-16 h-16 text-crimson/30 mx-auto mb-4" />
+                      <div className="mb-4">
+                        <BestiaryGlyph animal="feather" size="lg" color="#b82330" />
+                      </div>
                       <h2 className="font-cinzel text-xl text-crimson mb-3">No spells saved yet</h2>
                       <p className="font-montserrat text-sm text-navy-dark/60 mb-6">
                         Start building your personal collection by generating spells and saving them to your grimoire.
