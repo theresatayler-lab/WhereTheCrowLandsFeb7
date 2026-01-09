@@ -476,6 +476,9 @@ BAN these filler phrases: {json.dumps(voice_config.get('never_says', ['so mote i
 ### D) TABOOS (never include)
 {json.dumps(taboos)}
 
+### E) SETTING CONTEXT (V1.2) - CRITICAL FOR THIS SPELL
+{_build_setting_guidance(spell_spec.get('setting', 'home_quiet'))}
+
 ## THE SPELL YOU ARE WRITING
 Title: {plan.get('spell_title', 'Untitled')}
 Subtitle: {plan.get('spell_subtitle', '')}
@@ -486,7 +489,7 @@ Format: {plan.get('format_id', 'general')}
 - Their Need: "{spell_spec.get('user_query', '')}"
 - Desired Feeling: {spell_spec.get('desired_feeling', 'calm')}
 - Anchor Object: {spell_spec.get('anchor_object', 'candle')}
-- Setting: {spell_spec.get('setting', 'bedroom')}
+- Setting: {spell_spec.get('setting', 'home_quiet')}
 - Things to Avoid: {spell_spec.get('avoid', 'None')}
 
 ## BELIEF BOUNDARY
