@@ -378,6 +378,26 @@ STRICT RULES:
 
 
 # ============================================================================
+# V1.2: SETTING GUIDANCE BUILDER
+# ============================================================================
+
+def _build_setting_guidance(setting_id: str) -> str:
+    """Build setting-specific guidance for the spell writer"""
+    context = SETTING_CONTEXT.get(setting_id, SETTING_CONTEXT.get("home_quiet"))
+    
+    return f"""The seeker will perform this spell: **{context['label']}**
+{context['guidance']}
+
+EXAMPLE SPACES: {', '.join(context['example_spaces'])}
+CAN INCLUDE: {', '.join(context['can_include'])}
+
+⚠️ IMPORTANT: Adapt the spell to fit this context. If the setting is "On the move" or "In public," 
+the spell must use ONLY subtle, internalized actions that won't draw attention. 
+If the setting is "In the quiet of my home," you can include fuller rituals with candles, 
+spoken words, and physical setup."""
+
+
+# ============================================================================
 # STAGE 2: SPELL WRITER PROMPT (V1.1 - SPELL WRITER CONTRACT)
 # ============================================================================
 
