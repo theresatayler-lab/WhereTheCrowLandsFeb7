@@ -72,14 +72,23 @@ DB_NAME=<from hosting secrets>
 
 ## Pending Tasks
 
-### NEXT: Site UI Components
+### P0 (Fixed)
+- ✅ Blank PDF Download Bug - FIXED (January 9, 2025)
+
+### P1: Site UI Components (NEXT)
 - Build reusable components: PageHero, ParchmentPanel, OrnateCard, SectionDivider, BestiaryGlyph
 - Apply across all pages for consistent Home page quality
 - Static ornament library for running folklore animals + detail
 
-### Backlog
+### P2: Auth/Routing Instability
+- Issue: Logged-in users sometimes get redirected away from protected pages (/my-grimoire, /profile)
+- Needs investigation of PrivateRoute logic in App.js
+
+### P3: Backlog
+- Theresa archetype enrichment in persona_config.py
+- BrowserStack accessibility issues (awaiting user input)
+- Caching reality check
 - Fix Corrie Tarot navigation (if still broken)
-- Theresa archetype enrichment
 - Sitemap for crawlers
 - Stripe live activation
 
