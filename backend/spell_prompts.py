@@ -470,33 +470,37 @@ AVOID: {', '.join(avoid_list)}"""
 
     elif asset_type == "sigil":
         asset_info = asset_plan.get("sigil", {})
-        prompt = f"""High contrast BLACK AND WHITE sigil design,
+        # Sigil uses a simplified art bible prefix for linework focus
+        prompt = f"""Ornate occult engraved linework sigil,
+High contrast BLACK AND WHITE sigil design,
 {asset_info.get('design_concept', 'mystical protective symbol')},
 elements: {', '.join(asset_info.get('elements', ['circle', 'line']))},
 geometric and organic lines combined,
 PRINTABLE at small size, clear bold lines,
 magical seal or protective mark style,
 ultra-detailed engraved linework, symmetrical medallion,
+art nouveau border flourishes,
 BLACK AND WHITE ONLY, no color, no grey, no shading,
 NO text, NO letters, NO words, NO signatures, NO watermarks"""
 
     elif asset_type.startswith("divider"):
-        # Get the specific divider from the plan
+        # DIVIDERS ARE NOW STATIC - this code path should not be called
+        # Keeping for backwards compatibility but dividers come from library
         divider_idx = int(asset_type.split("_")[1]) - 1 if "_" in asset_type else 0
         dividers = asset_plan.get("dividers", [{}])
         divider_info = dividers[divider_idx] if divider_idx < len(dividers) else dividers[0] if dividers else {}
         
-        prompt = f"""{base_style}, HORIZONTAL decorative divider,
+        prompt = f"""{art_bible_prefix},
+{base_style}, HORIZONTAL decorative divider,
 ornamental border featuring {divider_info.get('motif', 'scrollwork')},
 HORIZONTAL orientation (wide, not tall), symmetrical,
 suitable for separating text sections in a book,
 elegant, art nouveau filigree, engraved texture,
 {dall_e_rules},
-{art_bible_suffix},
 AVOID: {', '.join(avoid_list)}"""
 
     else:
-        prompt = f"{base_style}, mystical illustration, {art_bible_suffix}"
+        prompt = f"{art_bible_prefix}, {base_style}, mystical illustration"
     
     return prompt.replace("\n", " ").strip()
 
