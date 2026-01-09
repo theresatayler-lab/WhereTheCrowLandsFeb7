@@ -367,7 +367,9 @@ export const MyGrimoire = () => {
                     className="text-center py-16"
                   >
                     <LightOrnateCard hover={false} className="max-w-md mx-auto">
-                      <Hand className="w-16 h-16 text-gold/30 mx-auto mb-4" />
+                      <div className="mb-4">
+                        <BestiaryGlyph animal="triquetra" size="lg" color="#d4a84b" />
+                      </div>
                       <h2 className="font-cinzel text-xl text-gold-dark mb-3">No wards saved yet</h2>
                       <p className="font-montserrat text-sm text-navy-dark/60 mb-6">
                         Ask Cathleen to help you find the perfect ward for your situation.
