@@ -418,7 +418,7 @@ If in doubt, cite fewer sources rather than hallucinate.
 def build_image_prompt(asset_type: str, asset_plan: dict, persona_config: dict, spell_title: str) -> str:
     """
     Build DALL-E prompt for each asset type
-    CRITICAL: Always inject CROWLANDS_ART_BIBLE tokens for consistent scarf/tapestry aesthetic
+    CRITICAL: CROWLANDS_ART_BIBLE is the PREFIX - it dominates the prompt
     Rules: "No text", print-friendly linework, hard art style rules
     """
     
@@ -426,8 +426,8 @@ def build_image_prompt(asset_type: str, asset_plan: dict, persona_config: dict, 
     dall_e_rules = persona_config['visual_dna'].get('dall_e_rules', 'pen-and-ink illustration, NO text')
     avoid_list = persona_config['visual_dna']['avoid']
     
-    # Get the global art bible suffix - this is CRITICAL for consistent scarf/tapestry aesthetic
-    art_bible_suffix = get_art_bible_prompt_suffix()
+    # Get the global art bible - this is PREFIX (dominates the prompt)
+    art_bible_prefix = get_art_bible_prompt_suffix()
     
     # Get asset role lock constraints
     role_lock = ASSET_ROLE_LOCKS.get(asset_type.split("_")[0], ASSET_ROLE_LOCKS.get("header", {}))
@@ -438,12 +438,13 @@ def build_image_prompt(asset_type: str, asset_plan: dict, persona_config: dict, 
         # Use persona-specific header_scene if available
         header_scene = persona_config['visual_dna'].get('header_scene', asset_info.get('scene_description', 'mystical scene'))
         
-        prompt = f"""{base_style}, {header_scene}, 
+        # ART BIBLE PREFIX - dominates the prompt
+        prompt = f"""{art_bible_prefix},
+{base_style}, {header_scene}, 
 {asset_info.get('mood', 'contemplative')} mood, 
 featuring {', '.join(asset_info.get('key_elements', ['candle']))},
 {role_suffix},
 {dall_e_rules},
-{art_bible_suffix},
 AVOID: {', '.join(avoid_list)}"""
 
     elif asset_type == "tarot_card_image":
@@ -454,7 +455,9 @@ AVOID: {', '.join(avoid_list)}"""
         framing = asset_info.get('must_use_framing', 'circular border')
         symbols = asset_info.get('must_include_symbols', ['star'])
         
-        prompt = f"""{base_style}, SYMBOLIC EMBLEM (NOT a scene),
+        # ART BIBLE PREFIX - dominates the prompt
+        prompt = f"""{art_bible_prefix},
+{base_style}, SYMBOLIC EMBLEM (NOT a scene),
 {tarot_emblem if tarot_emblem else f'FOCAL ELEMENT: {focal}'},
 FRAMING: {framing},
 SUPPORTING SYMBOLS: {', '.join(symbols)},
@@ -462,7 +465,6 @@ centered composition, suitable for tarot/oracle card,
 medallion or seal style, symmetrical,
 {role_suffix},
 {dall_e_rules},
-{art_bible_suffix},
 MUST be visually DISTINCT from header image,
 AVOID: {', '.join(avoid_list)}"""
 
