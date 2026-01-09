@@ -50,7 +50,34 @@ DB_NAME=<from hosting secrets>
 
 ## Completed Work (January 2025)
 
-### Session January 9, 2025
+### Session January 9, 2025 (Current)
+
+#### Visual Polish V2.0 - COMPLETE
+- **Enhanced Ornament Library** (`/app/frontend/src/assets/ornaments/index.js`)
+  - 24 SVG bestiary glyphs: crow, raven, owl, hare, stag, fox, moth, serpent, pentacle, triquetra, crescent, sunDisc, key, chalice, candle, bell, compass, mirror, feather, thread, etc.
+  - 20 SVG corner ornaments: classic, elaborate, floral, celtic, artNouveau, geometric, vine, occult, simple, double, diamond, star, spiral, wave, leaf, cross, arc, bracket, scroll, tassel
+  - 12 SVG divider strips: classic, moon, stars, diamonds, wave, dots, ornate, celtic, arrows, simple, doubleLine, gradient
+  - **Single Source of Truth**: `PAGE_ORNAMENT_CONFIG` maps each page to specific ornament styles
+
+- **Page-Aware Ornament Components**
+  - `PageOrnamentCorners` - Renders 4 corners with page-specific style
+  - `PageDivider` - Page-aware divider component
+  - `PageGlyph` - Page-aware accent glyph (primary/secondary)
+  - `DecoratedSectionHeader` - Section header with ornament integration
+  - `StepperOrnament` - Decorative element between wizard steps
+  - `NavFlourish` - Small decorative element for navigation
+
+- **UI Integration Complete**
+  - `/app/frontend/src/pages/MyGrimoire.js` - Empty states now use `BestiaryGlyph` instead of Lucide icons
+  - `/app/frontend/src/pages/Guides.js` - Guide cards have per-guide glyph accents (feather+crescent for Shigg, owl+crescent for Corrie, etc.)
+  - `/app/frontend/src/pages/SpellRequest.js` - Step indicator uses `StepperOrnament` between steps
+
+- **Visual QA Report Updated** (`/app/VISUAL_QA_REPORT.md`)
+  - 22 pages audited, 98% visual consistency
+  - 12 minor issues documented (all S/M changes)
+  - Complete ornament usage reference and examples
+
+### Session January 9, 2025 (Earlier)
 - **PDF Download Bug Fixed**: Completely rewrote PDF generation to use jsPDF directly instead of html2pdf.js
   - `GrimoireDownloader.js` - Uses jsPDF for entire grimoire PDF (cover, TOC, spell pages)
   - `GrimoirePage.js` - Uses jsPDF + html2canvas for single spell PDF
