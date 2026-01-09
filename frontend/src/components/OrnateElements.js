@@ -464,6 +464,104 @@ export const TarotCardFrame = ({ imageUrl, persona = 'site', title, className = 
 };
 
 // ============================================================================
+// PAGE-AWARE ORNAMENT COMPONENTS
+// Use the static ornament library with page-specific configurations
+// ============================================================================
+
+// Page corners that use the ornament config
+export const PageOrnamentCorners = ({ pageId = 'default', size = 60, className = '' }) => {
+  const config = PAGE_ORNAMENT_CONFIG[pageId] || PAGE_ORNAMENT_CONFIG.default;
+  const Corner = CornerOrnaments[config.cornerStyle] || CornerOrnaments.classic;
+  
+  return (
+    <>
+      <div className={`absolute top-2 left-2 pointer-events-none z-20 ${className}`} style={{ width: size, height: size }}>
+        <Corner size={size} rotation={0} />
+      </div>
+      <div className={`absolute top-2 right-2 pointer-events-none z-20 ${className}`} style={{ width: size, height: size }}>
+        <Corner size={size} rotation={90} />
+      </div>
+      <div className={`absolute bottom-2 left-2 pointer-events-none z-20 ${className}`} style={{ width: size, height: size }}>
+        <Corner size={size} rotation={270} />
+      </div>
+      <div className={`absolute bottom-2 right-2 pointer-events-none z-20 ${className}`} style={{ width: size, height: size }}>
+        <Corner size={size} rotation={180} />
+      </div>
+    </>
+  );
+};
+
+// Page-aware divider component
+export const PageDivider = ({ pageId = 'default', width = 200, className = '' }) => {
+  const config = PAGE_ORNAMENT_CONFIG[pageId] || PAGE_ORNAMENT_CONFIG.default;
+  const Divider = DividerStrips[config.dividerStyle] || DividerStrips.classic;
+  
+  return (
+    <div className={`flex justify-center py-4 ${className}`}>
+      <Divider width={width} />
+    </div>
+  );
+};
+
+// Page-aware accent glyph
+export const PageGlyph = ({ pageId = 'default', type = 'accent', size = 24, color = COLORS.gold, className = '' }) => {
+  const config = PAGE_ORNAMENT_CONFIG[pageId] || PAGE_ORNAMENT_CONFIG.default;
+  const glyphName = type === 'secondary' ? config.secondaryGlyph : config.accentGlyph;
+  const Glyph = BestiaryGlyphs[glyphName];
+  
+  return Glyph ? (
+    <span className={className}>
+      <Glyph size={size} color={color} />
+    </span>
+  ) : null;
+};
+
+// Decorated section header with page-aware ornaments
+export const DecoratedSectionHeader = ({ pageId = 'default', title, subtitle, light = false, className = '' }) => {
+  const config = PAGE_ORNAMENT_CONFIG[pageId] || PAGE_ORNAMENT_CONFIG.default;
+  const AccentGlyph = BestiaryGlyphs[config.accentGlyph];
+  const glyphColor = light ? COLORS.crimson : COLORS.gold;
+  
+  return (
+    <div className={`text-center ${className}`}>
+      <PageDivider pageId={pageId} width={180} className="mb-3" />
+      <div className="flex items-center justify-center gap-3 mb-2">
+        {AccentGlyph && <AccentGlyph size={20} color={glyphColor} />}
+        <h2 className={`font-italiana text-2xl sm:text-3xl ${light ? 'text-crimson' : 'text-gold-light'}`}>
+          {title}
+        </h2>
+        {AccentGlyph && <AccentGlyph size={20} color={glyphColor} />}
+      </div>
+      {subtitle && (
+        <p className={`font-montserrat text-sm ${light ? 'text-navy-dark/70' : 'text-silver-mist/70'}`}>
+          {subtitle}
+        </p>
+      )}
+    </div>
+  );
+};
+
+// Nav flourish component - small decorative element for navigation
+export const NavFlourish = ({ color = COLORS.gold, size = 16 }) => (
+  <span className="inline-flex items-center gap-1 opacity-60">
+    <svg width={size} height={size} viewBox="0 0 16 16" fill="none">
+      <path d="M2 8h4M10 8h4M8 2v4M8 10v4" stroke={color} strokeWidth="1" strokeLinecap="round" opacity="0.5"/>
+      <circle cx="8" cy="8" r="2" fill={color} opacity="0.7"/>
+    </svg>
+  </span>
+);
+
+// Stepper ornament - decorative element between stepper steps
+export const StepperOrnament = ({ active = false }) => (
+  <div className={`flex items-center justify-center w-6 h-6 ${active ? 'opacity-100' : 'opacity-40'}`}>
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+      <path d="M4 10h4M12 10h4" stroke={active ? COLORS.crimson : COLORS.gold} strokeWidth="1.5" strokeLinecap="round"/>
+      <polygon points="10 6 13 10 10 14 7 10" fill={active ? COLORS.crimson : COLORS.gold} opacity={active ? 1 : 0.6}/>
+    </svg>
+  </div>
+);
+
+// ============================================================================
 // SPELL PAGE SPECIFIC COMPONENTS
 // ============================================================================
 
