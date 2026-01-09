@@ -1174,7 +1174,38 @@ ANCHOR_SCENARIO_MAP = {
 # SETTING TO SCENARIO MAPPING
 # ============================================================================
 
+# ============================================================================
+# SETTING TO SCENARIO MAPPING (V1.1 - Contextual Settings)
+# New settings: home_quiet, nature, work_daily, transit, public
+# ============================================================================
+
 SETTING_SCENARIO_MAP = {
+    # "In the quiet of my home" - private, uninterrupted space
+    "home_quiet": [
+        "kettle_charm", "windowsill_ward", "herb_packet", "home_circle_blessing", 
+        "voice_ward", "keening_container", "token_talisman", "candle_letter", 
+        "protection_protocol", "discernment_protocol", "unbinding_ritual", 
+        "mirror_inquiry_safe", "threadworking", "record_and_repeat"
+    ],
+    # "Outside in nature" - garden, park, woods, water
+    "nature": [
+        "bird_omen_reading", "voice_ward", "herb_packet", "windowsill_ward"
+    ],
+    # "During my daily routine" - work, errands, regular tasks
+    "work_daily": [
+        "tea_ring_unknotting", "token_talisman", "protection_protocol", 
+        "discernment_protocol", "threadworking", "record_and_repeat", "kettle_charm"
+    ],
+    # "On the move" - commute, travel, waiting
+    "transit": [
+        "token_talisman", "voice_ward", "bird_omen_reading", "protection_protocol"
+    ],
+    # "In public or semi-public" - café, library, shared space
+    "public": [
+        "tea_ring_unknotting", "token_talisman", "discernment_protocol", 
+        "record_and_repeat", "bird_omen_reading"
+    ],
+    # Legacy mappings for backward compatibility
     "kitchen": ["kettle_charm", "windowsill_ward", "bird_omen_reading", "herb_packet", "home_circle_blessing", "token_talisman", "candle_letter", "threadworking"],
     "bedroom": ["windowsill_ward", "home_circle_blessing", "voice_ward", "keening_container", "token_talisman", "candle_letter", "protection_protocol", "discernment_protocol", "unbinding_ritual", "mirror_inquiry_safe", "threadworking"],
     "outdoors": ["bird_omen_reading", "voice_ward"],
