@@ -7,7 +7,8 @@ import {
   AlertTriangle, Quote, History, Users, Save, Lock, Key
 } from 'lucide-react';
 import { toast } from 'sonner';
-import html2pdf from 'html2pdf.js';
+import { jsPDF } from 'jspdf';
+import html2canvas from 'html2canvas';
 import { grimoireAPI, subscriptionAPI } from '../utils/api';
 import { useNavigate } from 'react-router-dom';
 import { SpellBorderFrame, SectionBorderFrame, TarotCardFrame, PERSONA_BORDER_URLS } from './OrnateElements';
