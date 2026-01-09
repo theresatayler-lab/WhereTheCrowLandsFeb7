@@ -357,7 +357,7 @@ export const SpellRequest = () => {
     tone: 'practical',
     belief_boundary: 'spiritual_grounded',
     anchor_object: 'candle',
-    setting: 'bedroom',
+    setting: 'home_quiet',
     user_name: '',
     avoid: ''
   });
