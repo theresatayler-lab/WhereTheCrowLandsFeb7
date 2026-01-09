@@ -82,11 +82,11 @@ const ANCHORS = [
 ];
 
 const SETTINGS = [
-  { id: 'kitchen', label: 'Kitchen', icon: Coffee },
-  { id: 'bedroom', label: 'Bedroom', icon: Moon },
-  { id: 'outdoors', label: 'Outdoors', icon: TreeDeciduous },
-  { id: 'bath', label: 'Bath', icon: Bath },
-  { id: 'desk', label: 'Desk/Office', icon: Briefcase }
+  { id: 'home_quiet', label: 'In the quiet of my home', icon: Home, description: 'Private space, uninterrupted' },
+  { id: 'nature', label: 'Outside in nature', icon: TreeDeciduous, description: 'Garden, park, woods, water' },
+  { id: 'work_daily', label: 'During my daily routine', icon: Coffee, description: 'Work, errands, regular tasks' },
+  { id: 'transit', label: 'On the move', icon: Briefcase, description: 'Commute, travel, waiting' },
+  { id: 'public', label: 'In public or semi-public', icon: Sun, description: 'Café, library, shared space' }
 ];
 
 // ===== WIZARD STEP COMPONENTS =====
