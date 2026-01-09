@@ -147,14 +147,15 @@ DB_NAME=<from hosting secrets>
 ### P0 (Fixed)
 - ✅ Blank PDF Download Bug - FIXED (January 9, 2025)
 
-### P1: Site UI Components (NEXT)
-- Build reusable components: PageHero, ParchmentPanel, OrnateCard, SectionDivider, BestiaryGlyph
-- Apply across all pages for consistent Home page quality
-- Static ornament library for running folklore animals + detail
+### P1: Visual Polish (COMPLETED ✅)
+- ✅ Build reusable components: PageOrnamentCorners, PageDivider, PageGlyph, DecoratedSectionHeader
+- ✅ Apply ornament system across pages (Guides, SpellRequest, MyGrimoire)
+- ✅ Static ornament library with 56+ SVG assets
 
-### P2: Auth/Routing Instability
-- Issue: Logged-in users sometimes get redirected away from protected pages (/my-grimoire, /profile)
-- Needs investigation of PrivateRoute logic in App.js
+### P2: Minor Remaining Visual Polish
+- Guide cards could add ornament dividers between sections
+- Library book cards missing corner accents
+- Timeline markers could use bestiary glyphs
 
 ### P3: Backlog
 - Theresa archetype enrichment in persona_config.py
