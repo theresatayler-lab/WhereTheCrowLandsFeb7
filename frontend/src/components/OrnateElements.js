@@ -1,19 +1,20 @@
 import React from 'react';
+import { 
+  COLORS, 
+  CornerOrnaments, 
+  DividerStrips, 
+  BestiaryGlyphs,
+  PAGE_ORNAMENT_CONFIG,
+  getGlyph,
+  getCornerForPage,
+  getDividerForPage
+} from '../assets/ornaments';
 
 // ============================================================================
-// CROWLANDS VISUAL SYSTEM V1.1 - REUSABLE COMPONENTS
+// CROWLANDS VISUAL SYSTEM V2.0 - REUSABLE COMPONENTS
 // Make every page feel like a collectible grimoire
+// Now integrated with static ornament library
 // ============================================================================
-
-// Color tokens from Art Bible
-const COLORS = {
-  navy: '#0e1629',
-  oxblood: '#8b2232',
-  gold: '#d4a84b',
-  bone: '#f5f0e6',
-  crimson: '#b82330',
-  copper: '#b87333'
-};
 
 // ============================================================================
 // CORNER ORNAMENTS
