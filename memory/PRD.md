@@ -57,6 +57,20 @@ DB_NAME=<from hosting secrets>
   - Both downloads now produce valid, non-blank PDFs
   - Tested and verified: Full grimoire PDF (~6KB) and single spell PDF (~143KB)
 
+- **SPELL QUALITY UPGRADE V1.1**: Major quality overhaul for heirloom-style spells
+  - Added `voice` block to each persona (role, tone, signature_phrases, pet_names, never_says)
+  - Added `micro_lore` array (10 lived details per persona like "kettle that sings")
+  - Added `taboos` array (things each persona would never do/say)
+  - New `text_variation_tokens` for behind-the-scenes uniqueness (setting, sensory, gesture, metaphor details)
+  - **Spell Writer Contract** now enforces:
+    - `why_this_works`: 4-7 paragraphs explaining "We use X because..."
+    - `substitutions`: 3 practical alternatives
+    - `tiny_mistakes_to_avoid`: 3 safety/prep notes
+    - `closing_and_aftercare`: with validation line ("If this doesn't land today...")
+  - Incantation specificity rule: 3 concrete nouns + 1 emotion word
+  - Ban on generic phrases per persona
+  - Added `validate_spell_contract()` quality guard function
+
 ### Session December 2024
 - **ImageProvider Abstraction**: Single interface with provider switching
 - **Static Dividers**: No longer generated, use library URLs
