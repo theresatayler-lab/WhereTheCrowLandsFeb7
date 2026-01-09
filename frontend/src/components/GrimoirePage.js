@@ -620,35 +620,57 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
     setIsGeneratingPdf(true);
     
     try {
-      // Try using html2pdf
-      console.log('Attempting PDF generation with html2pdf...');
+      console.log('Attempting PDF generation with jsPDF + html2canvas...');
       const element = grimoireRef.current;
       
-      const opt = {
-        margin: [10, 10, 10, 10],
-        filename: `${spell.title?.replace(/[^a-z0-9]/gi, '_') || 'spell'}_grimoire.pdf`,
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { 
-          scale: 2,
-          useCORS: true,
-          allowTaint: true,
-          backgroundColor: '#D8CBB3',
-          logging: false
-        },
-        jsPDF: { 
-          unit: 'mm', 
-          format: 'a4', 
-          orientation: 'portrait' 
-        },
-        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
-      };
+      // Wait a brief moment for any images to load
+      await new Promise(resolve => setTimeout(resolve, 500));
       
-      const worker = html2pdf();
-      await worker.set(opt).from(element).save();
+      // Create canvas from the element
+      const canvas = await html2canvas(element, {
+        scale: 2,
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: '#D8CBB3',
+        logging: false,
+        windowWidth: element.scrollWidth,
+        windowHeight: element.scrollHeight
+      });
+      
+      // Calculate PDF dimensions
+      const imgData = canvas.toDataURL('image/jpeg', 0.95);
+      const imgWidth = 210; // A4 width in mm
+      const pageHeight = 297; // A4 height in mm
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      
+      // Create PDF
+      const pdf = new jsPDF({
+        orientation: imgHeight > imgWidth ? 'portrait' : 'landscape',
+        unit: 'mm',
+        format: 'a4'
+      });
+      
+      let heightLeft = imgHeight;
+      let position = 0;
+      
+      // Add first page
+      pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+      
+      // Add remaining pages if content is longer than one page
+      while (heightLeft > 0) {
+        position = heightLeft - imgHeight;
+        pdf.addPage();
+        pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+      }
+      
+      const filename = `${spell.title?.replace(/[^a-z0-9]/gi, '_') || 'spell'}_grimoire.pdf`;
+      pdf.save(filename);
       
       toast.success('PDF downloaded to your Downloads folder!');
     } catch (error) {
-      console.error('html2pdf error:', error);
+      console.error('PDF generation error:', error);
       
       // Fallback: Open print dialog
       toast.info('Opening print dialog - use "Save as PDF" option');
