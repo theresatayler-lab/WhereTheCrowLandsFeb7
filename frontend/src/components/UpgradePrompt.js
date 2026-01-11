@@ -67,7 +67,7 @@ export const SpellLimitBanner = ({ remaining, total }) => {
             </span>
           </div>
           <p className="font-montserrat text-sm text-navy-dark/70 mb-4">
-            You've used all {limit} free spells. Upgrade to Pro for unlimited spell crafting!
+            You&apos;ve used all {limit} free spells. Upgrade to Pro for unlimited spell crafting!
           </p>
           <Link
             to="/upgrade"
