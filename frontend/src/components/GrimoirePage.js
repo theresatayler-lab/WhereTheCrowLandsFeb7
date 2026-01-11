@@ -719,6 +719,39 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
     }
   };
 
+  // Fetch research & origins from dual-model API
+  const fetchResearchOrigins = async () => {
+    if (researchData) {
+      // Already loaded, just toggle visibility
+      setShowResearch(!showResearch);
+      return;
+    }
+    
+    setIsLoadingResearch(true);
+    setShowResearch(true);
+    
+    try {
+      // Build context from spell data
+      const spellContext = `Spell: "${spell.title}". Intention: ${spell.introduction || spell.scenario || 'self-improvement'}`;
+      const personaId = archetype?.id || 'shigg';
+      
+      const result = await researchAPI.combined(
+        spell.title || 'magical practice',
+        personaId,
+        'gentle',
+        spellContext
+      );
+      
+      setResearchData(result);
+    } catch (error) {
+      console.error('Research fetch error:', error);
+      toast.error('Unable to fetch research data');
+      setShowResearch(false);
+    } finally {
+      setIsLoadingResearch(false);
+    }
+  };
+
 
   if (spell.parse_error) {
     return (
