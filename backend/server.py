@@ -240,8 +240,8 @@ async def check_spell_generation_limit(user: dict) -> dict:
     subscription_tier = user.get('subscription_tier', 'free')
     subscription_status = user.get('subscription_status', 'free')
     
-    # Pro/paid users have unlimited spells
-    if subscription_tier == 'paid' or subscription_status == 'pro':
+    # Pro/paid users have unlimited spells (accept both 'pro' and 'paid')
+    if subscription_tier in ('paid', 'pro') or subscription_status in ('paid', 'pro'):
         return {'can_generate': True, 'remaining': -1, 'limit': -1}
     
     # Free tier - limit to 3 spells
