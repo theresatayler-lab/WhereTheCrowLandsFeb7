@@ -1224,8 +1224,8 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
           </section>
         )}
         
-        {/* Inspired By / Sources - new format */}
-        {spell.inspired_by && spell.inspired_by.length > 0 && (
+        {/* References & Where This Comes From - Collectible Design */}
+        {spell.inspired_by && spell.inspired_by.length > 0 ? (
           <section className="border border-amber-800/30 rounded-sm overflow-hidden">
             <button
               onClick={() => setShowHistoricalContext(!showHistoricalContext)}
@@ -1233,7 +1233,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
             >
               <span className="font-cinzel text-base text-amber-900 flex items-center gap-2">
                 <BookOpen className="w-5 h-5" />
-                References &amp; Inspired By
+                References &amp; Where This Comes From
               </span>
               {showHistoricalContext ? <ChevronUp className="w-5 h-5 text-stone-700" /> : <ChevronDown className="w-5 h-5 text-stone-700" />}
             </button>
@@ -1246,48 +1246,127 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                   exit={{ height: 0, opacity: 0 }}
                   className="overflow-hidden"
                 >
-                  <div className="p-4 space-y-4 border-t border-amber-800/30">
+                  <div className="p-4 space-y-3 border-t border-amber-800/30">
                     {spell.inspired_by.map((source, idx) => (
-                      <div key={idx} className="p-4 bg-amber-900/10 rounded-sm border border-amber-800/20">
-                        <div className="flex items-start gap-3">
-                          <span className="text-xl mt-0.5">
+                      <details key={idx} className="group bg-amber-900/5 rounded-sm border border-amber-800/20">
+                        <summary className="p-3 cursor-pointer flex items-center gap-3 hover:bg-amber-900/10 transition-colors list-none">
+                          <span className="text-lg">
                             {source.source_type === 'book' ? '📖' : 
                              source.source_type === 'tradition' ? '🏛️' : 
                              source.source_type === 'practice' ? '✨' : 
                              source.source_type === 'author' ? '✍️' : '📜'}
                           </span>
-                          <div className="flex-1 space-y-2">
-                            {/* Title and Author */}
-                            <div>
-                              <p className="font-cinzel text-sm font-medium text-amber-900">
-                                {source.name}
-                                {source.year && <span className="text-stone-500 font-montserrat text-xs ml-1">({source.year})</span>}
+                          <div className="flex-1 min-w-0">
+                            <p className="font-cinzel text-sm font-medium text-amber-900 truncate">
+                              {source.name}
+                              {source.author && <span className="text-stone-600 font-montserrat text-xs ml-1">— {source.author}</span>}
+                            </p>
+                          </div>
+                          <ChevronDown className="w-4 h-4 text-stone-500 group-open:rotate-180 transition-transform" />
+                        </summary>
+                        
+                        <div className="px-3 pb-3 pt-1 space-y-3 border-t border-amber-800/10">
+                          {/* Why This Matters Here */}
+                          {(source.connection_to_spell || source.connection) && (
+                            <div className="bg-white/60 p-3 rounded border-l-2 border-amber-700">
+                              <p className="font-montserrat text-xs text-amber-800 uppercase tracking-wider mb-1">Why this matters here</p>
+                              <p className="font-crimson text-sm text-stone-700 leading-relaxed">
+                                {source.connection_to_spell || source.connection}
                               </p>
-                              {source.author && (
-                                <p className="font-montserrat text-xs text-stone-600">by {source.author}</p>
-                              )}
                             </div>
-                            
-                            {/* Connection to Spell - The key new content */}
-                            {(source.connection_to_spell || source.connection) && (
-                              <div className="bg-white/50 p-3 rounded border-l-2 border-amber-700">
-                                <p className="font-montserrat text-xs text-amber-800 uppercase tracking-wider mb-1">Why This Source Matters</p>
-                                <p className="font-montserrat text-sm text-stone-700 leading-relaxed">
-                                  {source.connection_to_spell || source.connection}
-                                </p>
+                          )}
+                          
+                          {/* Key Concept Used */}
+                          {source.key_concept_used && (
+                            <div className="flex items-start gap-2">
+                              <span className="text-amber-700 text-sm">🔑</span>
+                              <div>
+                                <p className="font-montserrat text-xs text-amber-800 uppercase tracking-wider">Concept used</p>
+                                <p className="font-montserrat text-sm text-stone-700">{source.key_concept_used}</p>
                               </div>
-                            )}
-                            
-                            {/* Key Concept */}
-                            {source.key_concept_used && (
-                              <p className="font-montserrat text-xs text-stone-600">
-                                <span className="font-medium text-amber-800">Key concept used:</span> {source.key_concept_used}
+                            </div>
+                          )}
+                          
+                          {/* Beginner Takeaway */}
+                          {source.beginner_takeaway && (
+                            <div className="bg-amber-100/50 p-2 rounded">
+                              <p className="font-crimson text-sm text-amber-900 italic">
+                                💡 {source.beginner_takeaway}
                               </p>
-                            )}
-                            
-                            {/* Quote */}
-                            {source.quote && (
-                              <blockquote className="font-crimson text-sm text-stone-700 italic border-l-2 border-amber-600/50 pl-3 my-2">
+                            </div>
+                          )}
+                          
+                          {/* Learn More Links */}
+                          {source.learn_more && source.learn_more.length > 0 && (
+                            <div>
+                              <p className="font-montserrat text-xs text-amber-800 uppercase tracking-wider mb-2">Learn more</p>
+                              <div className="flex flex-wrap gap-2">
+                                {source.learn_more.map((resource, resIdx) => (
+                                  <a 
+                                    key={resIdx}
+                                    href={resource.url} 
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-1 px-2 py-1 bg-white/70 hover:bg-white rounded text-xs font-montserrat text-amber-900 border border-amber-800/20 transition-colors"
+                                  >
+                                    {resource.access === 'free' ? '🆓' : resource.access === 'overview' ? '📋' : '📚'}
+                                    <span className="truncate max-w-32">{resource.title}</span>
+                                    <ExternalLink className="w-3 h-3 flex-shrink-0" />
+                                  </a>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </details>
+                    ))}
+                    
+                    {/* Historical Context - Compact */}
+                    {spell.historical_context && (
+                      <div className="p-3 bg-stone-100/80 rounded-sm border border-stone-300/50 mt-3">
+                        <div className="flex items-center gap-2 mb-2">
+                          <History className="w-4 h-4 text-stone-600" />
+                          <span className="font-montserrat text-xs text-stone-600 uppercase tracking-wider">Historical Context</span>
+                        </div>
+                        <div className="space-y-1 text-sm">
+                          {spell.historical_context.tradition && (
+                            <p className="font-montserrat text-stone-700">
+                              <span className="font-medium">Tradition:</span> {spell.historical_context.tradition}
+                            </p>
+                          )}
+                          {spell.historical_context.cultural_note && (
+                            <p className="font-crimson text-stone-600 italic text-sm">
+                              {spell.historical_context.cultural_note}
+                            </p>
+                          )}
+                          {spell.historical_context.modern_adaptation && (
+                            <p className="font-montserrat text-xs text-stone-500 mt-1">
+                              <span className="font-medium">Today:</span> {spell.historical_context.modern_adaptation}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </section>
+        ) : (
+          /* Back-compat: Older spells without references */
+          <section className="p-4 bg-stone-100/50 rounded-sm border border-stone-300/30 text-center">
+            <p className="font-montserrat text-sm text-stone-500 mb-2">
+              This spell predates our reference system.
+            </p>
+            <button 
+              onClick={() => {/* TODO: Call lightweight endpoint to add references */}}
+              className="font-montserrat text-xs text-amber-700 hover:text-amber-900 underline"
+              disabled
+            >
+              Add references to this spell (coming soon)
+            </button>
+          </section>
+        )}
                                 &ldquo;{source.quote}&rdquo;
                               </blockquote>
                             )}
