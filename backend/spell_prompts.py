@@ -577,6 +577,9 @@ Format: {plan.get('format_id', 'general')}
 ## ALLOWED SOURCES FOR THIS SPELL (cite ONLY these by source_id)
 {sources_text if sources_text else "No specific sources - draw from persona's general knowledge"}
 
+## SOURCE ENCYCLOPEDIA (Use this to write RICH, SPECIFIC inspired_by sections)
+{source_encyclopedia_text}
+
 ## OUTPUT FORMAT
 Return ONLY this JSON (no markdown, no explanation):
 {{
