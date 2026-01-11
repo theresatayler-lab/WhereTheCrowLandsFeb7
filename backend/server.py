@@ -2775,16 +2775,18 @@ async def generate_personalized_spell(request: PersonalizedSpellRequest, user = 
         # Check spell limits for non-pro users
         if user:
             user_data = await db.users.find_one({'id': user['id']}, {'_id': 0})
-            if user_data and user_data.get('subscription_tier') != 'pro':
-                spell_count = user_data.get('spell_generation_count', 0)
-                limit = 3  # Free tier limit
-                if spell_count >= limit:
-                    raise HTTPException(status_code=403, detail={
-                        'error': 'spell_limit_reached',
-                        'message': f'You have reached your limit of {limit} free spells. Upgrade to Pro for unlimited spell generation!',
-                        'limit': limit,
-                        'current': spell_count
-                    })
+            if user_data:
+                is_pro = user_data.get('subscription_tier') == 'pro' or user_data.get('subscription_status') == 'pro'
+                if not is_pro:
+                    spell_count = user_data.get('spell_generation_count', 0)
+                    limit = 3  # Free tier limit
+                    if spell_count >= limit:
+                        raise HTTPException(status_code=403, detail={
+                            'error': 'spell_limit_reached',
+                            'message': f'You have reached your limit of {limit} free spells. Upgrade to Pro for unlimited spell generation!',
+                            'limit': limit,
+                            'current': spell_count
+                        })
         
         # Resolve "choose_for_me" persona based on feeling and anchor
         # Use standardized IDs: shigg, cathleen, katherine
