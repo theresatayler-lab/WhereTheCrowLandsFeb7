@@ -1762,8 +1762,8 @@ def get_practices_for_scenario(persona_id: str, scenario_id: str) -> List[dict]:
     return [p for p in persona["practices"] if p["practice_id"] in linked_practice_ids]
 
 
-def get_source_by_id(persona_id: str, source_id: str) -> Optional[dict]:
-    """Get a source by its ID"""
+def get_persona_source_by_id(persona_id: str, source_id: str) -> Optional[dict]:
+    """Get a source by its ID from a persona's allowed_sources list"""
     persona = get_persona_config(persona_id)
     return next((s for s in persona["allowed_sources"] if s["source_id"] == source_id), None)
 
