@@ -4,7 +4,8 @@ import {
   ChevronDown, ChevronUp, Clock, Moon, Sun, Calendar, 
   BookOpen, Feather, Copy, Download, CheckCircle2, Circle,
   Flame, Droplets, Wind, Sparkles, Star, Eye, Heart,
-  AlertTriangle, Quote, History, Users, Save, Lock, Key
+  AlertTriangle, Quote, History, Users, Save, Lock, Key,
+  ExternalLink, ArrowRight
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { jsPDF } from 'jspdf';
