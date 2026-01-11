@@ -311,6 +311,10 @@ The tarot card image MUST use these constraints. Do NOT deviate.
 ## ALLOWED SOURCES (cite ONLY by source_id from this list)
 {allowed_sources_text}
 
+## SOURCE ENCYCLOPEDIA (Rich context for your references)
+Use this information to write DETAILED, SPECIFIC connections between sources and your spell:
+{source_encyclopedia_text}
+
 ## PERSONA VOICE STYLE
 {persona_config['section_grammar']['voice_style']}
 
