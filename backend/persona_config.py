@@ -87,7 +87,7 @@ def validate_url_domain(url: str) -> bool:
     try:
         domain = urlparse(url).netloc.lower()
         return any(allowed in domain for allowed in ALLOWED_REFERENCE_DOMAINS)
-    except:
+    except Exception:
         return False
 
 def get_validated_resources(source_id: str) -> list:
