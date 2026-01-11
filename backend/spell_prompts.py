@@ -464,6 +464,34 @@ def build_spell_writer_prompt(spell_spec: dict, persona_config: dict, scenario: 
         for s in selected_sources
     ])
     
+    # Build source encyclopedia text for selected sources
+    from persona_config import SOURCE_ENCYCLOPEDIA
+    source_encyclopedia_entries = []
+    for source in selected_sources:
+        source_id = source.get("source_id", "")
+        encyclopedia_entry = SOURCE_ENCYCLOPEDIA.get(source_id, {})
+        if encyclopedia_entry:
+            entry_text = f"""
+### {encyclopedia_entry.get('name', source_id)}
+- **Bio**: {encyclopedia_entry.get('bio', 'N/A')[:300]}
+- **Core Teachings**: {', '.join(encyclopedia_entry.get('core_teachings', [])[:4])}
+- **Relevance Contexts**:
+"""
+            for ctx_name, ctx_text in encyclopedia_entry.get('relevance_contexts', {}).items():
+                entry_text += f"  - **{ctx_name}**: {ctx_text}\n"
+            
+            if 'online_resources' in encyclopedia_entry:
+                entry_text += "- **Resources for learn_more section**:\n"
+                for res in encyclopedia_entry.get('online_resources', [])[:3]:
+                    entry_text += f"  - {res['title']}: {res['url']} ({res['type']})\n"
+            
+            if 'quote' in encyclopedia_entry:
+                entry_text += f"- **Quotable**: \"{encyclopedia_entry['quote']}\""
+            
+            source_encyclopedia_entries.append(entry_text)
+    
+    source_encyclopedia_text = "\n".join(source_encyclopedia_entries) if source_encyclopedia_entries else "No encyclopedia entries for selected sources."
+    
     # Get variation tokens from plan
     variation_tokens = plan.get("variation_tokens", {})
     text_variation_tokens = plan.get("text_variation_tokens", {})
