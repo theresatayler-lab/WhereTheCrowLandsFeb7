@@ -686,6 +686,15 @@ Every source_id in "inspired_by" MUST match a source_id from that list.
 Do NOT invent sources. Do NOT cite sources not in the list.
 If in doubt, cite fewer sources rather than hallucinate.
 
+## INSPIRED_BY REQUIREMENTS (CRITICAL for value)
+The "inspired_by" section is one of the most valuable parts of the spell. Each entry MUST include:
+1. **connection_to_spell**: 2-3 sentences explaining SPECIFICALLY how this source relates to THIS spell
+   - BAD: "Dion Fortune wrote about protection"
+   - GOOD: "Dion Fortune's concept of the etheric body as a psychic shield directly informs Step 3's visualization. Her teaching that we strengthen our own aura rather than attacking external forces is why we focus on building warmth from within."
+2. **key_concept_used**: The specific technique or idea borrowed (e.g., "etheric shielding", "threshold guardian")
+3. **quote**: Include a relevant quote from the source when available
+4. **learn_more**: Include 1-2 specific online resources where the seeker can explore further
+
 ## CRITICAL RULES (Contract Enforcement)
 1. Use seeker's name ({spell_spec.get('user_name', 'Seeker')}) at least TWICE
 2. Anchor object ({spell_spec.get('anchor_object', 'candle')}) must be CENTRAL with WHY explanation
