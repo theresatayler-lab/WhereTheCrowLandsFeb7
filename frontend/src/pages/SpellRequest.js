@@ -349,6 +349,7 @@ const Step3 = ({ spellSpec, updateSpec }) => {
 // ===== MAIN COMPONENT =====
 
 export const SpellRequest = () => {
+  const navigate = useNavigate();
   const [step, setStep] = useState(0);
   const [spellSpec, setSpellSpec] = useState({
     persona_id: getCurrentArchetype() || 'choose_for_me',
