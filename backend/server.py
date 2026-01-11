@@ -2917,6 +2917,43 @@ async def generate_personalized_spell(request: PersonalizedSpellRequest, user = 
             logging.error(f"Failed to parse spell JSON: {spell_text[:500]}")
             raise HTTPException(status_code=500, detail="Failed to generate spell content")
         
+        # === VALIDATE & SANITIZE INSPIRED_BY REFERENCES ===
+        from persona_config import SOURCE_ENCYCLOPEDIA, validate_url_domain, get_learn_more_for_source
+        
+        if 'inspired_by' in spell and isinstance(spell['inspired_by'], list):
+            validated_refs = []
+            allowed_source_ids = [s.get('source_id') for s in persona_config.get('allowed_sources', [])]
+            
+            for ref in spell['inspired_by']:
+                source_id = ref.get('source_id', '')
+                
+                # Skip if source_id not in encyclopedia or not allowed for persona
+                if source_id not in SOURCE_ENCYCLOPEDIA or source_id not in allowed_source_ids:
+                    logging.warning(f"Skipping invalid source_id: {source_id}")
+                    continue
+                
+                encyclopedia_entry = SOURCE_ENCYCLOPEDIA.get(source_id, {})
+                
+                # Override learn_more with validated links from encyclopedia ONLY
+                ref['learn_more'] = get_learn_more_for_source(source_id, max_items=3)
+                
+                # Remove any quote field (no quotes unless verified)
+                if 'quote' in ref:
+                    del ref['quote']
+                
+                # Ensure required fields exist
+                if not ref.get('connection_to_spell'):
+                    ref['connection_to_spell'] = f"This spell draws on concepts from {encyclopedia_entry.get('name', source_id)}."
+                if not ref.get('key_concept_used'):
+                    concepts = encyclopedia_entry.get('core_concepts', ['traditional practice'])
+                    ref['key_concept_used'] = concepts[0] if concepts else 'traditional practice'
+                if not ref.get('beginner_takeaway'):
+                    ref['beginner_takeaway'] = "If you remember one thing, trust that you're following a well-worn path."
+                
+                validated_refs.append(ref)
+            
+            spell['inspired_by'] = validated_refs
+        
         # Add metadata
         spell['scenario_id'] = scenario['scenario_id']
         spell['scenario_name'] = scenario['name']
