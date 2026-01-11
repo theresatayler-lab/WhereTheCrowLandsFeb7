@@ -54,6 +54,48 @@ CROWLANDS_ART_BIBLE = {
 # This enables AI to explain WHY a source is relevant to a specific spell
 # ============================================================================
 
+# ALLOWED DOMAINS - Only URLs from these domains are permitted in learn_more
+ALLOWED_REFERENCE_DOMAINS = [
+    "wikipedia.org",
+    "archive.org", 
+    "sacred-texts.com",
+    "gutenberg.org",
+    "bl.uk",  # British Library
+    "poetryfoundation.org",
+    "hermetic.com",
+    "golden-dawn.com",
+    "innerlight.org.uk",
+    "theosophical.org",
+    "cgjungny.org",
+    "folklore-society.com",
+    "museumofwitchcraftandmagic.co.uk",
+    "duchas.ie",  # Irish folklore
+    "sacred-sites.com",
+    "spr.ac.uk",  # Society for Psychical Research
+    "esotericarchives.com",
+    "yeatssociety.com",
+    "herts.ac.uk",  # Owen Davies university
+    "patheos.com",
+    "lairbhan.blogspot.com",  # Morgan Daimler
+]
+
+def validate_url_domain(url: str) -> bool:
+    """Check if URL is from an allowed domain"""
+    if not url:
+        return False
+    from urllib.parse import urlparse
+    try:
+        domain = urlparse(url).netloc.lower()
+        return any(allowed in domain for allowed in ALLOWED_REFERENCE_DOMAINS)
+    except:
+        return False
+
+def get_validated_resources(source_id: str) -> list:
+    """Get only validated resources from encyclopedia"""
+    source = SOURCE_ENCYCLOPEDIA.get(source_id, {})
+    resources = source.get("online_resources", [])
+    return [r for r in resources if validate_url_domain(r.get("url", ""))]
+
 SOURCE_ENCYCLOPEDIA = {
     # ==== OCCULT AUTHORS ====
     "dion_fortune": {
@@ -61,30 +103,30 @@ SOURCE_ENCYCLOPEDIA = {
         "full_name": "Violet Mary Firth (Dion Fortune)",
         "years": "1890-1946",
         "nationality": "British",
-        "bio": "Pioneering British occultist, psychologist, and author who founded the Society of the Inner Light. Trained in psychology and psychoanalysis, she uniquely blended Jungian concepts with ceremonial magic and the Western Mystery Tradition.",
+        "bio_short": "Pioneering British occultist who blended psychology with ceremonial magic. Founded the Society of the Inner Light.",
         "key_works": [
-            {"title": "Psychic Self-Defense", "year": 1930, "topic": "Protection from psychic attacks and negative energies"},
-            {"title": "The Mystical Qabalah", "year": 1935, "topic": "Western esoteric interpretation of the Tree of Life"},
-            {"title": "The Sea Priestess", "year": 1938, "topic": "Fictional exploration of priestess magic and lunar mysteries"},
-            {"title": "Moon Magic", "year": 1956, "topic": "Posthumous novel on feminine mysteries and ceremonial work"}
+            {"title": "Psychic Self-Defense", "year": 1930, "topic": "Protection and shielding"},
+            {"title": "The Mystical Qabalah", "year": 1935, "topic": "Western Qabalah"},
+            {"title": "The Sea Priestess", "year": 1938, "topic": "Lunar mysteries"}
         ],
-        "core_teachings": [
-            "The etheric body as a psychic shield",
-            "Group mind dynamics in magical workings",
-            "Polarity work between masculine and feminine energies",
-            "Practical psychology applied to magical development"
+        "core_concepts": [
+            "Etheric body as psychic shield",
+            "Psychic hygiene",
+            "Aura strengthening",
+            "Protective visualization"
         ],
         "relevance_contexts": {
-            "protection": "Fortune's 'Psychic Self-Defense' remains the foundational text on shielding techniques, teaching that protection comes from strengthening one's own aura rather than attacking external forces.",
-            "shadow_work": "Her integration of Jungian psychology with occult practice pioneered the modern approach to confronting and integrating the shadow self through ritual.",
-            "ritual_structure": "Fortune emphasized that effective ritual requires both psychological preparation and ceremonial form, creating lasting change through repeated symbolic action."
+            "protection": "Teaches that protection comes from strengthening your own energy field, not fighting external forces.",
+            "shadow_work": "Integrates Jungian psychology with ritual for confronting hidden aspects of self.",
+            "ritual_structure": "Emphasizes psychological preparation alongside ceremonial form."
         },
         "online_resources": [
-            {"title": "Society of the Inner Light", "url": "https://www.innerlight.org.uk/", "type": "organization"},
-            {"title": "Sacred Texts Archive", "url": "https://www.sacred-texts.com/eso/index.htm", "type": "texts"},
-            {"title": "Dion Fortune - Occult History", "url": "https://www.theosophical.org/publications/quest-magazine/dion-fortune", "type": "biography"}
+            {"title": "Society of the Inner Light (Official)", "url": "https://www.innerlight.org.uk/", "type": "organization", "access": "free"},
+            {"title": "Sacred Texts - Esoteric Archive", "url": "https://www.sacred-texts.com/eso/index.htm", "type": "texts", "access": "free"},
+            {"title": "Wikipedia - Dion Fortune", "url": "https://en.wikipedia.org/wiki/Dion_Fortune", "type": "overview", "access": "free"}
         ],
-        "quote": "Magic is the art of causing changes in consciousness in accordance with will."
+        # Verified quote with source - from Psychic Self-Defense, public domain paraphrase
+        "verified_quote": None  # Removed - will use paraphrase instead
     },
     
     "israel_regardie": {
@@ -92,32 +134,292 @@ SOURCE_ENCYCLOPEDIA = {
         "full_name": "Francis Israel Regardie",
         "years": "1907-1985",
         "nationality": "British-American",
-        "bio": "Secretary to Aleister Crowley and later a practicing psychotherapist who published the complete Golden Dawn rituals, preserving them for future generations. He uniquely bridged ceremonial magic and Reichian therapy.",
+        "bio_short": "Preserved the Golden Dawn rituals for future generations. Bridged ceremonial magic with psychotherapy.",
         "key_works": [
-            {"title": "The Golden Dawn", "year": 1937, "topic": "Complete rituals and teachings of the Hermetic Order"},
-            {"title": "The Tree of Life", "year": 1932, "topic": "Study of ceremonial magic and Qabalah"},
-            {"title": "The Middle Pillar", "year": 1938, "topic": "Energy work and the Qabalistic cross"}
+            {"title": "The Golden Dawn", "year": 1937, "topic": "Complete GD rituals"},
+            {"title": "The Middle Pillar", "year": 1938, "topic": "Energy circulation"}
         ],
-        "core_teachings": [
-            "The Middle Pillar exercise for energy circulation",
-            "Integration of body work with ceremonial practice",
-            "Systematic approach to magical development",
-            "The importance of psychological preparation"
+        "core_concepts": [
+            "Middle Pillar exercise",
+            "Energy circulation",
+            "Qabalistic cross",
+            "Grounding before working"
         ],
         "relevance_contexts": {
-            "energy_work": "Regardie's Middle Pillar technique provides the foundational energy circulation practice used in countless modern spells for centering and empowerment.",
-            "ceremonial_structure": "His documentation of Golden Dawn rituals gives us the template for formal magical workings with invocations, banishings, and grade ceremonies.",
-            "grounding": "His emphasis on physical and psychological grounding before magical work remains essential safety teaching."
+            "energy_work": "The Middle Pillar technique is foundational for centering and building energy before spellwork.",
+            "ceremonial_structure": "Provides the template for formal ritual: opening, invocation, working, closing.",
+            "grounding": "Emphasizes physical and psychological preparation as essential safety practice."
         },
         "online_resources": [
-            {"title": "Golden Dawn Library", "url": "https://www.golden-dawn.com/", "type": "texts"},
-            {"title": "Hermetic Library", "url": "https://hermetic.com/", "type": "archive"}
+            {"title": "Hermetic Library Archive", "url": "https://hermetic.com/", "type": "archive", "access": "free"},
+            {"title": "Wikipedia - Israel Regardie", "url": "https://en.wikipedia.org/wiki/Israel_Regardie", "type": "overview", "access": "free"},
+            {"title": "Esoteric Archives", "url": "https://www.esotericarchives.com/", "type": "texts", "access": "free"}
         ],
-        "quote": "The work of the Qabalist is to become consciously aware of the Divine Life within."
+        "verified_quote": None
     },
     
     "cg_jung": {
         "name": "Carl Gustav Jung",
+        "full_name": "Carl Gustav Jung",
+        "years": "1875-1961",
+        "nationality": "Swiss",
+        "bio_short": "Founder of analytical psychology. Introduced concepts of the collective unconscious, archetypes, and shadow work.",
+        "key_works": [
+            {"title": "Man and His Symbols", "year": 1964, "topic": "Archetypal psychology intro"},
+            {"title": "Psychology and Alchemy", "year": 1944, "topic": "Transformation symbolism"}
+        ],
+        "core_concepts": [
+            "Shadow integration",
+            "Archetypes",
+            "Active imagination",
+            "Individuation"
+        ],
+        "relevance_contexts": {
+            "shadow_work": "The Shadow—repressed aspects of self—provides the framework for spells that confront fears or integrate rejected parts.",
+            "archetypes": "Understanding universal patterns (Wise One, Protector, Transformer) helps connect with energies beyond personal experience.",
+            "transformation": "Individuation—becoming whole through integrating opposites—mirrors the alchemical Great Work."
+        },
+        "online_resources": [
+            {"title": "Jung Foundation NY", "url": "https://www.cgjungny.org/", "type": "organization", "access": "free"},
+            {"title": "Wikipedia - Carl Jung", "url": "https://en.wikipedia.org/wiki/Carl_Jung", "type": "overview", "access": "free"},
+            {"title": "Archive.org - Jung Works", "url": "https://archive.org/search?query=carl+jung", "type": "texts", "access": "free"}
+        ],
+        "verified_quote": None
+    },
+    
+    "owen_davies": {
+        "name": "Owen Davies",
+        "years": "1969-present",
+        "nationality": "British",
+        "bio_short": "Professor of social history specializing in British magic and cunning-folk traditions. Academic authority on everyday magical practices.",
+        "key_works": [
+            {"title": "Popular Magic: Cunning-folk in English History", "year": 2003, "topic": "Village magic practitioners"},
+            {"title": "Grimoires: A History of Magic Books", "year": 2009, "topic": "Evolution of spell books"}
+        ],
+        "core_concepts": [
+            "Cunning folk traditions",
+            "Practical village magic",
+            "Household protection",
+            "Folk remedies"
+        ],
+        "relevance_contexts": {
+            "folk_magic": "Documents how ordinary people used magic for practical problems—lost objects, illness, protection.",
+            "protection": "Shows traditional British methods of warding, blessing, and undoing curses.",
+            "historical_authenticity": "Distinguishes genuine historical practices from modern inventions."
+        },
+        "online_resources": [
+            {"title": "Folklore Society", "url": "https://folklore-society.com/", "type": "organization", "access": "free"},
+            {"title": "Museum of Witchcraft", "url": "https://museumofwitchcraftandmagic.co.uk/", "type": "museum", "access": "overview"},
+            {"title": "Wikipedia - Owen Davies", "url": "https://en.wikipedia.org/wiki/Owen_Davies_(historian)", "type": "overview", "access": "free"}
+        ],
+        "verified_quote": None
+    },
+    
+    "ted_hughes": {
+        "name": "Ted Hughes",
+        "years": "1930-1998",
+        "nationality": "British",
+        "bio_short": "Poet Laureate known for visceral nature poetry. His 'Crow' sequence reimagines creation through a trickster bird figure.",
+        "key_works": [
+            {"title": "Crow: From the Life and Songs of the Crow", "year": 1970, "topic": "Mythological trickster poetry"},
+            {"title": "Tales from Ovid", "year": 1997, "topic": "Metamorphoses translations"}
+        ],
+        "core_concepts": [
+            "Crow as cosmic trickster",
+            "Nature as raw force",
+            "Transformation through destruction",
+            "Shadow confrontation"
+        ],
+        "relevance_contexts": {
+            "crow_magic": "The crow as messenger between worlds—neither good nor evil, but necessary and transformative.",
+            "transformation": "Explores how destruction precedes creation, relevant to spells involving endings or renewal.",
+            "shadow_work": "Confronts darkness without flinching, modeling how to work with difficult emotions."
+        },
+        "online_resources": [
+            {"title": "Poetry Foundation - Ted Hughes", "url": "https://www.poetryfoundation.org/poets/ted-hughes", "type": "biography", "access": "free"},
+            {"title": "British Library Collection", "url": "https://www.bl.uk/people/ted-hughes", "type": "archive", "access": "free"},
+            {"title": "Wikipedia - Ted Hughes", "url": "https://en.wikipedia.org/wiki/Ted_Hughes", "type": "overview", "access": "free"}
+        ],
+        "verified_quote": None
+    },
+    
+    "wb_yeats": {
+        "name": "W.B. Yeats",
+        "years": "1865-1939",
+        "nationality": "Irish",
+        "bio_short": "Nobel Prize-winning poet and Golden Dawn member who bridged Celtic mythology with ceremonial magic.",
+        "key_works": [
+            {"title": "The Celtic Twilight", "year": 1893, "topic": "Irish fairy lore"},
+            {"title": "A Vision", "year": 1925, "topic": "Esoteric cosmology"}
+        ],
+        "core_concepts": [
+            "Fairy faith (Sidhe)",
+            "Threshold times",
+            "Poetry as invocation",
+            "Celtic spirit lore"
+        ],
+        "relevance_contexts": {
+            "celtic_magic": "Documents living Celtic fairy faith, providing authentic Irish lore for workings with land spirits.",
+            "invocation": "Understands that poetry can invoke real presences, informing spells using spoken word.",
+            "threshold_work": "Twilight imagery guides workings done at dawn, dusk, or seasonal transitions."
+        },
+        "online_resources": [
+            {"title": "Yeats Society Sligo", "url": "https://www.yeatssociety.com/", "type": "organization", "access": "free"},
+            {"title": "Poetry Foundation - Yeats", "url": "https://www.poetryfoundation.org/poets/william-butler-yeats", "type": "biography", "access": "free"},
+            {"title": "Wikipedia - W.B. Yeats", "url": "https://en.wikipedia.org/wiki/W._B._Yeats", "type": "overview", "access": "free"}
+        ],
+        "verified_quote": None
+    },
+    
+    "morgan_daimler": {
+        "name": "Morgan Daimler",
+        "years": "contemporary",
+        "nationality": "American",
+        "bio_short": "Prolific author on Irish mythology and fairy lore. Combines scholarly research with practical Celtic polytheism.",
+        "key_works": [
+            {"title": "The Morrigan: Meeting the Great Queens", "year": 2014, "topic": "Irish war goddess"},
+            {"title": "Fairy Witchcraft", "year": 2014, "topic": "Working with fairy beings"},
+            {"title": "A New Dictionary of Fairies", "year": 2020, "topic": "Fairy encyclopedia"}
+        ],
+        "core_concepts": [
+            "Proper fairy protocols",
+            "The Morrigan's triple nature",
+            "Land spirit relationships",
+            "Protective offerings"
+        ],
+        "relevance_contexts": {
+            "protection": "The Morrigan provides warrior goddess framework for fierce protective magic.",
+            "fairy_work": "Establishes proper respect and offerings for workings with land spirits.",
+            "celtic_deities": "Offers deep research for authentic invocations of Irish gods and goddesses."
+        },
+        "online_resources": [
+            {"title": "Morgan Daimler Blog", "url": "https://lairbhan.blogspot.com/", "type": "blog", "access": "free"},
+            {"title": "Patheos - Living Liminally", "url": "https://www.patheos.com/blogs/agora/author/morgandaimler/", "type": "articles", "access": "free"},
+            {"title": "Wikipedia - Morgan Daimler", "url": "https://en.wikipedia.org/wiki/Morgan_Daimler", "type": "overview", "access": "free"}
+        ],
+        "verified_quote": None
+    },
+    
+    # ==== COLLECTIVE TRADITIONS ====
+    "british_folk_traditions": {
+        "name": "British Folk Magic Traditions",
+        "type": "collective_tradition",
+        "bio_short": "Accumulated magical practices of ordinary British people from medieval times through the 20th century.",
+        "core_concepts": [
+            "Hearth protection",
+            "Seasonal observances",
+            "Herbal charms",
+            "Kitchen witchcraft"
+        ],
+        "relevance_contexts": {
+            "domestic_magic": "Emphasizes the home as sacred space with the hearth as its magical center.",
+            "seasonal_work": "Agricultural calendar provides timing aligned with natural cycles.",
+            "practical_magic": "Always focused on solving real problems—keeping spell work grounded."
+        },
+        "online_resources": [
+            {"title": "Folklore Society", "url": "https://folklore-society.com/", "type": "organization", "access": "free"},
+            {"title": "Museum of Witchcraft", "url": "https://museumofwitchcraftandmagic.co.uk/", "type": "museum", "access": "overview"},
+            {"title": "Wikipedia - Folk Magic", "url": "https://en.wikipedia.org/wiki/Folk_magic", "type": "overview", "access": "free"}
+        ],
+        "verified_quote": None
+    },
+    
+    "irish_folk_traditions": {
+        "name": "Irish Folk Magic Traditions",
+        "type": "collective_tradition",
+        "bio_short": "Ireland's rich magical heritage blending pre-Christian Celtic practices with folk religion.",
+        "core_concepts": [
+            "Fairy faith (Sidhe)",
+            "Holy well offerings",
+            "Iron and rowan protection",
+            "Samhain ancestor work"
+        ],
+        "relevance_contexts": {
+            "threshold_work": "Acutely aware of liminal spaces and times—crossroads, twilight, Samhain.",
+            "land_connection": "Deep bond with specific places informs spells about home and belonging.",
+            "protection": "Traditional warding methods using iron, salt, and sacred plants."
+        },
+        "online_resources": [
+            {"title": "Dúchas - Irish Folklore", "url": "https://www.duchas.ie/", "type": "archive", "access": "free"},
+            {"title": "Sacred Sites Ireland", "url": "https://www.sacred-sites.com/europe/ireland/", "type": "reference", "access": "free"},
+            {"title": "Wikipedia - Irish Folklore", "url": "https://en.wikipedia.org/wiki/Irish_folklore", "type": "overview", "access": "free"}
+        ],
+        "verified_quote": None
+    },
+    
+    "victorian_spiritualism": {
+        "name": "Victorian Spiritualism",
+        "type": "collective_tradition",
+        "bio_short": "19th-century movement that systematized contact with the dead and developed mediumship techniques.",
+        "core_concepts": [
+            "Séance structure",
+            "Trance mediumship",
+            "Spirit communication",
+            "Automatic writing"
+        ],
+        "relevance_contexts": {
+            "ancestor_work": "Developed structured approaches to speaking with the dead.",
+            "divination": "Techniques of mediumship—relaxation, receptivity, recording—apply to intuitive practice.",
+            "grief_work": "Practices for connecting with lost loved ones remain relevant for processing loss."
+        },
+        "online_resources": [
+            {"title": "Society for Psychical Research", "url": "https://www.spr.ac.uk/", "type": "organization", "access": "free"},
+            {"title": "Wikipedia - Spiritualism", "url": "https://en.wikipedia.org/wiki/Spiritualism", "type": "overview", "access": "free"},
+            {"title": "Archive.org - Spiritualist Texts", "url": "https://archive.org/search?query=spiritualism", "type": "texts", "access": "free"}
+        ],
+        "verified_quote": None
+    },
+    
+    "golden_dawn_tradition": {
+        "name": "Hermetic Order of the Golden Dawn",
+        "type": "collective_tradition",
+        "bio_short": "Most influential magical order of the modern era (founded 1888), synthesizing Qabalah, tarot, and ceremonial magic.",
+        "core_concepts": [
+            "Banishing rituals",
+            "Middle Pillar",
+            "Ceremonial structure",
+            "Magical correspondences"
+        ],
+        "relevance_contexts": {
+            "ceremonial_structure": "Created the template for formal ritual: opening, invocation, working, closing.",
+            "correspondences": "Tables linking colors, symbols, numbers provide basis for ritual design.",
+            "protection": "Banishing rituals remain the gold standard for clearing sacred space."
+        },
+        "online_resources": [
+            {"title": "Hermetic Library", "url": "https://hermetic.com/", "type": "archive", "access": "free"},
+            {"title": "Esoteric Archives", "url": "https://www.esotericarchives.com/", "type": "texts", "access": "free"},
+            {"title": "Wikipedia - Hermetic Order", "url": "https://en.wikipedia.org/wiki/Hermetic_Order_of_the_Golden_Dawn", "type": "overview", "access": "free"}
+        ],
+        "verified_quote": None
+    }
+}
+
+def get_source_by_id(source_id: str) -> dict:
+    """Get a source from the encyclopedia by ID, returns empty dict if not found"""
+    return SOURCE_ENCYCLOPEDIA.get(source_id, {})
+
+def validate_source_id(source_id: str, persona_allowed_sources: list) -> bool:
+    """Check if a source_id exists in both the encyclopedia AND persona's allowed list"""
+    # Must exist in encyclopedia
+    if source_id not in SOURCE_ENCYCLOPEDIA:
+        return False
+    # Must be in persona's allowed sources
+    allowed_ids = [s.get("source_id") for s in persona_allowed_sources]
+    return source_id in allowed_ids
+
+def get_learn_more_for_source(source_id: str, max_items: int = 3) -> list:
+    """Get validated learn_more links for a source - ONLY from encyclopedia"""
+    source = SOURCE_ENCYCLOPEDIA.get(source_id, {})
+    resources = source.get("online_resources", [])
+    validated = []
+    for r in resources[:max_items]:
+        if validate_url_domain(r.get("url", "")):
+            validated.append({
+                "title": r.get("title", ""),
+                "url": r.get("url", ""),
+                "access": r.get("access", "free")
+            })
+    return validated
         "full_name": "Carl Gustav Jung",
         "years": "1875-1961",
         "nationality": "Swiss",
