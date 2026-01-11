@@ -39,6 +39,12 @@ from spell_prompts import (
     build_image_prompt, generate_all_image_prompts,
     get_used_scenarios, record_used_scenario
 )
+from research_service import (
+    ResearchRequest, ResearchResponse,
+    SpellbookRequest, SpellbookResponse,
+    CombinedRequest, CombinedResponse,
+    research_query, generate_spellbook_response, generate_combined_response
+)
 import random
 
 ROOT_DIR = Path(__file__).parent
