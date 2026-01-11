@@ -225,6 +225,33 @@ def build_planner_prompt(spell_spec: dict, persona_config: dict, scenario: dict)
         for s in persona_config.get("allowed_sources", [])
     ])
     
+    # Build source encyclopedia text for rich reference context
+    from persona_config import SOURCE_ENCYCLOPEDIA
+    source_encyclopedia_entries = []
+    for source in persona_config.get("allowed_sources", []):
+        source_id = source.get("source_id", "")
+        encyclopedia_entry = SOURCE_ENCYCLOPEDIA.get(source_id, {})
+        if encyclopedia_entry:
+            entry_text = f"""
+### {encyclopedia_entry.get('name', source_id)}
+- **Who**: {encyclopedia_entry.get('bio', 'N/A')[:200]}...
+- **Key Works**: {', '.join([w['title'] for w in encyclopedia_entry.get('key_works', [])[:3]])}
+- **Core Teachings**: {', '.join(encyclopedia_entry.get('core_teachings', [])[:3])}
+- **Relevance Contexts**:
+"""
+            for ctx_name, ctx_text in encyclopedia_entry.get('relevance_contexts', {}).items():
+                entry_text += f"  - {ctx_name}: {ctx_text[:150]}...\n"
+            
+            if 'online_resources' in encyclopedia_entry:
+                entry_text += "- **Learn More**: " + ", ".join([r['title'] for r in encyclopedia_entry['online_resources'][:2]])
+            
+            if 'quote' in encyclopedia_entry:
+                entry_text += f"\n- **Quote**: \"{encyclopedia_entry['quote']}\""
+            
+            source_encyclopedia_entries.append(entry_text)
+    
+    source_encyclopedia_text = "\n".join(source_encyclopedia_entries[:4])  # Limit to top 4 to save tokens
+    
     # Get practices linked to this scenario
     practices = get_practices_for_scenario(persona_id, scenario["scenario_id"])
     practices_text = "\n".join([
