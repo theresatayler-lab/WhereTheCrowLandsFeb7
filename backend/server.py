@@ -1111,6 +1111,72 @@ async def chat_with_ai(message_data: ChatMessage):
         logging.error(f'AI chat error: {str(e)}')
         raise HTTPException(status_code=500, detail='Failed to process chat request')
 
+# ============================================================================
+# DUAL-MODEL RESEARCH ENDPOINTS (DeepSeek + OpenAI)
+# ============================================================================
+
+@api_router.post('/research', response_model=dict)
+async def research_endpoint(request: ResearchRequest):
+    """
+    Research endpoint using DeepSeek as the research engine.
+    Returns factual, scholarly information about magical traditions.
+    """
+    try:
+        result = await research_query(request.query, request.context)
+        return {
+            "answer": result.answer,
+            "bullets": result.bullets,
+            "sources": result.sources
+        }
+    except Exception as e:
+        logging.error(f'Research endpoint error: {str(e)}')
+        raise HTTPException(status_code=500, detail=f'Research query failed: {str(e)}')
+
+@api_router.post('/spellbook', response_model=dict)
+async def spellbook_endpoint(request: SpellbookRequest):
+    """
+    Spellbook endpoint using OpenAI for persona-voiced responses.
+    Returns in-character ritual guidance.
+    """
+    try:
+        result = await generate_spellbook_response(
+            request.user_request,
+            request.persona,
+            request.tone
+        )
+        return {
+            "response": result.response,
+            "persona_name": result.persona_name,
+            "tone_used": result.tone_used
+        }
+    except Exception as e:
+        logging.error(f'Spellbook endpoint error: {str(e)}')
+        raise HTTPException(status_code=500, detail=f'Spellbook generation failed: {str(e)}')
+
+@api_router.post('/combined', response_model=dict)
+async def combined_endpoint(request: CombinedRequest):
+    """
+    Combined endpoint that calls BOTH engines:
+    - DeepSeek for research/origins
+    - OpenAI for persona voice
+    Returns merged response with both sections.
+    """
+    try:
+        result = await generate_combined_response(
+            request.user_request,
+            request.persona,
+            request.tone,
+            request.context
+        )
+        return {
+            "spellbook_response": result.spellbook_response,
+            "research_origins": result.research_origins,
+            "persona_used": result.persona_used
+        }
+    except Exception as e:
+        logging.error(f'Combined endpoint error: {str(e)}')
+        raise HTTPException(status_code=500, detail=f'Combined generation failed: {str(e)}')
+
 # Spell personalization questions endpoint
 @api_router.get('/spell-context-questions')
 async def get_spell_context_questions():
