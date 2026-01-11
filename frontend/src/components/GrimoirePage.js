@@ -1232,7 +1232,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
             >
               <span className="font-cinzel text-base text-amber-900 flex items-center gap-2">
                 <BookOpen className="w-5 h-5" />
-                Inspired By
+                References &amp; Inspired By
               </span>
               {showHistoricalContext ? <ChevronUp className="w-5 h-5 text-stone-700" /> : <ChevronDown className="w-5 h-5 text-stone-700" />}
             </button>
@@ -1245,28 +1245,119 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                   exit={{ height: 0, opacity: 0 }}
                   className="overflow-hidden"
                 >
-                  <div className="p-4 space-y-3 border-t border-amber-800/30">
+                  <div className="p-4 space-y-4 border-t border-amber-800/30">
                     {spell.inspired_by.map((source, idx) => (
-                      <div key={idx} className="p-3 bg-amber-900/10 rounded-sm">
+                      <div key={idx} className="p-4 bg-amber-900/10 rounded-sm border border-amber-800/20">
                         <div className="flex items-start gap-3">
-                          <span className="text-lg">{source.source_type === 'book' ? '📖' : source.source_type === 'tradition' ? '🏛️' : source.source_type === 'practice' ? '✨' : '📜'}</span>
-                          <div className="flex-1">
-                            <p className="font-montserrat text-sm font-medium text-stone-800">
-                              {source.name}
-                              {source.author && <span className="text-stone-600"> — {source.author}</span>}
-                            </p>
-                            {source.connection && (
-                              <p className="font-montserrat text-xs text-stone-600 mt-1">{source.connection}</p>
+                          <span className="text-xl mt-0.5">
+                            {source.source_type === 'book' ? '📖' : 
+                             source.source_type === 'tradition' ? '🏛️' : 
+                             source.source_type === 'practice' ? '✨' : 
+                             source.source_type === 'author' ? '✍️' : '📜'}
+                          </span>
+                          <div className="flex-1 space-y-2">
+                            {/* Title and Author */}
+                            <div>
+                              <p className="font-cinzel text-sm font-medium text-amber-900">
+                                {source.name}
+                                {source.year && <span className="text-stone-500 font-montserrat text-xs ml-1">({source.year})</span>}
+                              </p>
+                              {source.author && (
+                                <p className="font-montserrat text-xs text-stone-600">by {source.author}</p>
+                              )}
+                            </div>
+                            
+                            {/* Connection to Spell - The key new content */}
+                            {(source.connection_to_spell || source.connection) && (
+                              <div className="bg-white/50 p-3 rounded border-l-2 border-amber-700">
+                                <p className="font-montserrat text-xs text-amber-800 uppercase tracking-wider mb-1">Why This Source Matters</p>
+                                <p className="font-montserrat text-sm text-stone-700 leading-relaxed">
+                                  {source.connection_to_spell || source.connection}
+                                </p>
+                              </div>
                             )}
+                            
+                            {/* Key Concept */}
+                            {source.key_concept_used && (
+                              <p className="font-montserrat text-xs text-stone-600">
+                                <span className="font-medium text-amber-800">Key concept used:</span> {source.key_concept_used}
+                              </p>
+                            )}
+                            
+                            {/* Quote */}
+                            {source.quote && (
+                              <blockquote className="font-crimson text-sm text-stone-700 italic border-l-2 border-amber-600/50 pl-3 my-2">
+                                "{source.quote}"
+                              </blockquote>
+                            )}
+                            
+                            {/* Learn More Resources */}
+                            {source.learn_more && source.learn_more.resources && source.learn_more.resources.length > 0 && (
+                              <div className="pt-2 border-t border-amber-800/20">
+                                <p className="font-montserrat text-xs text-amber-800 uppercase tracking-wider mb-2">
+                                  {source.learn_more.description || 'Explore Further'}
+                                </p>
+                                <div className="flex flex-wrap gap-2">
+                                  {source.learn_more.resources.map((resource, resIdx) => (
+                                    <a 
+                                      key={resIdx}
+                                      href={resource.url} 
+                                      target="_blank" 
+                                      rel="noopener noreferrer"
+                                      className="inline-flex items-center gap-1 px-2 py-1 bg-amber-800/10 hover:bg-amber-800/20 rounded text-xs font-montserrat text-amber-900 transition-colors"
+                                    >
+                                      {resource.type === 'book' ? '📚' : 
+                                       resource.type === 'article' ? '📄' : 
+                                       resource.type === 'archive' ? '🗃️' : 
+                                       resource.type === 'organization' ? '🏛️' : '🔗'}
+                                      {resource.title}
+                                      <ExternalLink className="w-3 h-3" />
+                                    </a>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
+                            
+                            {/* Archive Link */}
                             {source.archive_link && (
-                              <a href={source.archive_link} className="font-montserrat text-xs text-amber-800 hover:underline mt-1 inline-block">
-                                View in Archive →
+                              <a href={source.archive_link} className="font-montserrat text-xs text-amber-800 hover:underline inline-flex items-center gap-1">
+                                View in Crowlands Archive <ArrowRight className="w-3 h-3" />
                               </a>
                             )}
                           </div>
                         </div>
                       </div>
                     ))}
+                    
+                    {/* Historical Context Block */}
+                    {spell.historical_context && (
+                      <div className="p-4 bg-stone-100 rounded-sm border border-stone-300/50 mt-4">
+                        <p className="font-cinzel text-sm text-stone-800 mb-2 flex items-center gap-2">
+                          <History className="w-4 h-4" />
+                          Historical Context
+                        </p>
+                        {spell.historical_context.tradition && (
+                          <p className="font-montserrat text-sm text-stone-700 mb-2">
+                            <span className="font-medium">Tradition:</span> {spell.historical_context.tradition}
+                          </p>
+                        )}
+                        {spell.historical_context.time_period && (
+                          <p className="font-montserrat text-sm text-stone-700 mb-2">
+                            <span className="font-medium">Period:</span> {spell.historical_context.time_period}
+                          </p>
+                        )}
+                        {spell.historical_context.cultural_note && (
+                          <p className="font-crimson text-sm text-stone-700 italic">
+                            {spell.historical_context.cultural_note}
+                          </p>
+                        )}
+                        {spell.historical_context.modern_adaptation && (
+                          <p className="font-montserrat text-xs text-stone-600 mt-2">
+                            <span className="font-medium">Modern adaptation:</span> {spell.historical_context.modern_adaptation}
+                          </p>
+                        )}
+                      </div>
+                    )}
                   </div>
                 </motion.div>
               )}
