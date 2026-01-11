@@ -102,6 +102,37 @@ export const aiAPI = {
   },
 };
 
+// Dual-Model Research API (DeepSeek + OpenAI)
+export const researchAPI = {
+  // DeepSeek-powered research engine
+  research: async (query, context = null) => {
+    const response = await axios.post(`${API}/research`, {
+      query,
+      context,
+    });
+    return response.data;
+  },
+  // OpenAI-powered persona spellbook voice
+  spellbook: async (userRequest, persona, tone = 'gentle') => {
+    const response = await axios.post(`${API}/spellbook`, {
+      user_request: userRequest,
+      persona,
+      tone,
+    });
+    return response.data;
+  },
+  // Combined: Both engines together
+  combined: async (userRequest, persona = 'shigg', tone = 'gentle', context = null) => {
+    const response = await axios.post(`${API}/combined`, {
+      user_request: userRequest,
+      persona,
+      tone,
+      context,
+    });
+    return response.data;
+  },
+};
+
 export const archetypesAPI = {
   getAll: async () => {
     const response = await axios.get(`${API}/archetypes`);
