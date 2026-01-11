@@ -28,3 +28,28 @@ Date: Sun Jan 11 21:18:35 UTC 2026
 
 **References count:** 0
 
+## Katherine Spell 1: Embracing the Mirror's Shadow
+
+**References count:** 1
+
+### Reference 1: Dion Fortune
+- **source_id:** dion_fortune
+- **connection_to_spell:** Fortune's work on shadow_work underscores our use of the mirror as a tool for self-reflection. In Step 2, as we trace the mirror's edge, we engage with Fortune's principle of 'psychic hygiene' by conf...
+- **key_concept_used:** psychic hygiene
+- **beginner_takeaway:** If you remember one thing, it's that clarity comes by facing, not fleeing, your inner shadows.
+- **learn_more links:** 3
+  - Society of the Inner Light (Official): https://www.innerlight.org.uk/
+  - Sacred Texts - Esoteric Archive: https://www.sacred-texts.com/eso/index.htm
+  - Wikipedia - Dion Fortune: https://en.wikipedia.org/wiki/Dion_Fortune
+
+## Katherine Spell 2: Illuminate, Transform, Release
+
+**References count:** 1
+
+### Reference 1: Dion Fortune
+- **source_id:** dion_fortune
+- **connection_to_spell:** The candle's role in our ritual connects to Dion Fortune's teachings on the transformation of personal energy. In Step 1, visualizing the candle flame aligns with her concept of focusing energy to tra...
+- **key_concept_used:** psychic hygiene
+- **beginner_takeaway:** If you remember one thing, it's that transformation begins with focused intention.
+- **learn_more links:** 3
+
