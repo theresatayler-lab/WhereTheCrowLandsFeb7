@@ -100,7 +100,7 @@ export const SpellLimitBanner = ({ remaining, total }) => {
           </div>
           {isLow && (
             <p className="font-montserrat text-xs text-destructive mt-2">
-              You're almost out of free spells! Upgrade for unlimited access.
+              You&apos;re almost out of free spells! Upgrade for unlimited access.
             </p>
           )}
         </>
