@@ -1505,6 +1505,99 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
           </div>
         </div>
 
+        {/* Research & Origins Button */}
+        <section className="border border-indigo-800/30 rounded-sm overflow-hidden">
+          <button
+            onClick={fetchResearchOrigins}
+            disabled={isLoadingResearch}
+            className="w-full p-4 flex items-center justify-between bg-indigo-900/10 hover:bg-indigo-900/20 transition-all disabled:opacity-70"
+            data-testid="show-research-origins-btn"
+          >
+            <span className="font-cinzel text-base text-indigo-900 flex items-center gap-2">
+              {isLoadingResearch ? (
+                <Loader2 className="w-5 h-5 animate-spin" />
+              ) : (
+                <Search className="w-5 h-5" />
+              )}
+              {isLoadingResearch ? 'Researching...' : 'Show Research & Origins'}
+            </span>
+            {showResearch ? <ChevronUp className="w-5 h-5 text-stone-700" /> : <ChevronDown className="w-5 h-5 text-stone-700" />}
+          </button>
+          
+          <AnimatePresence>
+            {showResearch && researchData && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                className="overflow-hidden"
+              >
+                <div className="p-4 space-y-4 border-t border-indigo-800/30 bg-indigo-50/30">
+                  {/* Spellbook Response (OpenAI Persona Voice) */}
+                  <div className="bg-amber-50/80 p-4 rounded-sm border border-amber-800/30">
+                    <div className="flex items-center gap-2 mb-3">
+                      <BookOpen className="w-4 h-4 text-amber-800" />
+                      <span className="font-cinzel text-sm text-amber-900 uppercase tracking-wider">
+                        {researchData.persona_used}'s Wisdom
+                      </span>
+                    </div>
+                    <p className="font-crimson text-base text-stone-700 leading-relaxed whitespace-pre-wrap">
+                      {researchData.spellbook_response}
+                    </p>
+                  </div>
+                  
+                  {/* Research Origins (DeepSeek) */}
+                  <div className="bg-white/60 p-4 rounded-sm border border-indigo-800/20">
+                    <div className="flex items-center gap-2 mb-3">
+                      <Search className="w-4 h-4 text-indigo-800" />
+                      <span className="font-cinzel text-sm text-indigo-900 uppercase tracking-wider">
+                        Research & Origins
+                      </span>
+                    </div>
+                    
+                    {/* Main Answer */}
+                    <p className="font-montserrat text-sm text-stone-700 leading-relaxed mb-4">
+                      {researchData.research_origins?.answer}
+                    </p>
+                    
+                    {/* Key Points */}
+                    {researchData.research_origins?.bullets?.length > 0 && (
+                      <div className="mb-4">
+                        <p className="font-montserrat text-xs text-indigo-800 uppercase tracking-wider mb-2">Key Points</p>
+                        <ul className="space-y-1">
+                          {researchData.research_origins.bullets.map((bullet, idx) => (
+                            <li key={idx} className="font-montserrat text-sm text-stone-700 flex items-start gap-2">
+                              <span className="text-indigo-600 mt-1">•</span>
+                              {bullet}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                    
+                    {/* Sources */}
+                    {researchData.research_origins?.sources?.length > 0 && (
+                      <div>
+                        <p className="font-montserrat text-xs text-indigo-800 uppercase tracking-wider mb-2">Suggested Further Reading</p>
+                        <div className="flex flex-wrap gap-2">
+                          {researchData.research_origins.sources.map((source, idx) => (
+                            <span 
+                              key={idx}
+                              className="inline-block px-2 py-1 bg-indigo-100/50 text-xs font-montserrat text-indigo-800 rounded border border-indigo-200"
+                            >
+                              📚 {source}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </section>
+
         {/* Action Buttons */}
         <div className="flex flex-wrap gap-3 pt-4 border-t border-amber-800/30">
           <button
