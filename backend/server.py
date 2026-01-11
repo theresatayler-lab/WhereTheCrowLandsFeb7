@@ -2776,7 +2776,10 @@ async def generate_personalized_spell(request: PersonalizedSpellRequest, user = 
         if user:
             user_data = await db.users.find_one({'id': user['id']}, {'_id': 0})
             if user_data:
-                is_pro = user_data.get('subscription_tier') == 'pro' or user_data.get('subscription_status') == 'pro'
+                # Check for paid/pro status (accept both 'pro' and 'paid' as valid paid tiers)
+                tier = user_data.get('subscription_tier', 'free')
+                status = user_data.get('subscription_status', 'free')
+                is_pro = tier in ('pro', 'paid') or status in ('pro', 'paid', 'active')
                 if not is_pro:
                     spell_count = user_data.get('spell_generation_count', 0)
                     limit = 3  # Free tier limit
