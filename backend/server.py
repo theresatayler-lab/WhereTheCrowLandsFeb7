@@ -238,8 +238,10 @@ def create_token(user_id: str) -> str:
 async def check_spell_generation_limit(user: dict) -> dict:
     """Check if user can generate spell and return status"""
     subscription_tier = user.get('subscription_tier', 'free')
+    subscription_status = user.get('subscription_status', 'free')
     
-    if subscription_tier == 'paid':
+    # Pro/paid users have unlimited spells
+    if subscription_tier == 'paid' or subscription_status == 'pro':
         return {'can_generate': True, 'remaining': -1, 'limit': -1}
     
     # Free tier - limit to 3 spells
