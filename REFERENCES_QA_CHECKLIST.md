@@ -53,3 +53,54 @@ Date: Sun Jan 11 21:18:35 UTC 2026
 - **beginner_takeaway:** If you remember one thing, it's that transformation begins with focused intention.
 - **learn_more links:** 3
 
+
+---
+
+# QA CHECKLIST SUMMARY
+
+## Validation Criteria
+
+| Criteria | Status |
+|----------|--------|
+| References differ spell-to-spell (not always same source) | ✅ PASS |
+| Every link comes from SOURCE_ENCYCLOPEDIA | ✅ PASS (server-side enforced) |
+| No quotes (removed in this version) | ✅ PASS |
+| connection_to_spell ties to spell materials/steps | ⚠️ CHECK MANUALLY |
+| beginner_takeaway present | ✅ PASS |
+| learn_more links present and valid | ✅ PASS |
+| Persona voice matches in references | ⚠️ CHECK MANUALLY |
+
+## Implementation Summary
+
+### Backend Constraints Applied:
+1. **SOURCE_ENCYCLOPEDIA** locked down with verified resources only
+2. **ALLOWED_REFERENCE_DOMAINS** whitelist enforces safe URLs
+3. **validate_url_domain()** - server-side URL validation
+4. **get_learn_more_for_source()** - only returns validated encyclopedia links
+5. **Server-side validation** in generate_personalized_spell endpoint:
+   - Strips any quotes (no hallucinated quotes)
+   - Validates source_id against encyclopedia AND persona's allowed_sources
+   - Overrides learn_more with encyclopedia-only links
+   - Adds fallback content if required fields missing
+
+### Frontend Changes:
+1. Renamed to "References & Where This Comes From"
+2. Collapsible cards for each reference
+3. Shows: connection_to_spell, key_concept_used, beginner_takeaway, learn_more links
+4. Compact historical_context section
+5. Back-compat placeholder for older spells
+
+### Persona Voice Requirements:
+- Shigg: Domestic folklore, handed-down recipe wisdom
+- Cathleen: Protective, devotional, candlelight logic
+- Katherine: Precise, "test and verify", methodical
+
+---
+
+## Files Modified
+
+- `/app/backend/persona_config.py` - SOURCE_ENCYCLOPEDIA with validation functions
+- `/app/backend/spell_prompts.py` - Strict inspired_by contract
+- `/app/backend/server.py` - Server-side reference validation
+- `/app/frontend/src/components/GrimoirePage.js` - New references UI
+
