@@ -391,6 +391,153 @@ SOURCE_ENCYCLOPEDIA = {
             {"title": "Wikipedia - Hermetic Order", "url": "https://en.wikipedia.org/wiki/Hermetic_Order_of_the_Golden_Dawn", "type": "overview", "access": "free"}
         ],
         "verified_quote": None
+    },
+    
+    # ==== PERSONA-SPECIFIC SOURCES (mapped to persona allowed_sources) ====
+    "rubaiyat": {
+        "name": "Rubáiyát of Omar Khayyám",
+        "author": "Edward FitzGerald (translator)",
+        "years": "1859",
+        "bio_short": "Persian mystical poetry translation that introduced carpe diem philosophy to Western audiences.",
+        "core_concepts": ["Carpe diem", "Garden as paradise", "Present moment", "Acceptance"],
+        "relevance_contexts": {
+            "presence": "Teaches embracing the present moment—perfect for calming spells.",
+            "garden_magic": "Garden imagery provides framework for nature-based workings.",
+            "acceptance": "Acceptance of transience helps with grief and letting go."
+        },
+        "online_resources": [
+            {"title": "Project Gutenberg - Full Text", "url": "https://www.gutenberg.org/ebooks/246", "type": "full_text", "access": "free"},
+            {"title": "Wikipedia - Rubaiyat", "url": "https://en.wikipedia.org/wiki/Rubaiyat_of_Omar_Khayyam", "type": "overview", "access": "free"},
+            {"title": "Poetry Foundation", "url": "https://www.poetryfoundation.org/poets/edward-fitzgerald", "type": "biography", "access": "free"}
+        ],
+        "verified_quote": None
+    },
+    
+    "hughes_crow": {
+        "name": "Crow: From the Life and Songs of the Crow",
+        "author": "Ted Hughes",
+        "years": "1970",
+        "bio_short": "Mythological poetry reimagining creation through a trickster crow figure.",
+        "core_concepts": ["Crow as messenger", "Transformation", "Shadow work", "Nature's raw power"],
+        "relevance_contexts": {
+            "crow_magic": "The crow as messenger between worlds—necessary and transformative.",
+            "transformation": "Destruction precedes creation, relevant to renewal spells.",
+            "shadow_work": "Confronts darkness without flinching."
+        },
+        "online_resources": [
+            {"title": "Poetry Foundation - Ted Hughes", "url": "https://www.poetryfoundation.org/poets/ted-hughes", "type": "biography", "access": "free"},
+            {"title": "British Library - Hughes", "url": "https://www.bl.uk/people/ted-hughes", "type": "archive", "access": "free"},
+            {"title": "Wikipedia - Crow", "url": "https://en.wikipedia.org/wiki/Crow:_From_the_Life_and_Songs_of_the_Crow", "type": "overview", "access": "free"}
+        ],
+        "verified_quote": None
+    },
+    
+    "domestic_traditions": {
+        "name": "British Kitchen Folklore",
+        "type": "collective_tradition",
+        "bio_short": "Traditional household magic passed down through generations of British women.",
+        "core_concepts": ["Hearth magic", "Kitchen witchcraft", "Household protection", "Practical remedies"],
+        "relevance_contexts": {
+            "domestic_magic": "The home as sacred space, the hearth as magical center.",
+            "practical_magic": "Solving real problems with everyday items.",
+            "protection": "Traditional methods for keeping the home safe."
+        },
+        "online_resources": [
+            {"title": "Folklore Society", "url": "https://folklore-society.com/", "type": "organization", "access": "free"},
+            {"title": "Museum of Witchcraft", "url": "https://museumofwitchcraftandmagic.co.uk/", "type": "museum", "access": "overview"},
+            {"title": "Wikipedia - Kitchen Witchcraft", "url": "https://en.wikipedia.org/wiki/Kitchen_witch", "type": "overview", "access": "free"}
+        ],
+        "verified_quote": None
+    },
+    
+    "east_end": {
+        "name": "East End Domestic Traditions",
+        "type": "collective_tradition",
+        "bio_short": "Working-class London magical practices—practical, resourceful, deeply rooted in community.",
+        "core_concepts": ["Practical magic", "Community wisdom", "Making do", "Passed-down remedies"],
+        "relevance_contexts": {
+            "domestic_magic": "Using what you have at hand, no fancy tools required.",
+            "folk_magic": "Real magic from real people solving real problems.",
+            "protection": "Neighborhood-level protection and blessing traditions."
+        },
+        "online_resources": [
+            {"title": "Museum of London", "url": "https://www.museumoflondon.org.uk/", "type": "museum", "access": "free"},
+            {"title": "Wikipedia - East End", "url": "https://en.wikipedia.org/wiki/East_End_of_London", "type": "overview", "access": "free"}
+        ],
+        "verified_quote": None
+    },
+    
+    "grieve_herbal": {
+        "name": "A Modern Herbal",
+        "author": "Maud Grieve",
+        "years": "1931",
+        "bio_short": "Comprehensive guide to medicinal and magical herbs, still authoritative today.",
+        "core_concepts": ["Herbal magic", "Plant correspondences", "Traditional remedies", "Kitchen garden wisdom"],
+        "relevance_contexts": {
+            "herbal_magic": "Properties and uses of herbs for magical and medicinal purposes.",
+            "domestic_magic": "Kitchen herbs as magical allies.",
+            "protection": "Protective herbs and their traditional uses."
+        },
+        "online_resources": [
+            {"title": "Botanical.com - Full Text", "url": "https://www.botanical.com/botanical/mgmh/mgmh.html", "type": "full_text", "access": "free"},
+            {"title": "Wikipedia - Maud Grieve", "url": "https://en.wikipedia.org/wiki/Maud_Grieve", "type": "overview", "access": "free"},
+            {"title": "Archive.org - Modern Herbal", "url": "https://archive.org/search?query=maud%20grieve%20modern%20herbal", "type": "archive", "access": "free"}
+        ],
+        "verified_quote": None
+    },
+    
+    "yeats_celtic": {
+        "name": "The Celtic Twilight",
+        "author": "W.B. Yeats",
+        "years": "1893",
+        "bio_short": "Irish fairy lore and folk belief collected by the Nobel laureate poet and Golden Dawn member.",
+        "core_concepts": ["Fairy faith", "Sidhe", "Threshold times", "Irish spirit lore"],
+        "relevance_contexts": {
+            "celtic_magic": "Authentic Irish fairy faith for workings with land spirits.",
+            "threshold_work": "Twilight imagery for dawn, dusk, and seasonal workings.",
+            "invocation": "Poetry as magical action."
+        },
+        "online_resources": [
+            {"title": "Project Gutenberg - Celtic Twilight", "url": "https://www.gutenberg.org/ebooks/5765", "type": "full_text", "access": "free"},
+            {"title": "Yeats Society", "url": "https://www.yeatssociety.com/", "type": "organization", "access": "free"},
+            {"title": "Wikipedia - Celtic Twilight", "url": "https://en.wikipedia.org/wiki/The_Celtic_Twilight", "type": "overview", "access": "free"}
+        ],
+        "verified_quote": None
+    },
+    
+    "carmichael": {
+        "name": "Carmina Gadelica",
+        "author": "Alexander Carmichael",
+        "years": "1900",
+        "bio_short": "Scottish Gaelic prayers, hymns, and incantations collected from the Highlands and Islands.",
+        "core_concepts": ["Celtic prayers", "Blessing traditions", "Protection charms", "Daily devotions"],
+        "relevance_contexts": {
+            "celtic_magic": "Authentic Gaelic blessing and protection prayers.",
+            "protection": "Traditional Scottish warding and blessing.",
+            "daily_practice": "Prayers for every part of daily life."
+        },
+        "online_resources": [
+            {"title": "Sacred Texts - Carmina Gadelica", "url": "https://www.sacred-texts.com/neu/celt/cg1/index.htm", "type": "full_text", "access": "free"},
+            {"title": "Wikipedia - Carmina Gadelica", "url": "https://en.wikipedia.org/wiki/Carmina_Gadelica", "type": "overview", "access": "free"}
+        ],
+        "verified_quote": None
+    },
+    
+    "cunning_traditions": {
+        "name": "Celtic Cunning Traditions",
+        "type": "collective_tradition",
+        "bio_short": "Practical magic of Celtic cunning folk—healers, seers, and community problem-solvers.",
+        "core_concepts": ["Practical protection", "Healing magic", "Curse-breaking", "Community service"],
+        "relevance_contexts": {
+            "protection": "Warding methods passed down through generations.",
+            "folk_magic": "Real solutions for real problems.",
+            "healing": "Traditional approaches to spiritual and physical healing."
+        },
+        "online_resources": [
+            {"title": "Folklore Society", "url": "https://folklore-society.com/", "type": "organization", "access": "free"},
+            {"title": "Wikipedia - Cunning Folk", "url": "https://en.wikipedia.org/wiki/Cunning_folk", "type": "overview", "access": "free"}
+        ],
+        "verified_quote": None
     }
 }
 
