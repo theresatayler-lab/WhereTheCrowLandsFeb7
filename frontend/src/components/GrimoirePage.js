@@ -523,6 +523,10 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
   const [isSaving, setIsSaving] = useState(false);
   const [subscriptionTier, setSubscriptionTier] = useState('free'); // Default to free
   const [viewMode, setViewMode] = useState('card'); // 'card' or 'full' - start with card view
+  // Research & Origins state
+  const [showResearch, setShowResearch] = useState(false);
+  const [isLoadingResearch, setIsLoadingResearch] = useState(false);
+  const [researchData, setResearchData] = useState(null);
   const grimoireRef = useRef(null);
   const navigate = useNavigate();
   
