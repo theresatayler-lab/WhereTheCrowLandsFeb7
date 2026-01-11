@@ -681,29 +681,24 @@ Return ONLY this JSON (no markdown, no explanation):
     }},
     "inspired_by": [
         {{
-            "source_id": "MUST be from selected_sources",
+            "source_id": "MUST be from selected_sources - REQUIRED",
             "source_type": "book/tradition/practice/author",
             "name": "Source name (book title or tradition name)",
-            "author": "Author name if applicable",
+            "author": "Author name if applicable, null for traditions",
             "year": "Year if known, null if traditional",
-            "connection_to_spell": "2-3 sentences explaining SPECIFICALLY how this source relates to THIS spell. Example: 'Dion Fortune's concept of the etheric body as a psychic shield directly informs our visualization of the protective bubble in Step 3. Her teaching that we strengthen our own aura rather than attacking external forces is why we focus on building warmth rather than pushing away cold.'",
-            "key_concept_used": "The specific idea or technique borrowed (e.g., 'etheric shielding', 'candle as living flame', 'threshold guardian')",
-            "quote": "A relevant quote from the source if available, or null",
-            "learn_more": {{
-                "description": "Brief invitation to explore further",
-                "resources": [
-                    {{"title": "Resource name", "url": "https://...", "type": "book/article/archive/organization"}},
-                    {{"title": "Second resource", "url": "https://...", "type": "type"}}
-                ]
-            }},
-            "archive_link": "/library or /rituals or /deities or /figures"
+            "connection_to_spell": "2-4 sentences that MUST reference: (1) a specific MATERIAL from this spell (mirror, salt, candle, thread) AND (2) a specific STEP or ACTION (Step 3: trace the circle, in the closing gesture, when lighting the candle). NO GENERIC CONNECTIONS.",
+            "key_concept_used": "ONE specific concept (e.g., 'psychic hygiene', 'protective circle', 'sympathetic link', 'threshold guardian') - not vague",
+            "beginner_takeaway": "ONE sentence starting with 'If you remember one thing...' - practical and encouraging",
+            "learn_more": [
+                {{"title": "Resource title from encyclopedia", "url": "MUST be from SOURCE_ENCYCLOPEDIA", "access": "free/paid/overview"}}
+            ]
         }}
     ],
     "historical_context": {{
-        "tradition": "The broader tradition this spell draws from (e.g., 'British kitchen magic', 'Victorian spiritualism', 'Celtic protection work')",
-        "time_period": "When these practices were most common",
-        "cultural_note": "2-3 sentences on how people historically used similar workings and why",
-        "modern_adaptation": "1 sentence on how we've adapted it for contemporary practice"
+        "tradition": "The broader tradition (e.g., 'British kitchen magic', 'Celtic protection work') - ONE phrase",
+        "time_period": "When common (e.g., '18th-19th century', 'Medieval period') - ONE phrase",
+        "cultural_note": "1-2 sentences MAX on how people historically used this type of working",
+        "modern_adaptation": "1 sentence on how we've adapted it safely for today"
     }},
     "variations": [
         "Alternative approach 1 (quieter/shorter/accessibility option)",
