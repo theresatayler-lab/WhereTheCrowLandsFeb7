@@ -552,7 +552,23 @@ export const SpellRequest = () => {
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
         if (response.status === 403 && errorData.detail?.error === 'spell_limit_reached') {
-          toast.error(errorData.detail.message);
+          // Show friendly message with upgrade option
+          toast.error(
+            <div className="flex flex-col gap-2">
+              <span className="font-semibold">You've used all your free spells!</span>
+              <span className="text-sm">Upgrade to Pro for unlimited spell crafting.</span>
+            </div>,
+            {
+              duration: 5000,
+              action: {
+                label: 'Upgrade Now',
+                onClick: () => navigate('/upgrade')
+              }
+            }
+          );
+          // Redirect to upgrade page after a short delay
+          setTimeout(() => navigate('/upgrade'), 2000);
+          setLoading(false);
           return;
         }
         throw new Error('Failed to generate spell');
