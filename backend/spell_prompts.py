@@ -620,13 +620,29 @@ Return ONLY this JSON (no markdown, no explanation):
     "inspired_by": [
         {{
             "source_id": "MUST be from selected_sources",
-            "source_type": "book/tradition/practice",
-            "name": "Source name",
-            "author": "Author if applicable",
-            "connection": "How this connects to the spell (conversational, not academic)",
-            "archive_link": "/library or /rituals etc"
+            "source_type": "book/tradition/practice/author",
+            "name": "Source name (book title or tradition name)",
+            "author": "Author name if applicable",
+            "year": "Year if known, null if traditional",
+            "connection_to_spell": "2-3 sentences explaining SPECIFICALLY how this source relates to THIS spell. Example: 'Dion Fortune's concept of the etheric body as a psychic shield directly informs our visualization of the protective bubble in Step 3. Her teaching that we strengthen our own aura rather than attacking external forces is why we focus on building warmth rather than pushing away cold.'",
+            "key_concept_used": "The specific idea or technique borrowed (e.g., 'etheric shielding', 'candle as living flame', 'threshold guardian')",
+            "quote": "A relevant quote from the source if available, or null",
+            "learn_more": {{
+                "description": "Brief invitation to explore further",
+                "resources": [
+                    {{"title": "Resource name", "url": "https://...", "type": "book/article/archive/organization"}},
+                    {{"title": "Second resource", "url": "https://...", "type": "type"}}
+                ]
+            }},
+            "archive_link": "/library or /rituals or /deities or /figures"
         }}
     ],
+    "historical_context": {{
+        "tradition": "The broader tradition this spell draws from (e.g., 'British kitchen magic', 'Victorian spiritualism', 'Celtic protection work')",
+        "time_period": "When these practices were most common",
+        "cultural_note": "2-3 sentences on how people historically used similar workings and why",
+        "modern_adaptation": "1 sentence on how we've adapted it for contemporary practice"
+    }},
     "variations": [
         "Alternative approach 1 (quieter/shorter/accessibility option)",
         "Alternative approach 2"
