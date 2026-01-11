@@ -555,7 +555,7 @@ export const SpellRequest = () => {
           // Show friendly message with upgrade option
           toast.error(
             <div className="flex flex-col gap-2">
-              <span className="font-semibold">You've used all your free spells!</span>
+              <span className="font-semibold">You&apos;ve used all your free spells!</span>
               <span className="text-sm">Upgrade to Pro for unlimited spell crafting.</span>
             </div>,
             {
