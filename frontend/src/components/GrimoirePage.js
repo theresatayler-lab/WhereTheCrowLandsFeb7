@@ -1288,7 +1288,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                             {/* Quote */}
                             {source.quote && (
                               <blockquote className="font-crimson text-sm text-stone-700 italic border-l-2 border-amber-600/50 pl-3 my-2">
-                                "{source.quote}"
+                                &ldquo;{source.quote}&rdquo;
                               </blockquote>
                             )}
                             
