@@ -1538,7 +1538,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                     <div className="flex items-center gap-2 mb-3">
                       <BookOpen className="w-4 h-4 text-amber-800" />
                       <span className="font-cinzel text-sm text-amber-900 uppercase tracking-wider">
-                        {researchData.persona_used}'s Wisdom
+                        {researchData.persona_used}&apos;s Wisdom
                       </span>
                     </div>
                     <p className="font-crimson text-base text-stone-700 leading-relaxed whitespace-pre-wrap">
