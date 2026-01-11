@@ -5,12 +5,12 @@ import {
   BookOpen, Feather, Copy, Download, CheckCircle2, Circle,
   Flame, Droplets, Wind, Sparkles, Star, Eye, Heart,
   AlertTriangle, Quote, History, Users, Save, Lock, Key,
-  ExternalLink, ArrowRight
+  ExternalLink, ArrowRight, Search, Loader2
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
-import { grimoireAPI, subscriptionAPI } from '../utils/api';
+import { grimoireAPI, subscriptionAPI, researchAPI } from '../utils/api';
 import { useNavigate } from 'react-router-dom';
 import { SpellBorderFrame, SectionBorderFrame, TarotCardFrame, PERSONA_BORDER_URLS } from './OrnateElements';
 
