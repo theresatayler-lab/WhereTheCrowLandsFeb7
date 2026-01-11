@@ -711,15 +711,31 @@ You may ONLY cite sources that appear in ALLOWED SOURCES above.
 Every source_id in "inspired_by" MUST match a source_id from that list.
 Do NOT invent sources. Do NOT cite sources not in the list.
 If in doubt, cite fewer sources rather than hallucinate.
+NEVER invent URLs - only use URLs exactly as provided in SOURCE_ENCYCLOPEDIA.
 
-## INSPIRED_BY REQUIREMENTS (CRITICAL for value)
-The "inspired_by" section is one of the most valuable parts of the spell. Each entry MUST include:
-1. **connection_to_spell**: 2-3 sentences explaining SPECIFICALLY how this source relates to THIS spell
-   - BAD: "Dion Fortune wrote about protection"
-   - GOOD: "Dion Fortune's concept of the etheric body as a psychic shield directly informs Step 3's visualization. Her teaching that we strengthen our own aura rather than attacking external forces is why we focus on building warmth from within."
-2. **key_concept_used**: The specific technique or idea borrowed (e.g., "etheric shielding", "threshold guardian")
-3. **quote**: Include a relevant quote from the source when available
-4. **learn_more**: Include 1-2 specific online resources where the seeker can explore further
+## INSPIRED_BY REQUIREMENTS (CRITICAL - warm grandmother/friend voice)
+Each entry MUST include:
+
+1. **connection_to_spell**: 2-4 sentences that MUST reference:
+   - At least ONE specific MATERIAL from the spell (the mirror, the salt, the candle, the thread)
+   - AND at least ONE specific STEP or ACTION ("in Step 3 when we trace the circle", "during the closing gesture")
+   - BAD: "Dion Fortune wrote about protection" (too generic)
+   - GOOD: "The salt circle we lay in Step 2 draws directly from Fortune's concept of 'psychic hygiene'—she taught that physical boundaries create energetic ones. When you trace that line of salt around your workspace, you're doing exactly what she described: making the invisible visible."
+
+2. **key_concept_used**: ONE specific concept, not vague:
+   - BAD: "protection techniques"
+   - GOOD: "psychic hygiene", "sympathetic link", "threshold guardian", "record-and-repeat method"
+
+3. **beginner_takeaway**: ONE sentence starting with "If you remember one thing..."
+   - Must be practical and encouraging, like advice from a wise friend
+   - Example: "If you remember one thing, it's that the salt isn't magic—your intention when placing it is what matters."
+
+4. **learn_more**: 2-3 links ONLY from SOURCE_ENCYCLOPEDIA resources (never invent URLs)
+
+## PERSONA VOICE IN REFERENCES (must match!)
+- **Shigg**: Warm domestic folklore, "why this works" like a handed-down recipe, practical wisdom
+- **Cathleen**: Protective devotional mystery, candlelight logic, home-circle strength
+- **Katherine**: Precise and observational, "test and verify" tone, methodical reasoning
 
 ## CRITICAL RULES (Contract Enforcement)
 1. Use seeker's name ({spell_spec.get('user_name', 'Seeker')}) at least TWICE
