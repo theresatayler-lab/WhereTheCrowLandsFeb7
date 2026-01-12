@@ -32,17 +32,37 @@ def get_provider_status() -> Dict[str, Any]:
     }
 
 # ============================================================================
-# Research Modes
+# Research Modes (V2 Enhanced - 10 total modes)
 # ============================================================================
 
 RESEARCH_MODES = {
+    # Original 3 modes
     "spell_origins": "History + folklore + practice rationale (default)",
     "source_explainer": "Deep dive on specific author/tradition cited in spell",
-    "safety_substitutions": "Practical swaps + risk notes for candles, smoke, etc."
+    "safety_substitutions": "Practical swaps + risk notes for candles, smoke, etc.",
+    # DeepSeek V3 additions
+    "cross_traditional_analysis": "Parallel examples from 2-3 traditions, divergence/convergence points",
+    "material_science_context": "Ethnobotanical data, chemical compounds, physical properties",
+    "ritual_anatomy": "Component breakdown (opening, invocation, operation, closing), timing significance",
+    "historical_evolution": "Earliest documented form, key adaptations, modern interpretations",
+    "geographic_variants": "Regional variations, environmental influences, cultural syncretism",
+    "transmission_analysis": "Oral/written transmission paths, preservation gaps, reconstruction challenges",
+    "contemporary_adaptation": "Urban substitutions, digital adaptations, apartment-friendly modifications"
+}
+
+# Triggers for automatic mode selection
+MODE_TRIGGERS = {
+    "cross_traditional_analysis": ["compare", "comparison", "other traditions", "different cultures", "similar to"],
+    "material_science_context": ["why does", "how does", "scientific", "chemical", "properties of"],
+    "ritual_anatomy": ["structure", "components", "essential parts", "how to perform", "steps of"],
+    "historical_evolution": ["evolved", "changed over time", "history of", "originally", "ancient to modern"],
+    "geographic_variants": ["regional", "appalachian", "celtic", "nordic", "local variations"],
+    "transmission_analysis": ["passed down", "taught", "preserved", "oral tradition", "grimoire tradition"],
+    "contemporary_adaptation": ["modern", "apartment", "urban", "city", "today's world"]
 }
 
 # Objects that trigger safety_substitutions mode
-SAFETY_TRIGGER_OBJECTS = {"candle", "smoke", "burning", "fire", "herbs", "water", "oil", "incense"}
+SAFETY_TRIGGER_OBJECTS = {"candle", "smoke", "burning", "fire", "herbs", "water", "oil", "incense", "sharp", "blood"}
 
 # ============================================================================
 # Persona-Specific Research Biases
