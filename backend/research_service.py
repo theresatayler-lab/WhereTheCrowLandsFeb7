@@ -108,10 +108,17 @@ IMPORTANT: For sources, provide author names, book titles, or academic reference
 
 async def research_query(query: str, context: Optional[str] = None) -> ResearchResponse:
     """Query DeepSeek for research/factual information"""
+    start_time = time.time()
+    endpoint_name = "/api/research"
+    provider = "deepseek"
+    
+    logger.info(f"[PROVIDER_CALL] endpoint={endpoint_name} provider={provider} base_url={DEEPSEEK_BASE_URL} model={DEEPSEEK_MODEL}")
+    
     client = get_deepseek_client()
     
     if not client:
-        # Fallback response when DeepSeek is not configured
+        elapsed = time.time() - start_time
+        logger.warning(f"[PROVIDER_CALL] endpoint={endpoint_name} provider={provider} status=NOT_CONFIGURED timing={elapsed:.3f}s")
         return ResearchResponse(
             answer="Research engine not configured. Please add DEEPSEEK_API_KEY to environment variables.",
             bullets=["DeepSeek API key required for research features"],
