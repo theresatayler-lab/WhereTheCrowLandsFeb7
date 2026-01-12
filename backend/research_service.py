@@ -1,9 +1,11 @@
-# Research Service - Dual-Model Architecture
+# Research Service - Dual-Model Architecture V2
 # DeepSeek for research/factual content, OpenAI for persona voice
+# V2: Enhanced research modes, strict validation, persona-specific biases
 
 import os
 import logging
 import time
+import re
 from typing import Dict, List, Optional, Any
 from openai import AsyncOpenAI
 from pydantic import BaseModel, Field
@@ -30,18 +32,70 @@ def get_provider_status() -> Dict[str, Any]:
     }
 
 # ============================================================================
-# Pydantic Models
+# Research Modes
+# ============================================================================
+
+RESEARCH_MODES = {
+    "spell_origins": "History + folklore + practice rationale (default)",
+    "source_explainer": "Deep dive on specific author/tradition cited in spell",
+    "safety_substitutions": "Practical swaps + risk notes for candles, smoke, etc."
+}
+
+# Objects that trigger safety_substitutions mode
+SAFETY_TRIGGER_OBJECTS = {"candle", "smoke", "burning", "fire", "herbs", "water", "oil", "incense"}
+
+# ============================================================================
+# Persona-Specific Research Biases
+# ============================================================================
+
+PERSONA_RESEARCH_BIASES = {
+    "shigg": {
+        "tradition_bias": ["british_folk_magic", "kitchen_witchery", "cunning_folk", "wartime_domestic_life", "tea_traditions"],
+        "avoid_bias": ["golden_dawn_ritual_magic", "high_ceremony", "qabalah_deep_dive"],
+        "flavor": "British domestic folklore, grandmother wisdom, bird omens"
+    },
+    "cathleen": {
+        "tradition_bias": ["protective_folk_magic", "celtic_devotional", "lorica_prayers", "wartime_homefront", "morrigan_traditions"],
+        "avoid_bias": ["kitchen_witchery_focus", "tailoring_diagrams", "ceremonial_high_magic"],
+        "flavor": "Protection, devotional, wartime resilience, Celtic traditions"
+    },
+    "katherine": {
+        "tradition_bias": ["victorian_spiritualism", "golden_dawn", "protective_psychic_hygiene", "record_keeping", "table_tipping"],
+        "avoid_bias": ["cozy_domestic_folklore", "devotional_prayer_tone", "celtic_mysticism"],
+        "flavor": "Research, diagrams, spiritualism, occult precision"
+    },
+    "theresa": {
+        "tradition_bias": ["genealogy_magic", "family_secrets", "inherited_wisdom", "photo_magic", "storytelling_traditions"],
+        "avoid_bias": ["formal_ceremony", "academic_distance"],
+        "flavor": "Ancestral wisdom, truth-seeking, inherited objects"
+    }
+}
+
+# ============================================================================
+# Pydantic Models - V2 Enhanced
 # ============================================================================
 
 class ResearchRequest(BaseModel):
     query: str
     context: Optional[str] = None
 
+class ResearchResponseV2(BaseModel):
+    """V2 Research Object with enhanced structure"""
+    research_mode: str = "spell_origins"
+    summary: str = ""
+    key_takeaways: List[Dict[str, Any]] = []
+    why_this_works_facts: List[Dict[str, Any]] = []
+    practice_context: Dict[str, Any] = {}
+    suggested_reading_path: List[Dict[str, Any]] = []
+    sources: List[Dict[str, Any]] = []
+    source_map: Dict[str, List[str]] = {}
+
+# Legacy compatibility
 class ResearchResponse(BaseModel):
     answer: str
-    bullets: List[Dict[str, Any]]  # Enhanced: includes source_refs and claim_flag
-    sources: List[Dict[str, Any]]  # Enhanced: structured citations
-    source_map: Dict[str, List[str]] = {}  # bullet_index -> source_ids
+    bullets: List[Dict[str, Any]]
+    sources: List[Dict[str, Any]]
+    source_map: Dict[str, List[str]] = {}
 
 class SpellbookRequest(BaseModel):
     user_request: str
@@ -65,7 +119,7 @@ class CombinedResponse(BaseModel):
     persona_used: str
 
 # ============================================================================
-# DeepSeek Client (Research Engine)
+# DeepSeek Client
 # ============================================================================
 
 def get_deepseek_client() -> Optional[AsyncOpenAI]:
@@ -76,7 +130,7 @@ def get_deepseek_client() -> Optional[AsyncOpenAI]:
         return None
     return AsyncOpenAI(
         api_key=api_key,
-        base_url="https://api.deepseek.com"
+        base_url=DEEPSEEK_BASE_URL
     )
 
 def get_openai_client() -> Optional[AsyncOpenAI]:
@@ -88,137 +142,334 @@ def get_openai_client() -> Optional[AsyncOpenAI]:
     return AsyncOpenAI(api_key=api_key)
 
 # ============================================================================
-# Research Engine (DeepSeek)
+# Research Mode Selection
 # ============================================================================
 
-RESEARCH_SYSTEM_PROMPT = """You are a scholarly research assistant specializing in folk magic, domestic ritual traditions, British mysticism, and historical occult practices.
-
-YOUR ROLE:
-- Provide factual, well-researched information about magical traditions
-- Cite historical figures, texts, and practices with precision
-- Return structured JSON only — NO persona voice, NO emotional language
-
-STRICT CONSTRAINTS:
-- NO phrases like "dear seeker", "my child", "warmth", "gentle" — you are an archivist, not a guide
-- NO reassurance or comfort language
-- NO invented traditions or fabricated sources
-- If you cannot verify a source, mark it as "needs_verification": true
-- Every bullet point must reference 1-2 source IDs
-- Every bullet must have a claim_flag: "historical" | "folklore" | "modern_occult" | "speculative"
-
-SOURCE REQUIREMENTS:
-- Sources must be real (books, papers, documented traditions)
-- Include: author, title, year (if known), and URL when available
-- Allowed URL domains: archive.org, wikipedia.org, goodreads.com, jstor.org, sacred-texts.com, worldcat.org
-- If no URL exists, provide search_terms for verification
-
-OUTPUT: Valid JSON only. No markdown, no commentary outside JSON."""
-
-async def research_query(query: str, context: Optional[str] = None) -> ResearchResponse:
-    """Query DeepSeek for research/factual information"""
-    start_time = time.time()
-    endpoint_name = "/api/research"
-    provider = "deepseek"
+def select_research_mode(user_request: str, anchor_object: Optional[str] = None, materials: List[str] = None) -> str:
+    """Select appropriate research mode based on request content"""
+    request_lower = user_request.lower()
     
-    logger.info(f"[PROVIDER_CALL] endpoint={endpoint_name} provider={provider} base_url={DEEPSEEK_BASE_URL} model={DEEPSEEK_MODEL}")
+    # Mode B: Source Explainer
+    if any(phrase in request_lower for phrase in ["where did this come from", "origins", "history of", "sources for", "explain the source"]):
+        return "source_explainer"
     
-    client = get_deepseek_client()
+    # Mode C: Safety Substitutions
+    if anchor_object and anchor_object.lower() in SAFETY_TRIGGER_OBJECTS:
+        return "safety_substitutions"
+    if materials:
+        materials_lower = [m.lower() for m in materials]
+        if any(obj in " ".join(materials_lower) for obj in SAFETY_TRIGGER_OBJECTS):
+            return "safety_substitutions"
     
-    if not client:
-        elapsed = time.time() - start_time
-        logger.warning(f"[PROVIDER_CALL] endpoint={endpoint_name} provider={provider} status=NOT_CONFIGURED timing={elapsed:.3f}s")
-        return ResearchResponse(
-            answer="Research engine not configured. Please add DEEPSEEK_API_KEY to environment variables.",
-            bullets=["DeepSeek API key required for research features"],
-            sources=["Configuration required"]
-        )
-    
-    # Build the user message
-    user_message = f"Research Query: {query}"
-    if context:
-        user_message = f"Context: {context}\n\n{user_message}"
-    
-    user_message += """
+    # Default: Mode A
+    return "spell_origins"
 
-Return JSON with this EXACT structure:
-{
-  "answer": "Factual summary (2-3 paragraphs, NO persona voice)",
-  "bullets": [
+# ============================================================================
+# V2 Archivist System Prompt
+# ============================================================================
+
+ARCHIVIST_SYSTEM_PROMPT = """You are THE ARCHIVIST for an occult folklore app. You NEVER roleplay. You NEVER address the user emotionally. You write in a clear, educational tone.
+
+ABSOLUTE RULES:
+1. Provide REAL, VERIFIABLE sources where possible (title, author, year, URL)
+2. If uncertain about a source, set "needs_verification": true — do NOT invent titles, authors, or quotes
+3. Distinguish claim types: "historical" | "folklore" | "modern_occult" | "speculative"
+4. NO persona voice — no "dear", "seeker", "my child", "warmth", "gentle", "beloved"
+5. NO comforting lines or second-person intimacy
+6. NO invented quotes from historical figures
+7. Output STRICT JSON only — no markdown, no commentary
+
+CONFIDENCE LEVELS:
+- "high": Documented in multiple academic sources
+- "medium": Found in one reputable source or well-known tradition
+- "low": Oral tradition, modern reconstruction, or reasonable inference
+
+SOURCE QUALITY:
+- Prefer: archive.org, academic papers, museum collections, published books with ISBNs
+- Acceptable: Wikipedia (flag as lower confidence), Goodreads (for book verification)
+- If no URL exists: provide "search_terms" for manual verification
+
+You are a librarian, not a mystic. Be helpful, precise, and honest about uncertainty."""
+
+# ============================================================================
+# Research Object V2 Schema Prompt
+# ============================================================================
+
+RESEARCH_OBJECT_V2_SCHEMA = """{
+  "research_mode": "spell_origins | source_explainer | safety_substitutions",
+  "summary": "3-6 sentences factual summary of findings",
+  "key_takeaways": [
     {
-      "text": "Key fact or finding",
+      "text": "Key finding or fact",
+      "claim_flag": "historical | folklore | modern_occult | speculative",
       "source_refs": ["source_1"],
-      "claim_flag": "historical"
+      "confidence": "high | medium | low"
+    }
+  ],
+  "why_this_works_facts": [
+    {
+      "claim": "We use [X] because... (factual rationale, not mystical certainty)",
+      "claim_flag": "historical | folklore | modern_occult | speculative",
+      "source_refs": ["source_1"],
+      "confidence": "high | medium | low"
+    }
+  ],
+  "practice_context": {
+    "tradition_tags": ["british_folk_magic", "cunning_folk", "golden_dawn", "victorian_spiritualism", "celtic_devotional", "kitchen_witchery"],
+    "time_period": "e.g., 19th–early 20th century",
+    "region": "e.g., Britain / Ireland / Western Europe",
+    "note": "1-3 sentences of context"
+  },
+  "suggested_reading_path": [
+    {
+      "step_title": "Start here...",
+      "why": "1 sentence explaining why this is a good entry point",
+      "source_refs": ["source_1"]
     }
   ],
   "sources": [
     {
       "id": "source_1",
+      "type": "book | article | archive | museum | encyclopedia",
       "author": "Author Name",
-      "title": "Book or Paper Title",
-      "year": 1930,
-      "url": "https://archive.org/... or null",
-      "search_terms": "fallback search if no URL",
-      "needs_verification": false
+      "title": "Full Title",
+      "year": 2003,
+      "publisher_or_site": "Publisher or website name",
+      "url": "https://... or null if unavailable",
+      "search_terms": "fallback search terms if no URL",
+      "needs_verification": false,
+      "notes": "1 sentence about what this source contains (optional)"
     }
   ],
   "source_map": {
-    "0": ["source_1"],
-    "1": ["source_1", "source_2"]
+    "key_takeaways.0": ["source_1"],
+    "why_this_works_facts.0": ["source_1", "source_2"]
   }
-}
-
-CLAIM FLAGS:
-- "historical": documented in academic sources
-- "folklore": oral tradition, regional customs
-- "modern_occult": 20th century occult revival (Golden Dawn, Wicca, etc.)
-- "speculative": reasonable inference, not directly documented
-
-Remember: NO emotional language. You are an archivist."""
-
-    try:
-        response = await client.chat.completions.create(
-            model=DEEPSEEK_MODEL,
-            messages=[
-                {"role": "system", "content": RESEARCH_SYSTEM_PROMPT},
-                {"role": "user", "content": user_message}
-            ],
-            temperature=0.7,
-            max_tokens=2000,
-            response_format={"type": "json_object"}
-        )
-        
-        elapsed = time.time() - start_time
-        logger.info(f"[PROVIDER_CALL] endpoint={endpoint_name} provider={provider} status=SUCCESS timing={elapsed:.3f}s")
-        
-        import json
-        result = json.loads(response.choices[0].message.content)
-        
-        # Validate no persona voice contamination
-        persona_words = ["dear", "seeker", "my child", "warmth", "gentle", "beloved"]
-        answer_lower = result.get("answer", "").lower()
-        for word in persona_words:
-            if word in answer_lower:
-                logger.warning(f"[VALIDATION] Persona voice detected in research output: '{word}'")
-        
-        return ResearchResponse(
-            answer=result.get("answer", "No answer provided"),
-            bullets=result.get("bullets", []),
-            sources=result.get("sources", []),
-            source_map=result.get("source_map", {})
-        )
-        
-    except Exception as e:
-        elapsed = time.time() - start_time
-        logger.error(f"[PROVIDER_CALL] endpoint={endpoint_name} provider={provider} status=ERROR timing={elapsed:.3f}s error={str(e)}")
-        return ResearchResponse(
-            answer=f"Research query failed: {str(e)}",
-            bullets=[],
-            sources=[],
-            source_map={}
-        )
+}"""
 
 # ============================================================================
-# Spellbook Voice (OpenAI)
+# Validation Functions
+# ============================================================================
+
+PERSONA_VOICE_PATTERNS = [
+    r'\bdear\b', r'\bseeker\b', r'\bmy child\b', r'\bwarmth\b', 
+    r'\bgentle\b', r'\bbeloved\b', r'\bcome closer\b', r'\blove\b',
+    r'\bsweet\b', r'\bheart\b', r'\bdarling\b'
+]
+
+def validate_research_output(result: Dict[str, Any], mode: str) -> tuple[bool, List[str]]:
+    """Validate research output meets quality standards. Returns (is_valid, errors)"""
+    errors = []
+    
+    # Check for persona voice contamination
+    text_to_check = str(result.get("summary", "")) + str(result.get("key_takeaways", []))
+    text_lower = text_to_check.lower()
+    for pattern in PERSONA_VOICE_PATTERNS:
+        if re.search(pattern, text_lower):
+            errors.append(f"PERSONA_VOICE: Detected '{pattern}' in research output")
+    
+    # Check sources have required fields
+    sources = result.get("sources", [])
+    for i, source in enumerate(sources):
+        if not isinstance(source, dict):
+            errors.append(f"SOURCE_{i}: Not a valid object")
+            continue
+        
+        needs_verification = source.get("needs_verification", False)
+        if not needs_verification:
+            if not source.get("author"):
+                errors.append(f"SOURCE_{i}: Missing author (set needs_verification=true if uncertain)")
+            if not source.get("title"):
+                errors.append(f"SOURCE_{i}: Missing title (set needs_verification=true if uncertain)")
+    
+    # Check minimum sources for modes A/B
+    if mode in ["spell_origins", "source_explainer"]:
+        valid_sources = [s for s in sources if isinstance(s, dict) and s.get("title")]
+        if len(valid_sources) < 2:
+            errors.append(f"INSUFFICIENT_SOURCES: Mode '{mode}' requires at least 2 sources, got {len(valid_sources)}")
+    
+    # Check key_takeaways have claim_flags
+    for i, takeaway in enumerate(result.get("key_takeaways", [])):
+        if isinstance(takeaway, dict):
+            if not takeaway.get("claim_flag"):
+                errors.append(f"TAKEAWAY_{i}: Missing claim_flag")
+            if not takeaway.get("source_refs"):
+                errors.append(f"TAKEAWAY_{i}: Missing source_refs")
+    
+    return len(errors) == 0, errors
+
+# ============================================================================
+# Build Research Brief (Persona-Specific Input to DeepSeek)
+# ============================================================================
+
+def build_research_brief(
+    persona_id: str,
+    user_request: str,
+    anchor_object: Optional[str] = None,
+    materials: List[str] = None,
+    research_mode: str = "spell_origins"
+) -> Dict[str, Any]:
+    """Build a persona-specific research brief for DeepSeek"""
+    
+    persona_bias = PERSONA_RESEARCH_BIASES.get(persona_id, PERSONA_RESEARCH_BIASES["shigg"])
+    
+    brief = {
+        "research_mode": research_mode,
+        "persona_id": persona_id,
+        "user_goal": user_request,
+        "anchor_object": anchor_object,
+        "materials": materials or [],
+        "tradition_bias": persona_bias["tradition_bias"],
+        "avoid_bias": persona_bias["avoid_bias"],
+        "constraints": {
+            "no_roleplay": True,
+            "cite_real_sources": True,
+            "no_invented_quotes": True,
+            "mark_uncertain_as_needs_verification": True
+        },
+        "desired_outputs": [
+            "origins of the practice",
+            "why each key ingredient/action is used historically/folklorically",
+            "credible reading links",
+            "confidence levels for each claim"
+        ]
+    }
+    
+    return brief
+
+# ============================================================================
+# DeepSeek Research Query V2
+# ============================================================================
+
+async def research_query_v2(
+    query: str,
+    persona_id: str = "shigg",
+    anchor_object: Optional[str] = None,
+    materials: List[str] = None,
+    context: Optional[str] = None,
+    max_retries: int = 2
+) -> ResearchResponseV2:
+    """V2 Research query with modes, validation, and auto-retry"""
+    
+    start_time = time.time()
+    endpoint_name = "/api/research_v2"
+    provider = "deepseek"
+    
+    # Select research mode
+    research_mode = select_research_mode(query, anchor_object, materials)
+    
+    logger.info(f"[PROVIDER_CALL] endpoint={endpoint_name} provider={provider} mode={research_mode} persona={persona_id}")
+    
+    client = get_deepseek_client()
+    if not client:
+        elapsed = time.time() - start_time
+        logger.warning(f"[PROVIDER_CALL] endpoint={endpoint_name} status=NOT_CONFIGURED timing={elapsed:.3f}s")
+        return ResearchResponseV2(
+            research_mode=research_mode,
+            summary="Research engine not configured. Please add DEEPSEEK_API_KEY.",
+            sources=[]
+        )
+    
+    # Build research brief
+    brief = build_research_brief(persona_id, query, anchor_object, materials, research_mode)
+    
+    # Build user message
+    user_message = f"""RESEARCH BRIEF:
+{__import__('json').dumps(brief, indent=2)}
+
+ADDITIONAL CONTEXT: {context or 'None'}
+
+Return a Research Object V2 with this EXACT JSON structure:
+{RESEARCH_OBJECT_V2_SCHEMA}
+
+Focus on {PERSONA_RESEARCH_BIASES.get(persona_id, {}).get('flavor', 'general folklore')}.
+Prioritize traditions: {', '.join(brief['tradition_bias'])}
+Avoid overemphasis on: {', '.join(brief['avoid_bias'])}
+
+Remember: You are THE ARCHIVIST. No persona voice. Strict JSON only."""
+
+    for attempt in range(max_retries + 1):
+        try:
+            response = await client.chat.completions.create(
+                model=DEEPSEEK_MODEL,
+                messages=[
+                    {"role": "system", "content": ARCHIVIST_SYSTEM_PROMPT},
+                    {"role": "user", "content": user_message}
+                ],
+                temperature=0.6,
+                max_tokens=2500,
+                response_format={"type": "json_object"}
+            )
+            
+            import json
+            result = json.loads(response.choices[0].message.content)
+            
+            # Validate output
+            is_valid, errors = validate_research_output(result, research_mode)
+            
+            if not is_valid:
+                logger.warning(f"[VALIDATION] Attempt {attempt+1}: {errors}")
+                if attempt < max_retries:
+                    continue  # Retry
+            
+            elapsed = time.time() - start_time
+            logger.info(f"[PROVIDER_CALL] endpoint={endpoint_name} provider={provider} status=SUCCESS timing={elapsed:.3f}s attempt={attempt+1}")
+            
+            return ResearchResponseV2(
+                research_mode=result.get("research_mode", research_mode),
+                summary=result.get("summary", ""),
+                key_takeaways=result.get("key_takeaways", []),
+                why_this_works_facts=result.get("why_this_works_facts", []),
+                practice_context=result.get("practice_context", {}),
+                suggested_reading_path=result.get("suggested_reading_path", []),
+                sources=result.get("sources", []),
+                source_map=result.get("source_map", {})
+            )
+            
+        except Exception as e:
+            elapsed = time.time() - start_time
+            logger.error(f"[PROVIDER_CALL] endpoint={endpoint_name} status=ERROR attempt={attempt+1} timing={elapsed:.3f}s error={str(e)}")
+            if attempt == max_retries:
+                return ResearchResponseV2(
+                    research_mode=research_mode,
+                    summary=f"Research query failed: {str(e)}",
+                    sources=[]
+                )
+
+# ============================================================================
+# Legacy Research Query (Compatibility Layer)
+# ============================================================================
+
+async def research_query(query: str, context: Optional[str] = None) -> ResearchResponse:
+    """Legacy research query - wraps V2 for backward compatibility"""
+    
+    # Use V2 internally
+    v2_result = await research_query_v2(
+        query=query,
+        persona_id="shigg",  # Default
+        context=context
+    )
+    
+    # Convert V2 to legacy format
+    bullets = []
+    for takeaway in v2_result.key_takeaways:
+        if isinstance(takeaway, dict):
+            bullets.append({
+                "text": takeaway.get("text", ""),
+                "claim_flag": takeaway.get("claim_flag", "folklore"),
+                "source_refs": takeaway.get("source_refs", []),
+                "confidence": takeaway.get("confidence", "medium")
+            })
+    
+    return ResearchResponse(
+        answer=v2_result.summary,
+        bullets=bullets,
+        sources=v2_result.sources,
+        source_map=v2_result.source_map
+    )
+
+# ============================================================================
+# OpenAI Spellbook Voice
 # ============================================================================
 
 PERSONA_VOICES = {
@@ -269,13 +520,13 @@ You help seekers uncover truth and connect with ancestral wisdom."""
     }
 }
 
-async def generate_spellbook_response(user_request: str, persona: str, tone: str) -> SpellbookResponse:
+async def generate_spellbook_response(user_request: str, persona: str, tone: str, research_facts: List[Dict] = None) -> SpellbookResponse:
     """Generate persona-voiced spellbook response using OpenAI"""
     start_time = time.time()
     endpoint_name = "/api/spellbook"
     provider = "openai"
     
-    logger.info(f"[PROVIDER_CALL] endpoint={endpoint_name} provider={provider} base_url=https://api.openai.com model={OPENAI_MODEL}")
+    logger.info(f"[PROVIDER_CALL] endpoint={endpoint_name} provider={provider} persona={persona} has_research_facts={research_facts is not None}")
     
     client = get_openai_client()
     
@@ -288,23 +539,42 @@ async def generate_spellbook_response(user_request: str, persona: str, tone: str
             tone_used=tone
         )
     
-    # Get persona configuration
     persona_config = PERSONA_VOICES.get(persona.lower(), PERSONA_VOICES["shigg"])
     
-    # Build tone guidance
     tone_guidance = {
         "gentle": "Respond with soft, nurturing energy. Be invitational and tender.",
         "practical": "Respond with clear, direct guidance. Be grounded and actionable.",
         "intense": "Respond with powerful, unflinching wisdom. Go deep and don't soften the truth."
     }
     
+    # Build research context if provided
+    research_context = ""
+    if research_facts:
+        research_context = """
+RESEARCH FACTS TO REFERENCE (do NOT invent beyond these):
+Use these facts to explain WHY each practice works. If confidence is "low", use softening language like "some traditions say" or "it's believed that".
+
+"""
+        for fact in research_facts[:5]:  # Limit to 5 facts
+            confidence = fact.get("confidence", "medium")
+            soften = " (use hedging language)" if confidence == "low" else ""
+            research_context += f"- {fact.get('claim', fact.get('text', ''))}{soften}\n"
+    
     system_message = f"""{persona_config['system_prompt']}
 
 TONE FOR THIS RESPONSE: {tone_guidance.get(tone, tone_guidance['gentle'])}
+{research_context}
+
+IMPORTANT RULES:
+- You may NOT invent historical claims beyond what's in the research facts above
+- You may add warmth and persona voice to explain these facts
+- If explaining a practice's history, reference the research
+- If no research fact covers something, speak from your character's lived experience only
 
 Write in-character, as if speaking directly to the seeker. Include:
 - A warm acknowledgment of their need
 - Guidance in your authentic voice
+- Why the practices work (using research facts where relevant)
 - An invitation to return"""
 
     try:
@@ -315,7 +585,7 @@ Write in-character, as if speaking directly to the seeker. Include:
                 {"role": "user", "content": user_request}
             ],
             temperature=0.8,
-            max_tokens=1000
+            max_tokens=1200
         )
         
         elapsed = time.time() - start_time
@@ -337,33 +607,49 @@ Write in-character, as if speaking directly to the seeker. Include:
         )
 
 # ============================================================================
-# Combined Service (Both Engines)
+# Combined Service V2 (Both Engines with Proper Handoff)
 # ============================================================================
 
 async def generate_combined_response(
     user_request: str,
     persona: str = "shigg",
     tone: str = "gentle",
-    context: Optional[str] = None
+    context: Optional[str] = None,
+    anchor_object: Optional[str] = None,
+    materials: List[str] = None
 ) -> CombinedResponse:
-    """Generate combined response using both DeepSeek (research) and OpenAI (persona)"""
+    """Generate combined response: DeepSeek research FIRST, then OpenAI persona voice"""
     import asyncio
     
     start_time = time.time()
     endpoint_name = "/api/combined"
     
-    logger.info(f"[PROVIDER_CALL] endpoint={endpoint_name} provider=BOTH (deepseek+openai) starting_parallel_calls")
+    logger.info(f"[PROVIDER_CALL] endpoint={endpoint_name} provider=BOTH persona={persona}")
     
-    # Prepare research query based on user request
+    # STEP 1: DeepSeek Research (must complete first)
     research_query_text = f"What are the historical and folk magic traditions related to: {user_request}"
-    if context:
-        research_query_text = f"{research_query_text}. Additional context: {context}"
     
-    # Run both queries concurrently
-    research_task = research_query(research_query_text, context)
-    spellbook_task = generate_spellbook_response(user_request, persona, tone)
+    research_result = await research_query_v2(
+        query=research_query_text,
+        persona_id=persona,
+        anchor_object=anchor_object,
+        materials=materials,
+        context=context
+    )
     
-    research_result, spellbook_result = await asyncio.gather(research_task, spellbook_task)
+    # STEP 2: Extract facts for OpenAI
+    research_facts = research_result.why_this_works_facts or []
+    if not research_facts:
+        # Fallback to key_takeaways if no why_this_works_facts
+        research_facts = research_result.key_takeaways
+    
+    # STEP 3: OpenAI Persona Voice (with research facts)
+    spellbook_result = await generate_spellbook_response(
+        user_request=user_request,
+        persona=persona,
+        tone=tone,
+        research_facts=research_facts
+    )
     
     elapsed = time.time() - start_time
     logger.info(f"[PROVIDER_CALL] endpoint={endpoint_name} provider=BOTH status=COMPLETE timing={elapsed:.3f}s")
@@ -371,8 +657,12 @@ async def generate_combined_response(
     return CombinedResponse(
         spellbook_response=spellbook_result.response,
         research_origins={
-            "answer": research_result.answer,
-            "bullets": research_result.bullets,
+            "research_mode": research_result.research_mode,
+            "summary": research_result.summary,
+            "key_takeaways": research_result.key_takeaways,
+            "why_this_works_facts": research_result.why_this_works_facts,
+            "practice_context": research_result.practice_context,
+            "suggested_reading_path": research_result.suggested_reading_path,
             "sources": research_result.sources,
             "source_map": research_result.source_map
         },
