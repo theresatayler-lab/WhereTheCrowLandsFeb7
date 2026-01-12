@@ -44,7 +44,7 @@ from research_service import (
     SpellbookRequest, SpellbookResponse,
     CombinedRequest, CombinedResponse,
     research_query, generate_spellbook_response, generate_combined_response,
-    get_provider_status
+    get_provider_status, get_research_config
 )
 import random
 
