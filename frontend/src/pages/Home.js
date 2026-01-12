@@ -215,9 +215,19 @@ export const Home = () => {
               style={{ textShadow: '0 4px 40px rgba(212, 168, 75, 0.6), 0 0 80px rgba(184, 35, 48, 0.4)' }}>
               Where The Crowlands
             </h1>
-            <p className="font-cinzel text-base sm:text-xl md:text-2xl text-cream/90 mb-6 sm:mb-8 tracking-wide"
+            <p className="font-cinzel text-base sm:text-xl md:text-2xl text-cream/90 mb-4 tracking-wide"
               style={{ textShadow: '0 2px 15px rgba(0, 0, 0, 0.6)' }}>
               A place where magic and science aren't such strange bedfellows
+            </p>
+            
+            {/* Handwritten subhead */}
+            <p className="font-crimson italic text-lg sm:text-xl md:text-2xl text-gold/70 mb-6 sm:mb-8 tracking-wide"
+              style={{ 
+                textShadow: '0 2px 10px rgba(0, 0, 0, 0.4)',
+                fontStyle: 'italic',
+                letterSpacing: '0.05em'
+              }}>
+              … the bird is on the wing
             </p>
             
             <GrandDivider variant="moon" />
