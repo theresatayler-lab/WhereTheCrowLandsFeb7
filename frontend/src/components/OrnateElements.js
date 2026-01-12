@@ -337,7 +337,7 @@ export const PageHeader = ({ icon: Icon, title, subtitle, light = false }) => (
   <div className={`text-center mb-6 sm:mb-8 ${light ? 'text-navy-dark' : ''}`}>
     {Icon && <Icon className={`w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 mx-auto mb-3 sm:mb-4 ${light ? 'text-crimson' : 'text-crimson-bright'}`} 
       style={{ filter: light ? 'none' : 'drop-shadow(0 0 10px rgba(184, 35, 48, 0.4))' }} />}
-    <h1 className={`font-italiana text-2xl sm:text-3xl md:text-4xl lg:text-5xl mb-2 sm:mb-3 ${light ? 'text-crimson' : 'text-gold-light'}`}
+    <h1 className={`phantasmagoria-hero text-2xl sm:text-3xl md:text-4xl lg:text-5xl mb-2 sm:mb-3 ${light ? 'text-crimson' : 'text-gold-light'}`}
       style={{ textShadow: light ? '0 2px 10px rgba(184, 35, 48, 0.2)' : '0 2px 30px rgba(212, 168, 75, 0.5)' }}>
       {title}
     </h1>
