@@ -31,6 +31,20 @@ def get_provider_status() -> Dict[str, Any]:
         "image_provider": os.environ.get('IMAGE_PROVIDER', 'library')
     }
 
+def get_research_config() -> Dict[str, Any]:
+    """Return full research configuration including V3 enhancements"""
+    return {
+        "research_modes": RESEARCH_MODES,
+        "mode_triggers": MODE_TRIGGERS,
+        "tradition_tags": list(TRADITION_TAGS.keys()),
+        "source_quality_tiers": list(SOURCE_QUALITY_TIERS.keys()),
+        "learning_stages": [s["stage"] for s in LEARNING_STAGES],
+        "safety_categories": list(SAFETY_CATEGORIES.keys()),
+        "cross_persona_overlaps": CROSS_PERSONA_OVERLAPS,
+        "why_this_works_patterns": WHY_THIS_WORKS_PATTERNS,
+        "version": "v3"
+    }
+
 # ============================================================================
 # Research Modes (V2 Enhanced - 10 total modes)
 # ============================================================================
