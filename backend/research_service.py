@@ -577,8 +577,17 @@ def validate_research_output(result: Dict[str, Any], mode: str) -> tuple[bool, L
     return len(errors) == 0, errors
 
 # ============================================================================
-# Build Research Brief (Persona-Specific Input to DeepSeek)
+# Build Research Brief (Persona-Specific Input to DeepSeek) - V3 Enhanced
 # ============================================================================
+
+def get_cross_persona_relevance(persona_id: str) -> List[str]:
+    """Get other personas that share overlapping areas with the given persona"""
+    relevant = set()
+    for overlap in CROSS_PERSONA_OVERLAPS:
+        if persona_id in overlap["personas_involved"]:
+            relevant.update(overlap["personas_involved"])
+    relevant.discard(persona_id)  # Remove self
+    return list(relevant)
 
 def build_research_brief(
     persona_id: str,
@@ -587,9 +596,10 @@ def build_research_brief(
     materials: List[str] = None,
     research_mode: str = "spell_origins"
 ) -> Dict[str, Any]:
-    """Build a persona-specific research brief for DeepSeek"""
+    """Build a persona-specific research brief for DeepSeek - V3 Enhanced"""
     
     persona_bias = PERSONA_RESEARCH_BIASES.get(persona_id, PERSONA_RESEARCH_BIASES["shigg"])
+    cross_persona = get_cross_persona_relevance(persona_id)
     
     brief = {
         "research_mode": research_mode,
@@ -599,17 +609,22 @@ def build_research_brief(
         "materials": materials or [],
         "tradition_bias": persona_bias["tradition_bias"],
         "avoid_bias": persona_bias["avoid_bias"],
+        "cross_persona_relevance": cross_persona,
         "constraints": {
             "no_roleplay": True,
             "cite_real_sources": True,
             "no_invented_quotes": True,
-            "mark_uncertain_as_needs_verification": True
+            "mark_uncertain_as_needs_verification": True,
+            "use_source_quality_tiers": True,
+            "use_why_this_works_framing": True
         },
         "desired_outputs": [
             "origins of the practice",
             "why each key ingredient/action is used historically/folklorically",
-            "credible reading links",
-            "confidence levels for each claim"
+            "credible reading links with quality tier",
+            "confidence levels for each claim",
+            "safety considerations if applicable",
+            "suggested reading path by learning stage"
         ]
     }
     
