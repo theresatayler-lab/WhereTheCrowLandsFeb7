@@ -65,9 +65,38 @@ JWT_SECRET = os.environ.get('JWT_SECRET', 'your-secret-key-change-in-production'
 JWT_ALGORITHM = 'HS256'
 OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY', '')
 STRIPE_API_KEY = os.environ.get('STRIPE_API_KEY', '')
+EMERGENT_LLM_KEY = os.environ.get('EMERGENT_LLM_KEY', '')
 
-# Initialize OpenAI client
+# Initialize OpenAI client (fallback)
 openai_client = AsyncOpenAI(api_key=OPENAI_API_KEY)
+
+# Emergent LLM Helper for chat completions
+async def emergent_chat_completion(messages: list, model: str = "gpt-4o", temperature: float = 0.7, max_tokens: int = 4000) -> str:
+    """Use Emergent LLM Key for chat completions - works with OpenAI, Claude, Gemini"""
+    from emergentintegrations.llm.chat import LlmChat, UserMessage
+    import uuid
+    
+    # Extract system message and user messages
+    system_msg = "You are a helpful assistant."
+    user_content = ""
+    
+    for msg in messages:
+        if msg.get("role") == "system":
+            system_msg = msg.get("content", system_msg)
+        elif msg.get("role") == "user":
+            user_content = msg.get("content", "")
+    
+    # Create chat instance with Emergent key
+    chat = LlmChat(
+        api_key=EMERGENT_LLM_KEY,
+        session_id=str(uuid.uuid4()),
+        system_message=system_msg
+    ).with_model("openai", model)
+    
+    # Send message and get response
+    user_message = UserMessage(text=user_content)
+    response = await chat.send_message(user_message)
+    return response
 
 # Models
 class UserRegister(BaseModel):
