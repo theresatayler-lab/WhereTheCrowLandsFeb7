@@ -1,0 +1,449 @@
+{
+  "$schema": "research_fixtures_v1",
+  "description": "Worked examples for DeepSeek→OpenAI research pipeline",
+  "fixtures": [
+    {
+      "id": "shigg_comfort_tea",
+      "persona": "shigg",
+      "input": {
+        "user_request": "I need comfort after receiving difficult news",
+        "persona_id": "shigg",
+        "anchor_object": "tea",
+        "feeling_goal": "softened"
+      },
+      "research_brief": {
+        "$schema": "research_brief_v1",
+        "research_goal": "Explain historical and magical rationale behind tea-based comfort rituals in British domestic folk magic",
+        "practice_type": "comfort ritual / emotional soothing",
+        "tools": ["tea", "cup", "kettle", "honey"],
+        "tradition_focus": [
+          "British domestic folk magic",
+          "Kitchen witchery",
+          "WWII home front resilience practices"
+        ],
+        "persona_context": "Shigg (domestic magic, bird omens, grandmother wisdom)",
+        "era_constraints": {
+          "primary": "1930-1960 Britain",
+          "secondary": "Victorian domestic traditions"
+        },
+        "constraints": {
+          "no_modern_psychology": true,
+          "no_invented_traditions": true,
+          "cite_historical_figures": true,
+          "require_verifiable_sources": true
+        }
+      },
+      "research_object": {
+        "$schema": "research_object_v1",
+        "core_explanation": "Tea rituals in British folk magic tradition served as both practical comfort and symbolic transformation. The preparation of tea—boiling water, steeping leaves, the pause required—created a liminal space between crisis and response. During WWII, the tea ritual became codified as emotional first aid, with government campaigns promoting tea as essential for morale. Earlier, Victorian domestic manuals treated tea preparation as a form of household magic, with specific instructions for intention-setting.",
+        "historical_examples": [
+          {
+            "source_id": "british_folk_magic_hutton",
+            "author": "Ronald Hutton",
+            "work": "The Triumph of the Moon",
+            "concept": "domestic ritual as folk magic practice",
+            "era": "19th-20th century Britain",
+            "relevance": "Documents how everyday domestic acts became ritualized in British folk tradition"
+          },
+          {
+            "source_id": "wwii_home_front",
+            "author": "Various / Imperial War Museum",
+            "work": "WWII Home Front Archives",
+            "concept": "tea as morale and resilience practice",
+            "era": "1939-1945 Britain",
+            "relevance": "Tea rationing and ritual maintained as essential for psychological resilience"
+          }
+        ],
+        "tool_rationale": {
+          "tea": {
+            "historical_use": "Offered to those in shock or grief as standard British practice; government-mandated during WWII for morale",
+            "symbolic_meaning": "Transformation (dry leaves → nourishing drink), pause, hospitality, care",
+            "source_reference": "wwii_home_front"
+          },
+          "cup": {
+            "historical_use": "Vessel as container for intention; warming hands as grounding",
+            "symbolic_meaning": "Receptivity, holding space, containment of emotion",
+            "source_reference": "british_folk_magic_hutton"
+          },
+          "honey": {
+            "historical_use": "Added for sweetness and believed healing properties; associated with bees as messengers",
+            "symbolic_meaning": "Sweetening bitter circumstances, healing, preservation",
+            "source_reference": "british_folk_magic_hutton"
+          }
+        },
+        "tradition_notes": "The British tea ritual represents a domesticated form of folk magic that survived industrialization precisely because it appeared mundane. The act of 'putting the kettle on' in crisis situations is documented across oral histories as the instinctive first response to bad news, death announcements, and shock.",
+        "sources": [
+          {
+            "source_id": "british_folk_magic_hutton",
+            "author": "Ronald Hutton",
+            "work": "The Triumph of the Moon: A History of Modern Pagan Witchcraft",
+            "year": 1999,
+            "type": "book",
+            "public_links": [
+              {
+                "url": "https://www.goodreads.com/book/show/176038.The_Triumph_of_the_Moon",
+                "type": "goodreads",
+                "access": "preview"
+              },
+              {
+                "url": "https://en.wikipedia.org/wiki/The_Triumph_of_the_Moon",
+                "type": "wikipedia",
+                "access": "free"
+              }
+            ]
+          },
+          {
+            "source_id": "wwii_home_front",
+            "author": "Imperial War Museum",
+            "work": "Home Front Archives",
+            "year": null,
+            "type": "tradition",
+            "public_links": [
+              {
+                "url": "https://www.iwm.org.uk/history/what-life-was-like-on-the-home-front",
+                "type": "archive",
+                "access": "free"
+              }
+            ]
+          }
+        ],
+        "confidence_level": "well-documented",
+        "warnings": []
+      },
+      "expected_inspired_by_format": [
+        {
+          "source_id": "british_folk_magic_hutton",
+          "name": "The Triumph of the Moon",
+          "author": "Ronald Hutton",
+          "source_type": "book",
+          "connection_to_spell": "Documents how British domestic rituals like tea preparation became folk magic practices, explaining why the simple act of making tea carries ritual significance.",
+          "key_concept_used": "Domestic ritual as folk magic",
+          "beginner_takeaway": "The everyday act of making tea isn't 'just' comfort—it's a form of magic that British people have practiced for generations without calling it that.",
+          "learn_more": [
+            {
+              "title": "Book overview",
+              "url": "https://www.goodreads.com/book/show/176038.The_Triumph_of_the_Moon",
+              "access": "preview"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cathleen_protection_voice",
+      "persona": "cathleen",
+      "input": {
+        "user_request": "I need protection before a confrontation with someone who drains me",
+        "persona_id": "cathleen",
+        "anchor_object": "voice",
+        "feeling_goal": "protected"
+      },
+      "research_brief": {
+        "$schema": "research_brief_v1",
+        "research_goal": "Explain historical and magical rationale behind vocal/song-based protection practices in British and Celtic tradition",
+        "practice_type": "protective charm / psychic shielding",
+        "tools": ["voice", "breath", "humming", "specific song/hymn"],
+        "tradition_focus": [
+          "Celtic protective traditions",
+          "British hymn magic",
+          "Spiritualist vocal practices"
+        ],
+        "persona_context": "Cathleen (singer, Morrigan-aligned, psychic protection)",
+        "era_constraints": {
+          "primary": "1900-1950 Britain",
+          "secondary": "Celtic/Irish folk tradition"
+        },
+        "constraints": {
+          "no_modern_psychology": true,
+          "no_invented_traditions": true,
+          "cite_historical_figures": true,
+          "require_verifiable_sources": true
+        }
+      },
+      "research_object": {
+        "$schema": "research_object_v1",
+        "core_explanation": "Vocal protection practices have deep roots in both Celtic and British Christian tradition. The concept of 'saining' (blessing/protecting through sound) predates Christianity in the British Isles. Specific hymns like 'Abide With Me' and 'St. Patrick's Breastplate' were used as protective charms, with the belief that the vibration of sacred words created a shield. Dion Fortune documented the use of vocal vibration for psychic protection in her 1930 work.",
+        "historical_examples": [
+          {
+            "source_id": "psychic_self_defense",
+            "author": "Dion Fortune",
+            "work": "Psychic Self-Defense",
+            "concept": "vocal vibration as psychic shielding",
+            "era": "1930s Britain",
+            "relevance": "Provides practical instructions for using voice/breath for protection against psychic drain"
+          },
+          {
+            "source_id": "carmina_gadelica",
+            "author": "Alexander Carmichael",
+            "work": "Carmina Gadelica",
+            "concept": "Celtic protective prayers and charms",
+            "era": "Collected 1860-1909, traditions much older",
+            "relevance": "Documents traditional Scottish/Celtic vocal charms for protection"
+          },
+          {
+            "source_id": "morrigan_traditions",
+            "author": "Morgan Daimler",
+            "work": "The Morrigan: Meeting the Great Queens",
+            "concept": "Morrigan as protector deity invoked through voice",
+            "era": "Modern scholarship on Celtic tradition",
+            "relevance": "The Morrigan was traditionally called upon through vocal invocation for protection in conflict"
+          }
+        ],
+        "tool_rationale": {
+          "voice": {
+            "historical_use": "Celtic 'caim' (encircling prayer) spoken aloud to create protective barrier; Fortune's vibrational techniques",
+            "symbolic_meaning": "Breath as life force, sound as reality-shaping, words as power",
+            "source_reference": "carmina_gadelica"
+          },
+          "humming": {
+            "historical_use": "Used when words couldn't be spoken safely; vibration without content",
+            "symbolic_meaning": "Internal protection, resonance with body as instrument",
+            "source_reference": "psychic_self_defense"
+          },
+          "hymn": {
+            "historical_use": "'Abide With Me' specifically used during WWI/WWII as protection before battle or difficult situations",
+            "symbolic_meaning": "Calling on divine/ancestral protection through established sacred words",
+            "source_reference": "psychic_self_defense"
+          }
+        },
+        "tradition_notes": "The Celtic tradition of 'lorica' (breastplate prayers) specifically addressed protection before confrontation. St. Patrick's Breastplate is the most famous example, but folk versions existed for everyday conflicts. The practice survived in British spiritualist circles where vocal exercises were standard preparation before séances or psychic work.",
+        "sources": [
+          {
+            "source_id": "psychic_self_defense",
+            "author": "Dion Fortune",
+            "work": "Psychic Self-Defense",
+            "year": 1930,
+            "type": "book",
+            "public_links": [
+              {
+                "url": "https://archive.org/details/psychicselfdefen00fort",
+                "type": "archive",
+                "access": "free"
+              },
+              {
+                "url": "https://www.goodreads.com/book/show/163880.Psychic_Self_Defense",
+                "type": "goodreads",
+                "access": "preview"
+              }
+            ]
+          },
+          {
+            "source_id": "carmina_gadelica",
+            "author": "Alexander Carmichael",
+            "work": "Carmina Gadelica",
+            "year": 1900,
+            "type": "book",
+            "public_links": [
+              {
+                "url": "https://sacred-texts.com/neu/celt/cg1/index.htm",
+                "type": "archive",
+                "access": "free"
+              }
+            ]
+          },
+          {
+            "source_id": "morrigan_traditions",
+            "author": "Morgan Daimler",
+            "work": "The Morrigan: Meeting the Great Queens",
+            "year": 2014,
+            "type": "book",
+            "public_links": [
+              {
+                "url": "https://www.goodreads.com/book/show/23848428-the-morrigan",
+                "type": "goodreads",
+                "access": "preview"
+              }
+            ]
+          }
+        ],
+        "confidence_level": "well-documented",
+        "warnings": []
+      },
+      "expected_inspired_by_format": [
+        {
+          "source_id": "psychic_self_defense",
+          "name": "Psychic Self-Defense",
+          "author": "Dion Fortune",
+          "source_type": "book",
+          "connection_to_spell": "Fortune was a British occultist who documented specific techniques for protecting oneself from people who 'drain' energy—exactly what you're facing. Her vocal vibration methods form the basis of this working.",
+          "key_concept_used": "Vocal vibration as psychic shielding",
+          "beginner_takeaway": "Your voice isn't just for speaking—it's a protective instrument. The hum or song creates a real barrier.",
+          "learn_more": [
+            {
+              "title": "Full text (free)",
+              "url": "https://archive.org/details/psychicselfdefen00fort",
+              "access": "free"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "katherine_mirror_binding",
+      "persona": "katherine",
+      "input": {
+        "user_request": "I need to bind my anxiety so it stops controlling me",
+        "persona_id": "katherine",
+        "anchor_object": "mirror",
+        "feeling_goal": "clear"
+      },
+      "research_brief": {
+        "$schema": "research_brief_v1",
+        "research_goal": "Explain historical and magical rationale behind mirror-based binding rituals in Victorian and early 20th century occult practice",
+        "practice_type": "binding / containment / shadow work",
+        "tools": ["mirror", "thread", "written name", "black cloth"],
+        "tradition_focus": [
+          "Victorian spiritualism",
+          "Golden Dawn practices",
+          "British folk binding traditions"
+        ],
+        "persona_context": "Katherine (occult researcher, precision-focused, Golden Dawn influenced)",
+        "era_constraints": {
+          "primary": "1880-1940 Britain",
+          "secondary": "European ceremonial magic traditions"
+        },
+        "constraints": {
+          "no_modern_psychology": true,
+          "no_invented_traditions": true,
+          "cite_historical_figures": true,
+          "require_verifiable_sources": true
+        }
+      },
+      "research_object": {
+        "$schema": "research_object_v1",
+        "core_explanation": "Mirrors in Victorian occult practice served as liminal objects—thresholds between the seen and unseen. The Golden Dawn used mirrors for scrying and for 'externalizing' internal states that needed to be worked with objectively. Binding practices using mirrors allowed the practitioner to see the thing being bound (making abstract fears concrete) and then contain it through ritual covering or turning. Dion Fortune specifically wrote about mirrors as psychic reflectors that could trap or deflect unwanted influences.",
+        "historical_examples": [
+          {
+            "source_id": "psychic_self_defense",
+            "author": "Dion Fortune",
+            "work": "Psychic Self-Defense",
+            "concept": "mirrors as psychic reflectors and containers",
+            "era": "1930s Britain",
+            "relevance": "Documents specific mirror techniques for containing and deflecting negative influences"
+          },
+          {
+            "source_id": "golden_dawn_regardie",
+            "author": "Israel Regardie",
+            "work": "The Golden Dawn",
+            "concept": "mirror scrying and externalization techniques",
+            "era": "1930s documentation of 1880s-1900s practices",
+            "relevance": "The Order used mirrors for making internal states visible and workable"
+          },
+          {
+            "source_id": "english_magic_heygate",
+            "author": "Philip Carr-Gomm & Richard Heygate",
+            "work": "The Book of English Magic",
+            "concept": "folk binding traditions using sympathetic magic",
+            "era": "Survey of historical British practices",
+            "relevance": "Documents binding as a common folk practice for containing unwanted influences"
+          }
+        ],
+        "tool_rationale": {
+          "mirror": {
+            "historical_use": "Used in Golden Dawn for scrying; in folk magic for trapping spirits or reflecting negativity back to source",
+            "symbolic_meaning": "Threshold between worlds, externalization of internal states, truth-revealing",
+            "source_reference": "golden_dawn_regardie"
+          },
+          "thread": {
+            "historical_use": "Binding material in sympathetic magic; crossed threads create barrier",
+            "symbolic_meaning": "Containment, boundary-setting, limiting movement/power of the bound thing",
+            "source_reference": "english_magic_heygate"
+          },
+          "black_cloth": {
+            "historical_use": "Used to cover mirrors after death (Victorian); covers contained bound objects",
+            "symbolic_meaning": "Sealing, completing the binding, preventing escape or continued influence",
+            "source_reference": "psychic_self_defense"
+          }
+        },
+        "tradition_notes": "The concept of binding internal states (rather than external spirits) became more prominent in early 20th century British occultism as psychological frameworks emerged. The Golden Dawn's emphasis on 'knowledge and conversation' with aspects of self made internal binding a recognized practice distinct from folk spirit-binding.",
+        "sources": [
+          {
+            "source_id": "psychic_self_defense",
+            "author": "Dion Fortune",
+            "work": "Psychic Self-Defense",
+            "year": 1930,
+            "type": "book",
+            "public_links": [
+              {
+                "url": "https://archive.org/details/psychicselfdefen00fort",
+                "type": "archive",
+                "access": "free"
+              }
+            ]
+          },
+          {
+            "source_id": "golden_dawn_regardie",
+            "author": "Israel Regardie",
+            "work": "The Golden Dawn",
+            "year": 1937,
+            "type": "book",
+            "public_links": [
+              {
+                "url": "https://www.goodreads.com/book/show/270545.The_Golden_Dawn",
+                "type": "goodreads",
+                "access": "preview"
+              },
+              {
+                "url": "https://en.wikipedia.org/wiki/The_Golden_Dawn_(book)",
+                "type": "wikipedia",
+                "access": "free"
+              }
+            ]
+          },
+          {
+            "source_id": "english_magic_heygate",
+            "author": "Philip Carr-Gomm & Richard Heygate",
+            "work": "The Book of English Magic",
+            "year": 2009,
+            "type": "book",
+            "public_links": [
+              {
+                "url": "https://www.goodreads.com/book/show/6515568-the-book-of-english-magic",
+                "type": "goodreads",
+                "access": "preview"
+              }
+            ]
+          }
+        ],
+        "confidence_level": "well-documented",
+        "warnings": [
+          "Mirror work can surface difficult emotions; aftercare recommended"
+        ]
+      },
+      "expected_inspired_by_format": [
+        {
+          "source_id": "psychic_self_defense",
+          "name": "Psychic Self-Defense",
+          "author": "Dion Fortune",
+          "source_type": "book",
+          "connection_to_spell": "Fortune documented mirror techniques specifically for containing influences that feel out of control—which is exactly what anxiety is. Her approach treats anxiety as something real that can be externalized and bound.",
+          "key_concept_used": "Mirrors as psychic reflectors and containers",
+          "beginner_takeaway": "The mirror isn't symbolic decoration—it's a tool for making your anxiety visible so you can work with it directly.",
+          "learn_more": [
+            {
+              "title": "Full text (free)",
+              "url": "https://archive.org/details/psychicselfdefen00fort",
+              "access": "free"
+            }
+          ]
+        },
+        {
+          "source_id": "golden_dawn_regardie",
+          "name": "The Golden Dawn",
+          "author": "Israel Regardie",
+          "source_type": "book",
+          "connection_to_spell": "The Golden Dawn magical order used mirrors to externalize internal states—making the invisible visible so it could be properly addressed through ritual.",
+          "key_concept_used": "Externalization of internal states",
+          "beginner_takeaway": "Victorian magicians understood that you can't bind what you can't see. The mirror makes the abstract concrete.",
+          "learn_more": [
+            {
+              "title": "Book overview",
+              "url": "https://www.goodreads.com/book/show/270545.The_Golden_Dawn",
+              "access": "preview"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
