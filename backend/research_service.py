@@ -903,18 +903,16 @@ Write in-character, as if speaking directly to the seeker. Include:
 - An invitation to return"""
 
     try:
-        response = await client.chat.completions.create(
+        # Use Emergent LLM Key for persona voice
+        response_text = await emergent_persona_chat(
+            system_message=system_message,
+            user_message=user_request,
             model=OPENAI_MODEL,
-            messages=[
-                {"role": "system", "content": system_message},
-                {"role": "user", "content": user_request}
-            ],
-            temperature=0.8,
-            max_tokens=1200
+            temperature=0.8
         )
         
         elapsed = time.time() - start_time
-        logger.info(f"[PROVIDER_CALL] endpoint={endpoint_name} provider={provider} status=SUCCESS timing={elapsed:.3f}s")
+        logger.info(f"[PROVIDER_CALL] endpoint={endpoint_name} provider=emergent_openai status=SUCCESS timing={elapsed:.3f}s")
         
         return SpellbookResponse(
             response=response.choices[0].message.content,
