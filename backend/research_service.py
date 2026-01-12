@@ -146,7 +146,7 @@ Format your response as JSON with this structure:
 
     try:
         response = await client.chat.completions.create(
-            model="deepseek-chat",
+            model=DEEPSEEK_MODEL,
             messages=[
                 {"role": "system", "content": RESEARCH_SYSTEM_PROMPT},
                 {"role": "user", "content": user_message}
@@ -155,6 +155,9 @@ Format your response as JSON with this structure:
             max_tokens=1500,
             response_format={"type": "json_object"}
         )
+        
+        elapsed = time.time() - start_time
+        logger.info(f"[PROVIDER_CALL] endpoint={endpoint_name} provider={provider} status=SUCCESS timing={elapsed:.3f}s")
         
         import json
         result = json.loads(response.choices[0].message.content)
