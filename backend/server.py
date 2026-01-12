@@ -684,6 +684,11 @@ async def research_config():
     """Return research pipeline configuration (V3 enhanced)"""
     return get_research_config()
 
+@api_router.get('/llm/status')
+async def llm_status():
+    """Return LLM provider configuration and status"""
+    return get_llm_status()
+
 # Waitlist / Email Collection
 @api_router.post('/waitlist/join')
 async def join_waitlist(request: WaitlistRequest):
