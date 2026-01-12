@@ -330,7 +330,7 @@ const TarotCardView = ({ spell, archetype, style, imageBase64, onViewFull, onCop
                 </div>
                 
                 <h2 
-                  className="font-italiana text-2xl md:text-3xl text-amber-100 text-center mb-1"
+                  className="ritual-title text-2xl md:text-3xl text-amber-100 text-center mb-1"
                   style={{ textShadow: '2px 2px 8px rgba(0,0,0,0.8)' }}
                 >
                   {tarot.title || spell.title}
