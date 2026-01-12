@@ -892,14 +892,26 @@ Write in-character, as if speaking directly to the seeker. Include:
 - An invitation to return"""
 
     try:
-        # Use model-agnostic abstraction for persona voice (currently OpenAI via Emergent)
-        response_text = await persona_voice(
-            system_message=system_message,
-            user_message=user_request
+        # Use direct OpenAI for persona voice (your key)
+        from llm_providers import get_openai_client
+        client = get_openai_client()
+        
+        if not client:
+            raise ValueError("OpenAI not configured")
+        
+        response = await client.chat.completions.create(
+            model=OPENAI_MODEL,
+            messages=[
+                {"role": "system", "content": system_message},
+                {"role": "user", "content": user_request}
+            ],
+            temperature=0.8,
+            max_tokens=1200
         )
+        response_text = response.choices[0].message.content
         
         elapsed = time.time() - start_time
-        logger.info(f"[PROVIDER_CALL] endpoint={endpoint_name} provider=persona_voice status=SUCCESS timing={elapsed:.3f}s")
+        logger.info(f"[PROVIDER_CALL] endpoint={endpoint_name} provider=openai_direct status=SUCCESS timing={elapsed:.3f}s")
         
         return SpellbookResponse(
             response=response_text,
@@ -909,7 +921,7 @@ Write in-character, as if speaking directly to the seeker. Include:
         
     except Exception as e:
         elapsed = time.time() - start_time
-        logger.error(f"[PROVIDER_CALL] endpoint={endpoint_name} provider=persona_voice status=ERROR timing={elapsed:.3f}s error={str(e)}")
+        logger.error(f"[PROVIDER_CALL] endpoint={endpoint_name} provider=openai_direct status=ERROR timing={elapsed:.3f}s error={str(e)}")
         return SpellbookResponse(
             response=f"Failed to generate response: {str(e)}",
             persona_name=persona_config['name'],
