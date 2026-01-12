@@ -2967,20 +2967,20 @@ async def generate_personalized_spell(request: PersonalizedSpellRequest, user = 
         planner_start = time.time()
         planner_prompt = build_planner_prompt(spell_spec, persona_config, scenario)
         
-        planner_response = await openai_client.chat.completions.create(
-            model="gpt-4o",
+        # Use Emergent LLM Key for chat completion
+        planner_text = await emergent_chat_completion(
             messages=[
                 {"role": "system", "content": "You are a spell planner. Return ONLY valid JSON, no markdown, no explanation."},
                 {"role": "user", "content": planner_prompt}
             ],
+            model="gpt-4o",
             temperature=0.8,
             max_tokens=2500
         )
         timing_log['planner_ms'] = int((time.time() - planner_start) * 1000)
         logging.info(f"[TIMING] Planner: {timing_log['planner_ms']}ms")
         
-        # Parse planner output
-        planner_text = planner_response.choices[0].message.content
+        # Parse planner output - planner_text is already the content string
         # Clean JSON from markdown if present
         if '```json' in planner_text:
             planner_text = planner_text.split('```json')[1].split('```')[0]
