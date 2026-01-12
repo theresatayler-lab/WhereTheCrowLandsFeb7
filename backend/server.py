@@ -1960,18 +1960,16 @@ async def suggest_ward(request: WardRequest):
         
         user_message += "\n\nPlease suggest 2-3 wards that would be perfect for them. Remember to vary your suggestions and make them specific to THIS person."
         
-        # Call OpenAI
-        response = await openai_client.chat.completions.create(
-            model="gpt-4o",
+        # Use Emergent LLM Key
+        response_text = await emergent_chat_completion(
             messages=[
                 {"role": "system", "content": WARD_FINDER_PROMPT},
                 {"role": "user", "content": user_message}
             ],
-            temperature=0.9,  # Higher temperature for more variety
+            model="gpt-4o",
+            temperature=0.9,
             max_tokens=2000
         )
-        
-        response_text = response.choices[0].message.content
         
         # Parse JSON from response
         import re
