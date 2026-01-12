@@ -2732,18 +2732,16 @@ Respond ONLY with the JSON object, no other text."""
         else:
             system_message = DEFAULT_SYSTEM_MESSAGE + "\n\nYou must respond with structured JSON as specified."
         
-        # Use direct OpenAI API for spell generation
-        chat_response = await openai_client.chat.completions.create(
-            model="gpt-4o",
+        # Use Emergent LLM Key for spell generation
+        response = await emergent_chat_completion(
             messages=[
                 {"role": "system", "content": system_message},
                 {"role": "user", "content": structured_prompt}
             ],
+            model="gpt-4o",
             temperature=0.8,
             max_tokens=4000
         )
-        
-        response = chat_response.choices[0].message.content
         
         # Parse the JSON response
         import json
