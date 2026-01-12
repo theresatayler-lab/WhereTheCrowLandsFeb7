@@ -428,11 +428,11 @@ SOURCE QUALITY:
 You are a librarian, not a mystic. Be helpful, precise, and honest about uncertainty."""
 
 # ============================================================================
-# Research Object V2 Schema Prompt
+# Research Object V3 Schema Prompt (Enhanced)
 # ============================================================================
 
 RESEARCH_OBJECT_V2_SCHEMA = """{
-  "research_mode": "spell_origins | source_explainer | safety_substitutions",
+  "research_mode": "spell_origins | source_explainer | safety_substitutions | cross_traditional_analysis | material_science_context | ritual_anatomy | historical_evolution | geographic_variants | transmission_analysis | contemporary_adaptation",
   "summary": "3-6 sentences factual summary of findings",
   "key_takeaways": [
     {
@@ -444,20 +444,36 @@ RESEARCH_OBJECT_V2_SCHEMA = """{
   ],
   "why_this_works_facts": [
     {
-      "claim": "We use [X] because... (factual rationale, not mystical certainty)",
+      "claim": "Use framing patterns like: 'Historical practitioners believed X worked because Y' or 'The symbolic correspondence between X and Y suggests...' or 'Modern cognitive science suggests...'",
       "claim_flag": "historical | folklore | modern_occult | speculative",
+      "framing_type": "historical_belief | anthropological | symbolic | cognitive_science | magical_principle | material_property | ritualized_action | seasonal | elemental | sympathetic_magic",
       "source_refs": ["source_1"],
       "confidence": "high | medium | low"
     }
   ],
   "practice_context": {
-    "tradition_tags": ["british_folk_magic", "cunning_folk", "golden_dawn", "victorian_spiritualism", "celtic_devotional", "kitchen_witchery"],
+    "tradition_tags": ["british_folk_magic", "cunning_folk", "kitchen_witchery", "celtic_devotional", "victorian_spiritualism", "golden_dawn", "appalachian_folk_magic", "powwow_braucherei", "hedgewitchery", "folk_catholicism", "grimoire_tradition", "wisewoman_healing", "coastal_folk_magic", "postwar_makeshift_magic"],
     "time_period": "e.g., 19th–early 20th century",
-    "region": "e.g., Britain / Ireland / Western Europe",
+    "region": "e.g., Britain / Ireland / Western Europe / Appalachia",
+    "cross_persona_relevance": ["shigg", "cathleen", "katherine", "theresa"],
     "note": "1-3 sentences of context"
+  },
+  "safety_considerations": {
+    "material_hazards": ["flammable", "toxic", "irritant"],
+    "procedure_hazards": ["fire_risk", "sharp_objects"],
+    "psychological_considerations": ["trance_depth", "emotional_triggers"],
+    "substitutions": [
+      {
+        "original": "open flame candle",
+        "substitute": "LED candle or flashlight",
+        "type": "symbolic_equivalent | functional_equivalent | simplified_version",
+        "note": "Preserves light symbolism without fire risk"
+      }
+    ]
   },
   "suggested_reading_path": [
     {
+      "stage": "Foundation | Observation | Participation | Analysis | Improvisation | Integration",
       "step_title": "Start here...",
       "why": "1 sentence explaining why this is a good entry point",
       "source_refs": ["source_1"]
@@ -467,6 +483,7 @@ RESEARCH_OBJECT_V2_SCHEMA = """{
     {
       "id": "source_1",
       "type": "book | article | archive | museum | encyclopedia",
+      "quality_tier": "academic_primary | folk_archive | practitioner_primary | modern_scholar_practitioner | community_tradition | speculative_reconstruction | popular_synthesis",
       "author": "Author Name",
       "title": "Full Title",
       "year": 2003,
