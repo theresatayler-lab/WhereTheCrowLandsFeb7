@@ -3008,20 +3008,20 @@ async def generate_personalized_spell(request: PersonalizedSpellRequest, user = 
         writer_start = time.time()
         writer_prompt = build_spell_writer_prompt(spell_spec, persona_config, scenario, plan)
         
-        writer_response = await openai_client.chat.completions.create(
-            model="gpt-4o",
+        # Use Emergent LLM Key for chat completion
+        spell_text = await emergent_chat_completion(
             messages=[
                 {"role": "system", "content": f"You are {persona_config['name']}, {persona_config['title']}. Write spells in your unique voice. Return ONLY valid JSON, no markdown."},
                 {"role": "user", "content": writer_prompt}
             ],
+            model="gpt-4o",
             temperature=0.85,
             max_tokens=3500
         )
         timing_log['writer_ms'] = int((time.time() - writer_start) * 1000)
         logging.info(f"[TIMING] Writer: {timing_log['writer_ms']}ms")
         
-        # Parse spell output
-        spell_text = writer_response.choices[0].message.content
+        # Parse spell output - spell_text is already the content string
         if '```json' in spell_text:
             spell_text = spell_text.split('```json')[1].split('```')[0]
         elif '```' in spell_text:
