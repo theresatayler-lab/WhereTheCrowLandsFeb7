@@ -211,7 +211,7 @@ export const Home = () => {
           </motion.div>
 
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.3 }}>
-            <h1 className="font-italiana text-3xl sm:text-5xl md:text-6xl lg:text-7xl text-gold-light mb-3 sm:mb-4 tracking-tight leading-none"
+            <h1 className="phantasmagoria-hero text-3xl sm:text-5xl md:text-6xl lg:text-7xl text-gold-light mb-3 sm:mb-4 leading-none"
               style={{ textShadow: '0 4px 40px rgba(212, 168, 75, 0.6), 0 0 80px rgba(184, 35, 48, 0.4)' }}>
               Where The Crowlands
             </h1>
@@ -221,11 +221,10 @@ export const Home = () => {
             </p>
             
             {/* Handwritten subhead */}
-            <p className="font-crimson italic text-lg sm:text-xl md:text-2xl text-gold/70 mb-6 sm:mb-8 tracking-wide"
+            <p className="phantasmagoria-accent italic text-lg sm:text-xl md:text-2xl text-gold/70 mb-6 sm:mb-8"
               style={{ 
                 textShadow: '0 2px 10px rgba(0, 0, 0, 0.4)',
                 fontStyle: 'italic',
-                letterSpacing: '0.05em'
               }}>
               … the bird is on the wing
             </p>
