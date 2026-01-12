@@ -140,17 +140,40 @@ async def research_query(query: str, context: Optional[str] = None) -> ResearchR
     
     user_message += """
 
-Please provide:
-1. A clear, informative answer (2-3 paragraphs)
-2. Key bullet points summarizing the main facts
-3. Suggested sources for further reading (books, authors, academic papers, traditions)
-
-Format your response as JSON with this structure:
+Return JSON with this EXACT structure:
 {
-    "answer": "Your detailed answer here...",
-    "bullets": ["Key point 1", "Key point 2", "Key point 3"],
-    "sources": ["Author Name - 'Book Title'", "Academic source", "Traditional reference"]
-}"""
+  "answer": "Factual summary (2-3 paragraphs, NO persona voice)",
+  "bullets": [
+    {
+      "text": "Key fact or finding",
+      "source_refs": ["source_1"],
+      "claim_flag": "historical"
+    }
+  ],
+  "sources": [
+    {
+      "id": "source_1",
+      "author": "Author Name",
+      "title": "Book or Paper Title",
+      "year": 1930,
+      "url": "https://archive.org/... or null",
+      "search_terms": "fallback search if no URL",
+      "needs_verification": false
+    }
+  ],
+  "source_map": {
+    "0": ["source_1"],
+    "1": ["source_1", "source_2"]
+  }
+}
+
+CLAIM FLAGS:
+- "historical": documented in academic sources
+- "folklore": oral tradition, regional customs
+- "modern_occult": 20th century occult revival (Golden Dawn, Wicca, etc.)
+- "speculative": reasonable inference, not directly documented
+
+Remember: NO emotional language. You are an archivist."""
 
     try:
         response = await client.chat.completions.create(
