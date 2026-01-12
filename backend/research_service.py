@@ -309,6 +309,11 @@ async def generate_combined_response(
     """Generate combined response using both DeepSeek (research) and OpenAI (persona)"""
     import asyncio
     
+    start_time = time.time()
+    endpoint_name = "/api/combined"
+    
+    logger.info(f"[PROVIDER_CALL] endpoint={endpoint_name} provider=BOTH (deepseek+openai) starting_parallel_calls")
+    
     # Prepare research query based on user request
     research_query_text = f"What are the historical and folk magic traditions related to: {user_request}"
     if context:
@@ -319,6 +324,9 @@ async def generate_combined_response(
     spellbook_task = generate_spellbook_response(user_request, persona, tone)
     
     research_result, spellbook_result = await asyncio.gather(research_task, spellbook_task)
+    
+    elapsed = time.time() - start_time
+    logger.info(f"[PROVIDER_CALL] endpoint={endpoint_name} provider=BOTH status=COMPLETE timing={elapsed:.3f}s")
     
     return CombinedResponse(
         spellbook_response=spellbook_result.response,
