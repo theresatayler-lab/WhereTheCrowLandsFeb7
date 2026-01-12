@@ -75,9 +75,9 @@ from llm_providers import (
     get_llm_status, PROVIDER_CONFIG
 )
 
-# Legacy wrapper for existing code (uses the abstraction layer)
+# Legacy wrapper for existing code (uses direct OpenAI)
 async def emergent_chat_completion(messages: list, model: str = "gpt-4o", temperature: float = 0.7, max_tokens: int = 4000) -> str:
-    """Legacy wrapper - routes through model-agnostic abstraction"""
+    """Legacy wrapper - routes through model-agnostic abstraction (now using your OpenAI key)"""
     system_msg = "You are a helpful assistant."
     user_content = ""
     
@@ -87,12 +87,17 @@ async def emergent_chat_completion(messages: list, model: str = "gpt-4o", temper
         elif msg.get("role") == "user":
             user_content = msg.get("content", "")
     
-    return await chat_completion(
-        purpose="persona_voice",
-        system_message=system_msg,
-        user_message=user_content,
-        override_config={"temperature": temperature, "max_tokens": max_tokens}
+    # Use direct OpenAI client
+    response = await openai_client.chat.completions.create(
+        model=model,
+        messages=[
+            {"role": "system", "content": system_msg},
+            {"role": "user", "content": user_content}
+        ],
+        temperature=temperature,
+        max_tokens=max_tokens
     )
+    return response.choices[0].message.content
 
 # Models
 class UserRegister(BaseModel):
