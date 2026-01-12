@@ -39,8 +39,9 @@ class ResearchRequest(BaseModel):
 
 class ResearchResponse(BaseModel):
     answer: str
-    bullets: List[str]
-    sources: List[str]
+    bullets: List[Dict[str, Any]]  # Enhanced: includes source_refs and claim_flag
+    sources: List[Dict[str, Any]]  # Enhanced: structured citations
+    source_map: Dict[str, List[str]] = {}  # bullet_index -> source_ids
 
 class SpellbookRequest(BaseModel):
     user_request: str
