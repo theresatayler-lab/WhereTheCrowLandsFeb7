@@ -23,7 +23,7 @@ PROVIDER_CONFIG = {
     "persona_voice": {
         "provider": "openai",           # Options: "openai", "anthropic", "gemini"
         "model": "gpt-4o",              # Model to use for this provider
-        "use_emergent_key": True,       # Use Emergent Universal Key
+        "use_emergent_key": False,      # Use your own OpenAI key
         "temperature": 0.8,
         "max_tokens": 2000
     },
@@ -37,14 +37,14 @@ PROVIDER_CONFIG = {
     "spell_planner": {
         "provider": "openai",
         "model": "gpt-4o",
-        "use_emergent_key": True,
+        "use_emergent_key": False,      # Use your own OpenAI key
         "temperature": 0.8,
         "max_tokens": 2500
     },
     "spell_writer": {
         "provider": "openai",
         "model": "gpt-4o",
-        "use_emergent_key": True,
+        "use_emergent_key": False,      # Use your own OpenAI key
         "temperature": 0.85,
         "max_tokens": 3500
     }
