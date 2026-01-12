@@ -183,7 +183,7 @@ Remember: NO emotional language. You are an archivist."""
                 {"role": "user", "content": user_message}
             ],
             temperature=0.7,
-            max_tokens=1500,
+            max_tokens=2000,
             response_format={"type": "json_object"}
         )
         
@@ -193,10 +193,18 @@ Remember: NO emotional language. You are an archivist."""
         import json
         result = json.loads(response.choices[0].message.content)
         
+        # Validate no persona voice contamination
+        persona_words = ["dear", "seeker", "my child", "warmth", "gentle", "beloved"]
+        answer_lower = result.get("answer", "").lower()
+        for word in persona_words:
+            if word in answer_lower:
+                logger.warning(f"[VALIDATION] Persona voice detected in research output: '{word}'")
+        
         return ResearchResponse(
             answer=result.get("answer", "No answer provided"),
             bullets=result.get("bullets", []),
-            sources=result.get("sources", [])
+            sources=result.get("sources", []),
+            source_map=result.get("source_map", {})
         )
         
     except Exception as e:
@@ -205,7 +213,8 @@ Remember: NO emotional language. You are an archivist."""
         return ResearchResponse(
             answer=f"Research query failed: {str(e)}",
             bullets=[],
-            sources=[]
+            sources=[],
+            source_map={}
         )
 
 # ============================================================================
