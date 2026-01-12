@@ -645,6 +645,15 @@ async def update_email(request: UpdateEmailRequest, user = Depends(get_current_u
         spell_generation_count=user.get('spell_generation_count', 0)
     )
 
+# ============================================================================
+# Health / Provider Status Endpoints
+# ============================================================================
+
+@api_router.get('/health/providers')
+async def health_providers():
+    """Return configuration status for all AI providers"""
+    return get_provider_status()
+
 # Waitlist / Email Collection
 @api_router.post('/waitlist/join')
 async def join_waitlist(request: WaitlistRequest):
