@@ -3,11 +3,31 @@
 
 import os
 import logging
+import time
 from typing import Dict, List, Optional, Any
 from openai import AsyncOpenAI
 from pydantic import BaseModel, Field
 
 logger = logging.getLogger(__name__)
+
+# ============================================================================
+# Provider Configuration
+# ============================================================================
+
+DEEPSEEK_BASE_URL = "https://api.deepseek.com"
+DEEPSEEK_MODEL = "deepseek-chat"
+OPENAI_MODEL = "gpt-4o"
+
+def get_provider_status() -> Dict[str, Any]:
+    """Return configuration status for all providers"""
+    return {
+        "openai_configured": bool(os.environ.get('OPENAI_API_KEY')),
+        "deepseek_configured": bool(os.environ.get('DEEPSEEK_API_KEY')),
+        "deepseek_base_url": DEEPSEEK_BASE_URL,
+        "deepseek_model": DEEPSEEK_MODEL,
+        "openai_model": OPENAI_MODEL,
+        "image_provider": os.environ.get('IMAGE_PROVIDER', 'library')
+    }
 
 # ============================================================================
 # Pydantic Models
