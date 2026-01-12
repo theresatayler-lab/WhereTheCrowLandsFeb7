@@ -1748,17 +1748,15 @@ Return JSON:
         if request.question:
             user_message += f"\nTheir question: {request.question}"
         
-        response = await openai_client.chat.completions.create(
-            model="gpt-4o",
+        response_text = await emergent_chat_completion(
             messages=[
                 {"role": "system", "content": oracle_prompt},
                 {"role": "user", "content": user_message}
             ],
+            model="gpt-4o",
             temperature=0.9,
             max_tokens=2500
         )
-        
-        response_text = response.choices[0].message.content
         
         # Parse JSON
         import re
