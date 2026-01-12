@@ -23,33 +23,19 @@ logger = logging.getLogger(__name__)
 DEEPSEEK_BASE_URL = "https://api.deepseek.com"
 DEEPSEEK_MODEL = "deepseek-chat"
 OPENAI_MODEL = "gpt-4o"
-EMERGENT_LLM_KEY = os.environ.get('EMERGENT_LLM_KEY', '')
-
-# Emergent LLM Helper for persona voice
-async def emergent_persona_chat(system_message: str, user_message: str, model: str = "gpt-4o", temperature: float = 0.8) -> str:
-    """Use Emergent LLM Key for persona voice chat completions"""
-    from emergentintegrations.llm.chat import LlmChat, UserMessage
-    
-    chat = LlmChat(
-        api_key=EMERGENT_LLM_KEY,
-        session_id=str(uuid.uuid4()),
-        system_message=system_message
-    ).with_model("openai", model)
-    
-    user_msg = UserMessage(text=user_message)
-    response = await chat.send_message(user_msg)
-    return response
 
 def get_provider_status() -> Dict[str, Any]:
     """Return configuration status for all providers"""
+    status = get_llm_status()
     return {
-        "openai_configured": bool(os.environ.get('OPENAI_API_KEY')),
-        "emergent_configured": bool(EMERGENT_LLM_KEY),
-        "deepseek_configured": bool(os.environ.get('DEEPSEEK_API_KEY')),
+        "openai_configured": status.get("openai_configured", False),
+        "emergent_configured": status.get("emergent_key_configured", False),
+        "deepseek_configured": status.get("deepseek_configured", False),
         "deepseek_base_url": DEEPSEEK_BASE_URL,
         "deepseek_model": DEEPSEEK_MODEL,
         "openai_model": OPENAI_MODEL,
-        "image_provider": os.environ.get('IMAGE_PROVIDER', 'library')
+        "image_provider": os.environ.get('IMAGE_PROVIDER', 'library'),
+        "llm_config": status.get("current_config", {})
     }
 
 def get_research_config() -> Dict[str, Any]:
