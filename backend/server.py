@@ -654,6 +654,11 @@ async def health_providers():
     """Return configuration status for all AI providers"""
     return get_provider_status()
 
+@api_router.get('/research/config')
+async def research_config():
+    """Return research pipeline configuration (V3 enhanced)"""
+    return get_research_config()
+
 # Waitlist / Email Collection
 @api_router.post('/waitlist/join')
 async def join_waitlist(request: WaitlistRequest):
