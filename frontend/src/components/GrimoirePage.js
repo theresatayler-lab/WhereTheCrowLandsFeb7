@@ -826,7 +826,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
           />
           <div className={`absolute inset-0 bg-gradient-to-t ${style.headerGradient}`} />
           <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-card to-transparent">
-            <h1 className="font-italiana text-3xl md:text-4xl text-primary drop-shadow-lg">
+            <h1 className="ritual-title text-3xl md:text-4xl text-primary drop-shadow-lg">
               {spell.title || 'Untitled Spell'}
             </h1>
             {spell.subtitle && spell.subtitle !== 'null' && (
@@ -843,7 +843,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
             </div>
           </div>
           <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-[#D8CBB3] to-transparent">
-            <h1 className="font-italiana text-3xl md:text-4xl text-amber-900">
+            <h1 className="ritual-title text-3xl md:text-4xl text-amber-900">
               {spell.title || 'Untitled Spell'}
             </h1>
             {spell.subtitle && spell.subtitle !== 'null' && (
@@ -853,7 +853,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
         </div>
       ) : (
         <div className={`p-6 ${style.bgAccent} border-b border-amber-800/30`}>
-          <h1 className="font-italiana text-3xl md:text-4xl text-amber-900">{spell.title || 'Untitled Spell'}</h1>
+          <h1 className="ritual-title text-3xl md:text-4xl text-amber-900">{spell.title || 'Untitled Spell'}</h1>
           {spell.subtitle && spell.subtitle !== 'null' && (
             <p className="font-montserrat text-sm text-stone-700 mt-1">{spell.subtitle}</p>
           )}
