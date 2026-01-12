@@ -1411,17 +1411,15 @@ Remember: You are warm, dawn-quiet, British-inflected. Use understatement. Offer
         if not user_message:
             user_message = "The seeker asks for general guidance from the Bird Oracle today."
 
-        response = await openai_client.chat.completions.create(
-            model="gpt-4o",
+        response_text = await emergent_chat_completion(
             messages=[
                 {"role": "system", "content": bird_oracle_prompt},
                 {"role": "user", "content": user_message}
             ],
+            model="gpt-4o",
             temperature=0.9,
             max_tokens=1500
         )
-        
-        response_text = response.choices[0].message.content
         
         # Parse JSON
         import re
