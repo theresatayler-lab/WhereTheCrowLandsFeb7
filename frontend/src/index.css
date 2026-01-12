@@ -279,6 +279,38 @@ body::before {
     filter: drop-shadow(0 0 8px rgba(184, 35, 48, 0.6));
 }
 
+/* ============================================================================
+   TC PHANTASMAGORIA - Mindful Accent Font Usage
+   Use sparingly for maximum impact: titles, special callouts, ritual names
+   ============================================================================ */
+
+/* Primary accent class - for major headings and ritual titles */
+.font-phantasmagoria {
+    font-family: 'TC Phantasmagoria', 'Cinzel Decorative', serif;
+    letter-spacing: 0.02em;
+}
+
+/* Spell/Ritual title treatment */
+.ritual-title {
+    font-family: 'TC Phantasmagoria', 'Cinzel Decorative', serif;
+    letter-spacing: 0.05em;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Hero/Impact text - use very sparingly */
+.phantasmagoria-hero {
+    font-family: 'TC Phantasmagoria', 'Cinzel Decorative', serif;
+    letter-spacing: 0.08em;
+    line-height: 1.1;
+}
+
+/* Subtle accent - for small callouts, labels */
+.phantasmagoria-accent {
+    font-family: 'TC Phantasmagoria', 'Cinzel Decorative', serif;
+    font-size: 0.9em;
+    letter-spacing: 0.03em;
+}
+
 @layer base {
     [data-debug-wrapper='true'] {
         display: contents !important;
