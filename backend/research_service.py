@@ -231,9 +231,17 @@ You help seekers uncover truth and connect with ancestral wisdom."""
 
 async def generate_spellbook_response(user_request: str, persona: str, tone: str) -> SpellbookResponse:
     """Generate persona-voiced spellbook response using OpenAI"""
+    start_time = time.time()
+    endpoint_name = "/api/spellbook"
+    provider = "openai"
+    
+    logger.info(f"[PROVIDER_CALL] endpoint={endpoint_name} provider={provider} base_url=https://api.openai.com model={OPENAI_MODEL}")
+    
     client = get_openai_client()
     
     if not client:
+        elapsed = time.time() - start_time
+        logger.warning(f"[PROVIDER_CALL] endpoint={endpoint_name} provider={provider} status=NOT_CONFIGURED timing={elapsed:.3f}s")
         return SpellbookResponse(
             response="Persona voice not configured. Please add OPENAI_API_KEY to environment variables.",
             persona_name="System",
@@ -261,7 +269,7 @@ Write in-character, as if speaking directly to the seeker. Include:
 
     try:
         response = await client.chat.completions.create(
-            model="gpt-4o",
+            model=OPENAI_MODEL,
             messages=[
                 {"role": "system", "content": system_message},
                 {"role": "user", "content": user_request}
@@ -270,6 +278,9 @@ Write in-character, as if speaking directly to the seeker. Include:
             max_tokens=1000
         )
         
+        elapsed = time.time() - start_time
+        logger.info(f"[PROVIDER_CALL] endpoint={endpoint_name} provider={provider} status=SUCCESS timing={elapsed:.3f}s")
+        
         return SpellbookResponse(
             response=response.choices[0].message.content,
             persona_name=persona_config['name'],
@@ -277,7 +288,8 @@ Write in-character, as if speaking directly to the seeker. Include:
         )
         
     except Exception as e:
-        logger.error(f"OpenAI spellbook error: {str(e)}")
+        elapsed = time.time() - start_time
+        logger.error(f"[PROVIDER_CALL] endpoint={endpoint_name} provider={provider} status=ERROR timing={elapsed:.3f}s error={str(e)}")
         return SpellbookResponse(
             response=f"Failed to generate response: {str(e)}",
             persona_name=persona_config['name'],
