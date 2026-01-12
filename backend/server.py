@@ -43,7 +43,8 @@ from research_service import (
     ResearchRequest, ResearchResponse,
     SpellbookRequest, SpellbookResponse,
     CombinedRequest, CombinedResponse,
-    research_query, generate_spellbook_response, generate_combined_response
+    research_query, generate_spellbook_response, generate_combined_response,
+    get_provider_status
 )
 import random
 
