@@ -169,7 +169,8 @@ Format your response as JSON with this structure:
         )
         
     except Exception as e:
-        logger.error(f"DeepSeek research error: {str(e)}")
+        elapsed = time.time() - start_time
+        logger.error(f"[PROVIDER_CALL] endpoint={endpoint_name} provider={provider} status=ERROR timing={elapsed:.3f}s error={str(e)}")
         return ResearchResponse(
             answer=f"Research query failed: {str(e)}",
             bullets=[],
