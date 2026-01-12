@@ -1,182 +1,85 @@
 # Where The Crowlands - Product Requirements Document
 
-## Overview
-Where The Crowlands is a sophisticated full-stack application for building DIY rituals guided by AI archetypes with an 18th-century grimoire aesthetic.
+## Original Problem Statement
+Build "Where The Crowlands," a sophisticated full-stack application for creating DIY rituals guided by AI archetypes. The app features a dual-AI architecture with DeepSeek (research/factual) and OpenAI (persona voice).
 
-## Tech Stack
-- **Frontend**: React with Tailwind CSS
-- **Backend**: FastAPI (Python)
+## Core Architecture
+- **Frontend**: React + Tailwind + Shadcn/UI
+- **Backend**: FastAPI + Python
 - **Database**: MongoDB
-- **AI Integration**: OpenAI GPT-4 & DALL-E 3
+- **AI**: Dual-model (DeepSeek for research, OpenAI GPT-4o for persona voice)
 
-## Core Features
+## What's Been Implemented
 
-### Visual System V1.1 (Collectible Grimoire Aesthetic)
-- Global `CROWLANDS_ART_BIBLE` as **PREFIX** to all image prompts (ornate occult silk scarf/tapestry)
-- Persona-specific `visual_dna` overlays for Shigg, Cathleen, Katherine, Theresa
-- Hard negatives: no text/letters/words/watermarks/logos/photorealism/neon/collage
-- Palette: midnight navy, oxblood, antique gold, bone
+### Session: January 12, 2026
+- **TC Phantasmagoria Font Integration**
+  - Custom OTF font installed at `/app/frontend/public/fonts/grimoire-accent.otf`
+  - CSS utility classes: `.font-phantasmagoria`, `.ritual-title`, `.phantasmagoria-hero`, `.phantasmagoria-accent`
+  - Applied to: Main title, page headers, spell titles, guide names
+  
+- **DeepSeek Research Pipeline V3 Enhancement**
+  - 7 new research modes (10 total): cross_traditional_analysis, material_science_context, ritual_anatomy, historical_evolution, geographic_variants, transmission_analysis, contemporary_adaptation
+  - 28 tradition tags taxonomy (expanded from 6)
+  - 7 source quality tiers with confidence levels
+  - 10 "Why This Works" framing patterns
+  - Cross-persona connection points and tension mapping
+  - Enhanced safety substitution categories (6 categories with subcategories)
+  - 6-stage reading path pedagogy (Foundation → Integration)
+  - New endpoint: `GET /api/research/config`
 
-### Image Generation System
-- **ImageProvider abstraction** (`/app/backend/image_provider.py`)
-- Config: `IMAGE_PROVIDER` env var (library|dalle|flux)
-- Static library for dividers (no DALL-E generation)
-- Hash-based caching: `hash(prompt+persona+asset_type)`
-- Generated: header + tarot + sigil only (dividers are STATIC)
+- **Navigation Verification**
+  - Confirmed scroll-to-top behavior on all page transitions ✓
 
-### Progressive Loading System
-- Text-first: `generate_images: false` returns spell in ~25 seconds
-- Background image generation via `lazyLoadImages()`
-- Skeleton placeholders while images load
+### Previous Sessions
+- Dual-AI research pipeline (DeepSeek + OpenAI)
+- Four ancestral guides: Shigg, Cathleen, Katherine, Theresa
+- Spell generation with tarot cards and sigils
+- User authentication (JWT)
+- Subscription system (Stripe integration)
+- My Grimoire spell saving
+- Rich references system
+- PDF export functionality
 
-### Download Entire Grimoire (NEW)
-- Single PDF with cover page, table of contents, all spells
-- Includes: spell text, header image, tarot card, sigil
-- Component: `/app/frontend/src/components/GrimoireDownloader.js`
-- Button appears on My Grimoire page when user has saved spells
+## Key Pages
+- `/` - Home
+- `/spell-request` - Guided spell creation
+- `/guides` - Meet the Guides
+- `/my-grimoire` - Saved spells (auth required)
+- `/deities`, `/figures`, `/sites`, `/rituals`, `/timeline` - Archives
+- `/ai-chat` - Research interface
 
-### Spell Generation System
-- Multi-step wizard for spell personalization
-- Four AI archetypes: Shigg, Cathleen, Katherine, Theresa
-- Generated assets: header, tarot, sigil (dividers static)
-
-## Environment Variables (Backend)
-```
-OPENAI_API_KEY=<from hosting secrets>
-IMAGE_PROVIDER=dalle  # Options: library|dalle|flux
-MONGO_URL=<from hosting secrets>
-DB_NAME=<from hosting secrets>
-```
-
-## Completed Work (January 2025)
-
-### Session January 9, 2025 (Current)
-
-#### Visual Polish V2.0 - COMPLETE
-- **Enhanced Ornament Library** (`/app/frontend/src/assets/ornaments/index.js`)
-  - 24 SVG bestiary glyphs: crow, raven, owl, hare, stag, fox, moth, serpent, pentacle, triquetra, crescent, sunDisc, key, chalice, candle, bell, compass, mirror, feather, thread, etc.
-  - 20 SVG corner ornaments: classic, elaborate, floral, celtic, artNouveau, geometric, vine, occult, simple, double, diamond, star, spiral, wave, leaf, cross, arc, bracket, scroll, tassel
-  - 12 SVG divider strips: classic, moon, stars, diamonds, wave, dots, ornate, celtic, arrows, simple, doubleLine, gradient
-  - **Single Source of Truth**: `PAGE_ORNAMENT_CONFIG` maps each page to specific ornament styles
-
-- **Page-Aware Ornament Components**
-  - `PageOrnamentCorners` - Renders 4 corners with page-specific style
-  - `PageDivider` - Page-aware divider component
-  - `PageGlyph` - Page-aware accent glyph (primary/secondary)
-  - `DecoratedSectionHeader` - Section header with ornament integration
-  - `StepperOrnament` - Decorative element between wizard steps
-  - `NavFlourish` - Small decorative element for navigation
-
-- **UI Integration Complete**
-  - `/app/frontend/src/pages/MyGrimoire.js` - Empty states now use `BestiaryGlyph` instead of Lucide icons
-  - `/app/frontend/src/pages/Guides.js` - Guide cards have per-guide glyph accents (feather+crescent for Shigg, owl+crescent for Corrie, etc.)
-  - `/app/frontend/src/pages/SpellRequest.js` - Step indicator uses `StepperOrnament` between steps
-
-- **Visual QA Report Updated** (`/app/VISUAL_QA_REPORT.md`)
-  - 22 pages audited, 98% visual consistency
-  - 12 minor issues documented (all S/M changes)
-  - Complete ornament usage reference and examples
-
-### Session January 9, 2025 (Earlier)
-- **PDF Download Bug Fixed**: Completely rewrote PDF generation to use jsPDF directly instead of html2pdf.js
-  - `GrimoireDownloader.js` - Uses jsPDF for entire grimoire PDF (cover, TOC, spell pages)
-  - `GrimoirePage.js` - Uses jsPDF + html2canvas for single spell PDF
-  - Both downloads now produce valid, non-blank PDFs
-  - Tested with 11 spells: Full grimoire PDF (49KB, ~16 pages)
-
-- **SPELL QUALITY UPGRADE V1.1**: Major quality overhaul for heirloom-style spells
-  - Added `voice` block to each persona (role, tone, signature_phrases, pet_names, never_says)
-  - Added `micro_lore` array (10 lived details per persona like "kettle that sings")
-  - Added `taboos` array (things each persona would never do/say)
-  - New `text_variation_tokens` for behind-the-scenes uniqueness (setting, sensory, gesture, metaphor details)
-  - **Spell Writer Contract** now enforces:
-    - `why_this_works`: 4-7 paragraphs explaining "We use X because..."
-    - `substitutions`: 3 practical alternatives
-    - `tiny_mistakes_to_avoid`: 3 safety/prep notes
-    - `closing_and_aftercare`: with validation line ("If this doesn't land today...")
-  - Incantation specificity rule: 3 concrete nouns + 1 emotion word
-  - Ban on generic phrases per persona
-  - Added `validate_spell_contract()` quality guard function
-  - **Validated with 6 test spells** - all pass "persona in 3 lines" + "wise guide teaching" criteria
-
-- **Site-wide UI Pass COMPLETE**: All priority pages already use Crowlands visual system
-  - `/corrie-tarot` - PageBorderFrame, DarkSection, GrandDivider ✅
-  - `/profile` - PageBorderFrame, OrnateCard, PageHeader ✅  
-  - `/upgrade` - PageBorderFrame, DarkSection, LightOrnateCard ✅
-  - Home, Guides, SpellRequest, MyGrimoire - all consistent ✅
-
-- **Static Ornament Library Created**: `/app/frontend/src/assets/ornaments/index.js`
-  - 24 Bestiary Glyphs (crow, raven, owl, hare, stag, fox, moth, etc.)
-  - 20 Corner Ornaments (classic, elaborate, celtic, art_nouveau, etc.)
-  - 12 Divider Strips (moon, stars, diamonds, wave, etc.)
-  - Deterministic selection functions for consistent page theming
-
-- **Full Site QA Complete**: 22 pages tested, 100% visual pass, 95% functionality pass
-  - See `/app/VISUAL_QA_REPORT.md` for full details
-
-- **Setting Options Redesigned (V1.2)**: Replaced room-based settings with contextual settings
-  - Old: Kitchen, Bedroom, Outdoors, Bath, Desk/Office
-  - New: In the quiet of my home, Outside in nature, During my daily routine, On the move, In public/semi-public
-  - Added SETTING_CONTEXT in spell_prompts.py with guidance for each setting
-  - Backend SETTING_SCENARIO_MAP updated to map new settings to appropriate scenarios
-  - Spell Writer prompt now includes setting-specific guidance (what can/cannot be included)
-  - **Tested with 3 settings**: transit, home_quiet, nature - all adapt appropriately
-
-- **Session Persistence Fixed**: Protected routes now wait for auth check before redirecting
-  - Added `isAuthChecked` state to App.js
-  - `/my-grimoire` and `/profile` no longer redirect to `/auth` on direct navigation
-  - User can now bookmark and revisit protected pages without losing session
-
-- **Early-access gate disabled** for testing (can be re-enabled in App.js)
-
-### Session December 2024
-- **ImageProvider Abstraction**: Single interface with provider switching
-- **Static Dividers**: No longer generated, use library URLs
-- **ART_BIBLE as PREFIX**: Dominates all image prompts
-- **Download Entire Grimoire**: PDF export with cover, TOC, all spells + images
-- **Security**: Created .gitignore, confirmed env var usage
-
-### Previous Work
-- Border Design System (PageBorderFrame, SpellBorderFrame)
-- Progressive Loading
-- GrimoirePage contrast fixes
-- Visual System V1.1 integration
-
-## Pending Tasks
-
-### P0 (Fixed)
-- ✅ Blank PDF Download Bug - FIXED (January 9, 2025)
-
-### P1: Visual Polish (COMPLETED ✅)
-- ✅ Build reusable components: PageOrnamentCorners, PageDivider, PageGlyph, DecoratedSectionHeader
-- ✅ Apply ornament system across pages (Guides, SpellRequest, MyGrimoire)
-- ✅ Static ornament library with 56+ SVG assets
-
-### P2: Minor Remaining Visual Polish
-- Guide cards could add ornament dividers between sections
-- Library book cards missing corner accents
-- Timeline markers could use bestiary glyphs
-
-### P3: Backlog
-- Theresa archetype enrichment in persona_config.py
-- BrowserStack accessibility issues (awaiting user input)
-- Caching reality check
-- Fix Corrie Tarot navigation (if still broken)
-- Sitemap for crawlers
-- Stripe live activation
-
-## Key Files
-- `/app/backend/image_provider.py` - ImageProvider abstraction
-- `/app/backend/spell_prompts.py` - Image prompt building with ART_BIBLE prefix
-- `/app/backend/persona_config.py` - CROWLANDS_ART_BIBLE and persona configs
-- `/app/frontend/src/components/GrimoireDownloader.js` - PDF export
-- `/app/frontend/src/components/GrimoirePage.js` - Spell display
-- `/app/frontend/src/components/OrnateElements.js` - UI components
+## API Endpoints
+- `POST /api/combined` - Dual-AI spell generation
+- `GET /api/health/providers` - AI provider status
+- `GET /api/research/config` - V3 research configuration
+- `POST /api/auth/login`, `/api/auth/register` - Authentication
+- `GET /api/spells/user` - User's saved spells
 
 ## Test Credentials
-- Email: sub_test@test.com
-- Password: test123
+- Pro User: `sub_test@test.com` / `test123`
+- Free User: `free_test@test.com` / `test123`
 
-## Timing Benchmarks
-- Text-only (generate_images: false): ~25 seconds
-- Full with images (3 DALL-E + static dividers): ~90 seconds
+## Prioritized Backlog
+
+### P0 - High Priority
+- [ ] Visual Polish & Ornament Library (20 corners, 12 dividers, 24 glyphs)
+- [ ] Session persistence verification (user testing pending)
+
+### P1 - Medium Priority
+- [ ] Back-compatibility for old spell references
+- [ ] Theresa archetype enrichment
+- [ ] Fix linting errors in server.py
+
+### P2 - Future
+- [ ] Re-enable Early Access Gate
+- [ ] Premium PDF spell book compiler
+- [ ] Live Stripe payments activation
+- [ ] Print-on-Demand integration
+- [ ] sitemap.xml for crawlers
+- [ ] Refactor server.py into modular structure
+- [ ] Faster image provider (Flux)
+
+## Technical Notes
+- EarlyAccessGate in App.js is currently commented out
+- DeepSeek API key configured in backend/.env
+- Font loaded via index.html style tag (not CSS import due to webpack)
