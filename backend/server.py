@@ -1137,18 +1137,16 @@ async def chat_with_ai(message_data: ChatMessage):
         else:
             system_message = DEFAULT_SYSTEM_MESSAGE
         
-        # Use direct OpenAI API for chat
-        chat_response = await openai_client.chat.completions.create(
-            model="gpt-4o",
+        # Use Emergent LLM Key for chat
+        response = await emergent_chat_completion(
             messages=[
                 {"role": "system", "content": system_message},
                 {"role": "user", "content": message_data.message}
             ],
+            model="gpt-4o",
             temperature=0.8,
             max_tokens=2000
         )
-        
-        response = chat_response.choices[0].message.content
         
         return {'response': response, 'session_id': session_id, 'archetype': message_data.archetype}
     except Exception as e:
