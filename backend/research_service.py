@@ -11,6 +11,9 @@ from typing import Dict, List, Optional, Any
 from openai import AsyncOpenAI
 from pydantic import BaseModel, Field
 
+# Import model-agnostic abstraction
+from llm_providers import chat_completion, persona_voice, get_llm_status
+
 logger = logging.getLogger(__name__)
 
 # ============================================================================
