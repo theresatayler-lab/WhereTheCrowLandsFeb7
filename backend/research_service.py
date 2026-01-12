@@ -65,7 +65,218 @@ MODE_TRIGGERS = {
 SAFETY_TRIGGER_OBJECTS = {"candle", "smoke", "burning", "fire", "herbs", "water", "oil", "incense", "sharp", "blood"}
 
 # ============================================================================
-# Persona-Specific Research Biases
+# Tradition Tags Taxonomy (V3 Expanded - 28 tags)
+# ============================================================================
+
+TRADITION_TAGS = {
+    # Original core tags
+    "british_folk_magic": "Cunning folk, charms, and rural practices of England, Scotland, Wales",
+    "kitchen_witchery": "Domestic magic centered on hearth, cooking, and household protection",
+    "cunning_folk": "Professional magical practitioners of rural Britain",
+    "celtic_devotional": "Irish/Scottish traditions with devotional and protective focus",
+    "victorian_spiritualism": "Table-tipping, séance, and psychic development practices",
+    "golden_dawn": "Hermetic Order ritual magic and ceremonial traditions",
+    
+    # V3 Additions from DeepSeek
+    "appalachian_folk_magic": "Syncretic British Isles magic adapted to Appalachian mountains with Native American and African influences",
+    "powwow_braucherei": "Pennsylvania Dutch folk magic blending Christian prayer, sigils, and sympathetic magic",
+    "hoodoo_conjure": "African American folk tradition focusing on practical ends using roots, herbs, and mineral curios",
+    "hedgewitchery": "Practice centered on boundary-crossing, spirit work, and liminal states",
+    "folk_catholicism": "Localized Catholic devotional practices blended with pre-Christian magic",
+    "grimoire_tradition": "Book-based magic from medieval and Renaissance manuscript traditions",
+    "victorian_flower_language": "Symbolic use of flowers and herbs for communication and magic",
+    "romani_folk_practices": "Diverse itinerant traditions with strong focus on protection and fortune",
+    "nordic_trolldom": "Scandinavian folk magic with staffs, staves, and runic influences",
+    "medieval_physic_garden": "Monastic herbalism blending medicine, magic, and devotion",
+    "salem_folk_magic": "New England practices developing post-witch trials with unique regional character",
+    "wisewoman_healing": "Women's domestic healing traditions spanning birth to death care",
+    "traveller_charms": "Oral charm traditions of Irish and Scottish travelling communities",
+    "mountain_magic": "Isolated highland traditions preserving archaic elements",
+    "coastal_folk_magic": "Practices incorporating sea materials, weather lore, and sailor traditions",
+    "border_countries": "Practices from regions between England/Scotland with distinct hybrid character",
+    "workplace_witchery": "Modern adaptations for office, retail, and service job environments",
+    "postwar_makeshift_magic": "Resource-scarce practices from rationing periods using substitutions",
+    "lorica_prayers": "Celtic protective prayer traditions, breastplate prayers",
+    "wartime_domestic_life": "Magic adapted for WWII homefront conditions",
+    "tea_traditions": "Divination and magic using tea leaves and tea rituals",
+    "morrigan_traditions": "Celtic war goddess and transformation practices"
+}
+
+# ============================================================================
+# Source Quality Tiers
+# ============================================================================
+
+SOURCE_QUALITY_TIERS = {
+    "academic_primary": {
+        "description": "Peer-reviewed historical research, edited primary documents, archaeological reports",
+        "verification_flag": "verified",
+        "use_case": "Core historical claims",
+        "confidence_default": "high"
+    },
+    "folk_archive": {
+        "description": "Folklore society collections, oral history recordings, museum documentation",
+        "verification_flag": "verified_source_needs_context",
+        "use_case": "Practice documentation",
+        "confidence_default": "medium"
+    },
+    "practitioner_primary": {
+        "description": "Diaries, correspondence, grimoires from historical practitioners",
+        "verification_flag": "contemporary_account",
+        "use_case": "Practical application details",
+        "confidence_default": "medium"
+    },
+    "modern_scholar_practitioner": {
+        "description": "20th/21st century practitioners with academic rigor",
+        "verification_flag": "methodology_transparent",
+        "use_case": "Adaptation frameworks",
+        "confidence_default": "medium"
+    },
+    "community_tradition": {
+        "description": "Living oral tradition from identified cultural bearers",
+        "verification_flag": "cultural_context_required",
+        "use_case": "Continuous practice lines",
+        "confidence_default": "medium"
+    },
+    "speculative_reconstruction": {
+        "description": "Logical reconstruction from fragmentary evidence",
+        "verification_flag": "marked_as_reconstruction",
+        "use_case": "Gap filling with transparency",
+        "confidence_default": "low"
+    },
+    "popular_synthesis": {
+        "description": "Modern how-to books without clear sourcing",
+        "verification_flag": "needs_verification",
+        "use_case": "Last resort with caveats",
+        "confidence_default": "low"
+    }
+}
+
+# ============================================================================
+# "Why This Works" Framing Patterns
+# ============================================================================
+
+WHY_THIS_WORKS_PATTERNS = [
+    "Historical practitioners believed {X} worked because {Y}, based on {Z} understanding of the world.",
+    "Anthropologists note that rituals like this often serve {function} in community contexts.",
+    "The symbolic correspondence between {component} and {intent} appears across multiple traditions, suggesting shared intuitive logic.",
+    "Modern cognitive science suggests practices involving {sensory_element} can influence {mental_state} through {mechanism}.",
+    "This practice aligns with the principle of {magical_concept}, which holds that {explanation}.",
+    "Materially, {component} contains {property} that historically led to associations with {effect}.",
+    "The repetitive action of {practice} may induce a {state} conducive to {desired_outcome}.",
+    "Seasonal timing here corresponds with {natural_cycle}, connecting personal practice to larger rhythms.",
+    "The use of {element} taps into long-standing human associations between {quality} and {symbolic_meaning}.",
+    "This form of magic operates on the principle of {sympathy_contagion_naming}, where {explanation}."
+]
+
+# ============================================================================
+# Cross-Persona Connection Points
+# ============================================================================
+
+CROSS_PERSONA_OVERLAPS = [
+    {
+        "area": "Domestic protective magic",
+        "personas_involved": ["shigg", "cathleen", "theresa"],
+        "shared_sources": "Hearth protection charms, threshold rituals, concealed objects in walls"
+    },
+    {
+        "area": "Ancestral communication",
+        "personas_involved": ["katherine", "theresa"],
+        "tension_point": "Katherine uses structured séance; Theresa uses family storytelling and object-based memory"
+    },
+    {
+        "area": "Word-based magic (charms/prayers)",
+        "personas_involved": ["cathleen", "shigg"],
+        "shared_sources": "Lorica prayers meet cunning folk verbal charms"
+    },
+    {
+        "area": "Crisis improvisation",
+        "personas_involved": ["shigg", "cathleen", "theresa"],
+        "common_thread": "Resource scarcity leading to symbolic substitution"
+    }
+]
+
+CROSS_PERSONA_TENSIONS = [
+    "Shigg's pragmatic kitchen witchery vs. Katherine's ceremonial Golden Dawn influences",
+    "Cathleen's community-focused protective magic vs. Theresa's private family traditions",
+    "Katherine's Victorian academic occultism vs. Shigg's oral folk transmission"
+]
+
+# ============================================================================
+# Safety Substitution Categories (V3 Enhanced)
+# ============================================================================
+
+SAFETY_CATEGORIES = {
+    "material_hazards": {
+        "subcategories": ["flammable", "toxic_ingestion", "toxic_inhalation", "skin_irritant", "eye_hazard"],
+        "description": "Physical dangers from materials used in practice"
+    },
+    "procedure_hazards": {
+        "subcategories": ["fire_risk", "sharp_objects", "outdoor_concerns", "disposal_methods"],
+        "description": "Risks from how rituals are performed"
+    },
+    "psychological_considerations": {
+        "subcategories": ["trance_depth", "ancestral_triggers", "fear_response", "emotional_drain"],
+        "description": "Mental and emotional safety factors"
+    },
+    "cultural_sensitivity": {
+        "subcategories": ["closed_practice", "appropriate_use", "historical_context", "modern_politics"],
+        "description": "Respect for cultural boundaries and appropriation concerns"
+    },
+    "practical_constraints": {
+        "subcategories": ["space_requirements", "time_commitment", "cost_prohibitive", "seasonal_limitations"],
+        "description": "Logistics that may require adaptation"
+    },
+    "substitution_types": {
+        "subcategories": ["symbolic_equivalent", "functional_equivalent", "simplified_version", "modern_alternative"],
+        "description": "Ways to adapt practices safely"
+    }
+}
+
+# ============================================================================
+# Reading Path Pedagogy (Learning Stages)
+# ============================================================================
+
+LEARNING_STAGES = [
+    {
+        "stage": "Foundation",
+        "content_type": "Historical context, basic principles, safety overview",
+        "outcome": "Understand what they're engaging with and why it matters",
+        "order": 1
+    },
+    {
+        "stage": "Observation",
+        "content_type": "Case studies of complete rituals, component analysis",
+        "outcome": "Recognize patterns and structures in practice",
+        "order": 2
+    },
+    {
+        "stage": "Participation",
+        "content_type": "Simple, low-risk rituals with clear steps",
+        "outcome": "First-hand experience of ritual process",
+        "order": 3
+    },
+    {
+        "stage": "Analysis",
+        "content_type": "Comparative traditions, why things work, adaptation principles",
+        "outcome": "Critical understanding of mechanisms and variations",
+        "order": 4
+    },
+    {
+        "stage": "Improvisation",
+        "content_type": "Substitution guides, personalization frameworks, troubleshooting",
+        "outcome": "Confident adaptation to personal context",
+        "order": 5
+    },
+    {
+        "stage": "Integration",
+        "content_type": "Seasonal cycles, life event rituals, community aspects",
+        "outcome": "Practice woven into daily life and larger cycles",
+        "order": 6
+    }
+]
+
+# ============================================================================
+# Persona-Specific Research Biases (V3 Enhanced)
 # ============================================================================
 
 PERSONA_RESEARCH_BIASES = {
