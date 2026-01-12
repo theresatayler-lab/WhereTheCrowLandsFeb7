@@ -1543,17 +1543,15 @@ async def get_corrie_tarot_reading(request: CorrieTarotRequest, user = Depends(g
         if request.question:
             user_message += f"\nTheir specific question: {request.question}"
 
-        response = await openai_client.chat.completions.create(
-            model="gpt-4o",
+        response_text = await emergent_chat_completion(
             messages=[
                 {"role": "system", "content": CORRIE_TAROT_PROMPT},
                 {"role": "user", "content": user_message}
             ],
+            model="gpt-4o",
             temperature=0.9,
             max_tokens=2000
         )
-        
-        response_text = response.choices[0].message.content
         
         # Parse JSON
         import re
