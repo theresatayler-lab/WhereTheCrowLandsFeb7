@@ -915,14 +915,14 @@ Write in-character, as if speaking directly to the seeker. Include:
         logger.info(f"[PROVIDER_CALL] endpoint={endpoint_name} provider=emergent_openai status=SUCCESS timing={elapsed:.3f}s")
         
         return SpellbookResponse(
-            response=response.choices[0].message.content,
+            response=response_text,
             persona_name=persona_config['name'],
             tone_used=tone
         )
         
     except Exception as e:
         elapsed = time.time() - start_time
-        logger.error(f"[PROVIDER_CALL] endpoint={endpoint_name} provider={provider} status=ERROR timing={elapsed:.3f}s error={str(e)}")
+        logger.error(f"[PROVIDER_CALL] endpoint={endpoint_name} provider=emergent_openai status=ERROR timing={elapsed:.3f}s error={str(e)}")
         return SpellbookResponse(
             response=f"Failed to generate response: {str(e)}",
             persona_name=persona_config['name'],
