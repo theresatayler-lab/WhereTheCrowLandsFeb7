@@ -373,7 +373,8 @@ async def generate_combined_response(
         research_origins={
             "answer": research_result.answer,
             "bullets": research_result.bullets,
-            "sources": research_result.sources
+            "sources": research_result.sources,
+            "source_map": research_result.source_map
         },
         persona_used=spellbook_result.persona_name
     )
