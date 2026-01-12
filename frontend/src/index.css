@@ -1,14 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Crimson+Text:wght@400;600;700&family=Italiana&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600;700;800&display=swap');
 
-/* TC Phantasmagoria - Custom Accent Font (use mindfully) */
-@font-face {
-    font-family: 'TC Phantasmagoria';
-    src: url('/fonts/grimoire-accent.otf') format('opentype');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-}
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
