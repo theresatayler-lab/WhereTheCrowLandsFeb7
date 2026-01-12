@@ -892,16 +892,14 @@ Write in-character, as if speaking directly to the seeker. Include:
 - An invitation to return"""
 
     try:
-        # Use Emergent LLM Key for persona voice
-        response_text = await emergent_persona_chat(
+        # Use model-agnostic abstraction for persona voice (currently OpenAI via Emergent)
+        response_text = await persona_voice(
             system_message=system_message,
-            user_message=user_request,
-            model=OPENAI_MODEL,
-            temperature=0.8
+            user_message=user_request
         )
         
         elapsed = time.time() - start_time
-        logger.info(f"[PROVIDER_CALL] endpoint={endpoint_name} provider=emergent_openai status=SUCCESS timing={elapsed:.3f}s")
+        logger.info(f"[PROVIDER_CALL] endpoint={endpoint_name} provider=persona_voice status=SUCCESS timing={elapsed:.3f}s")
         
         return SpellbookResponse(
             response=response_text,
@@ -911,7 +909,7 @@ Write in-character, as if speaking directly to the seeker. Include:
         
     except Exception as e:
         elapsed = time.time() - start_time
-        logger.error(f"[PROVIDER_CALL] endpoint={endpoint_name} provider=emergent_openai status=ERROR timing={elapsed:.3f}s error={str(e)}")
+        logger.error(f"[PROVIDER_CALL] endpoint={endpoint_name} provider=persona_voice status=ERROR timing={elapsed:.3f}s error={str(e)}")
         return SpellbookResponse(
             response=f"Failed to generate response: {str(e)}",
             persona_name=persona_config['name'],
