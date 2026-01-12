@@ -373,11 +373,11 @@ def get_openai_client() -> Optional[AsyncOpenAI]:
     return AsyncOpenAI(api_key=api_key)
 
 # ============================================================================
-# Research Mode Selection
+# Research Mode Selection (V3 Enhanced)
 # ============================================================================
 
 def select_research_mode(user_request: str, anchor_object: Optional[str] = None, materials: List[str] = None) -> str:
-    """Select appropriate research mode based on request content"""
+    """Select appropriate research mode based on request content - V3 with 10 modes"""
     request_lower = user_request.lower()
     
     # Mode B: Source Explainer
@@ -391,6 +391,11 @@ def select_research_mode(user_request: str, anchor_object: Optional[str] = None,
         materials_lower = [m.lower() for m in materials]
         if any(obj in " ".join(materials_lower) for obj in SAFETY_TRIGGER_OBJECTS):
             return "safety_substitutions"
+    
+    # V3 Additional Modes - check triggers
+    for mode, triggers in MODE_TRIGGERS.items():
+        if any(trigger in request_lower for trigger in triggers):
+            return mode
     
     # Default: Mode A
     return "spell_origins"
