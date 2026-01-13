@@ -11,7 +11,40 @@ Build "Where The Crowlands," a sophisticated full-stack application for creating
 
 ## What's Been Implemented
 
-### Session: January 13, 2026 (Latest)
+### Session: December 2025 (Current)
+- **Production-Ready Prompt Pack V2 - 4-Stage Pipeline** ✅
+  - Implemented new modular prompt system at `/app/backend/prompts/`
+  - **Stage 1 - Archivist** (DeepSeek): Research facts, sources, tradition context
+  - **Stage 2 - Planner** (GPT-4o): Structure, materials, step outline
+  - **Stage 3 - Writer** (GPT-4o): Full spell content in guide's voice
+  - **Stage 4 - QA** (Programmatic + optional LLM): Validation with auto-rewrite
+  
+  **New Features:**
+  - Belief boundary switch: `SECULAR`, `SPIRITUAL`, `PRACTITIONER`
+  - Guide structure locks enforced per persona
+  - Hard limits enforcement (no harm, coercion, medical claims, certainty)
+  - Persona-lock validation (identifiable in first 3 lines)
+  - Canon taxonomy integration (13-category visual/conceptual framework)
+  - JSON schema validation for spell outputs
+  
+  **New Files Created:**
+  - `/app/backend/prompts/__init__.py` - Module exports
+  - `/app/backend/prompts/archivist.py` - Research prompt system
+  - `/app/backend/prompts/planner.py` - Spell structure planning
+  - `/app/backend/prompts/writer.py` - Guide voice writing + contracts
+  - `/app/backend/prompts/qa.py` - Validation and auto-rewrite
+  - `/app/backend/prompts/canon.py` - 13-category taxonomy
+  - `/app/backend/prompts/hard_limits.py` - Universal constraints
+  - `/app/backend/prompts/belief_modes.py` - Framing language control
+  - `/app/backend/prompts/pipeline.py` - Full pipeline orchestration
+  - `/app/backend/schemas/spell_schema.json` - Output validation schema
+  - `/app/backend/schemas/research_packet_schema.json` - Research validation
+  
+  **New API Endpoints:**
+  - `POST /api/ai/generate-spell-v2` - V2 spell generation
+  - `GET /api/ai/spell-config-v2` - V2 configuration info
+
+### Session: January 13, 2026
 - **Katherine's Waite-Style Ceremonial Structure**
   - Replaced `section_grammar` with new `spell_template_structure` (12-step ceremonial format)
   - Added `rubrics`: Rule of Three Tests, Closing Formula
@@ -76,7 +109,14 @@ Build "Where The Crowlands," a sophisticated full-stack application for creating
 - `/ai-chat` - Research interface
 
 ## API Endpoints
-- `POST /api/combined` - Dual-AI spell generation
+
+### V2 Spell Generation (New)
+- `POST /api/ai/generate-spell-v2` - Production-ready 4-stage pipeline
+- `GET /api/ai/spell-config-v2` - V2 configuration (belief modes, guides, taxonomy)
+
+### Legacy
+- `POST /api/combined` - Dual-AI spell generation (V1)
+- `POST /api/ai/generate-personalized-spell` - 2-stage system (V1.1)
 - `GET /api/health/providers` - AI provider status
 - `GET /api/research/config` - V3 research configuration
 - `POST /api/auth/login`, `/api/auth/register` - Authentication
@@ -96,6 +136,7 @@ Build "Where The Crowlands," a sophisticated full-stack application for creating
 - [x] Interactive Timeline Page (COMPLETED Jan 13, 2026)
 - [x] MongoDB DocumentTooLarge Error - Fixed with GridFS (COMPLETED Jan 13, 2026)
 - [x] Timeline images - 79 events with Unsplash images (COMPLETED Jan 13, 2026)
+- [x] Production Prompt Pack V2 - 4-stage pipeline (COMPLETED Dec 2025)
 - [ ] Visual Polish & Ornament Library (20 corners, 12 dividers, 24 glyphs) - BLOCKED: awaiting user assets
 
 ### P1 - Medium Priority
@@ -103,6 +144,7 @@ Build "Where The Crowlands," a sophisticated full-stack application for creating
 - [ ] Back-compatibility for old spell references
 - [ ] Theresa archetype enrichment
 - [ ] Fix linting errors in server.py
+- [ ] Migrate frontend to use V2 spell generation endpoint
 
 ### P2 - Future
 - [ ] Re-enable Early Access Gate
@@ -112,6 +154,7 @@ Build "Where The Crowlands," a sophisticated full-stack application for creating
 - [ ] sitemap.xml for crawlers
 - [ ] Refactor server.py into modular structure
 - [ ] Faster image provider (Flux)
+- [ ] Deterministic test suite (36 golden tests: 3 intentions × 4 personas × 3 belief levels)
 
 ## Technical Notes
 - EarlyAccessGate in App.js is currently commented out
@@ -119,6 +162,7 @@ Build "Where The Crowlands," a sophisticated full-stack application for creating
 - Font loaded via index.html style tag (not CSS import due to webpack)
 - **GridFS Image Storage**: Spell images stored in MongoDB GridFS (`spell_images` bucket). Uses `storage_version=2` for new spells. Legacy spells (v1) still work with inline base64.
 - **Timeline Data**: 79 events seeded from `/app/backend/timeline_events_expanded.py`. Database reseeded when event count changes.
+- **V2 Pipeline**: Archivist separates research from persona voice. Writer cannot research - only adapts from research_packet.
 
 ## Test Reports
 - `/app/test_reports/iteration_6.json` - GridFS and Timeline tests (14/14 passed)
