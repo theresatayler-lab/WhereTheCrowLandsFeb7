@@ -631,8 +631,6 @@ export const InvisibleHelpers = () => {
                       />
                     </div>
 
-                    <MysticalDivider light />
-
                     {/* Beneficiaries - ORIGINAL COPY */}
                     <div>
                       <SectionLabel 
@@ -650,8 +648,6 @@ export const InvisibleHelpers = () => {
                         ))}
                       </div>
                     </div>
-
-                    <MysticalDivider light variant="moon" />
 
                     {/* Primary Quality - ORIGINAL COPY */}
                     <div>
@@ -688,8 +684,6 @@ export const InvisibleHelpers = () => {
                         ))}
                       </div>
                     </div>
-
-                    <MysticalDivider light />
 
                     {/* Time Horizon - ORIGINAL COPY */}
                     <div>
