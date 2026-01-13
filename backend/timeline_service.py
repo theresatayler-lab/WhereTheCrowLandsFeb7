@@ -9,9 +9,13 @@ from timeline_models import (
     ConnectionGraphResponse, TAXONOMY_DATA, TimelineSource, EventConnections,
     GuideRelevance
 )
+from timeline_events_expanded import EXPANDED_TIMELINE_EVENTS
 import re
 
 logger = logging.getLogger(__name__)
+
+# Use expanded events from DeepSeek
+INITIAL_TIMELINE_EVENTS = EXPANDED_TIMELINE_EVENTS
 
 # ============================================================================
 # SAMPLE TIMELINE DATA (Initial seed - will be expanded by DeepSeek)
