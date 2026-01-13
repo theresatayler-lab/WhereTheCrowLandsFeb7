@@ -1,0 +1,428 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "spell_blocks.schema.json",
+  "title": "Crowlands Spell Blocks Schema V2",
+  "description": "Blocks-based spell output schema for rich interactive experiences",
+  "type": "object",
+  "required": [
+    "title",
+    "subtitle",
+    "intent",
+    "guide_id",
+    "belief_mode",
+    "template_id",
+    "canon_anchor",
+    "blocks",
+    "sources",
+    "ethics_statement"
+  ],
+  "properties": {
+    "title": {
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 100
+    },
+    "subtitle": {
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 150
+    },
+    "intent": {
+      "type": "string",
+      "minLength": 20,
+      "maxLength": 300
+    },
+    "guide_id": {
+      "type": "string",
+      "enum": ["shigg", "cathleen", "katherine", "theresa"]
+    },
+    "belief_mode": {
+      "type": "string",
+      "enum": ["SECULAR", "SPIRITUAL", "PRACTITIONER"]
+    },
+    "template_id": {
+      "type": "string",
+      "description": "Block template identifier per persona"
+    },
+    "persona_lock": {
+      "type": "object",
+      "required": ["props", "sensory_cue", "signature_move"],
+      "properties": {
+        "props": {
+          "type": "array",
+          "items": {"type": "string"},
+          "minItems": 2,
+          "maxItems": 3
+        },
+        "sensory_cue": {"type": "string"},
+        "signature_move": {"type": "string"}
+      }
+    },
+    "canon_anchor": {
+      "type": "object",
+      "required": ["id", "type", "title"],
+      "description": "Single canon anchor from Crowlands Context or Timeline",
+      "properties": {
+        "id": {"type": "string"},
+        "type": {"type": "string", "enum": ["timeline_event", "tradition", "figure", "practice"]},
+        "title": {"type": "string"},
+        "year": {"type": ["integer", "null"]},
+        "relevance": {"type": "string"}
+      }
+    },
+    "blocks": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 12,
+      "items": {
+        "type": "object",
+        "required": ["block_type", "block_id"],
+        "properties": {
+          "block_type": {
+            "type": "string",
+            "enum": [
+              "cold_open",
+              "materials",
+              "choice",
+              "stepper",
+              "lore_vignette",
+              "reflection",
+              "closing",
+              "bird_oracle",
+              "ward",
+              "song_prompt",
+              "evidence_card",
+              "journal_prompt",
+              "safety_note"
+            ]
+          },
+          "block_id": {"type": "string"},
+          "content": {"type": "object"}
+        }
+      }
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "required": ["source_id", "type", "relevance"],
+        "properties": {
+          "source_id": {"type": "string"},
+          "type": {"type": "string"},
+          "author": {"type": "string"},
+          "work": {"type": "string"},
+          "relevance": {"type": "string"},
+          "learn_more_url": {"type": "string"}
+        }
+      }
+    },
+    "ethics_statement": {
+      "type": "string",
+      "minLength": 30
+    },
+    "tradition_tags": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "image_prompt": {
+      "type": "object",
+      "properties": {
+        "header": {"type": "string"},
+        "tarot": {"type": "string"},
+        "sigil": {"type": "string"}
+      }
+    }
+  },
+  
+  "definitions": {
+    "cold_open_block": {
+      "description": "Opening narrative establishing guide voice and atmosphere",
+      "properties": {
+        "block_type": {"const": "cold_open"},
+        "content": {
+          "type": "object",
+          "required": ["greeting", "scene_setting", "hook"],
+          "properties": {
+            "greeting": {"type": "string", "description": "Guide's opening address to seeker"},
+            "scene_setting": {"type": "string", "description": "Atmospheric description with sensory detail"},
+            "hook": {"type": "string", "description": "The 'why now' that draws seeker in"},
+            "persona_markers": {
+              "type": "array",
+              "items": {"type": "string"},
+              "description": "Props/cues that identify the guide"
+            }
+          }
+        }
+      }
+    },
+    
+    "materials_block": {
+      "description": "List of materials with purposes and substitutions",
+      "properties": {
+        "block_type": {"const": "materials"},
+        "content": {
+          "type": "object",
+          "required": ["items", "gathering_note"],
+          "properties": {
+            "items": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 7,
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {"type": "string"},
+                  "purpose": {"type": "string"},
+                  "substitution": {"type": "string"},
+                  "optional": {"type": "boolean"}
+                }
+              }
+            },
+            "gathering_note": {"type": "string", "description": "Guide's comment about materials"}
+          }
+        }
+      }
+    },
+    
+    "choice_block": {
+      "description": "REQUIRED: Interactive decision point for seeker",
+      "properties": {
+        "block_type": {"const": "choice"},
+        "content": {
+          "type": "object",
+          "required": ["prompt", "options", "consequence_hint"],
+          "properties": {
+            "prompt": {"type": "string", "description": "The question or decision point"},
+            "options": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 4,
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {"type": "string"},
+                  "label": {"type": "string"},
+                  "description": {"type": "string"},
+                  "affects": {"type": "string", "description": "What this choice changes"}
+                }
+              }
+            },
+            "consequence_hint": {"type": "string", "description": "Guide's hint about what choice means"},
+            "default_option": {"type": "string"}
+          }
+        }
+      }
+    },
+    
+    "stepper_block": {
+      "description": "Interactive step-by-step ritual actions with checkboxes",
+      "properties": {
+        "block_type": {"const": "stepper"},
+        "content": {
+          "type": "object",
+          "required": ["steps", "completion_message"],
+          "properties": {
+            "steps": {
+              "type": "array",
+              "minItems": 3,
+              "maxItems": 7,
+              "items": {
+                "type": "object",
+                "required": ["step_number", "action", "why"],
+                "properties": {
+                  "step_number": {"type": "integer"},
+                  "action": {"type": "string", "minLength": 20},
+                  "spoken_words": {"type": "string"},
+                  "why": {"type": "string", "minLength": 20},
+                  "duration_hint": {"type": "string"},
+                  "checkpoint": {"type": "boolean", "description": "Requires user acknowledgment"}
+                }
+              }
+            },
+            "completion_message": {"type": "string"}
+          }
+        }
+      }
+    },
+    
+    "lore_vignette_block": {
+      "description": "REQUIRED: Historical/folkloric story connecting to the working",
+      "properties": {
+        "block_type": {"const": "lore_vignette"},
+        "content": {
+          "type": "object",
+          "required": ["title", "narrative", "source_connection", "relevance_to_working"],
+          "properties": {
+            "title": {"type": "string"},
+            "narrative": {"type": "string", "minLength": 100, "description": "The story itself"},
+            "era": {"type": "string"},
+            "tradition": {"type": "string"},
+            "source_connection": {"type": "string", "description": "Link to research source"},
+            "relevance_to_working": {"type": "string", "description": "Why this story matters here"},
+            "canon_anchor_id": {"type": "string", "description": "Link to timeline/context event"}
+          }
+        }
+      }
+    },
+    
+    "reflection_block": {
+      "description": "Journaling or contemplation prompts",
+      "properties": {
+        "block_type": {"const": "reflection"},
+        "content": {
+          "type": "object",
+          "required": ["prompts", "guide_note"],
+          "properties": {
+            "prompts": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 4,
+              "items": {"type": "string"}
+            },
+            "guide_note": {"type": "string"},
+            "log_fields": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "field_id": {"type": "string"},
+                  "label": {"type": "string"},
+                  "type": {"type": "string", "enum": ["text", "textarea", "scale", "checkbox"]}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    
+    "closing_block": {
+      "description": "Ritual closing with dismissal and grounding",
+      "properties": {
+        "block_type": {"const": "closing"},
+        "content": {
+          "type": "object",
+          "required": ["license_to_depart", "grounding_action", "empowerment_line"],
+          "properties": {
+            "license_to_depart": {"type": "string"},
+            "unseal_action": {"type": "string"},
+            "grounding_action": {"type": "string"},
+            "empowerment_line": {"type": "string"},
+            "next_steps_hint": {"type": "string"}
+          }
+        }
+      }
+    },
+    
+    "bird_oracle_block": {
+      "description": "Shigg/Theresa specialty: bird omen interpretation",
+      "properties": {
+        "block_type": {"const": "bird_oracle"},
+        "content": {
+          "type": "object",
+          "required": ["bird", "message", "observation_prompt"],
+          "properties": {
+            "bird": {"type": "string"},
+            "message": {"type": "string"},
+            "observation_prompt": {"type": "string"},
+            "log_field": {"type": "boolean"}
+          }
+        }
+      }
+    },
+    
+    "ward_block": {
+      "description": "Cathleen specialty: protection ward instructions",
+      "properties": {
+        "block_type": {"const": "ward"},
+        "content": {
+          "type": "object",
+          "required": ["ward_name", "purpose", "creation_steps", "activation_phrase"],
+          "properties": {
+            "ward_name": {"type": "string"},
+            "purpose": {"type": "string"},
+            "creation_steps": {"type": "array", "items": {"type": "string"}},
+            "activation_phrase": {"type": "string"},
+            "talisman_option": {"type": "string"}
+          }
+        }
+      }
+    },
+    
+    "song_prompt_block": {
+      "description": "Cathleen specialty: humming or vocalization",
+      "properties": {
+        "block_type": {"const": "song_prompt"},
+        "content": {
+          "type": "object",
+          "required": ["instruction", "purpose"],
+          "properties": {
+            "instruction": {"type": "string"},
+            "suggested_melody": {"type": "string"},
+            "words_optional": {"type": "string"},
+            "purpose": {"type": "string"}
+          }
+        }
+      }
+    },
+    
+    "evidence_card_block": {
+      "description": "Theresa specialty: pattern/evidence presentation",
+      "properties": {
+        "block_type": {"const": "evidence_card"},
+        "content": {
+          "type": "object",
+          "required": ["known", "likely", "lore"],
+          "properties": {
+            "known": {"type": "array", "items": {"type": "string"}, "description": "Verified facts"},
+            "likely": {"type": "array", "items": {"type": "string"}, "description": "Probable connections"},
+            "lore": {"type": "array", "items": {"type": "string"}, "description": "Unverified traditions"},
+            "pattern_note": {"type": "string"}
+          }
+        }
+      }
+    },
+    
+    "journal_prompt_block": {
+      "description": "Structured journaling with loggable fields",
+      "properties": {
+        "block_type": {"const": "journal_prompt"},
+        "content": {
+          "type": "object",
+          "required": ["prompts"],
+          "properties": {
+            "prompts": {"type": "array", "items": {"type": "string"}},
+            "fields": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {"type": "string"},
+                  "label": {"type": "string"},
+                  "placeholder": {"type": "string"}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    
+    "safety_note_block": {
+      "description": "Safety and ethics reminder",
+      "properties": {
+        "block_type": {"const": "safety_note"},
+        "content": {
+          "type": "object",
+          "required": ["note"],
+          "properties": {
+            "note": {"type": "string"},
+            "alternatives": {"type": "array", "items": {"type": "string"}}
+          }
+        }
+      }
+    }
+  }
+}
