@@ -578,6 +578,7 @@ export const Timeline = () => {
   const [filterPanelOpen, setFilterPanelOpen] = useState(false);
   const [expandedEvent, setExpandedEvent] = useState(null);
   const [activeDecade, setActiveDecade] = useState(null);
+  const [activeEra, setActiveEra] = useState(null);
 
   // Fetch events
   const fetchEvents = useCallback(async () => {
@@ -586,6 +587,15 @@ export const Timeline = () => {
       setError(null);
       
       const filterParams = { ...filters };
+      
+      // Apply era filter
+      if (activeEra && ERA_DEFINITIONS[activeEra]) {
+        const era = ERA_DEFINITIONS[activeEra];
+        filterParams.startYear = era.start;
+        filterParams.endYear = era.end;
+      }
+      
+      // Apply decade filter (overrides era if both set)
       if (activeDecade) {
         filterParams.startYear = activeDecade;
         filterParams.endYear = activeDecade + 9;
@@ -606,7 +616,7 @@ export const Timeline = () => {
     } finally {
       setLoading(false);
     }
-  }, [filters, activeDecade]);
+  }, [filters, activeDecade, activeEra]);
 
   // Fetch stats
   const fetchStats = useCallback(async () => {
