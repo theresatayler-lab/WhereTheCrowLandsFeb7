@@ -919,6 +919,14 @@ export const InvisibleHelpers = () => {
                       <p className="text-navy-dark/60 text-xs italic font-crimson mt-1">A Structured Intention for Protection & Clarity</p>
                     </div>
 
+                    {/* Before You Begin - Optional wrapper section */}
+                    {generatedWorking.before_you_begin && (
+                      <div className="bg-navy-dark/5 border-l-2 border-navy-dark/30 p-3">
+                        <h3 className="font-cinzel text-xs text-navy-dark/70 tracking-wider uppercase mb-1">Before You Begin</h3>
+                        <p className="text-navy-dark/70 font-crimson text-sm italic">{generatedWorking.before_you_begin}</p>
+                      </div>
+                    )}
+
                     {/* Intention */}
                     <div>
                       <h3 className="font-cinzel text-xs text-gold tracking-wider uppercase mb-1">Intention</h3>
