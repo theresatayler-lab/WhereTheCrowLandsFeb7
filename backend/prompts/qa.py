@@ -228,7 +228,7 @@ def _check_structure(spell: dict, report: dict):
             "fix_instruction": "Adjust title length"
         })
     
-    # Step count
+    # Step count - CRITICAL: must have 3-7 steps
     steps = spell.get("steps", [])
     if 3 <= len(steps) <= 7:
         report["checks_passed"].append("step_count")
@@ -236,7 +236,7 @@ def _check_structure(spell: dict, report: dict):
         report["checks_failed"].append(f"step_count: {len(steps)}")
         report["violations"].append({
             "check": "step_count",
-            "severity": "HIGH",
+            "severity": "CRITICAL",  # Elevated from HIGH to ensure rewrite
             "issue": f"Step count {len(steps)} not in 3-7 range",
             "fix_instruction": "Adjust to 3-7 steps"
         })
