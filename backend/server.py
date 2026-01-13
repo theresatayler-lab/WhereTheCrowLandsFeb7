@@ -3305,6 +3305,166 @@ async def generate_personalized_spell(request: PersonalizedSpellRequest, user = 
         logging.error(f'Personalized spell generation error: {str(e)}')
         raise HTTPException(status_code=500, detail=f'Failed to generate personalized spell: {str(e)}')
 
+
+# ===== V2 SPELL GENERATION - 4-Stage Pipeline =====
+# Archivist (DeepSeek) → Planner (GPT-4o) → Writer (GPT-4o) → QA
+from prompts import SpellGenerationPipeline, BELIEF_MODES, validate_hard_limits
+from research_service import get_deepseek_client
+
+class SpellRequestV2(BaseModel):
+    """V2 Spell Request with belief boundary support"""
+    spell_spec: dict  # User query, feeling, time, anchor, setting, avoid
+    belief_mode: str = "SPIRITUAL"  # SECULAR, SPIRITUAL, PRACTITIONER
+    generate_images: bool = False
+
+@api_router.post('/ai/generate-spell-v2')
+async def generate_spell_v2_endpoint(request: SpellRequestV2, user = Depends(get_optional_user)):
+    """
+    V2 Spell Generation - Production-ready 4-stage pipeline.
+    
+    Stages:
+    1. ARCHIVIST (DeepSeek) - Research facts, sources, tradition context
+    2. PLANNER (GPT-4o) - Structure, materials, step outline
+    3. WRITER (GPT-4o) - Full spell content in guide's voice
+    4. QA (Programmatic) - Validation with auto-rewrite
+    
+    Features:
+    - Belief boundary switch (SECULAR/SPIRITUAL/PRACTITIONER)
+    - Guide structure locks
+    - Hard limit enforcement
+    - Source validation
+    """
+    import time as time_module
+    total_start = time_module.time()
+    
+    try:
+        spell_spec = request.spell_spec
+        belief_mode = request.belief_mode.upper()
+        
+        # Validate belief mode
+        if belief_mode not in BELIEF_MODES:
+            belief_mode = "SPIRITUAL"
+        
+        # Check spell limits for non-pro users
+        if user:
+            user_data = await db.users.find_one({'id': user['id']}, {'_id': 0})
+            if user_data:
+                tier = user_data.get('subscription_tier', 'free')
+                status = user_data.get('subscription_status', 'free')
+                is_paid = tier in ('pro', 'paid') or status in ('pro', 'paid')
+                if not is_paid:
+                    spell_count = user_data.get('spell_generation_count', 0)
+                    limit = 3
+                    if spell_count >= limit:
+                        raise HTTPException(status_code=403, detail={
+                            'error': 'spell_limit_reached',
+                            'message': f'Free spell limit ({limit}) reached. Upgrade to Pro for unlimited spells!',
+                            'limit': limit,
+                            'current': spell_count
+                        })
+        
+        # Resolve persona ID
+        persona_id = spell_spec.get('persona_id', 'shigg')
+        id_map = {'shiggy': 'shigg', 'kathleen': 'cathleen', 'catherine': 'katherine'}
+        persona_id = id_map.get(persona_id, persona_id)
+        
+        if persona_id == 'choose_for_me':
+            feeling = spell_spec.get('desired_feeling', 'calm')
+            anchor = spell_spec.get('anchor_object', 'candle')
+            persona_map = {
+                ('calm', 'tea'): 'shigg', ('calm', 'bird'): 'shigg',
+                ('protected', 'song'): 'cathleen', ('brave', 'candle'): 'cathleen',
+                ('clear', 'mirror'): 'katherine', ('brave', 'thread'): 'katherine'
+            }
+            persona_id = persona_map.get((feeling, anchor), 'shigg')
+        
+        spell_spec['persona_id'] = persona_id
+        
+        # Get guide configuration
+        guide_config = get_persona_config(persona_id)
+        if not guide_config:
+            guide_config = get_persona_config('shigg')
+        
+        # Initialize clients
+        deepseek_client = get_deepseek_client()
+        
+        # Create pipeline
+        pipeline = SpellGenerationPipeline(
+            deepseek_client=deepseek_client,
+            openai_client=openai_client,
+            max_retries=1
+        )
+        
+        # Generate spell
+        spell_output, metadata = await pipeline.generate_spell(
+            spell_spec=spell_spec,
+            guide_config=guide_config,
+            belief_mode=belief_mode
+        )
+        
+        # Validate against hard limits one more time
+        is_valid, violations = validate_hard_limits(spell_output)
+        if not is_valid:
+            logging.warning(f"[V2] Hard limit violations in final output: {violations}")
+        
+        # Add metadata
+        spell_output['persona_id'] = persona_id
+        spell_output['spell_spec'] = spell_spec
+        
+        # Get archetype info
+        archetype_info = {
+            'id': persona_id,
+            'name': guide_config.get('name', 'Guide'),
+            'title': guide_config.get('title', '')
+        }
+        
+        # Increment spell count if user is logged in
+        if user:
+            await increment_spell_count(user['id'])
+        
+        total_ms = int((time_module.time() - total_start) * 1000)
+        metadata['timing']['total_ms'] = total_ms
+        
+        logging.info(f"[V2] Spell generated in {total_ms}ms. Stages: {metadata['stages_completed']}")
+        
+        return {
+            'spell': spell_output,
+            'archetype': archetype_info,
+            'metadata': metadata,
+            'belief_mode': belief_mode,
+            'validation': {
+                'hard_limits_passed': is_valid,
+                'violations': violations if not is_valid else [],
+                'qa_passed': metadata.get('qa_passed', True)
+            }
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logging.error(f'V2 Spell generation error: {str(e)}')
+        raise HTTPException(status_code=500, detail=f'Failed to generate spell: {str(e)}')
+
+
+@api_router.get('/ai/spell-config-v2')
+async def get_spell_config_v2():
+    """Get V2 spell generation configuration"""
+    from prompts import BELIEF_MODES, CANON_TAXONOMY, WRITER_CONTRACTS
+    
+    return {
+        'belief_modes': list(BELIEF_MODES.keys()),
+        'belief_mode_descriptions': {
+            k: v['description'] for k, v in BELIEF_MODES.items()
+        },
+        'guides': list(WRITER_CONTRACTS.keys()),
+        'guide_structures': {
+            k: v['structure'] for k, v in WRITER_CONTRACTS.items()
+        },
+        'tradition_tags': list(CANON_TAXONOMY['tradition_tags'].keys()),
+        'categories_count': len(CANON_TAXONOMY['categories'])
+    }
+
+
 # Favorites endpoints
 @api_router.post('/favorites')
 async def add_favorite(request: FavoriteRequest, user = Depends(get_current_user)):
