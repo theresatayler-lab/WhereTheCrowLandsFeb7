@@ -171,6 +171,20 @@ Build "Where The Crowlands," a sophisticated full-stack application for creating
 - `/app/tests/test_gridfs_and_timeline.py` - Comprehensive test suite
 - `/app/tests/test_spell_v2_pipeline.py` - V2 pipeline test suite
 
+### Session: January 13, 2026 - Invisible Helpers Portal
+- **Invisible Helpers Portal Implemented** ✅
+  - Route: `/invisible-helpers`
+  - Dark, reverent single-page portal inspired by Dion Fortune's wartime spiritual work
+  - **Three engagement modes:**
+    - Option I: Set an Intention (foundational, with AI-generated sacred geometry ward)
+    - Option II: The Lawful Return of Misused Power (featured, 6-step guided working)
+    - Option III: Clarity Against Propaganda (6-step collective defense working)
+  - **Email lead capture** with MongoDB storage (tagged source: `invisible-helpers`)
+  - **Stripe donation** integration (optional, never gates access)
+  - Navigation: Added under Explore dropdown as "Invisible Helpers"
+  - Ethical statement and closing truth prominently displayed
+  - Fortune-aligned ethics: defense, containment, clarity, and lawful return only
+
 ### Session: January 13, 2026 - Visual Overhaul & Persona Consistency
 - **Persona-Specific Color Palettes Implemented** ✅
   - Added `textMuted` property to archetypeStyle passed to SpellBlockRenderer
