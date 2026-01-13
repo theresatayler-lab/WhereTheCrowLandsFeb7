@@ -73,6 +73,11 @@ export const InvisibleHelpers = () => {
   
   const workingRef = useRef(null);
 
+  // Scroll to top when step changes
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const sessionId = urlParams.get('session_id');
@@ -87,7 +92,13 @@ export const InvisibleHelpers = () => {
       window.history.replaceState({}, '', window.location.pathname);
       handleGenerateAfterCheckout(storedEmail, JSON.parse(storedForm));
     }
+    scrollToTop();
   }, []);
+
+  // Scroll to top on step changes
+  useEffect(() => {
+    scrollToTop();
+  }, [step]);
 
   useEffect(() => {
     const count = parseInt(localStorage.getItem('ih_generation_count') || '0', 10);
@@ -96,6 +107,17 @@ export const InvisibleHelpers = () => {
 
   const handleFormChange = (field, value) => {
     setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const toggleActionCommitment = (label) => {
+    setFormData(prev => {
+      const arr = prev.action_commitments;
+      if (arr.includes(label)) {
+        return { ...prev, action_commitments: arr.filter(v => v !== label) };
+      } else {
+        return { ...prev, action_commitments: [...arr, label] };
+      }
+    });
   };
 
   const toggleBeneficiary = (label) => {
