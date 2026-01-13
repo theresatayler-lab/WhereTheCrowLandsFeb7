@@ -108,10 +108,10 @@ const CrowlandsChip = ({ label, selected, onClick }) => (
 
 // Section Label with Crowlands styling
 const SectionLabel = ({ title, context }) => (
-  <div className="mb-3">
-    <h3 className="font-cinzel text-base text-crimson tracking-wide">{title}</h3>
+  <div className="mb-2">
+    <h3 className="font-cinzel text-sm text-crimson tracking-wide">{title}</h3>
     {context && (
-      <p className="text-navy-dark/60 text-sm font-crimson italic mt-1">{context}</p>
+      <p className="text-navy-dark/60 text-xs font-crimson italic mt-0.5">{context}</p>
     )}
   </div>
 );
@@ -615,7 +615,7 @@ export const InvisibleHelpers = () => {
                 exit={{ opacity: 0, y: -20 }}
               >
                 <LightOrnateCard hover={false}>
-                  <div className="space-y-6">
+                  <div className="space-y-4">
                     
                     {/* Personal Intention - ORIGINAL COPY */}
                     <div>
