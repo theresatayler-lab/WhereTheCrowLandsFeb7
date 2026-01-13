@@ -169,36 +169,6 @@ def validate_hard_limits(spell_output: dict) -> tuple[bool, list[str]]:
             violations.append(f"COERCION_DETECTED: '{indicator}'")
     
     return len(violations) == 0, violations
-    if len(sources) > HARD_LIMITS["validation_rules"]["max_sources"]:
-        violations.append(f"TOO_MANY_SOURCES: {len(sources)}")
-    
-    # Check why_per_step requirement
-    if HARD_LIMITS["validation_rules"]["required_why_per_step"]:
-        for i, step in enumerate(steps):
-            if not step.get("why"):
-                violations.append(f"MISSING_WHY: step {i+1}")
-    
-    # Check required elements
-    for element in HARD_LIMITS["required_elements"]["every_spell"]:
-        field_map = {
-            "clear_intent": "intent",
-            "safety_note": "safety_ethics",
-            "closing_ritual": "closing",
-            "ethics_statement": "ethics_statement"
-        }
-        if not spell_output.get(field_map.get(element, element)):
-            violations.append(f"MISSING_REQUIRED: {element}")
-    
-    # Check for coercion indicators
-    coercion_indicators = [
-        "make them", "force them", "without their knowledge",
-        "control their", "bind them to", "against their will"
-    ]
-    for indicator in coercion_indicators:
-        if indicator.lower() in text_content.lower():
-            violations.append(f"COERCION_DETECTED: '{indicator}'")
-    
-    return len(violations) == 0, violations
 
 
 def _extract_all_text(obj, depth=0) -> str:
