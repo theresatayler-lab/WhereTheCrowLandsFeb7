@@ -476,10 +476,10 @@ const StepperBlock = ({ content, progress = new Set(), onComplete, archetypeStyl
 const LoreVignetteBlock = ({ content, archetypeStyle }) => (
   <div className="space-y-4" data-testid="lore-vignette-block">
     {content.title && (
-      <h4 className="font-cinzel text-lg">{content.title}</h4>
+      <h4 className={cn("font-cinzel text-lg", archetypeStyle.accentColor || "text-foreground")}>{content.title}</h4>
     )}
     
-    <div className="flex items-center gap-4 text-xs text-muted-foreground">
+    <div className={cn("flex items-center gap-4 text-xs", archetypeStyle.textMuted || "text-muted-foreground")}>
       {content.era && <span>{content.era}</span>}
       {content.tradition && <span>• {content.tradition}</span>}
     </div>
@@ -489,13 +489,17 @@ const LoreVignetteBlock = ({ content, archetypeStyle }) => (
     </div>
     
     {content.relevance_to_working && (
-      <div className={cn("p-3 rounded-lg text-sm", archetypeStyle.bgAccent || "bg-muted/30")}>
-        <span className="font-medium">Connection:</span> {content.relevance_to_working}
+      <div className={cn(
+        "p-3 rounded-lg text-sm border",
+        archetypeStyle.bgAccent || "bg-muted/30",
+        archetypeStyle.borderColor ? archetypeStyle.borderColor.replace('border-', 'border-') + '/30' : "border-border/30"
+      )}>
+        <span className={cn("font-medium", archetypeStyle.accentColor || "text-foreground")}>Connection:</span> {content.relevance_to_working}
       </div>
     )}
     
     {content.source_connection && (
-      <div className="text-xs text-muted-foreground italic">
+      <div className={cn("text-xs italic", archetypeStyle.textMuted || "text-muted-foreground")}>
         Source: {content.source_connection}
       </div>
     )}
@@ -506,11 +510,15 @@ const LoreVignetteBlock = ({ content, archetypeStyle }) => (
 const ReflectionBlock = ({ content, entries, onEntry, archetypeStyle }) => (
   <div className="space-y-4" data-testid="reflection-block">
     {content.guide_note && (
-      <p className="italic text-muted-foreground">&ldquo;{content.guide_note}&rdquo;</p>
+      <p className={cn("italic", archetypeStyle.textMuted || "text-muted-foreground")}>&ldquo;{content.guide_note}&rdquo;</p>
     )}
     
     {content.prompts?.map((prompt, i) => (
-      <div key={i} className="p-3 bg-muted/30 rounded-lg">
+      <div key={i} className={cn(
+        "p-3 rounded-lg border",
+        archetypeStyle.bgAccent || "bg-muted/30",
+        archetypeStyle.borderColor ? archetypeStyle.borderColor.replace('border-', 'border-') + '/20' : "border-border/20"
+      )}>
         <p className="text-sm mb-2">{prompt}</p>
       </div>
     ))}
