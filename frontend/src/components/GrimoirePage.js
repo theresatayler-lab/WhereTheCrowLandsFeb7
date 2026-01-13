@@ -1497,6 +1497,10 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
           </section>
         )}
 
+        {/* END OF LEGACY FLAT SPELL RENDERING */}
+        </>
+        )}
+
         {/* Divider before printables */}
         <GeneratedDivider imageBase64={generatedAssets?.divider_3} isLoading={isLoadingImages} />
         
