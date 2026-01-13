@@ -84,8 +84,8 @@ def validate_belief_compliance(spell_output: dict, mode: str) -> tuple[bool, lis
     Returns (is_compliant, list_of_issues)
     """
     issues = []
-    belief_config = BELIEF_MODES.get(mode.upper(), BELIEF_MODES["SPIRITUAL"])
-    forbidden = belief_config.get("forbidden_claims", [])
+    # Get belief config for potential future use with forbidden_claims
+    _ = BELIEF_MODES.get(mode.upper(), BELIEF_MODES["SPIRITUAL"])
     
     text_content = _extract_text(spell_output)
     
@@ -134,9 +134,9 @@ def adapt_claim_for_mode(claim: str, claim_type: str, mode: str) -> str:
     Adapt a claim's language for the specified belief mode.
     Used by the Writer to reframe Archivist facts.
     """
-    mode_config = BELIEF_MODES.get(mode.upper(), BELIEF_MODES["SPIRITUAL"])
+    mode_upper = mode.upper()
     
-    if mode == "SECULAR":
+    if mode_upper == "SECULAR":
         # Add psychological framing
         prefixes = [
             "From a symbolic perspective, ",
