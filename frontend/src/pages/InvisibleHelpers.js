@@ -2,16 +2,109 @@ import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Shield, Sparkles, ChevronRight, ChevronDown,
-  Download, Mail, Copy, Check, Clock, Loader2, X, Lock, Feather
+  Download, Copy, Check, Clock, Loader2
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { cn } from '../lib/utils';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+import { ElaborateCorner } from '../components/OrnateElements';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
-// Form options
+// Generic spell video for loading state
+const SPELL_VIDEO_URL = 'https://customer-assets.emergentagent.com/job_mystic-grimoire-1/artifacts/sl3euh2k_GenericSpellWaitingVid.MOV';
+
+// ============================================================================
+// INVISIBLE HELPERS MOTIF COMPONENTS
+// Subtle, reverent, diagrammatic mysticism
+// ============================================================================
+
+// Protective Circle SVG - used in hero and result container
+const ProtectiveCircle = ({ className = '', opacity = 0.08 }) => (
+  <svg viewBox="0 0 400 400" className={className} fill="none" style={{ opacity }}>
+    {/* Outer protective boundary */}
+    <circle cx="200" cy="200" r="190" stroke="currentColor" strokeWidth="0.5" />
+    <circle cx="200" cy="200" r="180" stroke="currentColor" strokeWidth="0.3" strokeDasharray="4 8" />
+    {/* Inner sanctum */}
+    <circle cx="200" cy="200" r="120" stroke="currentColor" strokeWidth="0.5" />
+    <circle cx="200" cy="200" r="100" stroke="currentColor" strokeWidth="0.3" />
+    {/* Cardinal points */}
+    <line x1="200" y1="10" x2="200" y2="50" stroke="currentColor" strokeWidth="0.5" />
+    <line x1="200" y1="350" x2="200" y2="390" stroke="currentColor" strokeWidth="0.5" />
+    <line x1="10" y1="200" x2="50" y2="200" stroke="currentColor" strokeWidth="0.5" />
+    <line x1="350" y1="200" x2="390" y2="200" stroke="currentColor" strokeWidth="0.5" />
+    {/* Balance triangles */}
+    <path d="M200,80 L220,110 L180,110 Z" stroke="currentColor" strokeWidth="0.3" fill="none" />
+    <path d="M200,320 L220,290 L180,290 Z" stroke="currentColor" strokeWidth="0.3" fill="none" />
+  </svg>
+);
+
+// Lattice/Grid overlay - subtle geometric law
+const SacredLattice = ({ className = '', opacity = 0.05 }) => (
+  <svg viewBox="0 0 100 100" className={className} preserveAspectRatio="none" style={{ opacity }}>
+    <defs>
+      <pattern id="lattice" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+        <path d="M0,10 L20,10 M10,0 L10,20" stroke="currentColor" strokeWidth="0.3" fill="none" />
+        <circle cx="10" cy="10" r="1" fill="currentColor" opacity="0.5" />
+      </pattern>
+    </defs>
+    <rect width="100" height="100" fill="url(#lattice)" />
+  </svg>
+);
+
+// Horizon line with mist effect for footer
+const HorizonMist = ({ className = '' }) => (
+  <div className={cn("relative h-24 overflow-hidden", className)}>
+    <svg viewBox="0 0 100 24" className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="mistGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="currentColor" stopOpacity="0" />
+          <stop offset="50%" stopColor="currentColor" stopOpacity="0.05" />
+          <stop offset="100%" stopColor="currentColor" stopOpacity="0" />
+        </linearGradient>
+      </defs>
+      {/* Distant hills/tor silhouette */}
+      <path d="M0,18 Q25,10 50,14 Q75,8 100,16 L100,24 L0,24 Z" fill="url(#mistGrad)" />
+      {/* Horizon line */}
+      <line x1="0" y1="16" x2="100" y2="16" stroke="currentColor" strokeWidth="0.2" opacity="0.1" />
+    </svg>
+  </div>
+);
+
+// Talisman frame for the result container
+const TalismanFrame = ({ children, className = '' }) => (
+  <div className={cn("relative", className)}>
+    {/* Corner marks - talisman style */}
+    <div className="absolute top-0 left-0 w-8 h-8 border-l-2 border-t-2 border-amber-700/30 rounded-tl" />
+    <div className="absolute top-0 right-0 w-8 h-8 border-r-2 border-t-2 border-amber-700/30 rounded-tr" />
+    <div className="absolute bottom-0 left-0 w-8 h-8 border-l-2 border-b-2 border-amber-700/30 rounded-bl" />
+    <div className="absolute bottom-0 right-0 w-8 h-8 border-r-2 border-b-2 border-amber-700/30 rounded-br" />
+    {/* Inner border */}
+    <div className="absolute inset-3 border border-slate-700/30 rounded pointer-events-none" />
+    {/* Subtle lattice background */}
+    <SacredLattice className="absolute inset-0 w-full h-full text-amber-500" opacity={0.03} />
+    {children}
+  </div>
+);
+
+// Transmutation callout style
+const TransmutationCallout = ({ children, className = '' }) => (
+  <div className={cn("relative bg-amber-900/10 border border-amber-900/30 rounded-lg p-4 overflow-hidden", className)}>
+    {/* Abstract alchemical geometry background */}
+    <svg className="absolute inset-0 w-full h-full text-amber-500 opacity-5" viewBox="0 0 100 100" preserveAspectRatio="none">
+      <circle cx="50" cy="50" r="40" stroke="currentColor" strokeWidth="0.5" fill="none" />
+      <polygon points="50,15 80,70 20,70" stroke="currentColor" strokeWidth="0.3" fill="none" />
+      <polygon points="50,85 20,30 80,30" stroke="currentColor" strokeWidth="0.3" fill="none" />
+    </svg>
+    <div className="relative z-10">{children}</div>
+  </div>
+);
+
+// ============================================================================
+// FORM OPTIONS
+// ============================================================================
+
 const BENEFICIARIES_OPTIONS = [
   { id: 'community', label: 'My community / neighbors' },
   { id: 'vulnerable', label: 'Vulnerable people' },
@@ -31,26 +124,24 @@ const QUALITY_OPTIONS = [
 ];
 
 const PRACTICE_STYLE_OPTIONS = [
-  { id: 'secular', label: 'Quiet / secular' },
-  { id: 'mystical', label: 'Mystical / angelic' },
-  { id: 'poetic', label: 'Poetic / mythic' },
+  { id: 'meditative', label: 'Quiet / secular' },
+  { id: 'prayerful', label: 'Prayerful / devotional' },
+  { id: 'folk', label: 'Folk / hearth magic' },
+  { id: 'ceremonial', label: 'Ceremonial / formal' },
 ];
 
 const TIME_HORIZON_OPTIONS = [
   { id: 'today', label: 'Today' },
-  { id: 'this_week', label: 'This week' },
-  { id: 'ongoing', label: 'Weekly cadence' },
-];
-
-const ACTION_OPTIONS = [
-  { id: 'mutual_aid', label: 'Mutual aid & legal defense' },
-  { id: 'neighbors', label: 'Community & neighbors' },
-  { id: 'truth', label: 'Vetted information sharing' },
-  { id: 'journalism', label: 'Independent journalism' },
-  { id: 'civic', label: 'Civic engagement' },
+  { id: 'week', label: 'This week' },
+  { id: 'moon', label: 'This moon cycle' },
+  { id: 'ongoing', label: 'Ongoing practice' },
 ];
 
 const MAX_FREE_GENERATIONS = 3;
+
+// ============================================================================
+// MAIN COMPONENT
+// ============================================================================
 
 export const InvisibleHelpers = () => {
   const [showFullIntro, setShowFullIntro] = useState(false);
@@ -60,7 +151,6 @@ export const InvisibleHelpers = () => {
     primary_quality: '',
     practice_style: '',
     time_horizon: '',
-    action_commitments: [], // Changed to array for multi-select
   });
   
   const [step, setStep] = useState('form'); // Start with form
@@ -107,17 +197,6 @@ export const InvisibleHelpers = () => {
 
   const handleFormChange = (field, value) => {
     setFormData(prev => ({ ...prev, [field]: value }));
-  };
-
-  const toggleActionCommitment = (label) => {
-    setFormData(prev => {
-      const arr = prev.action_commitments;
-      if (arr.includes(label)) {
-        return { ...prev, action_commitments: arr.filter(v => v !== label) };
-      } else {
-        return { ...prev, action_commitments: [...arr, label] };
-      }
-    });
   };
 
   const toggleBeneficiary = (label) => {
@@ -219,7 +298,7 @@ export const InvisibleHelpers = () => {
           primary_quality: form.primary_quality,
           practice_style: form.practice_style,
           time_horizon: form.time_horizon,
-          action_pledge: form.action_commitments?.join(', ') || '',
+          action_pledge: 'Benevolent outcomes and peace',
         }),
       });
       
@@ -247,20 +326,14 @@ export const InvisibleHelpers = () => {
   };
 
   const handleCreateVariation = () => {
-    if (generationCount >= MAX_FREE_GENERATIONS) {
-      toast.info('You\'ve reached the guest limit. Join early access to continue.');
-      window.location.href = '/early-access';
-      return;
-    }
     setGeneratedWorking(null);
-    setStep('checkout');
-    handleCheckout(0);
+    setStep('form');
   };
 
-  const handleCopyToClipboard = async () => {
+  const handleCopyToClipboard = () => {
     if (!generatedWorking) return;
     const text = formatWorkingAsText(generatedWorking);
-    await navigator.clipboard.writeText(text);
+    navigator.clipboard.writeText(text);
     setCopied(true);
     toast.success('Copied to clipboard');
     setTimeout(() => setCopied(false), 2000);
@@ -286,43 +359,38 @@ export const InvisibleHelpers = () => {
 
   const handleDownloadPDF = async () => {
     if (!workingRef.current || !generatedWorking) return;
+    
     try {
-      toast.info('Generating PDF...');
       const canvas = await html2canvas(workingRef.current, {
         scale: 2,
-        backgroundColor: '#0a0f1a',
-        useCORS: true,
+        backgroundColor: '#0f172a',
+        logging: false,
       });
+      
       const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+      const pdf = new jsPDF('p', 'mm', 'a4');
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pdfHeight = pdf.internal.pageSize.getHeight();
-      const imgWidth = pdfWidth - 20;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      const imgWidth = canvas.width;
+      const imgHeight = canvas.height;
+      const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
+      const imgX = (pdfWidth - imgWidth * ratio) / 2;
+      let imgY = 10;
       
-      pdf.setFillColor(10, 15, 26);
-      pdf.rect(0, 0, pdfWidth, pdfHeight, 'F');
+      pdf.addImage(imgData, 'PNG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
       
-      if (imgHeight <= pdfHeight - 20) {
-        pdf.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight);
-      } else {
-        let heightLeft = imgHeight;
-        let yPosition = 10;
-        pdf.addImage(imgData, 'PNG', 10, yPosition, imgWidth, imgHeight);
+      let heightLeft = imgHeight * ratio - (pdfHeight - 20);
+      while (heightLeft > 0) {
+        pdf.addPage();
+        imgY = -heightLeft + 10;
+        pdf.addImage(imgData, 'PNG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
         heightLeft -= (pdfHeight - 20);
-        while (heightLeft > 0) {
-          pdf.addPage();
-          pdf.setFillColor(10, 15, 26);
-          pdf.rect(0, 0, pdfWidth, pdfHeight, 'F');
-          yPosition = -(imgHeight - heightLeft) + 10;
-          pdf.addImage(imgData, 'PNG', 10, yPosition, imgWidth, imgHeight);
-          heightLeft -= (pdfHeight - 20);
-        }
       }
+      
       pdf.save('magical-battle-cry-intention.pdf');
       toast.success('PDF downloaded');
     } catch (error) {
-      console.error('PDF error:', error);
+      console.error('PDF generation error:', error);
       toast.error('Failed to generate PDF');
     }
   };
@@ -334,23 +402,25 @@ export const InvisibleHelpers = () => {
       primary_quality: '',
       practice_style: '',
       time_horizon: '',
-      action_commitments: [],
     });
     setEmail('');
     setGeneratedWorking(null);
     setStep('form');
   };
 
+  // ============================================================================
+  // RENDER
+  // ============================================================================
+
   return (
     <div className="min-h-screen bg-[#0a0f1a]" data-testid="invisible-helpers-page">
-      {/* Hero */}
+      {/* Hero with protective circle motif */}
       <section className="relative py-10 md:py-14 overflow-hidden">
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1) 0%, transparent 50%)`,
-            backgroundSize: '100px 100px'
-          }} />
-        </div>
+        {/* Protective circle background */}
+        <ProtectiveCircle 
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] text-amber-500" 
+          opacity={0.06}
+        />
         
         <div className="relative max-w-3xl mx-auto px-4 text-center">
           <motion.div
@@ -397,33 +467,21 @@ export const InvisibleHelpers = () => {
                     This portal draws inspiration from <span className="text-amber-500/90">Dion Fortune&apos;s</span> wartime 
                     spiritual work and the long tradition of ethical, protective practice. What you&apos;ll 
                     create here is a <span className="text-slate-200">structured intention</span> that 
-                    that returns misused power to natural law, strengthens those who protect, and steadies 
+                    returns misused power to natural law, strengthens those who protect, and steadies 
                     your own resolve. No curses. No targets. Just clarity, protection, and lawful return.
                   </p>
                 </div>
               </div>
 
             {/* Expandable section */}
-            <div className="border-t border-slate-700/50">
-              <button
-                onClick={() => setShowFullIntro(!showFullIntro)}
-                className="w-full px-6 py-3 flex items-center justify-between text-slate-500 hover:text-slate-400 transition-colors text-sm"
-              >
-                <span>{showFullIntro ? 'Show less' : 'Read more about this intention...'}</span>
-                <ChevronDown className={cn(
-                  "w-4 h-4 transition-transform",
-                  showFullIntro && "rotate-180"
-                )} />
-              </button>
-              
               <AnimatePresence>
                 {showFullIntro && (
                   <motion.div
                     initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
+                    animate={{ height: 'auto', opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
                     transition={{ duration: 0.3 }}
-                    className="overflow-hidden"
+                    className="overflow-hidden border-t border-slate-700/50"
                   >
                     <div className="px-6 md:px-8 pb-6 md:pb-8 prose prose-invert prose-slate max-w-none text-sm">
                       <h3 className="font-cinzel text-amber-600/80 text-base mb-3 mt-0">About Where The Crowlands</h3>
@@ -446,7 +504,7 @@ export const InvisibleHelpers = () => {
                         <li><span className="text-slate-300">Defense and protection over aggression</span> — always</li>
                       </ul>
 
-                      <h3 className="font-cinzel text-amber-600/80 text-base mb-3">What This Working Does</h3>
+                      <h3 className="font-cinzel text-amber-600/80 text-base mb-3">What This Intention Does</h3>
                       <p className="text-slate-400 leading-relaxed mb-4">
                         This is a <span className="text-slate-200">Neutralizing Return to Source via Higher Law</span>. 
                         It doesn&apos;t curse. It doesn&apos;t attack. It returns misused power—distortion, 
@@ -462,28 +520,26 @@ export const InvisibleHelpers = () => {
                         clarity—not revenge.
                       </p>
 
-                      <div className="bg-amber-900/10 border border-amber-900/30 rounded-lg p-4 mt-4">
+                      <TransmutationCallout className="mt-4">
                         <p className="text-amber-200/80 text-xs italic m-0">
                           &ldquo;Inner work does not replace resistance. It steadies those who resist.&rdquo;
                         </p>
-                      </div>
+                      </TransmutationCallout>
                     </div>
                   </motion.div>
                 )}
               </AnimatePresence>
+              
+              <button
+                onClick={() => setShowFullIntro(!showFullIntro)}
+                className="w-full py-3 px-6 border-t border-slate-700/50 text-amber-600/70 hover:text-amber-500 text-xs flex items-center justify-center gap-2 transition-colors"
+              >
+                <span>{showFullIntro ? 'Show less' : 'Read more about this intention...'}</span>
+                <ChevronDown className={cn("w-4 h-4 transition-transform", showFullIntro && "rotate-180")} />
+              </button>
             </div>
           </div>
-        </div>
-      </section>
-      )}
-
-      {/* Ethical Badge - Show when not on email step */}
-      {step !== 'email' && (
-        <div className="text-center pb-6">
-          <span className="inline-block px-4 py-2 bg-slate-900/50 border border-slate-700/50 rounded-full text-slate-500 text-xs">
-            No harm · No targets · No coercion · Only protection, clarity, and lawful return
-          </span>
-        </div>
+        </section>
       )}
 
       {/* Main Content - All steps */}
@@ -495,7 +551,6 @@ export const InvisibleHelpers = () => {
                 formData={formData}
                 onFormChange={handleFormChange}
                 onToggleBeneficiary={toggleBeneficiary}
-                onToggleAction={toggleActionCommitment}
                 isValid={isFormValid()}
                 onContinue={handleContinueToEmail}
               />
@@ -537,49 +592,47 @@ export const InvisibleHelpers = () => {
         </div>
       </section>
 
-      {/* Closing */}
-      <section className="py-12 px-4 border-t border-slate-800">
-        <div className="max-w-xl mx-auto text-center">
-          <p className="font-cinzel text-base text-slate-400 italic">
-            Inner work does not replace resistance.<br />
-            <span className="text-slate-300">It steadies those who resist.</span>
-          </p>
+      {/* Footer with horizon mist */}
+      <section className="relative border-t border-slate-800">
+        <HorizonMist className="absolute inset-x-0 -top-12 text-slate-400" />
+        <div className="relative py-12 px-4">
+          <div className="max-w-xl mx-auto text-center">
+            <p className="font-cinzel text-base text-slate-400 italic">
+              Inner work does not replace resistance.<br />
+              <span className="text-slate-300">It steadies those who resist.</span>
+            </p>
+          </div>
         </div>
       </section>
     </div>
   );
 };
 
-// Form Step with personal intention and contextual explanations
-const FormStep = ({ formData, onFormChange, onToggleBeneficiary, onToggleAction, isValid, onContinue }) => (
+// ============================================================================
+// FORM STEP
+// ============================================================================
+
+const FormStep = ({ formData, onFormChange, onToggleBeneficiary, isValid, onContinue }) => (
   <motion.div
     initial={{ opacity: 0, x: 20 }}
     animate={{ opacity: 1, x: 0 }}
     exit={{ opacity: 0, x: -20 }}
     className="bg-slate-900/50 border border-slate-700/50 rounded-lg p-6 space-y-6"
   >
-    <div className="text-center mb-2">
-      <Feather className="w-6 h-6 mx-auto mb-2 text-amber-500/60" />
-      <h2 className="font-cinzel text-lg text-slate-200">Craft Your Working</h2>
-    </div>
-
     {/* Personal Intention - FREE TEXT FIRST */}
-    <div className="bg-slate-800/30 border border-slate-700/30 rounded-lg p-4">
-      <label className="block text-slate-200 text-sm mb-2">
-        What is your intention?
-      </label>
-      <p className="text-slate-500 text-xs mb-3">
-        In a few words, what do you hope to see change for the better? What needs protecting, 
-        clarifying, or returning to balance? This is your chance to co-create.
-      </p>
+    <FormSection 
+      title="What is your intention?"
+      context="Write a few lines about what you're seeking protection from, or clarity about. This is for you."
+    >
       <textarea
         value={formData.personal_intention}
         onChange={(e) => onFormChange('personal_intention', e.target.value)}
-        placeholder="e.g., I want to see my community protected from fear and division. I want clarity to cut through the noise..."
+        placeholder="In my own words, I seek..."
         rows={3}
-        className="w-full px-3 py-2 bg-slate-900/50 border border-slate-700 rounded text-slate-300 text-sm placeholder:text-slate-600 focus:outline-none focus:border-amber-700/50 resize-none"
+        className="w-full px-4 py-3 bg-slate-800/50 border border-slate-700 rounded text-slate-200 placeholder:text-slate-600 focus:outline-none focus:border-amber-700/50 text-sm resize-none"
+        data-testid="personal-intention-input"
       />
-    </div>
+    </FormSection>
 
     {/* Beneficiaries */}
     <FormSection 
@@ -617,8 +670,8 @@ const FormStep = ({ formData, onFormChange, onToggleBeneficiary, onToggleAction,
 
     {/* Practice Style */}
     <FormSection 
-      title="Language style"
-      context="How do you connect? Some prefer quiet, grounded words. Others resonate with mystical imagery. There's no wrong answer."
+      title="Practice language"
+      context="How do you prefer your spiritual language? We'll match the tone accordingly."
     >
       <div className="flex flex-wrap gap-2">
         {PRACTICE_STYLE_OPTIONS.map(opt => (
@@ -689,23 +742,26 @@ const FormSection = ({ title, context, children }) => (
   </div>
 );
 
-// Toggle Chip
+// Toggle Chip component
 const ToggleChip = ({ label, selected, onClick }) => (
   <button
     type="button"
     onClick={onClick}
     className={cn(
-      "px-3 py-1.5 rounded-full text-xs transition-all",
+      "px-3 py-1.5 rounded-full text-xs transition-all border",
       selected
-        ? "bg-amber-900/40 border border-amber-700/50 text-amber-200"
-        : "bg-slate-800/50 border border-slate-700 text-slate-400 hover:border-slate-600"
+        ? "bg-amber-900/40 border-amber-700/50 text-amber-200"
+        : "bg-slate-800/50 border-slate-700/50 text-slate-400 hover:border-slate-600"
     )}
   >
     {label}
   </button>
 );
 
-// Email Step - Now after form
+// ============================================================================
+// EMAIL STEP
+// ============================================================================
+
 const EmailStep = ({ email, setEmail, onSubmit, onBack }) => (
   <motion.div
     initial={{ opacity: 0, x: 20 }}
@@ -750,7 +806,10 @@ const EmailStep = ({ email, setEmail, onSubmit, onBack }) => (
   </motion.div>
 );
 
-// Checkout Step
+// ============================================================================
+// CHECKOUT STEP
+// ============================================================================
+
 const CheckoutStep = ({ email, onCheckout, onBack, checkingOut }) => (
   <motion.div
     initial={{ opacity: 0, x: 20 }}
@@ -824,29 +883,88 @@ const CheckoutStep = ({ email, onCheckout, onBack, checkingOut }) => (
   </motion.div>
 );
 
-// Result Step
+// ============================================================================
+// RESULT STEP - With video loading and talisman frame
+// ============================================================================
+
 const ResultStep = ({ 
   working, 
   generating, 
   workingRef, 
   onCopy, 
   onDownload, 
-  onVariation,
+  onVariation, 
   onReset,
   copied,
   generationCount,
   maxGenerations
 }) => {
+  // Loading state with video background
   if (generating) {
     return (
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="bg-slate-900/50 border border-slate-700/50 rounded-lg p-12 text-center"
+        exit={{ opacity: 0 }}
+        className="fixed inset-0 bg-[#0a0f1a] z-50 flex items-center justify-center overflow-hidden"
       >
-        <Loader2 className="w-10 h-10 animate-spin mx-auto mb-4 text-amber-500/70" />
-        <h2 className="font-cinzel text-lg text-slate-200 mb-2">Generating Your Intention</h2>
-        <p className="text-slate-500 text-sm">Crafting your intention...</p>
+        {/* Background video */}
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover opacity-40"
+          style={{ filter: 'saturate(0.7) contrast(1.1)' }}
+        >
+          <source src={SPELL_VIDEO_URL} type="video/mp4" />
+          <source src={SPELL_VIDEO_URL} type="video/quicktime" />
+        </video>
+        
+        {/* Gradient overlays */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0f1a] via-[#0a0f1a]/70 to-[#0a0f1a]/50" />
+        <div className="absolute inset-0 bg-gradient-radial from-transparent via-transparent to-[#0a0f1a]" />
+        
+        {/* Corner ornaments */}
+        <ElaborateCorner className="absolute top-4 left-4 w-16 h-16 sm:w-24 sm:h-24" variant="gold" />
+        <ElaborateCorner className="absolute top-4 right-4 w-16 h-16 sm:w-24 sm:h-24 rotate-90" variant="gold" />
+        <ElaborateCorner className="absolute bottom-4 left-4 w-16 h-16 sm:w-24 sm:h-24 -rotate-90" variant="gold" />
+        <ElaborateCorner className="absolute bottom-4 right-4 w-16 h-16 sm:w-24 sm:h-24 rotate-180" variant="gold" />
+        
+        {/* Protective circle */}
+        <ProtectiveCircle className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] text-amber-500" opacity={0.1} />
+        
+        {/* Content */}
+        <div className="relative z-10 text-center px-6 max-w-lg">
+          <motion.div
+            animate={{ 
+              scale: [1, 1.05, 1],
+              opacity: [0.8, 1, 0.8]
+            }}
+            transition={{ 
+              repeat: Infinity, 
+              duration: 2, 
+              ease: 'easeInOut' 
+            }}
+            className="w-24 h-24 mx-auto mb-8 relative"
+          >
+            <div className="absolute inset-0 rounded-full border-2 border-amber-500/40 animate-pulse" />
+            <div className="absolute inset-2 rounded-full border border-rose-500/30" />
+            <Shield className="w-full h-full text-amber-500 p-4" style={{ filter: 'drop-shadow(0 0 20px rgba(212, 168, 75, 0.5))' }} />
+          </motion.div>
+          
+          <h2 className="font-cinzel text-2xl sm:text-3xl text-amber-500 mb-3" style={{ textShadow: '0 2px 20px rgba(212, 168, 75, 0.4)' }}>
+            Generating Your Intention
+          </h2>
+          
+          <p className="font-crimson text-lg text-slate-300/80 mb-2">
+            Weaving protection and clarity...
+          </p>
+          
+          <p className="text-slate-500 text-sm">
+            This may take a moment
+          </p>
+        </div>
       </motion.div>
     );
   }
@@ -856,17 +974,13 @@ const ResultStep = ({
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="bg-slate-900/50 border border-slate-700/50 rounded-lg p-12 text-center"
+        className="text-center py-12"
       >
-        <p className="text-slate-400">Something went wrong. Please try again.</p>
-        <button onClick={onReset} className="mt-4 text-amber-500 text-sm hover:text-amber-400">
-          Start Over
-        </button>
+        <Loader2 className="w-8 h-8 mx-auto mb-4 text-amber-500/50 animate-spin" />
+        <p className="text-slate-500">Preparing your intention...</p>
       </motion.div>
     );
   }
-
-  const remainingGenerations = maxGenerations - generationCount;
 
   return (
     <motion.div
@@ -874,18 +988,21 @@ const ResultStep = ({
       animate={{ opacity: 1, y: 0 }}
       className="space-y-6"
     >
-      {/* Actions */}
-      <div className="flex items-center justify-between">
-        <span className="text-slate-500 text-xs">
-          {remainingGenerations > 0 
-            ? `${remainingGenerations} variation${remainingGenerations !== 1 ? 's' : ''} remaining`
-            : 'Guest limit reached'
-          }
-        </span>
+      {/* Action buttons */}
+      <div className="flex flex-wrap gap-2 justify-between items-center">
+        <div className="flex gap-2">
+          <button
+            onClick={onVariation}
+            className="px-4 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded text-slate-300 text-sm transition-colors"
+          >
+            Create Another
+          </button>
+        </div>
         <div className="flex gap-2">
           <button
             onClick={onCopy}
             className="flex items-center gap-2 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded text-slate-300 text-xs transition-colors"
+            data-testid="copy-working-btn"
           >
             {copied ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
             {copied ? 'Copied' : 'Copy'}
@@ -901,89 +1018,79 @@ const ResultStep = ({
         </div>
       </div>
 
-      {/* Working Content */}
-      <div 
-        ref={workingRef}
-        className="bg-slate-900/70 border border-slate-700/50 rounded-lg p-6 md:p-8 space-y-6"
-      >
-        <div className="text-center border-b border-slate-700/50 pb-4">
-          <h2 className="font-cinzel text-xl text-slate-200">Magical Battle Cry Intention</h2>
-          <p className="text-amber-600/60 text-xs italic mt-1">A Structured Intention for Protection & Clarity</p>
-        </div>
+      {/* Working Content in Talisman Frame */}
+      <TalismanFrame>
+        <div 
+          ref={workingRef}
+          className="bg-slate-900/70 border border-slate-700/50 rounded-lg p-6 md:p-8 space-y-6"
+        >
+          <div className="text-center border-b border-slate-700/50 pb-4">
+            <h2 className="font-cinzel text-xl text-slate-200">Magical Battle Cry Intention</h2>
+            <p className="text-amber-600/60 text-xs italic mt-1">A Structured Intention for Protection & Clarity</p>
+          </div>
 
-        <div>
-          <h3 className="font-cinzel text-amber-600/80 text-xs mb-2 tracking-wider">INTENTION</h3>
-          <p className="text-slate-300 italic">{working.intention}</p>
-        </div>
+          <div>
+            <h3 className="font-cinzel text-amber-600/80 text-xs mb-2 tracking-wider">INTENTION</h3>
+            <p className="text-slate-300 italic">{working.intention}</p>
+          </div>
 
-        <div className="bg-slate-800/50 border-l-2 border-amber-700/50 p-4">
-          <h3 className="font-cinzel text-amber-600/80 text-xs mb-2 tracking-wider">ANCHOR PHRASE</h3>
-          <p className="text-slate-200 italic whitespace-pre-line">{working.anchor_phrase}</p>
-        </div>
+          <div className="bg-slate-800/50 border-l-2 border-amber-700/50 p-4">
+            <h3 className="font-cinzel text-amber-600/80 text-xs mb-2 tracking-wider">ANCHOR PHRASE</h3>
+            <p className="text-slate-200 italic whitespace-pre-line">{working.anchor_phrase}</p>
+          </div>
 
-        <div className="bg-amber-900/10 border border-amber-900/30 rounded p-4">
-          <h3 className="font-cinzel text-amber-600/80 text-xs mb-2 tracking-wider">ETHICAL FRAME</h3>
-          <p className="text-slate-400 text-sm whitespace-pre-line">{working.ethical_frame}</p>
-        </div>
+          <TransmutationCallout>
+            <h3 className="font-cinzel text-amber-600/80 text-xs mb-2 tracking-wider">ETHICAL FRAME</h3>
+            <p className="text-slate-400 text-sm whitespace-pre-line">{working.ethical_frame}</p>
+          </TransmutationCallout>
 
-        <div>
-          <h3 className="font-cinzel text-amber-600/80 text-xs mb-4 tracking-wider">THE PRACTICE</h3>
-          <div className="space-y-5">
-            {working.guided_working?.map((step, idx) => (
-              <div key={idx} className="border-l-2 border-slate-700 pl-4">
-                <div className="flex items-center gap-2 mb-1">
-                  <span className="text-amber-500/70 font-mono text-xs">{step.step}.</span>
-                  <h4 className="text-slate-200 text-sm font-medium">{step.title}</h4>
-                  <span className="text-slate-600 text-xs flex items-center gap-1">
-                    <Clock className="w-3 h-3" />
-                    {step.duration}
-                  </span>
-                </div>
-                <p className="text-slate-400 text-sm mb-2">{step.instructions}</p>
-                {step.spoken_words && (
-                  <div className="bg-slate-800/30 border-l-2 border-amber-700/30 p-2 mt-2">
-                    <p className="text-slate-300 italic text-sm">&ldquo;{step.spoken_words}&rdquo;</p>
+          <div>
+            <h3 className="font-cinzel text-amber-600/80 text-xs mb-4 tracking-wider">THE PRACTICE</h3>
+            <div className="space-y-4">
+              {working.guided_working?.map((step, idx) => (
+                <div key={idx} className="relative pl-8 border-l border-slate-700/50">
+                  {/* Node marker - pathway progression style */}
+                  <div className="absolute left-0 top-0 -translate-x-1/2 w-3 h-3 rounded-full bg-amber-900/50 border border-amber-700/50" />
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-amber-600/70 text-xs font-mono">Step {step.step}</span>
+                    <span className="text-slate-500 text-xs">·</span>
+                    <span className="text-slate-400 text-xs flex items-center gap-1">
+                      <Clock className="w-3 h-3" />
+                      {step.duration}
+                    </span>
                   </div>
-                )}
-              </div>
-            ))}
+                  <h4 className="text-slate-200 text-sm font-medium mb-2">{step.title}</h4>
+                  <p className="text-slate-400 text-sm">{step.instructions}</p>
+                  {step.spoken_words && (
+                    <p className="mt-2 text-amber-200/70 text-sm italic border-l-2 border-amber-700/30 pl-3">
+                      &ldquo;{step.spoken_words}&rdquo;
+                    </p>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="border-t border-slate-700/50 pt-4">
+            <h3 className="font-cinzel text-amber-600/80 text-xs mb-2 tracking-wider">ACTION PLEDGE</h3>
+            <p className="text-slate-300 text-sm">{working.action_pledge}</p>
+          </div>
+
+          <div className="text-center pt-4 border-t border-slate-700/50">
+            <p className="text-slate-500 italic text-sm">{working.closing_truth}</p>
           </div>
         </div>
+      </TalismanFrame>
 
-        <div className="bg-slate-800/50 rounded p-4">
-          <h3 className="font-cinzel text-amber-600/80 text-xs mb-2 tracking-wider">ACTION PLEDGE</h3>
-          <p className="text-slate-300 text-sm">{working.action_pledge}</p>
-        </div>
-
-        <div className="text-center pt-4 border-t border-slate-700/50">
-          <p className="text-slate-500 italic text-sm">{working.closing_truth}</p>
-        </div>
-      </div>
-
-      {/* Variation Button */}
-      <div className="text-center space-y-2">
-        {remainingGenerations > 0 ? (
-          <button
-            onClick={onVariation}
-            className="text-amber-500/70 hover:text-amber-500 text-sm transition-colors"
-          >
-            Create another variation
-          </button>
-        ) : (
-          <a
-            href="/early-access"
-            className="inline-flex items-center gap-2 text-amber-500 hover:text-amber-400 text-sm transition-colors"
-          >
-            <Lock className="w-4 h-4" />
+      {/* Generation count */}
+      {generationCount > 0 && (
+        <p className="text-center text-slate-600 text-xs">
+          Intentions created: {generationCount}/{maxGenerations} · 
+          <button onClick={onReset} className="text-amber-600/70 hover:text-amber-500 ml-1">
             Join early access for unlimited intentions
-          </a>
-        )}
-        <div>
-          <button onClick={onReset} className="text-slate-600 hover:text-slate-500 text-xs">
-            Start over
           </button>
-        </div>
-      </div>
+        </p>
+      )}
     </motion.div>
   );
 };
