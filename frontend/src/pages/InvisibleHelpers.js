@@ -500,7 +500,7 @@ export const InvisibleHelpers = () => {
       {/* INTRO SECTION - Only on form step */}
       {/* ================================================================ */}
       {step === 'form' && (
-        <LightSection className="py-8 sm:py-10 px-4 sm:px-6">
+        <LightSection className="py-4 sm:py-5 px-4 sm:px-6">
           <div className="max-w-3xl mx-auto">
             <LightOrnateCard hover={false}>
               {/* Always visible intro - ORIGINAL COPY */}
