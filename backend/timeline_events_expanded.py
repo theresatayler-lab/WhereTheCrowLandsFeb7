@@ -7,6 +7,7 @@ EXPANDED_TIMELINE_EVENTS = [
     # ============================================================================
     {
         "id": "gd_founding",
+        "image_url": "https://images.unsplash.com/photo-1715014036710-e3efa72b29f4?w=800",
         "year": 1888,
         "month": 3,
         "title": "Hermetic Order of the Golden Dawn Founded",
@@ -39,6 +40,7 @@ EXPANDED_TIMELINE_EVENTS = [
     # ============================================================================
     {
         "id": "crowley_book_of_law",
+        "image_url": "https://images.unsplash.com/photo-1602660187275-7275b639d7ea?w=800",
         "year": 1904,
         "month": 4,
         "title": "Aleister Crowley Receives The Book of the Law",
@@ -62,6 +64,7 @@ EXPANDED_TIMELINE_EVENTS = [
     },
     {
         "id": "waite_smith_tarot",
+        "image_url": "https://images.unsplash.com/photo-1637757969279-c4d028905131?w=800",
         "year": 1909,
         "month": 12,
         "title": "Rider-Waite-Smith Tarot Published",
@@ -89,6 +92,7 @@ EXPANDED_TIMELINE_EVENTS = [
     # ============================================================================
     {
         "id": "crowley_equinox_journal",
+        "image_url": "https://images.unsplash.com/photo-1551300329-dc0a750a7483?w=800",
         "year": 1910,
         "month": 3,
         "title": "Crowley Starts 'The Equinox' Journal",
@@ -112,6 +116,7 @@ EXPANDED_TIMELINE_EVENTS = [
     },
     {
         "id": "waite_ceremonial_magic",
+        "image_url": "https://images.unsplash.com/photo-1654408618689-b737eed3c171?w=800",
         "year": 1911,
         "title": "Waite's 'Book of Ceremonial Magic' Published",
         "primary_category": "Publication",
@@ -133,6 +138,7 @@ EXPANDED_TIMELINE_EVENTS = [
     },
     {
         "id": "crowley_oto_head",
+        "image_url": "https://images.unsplash.com/photo-1620741212042-191b98df5e47?w=800",
         "year": 1912,
         "month": 6,
         "title": "Aleister Crowley Becomes Head of British OTO",
@@ -155,6 +161,7 @@ EXPANDED_TIMELINE_EVENTS = [
     },
     {
         "id": "spare_book_of_pleasure",
+        "image_url": "https://images.unsplash.com/photo-1638248523314-758c12d39d8e?w=800",
         "year": 1913,
         "title": "Austin Osman Spare Publishes The Book of Pleasure",
         "primary_category": "Publication",
@@ -177,6 +184,7 @@ EXPANDED_TIMELINE_EVENTS = [
     },
     {
         "id": "crowley_magick_book",
+        "image_url": "https://images.unsplash.com/photo-1642428670761-e7c295e05339?w=800",
         "year": 1913,
         "title": "Crowley Publishes 'Magick' in The Equinox",
         "primary_category": "Publication",
@@ -198,6 +206,7 @@ EXPANDED_TIMELINE_EVENTS = [
     },
     {
         "id": "yeats_hour_glass",
+        "image_url": "https://images.unsplash.com/photo-1548092492-79f224d33b2f?w=800",
         "year": 1913,
         "title": "Yeats' 'The Hour Glass' Esoteric Play",
         "primary_category": "Publication",
@@ -220,6 +229,7 @@ EXPANDED_TIMELINE_EVENTS = [
     },
     {
         "id": "wwi_outbreak_occult",
+        "image_url": "https://images.unsplash.com/photo-1728836789759-8de20e97abaa?w=800",
         "year": 1914,
         "month": 8,
         "title": "WWI Outbreak Disrupts Occult Networks",
@@ -242,6 +252,7 @@ EXPANDED_TIMELINE_EVENTS = [
     },
     {
         "id": "wwi_trench_magic",
+        "image_url": "https://images.unsplash.com/photo-1686285961779-5070bdb03036?w=800",
         "year": 1914,
         "title": "Trench Folk Magic Emerges in WWI",
         "primary_category": "Ritual",
@@ -264,6 +275,7 @@ EXPANDED_TIMELINE_EVENTS = [
     },
     {
         "id": "psychic_gazette_founded",
+        "image_url": "https://images.unsplash.com/photo-1551300316-cbb247f68e5d?w=800",
         "year": 1915,
         "title": "'The International Psychic Gazette' Founded",
         "primary_category": "Publication",
@@ -286,6 +298,7 @@ EXPANDED_TIMELINE_EVENTS = [
     },
     {
         "id": "trench_letter_charms",
+        "image_url": "https://images.unsplash.com/photo-1603481630338-ec324d8102db?w=800",
         "year": 1916,
         "title": "Trench Letter Charm Networks",
         "primary_category": "Ritual",
@@ -308,6 +321,7 @@ EXPANDED_TIMELINE_EVENTS = [
     },
     {
         "id": "spiritualism_boom_1917",
+        "image_url": "https://images.unsplash.com/photo-1603669435608-eb647988e585?w=800",
         "year": 1917,
         "title": "Spiritualism Boom After Passchendaele",
         "primary_category": "Organization",
@@ -330,6 +344,7 @@ EXPANDED_TIMELINE_EVENTS = [
     },
     {
         "id": "moina_mathers_leadership",
+        "image_url": "https://images.unsplash.com/photo-1610951496980-25098dae1b0c?w=800",
         "year": 1918,
         "title": "Moina Mathers Takes Over Alpha et Omega",
         "primary_category": "Organization",
@@ -352,6 +367,7 @@ EXPANDED_TIMELINE_EVENTS = [
     },
     {
         "id": "fortune_psychic_crisis",
+        "image_url": "https://images.unsplash.com/photo-1717009882933-6a613cf821e5?w=800",
         "year": 1919,
         "title": "Dion Fortune's Psychic Crisis & Healing",
         "primary_category": "Figure",
@@ -373,6 +389,7 @@ EXPANDED_TIMELINE_EVENTS = [
     },
     {
         "id": "gardner_returns_colonial",
+        "image_url": "https://images.unsplash.com/photo-1610951308211-9d0e6f5e88f3?w=800",
         "year": 1919,
         "title": "Gerald Gardner Returns from Colonial Service",
         "primary_category": "Figure",
@@ -398,6 +415,7 @@ EXPANDED_TIMELINE_EVENTS = [
     # ============================================================================
     {
         "id": "witch_column_1920",
+        "image_url": "https://images.unsplash.com/photo-1635517575259-e11ce6ea04ce?w=800",
         "year": 1920,
         "title": "'The Witch' Column in John O'London's Weekly",
         "primary_category": "Publication",
@@ -420,6 +438,7 @@ EXPANDED_TIMELINE_EVENTS = [
     },
     {
         "id": "abbey_thelema",
+        "image_url": "https://images.unsplash.com/photo-1677104159692-1e51b799cff8?w=800",
         "year": 1920,
         "title": "Crowley Founds Abbey of Thelema",
         "primary_category": "Site",
@@ -442,6 +461,7 @@ EXPANDED_TIMELINE_EVENTS = [
     },
     {
         "id": "murray_witch_cult",
+        "image_url": "https://images.unsplash.com/photo-1762527645178-4259545cc575?w=800",
         "year": 1921,
         "title": "Margaret Murray Publishes The Witch-Cult in Western Europe",
         "primary_category": "Publication",
@@ -464,6 +484,7 @@ EXPANDED_TIMELINE_EVENTS = [
     },
     {
         "id": "fortune_joins_alpha_omega",
+        "image_url": "https://images.unsplash.com/photo-1603669388518-beee44ac92de?w=800",
         "year": 1921,
         "title": "Dion Fortune Joins Alpha et Omega",
         "primary_category": "Organization",
@@ -486,6 +507,7 @@ EXPANDED_TIMELINE_EVENTS = [
     },
     {
         "id": "crowley_expelled_italy",
+        "image_url": "https://images.unsplash.com/photo-1551300316-cc6ced5bbe27?w=800",
         "year": 1922,
         "title": "Crowley Expelled from Italy",
         "primary_category": "Legal",
@@ -508,6 +530,7 @@ EXPANDED_TIMELINE_EVENTS = [
     },
     {
         "id": "fortune_psychic_defense_articles",
+        "image_url": "https://images.unsplash.com/photo-1589942517020-cf5beebbb9a2?w=800",
         "year": 1922,
         "title": "Dion Fortune's 'Psychic Self-Defense' Articles",
         "primary_category": "Publication",
@@ -529,6 +552,7 @@ EXPANDED_TIMELINE_EVENTS = [
     },
     {
         "id": "abbey_thelema_raided",
+        "image_url": "https://images.unsplash.com/photo-1571735793046-f7eb829f53e6?w=800",
         "year": 1923,
         "title": "Abbey of Thelema Raided by Mussolini's Police",
         "primary_category": "Legal",
@@ -551,6 +575,7 @@ EXPANDED_TIMELINE_EVENTS = [
     },
     {
         "id": "inner_light",
+        "image_url": "https://images.unsplash.com/photo-1658702983847-e974f4ed2d55?w=800",
         "year": 1924,
         "title": "Dion Fortune Founds Fraternity of Inner Light",
         "primary_category": "Organization",
@@ -573,6 +598,7 @@ EXPANDED_TIMELINE_EVENTS = [
     },
     {
         "id": "yeats_vision",
+        "image_url": "https://images.unsplash.com/photo-1583524547940-f63d80daca69?w=800",
         "year": 1925,
         "title": "W.B. Yeats Publishes A Vision",
         "primary_category": "Publication",
@@ -595,6 +621,7 @@ EXPANDED_TIMELINE_EVENTS = [
     },
     {
         "id": "crowley_magick_theory_practice",
+        "image_url": "https://images.unsplash.com/photo-1616405160919-c209d0062a4a?w=800",
         "year": 1929,
         "title": "Crowley Publishes 'Magick in Theory and Practice'",
         "primary_category": "Publication",
@@ -620,6 +647,7 @@ EXPANDED_TIMELINE_EVENTS = [
     # ============================================================================
     {
         "id": "dion_fortune_psychic_defense",
+        "image_url": "https://images.unsplash.com/photo-1582744709859-2d89c6920cfb?w=800",
         "year": 1930,
         "title": "Dion Fortune Publishes Psychic Self-Defense",
         "primary_category": "Publication",
@@ -642,6 +670,7 @@ EXPANDED_TIMELINE_EVENTS = [
     },
     {
         "id": "gardner_folklore_society",
+        "image_url": "https://images.unsplash.com/photo-1551300316-21ec0d01011e?w=800",
         "year": 1934,
         "title": "Gerald Gardner Joins The Folklore Society",
         "primary_category": "Figure",
@@ -663,6 +692,7 @@ EXPANDED_TIMELINE_EVENTS = [
     },
     {
         "id": "fortune_mystical_qabalah",
+        "image_url": "https://images.unsplash.com/photo-1720593446579-c37fc1458962?w=800",
         "year": 1935,
         "title": "Dion Fortune Publishes 'The Mystical Qabalah'",
         "primary_category": "Publication",
@@ -822,6 +852,7 @@ EXPANDED_TIMELINE_EVENTS = [
     },
     {
         "id": "crowley_book_of_thoth",
+        "image_url": "https://images.unsplash.com/photo-1637757960303-6b152b77e161?w=800",
         "year": 1944,
         "title": "Crowley Publishes 'The Book of Thoth'",
         "primary_category": "Publication",
@@ -866,6 +897,7 @@ EXPANDED_TIMELINE_EVENTS = [
     },
     {
         "id": "crowley_death",
+        "image_url": "https://images.unsplash.com/photo-1551300316-cc6ced5bbe27?w=800",
         "year": 1947,
         "month": 12,
         "title": "Aleister Crowley Dies",
@@ -893,6 +925,7 @@ EXPANDED_TIMELINE_EVENTS = [
     # ============================================================================
     {
         "id": "witchcraft_act_repeal",
+        "image_url": "https://images.unsplash.com/photo-1633367151519-a5048db4c2d5?w=800",
         "year": 1951,
         "title": "Witchcraft Act of 1735 Repealed",
         "primary_category": "Legal",
@@ -925,6 +958,7 @@ HISTORICAL_EVENTS_EXTENDED = [
     # ============================================================================
     {
         "id": "papyrus_ani",
+        "image_url": "https://images.unsplash.com/photo-1734357288506-5271d99f306c?w=800",
         "year": -1250,
         "title": "Papyrus of Ani (Egyptian Book of the Dead)",
         "primary_category": "Publication",
@@ -948,6 +982,7 @@ HISTORICAL_EVENTS_EXTENDED = [
     },
     {
         "id": "orphic_tablets",
+        "image_url": "https://images.unsplash.com/photo-1767843172611-e8cf42cee432?w=800",
         "year": -400,
         "title": "Orphic Gold Tablets",
         "primary_category": "Ritual",
@@ -1140,6 +1175,7 @@ HISTORICAL_EVENTS_EXTENDED = [
     },
     {
         "id": "john_dee_monas",
+        "image_url": "https://images.unsplash.com/photo-1620741212042-191b98df5e47?w=800",
         "year": 1564,
         "title": "John Dee's Monas Hieroglyphica",
         "primary_category": "Publication",
@@ -1186,6 +1222,7 @@ HISTORICAL_EVENTS_EXTENDED = [
     },
     {
         "id": "atalanta_fugiens",
+        "image_url": "https://images.unsplash.com/photo-1642428670761-e7c295e05339?w=800",
         "year": 1617,
         "title": "Michael Maier's Atalanta Fugiens",
         "primary_category": "Publication",
@@ -1259,6 +1296,7 @@ HISTORICAL_EVENTS_EXTENDED = [
     },
     {
         "id": "fuseli_nightmare",
+        "image_url": "https://images.unsplash.com/photo-1717009882933-6a613cf821e5?w=800",
         "year": 1781,
         "title": "Henry Fuseli's The Nightmare",
         "primary_category": "Publication",
