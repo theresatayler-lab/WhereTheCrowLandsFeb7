@@ -505,7 +505,7 @@ export const InvisibleHelpers = () => {
             <LightOrnateCard hover={false}>
               {/* Always visible intro - ORIGINAL COPY */}
               <div className="prose prose-slate max-w-none text-sm">
-                <p className="text-navy-dark/90 leading-relaxed mb-4 font-crimson">
+                <p className="text-navy-dark/90 leading-relaxed mb-3 font-crimson">
                   In times of uncertainty, people have always gathered—not just to act, but to 
                   <span className="text-navy-dark font-medium"> steady themselves before acting</span>. During 
                   World War II, groups practiced coordinated meditation for protection and clarity. 
