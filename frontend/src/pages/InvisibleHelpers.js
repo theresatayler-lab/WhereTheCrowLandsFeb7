@@ -753,26 +753,25 @@ const BuilderForm = ({
           </div>
         </FormSection>
 
-        {/* Action Pledge */}
-        <FormSection title="Real-world action pledge" required>
-          <div className="flex flex-wrap gap-2">
-            {ACTION_PLEDGE_OPTIONS.map(opt => (
-              <ToggleChip
-                key={opt.id}
-                label={opt.label}
-                selected={formData.action_pledge === opt.label}
-                onClick={() => onFormChange('action_pledge', opt.label)}
-                radio
-              />
-            ))}
-          </div>
+        {/* Action Intention - Simplified */}
+        <FormSection title="Your intention for real-world action (optional)">
+          <p className="text-slate-500 text-xs mb-2">
+            Inner work is strengthened by outer action. Consider donating, volunteering, or checking on neighbors.
+          </p>
+          <textarea
+            placeholder="e.g., I will check on my neighbors this week, or donate to a mutual aid fund..."
+            value={formData.action_intention}
+            onChange={(e) => onFormChange('action_intention', e.target.value)}
+            rows={2}
+            className="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded text-slate-300 text-sm placeholder:text-slate-600 focus:outline-none focus:border-slate-500 resize-none"
+          />
         </FormSection>
 
         {/* Custom Name */}
         <FormSection title="Name for this working (optional)">
           <input
             type="text"
-            placeholder="Leave blank to auto-generate"
+            placeholder="e.g., 'The Clear Lamp Working' — leave blank to generate one"
             value={formData.custom_name}
             onChange={(e) => onFormChange('custom_name', e.target.value)}
             className="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded text-slate-300 text-sm placeholder:text-slate-600 focus:outline-none focus:border-slate-500"
