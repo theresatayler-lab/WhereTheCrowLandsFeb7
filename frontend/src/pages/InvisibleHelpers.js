@@ -139,13 +139,13 @@ export const InvisibleHelpers = () => {
            formData.action_commitments.length > 0;
   };
 
-  const handleContinueToCheckout = () => {
+  const handleContinueToEmail = () => {
     if (!isFormValid()) {
       toast.error('Please complete all required fields');
       return;
     }
     localStorage.setItem('ih_pending_form', JSON.stringify(formData));
-    setStep('checkout');
+    setStep('email');
   };
 
   const handleEmailSubmit = async (e) => {
@@ -171,7 +171,7 @@ export const InvisibleHelpers = () => {
     }
 
     localStorage.setItem('ih_pending_email', email);
-    setStep('form'); // Go to form after email
+    setStep('checkout'); // Go to checkout/donation after email
   };
 
   const handleCheckout = async (amount = 0) => {
