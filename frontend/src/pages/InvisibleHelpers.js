@@ -560,7 +560,7 @@ const FormStep = ({ formData, onFormChange, onToggleBeneficiary, isValid, onCont
     {/* Beneficiaries */}
     <FormSection 
       title="Who are you protecting?"
-      context="Fortune's wartime work centered on visualizing protection around those in harm's way. The Invisible Army didn't fight—they shielded."
+      context="The heart of this working is shielding those in harm's way. Visualize protection around them, not attack on anyone."
     >
       <div className="flex flex-wrap gap-2">
         {BENEFICIARIES_OPTIONS.map(opt => (
