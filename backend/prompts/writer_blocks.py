@@ -294,7 +294,10 @@ def _get_guide_specific_blocks(guide_id: str) -> str:
 - 'reflection' block: Include Rule of Three Tests reference""",
         
         "theresa": """THERESA SPECIALTY BLOCKS:
-- 'evidence_card' block: Include known/likely/lore categorization
+- 'evidence_card' block (displayed as "Inspiration"): Categorize insights poetically:
+  * known = "What the Records Show" (verified facts)
+  * likely = "What the Patterns Suggest" (probable connections)
+  * lore = "What the Stories Tell" (unverified traditions)
 - 'bird_oracle' block: Include systematic observation prompt
 - 'journal_prompt' block: Include pattern-tracking fields"""
     }
