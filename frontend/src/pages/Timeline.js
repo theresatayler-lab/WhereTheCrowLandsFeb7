@@ -207,6 +207,64 @@ const FilterPanel = ({ filters, setFilters, stats, isOpen, setIsOpen }) => {
 // EVENT CARD COMPONENT
 // ============================================================================
 
+const EventImage = ({ event, size = 'md' }) => {
+  const [imageError, setImageError] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
+  
+  const sizeClasses = {
+    sm: 'w-10 h-10',
+    md: 'w-14 h-14',
+    lg: 'w-20 h-20'
+  };
+  
+  const primaryTaxonomy = event.taxonomy_categories?.[0];
+  const taxonomyData = TAXONOMY_CATEGORIES[primaryTaxonomy] || TAXONOMY_CATEGORIES[6];
+  const TaxonomyIcon = taxonomyData.icon;
+  
+  // Check if event has an image URL
+  const imageUrl = event.image_url || event.image?.url;
+  
+  if (!imageUrl || imageError) {
+    // Fallback to taxonomy icon in a styled circle
+    return (
+      <div 
+        className={`${sizeClasses[size]} rounded-full flex items-center justify-center flex-shrink-0`}
+        style={{ 
+          backgroundColor: `${taxonomyData.color}20`,
+          border: `2px solid ${taxonomyData.color}40`
+        }}
+      >
+        <TaxonomyIcon size={size === 'sm' ? 16 : size === 'md' ? 20 : 28} style={{ color: taxonomyData.color }} />
+      </div>
+    );
+  }
+  
+  return (
+    <div 
+      className={`${sizeClasses[size]} rounded-full overflow-hidden flex-shrink-0 relative`}
+      style={{ 
+        border: `2px solid ${taxonomyData.color}60`,
+        boxShadow: `0 0 12px ${taxonomyData.color}30`
+      }}
+    >
+      {!imageLoaded && (
+        <div 
+          className="absolute inset-0 animate-pulse"
+          style={{ backgroundColor: `${taxonomyData.color}20` }}
+        />
+      )}
+      <img 
+        src={imageUrl}
+        alt={event.title}
+        className={`w-full h-full object-cover transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
+        onError={() => setImageError(true)}
+        onLoad={() => setImageLoaded(true)}
+        loading="lazy"
+      />
+    </div>
+  );
+};
+
 const EventCard = ({ event, isExpanded, onToggle, view }) => {
   const primaryTaxonomy = event.taxonomy_categories?.[0];
   const taxonomyData = TAXONOMY_CATEGORIES[primaryTaxonomy] || TAXONOMY_CATEGORIES[6];
@@ -225,6 +283,9 @@ const EventCard = ({ event, isExpanded, onToggle, view }) => {
   };
 
   const CategoryIcon = getCategoryIcon(event.primary_category || event.category);
+  
+  // Check if event has image
+  const hasImage = event.image_url || event.image?.url;
 
   return (
     <motion.div
@@ -236,13 +297,27 @@ const EventCard = ({ event, isExpanded, onToggle, view }) => {
       {/* Year Marker (Timeline view only) */}
       {view === 'timeline' && (
         <div 
-          className="absolute left-0 top-0 w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-navy-mid border-2 flex items-center justify-center z-10"
+          className="absolute left-0 top-0 w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-navy-mid border-2 flex items-center justify-center z-10 overflow-hidden"
           style={{ 
             borderColor: taxonomyData.color,
             boxShadow: `0 0 20px ${taxonomyData.color}40`
           }}
         >
-          <span className="font-cinzel text-[10px] sm:text-xs font-bold text-center leading-tight" style={{ color: taxonomyData.color }}>
+          {hasImage ? (
+            <img 
+              src={event.image_url || event.image?.url}
+              alt=""
+              className="w-full h-full object-cover"
+              onError={(e) => {
+                e.target.style.display = 'none';
+                e.target.nextSibling.style.display = 'flex';
+              }}
+            />
+          ) : null}
+          <span 
+            className={`font-cinzel text-[10px] sm:text-xs font-bold text-center leading-tight ${hasImage ? 'hidden' : 'flex'} flex-col items-center justify-center`}
+            style={{ color: taxonomyData.color }}
+          >
             {event.year < 0 ? `${Math.abs(event.year)}` : event.year}
             {event.year < 0 && <span className="block text-[8px]">BCE</span>}
           </span>
@@ -251,9 +326,16 @@ const EventCard = ({ event, isExpanded, onToggle, view }) => {
 
       <OrnateCard 
         hover={true}
-        className={`cursor-pointer ${event.is_pivotal_moment ? 'ring-2 ring-gold/30' : ''}`}
+        className={`cursor-pointer ${event.is_pivotal_moment ? 'ring-2 ring-gold/30' : ''} relative`}
         onClick={onToggle}
       >
+        {/* Image thumbnail in corner for grid view */}
+        {view === 'grid' && hasImage && (
+          <div className="absolute -top-3 -right-3 z-10">
+            <EventImage event={event} size="md" />
+          </div>
+        )}
+        
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2 mb-3">
           <div className="flex items-start gap-3">
