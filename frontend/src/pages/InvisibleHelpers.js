@@ -877,7 +877,7 @@ const ResultStep = ({
       >
         <div className="text-center border-b border-slate-700/50 pb-4">
           <h2 className="font-cinzel text-xl text-slate-200">Magical Battle Cry Intention</h2>
-          <p className="text-amber-600/60 text-xs italic mt-1">Inspired by the Invisible Helpers</p>
+          <p className="text-amber-600/60 text-xs italic mt-1">A Working for Protection & Clarity</p>
         </div>
 
         <div>
