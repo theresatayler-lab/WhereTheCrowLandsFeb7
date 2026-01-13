@@ -212,7 +212,7 @@ export const InvisibleHelpers = () => {
         time_horizon: formData.time_horizon,
         practice_style: formData.practice_style,
         anchor_length: formData.anchor_length,
-        action_pledge: formData.action_pledge,
+        action_pledge: formData.action_intention || 'Take one concrete action to support this intention',
         custom_name: formData.custom_name || null,
         patterns_to_neutralize: activeBuilder === 'lawful_return' ? formData.patterns_to_neutralize : null,
         distortion_channels: activeBuilder === 'clarity' ? formData.distortion_channels : null,
