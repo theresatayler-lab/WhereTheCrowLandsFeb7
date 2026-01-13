@@ -291,12 +291,18 @@ const BlockContent = ({
 
 // Cold Open - Guide's opening narrative
 const ColdOpenBlock = ({ content, archetypeStyle }) => (
-  <div className={cn("p-6 rounded-lg", archetypeStyle.bgAccent || "bg-muted/20")} data-testid="cold-open-block">
+  <div className={cn(
+    "p-6 rounded-lg border",
+    archetypeStyle.bgAccent || "bg-muted/20",
+    archetypeStyle.borderColor || "border-border"
+  )} data-testid="cold-open-block">
     {content.greeting && (
-      <p className="text-lg font-cinzel mb-4 italic">&ldquo;{content.greeting}&rdquo;</p>
+      <p className={cn("text-lg font-cinzel mb-4 italic", archetypeStyle.accentColor || "text-foreground")}>
+        &ldquo;{content.greeting}&rdquo;
+      </p>
     )}
     {content.scene_setting && (
-      <p className="text-muted-foreground mb-3">{content.scene_setting}</p>
+      <p className={cn("mb-3", archetypeStyle.textMuted || "text-muted-foreground")}>{content.scene_setting}</p>
     )}
     {content.hook && (
       <p className="text-foreground">{content.hook}</p>
