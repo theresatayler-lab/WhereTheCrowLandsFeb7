@@ -370,21 +370,8 @@ export const InvisibleHelpers = () => {
         </div>
       </section>
 
-      {/* Email Step - Right after hero when on email step */}
-      {step === 'email' && (
-        <section className="px-4 pb-8">
-          <div className="max-w-2xl mx-auto">
-            <EmailStep
-              email={email}
-              setEmail={setEmail}
-              onSubmit={handleEmailSubmit}
-            />
-          </div>
-        </section>
-      )}
-
-      {/* Expanded Intro Section - Show when not on email step */}
-      {step !== 'email' && (
+      {/* Expanded Intro Section - Show on form step */}
+      {step === 'form' && (
         <section className="px-4 pb-8">
           <div className="max-w-3xl mx-auto">
             <div className="bg-slate-900/30 border border-slate-700/50 rounded-lg overflow-hidden">
