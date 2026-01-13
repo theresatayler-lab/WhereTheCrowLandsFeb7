@@ -370,38 +370,52 @@ export const InvisibleHelpers = () => {
         </div>
       </section>
 
-      {/* Expanded Intro Section */}
-      <section className="px-4 pb-8">
-        <div className="max-w-3xl mx-auto">
-          <div className="bg-slate-900/30 border border-slate-700/50 rounded-lg overflow-hidden">
-            {/* Always visible intro */}
-            <div className="p-6 md:p-8">
-              <div className="prose prose-invert prose-slate max-w-none text-sm">
-                <p className="text-slate-300 leading-relaxed mb-4">
-                  In times of uncertainty, people have always gathered—not just to act, but to 
-                  <span className="text-slate-200"> steady themselves before acting</span>. During 
-                  World War II, groups practiced coordinated meditation for protection and clarity. 
-                  In the 1960s, activists paired inner work with outer resistance. Today, from 
-                  <span className="text-amber-500/80"> &ldquo;Etsy witches&rdquo;</span> making headlines 
-                  to artists weaving meaning into protest, people are rediscovering an old truth.
-                </p>
-                
-                <p className="text-slate-400 leading-relaxed mb-4">
-                  <span className="text-slate-300">When the world feels like it&apos;s burning, 
-                  steadying the inner field matters.</span> Not as a replacement for action—never 
-                  that—but as a companion to it. Focused intention, done with clean hands and a 
-                  clear heart, can be part of how we show up.
-                </p>
+      {/* Email Step - Right after hero when on email step */}
+      {step === 'email' && (
+        <section className="px-4 pb-8">
+          <div className="max-w-2xl mx-auto">
+            <EmailStep
+              email={email}
+              setEmail={setEmail}
+              onSubmit={handleEmailSubmit}
+            />
+          </div>
+        </section>
+      )}
 
-                <p className="text-slate-400 leading-relaxed">
-                  This portal draws inspiration from <span className="text-amber-500/90">Dion Fortune&apos;s</span> wartime 
-                  spiritual work and the long tradition of ethical, protective practice. What you&apos;ll 
-                  create here is a <span className="text-slate-200">working</span>—a structured intention 
-                  that returns misused power to natural law, strengthens those who protect, and steadies 
-                  your own resolve. No curses. No targets. Just clarity, protection, and lawful return.
-                </p>
+      {/* Expanded Intro Section - Show when not on email step */}
+      {step !== 'email' && (
+        <section className="px-4 pb-8">
+          <div className="max-w-3xl mx-auto">
+            <div className="bg-slate-900/30 border border-slate-700/50 rounded-lg overflow-hidden">
+              {/* Always visible intro */}
+              <div className="p-6 md:p-8">
+                <div className="prose prose-invert prose-slate max-w-none text-sm">
+                  <p className="text-slate-300 leading-relaxed mb-4">
+                    In times of uncertainty, people have always gathered—not just to act, but to 
+                    <span className="text-slate-200"> steady themselves before acting</span>. During 
+                    World War II, groups practiced coordinated meditation for protection and clarity. 
+                    In the 1960s, activists paired inner work with outer resistance. Today, from 
+                    <span className="text-amber-500/80"> &ldquo;Etsy witches&rdquo;</span> making headlines 
+                    to artists weaving meaning into protest, people are rediscovering an old truth.
+                  </p>
+                  
+                  <p className="text-slate-400 leading-relaxed mb-4">
+                    <span className="text-slate-300">When the world feels like it&apos;s burning, 
+                    steadying the inner field matters.</span> Not as a replacement for action—never 
+                    that—but as a companion to it. Focused intention, done with clean hands and a 
+                    clear heart, can be part of how we show up.
+                  </p>
+
+                  <p className="text-slate-400 leading-relaxed">
+                    This portal draws inspiration from <span className="text-amber-500/90">Dion Fortune&apos;s</span> wartime 
+                    spiritual work and the long tradition of ethical, protective practice. What you&apos;ll 
+                    create here is a <span className="text-slate-200">working</span>—a structured intention 
+                    that returns misused power to natural law, strengthens those who protect, and steadies 
+                    your own resolve. No curses. No targets. Just clarity, protection, and lawful return.
+                  </p>
+                </div>
               </div>
-            </div>
 
             {/* Expandable section */}
             <div className="border-t border-slate-700/50">
