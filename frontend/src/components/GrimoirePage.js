@@ -903,7 +903,8 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
               archetypeStyle={{
                 borderColor: style.borderColor,
                 accentColor: style.accentColor,
-                bgAccent: style.bgAccent
+                bgAccent: style.bgAccent,
+                textMuted: style.textMuted
               }}
               onLogUpdate={(log) => console.log('Spell log updated:', log)}
               initialLog={{}}
