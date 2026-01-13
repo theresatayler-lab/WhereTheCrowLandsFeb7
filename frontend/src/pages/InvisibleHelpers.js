@@ -719,19 +719,23 @@ const ToggleChip = ({ label, selected, onClick }) => (
   </button>
 );
 
-// Email Step - Now first step
-const EmailStep = ({ email, setEmail, onSubmit }) => (
+// Email Step - Now after form
+const EmailStep = ({ email, setEmail, onSubmit, onBack }) => (
   <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    exit={{ opacity: 0, y: -20 }}
+    initial={{ opacity: 0, x: 20 }}
+    animate={{ opacity: 1, x: 0 }}
+    exit={{ opacity: 0, x: -20 }}
     className="bg-slate-900/50 border border-slate-700/50 rounded-lg p-6"
   >
+    <button onClick={onBack} className="text-slate-500 hover:text-slate-300 text-sm mb-4">
+      ← Back to form
+    </button>
+    
     <div className="text-center mb-6">
       <Sparkles className="w-8 h-8 mx-auto mb-3 text-amber-500/70" />
       <h2 className="font-cinzel text-lg text-slate-200 mb-2">Receive Your Intention & Join the Chaos</h2>
       <p className="text-slate-500 text-sm">
-        Enter your email to craft your working and receive it for offline use.
+        Enter your email to receive your working and a PDF for offline use.
       </p>
     </div>
     
@@ -750,7 +754,7 @@ const EmailStep = ({ email, setEmail, onSubmit }) => (
         className="w-full py-3 bg-amber-900/40 hover:bg-amber-900/60 border border-amber-700/50 rounded font-cinzel text-amber-200 text-sm transition-colors flex items-center justify-center gap-2"
         data-testid="email-submit-btn"
       >
-        Let&apos;s Begin
+        Continue
         <ChevronRight className="w-4 h-4" />
       </button>
       <p className="text-slate-600 text-xs text-center">
