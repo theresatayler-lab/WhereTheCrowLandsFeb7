@@ -229,14 +229,14 @@ export const InvisibleHelpers = () => {
         setGeneratedWorking(data.working);
         setGenerationCount(data.generation_count || generationCount + 1);
         localStorage.setItem('ih_generation_count', String(data.generation_count || generationCount + 1));
-        toast.success('Your working has been generated!');
+        toast.success('Your intention has been generated!');
         localStorage.removeItem('ih_pending_email');
         localStorage.removeItem('ih_pending_form');
       } else if (data.limit_reached) {
         toast.info('You\'ve reached the guest limit.');
         window.location.href = '/early-access';
       } else {
-        toast.error(data.error || 'Failed to generate working');
+        toast.error(data.error || 'Failed to generate intention');
       }
     } catch (error) {
       console.error('Generation error:', error);
@@ -396,7 +396,7 @@ export const InvisibleHelpers = () => {
                   <p className="text-slate-400 leading-relaxed">
                     This portal draws inspiration from <span className="text-amber-500/90">Dion Fortune&apos;s</span> wartime 
                     spiritual work and the long tradition of ethical, protective practice. What you&apos;ll 
-                    create here is a <span className="text-slate-200">working</span>—a structured intention 
+                    create here is a <span className="text-slate-200">structured intention</span> that 
                     that returns misused power to natural law, strengthens those who protect, and steadies 
                     your own resolve. No curses. No targets. Just clarity, protection, and lawful return.
                   </p>
@@ -409,7 +409,7 @@ export const InvisibleHelpers = () => {
                 onClick={() => setShowFullIntro(!showFullIntro)}
                 className="w-full px-6 py-3 flex items-center justify-between text-slate-500 hover:text-slate-400 transition-colors text-sm"
               >
-                <span>{showFullIntro ? 'Show less' : 'Read more about this working...'}</span>
+                <span>{showFullIntro ? 'Show less' : 'Read more about this intention...'}</span>
                 <ChevronDown className={cn(
                   "w-4 h-4 transition-transform",
                   showFullIntro && "rotate-180"
@@ -566,7 +566,7 @@ const FormStep = ({ formData, onFormChange, onToggleBeneficiary, onToggleAction,
     {/* Personal Intention - FREE TEXT FIRST */}
     <div className="bg-slate-800/30 border border-slate-700/30 rounded-lg p-4">
       <label className="block text-slate-200 text-sm mb-2">
-        What is your intention with this working?
+        What is your intention?
       </label>
       <p className="text-slate-500 text-xs mb-3">
         In a few words, what do you hope to see change for the better? What needs protecting, 
@@ -584,7 +584,7 @@ const FormStep = ({ formData, onFormChange, onToggleBeneficiary, onToggleAction,
     {/* Beneficiaries */}
     <FormSection 
       title="Who are you protecting?"
-      context="The heart of this working is shielding those in harm's way. Visualize protection around them, not attack on anyone."
+      context="The heart of this intention is shielding those in harm's way. Visualize protection around them, not attack on anyone."
     >
       <div className="flex flex-wrap gap-2">
         {BENEFICIARIES_OPTIONS.map(opt => (
@@ -635,7 +635,7 @@ const FormStep = ({ formData, onFormChange, onToggleBeneficiary, onToggleAction,
     {/* Time Horizon */}
     <FormSection 
       title="Time horizon"
-      context="Synchronized, regular practice builds coherence. Picking a specific time helps anchor the working in your life."
+      context="Synchronized, regular practice builds coherence. Picking a specific time helps anchor the intention in your life."
     >
       <div className="flex flex-wrap gap-2">
         {TIME_HORIZON_OPTIONS.map(opt => (
@@ -721,7 +721,7 @@ const EmailStep = ({ email, setEmail, onSubmit, onBack }) => (
       <Sparkles className="w-8 h-8 mx-auto mb-3 text-amber-500/70" />
       <h2 className="font-cinzel text-lg text-slate-200 mb-2">Receive Your Intention & Join the Chaos</h2>
       <p className="text-slate-500 text-sm">
-        Enter your email to receive your working and a PDF for offline use.
+        Enter your email to receive your intention and a PDF for offline use.
       </p>
     </div>
     
@@ -744,7 +744,7 @@ const EmailStep = ({ email, setEmail, onSubmit, onBack }) => (
         <ChevronRight className="w-4 h-4" />
       </button>
       <p className="text-slate-600 text-xs text-center">
-        You can generate up to 3 workings as a guest. Join early access for unlimited.
+        You can generate up to 3 intentions as a guest. Join early access for unlimited.
       </p>
     </form>
   </motion.div>
@@ -846,7 +846,7 @@ const ResultStep = ({
       >
         <Loader2 className="w-10 h-10 animate-spin mx-auto mb-4 text-amber-500/70" />
         <h2 className="font-cinzel text-lg text-slate-200 mb-2">Generating Your Working</h2>
-        <p className="text-slate-500 text-sm">Crafting your working...</p>
+        <p className="text-slate-500 text-sm">Crafting your intention...</p>
       </motion.div>
     );
   }
@@ -975,7 +975,7 @@ const ResultStep = ({
             className="inline-flex items-center gap-2 text-amber-500 hover:text-amber-400 text-sm transition-colors"
           >
             <Lock className="w-4 h-4" />
-            Join early access for unlimited workings
+            Join early access for unlimited intentions
           </a>
         )}
         <div>
