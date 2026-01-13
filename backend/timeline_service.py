@@ -16,18 +16,24 @@ logger = logging.getLogger(__name__)
 
 # Use expanded events from DeepSeek
 INITIAL_TIMELINE_EVENTS = EXPANDED_TIMELINE_EVENTS
+EXPECTED_EVENT_COUNT = len(EXPANDED_TIMELINE_EVENTS)
 
 # ============================================================================
 # SERVICE FUNCTIONS
 # ============================================================================
 
 async def seed_timeline_data(db: AsyncIOMotorDatabase):
-    """Seed initial timeline events if collection is empty"""
+    """Seed initial timeline events - reseed if count doesn't match"""
     count = await db.timeline_events_v2.count_documents({})
-    if count == 0:
-        logger.info("Seeding enhanced timeline data...")
+    
+    # If count doesn't match expected, clear and reseed
+    if count != EXPECTED_EVENT_COUNT:
+        logger.info(f"Timeline data mismatch ({count} vs {EXPECTED_EVENT_COUNT}). Reseeding...")
+        await db.timeline_events_v2.delete_many({})
         await db.timeline_events_v2.insert_many(INITIAL_TIMELINE_EVENTS)
         logger.info(f"Seeded {len(INITIAL_TIMELINE_EVENTS)} timeline events")
+        return len(INITIAL_TIMELINE_EVENTS)
+    
     return count
 
 async def get_timeline_events(
