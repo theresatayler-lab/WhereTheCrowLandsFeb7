@@ -233,7 +233,7 @@ export const InvisibleHelpers = () => {
             {emailSubmitted ? (
               <div className="flex items-center justify-center gap-2 text-green-500">
                 <Check className="w-5 h-5" />
-                <span>You're on the list</span>
+                <span>You&apos;re on the list</span>
               </div>
             ) : (
               <form onSubmit={handleEmailSubmit} className="space-y-3">
@@ -255,7 +255,7 @@ export const InvisibleHelpers = () => {
                   {emailSubmitting ? 'Joining...' : 'Notify Me'}
                 </button>
                 <p className="text-slate-600 text-xs text-center">
-                  We'll email you when the full portal opens. Unsubscribe anytime.
+                  We&apos;ll email you when the full portal opens. Unsubscribe anytime.
                 </p>
               </form>
             )}
