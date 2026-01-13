@@ -171,6 +171,16 @@ Build "Where The Crowlands," a sophisticated full-stack application for creating
 - `/app/tests/test_gridfs_and_timeline.py` - Comprehensive test suite
 - `/app/tests/test_spell_v2_pipeline.py` - V2 pipeline test suite
 
+### Session: January 13, 2026 - Invisible Helpers Copy Refinement
+- **Reduced Dion Fortune References** ✅
+  - Intro now references Fortune only once for inspiration credit
+  - Changed subtitle from "Inspired by the Invisible Helpers" to "A Working for Protection & Clarity"
+  - "Fortune's Principles" → "Guiding Principles" 
+  - Form context text generalized (removed Fortune-specific phrasing)
+  - Closing quote updated: "Magic does not replace..." → "Inner work does not replace..."
+  - Loading state text simplified
+  - Content now "in spirit of" the tradition rather than directly attributing
+
 ### Session: January 13, 2026 - Invisible Helpers Spell-Builder Portal
 - **Invisible Helpers Spell-Builder Implemented** ✅
   - Route: `/invisible-helpers`
