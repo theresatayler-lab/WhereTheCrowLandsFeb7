@@ -715,6 +715,7 @@ EXPANDED_TIMELINE_EVENTS = [
     },
     {
         "id": "regardie_golden_dawn",
+        "image_url": "https://images.unsplash.com/photo-1551300316-cbb247f68e5d?w=800",
         "year": 1937,
         "title": "Israel Regardie Publishes Golden Dawn Materials",
         "primary_category": "Publication",
@@ -737,6 +738,7 @@ EXPANDED_TIMELINE_EVENTS = [
     },
     {
         "id": "murray_god_of_witches",
+        "image_url": "https://images.unsplash.com/photo-1633367151519-a5048db4c2d5?w=800",
         "year": 1939,
         "title": "Margaret Murray Publishes 'The God of the Witches'",
         "primary_category": "Publication",
@@ -758,6 +760,7 @@ EXPANDED_TIMELINE_EVENTS = [
     },
     {
         "id": "gardner_new_forest_initiation",
+        "image_url": "https://images.unsplash.com/photo-1702118454431-5a264cc5367d?w=800",
         "year": 1939,
         "title": "Gardner's Claimed New Forest Coven Initiation",
         "primary_category": "Ritual",
@@ -785,6 +788,7 @@ EXPANDED_TIMELINE_EVENTS = [
     # ============================================================================
     {
         "id": "blitz_begins",
+        "image_url": "https://images.unsplash.com/photo-1707055286908-c129c8617af6?w=800",
         "year": 1940,
         "month": 9,
         "title": "The London Blitz Begins",
@@ -808,6 +812,7 @@ EXPANDED_TIMELINE_EVENTS = [
     },
     {
         "id": "fortune_magical_battle",
+        "image_url": "https://images.unsplash.com/photo-1506795593475-bac1181c01a5?w=800",
         "year": 1940,
         "title": "Dion Fortune's 'Magical Battle of Britain' Letters Begin",
         "primary_category": "Ritual",
@@ -830,6 +835,7 @@ EXPANDED_TIMELINE_EVENTS = [
     },
     {
         "id": "blitz_protective_magic",
+        "image_url": "https://images.unsplash.com/photo-1675969352259-a55860bffd3c?w=800",
         "year": 1940,
         "title": "Protective Folk Magic During the Blitz",
         "primary_category": "Ritual",
@@ -874,6 +880,7 @@ EXPANDED_TIMELINE_EVENTS = [
     },
     {
         "id": "dion_fortune_death",
+        "image_url": "https://images.unsplash.com/photo-1699369398947-f3779c75bbf2?w=800",
         "year": 1946,
         "month": 1,
         "title": "Dion Fortune Dies",
@@ -1006,6 +1013,7 @@ HISTORICAL_EVENTS_EXTENDED = [
     },
     {
         "id": "cantong_qi",
+        "image_url": "https://images.unsplash.com/photo-1701071694907-46b8902ab4bc?w=800",
         "year": 142,
         "title": "Wei Boyang's Cantong Qi",
         "primary_category": "Publication",
@@ -1029,6 +1037,7 @@ HISTORICAL_EVENTS_EXTENDED = [
     },
     {
         "id": "zosimos_visions",
+        "image_url": "https://images.unsplash.com/photo-1720593446579-c37fc1458962?w=800",
         "year": 300,
         "title": "Zosimos of Panopolis' Visions",
         "primary_category": "Publication",
@@ -1052,6 +1061,7 @@ HISTORICAL_EVENTS_EXTENDED = [
     },
     {
         "id": "pgm_papyri",
+        "image_url": "https://images.unsplash.com/photo-1758458708249-7d96bf803315?w=800",
         "year": 200,
         "title": "Greek Magical Papyri (PGM)",
         "primary_category": "Publication",
@@ -1079,6 +1089,7 @@ HISTORICAL_EVENTS_EXTENDED = [
     # ============================================================================
     {
         "id": "anglo_saxon_leechbooks",
+        "image_url": "https://images.unsplash.com/photo-1602660187275-7275b639d7ea?w=800",
         "year": 900,
         "title": "Anglo-Saxon Leechbooks",
         "primary_category": "Publication",
@@ -1102,6 +1113,7 @@ HISTORICAL_EVENTS_EXTENDED = [
     },
     {
         "id": "picatrix_translation",
+        "image_url": "https://images.unsplash.com/photo-1763225271111-dd9363584249?w=800",
         "year": 1050,
         "title": "Picatrix Translation",
         "primary_category": "Publication",
@@ -1125,6 +1137,7 @@ HISTORICAL_EVENTS_EXTENDED = [
     },
     {
         "id": "sefer_hazohar",
+        "image_url": "https://images.unsplash.com/photo-1654408618689-b737eed3c171?w=800",
         "year": 1250,
         "title": "Sefer HaZohar Publication",
         "primary_category": "Publication",
@@ -1152,6 +1165,7 @@ HISTORICAL_EVENTS_EXTENDED = [
     # ============================================================================
     {
         "id": "malleus_maleficarum",
+        "image_url": "https://images.unsplash.com/photo-1762527645178-4259545cc575?w=800",
         "year": 1486,
         "title": "Malleus Maleficarum Publication",
         "primary_category": "Publication",
@@ -1199,6 +1213,7 @@ HISTORICAL_EVENTS_EXTENDED = [
     },
     {
         "id": "basil_valentine_keys",
+        "image_url": "https://images.unsplash.com/photo-1642428670761-e7c295e05339?w=800",
         "year": 1599,
         "title": "Basil Valentine's Twelve Keys",
         "primary_category": "Publication",
@@ -1246,6 +1261,7 @@ HISTORICAL_EVENTS_EXTENDED = [
     },
     {
         "id": "kircher_ars_magna",
+        "image_url": "https://images.unsplash.com/photo-1616405160919-c209d0062a4a?w=800",
         "year": 1646,
         "title": "Athanasius Kircher's Ars Magna Lucis et Umbrae",
         "primary_category": "Publication",
@@ -1273,6 +1289,7 @@ HISTORICAL_EVENTS_EXTENDED = [
     # ============================================================================
     {
         "id": "rosicrucian_revival",
+        "image_url": "https://images.unsplash.com/photo-1583524547940-f63d80daca69?w=800",
         "year": 1750,
         "title": "Rosicrucian Revival in Germany",
         "primary_category": "Organization",
@@ -1320,6 +1337,7 @@ HISTORICAL_EVENTS_EXTENDED = [
     },
     {
         "id": "lewis_monk",
+        "image_url": "https://images.unsplash.com/photo-1728836789759-8de20e97abaa?w=800",
         "year": 1796,
         "title": "Matthew Lewis' The Monk",
         "primary_category": "Publication",
@@ -1347,6 +1365,7 @@ HISTORICAL_EVENTS_EXTENDED = [
     # ============================================================================
     {
         "id": "barrett_magus",
+        "image_url": "https://images.unsplash.com/photo-1620741212042-191b98df5e47?w=800",
         "year": 1804,
         "title": "Francis Barrett's The Magus",
         "primary_category": "Publication",
@@ -1370,6 +1389,7 @@ HISTORICAL_EVENTS_EXTENDED = [
     },
     {
         "id": "fox_sisters_hydesville",
+        "image_url": "https://images.unsplash.com/photo-1603669435608-eb647988e585?w=800",
         "year": 1848,
         "title": "Fox Sisters' Hydesville Rappings",
         "primary_category": "Ritual",
@@ -1393,6 +1413,7 @@ HISTORICAL_EVENTS_EXTENDED = [
     },
     {
         "id": "levi_dogme_rituel",
+        "image_url": "https://images.unsplash.com/photo-1677104159692-1e51b799cff8?w=800",
         "year": 1857,
         "title": "Eliphas Lévi's Dogme et Rituel",
         "primary_category": "Publication",
@@ -1416,6 +1437,7 @@ HISTORICAL_EVENTS_EXTENDED = [
     },
     {
         "id": "houghton_spirit_drawings",
+        "image_url": "https://images.unsplash.com/photo-1658702983847-e974f4ed2d55?w=800",
         "year": 1865,
         "title": "Georgiana Houghton's Spirit Drawings",
         "primary_category": "Ritual",
@@ -1439,6 +1461,7 @@ HISTORICAL_EVENTS_EXTENDED = [
     },
     {
         "id": "salon_rose_croix",
+        "image_url": "https://images.unsplash.com/photo-1548092492-79f224d33b2f?w=800",
         "year": 1892,
         "title": "Salon de la Rose+Croix Opens",
         "primary_category": "Organization",
@@ -1462,6 +1485,7 @@ HISTORICAL_EVENTS_EXTENDED = [
     },
     {
         "id": "leland_aradia",
+        "image_url": "https://images.unsplash.com/photo-1635517575259-e11ce6ea04ce?w=800",
         "year": 1899,
         "title": "Charles Leland's Aradia Published",
         "primary_category": "Publication",
@@ -1489,6 +1513,7 @@ HISTORICAL_EVENTS_EXTENDED = [
     # ============================================================================
     {
         "id": "gardner_witchcraft_today",
+        "image_url": "https://images.unsplash.com/photo-1595878742056-4a4004a29c20?w=800",
         "year": 1954,
         "title": "Gerald Gardner's Witchcraft Today",
         "primary_category": "Publication",
@@ -1512,6 +1537,7 @@ HISTORICAL_EVENTS_EXTENDED = [
     },
     {
         "id": "kenneth_anger_inauguration",
+        "image_url": "https://images.unsplash.com/photo-1584881760922-96e9c914b106?w=800",
         "year": 1954,
         "title": "Kenneth Anger's Inauguration of the Pleasure Dome",
         "primary_category": "Publication",
@@ -1535,6 +1561,7 @@ HISTORICAL_EVENTS_EXTENDED = [
     },
     {
         "id": "roberts_seth_material",
+        "image_url": "https://images.unsplash.com/photo-1582744709859-2d89c6920cfb?w=800",
         "year": 1963,
         "title": "Jane Roberts Begins Seth Material",
         "primary_category": "Ritual",
@@ -1558,6 +1585,7 @@ HISTORICAL_EVENTS_EXTENDED = [
     },
     {
         "id": "beuys_dead_hare",
+        "image_url": "https://images.unsplash.com/photo-1733006955712-08ffcf70c1e3?w=800",
         "year": 1965,
         "title": "Joseph Beuys' How to Explain Pictures to a Dead Hare",
         "primary_category": "Ritual",
@@ -1581,6 +1609,7 @@ HISTORICAL_EVENTS_EXTENDED = [
     },
     {
         "id": "church_of_satan",
+        "image_url": "https://images.unsplash.com/photo-1571735793046-f7eb829f53e6?w=800",
         "year": 1966,
         "title": "Church of Satan Founded",
         "primary_category": "Organization",
@@ -1604,6 +1633,7 @@ HISTORICAL_EVENTS_EXTENDED = [
     },
     {
         "id": "klarwein_bitches_brew",
+        "image_url": "https://images.unsplash.com/photo-1610573600031-bc1c2a16c6e0?w=800",
         "year": 1969,
         "title": "Mati Klarwein's Bitches Brew Cover",
         "primary_category": "Publication",
@@ -1627,6 +1657,7 @@ HISTORICAL_EVENTS_EXTENDED = [
     },
     {
         "id": "jodorowsky_holy_mountain",
+        "image_url": "https://images.unsplash.com/photo-1616121408864-91b117637d06?w=800",
         "year": 1973,
         "title": "Jodorowsky's The Holy Mountain",
         "primary_category": "Publication",
@@ -1650,6 +1681,7 @@ HISTORICAL_EVENTS_EXTENDED = [
     },
     {
         "id": "schneemann_interior_scroll",
+        "image_url": "https://images.unsplash.com/photo-1603481630338-ec324d8102db?w=800",
         "year": 1975,
         "title": "Carolee Schneemann's Interior Scroll",
         "primary_category": "Ritual",
@@ -1673,6 +1705,7 @@ HISTORICAL_EVENTS_EXTENDED = [
     },
     {
         "id": "giger_necronomicon",
+        "image_url": "https://images.unsplash.com/photo-1638248523314-758c12d39d8e?w=800",
         "year": 1977,
         "title": "H.R. Giger's Necronomicon",
         "primary_category": "Publication",
@@ -1696,6 +1729,7 @@ HISTORICAL_EVENTS_EXTENDED = [
     },
     {
         "id": "carroll_liber_null",
+        "image_url": "https://images.unsplash.com/photo-1620741212042-191b98df5e47?w=800",
         "year": 1978,
         "title": "Peter Carroll's Liber Null",
         "primary_category": "Publication",
@@ -1719,6 +1753,7 @@ HISTORICAL_EVENTS_EXTENDED = [
     },
     {
         "id": "alex_grey_sacred_mirrors",
+        "image_url": "https://images.unsplash.com/photo-1584881760922-96e9c914b106?w=800",
         "year": 1980,
         "title": "Alex Grey Begins Sacred Mirrors Series",
         "primary_category": "Publication",
@@ -1742,6 +1777,7 @@ HISTORICAL_EVENTS_EXTENDED = [
     },
     {
         "id": "topy_founding",
+        "image_url": "https://images.unsplash.com/photo-1677104159692-1e51b799cff8?w=800",
         "year": 1981,
         "title": "Genesis P-Orridge Founds Thee Temple ov Psychick Youth",
         "primary_category": "Organization",
@@ -1769,6 +1805,7 @@ HISTORICAL_EVENTS_EXTENDED = [
     # ============================================================================
     {
         "id": "the_craft_film",
+        "image_url": "https://images.unsplash.com/photo-1633367151519-a5048db4c2d5?w=800",
         "year": 1996,
         "title": "The Craft Film Release",
         "primary_category": "Publication",
@@ -1792,6 +1829,7 @@ HISTORICAL_EVENTS_EXTENDED = [
     },
     {
         "id": "chapel_sacred_mirrors",
+        "image_url": "https://images.unsplash.com/photo-1610573600031-bc1c2a16c6e0?w=800",
         "year": 2004,
         "title": "Chapel of Sacred Mirrors Opens",
         "primary_category": "Site",
@@ -1815,6 +1853,7 @@ HISTORICAL_EVENTS_EXTENDED = [
     },
     {
         "id": "instagram_witch_aesthetic",
+        "image_url": "https://images.unsplash.com/photo-1603669388518-beee44ac92de?w=800",
         "year": 2010,
         "title": "Instagram Witch Aesthetic Emerges",
         "primary_category": "Organization",
@@ -1838,6 +1877,7 @@ HISTORICAL_EVENTS_EXTENDED = [
     },
     {
         "id": "ahs_coven",
+        "image_url": "https://images.unsplash.com/photo-1635517575259-e11ce6ea04ce?w=800",
         "year": 2013,
         "title": "American Horror Story: Coven",
         "primary_category": "Publication",
@@ -1861,6 +1901,7 @@ HISTORICAL_EVENTS_EXTENDED = [
     },
     {
         "id": "witchtok_trend",
+        "image_url": "https://images.unsplash.com/photo-1603667348045-40eb78861082?w=800",
         "year": 2020,
         "title": "WitchTok Trend Peaks",
         "primary_category": "Organization",
