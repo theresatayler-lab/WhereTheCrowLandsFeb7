@@ -60,10 +60,10 @@ export const InvisibleHelpers = () => {
     primary_quality: '',
     practice_style: '',
     time_horizon: '',
-    action_pledge: '',
+    action_commitments: [], // Changed to array for multi-select
   });
   
-  const [step, setStep] = useState('form');
+  const [step, setStep] = useState('email'); // Start with email step
   const [email, setEmail] = useState('');
   const [generating, setGenerating] = useState(false);
   const [generatedWorking, setGeneratedWorking] = useState(null);
