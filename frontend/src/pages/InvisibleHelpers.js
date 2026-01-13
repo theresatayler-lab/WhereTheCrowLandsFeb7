@@ -602,7 +602,7 @@ export const InvisibleHelpers = () => {
       {/* ================================================================ */}
       {/* MAIN CONTENT ON PARCHMENT */}
       {/* ================================================================ */}
-      <LightSection className="py-8 sm:py-12 px-4 sm:px-6">
+      <LightSection className="py-4 sm:py-6 px-4 sm:px-6">
         <div className="max-w-2xl mx-auto">
           
           <AnimatePresence mode="wait">
