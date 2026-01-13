@@ -882,17 +882,35 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
           </div>
         )}
 
-        {/* Timing */}
-        {spell.timing && (
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <TimingCard icon={Moon} label="Moon Phase" value={spell.timing?.moon_phase} />
-            <TimingCard icon={Sun} label="Time" value={spell.timing?.time_of_day} />
-            <TimingCard icon={Calendar} label="Day" value={spell.timing?.day} />
-            <TimingCard icon={Clock} label="Note" value={spell.timing?.note} small />
+        {/* BLOCKS-BASED SPELL RENDERING (V3) */}
+        {spell.blocks && spell.blocks.length > 0 ? (
+          <div className="blocks-spell-container">
+            <SpellBlockRenderer 
+              spell={spell}
+              archetypeStyle={{
+                borderColor: style.borderColor,
+                accentColor: style.accentColor,
+                bgAccent: style.bgAccent
+              }}
+              onLogUpdate={(log) => console.log('Spell log updated:', log)}
+              initialLog={{}}
+            />
           </div>
-        )}
+        ) : (
+          <>
+            {/* LEGACY FLAT SPELL RENDERING (V2 and earlier) */}
+            
+            {/* Timing */}
+            {spell.timing && (
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <TimingCard icon={Moon} label="Moon Phase" value={spell.timing?.moon_phase} />
+                <TimingCard icon={Sun} label="Time" value={spell.timing?.time_of_day} />
+                <TimingCard icon={Calendar} label="Day" value={spell.timing?.day} />
+                <TimingCard icon={Clock} label="Note" value={spell.timing?.note} small />
+              </div>
+            )}
 
-        {/* Cathleen's Suggested Ward - Special feature for her spells */}
+            {/* Cathleen's Suggested Ward - Special feature for her spells */}
         {spell.suggested_ward && (
           <section className="relative">
             <div className="absolute inset-0 bg-gradient-to-r from-slate-600/20 via-slate-500/10 to-slate-600/20 rounded-lg" />
