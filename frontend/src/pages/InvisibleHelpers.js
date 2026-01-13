@@ -908,7 +908,7 @@ const ResultStep = ({
       >
         <div className="text-center border-b border-slate-700/50 pb-4">
           <h2 className="font-cinzel text-xl text-slate-200">Magical Battle Cry Intention</h2>
-          <p className="text-amber-600/60 text-xs italic mt-1">A Working for Protection & Clarity</p>
+          <p className="text-amber-600/60 text-xs italic mt-1">A Structured Intention for Protection & Clarity</p>
         </div>
 
         <div>
@@ -927,7 +927,7 @@ const ResultStep = ({
         </div>
 
         <div>
-          <h3 className="font-cinzel text-amber-600/80 text-xs mb-4 tracking-wider">THE WORKING</h3>
+          <h3 className="font-cinzel text-amber-600/80 text-xs mb-4 tracking-wider">THE PRACTICE</h3>
           <div className="space-y-5">
             {working.guided_working?.map((step, idx) => (
               <div key={idx} className="border-l-2 border-slate-700 pl-4">
