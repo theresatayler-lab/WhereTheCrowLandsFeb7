@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Shield, Sparkles, ChevronRight, Download, Copy, Check, Clock, Loader2 } from 'lucide-react';
+import { Shield, Sparkles, ChevronRight, ChevronDown, Download, Copy, Check, Clock, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
@@ -21,7 +21,7 @@ const API_URL = process.env.REACT_APP_BACKEND_URL;
 const SPELL_VIDEO_URL = 'https://customer-assets.emergentagent.com/job_mystic-grimoire-1/artifacts/sl3euh2k_GenericSpellWaitingVid.MOV';
 
 // ============================================================================
-// FORM OPTIONS - Same data, Crowlands presentation language
+// FORM OPTIONS - ORIGINAL LABELS PRESERVED
 // ============================================================================
 
 const BENEFICIARIES_OPTIONS = [
@@ -43,10 +43,10 @@ const QUALITY_OPTIONS = [
 ];
 
 const PRACTICE_STYLE_OPTIONS = [
-  { id: 'meditative', label: 'Quiet & secular' },
-  { id: 'prayerful', label: 'Prayerful & devotional' },
-  { id: 'folk', label: 'Folk & hearth' },
-  { id: 'ceremonial', label: 'Ceremonial & formal' },
+  { id: 'meditative', label: 'Quiet / secular' },
+  { id: 'prayerful', label: 'Prayerful / devotional' },
+  { id: 'folk', label: 'Folk / hearth magic' },
+  { id: 'ceremonial', label: 'Ceremonial / formal' },
 ];
 
 const TIME_HORIZON_OPTIONS = [
@@ -59,41 +59,7 @@ const TIME_HORIZON_OPTIONS = [
 const MAX_FREE_GENERATIONS = 3;
 
 // ============================================================================
-// RITUAL STEPPER - Crowlands style
-// ============================================================================
-
-const RitualStepper = ({ currentStep, steps }) => (
-  <div className="flex items-center justify-center gap-2 sm:gap-4 mb-8">
-    {steps.map((step, i) => (
-      <React.Fragment key={i}>
-        <div className="flex flex-col items-center">
-          <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center font-cinzel text-sm transition-all border-2 ${
-            i < currentStep 
-              ? 'bg-crimson border-crimson text-cream' 
-              : i === currentStep 
-                ? 'bg-transparent border-gold text-gold' 
-                : 'bg-transparent border-navy-mid/50 text-navy-mid/50'
-          }`}>
-            {i < currentStep ? <Check className="w-4 h-4" /> : i + 1}
-          </div>
-          <span className={`text-xs mt-1 font-montserrat tracking-wide hidden sm:block ${
-            i <= currentStep ? 'text-crimson' : 'text-navy-dark/40'
-          }`}>
-            {step}
-          </span>
-        </div>
-        {i < steps.length - 1 && (
-          <div className={`w-8 sm:w-16 h-0.5 ${
-            i < currentStep ? 'bg-crimson/60' : 'bg-navy-mid/20'
-          }`} />
-        )}
-      </React.Fragment>
-    ))}
-  </div>
-);
-
-// ============================================================================
-// CROWLANDS INPUT COMPONENTS
+// CROWLANDS STYLED INPUT COMPONENTS
 // ============================================================================
 
 const CrowlandsInput = ({ value, onChange, placeholder, type = 'text', rows }) => {
@@ -124,7 +90,7 @@ const CrowlandsInput = ({ value, onChange, placeholder, type = 'text', rows }) =
   );
 };
 
-const CrowlandsChip = ({ label, selected, onClick, glyph }) => (
+const CrowlandsChip = ({ label, selected, onClick }) => (
   <button
     type="button"
     onClick={onClick}
@@ -135,24 +101,17 @@ const CrowlandsChip = ({ label, selected, onClick, glyph }) => (
     }`}
     style={{ boxShadow: selected ? 'inset 0 1px 3px rgba(184, 35, 48, 0.1)' : 'none' }}
   >
-    {glyph && <span className="mr-1 opacity-60">{glyph}</span>}
     {label}
     {selected && <span className="absolute -top-1 -right-1 text-crimson text-xs">◆</span>}
   </button>
 );
 
-// ============================================================================
-// SECTION LABEL - Crowlands serif/small-caps style
-// ============================================================================
-
-const SectionLabel = ({ title, subtitle, glyph = '✦' }) => (
-  <div className="mb-4">
-    <div className="flex items-center gap-2 mb-1">
-      <span className="text-gold text-sm">{glyph}</span>
-      <h3 className="font-cinzel text-lg text-crimson tracking-wide uppercase">{title}</h3>
-    </div>
-    {subtitle && (
-      <p className="text-navy-dark/60 text-sm font-crimson italic pl-6">{subtitle}</p>
+// Section Label with Crowlands styling
+const SectionLabel = ({ title, context }) => (
+  <div className="mb-3">
+    <h3 className="font-cinzel text-base text-crimson tracking-wide">{title}</h3>
+    {context && (
+      <p className="text-navy-dark/60 text-sm font-crimson italic mt-1">{context}</p>
     )}
   </div>
 );
@@ -162,6 +121,7 @@ const SectionLabel = ({ title, subtitle, glyph = '✦' }) => (
 // ============================================================================
 
 export const InvisibleHelpers = () => {
+  const [showFullIntro, setShowFullIntro] = useState(false);
   const [formData, setFormData] = useState({
     personal_intention: '',
     beneficiaries: [],
@@ -323,7 +283,7 @@ export const InvisibleHelpers = () => {
         setGeneratedWorking(data.working);
         setGenerationCount(data.generation_count || generationCount + 1);
         localStorage.setItem('ih_generation_count', String(data.generation_count || generationCount + 1));
-        toast.success('Your intention has been sealed.');
+        toast.success('Your intention has been generated!');
         localStorage.removeItem('ih_pending_email');
         localStorage.removeItem('ih_pending_form');
       } else if (data.limit_reached) {
@@ -342,7 +302,6 @@ export const InvisibleHelpers = () => {
 
   const handleCreateVariation = () => {
     setGeneratedWorking(null);
-    setFormStep(0);
     setStep('form');
   };
 
@@ -356,7 +315,7 @@ export const InvisibleHelpers = () => {
   };
 
   const formatWorkingAsText = (working) => {
-    let text = `MAGICAL BATTLE CRY INTENTION\nA Coordinated Working for Protection & Clarity\n\n`;
+    let text = `MAGICAL BATTLE CRY INTENTION\nA Structured Intention for Protection & Clarity\n\n`;
     text += `INTENTION\n${working.intention}\n\n`;
     text += `ANCHOR PHRASE\n${working.anchor_phrase}\n\n`;
     text += `ETHICAL FRAME\n${working.ethical_frame}\n\n`;
@@ -471,12 +430,12 @@ export const InvisibleHelpers = () => {
             <Shield className="w-full h-full text-gold p-4" style={{ filter: 'drop-shadow(0 0 20px rgba(212, 168, 75, 0.5))' }} />
           </motion.div>
           
-          <h2 className="font-italiana text-2xl sm:text-3xl text-gold mb-3" style={{ textShadow: '0 2px 20px rgba(212, 168, 75, 0.4)' }}>
-            Sealing Your Intention
+          <h2 className="phantasmagoria-hero text-2xl sm:text-3xl text-gold mb-3" style={{ textShadow: '0 2px 20px rgba(212, 168, 75, 0.4)' }}>
+            Generating Your Intention
           </h2>
           
           <p className="font-crimson text-lg text-cream/80 mb-2">
-            Weaving protection and clarity...
+            Crafting your intention...
           </p>
           
           <p className="text-silver-mist/60 text-sm font-montserrat">
@@ -497,13 +456,13 @@ export const InvisibleHelpers = () => {
       {/* ================================================================ */}
       {/* CINEMATIC HERO HEADER */}
       {/* ================================================================ */}
-      <DarkSection className="py-16 sm:py-20 md:py-24 px-4 sm:px-6" variant="warm">
+      <DarkSection className="py-12 sm:py-16 md:py-20 px-4 sm:px-6" variant="warm">
         {/* Corner flourishes */}
-        <CornerFlourish position="top-left" className="absolute top-4 left-4 w-16 h-16 sm:w-20 sm:h-20" />
-        <CornerFlourish position="top-right" className="absolute top-4 right-4 w-16 h-16 sm:w-20 sm:h-20" />
+        <CornerFlourish position="top-left" className="absolute top-4 left-4 w-14 h-14 sm:w-18 sm:h-18" />
+        <CornerFlourish position="top-right" className="absolute top-4 right-4 w-14 h-14 sm:w-18 sm:h-18" />
         
         {/* Protective circle background - subtle sigil */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] opacity-[0.08]">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] opacity-[0.06]">
           <svg viewBox="0 0 400 400" className="w-full h-full text-gold" fill="none" stroke="currentColor">
             <circle cx="200" cy="200" r="180" strokeWidth="1" />
             <circle cx="200" cy="200" r="150" strokeWidth="0.5" strokeDasharray="8 4" />
@@ -517,25 +476,18 @@ export const InvisibleHelpers = () => {
         
         <div className="max-w-4xl mx-auto relative z-10">
           <div className="text-center">
-            {/* Small caps line */}
-            <p className="font-montserrat text-xs sm:text-sm tracking-[0.3em] text-gold/70 uppercase mb-4">
-              A Coordinated Working
-            </p>
+            <Shield className="w-12 h-12 sm:w-14 sm:h-14 mx-auto mb-4 text-crimson-bright"
+              style={{ filter: 'drop-shadow(0 0 15px rgba(184, 35, 48, 0.5))' }} />
             
             {/* Main title - phantasmagoria font */}
-            <h1 className="phantasmagoria-hero text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-gold-light mb-4"
+            <h1 className="phantasmagoria-hero text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-gold-light mb-3"
               style={{ textShadow: '0 2px 30px rgba(212, 168, 75, 0.5)' }}>
               Magical Battle Cry Intention
             </h1>
             
             {/* Subtitle */}
-            <p className="font-montserrat text-sm sm:text-base text-silver-mist/80 mb-3">
-              For protection, clarity, and lawful return
-            </p>
-            
-            {/* Italic lore line */}
-            <p className="font-crimson text-sm italic text-cream/60">
-              A quiet working, done with clean hands and disciplined will.
+            <p className="font-crimson text-sm sm:text-base text-silver-mist/80 italic">
+              A Structured Intention for Protection & Clarity
             </p>
           </div>
         </div>
@@ -545,10 +497,113 @@ export const InvisibleHelpers = () => {
       </DarkSection>
 
       {/* ================================================================ */}
+      {/* INTRO SECTION - Only on form step */}
+      {/* ================================================================ */}
+      {step === 'form' && (
+        <LightSection className="py-8 sm:py-10 px-4 sm:px-6">
+          <div className="max-w-3xl mx-auto">
+            <LightOrnateCard hover={false}>
+              {/* Always visible intro - ORIGINAL COPY */}
+              <div className="prose prose-slate max-w-none text-sm">
+                <p className="text-navy-dark/90 leading-relaxed mb-4 font-crimson">
+                  In times of uncertainty, people have always gathered—not just to act, but to 
+                  <span className="text-navy-dark font-medium"> steady themselves before acting</span>. During 
+                  World War II, groups practiced coordinated meditation for protection and clarity. 
+                  In the 1960s, activists paired inner work with outer resistance. Today, from 
+                  <span className="text-crimson"> "Etsy witches"</span> making headlines 
+                  to artists weaving meaning into protest, people are rediscovering an old truth.
+                </p>
+                
+                <p className="text-navy-dark/70 leading-relaxed mb-4 font-crimson">
+                  <span className="text-navy-dark">When the world feels like it's burning, 
+                  steadying the inner field matters.</span> Not as a replacement for action—never 
+                  that—but as a companion to it. Focused intention, done with clean hands and a 
+                  clear heart, can be part of how we show up.
+                </p>
+
+                <p className="text-navy-dark/70 leading-relaxed font-crimson">
+                  This portal draws inspiration from <span className="text-crimson">Dion Fortune's</span> wartime 
+                  spiritual work and the long tradition of ethical, protective practice. What you'll 
+                  create here is a <span className="text-navy-dark font-medium">structured intention</span> that 
+                  returns misused power to natural law, strengthens those who protect, and steadies 
+                  your own resolve. No curses. No targets. Just clarity, protection, and lawful return.
+                </p>
+              </div>
+
+              {/* Expandable section */}
+              <AnimatePresence>
+                {showFullIntro && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="overflow-hidden border-t border-gold/30 mt-6 pt-6"
+                  >
+                    <div className="prose prose-slate max-w-none text-sm">
+                      <h3 className="font-cinzel text-crimson text-base mb-3">About Where The Crowlands</h3>
+                      <p className="text-navy-dark/70 leading-relaxed mb-4 font-crimson">
+                        We're building <span className="text-navy-dark font-medium">Where The Crowlands</span> as 
+                        a portal to a world where magic is practical, ethical, and a little bit fun. A place 
+                        where AI-guided rituals meet family folklore, where you can explore the history of 
+                        magical practice while crafting your own. Think of it as your digital grimoire—part 
+                        library, part workshop, part community.
+                      </p>
+
+                      <h3 className="font-cinzel text-crimson text-base mb-3">Guiding Principles</h3>
+                      <p className="text-navy-dark/70 leading-relaxed mb-3 font-crimson">
+                        Ethical magical work across traditions shares common principles:
+                      </p>
+                      <ul className="text-navy-dark/70 space-y-2 mb-4 font-crimson">
+                        <li><span className="text-navy-dark">Language directs force</span> — vague or emotional wording causes rebound</li>
+                        <li><span className="text-navy-dark">Work that violates free will rebounds</span> — we redirect, never strike</li>
+                        <li><span className="text-navy-dark">Justice belongs to impersonal law</span> — not personal vengeance</li>
+                        <li><span className="text-navy-dark">Defense and protection over aggression</span> — always</li>
+                      </ul>
+
+                      <h3 className="font-cinzel text-crimson text-base mb-3">What This Intention Does</h3>
+                      <p className="text-navy-dark/70 leading-relaxed mb-4 font-crimson">
+                        This is a <span className="text-navy-dark font-medium">Neutralizing Return to Source via Higher Law</span>. 
+                        It doesn't curse. It doesn't attack. It returns misused power—distortion, 
+                        coercion, dehumanization—to the impersonal law that governs consequence. Think of it 
+                        as redirecting energy back to where it came from, transmuted into accountability 
+                        rather than harm.
+                      </p>
+                      
+                      <p className="text-navy-dark/70 leading-relaxed mb-4 font-crimson">
+                        The goal is <span className="text-crimson">disruption, not destruction</span>. 
+                        A little sand in the gears of cruelty. But always with clean hands, always paired 
+                        with real-world action, and always remembering that the goal is protection and 
+                        clarity—not revenge.
+                      </p>
+
+                      <BorderFrame variant="crimson" className="bg-crimson/5">
+                        <p className="text-crimson/80 text-sm italic m-0 font-crimson">
+                          "Inner work does not replace resistance. It steadies those who resist."
+                        </p>
+                      </BorderFrame>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+              
+              <button
+                onClick={() => setShowFullIntro(!showFullIntro)}
+                className="w-full py-3 mt-4 border-t border-gold/30 text-crimson hover:text-crimson-bright text-xs flex items-center justify-center gap-2 transition-colors font-montserrat"
+              >
+                <span>{showFullIntro ? 'Show less' : 'Read more about this intention...'}</span>
+                <ChevronDown className={`w-4 h-4 transition-transform ${showFullIntro ? 'rotate-180' : ''}`} />
+              </button>
+            </LightOrnateCard>
+          </div>
+        </LightSection>
+      )}
+
+      {/* ================================================================ */}
       {/* MAIN CONTENT ON PARCHMENT */}
       {/* ================================================================ */}
-      <LightSection className="py-12 sm:py-16 px-4 sm:px-6">
-        <div className="max-w-3xl mx-auto">
+      <LightSection className="py-8 sm:py-12 px-4 sm:px-6">
+        <div className="max-w-2xl mx-auto">
           
           <AnimatePresence mode="wait">
             {/* FORM STEP */}
@@ -559,21 +614,14 @@ export const InvisibleHelpers = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
               >
-                {/* Ritual Stepper */}
-                <RitualStepper 
-                  currentStep={formStep} 
-                  steps={['Name the field', 'Choose strength', 'Seal intention']} 
-                />
-                
-                <LightOrnateCard hover={false} className="mb-8">
-                  <div className="space-y-8">
+                <LightOrnateCard hover={false}>
+                  <div className="space-y-6">
                     
-                    {/* STEP 0: Name the field */}
-                    <div className={formStep === 0 ? 'opacity-100' : 'opacity-40'}>
+                    {/* Personal Intention - ORIGINAL COPY */}
+                    <div>
                       <SectionLabel 
-                        title="Name the Intention" 
-                        subtitle="In your own words, what do you seek protection from, or clarity about?"
-                        glyph="✦"
+                        title="What is your intention?"
+                        context="Write a few lines about what you're seeking protection from, or clarity about. This is for you."
                       />
                       <CrowlandsInput
                         value={formData.personal_intention}
@@ -581,151 +629,109 @@ export const InvisibleHelpers = () => {
                         placeholder="In my own words, I seek..."
                         rows={3}
                       />
-                      
-                      <div className="mt-6">
-                        <SectionLabel 
-                          title="Who is held within the ward?" 
-                          subtitle="The heart of this intention is shielding those in harm's way."
-                          glyph="◆"
-                        />
-                        <div className="flex flex-wrap gap-2">
-                          {BENEFICIARIES_OPTIONS.map(opt => (
-                            <CrowlandsChip
-                              key={opt.id}
-                              label={opt.label}
-                              selected={formData.beneficiaries.includes(opt.label)}
-                              onClick={() => toggleBeneficiary(opt.label)}
-                            />
-                          ))}
-                        </div>
-                      </div>
-                      
-                      {formData.beneficiaries.length > 0 && (
-                        <div className="mt-6 text-center">
-                          <button
-                            onClick={() => setFormStep(1)}
-                            className="text-crimson hover:text-crimson-bright font-montserrat text-sm underline underline-offset-4"
-                          >
-                            Continue to choose what must be strengthened →
-                          </button>
-                        </div>
-                      )}
                     </div>
 
-                    {/* Divider */}
-                    {formStep >= 1 && <MysticalDivider light variant="moon" />}
+                    <MysticalDivider light />
 
-                    {/* STEP 1: Choose what is strengthened */}
-                    {formStep >= 1 && (
-                      <div className={formStep === 1 ? 'opacity-100' : 'opacity-40'}>
-                        <SectionLabel 
-                          title="What must be strengthened" 
-                          subtitle="What energy do you want to amplify?"
-                          glyph="☽"
-                        />
-                        <div className="flex flex-wrap gap-2 mb-6">
-                          {QUALITY_OPTIONS.map(opt => (
-                            <CrowlandsChip
-                              key={opt.id}
-                              label={opt.label}
-                              glyph={opt.glyph}
-                              selected={formData.primary_quality === opt.label}
-                              onClick={() => handleFormChange('primary_quality', opt.label)}
-                            />
-                          ))}
-                        </div>
-                        
-                        <SectionLabel 
-                          title="Voice of the working" 
-                          subtitle="How do you prefer your spiritual language?"
-                          glyph="❧"
-                        />
-                        <div className="flex flex-wrap gap-2 mb-6">
-                          {PRACTICE_STYLE_OPTIONS.map(opt => (
-                            <CrowlandsChip
-                              key={opt.id}
-                              label={opt.label}
-                              selected={formData.practice_style === opt.label}
-                              onClick={() => handleFormChange('practice_style', opt.label)}
-                            />
-                          ))}
-                        </div>
-                        
-                        <SectionLabel 
-                          title="Duration of the working" 
-                          subtitle="When will you perform this intention?"
-                          glyph="◇"
-                        />
-                        <div className="flex flex-wrap gap-2">
-                          {TIME_HORIZON_OPTIONS.map(opt => (
-                            <CrowlandsChip
-                              key={opt.id}
-                              label={opt.label}
-                              selected={formData.time_horizon === opt.label}
-                              onClick={() => handleFormChange('time_horizon', opt.label)}
-                            />
-                          ))}
-                        </div>
-                        
-                        {formData.primary_quality && formData.practice_style && formData.time_horizon && (
-                          <div className="mt-6 text-center">
-                            <button
-                              onClick={() => setFormStep(2)}
-                              className="text-crimson hover:text-crimson-bright font-montserrat text-sm underline underline-offset-4"
-                            >
-                              Continue to seal the intention →
-                            </button>
-                          </div>
-                        )}
+                    {/* Beneficiaries - ORIGINAL COPY */}
+                    <div>
+                      <SectionLabel 
+                        title="Who are you protecting?"
+                        context="The heart of this intention is shielding those in harm's way. Visualize protection around them, not attack on anyone."
+                      />
+                      <div className="flex flex-wrap gap-2">
+                        {BENEFICIARIES_OPTIONS.map(opt => (
+                          <CrowlandsChip
+                            key={opt.id}
+                            label={opt.label}
+                            selected={formData.beneficiaries.includes(opt.label)}
+                            onClick={() => toggleBeneficiary(opt.label)}
+                          />
+                        ))}
                       </div>
-                    )}
+                    </div>
 
-                    {/* Divider */}
-                    {formStep >= 2 && <MysticalDivider light />}
+                    <MysticalDivider light variant="moon" />
 
-                    {/* STEP 2: Seal the intention */}
-                    {formStep >= 2 && (
-                      <div className={formStep === 2 ? 'opacity-100' : 'opacity-40'}>
-                        <SectionLabel 
-                          title="How this is carried into the world" 
-                          subtitle="Your commitment to the material realm"
-                          glyph="⛤"
-                        />
-                        
-                        <BorderFrame variant="crimson" className="bg-cream/50">
-                          <p className="font-crimson text-navy-dark text-sm leading-relaxed">
-                            By creating this intention, I understand that spellwork and storytelling are conduits 
-                            to support real action. I commit to channeling this intention toward benevolent outcomes and peace.
-                          </p>
-                        </BorderFrame>
-                        
-                        {/* SEAL BUTTON */}
-                        <div className="mt-8 text-center">
-                          <button
-                            onClick={handleContinueToEmail}
-                            disabled={!isFormValid()}
-                            className={`relative px-8 py-4 font-cinzel text-sm tracking-wider uppercase transition-all ${
-                              isFormValid()
-                                ? 'bg-crimson hover:bg-crimson-bright text-cream border-2 border-crimson hover:border-crimson-bright shadow-lg hover:shadow-crimson/30'
-                                : 'bg-navy-mid/20 text-navy-dark/40 border-2 border-navy-mid/30 cursor-not-allowed'
-                            }`}
-                            style={{ 
-                              boxShadow: isFormValid() ? '0 0 20px rgba(184, 35, 48, 0.3)' : 'none'
-                            }}
-                            data-testid="continue-to-checkout-btn"
-                          >
-                            {isFormValid() && <span className="absolute -top-2 -left-2 text-gold text-lg">✦</span>}
-                            {isFormValid() && <span className="absolute -top-2 -right-2 text-gold text-lg">✦</span>}
-                            Seal This Intention
-                            {isFormValid() && <span className="absolute -bottom-2 -left-2 text-gold text-lg">✦</span>}
-                            {isFormValid() && <span className="absolute -bottom-2 -right-2 text-gold text-lg">✦</span>}
-                          </button>
-                          <p className="text-navy-dark/50 text-xs font-montserrat mt-2">
-                            You may revise before completion.
-                          </p>
-                        </div>
+                    {/* Primary Quality - ORIGINAL COPY */}
+                    <div>
+                      <SectionLabel 
+                        title="Quality to strengthen"
+                        context="What energy do you want to amplify? Focused visualization on positive qualities creates a 'seed idea' that spreads outward."
+                      />
+                      <div className="flex flex-wrap gap-2">
+                        {QUALITY_OPTIONS.map(opt => (
+                          <CrowlandsChip
+                            key={opt.id}
+                            label={opt.label}
+                            selected={formData.primary_quality === opt.label}
+                            onClick={() => handleFormChange('primary_quality', opt.label)}
+                          />
+                        ))}
                       </div>
-                    )}
+                    </div>
+
+                    {/* Practice Style - ORIGINAL COPY */}
+                    <div>
+                      <SectionLabel 
+                        title="Practice language"
+                        context="How do you prefer your spiritual language? We'll match the tone accordingly."
+                      />
+                      <div className="flex flex-wrap gap-2">
+                        {PRACTICE_STYLE_OPTIONS.map(opt => (
+                          <CrowlandsChip
+                            key={opt.id}
+                            label={opt.label}
+                            selected={formData.practice_style === opt.label}
+                            onClick={() => handleFormChange('practice_style', opt.label)}
+                          />
+                        ))}
+                      </div>
+                    </div>
+
+                    <MysticalDivider light />
+
+                    {/* Time Horizon - ORIGINAL COPY */}
+                    <div>
+                      <SectionLabel 
+                        title="Time horizon"
+                        context="Synchronized, regular practice builds coherence. Picking a specific time helps anchor the intention in your life."
+                      />
+                      <div className="flex flex-wrap gap-2">
+                        {TIME_HORIZON_OPTIONS.map(opt => (
+                          <CrowlandsChip
+                            key={opt.id}
+                            label={opt.label}
+                            selected={formData.time_horizon === opt.label}
+                            onClick={() => handleFormChange('time_horizon', opt.label)}
+                          />
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Commitment - ORIGINAL COPY */}
+                    <BorderFrame variant="gold" className="bg-gold/5">
+                      <h3 className="font-cinzel text-sm text-crimson mb-2">Your commitment to the material world</h3>
+                      <p className="text-navy-dark/80 text-sm font-crimson">
+                        By creating this intention, I understand that spellwork and storytelling are conduits to support real action. 
+                        I commit to channeling this intention toward benevolent outcomes and peace.
+                      </p>
+                    </BorderFrame>
+
+                    {/* Continue Button */}
+                    <button
+                      onClick={handleContinueToEmail}
+                      disabled={!isFormValid()}
+                      className={`w-full py-4 font-cinzel text-sm tracking-wider uppercase transition-all flex items-center justify-center gap-2 ${
+                        isFormValid()
+                          ? 'bg-crimson hover:bg-crimson-bright text-cream'
+                          : 'bg-navy-mid/20 text-navy-dark/40 cursor-not-allowed'
+                      }`}
+                      data-testid="continue-to-checkout-btn"
+                    >
+                      Continue
+                      <ChevronRight className="w-4 h-4" />
+                    </button>
                     
                   </div>
                 </LightOrnateCard>
@@ -747,9 +753,9 @@ export const InvisibleHelpers = () => {
                   
                   <div className="text-center mb-8">
                     <Sparkles className="w-10 h-10 mx-auto mb-4 text-crimson" />
-                    <h2 className="font-italiana text-2xl text-crimson mb-2">Receive Your Intention & Join the Chaos</h2>
+                    <h2 className="phantasmagoria-hero text-2xl text-crimson mb-2">Receive Your Intention & Join the Chaos</h2>
                     <p className="text-navy-dark/70 text-sm font-crimson">
-                      Enter your email to receive your sealed intention.
+                      Enter your email to receive your intention and a PDF for offline use.
                     </p>
                   </div>
                   
@@ -762,13 +768,14 @@ export const InvisibleHelpers = () => {
                     />
                     <button
                       type="submit"
-                      className="w-full py-3 bg-crimson hover:bg-crimson-bright text-cream font-cinzel text-sm tracking-wider uppercase transition-colors"
+                      className="w-full py-3 bg-crimson hover:bg-crimson-bright text-cream font-cinzel text-sm tracking-wider uppercase transition-colors flex items-center justify-center gap-2"
                       data-testid="email-submit-btn"
                     >
                       Continue
+                      <ChevronRight className="w-4 h-4" />
                     </button>
                     <p className="text-navy-dark/50 text-xs text-center font-montserrat">
-                      You can generate up to 3 intentions as a guest.
+                      You can generate up to 3 intentions as a guest. Join early access for unlimited.
                     </p>
                   </form>
                 </LightOrnateCard>
@@ -790,8 +797,9 @@ export const InvisibleHelpers = () => {
                   
                   <div className="text-center mb-6">
                     <Sparkles className="w-10 h-10 mx-auto mb-4 text-crimson" />
-                    <h2 className="font-italiana text-2xl text-crimson mb-4">Support This Work</h2>
+                    <h2 className="phantasmagoria-hero text-2xl text-crimson mb-4">Support This Work</h2>
                     
+                    {/* ORIGINAL COPY */}
                     <div className="text-navy-dark/80 text-sm font-crimson space-y-3 text-left max-w-md mx-auto">
                       <p>
                         This portal is offered freely. If you're able, consider a pay-what-you-choose contribution.
@@ -821,7 +829,7 @@ export const InvisibleHelpers = () => {
                       {checkingOut ? <Loader2 className="w-4 h-4 animate-spin mx-auto" /> : '✦ Continue Free — No Judgement ✦'}
                     </button>
                     
-                    <p className="text-navy-dark/40 text-xs text-center">— or support the work —</p>
+                    <p className="text-navy-dark/40 text-xs text-center font-montserrat">— or support the work —</p>
                     
                     <div className="grid grid-cols-3 gap-2">
                       {[500, 1000, 2500].map(amount => (
@@ -835,6 +843,19 @@ export const InvisibleHelpers = () => {
                         </button>
                       ))}
                     </div>
+                    
+                    <button
+                      onClick={() => {
+                        const custom = prompt('Enter amount in dollars (e.g., 20):');
+                        if (custom && !isNaN(parseFloat(custom))) {
+                          handleCheckout(Math.round(parseFloat(custom) * 100));
+                        }
+                      }}
+                      disabled={checkingOut}
+                      className="w-full py-2 text-navy-dark/50 hover:text-navy-dark/70 text-xs transition-colors disabled:opacity-50 font-montserrat"
+                    >
+                      Other amount...
+                    </button>
                   </div>
                 </LightOrnateCard>
               </motion.div>
@@ -860,14 +881,16 @@ export const InvisibleHelpers = () => {
                   <div className="flex gap-2">
                     <button
                       onClick={handleCopyToClipboard}
-                      className="flex items-center gap-2 px-3 py-2 border border-navy-dark/30 text-navy-dark hover:bg-navy-dark/5 text-xs transition-colors"
+                      className="flex items-center gap-2 px-3 py-2 border border-navy-dark/30 text-navy-dark hover:bg-navy-dark/5 text-xs transition-colors font-montserrat"
+                      data-testid="copy-working-btn"
                     >
                       {copied ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
                       {copied ? 'Copied' : 'Copy'}
                     </button>
                     <button
                       onClick={handleDownloadPDF}
-                      className="flex items-center gap-2 px-3 py-2 bg-crimson hover:bg-crimson-bright text-cream text-xs transition-colors"
+                      className="flex items-center gap-2 px-3 py-2 bg-crimson hover:bg-crimson-bright text-cream text-xs transition-colors font-montserrat"
+                      data-testid="download-pdf-btn"
                     >
                       <Download className="w-3 h-3" />
                       PDF
@@ -889,38 +912,37 @@ export const InvisibleHelpers = () => {
                   <span className="absolute -bottom-2 -right-2 text-gold text-xl">✦</span>
                   
                   {/* Lattice watermark */}
-                  <div className="absolute inset-6 opacity-[0.04]" style={{
+                  <div className="absolute inset-6 opacity-[0.03]" style={{
                     backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,20 L40,20 M20,0 L20,40' stroke='%23d4a84b' stroke-width='0.5' fill='none'/%3E%3Ccircle cx='20' cy='20' r='2' fill='%23d4a84b'/%3E%3C/svg%3E")`,
                   }} />
                   
                   <div 
                     ref={workingRef}
-                    className="relative z-10 bg-cream/95 p-8 md:p-10 space-y-6"
+                    className="relative z-10 bg-cream/95 p-6 sm:p-8 space-y-6"
                   >
                     {/* Header */}
-                    <div className="text-center border-b-2 border-gold/30 pb-6">
-                      <p className="font-montserrat text-xs tracking-[0.2em] text-gold/70 uppercase mb-2">A Coordinated Working</p>
-                      <h2 className="font-italiana text-2xl sm:text-3xl text-crimson">Magical Battle Cry Intention</h2>
-                      <p className="text-navy-dark/60 text-xs italic font-crimson mt-1">For protection, clarity, and lawful return</p>
+                    <div className="text-center border-b-2 border-gold/30 pb-4">
+                      <h2 className="phantasmagoria-hero text-xl sm:text-2xl text-crimson">Magical Battle Cry Intention</h2>
+                      <p className="text-navy-dark/60 text-xs italic font-crimson mt-1">A Structured Intention for Protection & Clarity</p>
                     </div>
 
                     {/* Intention */}
                     <div>
-                      <h3 className="font-cinzel text-xs text-gold tracking-wider uppercase mb-2">✦ Intention</h3>
-                      <p className="text-navy-dark font-crimson italic text-lg">{generatedWorking.intention}</p>
+                      <h3 className="font-cinzel text-xs text-gold tracking-wider uppercase mb-2">Intention</h3>
+                      <p className="text-navy-dark font-crimson italic">{generatedWorking.intention}</p>
                     </div>
 
                     <MysticalDivider light variant="moon" />
 
                     {/* Anchor Phrase */}
                     <div className="bg-gold/5 border-l-4 border-gold p-4">
-                      <h3 className="font-cinzel text-xs text-gold tracking-wider uppercase mb-2">◆ Anchor Phrase</h3>
+                      <h3 className="font-cinzel text-xs text-gold tracking-wider uppercase mb-2">Anchor Phrase</h3>
                       <p className="text-navy-dark font-crimson italic whitespace-pre-line">{generatedWorking.anchor_phrase}</p>
                     </div>
 
                     {/* Ethical Frame */}
                     <BorderFrame variant="crimson" className="bg-crimson/5">
-                      <h3 className="font-cinzel text-xs text-crimson tracking-wider uppercase mb-2">❧ Ethical Frame</h3>
+                      <h3 className="font-cinzel text-xs text-crimson tracking-wider uppercase mb-2">Ethical Frame</h3>
                       <p className="text-navy-dark/80 font-crimson text-sm whitespace-pre-line">{generatedWorking.ethical_frame}</p>
                     </BorderFrame>
 
@@ -928,24 +950,24 @@ export const InvisibleHelpers = () => {
 
                     {/* The Practice */}
                     <div>
-                      <h3 className="font-cinzel text-xs text-gold tracking-wider uppercase mb-4">☽ The Practice</h3>
+                      <h3 className="font-cinzel text-xs text-gold tracking-wider uppercase mb-4">The Practice</h3>
                       <div className="space-y-4">
-                        {generatedWorking.guided_working?.map((step, idx) => (
+                        {generatedWorking.guided_working?.map((stepItem, idx) => (
                           <div key={idx} className="relative pl-8 border-l-2 border-crimson/30">
                             <div className="absolute left-0 top-0 -translate-x-1/2 w-4 h-4 rounded-full bg-crimson/20 border-2 border-crimson flex items-center justify-center">
-                              <span className="text-crimson text-[10px] font-bold">{step.step}</span>
+                              <span className="text-crimson text-[10px] font-bold">{stepItem.step}</span>
                             </div>
                             <div className="flex items-center gap-2 mb-1">
-                              <span className="text-navy-dark font-cinzel text-sm font-semibold">{step.title}</span>
-                              <span className="text-navy-dark/40 text-xs flex items-center gap-1">
+                              <span className="text-navy-dark font-cinzel text-sm font-semibold">{stepItem.title}</span>
+                              <span className="text-navy-dark/40 text-xs flex items-center gap-1 font-montserrat">
                                 <Clock className="w-3 h-3" />
-                                {step.duration}
+                                {stepItem.duration}
                               </span>
                             </div>
-                            <p className="text-navy-dark/70 font-crimson text-sm">{step.instructions}</p>
-                            {step.spoken_words && (
+                            <p className="text-navy-dark/70 font-crimson text-sm">{stepItem.instructions}</p>
+                            {stepItem.spoken_words && (
                               <p className="mt-2 text-crimson italic text-sm font-crimson border-l-2 border-gold/30 pl-3">
-                                "{step.spoken_words}"
+                                "{stepItem.spoken_words}"
                               </p>
                             )}
                           </div>
@@ -957,7 +979,7 @@ export const InvisibleHelpers = () => {
 
                     {/* Action Pledge */}
                     <div className="border-t-2 border-gold/30 pt-4">
-                      <h3 className="font-cinzel text-xs text-gold tracking-wider uppercase mb-2">⛤ Action Pledge</h3>
+                      <h3 className="font-cinzel text-xs text-gold tracking-wider uppercase mb-2">Action Pledge</h3>
                       <p className="text-navy-dark font-crimson text-sm">{generatedWorking.action_pledge}</p>
                     </div>
 
@@ -973,7 +995,7 @@ export const InvisibleHelpers = () => {
                   <p className="text-center text-navy-dark/50 text-xs font-montserrat">
                     Intentions created: {generationCount}/{MAX_FREE_GENERATIONS} · 
                     <button onClick={resetAll} className="text-crimson hover:text-crimson-bright ml-1 underline">
-                      Join early access for unlimited
+                      Join early access for unlimited intentions
                     </button>
                   </p>
                 )}
@@ -990,10 +1012,10 @@ export const InvisibleHelpers = () => {
       <DarkSection className="py-12 px-4">
         <div className="max-w-xl mx-auto text-center">
           <MysticalDivider variant="moon" />
-          <p className="font-italiana text-lg text-gold/80 italic mt-6">
+          <p className="font-crimson text-base text-silver-mist/80 italic mt-6">
             Inner work does not replace resistance.
           </p>
-          <p className="font-italiana text-xl text-gold mt-1">
+          <p className="font-crimson text-lg text-gold mt-1">
             It steadies those who resist.
           </p>
         </div>
