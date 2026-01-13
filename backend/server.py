@@ -998,13 +998,18 @@ async def generate_working(request: WorkingGeneratorRequest):
         content = response.choices[0].message.content
         working_data = json.loads(content)
         
-        # Post-generation validation - check output for banned terms
+        # Post-generation validation - only check for truly harmful content
+        # Allow words like "punish" and "suffer" in negative context (e.g., "does not punish")
         output_text = json.dumps(working_data)
-        output_banned = check_banned_terms(output_text)
+        
+        # Simple check for truly harmful phrases
+        harmful_patterns = ['curse them', 'hex them', 'hurt them', 'kill them', 'punish them', 'cause pain']
+        output_banned = [p for p in harmful_patterns if p in output_text.lower()]
+        
         if output_banned:
             # Regenerate with stricter prompt
-            logger.warning(f"Generated working contained banned terms: {output_banned}. Regenerating...")
-            stricter_prompt = user_prompt + "\n\nIMPORTANT: The previous generation contained harmful language. Ensure this version contains NO references to harm, punishment, pain, or suffering. Focus ONLY on protection, clarity, and lawful consequence."
+            logger.warning(f"Generated working contained harmful phrases: {output_banned}. Regenerating...")
+            stricter_prompt = user_prompt + "\n\nIMPORTANT: Ensure NO harmful language directed at any target. Focus ONLY on protection, clarity, and lawful consequence through impersonal law."
             
             response = await deepseek_client.chat.completions.create(
                 model="deepseek-chat",
