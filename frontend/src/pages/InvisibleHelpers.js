@@ -656,22 +656,29 @@ const FormStep = ({ formData, onFormChange, onToggleBeneficiary, onToggleAction,
       </div>
     </FormSection>
 
-    {/* Action Pledge */}
-    <FormSection 
-      title="Real-world action"
-      context="Inner work supports outer action—never replaces it. What concrete thing will you do to ground this working in material reality?"
-    >
+    {/* Action Commitment - Fun multi-select */}
+    <div className="bg-slate-800/30 border border-slate-700/30 rounded-lg p-4">
+      <label className="block text-slate-200 text-sm mb-2">
+        Your commitment to the material world
+      </label>
+      <p className="text-slate-500 text-xs mb-3">
+        By creating this working, I understand that spellwork and storytelling are conduits to support real action. 
+        I commit to channeling this intention toward:
+      </p>
       <div className="flex flex-wrap gap-2">
         {ACTION_OPTIONS.map(opt => (
           <ToggleChip
             key={opt.id}
             label={opt.label}
-            selected={formData.action_pledge === opt.label}
-            onClick={() => onFormChange('action_pledge', opt.label)}
+            selected={formData.action_commitments.includes(opt.label)}
+            onClick={() => onToggleAction(opt.label)}
           />
         ))}
       </div>
-    </FormSection>
+      <p className="text-amber-600/60 text-xs mt-3 italic">
+        ✨ Select all that call to you — the more, the merrier the chaos
+      </p>
+    </div>
 
     {/* Continue Button */}
     <button
@@ -683,7 +690,7 @@ const FormStep = ({ formData, onFormChange, onToggleBeneficiary, onToggleAction,
           ? "bg-amber-900/40 hover:bg-amber-900/60 border border-amber-700/50 text-amber-200"
           : "bg-slate-800 border border-slate-700 text-slate-500 cursor-not-allowed"
       )}
-      data-testid="continue-to-email-btn"
+      data-testid="continue-to-checkout-btn"
     >
       Continue
       <ChevronRight className="w-4 h-4" />
