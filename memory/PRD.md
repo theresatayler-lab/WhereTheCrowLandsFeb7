@@ -12,6 +12,18 @@ Build "Where The Crowlands," a sophisticated full-stack application for creating
 ## What's Been Implemented
 
 ### Session: January 13, 2026 (Latest)
+- **Katherine's Waite-Style Ceremonial Structure**
+  - Replaced `section_grammar` with new `spell_template_structure` (12-step ceremonial format)
+  - Added `rubrics`: Rule of Three Tests, Closing Formula
+  - Added `spell_families`: 5 taxonomic categories (Shadow Integration, Night Magic, Protective Dark Magic, Divination in Darkness, Ancestor & Grief Work)
+  - Added `signature_moves`: props, sensory anchors, core ethics
+  - Added 5 pre-built `grimoire_entries` following the new template:
+    1. Mirror of Truth (shadow_integration)
+    2. The Midnight Stitch (night_magic)
+    3. Salt and Stitch (protective_dark_magic)
+    4. Shadow Scrying (divination_in_darkness)
+    5. The Candle Vigil (ancestor_grief_work)
+
 - **GridFS Image Storage - DocumentTooLarge Bug Fix**
   - Implemented `/app/backend/image_storage.py` with GridFS-based storage
   - Spell images (header, tarot, sigil) stored in `spell_images` GridFS bucket
