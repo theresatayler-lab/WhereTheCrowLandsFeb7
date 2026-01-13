@@ -126,7 +126,7 @@ export const InvisibleHelpers = () => {
     time_horizon: '',
     practice_style: '',
     anchor_length: 'short',
-    action_pledge: '',
+    action_intention: '', // Changed from action_pledge - now free text
     custom_name: '',
     patterns_to_neutralize: [],
     distortion_channels: [],
@@ -140,6 +140,25 @@ export const InvisibleHelpers = () => {
   const [copied, setCopied] = useState(false);
   
   const workingRef = useRef(null);
+
+  // Reset form when selecting a new builder
+  const selectBuilder = (builderId) => {
+    setFormData({
+      beneficiaries: [],
+      customBeneficiary: '',
+      primary_quality: '',
+      time_horizon: '',
+      practice_style: '',
+      anchor_length: 'short',
+      action_intention: '',
+      custom_name: '',
+      patterns_to_neutralize: [],
+      distortion_channels: [],
+      return_types: [],
+    });
+    setGeneratedWorking(null);
+    setActiveBuilder(builderId);
+  };
 
   const handleFormChange = (field, value) => {
     setFormData(prev => ({ ...prev, [field]: value }));
