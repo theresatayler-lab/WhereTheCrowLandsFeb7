@@ -1,0 +1,214 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "spell.schema.json",
+  "title": "Crowlands Spell Output Schema",
+  "description": "Strict schema for spell generation output with validation rules",
+  "type": "object",
+  "required": [
+    "title",
+    "subtitle",
+    "intent",
+    "guide_id",
+    "belief_mode",
+    "materials",
+    "steps",
+    "sources",
+    "ethics_statement",
+    "closing"
+  ],
+  "properties": {
+    "title": {
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 100,
+      "description": "Practical + slightly evocative title"
+    },
+    "subtitle": {
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 150,
+      "description": "Short poetic tagline"
+    },
+    "intent": {
+      "type": "string",
+      "minLength": 20,
+      "maxLength": 300,
+      "description": "One sentence, precise, testable/measurable"
+    },
+    "guide_id": {
+      "type": "string",
+      "enum": ["shigg", "cathleen", "katherine", "theresa"],
+      "description": "Which guide generated this spell"
+    },
+    "belief_mode": {
+      "type": "string",
+      "enum": ["SECULAR", "SPIRITUAL", "PRACTITIONER"],
+      "description": "Belief boundary switch controlling framing language"
+    },
+    "persona_lock": {
+      "type": "object",
+      "description": "Props and cues that identify the guide in first 3 lines",
+      "required": ["props", "sensory_cue", "signature_move"],
+      "properties": {
+        "props": {
+          "type": "array",
+          "items": {"type": "string"},
+          "minItems": 2,
+          "maxItems": 3,
+          "description": "2-3 props that identify the guide"
+        },
+        "sensory_cue": {
+          "type": "string",
+          "description": "One sensory detail anchoring the guide"
+        },
+        "signature_move": {
+          "type": "string",
+          "description": "The guide's signature action or phrase"
+        }
+      }
+    },
+    "setting": {
+      "type": "object",
+      "required": ["location", "liminal_hour", "sensory_anchor"],
+      "properties": {
+        "location": {"type": "string"},
+        "liminal_hour": {"type": "string"},
+        "sensory_anchor": {"type": "string"}
+      }
+    },
+    "materials": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 7,
+      "items": {
+        "type": "object",
+        "required": ["name", "purpose"],
+        "properties": {
+          "name": {"type": "string"},
+          "purpose": {"type": "string", "description": "Why this material is used"},
+          "substitution": {"type": "string", "description": "Safe alternative if needed"}
+        }
+      }
+    },
+    "safety_ethics": {
+      "type": "string",
+      "minLength": 20,
+      "maxLength": 200,
+      "description": "One tight safety/ethics line, always present"
+    },
+    "opening": {
+      "type": "object",
+      "description": "Opening boundary - seal, stitch, or measure",
+      "properties": {
+        "action": {"type": "string"},
+        "words": {"type": "string"},
+        "why": {"type": "string"}
+      }
+    },
+    "invocation": {
+      "type": "object",
+      "description": "Lineage acknowledgment + discernment clause",
+      "properties": {
+        "lineage_call": {"type": "string"},
+        "discernment_clause": {"type": "string"},
+        "why": {"type": "string"}
+      }
+    },
+    "steps": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 7,
+      "items": {
+        "type": "object",
+        "required": ["step_number", "action", "why"],
+        "properties": {
+          "step_number": {"type": "integer", "minimum": 1},
+          "action": {"type": "string", "minLength": 20},
+          "spoken_words": {"type": "string"},
+          "why": {"type": "string", "minLength": 20, "description": "Explanation of why this step works"}
+        }
+      }
+    },
+    "closing": {
+      "type": "object",
+      "required": ["license_to_depart", "unseal_action", "physical_action"],
+      "properties": {
+        "license_to_depart": {"type": "string"},
+        "unseal_action": {"type": "string"},
+        "physical_action": {"type": "string"},
+        "empowerment_line": {"type": "string", "description": "Guide's closing statement"}
+      }
+    },
+    "record_prompts": {
+      "type": "array",
+      "items": {"type": "string"},
+      "minItems": 2,
+      "maxItems": 4,
+      "description": "Journal prompts for the experiment log"
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "required": ["source_id", "type", "relevance"],
+        "properties": {
+          "source_id": {"type": "string"},
+          "type": {
+            "type": "string",
+            "enum": ["historical", "folklore", "modern_occult", "speculative", "academic"]
+          },
+          "relevance": {"type": "string", "description": "Why this source informs this spell"},
+          "verified": {"type": "boolean", "default": true},
+          "learn_more_url": {"type": "string", "format": "uri"}
+        }
+      }
+    },
+    "ethics_statement": {
+      "type": "string",
+      "minLength": 30,
+      "description": "Clear ethical boundary statement"
+    },
+    "variations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {"type": "string"},
+          "modification": {"type": "string"},
+          "when_to_use": {"type": "string"}
+        }
+      },
+      "description": "Alternative versions for different contexts"
+    },
+    "tradition_tags": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Taxonomy tags from canon"
+    },
+    "timeline_ids": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Links to relevant timeline events"
+    },
+    "bird_oracle": {
+      "type": "object",
+      "description": "Optional bird oracle element (Shigg specialty)",
+      "properties": {
+        "bird": {"type": "string"},
+        "message": {"type": "string"}
+      }
+    },
+    "image_prompt": {
+      "type": "object",
+      "description": "Optional DALL-E prompt for spell imagery",
+      "properties": {
+        "header": {"type": "string"},
+        "tarot": {"type": "string"},
+        "sigil": {"type": "string"}
+      }
+    }
+  },
+  "additionalProperties": false
+}
