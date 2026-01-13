@@ -171,6 +171,24 @@ Build "Where The Crowlands," a sophisticated full-stack application for creating
 - `/app/tests/test_gridfs_and_timeline.py` - Comprehensive test suite
 - `/app/tests/test_spell_v2_pipeline.py` - V2 pipeline test suite
 
+### Session: January 13, 2026 - Invisible Helpers UX Refinement
+- **Email Capture First Flow** ✅
+  - Moved email capture to top of page, right after title
+  - New title: "Receive Your Intention & Join the Chaos"
+  - Flow: Email → Form → Checkout → Result
+  - All step transitions now scroll to top of page
+  
+- **Action Commitment Redesign** ✅
+  - Changed from single-select to multi-select checkboxes
+  - New commitment statement: "By creating this working, I understand that spellwork and storytelling are conduits to support real action..."
+  - Fun encouragement: "✨ Select all that call to you — the more, the merrier the chaos"
+  - Options: Mutual aid & legal defense, Community & neighbors, Vetted information sharing, Independent journalism, Civic engagement
+
+- **Email Capture Backend** ✅ 
+  - Emails stored in `invisible_helpers` MongoDB collection via `/api/invisible-helpers/battle-cry/generate`
+  - Tracks: email, generation_count, last_generated_at, source
+  - Limit enforcement: 3 generations per email for guests
+
 ### Session: January 13, 2026 - Invisible Helpers Copy Refinement
 - **Reduced Dion Fortune References** ✅
   - Intro now references Fortune only once for inspiration credit
