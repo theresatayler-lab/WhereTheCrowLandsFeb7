@@ -34,12 +34,12 @@ const BENEFICIARIES_OPTIONS = [
 ];
 
 const QUALITY_OPTIONS = [
-  { id: 'clarity', label: 'Clarity', glyph: '◇' },
-  { id: 'restraint', label: 'Restraint', glyph: '◇' },
-  { id: 'courage', label: 'Courage', glyph: '◇' },
-  { id: 'protection', label: 'Protection', glyph: '◇' },
-  { id: 'conscience', label: 'Conscience', glyph: '◇' },
-  { id: 'truth', label: 'Truth', glyph: '◇' },
+  { id: 'clarity', label: 'Clarity' },
+  { id: 'restraint', label: 'Restraint' },
+  { id: 'courage', label: 'Courage' },
+  { id: 'protection', label: 'Protection' },
+  { id: 'conscience', label: 'Conscience' },
+  { id: 'truth', label: 'Truth' },
 ];
 
 const PRACTICE_STYLE_OPTIONS = [
