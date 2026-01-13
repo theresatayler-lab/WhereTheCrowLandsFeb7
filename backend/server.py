@@ -770,11 +770,121 @@ async def get_ritual(ritual_id: str):
         raise HTTPException(status_code=404, detail='Ritual not found')
     return ritual
 
-# Timeline endpoints
+# Timeline endpoints (Legacy - simple version)
 @api_router.get('/timeline', response_model=List[TimelineEvent])
 async def get_timeline():
     events = await db.timeline_events.find({}, {'_id': 0}).sort('year', 1).to_list(100)
     return events
+
+# ============================================================================
+# ENHANCED TIMELINE V2 - Interactive Occult Revival Timeline
+# ============================================================================
+from timeline_models import (
+    TimelineEventEnhanced, TimelineFilterRequest, TimelineStatsResponse,
+    ConnectionGraphResponse, TAXONOMY_DATA
+)
+from timeline_service import (
+    seed_timeline_data, get_timeline_events, get_timeline_stats,
+    get_connection_graph, get_event_by_id, get_taxonomy_data,
+    add_timeline_event, update_timeline_event, delete_timeline_event
+)
+
+@api_router.get('/timeline/v2/events')
+async def get_timeline_v2(
+    categories: Optional[str] = None,
+    primary_categories: Optional[str] = None,
+    traditions: Optional[str] = None,
+    guides: Optional[str] = None,
+    start_year: Optional[int] = None,
+    end_year: Optional[int] = None,
+    importance: Optional[str] = None,
+    figures: Optional[str] = None,
+    search: Optional[str] = None,
+    limit: int = 200,
+    skip: int = 0
+):
+    """Get enhanced timeline events with filtering"""
+    # Build filter request from query params
+    filters = TimelineFilterRequest(
+        categories=[int(c) for c in categories.split(',')] if categories else None,
+        primary_categories=primary_categories.split(',') if primary_categories else None,
+        traditions=traditions.split(',') if traditions else None,
+        guides=guides.split(',') if guides else None,
+        date_range={"start": start_year, "end": end_year} if start_year or end_year else None,
+        importance=[int(i) for i in importance.split(',')] if importance else None,
+        figures=figures.split(',') if figures else None,
+        search=search
+    )
+    
+    # Seed data if needed
+    await seed_timeline_data(db)
+    
+    events = await get_timeline_events(db, filters, limit, skip)
+    return events
+
+@api_router.get('/timeline/v2/events/{event_id}')
+async def get_timeline_event_v2(event_id: str):
+    """Get a single timeline event by ID"""
+    event = await get_event_by_id(db, event_id)
+    if not event:
+        raise HTTPException(status_code=404, detail='Event not found')
+    return event
+
+@api_router.get('/timeline/v2/stats')
+async def get_timeline_stats_v2():
+    """Get timeline statistics"""
+    await seed_timeline_data(db)
+    stats = await get_timeline_stats(db)
+    return stats
+
+@api_router.get('/timeline/v2/graph')
+async def get_timeline_graph(
+    categories: Optional[str] = None,
+    traditions: Optional[str] = None,
+    guides: Optional[str] = None
+):
+    """Get network graph data for visualization"""
+    filters = TimelineFilterRequest(
+        categories=[int(c) for c in categories.split(',')] if categories else None,
+        traditions=traditions.split(',') if traditions else None,
+        guides=guides.split(',') if guides else None
+    )
+    await seed_timeline_data(db)
+    graph = await get_connection_graph(db, filters)
+    return graph
+
+@api_router.get('/timeline/v2/taxonomy')
+async def get_taxonomy():
+    """Get full taxonomy data for frontend"""
+    return await get_taxonomy_data()
+
+@api_router.post('/timeline/v2/events')
+async def create_timeline_event(event: dict, current_user: dict = Depends(get_current_user)):
+    """Create a new timeline event (requires auth)"""
+    if current_user.get('subscription_tier') != 'pro':
+        raise HTTPException(status_code=403, detail='Pro subscription required')
+    result = await add_timeline_event(db, event)
+    return {"success": True, "event": result}
+
+@api_router.put('/timeline/v2/events/{event_id}')
+async def update_timeline_event_v2(event_id: str, updates: dict, current_user: dict = Depends(get_current_user)):
+    """Update a timeline event (requires auth)"""
+    if current_user.get('subscription_tier') != 'pro':
+        raise HTTPException(status_code=403, detail='Pro subscription required')
+    result = await update_timeline_event(db, event_id, updates)
+    if not result:
+        raise HTTPException(status_code=404, detail='Event not found')
+    return {"success": True, "event": result}
+
+@api_router.delete('/timeline/v2/events/{event_id}')
+async def delete_timeline_event_v2(event_id: str, current_user: dict = Depends(get_current_user)):
+    """Delete a timeline event (requires auth)"""
+    if current_user.get('subscription_tier') != 'pro':
+        raise HTTPException(status_code=403, detail='Pro subscription required')
+    success = await delete_timeline_event(db, event_id)
+    if not success:
+        raise HTTPException(status_code=404, detail='Event not found')
+    return {"success": True}
 
 # Archetype personas for AI spell generation
 ARCHETYPE_PERSONAS = {
