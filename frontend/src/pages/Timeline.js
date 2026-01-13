@@ -270,7 +270,9 @@ const EventCard = ({ event, isExpanded, onToggle, view }) => {
                 {event.title}
               </h3>
               {view === 'grid' && (
-                <span className="font-cinzel text-sm text-cream/60">{event.year}</span>
+                <span className="font-cinzel text-sm text-cream/60">
+                  {event.year < 0 ? `${Math.abs(event.year)} BCE` : event.year}
+                </span>
               )}
             </div>
           </div>
