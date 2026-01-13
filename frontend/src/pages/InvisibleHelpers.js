@@ -489,63 +489,60 @@ export const InvisibleHelpers = () => {
           </div>
         </div>
       </section>
+      )}
 
-      {/* Ethical Badge */}
-      <div className="text-center pb-6">
-        <span className="inline-block px-4 py-2 bg-slate-900/50 border border-slate-700/50 rounded-full text-slate-500 text-xs">
-          No harm · No targets · No coercion · Only protection, clarity, and lawful return
-        </span>
-      </div>
-
-      {/* Main Content */}
-      <section className="px-4 pb-16">
-        <div className="max-w-2xl mx-auto">
-          <AnimatePresence mode="wait">
-            {step === 'form' && (
-              <FormStep
-                formData={formData}
-                onFormChange={handleFormChange}
-                onToggleBeneficiary={toggleBeneficiary}
-                isValid={isFormValid()}
-                onContinue={handleContinueToEmail}
-              />
-            )}
-            
-            {step === 'email' && (
-              <EmailStep
-                email={email}
-                setEmail={setEmail}
-                onSubmit={handleEmailSubmit}
-                onBack={() => setStep('form')}
-              />
-            )}
-            
-            {step === 'checkout' && (
-              <CheckoutStep
-                email={email}
-                onCheckout={handleCheckout}
-                onBack={() => setStep('email')}
-                checkingOut={checkingOut}
-              />
-            )}
-            
-            {step === 'result' && (
-              <ResultStep
-                working={generatedWorking}
-                generating={generating}
-                workingRef={workingRef}
-                onCopy={handleCopyToClipboard}
-                onDownload={handleDownloadPDF}
-                onVariation={handleCreateVariation}
-                onReset={resetAll}
-                copied={copied}
-                generationCount={generationCount}
-                maxGenerations={MAX_FREE_GENERATIONS}
-              />
-            )}
-          </AnimatePresence>
+      {/* Ethical Badge - Show when not on email step */}
+      {step !== 'email' && (
+        <div className="text-center pb-6">
+          <span className="inline-block px-4 py-2 bg-slate-900/50 border border-slate-700/50 rounded-full text-slate-500 text-xs">
+            No harm · No targets · No coercion · Only protection, clarity, and lawful return
+          </span>
         </div>
-      </section>
+      )}
+
+      {/* Main Content - Form, Checkout, and Result steps */}
+      {step !== 'email' && (
+        <section className="px-4 pb-16">
+          <div className="max-w-2xl mx-auto">
+            <AnimatePresence mode="wait">
+              {step === 'form' && (
+                <FormStep
+                  formData={formData}
+                  onFormChange={handleFormChange}
+                  onToggleBeneficiary={toggleBeneficiary}
+                  onToggleAction={toggleActionCommitment}
+                  isValid={isFormValid()}
+                  onContinue={handleContinueToCheckout}
+                />
+              )}
+              
+              {step === 'checkout' && (
+                <CheckoutStep
+                  email={email}
+                  onCheckout={handleCheckout}
+                  onBack={() => setStep('form')}
+                  checkingOut={checkingOut}
+                />
+              )}
+              
+              {step === 'result' && (
+                <ResultStep
+                  working={generatedWorking}
+                  generating={generating}
+                  workingRef={workingRef}
+                  onCopy={handleCopyToClipboard}
+                  onDownload={handleDownloadPDF}
+                  onVariation={handleCreateVariation}
+                  onReset={resetAll}
+                  copied={copied}
+                  generationCount={generationCount}
+                  maxGenerations={MAX_FREE_GENERATIONS}
+                />
+              )}
+            </AnimatePresence>
+          </div>
+        </section>
+      )}
 
       {/* Closing */}
       <section className="py-12 px-4 border-t border-slate-800">
