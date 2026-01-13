@@ -108,16 +108,23 @@ export const SpellBlockRenderer = ({
     <div className="space-y-4" data-testid="spell-block-renderer">
       {/* Persona Lock Header */}
       {personaLock.props && (
-        <div className="flex items-center gap-2 text-xs text-muted-foreground mb-2">
-          <Sparkles className="w-3 h-3" />
+        <div className={cn(
+          "flex items-center gap-2 text-xs mb-2",
+          archetypeStyle.textMuted || "text-muted-foreground"
+        )}>
+          <Sparkles className={cn("w-3 h-3", archetypeStyle.accentColor || "text-primary")} />
           <span>{personaLock.props.join(' • ')} • {personaLock.sensory_cue}</span>
         </div>
       )}
 
       {/* Canon Anchor Badge */}
       {canonAnchor.title && (
-        <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 rounded-full text-xs mb-4">
-          <BookOpen className="w-3 h-3" />
+        <div className={cn(
+          "inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs mb-4 border",
+          archetypeStyle.bgAccent || "bg-primary/10",
+          archetypeStyle.borderColor || "border-primary/30"
+        )}>
+          <BookOpen className={cn("w-3 h-3", archetypeStyle.accentColor || "text-primary")} />
           <span>{canonAnchor.title}</span>
           {canonAnchor.year && <span className="text-muted-foreground">({canonAnchor.year})</span>}
         </div>
