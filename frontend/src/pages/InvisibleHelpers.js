@@ -358,29 +358,27 @@ export const InvisibleHelpers = () => {
             <div className="p-6 md:p-8">
               <div className="prose prose-invert prose-slate max-w-none text-sm">
                 <p className="text-slate-300 leading-relaxed mb-4">
-                  In 1940, as bombs fell on London and fear gripped a nation, a remarkable woman named 
-                  <span className="text-amber-500/90"> Dion Fortune</span> did something extraordinary. 
-                  She gathered her scattered community—unable to meet in person—and organized them into 
-                  what she called an <em className="text-slate-200">Invisible Army</em>. Every Sunday, 
-                  at the same hour, they would sit in meditation, visualizing protection, clarity, and 
-                  the strengthening of all who resisted tyranny.
+                  In times of uncertainty, people have always gathered—not just to act, but to 
+                  <span className="text-slate-200"> steady themselves before acting</span>. During 
+                  World War II, groups practiced coordinated meditation for protection and clarity. 
+                  In the 1960s, activists paired inner work with outer resistance. Today, from 
+                  <span className="text-amber-500/80"> &ldquo;Etsy witches&rdquo;</span> making headlines 
+                  to artists weaving meaning into protest, people are rediscovering an old truth.
                 </p>
                 
                 <p className="text-slate-400 leading-relaxed mb-4">
-                  She wasn&apos;t naive. She knew magic doesn&apos;t replace action. But she also knew 
-                  that <span className="text-slate-300">when the world feels like it&apos;s burning, 
-                  steadying the inner field matters</span>. Her letters from that period—later published 
-                  as <em>The Magical Battle of Britain</em>—remain a testament to disciplined, ethical 
-                  spiritual work in times of crisis.
+                  <span className="text-slate-300">When the world feels like it&apos;s burning, 
+                  steadying the inner field matters.</span> Not as a replacement for action—never 
+                  that—but as a companion to it. Focused intention, done with clean hands and a 
+                  clear heart, can be part of how we show up.
                 </p>
 
                 <p className="text-slate-400 leading-relaxed">
-                  Today, we find ourselves in another moment that calls for both action and intention. 
-                  From the <span className="text-amber-500/80">&ldquo;Etsy witches&rdquo;</span> who made 
-                  headlines hexing injustice, to artists and activists weaving meaning into resistance, 
-                  people are rediscovering what Fortune knew: <span className="text-slate-300">that 
-                  focused intention, done with clean hands and a clear heart, can be part of how we 
-                  show up</span>.
+                  This portal draws inspiration from <span className="text-amber-500/90">Dion Fortune&apos;s</span> wartime 
+                  spiritual work and the long tradition of ethical, protective practice. What you&apos;ll 
+                  create here is a <span className="text-slate-200">working</span>—a structured intention 
+                  that returns misused power to natural law, strengthens those who protect, and steadies 
+                  your own resolve. No curses. No targets. Just clarity, protection, and lawful return.
                 </p>
               </div>
             </div>
