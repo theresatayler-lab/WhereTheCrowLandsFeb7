@@ -514,7 +514,7 @@ export const InvisibleHelpers = () => {
                   to artists weaving meaning into protest, people are rediscovering an old truth.
                 </p>
                 
-                <p className="text-navy-dark/70 leading-relaxed mb-4 font-crimson">
+                <p className="text-navy-dark/70 leading-relaxed mb-3 font-crimson">
                   <span className="text-navy-dark">When the world feels like it's burning, 
                   steadying the inner field matters.</span> Not as a replacement for action—never 
                   that—but as a companion to it. Focused intention, done with clean hands and a 
