@@ -40,7 +40,7 @@ const BLOCK_LABELS = {
   bird_oracle: 'Bird Oracle',
   ward: 'Protection Ward',
   song_prompt: 'Voice Work',
-  evidence_card: 'Evidence',
+  evidence_card: 'Inspiration',
   journal_prompt: 'Journal',
   safety_note: 'Safety Note'
 };
