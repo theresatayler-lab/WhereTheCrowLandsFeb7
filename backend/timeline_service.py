@@ -14,9 +14,10 @@ import re
 
 logger = logging.getLogger(__name__)
 
-# Use expanded events from DeepSeek
-INITIAL_TIMELINE_EVENTS = EXPANDED_TIMELINE_EVENTS
-EXPECTED_EVENT_COUNT = len(EXPANDED_TIMELINE_EVENTS)
+# Use all events including extended historical events
+from timeline_events_expanded import ALL_TIMELINE_EVENTS
+INITIAL_TIMELINE_EVENTS = ALL_TIMELINE_EVENTS
+EXPECTED_EVENT_COUNT = len(ALL_TIMELINE_EVENTS)
 
 # ============================================================================
 # SERVICE FUNCTIONS
