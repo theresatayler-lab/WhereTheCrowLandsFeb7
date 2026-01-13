@@ -344,7 +344,7 @@ export const InvisibleHelpers = () => {
               Magical Battle Cry Intention
             </h1>
             <p className="text-amber-600/70 text-sm italic">
-              Inspired by the Invisible Helpers
+              A Working for Protection & Clarity
             </p>
           </motion.div>
         </div>
