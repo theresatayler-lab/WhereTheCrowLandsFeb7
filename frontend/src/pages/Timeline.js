@@ -242,8 +242,9 @@ const EventCard = ({ event, isExpanded, onToggle, view }) => {
             boxShadow: `0 0 20px ${taxonomyData.color}40`
           }}
         >
-          <span className="font-cinzel text-xs sm:text-sm font-bold" style={{ color: taxonomyData.color }}>
-            {event.year}
+          <span className="font-cinzel text-[10px] sm:text-xs font-bold text-center leading-tight" style={{ color: taxonomyData.color }}>
+            {event.year < 0 ? `${Math.abs(event.year)}` : event.year}
+            {event.year < 0 && <span className="block text-[8px]">BCE</span>}
           </span>
         </div>
       )}
