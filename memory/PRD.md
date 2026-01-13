@@ -137,6 +137,7 @@ Build "Where The Crowlands," a sophisticated full-stack application for creating
 - [x] MongoDB DocumentTooLarge Error - Fixed with GridFS (COMPLETED Jan 13, 2026)
 - [x] Timeline images - 79 events with Unsplash images (COMPLETED Jan 13, 2026)
 - [x] Production Prompt Pack V2 - 4-stage pipeline (COMPLETED Dec 2025)
+- [x] Visual Consistency Across Personas - Distinct color palettes for all 4 guides (COMPLETED Jan 13, 2026)
 - [ ] Visual Polish & Ornament Library (20 corners, 12 dividers, 24 glyphs) - BLOCKED: awaiting user assets
 
 ### P1 - Medium Priority
