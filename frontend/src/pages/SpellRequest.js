@@ -67,9 +67,8 @@ const TONES = [
 
 const BELIEF_BOUNDARIES = [
   { id: 'secular_reflective', label: 'Secular & Reflective', description: 'Psychology-focused, no supernatural framing' },
-  { id: 'spiritual_grounded', label: 'Spiritual & Grounded', description: 'Energy work, universe, nature-based' },
-  { id: 'deity_friendly', label: 'Deity Friendly', description: 'Open to invoking specific divine figures' },
-  { id: 'ancestor_friendly', label: 'Ancestor Friendly', description: 'Connecting with lineage and those who came before' }
+  { id: 'spiritual_grounded', label: 'Spiritual & Grounded', description: 'Energy work, symbolic, open to mystery' },
+  { id: 'practitioner', label: 'Practitioner', description: 'Direct magical framing, experienced seeker' }
 ];
 
 const ANCHORS = [
