@@ -501,15 +501,39 @@ const EraNav = ({ events, activeEra, setActiveEra }) => {
 // DECADE NAVIGATION (For detailed filtering within eras)
 // ============================================================================
 
-const DecadeNav = ({ events, activeDecade, setActiveDecade }) => {
+const DecadeNav = ({ events, activeDecade, setActiveDecade, activeEra }) => {
   const decades = useMemo(() => {
     const decadeSet = new Set();
     events.forEach(e => {
-      const decade = Math.floor(e.year / 10) * 10;
+      // Skip very ancient dates for decade view
+      if (e.year < -500) return;
+      
+      // Handle negative years (BCE)
+      let decade;
+      if (e.year < 0) {
+        decade = Math.ceil(e.year / 10) * 10;
+      } else {
+        decade = Math.floor(e.year / 10) * 10;
+      }
       decadeSet.add(decade);
     });
-    return Array.from(decadeSet).sort();
+    return Array.from(decadeSet).sort((a, b) => a - b);
   }, [events]);
+
+  // Only show decades relevant to current era filter
+  const filteredDecades = useMemo(() => {
+    if (!activeEra) return decades.slice(-10); // Show last 10 decades if no era filter
+    const era = ERA_DEFINITIONS[activeEra];
+    if (!era) return decades;
+    return decades.filter(d => d >= era.start && d < era.end);
+  }, [decades, activeEra]);
+
+  const formatDecade = (decade) => {
+    if (decade < 0) {
+      return `${Math.abs(decade)}s BCE`;
+    }
+    return `${decade}s`;
+  };
 
   return (
     <div className="flex items-center gap-2 overflow-x-auto pb-2">
