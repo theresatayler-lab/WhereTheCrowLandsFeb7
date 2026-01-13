@@ -639,7 +639,7 @@ export const SpellRequest = () => {
               onClick={handleNewSpell}
               className="btn-ritual-ghost mb-6 px-5 py-2.5 rounded-sm flex items-center gap-2"
             >
-              ← Create Another Spell
+              ← Begin Another Working
             </button>
             
             {/* Images loading indicator */}
