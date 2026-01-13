@@ -912,10 +912,10 @@ export const InvisibleHelpers = () => {
                   
                   <div 
                     ref={workingRef}
-                    className="relative z-10 bg-cream/95 p-6 sm:p-8 space-y-6"
+                    className="relative z-10 bg-cream/95 p-4 sm:p-6 space-y-3"
                   >
                     {/* Header */}
-                    <div className="text-center border-b-2 border-gold/30 pb-4">
+                    <div className="text-center border-b border-gold/30 pb-3">
                       <h2 className="phantasmagoria-hero text-xl sm:text-2xl text-crimson">Magical Battle Cry Intention</h2>
                       <p className="text-navy-dark/60 text-xs italic font-crimson mt-1">A Structured Intention for Protection & Clarity</p>
                     </div>
