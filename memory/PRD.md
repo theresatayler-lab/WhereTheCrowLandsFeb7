@@ -166,4 +166,6 @@ Build "Where The Crowlands," a sophisticated full-stack application for creating
 
 ## Test Reports
 - `/app/test_reports/iteration_6.json` - GridFS and Timeline tests (14/14 passed)
+- `/app/test_reports/iteration_7.json` - V2 Pipeline tests (6/7 passed, 1 fixed)
 - `/app/tests/test_gridfs_and_timeline.py` - Comprehensive test suite
+- `/app/tests/test_spell_v2_pipeline.py` - V2 pipeline test suite
