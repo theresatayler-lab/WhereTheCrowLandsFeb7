@@ -11,6 +11,30 @@ Build "Where The Crowlands," a sophisticated full-stack application for creating
 
 ## What's Been Implemented
 
+### Session: January 13, 2026
+- **Interactive Occult Revival Timeline (NEW)**
+  - Enhanced timeline page with 3 view modes: Timeline (vertical), Grid, Network (placeholder)
+  - 13-category occult taxonomy integration from master chart
+  - Decade navigation (1880s-1950s) with filtering
+  - Taxonomy category filters with colored icons
+  - Guide lens filtering (Shigg, Cathleen, Katherine, Theresa)
+  - Search functionality
+  - Expandable event cards with:
+    - Significance, key figures, traditions
+    - Source citations with quality tiers
+    - Location data
+    - Guide relevance indicators (colored dots)
+  - 13 seed events covering 1888-1951 occult revival period
+  - New backend models: `TimelineEventEnhanced`, `TimelineFilterRequest`, `ConnectionGraphResponse`
+  - New API endpoints:
+    - `GET /api/timeline/v2/events` - Filtered timeline events
+    - `GET /api/timeline/v2/events/{id}` - Single event detail
+    - `GET /api/timeline/v2/stats` - Timeline statistics
+    - `GET /api/timeline/v2/graph` - Network graph data
+    - `GET /api/timeline/v2/taxonomy` - Full taxonomy configuration
+    - `POST/PUT/DELETE /api/timeline/v2/events` - Admin CRUD (Pro only)
+  - Created DeepSeek briefing document for content expansion
+
 ### Session: January 12, 2026
 - **TC Phantasmagoria Font Integration**
   - Custom OTF font installed at `/app/frontend/public/fonts/grimoire-accent.otf`
