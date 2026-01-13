@@ -164,6 +164,7 @@ function App() {
           <Route path="/corrie-tarot" element={<CorrieTarot />} />
           <Route path="/early-access" element={<EarlyAccessPage />} />
           <Route path="/library" element={<Library />} />
+          <Route path="/invisible-helpers" element={<InvisibleHelpers />} />
           <Route path="/upgrade" element={<Upgrade />} />
           <Route path="/payment-success" element={<PaymentSuccess />} />
           <Route path="/about" element={<About />} />
