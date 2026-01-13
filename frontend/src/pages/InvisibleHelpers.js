@@ -315,6 +315,9 @@ export const InvisibleHelpers = () => {
 
   const formatWorkingAsText = (working) => {
     let text = `MAGICAL BATTLE CRY INTENTION\nA Structured Intention for Protection & Clarity\n\n`;
+    if (working.before_you_begin) {
+      text += `BEFORE YOU BEGIN\n${working.before_you_begin}\n\n`;
+    }
     text += `INTENTION\n${working.intention}\n\n`;
     text += `ANCHOR PHRASE\n${working.anchor_phrase}\n\n`;
     text += `ETHICAL FRAME\n${working.ethical_frame}\n\n`;
@@ -327,6 +330,9 @@ export const InvisibleHelpers = () => {
       }
     });
     text += `\nACTION PLEDGE\n${working.action_pledge}\n\n`;
+    if (working.after_the_spell) {
+      text += `AFTER THE SPELL\n${working.after_the_spell}\n\n`;
+    }
     text += `---\n${working.closing_truth}`;
     return text;
   };
