@@ -220,7 +220,7 @@ export const InvisibleHelpers = () => {
           primary_quality: form.primary_quality,
           practice_style: form.practice_style,
           time_horizon: form.time_horizon,
-          action_pledge: form.action_pledge,
+          action_pledge: form.action_commitments?.join(', ') || '',
         }),
       });
       
@@ -230,7 +230,7 @@ export const InvisibleHelpers = () => {
         setGeneratedWorking(data.working);
         setGenerationCount(data.generation_count || generationCount + 1);
         localStorage.setItem('ih_generation_count', String(data.generation_count || generationCount + 1));
-        toast.success('Your working has been generated and emailed to you.');
+        toast.success('Your working has been generated!');
         localStorage.removeItem('ih_pending_email');
         localStorage.removeItem('ih_pending_form');
       } else if (data.limit_reached) {
