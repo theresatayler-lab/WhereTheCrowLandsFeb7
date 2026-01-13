@@ -314,13 +314,17 @@ const ColdOpenBlock = ({ content, archetypeStyle }) => (
 const MaterialsBlock = ({ content, archetypeStyle }) => (
   <div className="space-y-3" data-testid="materials-block">
     {content.items?.map((item, i) => (
-      <div key={i} className="flex items-start gap-3 p-3 bg-muted/30 rounded-lg">
+      <div key={i} className={cn(
+        "flex items-start gap-3 p-3 rounded-lg border",
+        archetypeStyle.bgAccent || "bg-muted/30",
+        archetypeStyle.borderColor ? archetypeStyle.borderColor.replace('border-', 'border-') + '/30' : "border-border/30"
+      )}>
         <Feather className={cn("w-4 h-4 mt-1 flex-shrink-0", archetypeStyle.accentColor || "text-primary")} />
         <div className="flex-1">
           <div className="font-medium">{item.name}</div>
-          <div className="text-sm text-muted-foreground">{item.purpose}</div>
+          <div className={cn("text-sm", archetypeStyle.textMuted || "text-muted-foreground")}>{item.purpose}</div>
           {item.substitution && (
-            <div className="text-xs text-muted-foreground mt-1">
+            <div className={cn("text-xs mt-1", archetypeStyle.textMuted || "text-muted-foreground")}>
               <span className="font-medium">Alternative:</span> {item.substitution}
             </div>
           )}
@@ -331,7 +335,9 @@ const MaterialsBlock = ({ content, archetypeStyle }) => (
       </div>
     ))}
     {content.gathering_note && (
-      <p className="text-sm italic text-muted-foreground mt-4">&ldquo;{content.gathering_note}&rdquo;</p>
+      <p className={cn("text-sm italic mt-4", archetypeStyle.textMuted || "text-muted-foreground")}>
+        &ldquo;{content.gathering_note}&rdquo;
+      </p>
     )}
   </div>
 );
