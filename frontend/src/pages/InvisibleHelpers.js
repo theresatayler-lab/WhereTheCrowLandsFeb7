@@ -360,7 +360,7 @@ export const InvisibleHelpers = () => {
       time_horizon: '',
       practice_style: '',
       anchor_length: 'short',
-      action_pledge: '',
+      action_intention: '',
       custom_name: '',
       patterns_to_neutralize: [],
       distortion_channels: [],
