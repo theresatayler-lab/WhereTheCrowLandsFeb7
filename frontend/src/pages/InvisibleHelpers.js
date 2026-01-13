@@ -780,24 +780,36 @@ const CheckoutStep = ({ email, onCheckout, onBack, checkingOut }) => (
     
     <div className="text-center mb-6">
       <Sparkles className="w-8 h-8 mx-auto mb-3 text-amber-500/70" />
-      <h2 className="font-cinzel text-lg text-slate-200 mb-2">Support This Work</h2>
-      <p className="text-slate-500 text-sm">
-        This portal is offered freely. If you&apos;re able, consider a pay-what-you-choose contribution.
-      </p>
-      <p className="text-slate-600 text-xs mt-2">
-        Sending to: {email}
+      <h2 className="font-cinzel text-lg text-slate-200 mb-3">Support This Work</h2>
+      <div className="text-slate-400 text-sm space-y-3 text-left">
+        <p>
+          This portal is offered freely. If you&apos;re able, consider a pay-what-you-choose contribution.
+        </p>
+        <p>
+          Each spell costs the witchy woman behind the veil approximately <span className="text-amber-500">$0.02–0.05</span> in 
+          AI generation costs, and she&apos;s building this whole thing as we speak.
+        </p>
+        <p className="text-slate-500">
+          Please continue to your spell with or without a donation!
+        </p>
+      </div>
+      <p className="text-amber-600/70 text-xs mt-4 italic font-cinzel">
+        So it is, love only, the war is TAMAM SHUD
       </p>
     </div>
     
     <div className="space-y-3">
+      {/* Free button - stands out in rose/pink */}
       <button
         onClick={() => onCheckout(0)}
         disabled={checkingOut}
-        className="w-full py-3 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded text-slate-300 text-sm transition-colors disabled:opacity-50"
+        className="w-full py-3 bg-rose-900/30 hover:bg-rose-900/50 border border-rose-600/50 rounded text-rose-200 text-sm font-medium transition-colors disabled:opacity-50"
         data-testid="checkout-free-btn"
       >
-        {checkingOut ? <Loader2 className="w-4 h-4 animate-spin mx-auto" /> : 'Continue Free'}
+        {checkingOut ? <Loader2 className="w-4 h-4 animate-spin mx-auto" /> : '✨ Continue Free — No Judgement ✨'}
       </button>
+      
+      <p className="text-slate-600 text-xs text-center">— or support the work —</p>
       
       <div className="grid grid-cols-3 gap-2">
         {[500, 1000, 2500].map(amount => (
