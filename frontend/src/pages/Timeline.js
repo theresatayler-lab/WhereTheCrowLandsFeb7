@@ -433,7 +433,72 @@ const ViewToggle = ({ view, setView }) => {
 };
 
 // ============================================================================
-// DECADE NAVIGATION
+// ERA NAVIGATION (For extended historical timeline)
+// ============================================================================
+
+const ERA_DEFINITIONS = {
+  ancient: { label: "Ancient", start: -2000, end: 500, color: "#3a506b" },
+  medieval: { label: "Medieval", start: 500, end: 1500, color: "#5c6b73" },
+  renaissance: { label: "Renaissance", start: 1500, end: 1700, color: "#8e6e53" },
+  enlightenment: { label: "18th Century", start: 1700, end: 1800, color: "#9d8ca1" },
+  victorian: { label: "19th Century", start: 1800, end: 1900, color: "#6b5b95" },
+  revival: { label: "Occult Revival", start: 1880, end: 1951, color: "#d4a84b" },
+  postwar: { label: "Post-War", start: 1951, end: 1990, color: "#8b2232" },
+  contemporary: { label: "Contemporary", start: 1990, end: 2030, color: "#a29bfe" },
+};
+
+const EraNav = ({ events, activeEra, setActiveEra }) => {
+  // Detect which eras have events
+  const availableEras = useMemo(() => {
+    const erasWithEvents = new Set();
+    events.forEach(e => {
+      Object.entries(ERA_DEFINITIONS).forEach(([key, era]) => {
+        if (e.year >= era.start && e.year < era.end) {
+          erasWithEvents.add(key);
+        }
+      });
+    });
+    return Object.entries(ERA_DEFINITIONS).filter(([key]) => erasWithEvents.has(key));
+  }, [events]);
+
+  if (availableEras.length <= 1) return null;
+
+  return (
+    <div className="flex items-center gap-2 overflow-x-auto pb-2 mb-4">
+      <span className="font-montserrat text-xs text-cream/50 mr-2">Era:</span>
+      <button
+        onClick={() => setActiveEra(null)}
+        className={`px-3 py-1.5 rounded-full font-montserrat text-xs whitespace-nowrap transition-all ${
+          activeEra === null
+            ? 'bg-gold text-navy-dark'
+            : 'bg-navy-mid/50 text-cream/70 hover:text-cream border border-gold/20'
+        }`}
+      >
+        All Eras
+      </button>
+      {availableEras.map(([key, era]) => (
+        <button
+          key={key}
+          onClick={() => setActiveEra(key)}
+          className={`px-3 py-1.5 rounded-full font-montserrat text-xs whitespace-nowrap transition-all border ${
+            activeEra === key
+              ? 'text-navy-dark'
+              : 'bg-navy-mid/50 text-cream/70 hover:text-cream border-gold/20'
+          }`}
+          style={{
+            backgroundColor: activeEra === key ? era.color : undefined,
+            borderColor: activeEra === key ? era.color : undefined
+          }}
+        >
+          {era.label}
+        </button>
+      ))}
+    </div>
+  );
+};
+
+// ============================================================================
+// DECADE NAVIGATION (For detailed filtering within eras)
 // ============================================================================
 
 const DecadeNav = ({ events, activeDecade, setActiveDecade }) => {
