@@ -170,6 +170,17 @@ Build "Where The Crowlands," a sophisticated full-stack application for creating
 - `/app/tests/test_gridfs_and_timeline.py` - Comprehensive test suite
 - `/app/tests/test_spell_v2_pipeline.py` - V2 pipeline test suite
 
+### Session: January 13, 2026 - Visual Overhaul & Persona Consistency
+- **Persona-Specific Color Palettes Implemented** ✅
+  - Added `textMuted` property to archetypeStyle passed to SpellBlockRenderer
+  - All 4 guides now have distinct, consistent color schemes throughout the V3 block rendering:
+    - **Shigg**: Amber/Copper tones (`border-amber-600`, `text-amber-500`, `bg-amber-900/15`)
+    - **Cathleen**: Teal/Emerald tones (`border-teal-600`, `text-teal-400`, `bg-teal-900/15`)
+    - **Katherine**: Violet/Purple tones (`border-violet-600`, `text-violet-400`, `bg-violet-900/15`)
+    - **Theresa**: Indigo/Slate tones (`border-indigo-500`, `text-indigo-400`, `bg-indigo-900/15`)
+  - Colors applied to: Cold Open, Materials, Choice, Stepper, Lore Vignette, Reflection, Closing, Bird Oracle, Ward, Song Prompt, Evidence Card (Inspiration), Journal Prompt, Safety Note
+  - Verified visually with test V3 spells for each persona
+
 ### Session: December 2025 - Blocks-Based Spell System
 - **V3 Blocks Pipeline Implementation** ✅
   - Extended schema with `blocks[]` array for typed block content
