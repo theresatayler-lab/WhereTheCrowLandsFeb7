@@ -87,11 +87,11 @@ const ARCHETYPE_STYLES = {
     cardGradient: 'from-stone-800/90 via-stone-700/80 to-stone-800/90',
   },
   theresa: {
-    borderColor: 'border-primary',
-    accentColor: 'text-primary',
-    bgAccent: 'bg-primary/5',
-    headerGradient: 'from-primary/10 via-secondary/10 to-transparent',
-    cardGradient: 'from-violet-900/90 via-violet-800/80 to-violet-900/90',
+    borderColor: 'border-indigo-600',
+    accentColor: 'text-indigo-400',
+    bgAccent: 'bg-indigo-900/10',
+    headerGradient: 'from-indigo-900/20 via-slate-800/10 to-transparent',
+    cardGradient: 'from-slate-900/90 via-indigo-900/80 to-slate-900/90',
   },
   neutral: {
     borderColor: 'border-border',
