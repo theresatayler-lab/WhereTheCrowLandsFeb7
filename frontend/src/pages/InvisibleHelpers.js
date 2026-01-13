@@ -335,11 +335,11 @@ export const InvisibleHelpers = () => {
       primary_quality: '',
       practice_style: '',
       time_horizon: '',
-      action_pledge: '',
+      action_commitments: [],
     });
     setEmail('');
     setGeneratedWorking(null);
-    setStep('form');
+    setStep('email');
   };
 
   return (
