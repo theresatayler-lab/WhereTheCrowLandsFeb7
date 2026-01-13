@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { 
   Moon, BookOpen, Users, MapPin, Scroll, Clock, Bot, Sparkles, User, LogOut, 
   Menu, X, HelpCircle, Shield, Feather, ChevronDown, Wand2, Eye, Library,
-  Crown, Image
+  Crown, Image, Compass
 } from 'lucide-react';
 
 // Dropdown component
