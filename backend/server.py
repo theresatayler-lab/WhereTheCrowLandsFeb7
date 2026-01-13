@@ -814,12 +814,26 @@ def sanitize_input(text: str) -> str:
     return result
 
 def check_banned_terms(text: str) -> List[str]:
-    """Check for banned terms in text"""
+    """Check for banned terms in text - context-aware"""
     found = []
     text_lower = text.lower()
-    for term in BANNED_TERMS:
+    
+    # Check absolute bans first
+    for term in BANNED_TERMS_ABSOLUTE:
+        if term in text_lower:
+            # Allow "curse" in context of "not a curse" or "does not curse"
+            if term == 'curse' and ('not a curse' in text_lower or 'does not curse' in text_lower):
+                continue
+            # Allow "hex" in context of "not a hex"
+            if term == 'hex' and ('not a hex' in text_lower or 'does not hex' in text_lower):
+                continue
+            found.append(term)
+    
+    # Check contextual bans
+    for term in BANNED_TERMS_STRICT:
         if term in text_lower:
             found.append(term)
+    
     return found
 
 # System prompt for Fortune-aligned working generation
