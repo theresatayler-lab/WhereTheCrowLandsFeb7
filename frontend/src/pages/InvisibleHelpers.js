@@ -415,13 +415,13 @@ export const InvisibleHelpers = () => {
                         library, part workshop, part community.
                       </p>
 
-                      <h3 className="font-cinzel text-amber-600/80 text-base mb-3">Fortune&apos;s Principles</h3>
+                      <h3 className="font-cinzel text-amber-600/80 text-base mb-3">Guiding Principles</h3>
                       <p className="text-slate-400 leading-relaxed mb-3">
-                        Dion Fortune was adamant about several things that guide this working:
+                        Ethical magical work across traditions shares common principles:
                       </p>
                       <ul className="text-slate-400 space-y-2 mb-4">
                         <li><span className="text-slate-300">Language directs force</span> — vague or emotional wording causes rebound</li>
-                        <li><span className="text-slate-300">Magic that violates free will rebounds</span> — we redirect, never strike</li>
+                        <li><span className="text-slate-300">Work that violates free will rebounds</span> — we redirect, never strike</li>
                         <li><span className="text-slate-300">Justice belongs to impersonal law</span> — not personal vengeance</li>
                         <li><span className="text-slate-300">Defense and protection over aggression</span> — always</li>
                       </ul>
@@ -431,20 +431,20 @@ export const InvisibleHelpers = () => {
                         This is a <span className="text-slate-200">Neutralizing Return to Source via Higher Law</span>. 
                         It doesn&apos;t curse. It doesn&apos;t attack. It returns misused power—distortion, 
                         coercion, dehumanization—to the impersonal law that governs consequence. Think of it 
-                        as redirecting dark energy back to where it came from, transmuted into accountability 
+                        as redirecting energy back to where it came from, transmuted into accountability 
                         rather than harm.
                       </p>
                       
                       <p className="text-slate-400 leading-relaxed mb-4">
-                        We&apos;re here to <span className="text-amber-500/80">create chaos, not catastrophe</span>. 
-                        A little disruption to unjust systems. A little sand in the gears of cruelty. But always 
-                        with clean hands, always paired with real-world action, and always remembering that 
-                        the goal is protection and clarity—not revenge.
+                        The goal is <span className="text-amber-500/80">disruption, not destruction</span>. 
+                        A little sand in the gears of cruelty. But always with clean hands, always paired 
+                        with real-world action, and always remembering that the goal is protection and 
+                        clarity—not revenge.
                       </p>
 
                       <div className="bg-amber-900/10 border border-amber-900/30 rounded-lg p-4 mt-4">
                         <p className="text-amber-200/80 text-xs italic m-0">
-                          &ldquo;Magic does not replace resistance. It steadies those who resist.&rdquo;
+                          &ldquo;Inner work does not replace resistance. It steadies those who resist.&rdquo;
                         </p>
                       </div>
                     </div>
