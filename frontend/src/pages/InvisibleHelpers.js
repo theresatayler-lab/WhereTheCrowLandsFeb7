@@ -179,8 +179,7 @@ export const InvisibleHelpers = () => {
     const base = formData.beneficiaries.length > 0 &&
                  formData.primary_quality &&
                  formData.time_horizon &&
-                 formData.practice_style &&
-                 formData.action_pledge;
+                 formData.practice_style;
     
     if (activeBuilder === 'lawful_return') {
       return base && formData.patterns_to_neutralize.length > 0;
