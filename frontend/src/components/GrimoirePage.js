@@ -13,6 +13,7 @@ import html2canvas from 'html2canvas';
 import { grimoireAPI, subscriptionAPI, researchAPI } from '../utils/api';
 import { useNavigate } from 'react-router-dom';
 import { SpellBorderFrame, SectionBorderFrame, TarotCardFrame, PERSONA_BORDER_URLS } from './OrnateElements';
+import { SpellBlockRenderer } from './SpellBlockRenderer';
 
 // Ornate seal logo for spell pages
 const SEAL_LOGO_URL = "https://customer-assets.emergentagent.com/job_870e50df-769b-4f54-87c7-dc69482a19cb/artifacts/jdsp7esr_WhereTheCrowLandsLogo.png";
