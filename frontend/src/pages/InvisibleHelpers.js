@@ -997,10 +997,9 @@ export const InvisibleHelpers = () => {
       {/* ================================================================ */}
       {/* FOOTER */}
       {/* ================================================================ */}
-      <DarkSection className="py-12 px-4">
+      <DarkSection className="py-8 px-4">
         <div className="max-w-xl mx-auto text-center">
-          <MysticalDivider variant="moon" />
-          <p className="font-crimson text-base text-silver-mist/80 italic mt-6">
+          <p className="font-crimson text-base text-silver-mist/80 italic">
             Inner work does not replace resistance.
           </p>
           <p className="font-crimson text-lg text-gold mt-1">
