@@ -449,7 +449,13 @@ export const InvisibleHelpers = () => {
       {step === 'form' && (
         <section className="px-4 pb-8">
           <div className="max-w-3xl mx-auto">
-            <div className="bg-slate-900/30 border border-slate-700/50 rounded-lg overflow-hidden">
+            <div className="relative bg-slate-900/50 border border-amber-900/30 rounded-lg overflow-hidden">
+              {/* Corner accents */}
+              <div className="absolute top-0 left-0 w-12 h-12 border-l-2 border-t-2 border-amber-700/40 rounded-tl-lg" />
+              <div className="absolute top-0 right-0 w-12 h-12 border-r-2 border-t-2 border-amber-700/40 rounded-tr-lg" />
+              <div className="absolute bottom-0 left-0 w-12 h-12 border-l-2 border-b-2 border-amber-700/40 rounded-bl-lg" />
+              <div className="absolute bottom-0 right-0 w-12 h-12 border-r-2 border-b-2 border-amber-700/40 rounded-br-lg" />
+              
               {/* Always visible intro */}
               <div className="p-6 md:p-8">
                 <div className="prose prose-invert prose-slate max-w-none text-sm">
