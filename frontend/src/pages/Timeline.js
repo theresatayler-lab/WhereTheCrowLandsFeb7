@@ -294,28 +294,17 @@ const EventCard = ({ event, isExpanded, onToggle, view }) => {
       animate={{ opacity: 1, y: 0 }}
       className={`relative ${view === 'grid' ? '' : 'pl-16 sm:pl-20'}`}
     >
-      {/* Year Marker (Timeline view only) */}
+      {/* Year Marker (Timeline view only) - Shows date, NOT image */}
       {view === 'timeline' && (
         <div 
-          className="absolute left-0 top-0 w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-navy-mid border-2 flex items-center justify-center z-10 overflow-hidden"
+          className="absolute left-0 top-0 w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-navy-mid border-2 flex items-center justify-center z-10"
           style={{ 
             borderColor: taxonomyData.color,
             boxShadow: `0 0 20px ${taxonomyData.color}40`
           }}
         >
-          {hasImage ? (
-            <img 
-              src={event.image_url || event.image?.url}
-              alt=""
-              className="w-full h-full object-cover"
-              onError={(e) => {
-                e.target.style.display = 'none';
-                e.target.nextSibling.style.display = 'flex';
-              }}
-            />
-          ) : null}
           <span 
-            className={`font-cinzel text-[10px] sm:text-xs font-bold text-center leading-tight ${hasImage ? 'hidden' : 'flex'} flex-col items-center justify-center`}
+            className="font-cinzel text-[10px] sm:text-xs font-bold text-center leading-tight flex flex-col items-center justify-center"
             style={{ color: taxonomyData.color }}
           >
             {event.year < 0 ? `${Math.abs(event.year)}` : event.year}
@@ -329,25 +318,18 @@ const EventCard = ({ event, isExpanded, onToggle, view }) => {
         className={`cursor-pointer ${event.is_pivotal_moment ? 'ring-2 ring-gold/30' : ''} relative`}
         onClick={onToggle}
       >
-        {/* Image thumbnail in corner for grid view */}
-        {view === 'grid' && hasImage && (
-          <div className="absolute -top-3 -right-3 z-10">
-            <EventImage event={event} size="md" />
-          </div>
-        )}
-        
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2 mb-3">
-          <div className="flex items-start gap-3">
+          <div className="flex items-start gap-3 flex-1">
             {/* Taxonomy Icon */}
             <div 
-              className="p-2 rounded-lg"
+              className="p-2 rounded-lg flex-shrink-0"
               style={{ backgroundColor: `${taxonomyData.color}20` }}
             >
               <TaxonomyIcon size={18} style={{ color: taxonomyData.color }} />
             </div>
             
-            <div>
+            <div className="flex-1 min-w-0">
               <h3 className="font-phantasmagoria text-lg sm:text-xl text-gold leading-tight" style={{ textShadow: '0 2px 10px rgba(212, 168, 75, 0.3)' }}>
                 {event.title}
               </h3>
@@ -359,7 +341,7 @@ const EventCard = ({ event, isExpanded, onToggle, view }) => {
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-shrink-0">
             {/* Importance Star */}
             {event.importance === 1 && (
               <Star size={16} className="text-gold fill-gold" />
@@ -373,29 +355,55 @@ const EventCard = ({ event, isExpanded, onToggle, view }) => {
           </div>
         </div>
 
-        {/* Description */}
-        <p className="font-montserrat text-sm text-cream/85 leading-relaxed mb-3">
-          {isExpanded ? event.description : event.description?.slice(0, 200) + (event.description?.length > 200 ? '...' : '')}
-        </p>
+        {/* Content wrapper with description and image thumbnail */}
+        <div className="flex gap-4">
+          {/* Description - takes most space */}
+          <div className="flex-1">
+            <p className="font-montserrat text-sm text-cream/85 leading-relaxed mb-3">
+              {isExpanded ? event.description : event.description?.slice(0, 200) + (event.description?.length > 200 ? '...' : '')}
+            </p>
 
-        {/* Guide Relevance Dots */}
-        {event.guide_relevance && (
-          <div className="flex items-center gap-3 mb-3">
-            <span className="font-montserrat text-xs text-cream/50">Guides:</span>
-            {Object.entries(event.guide_relevance).map(([guide, level]) => (
-              <div 
-                key={guide}
-                className="flex items-center gap-1"
-                title={`${GUIDE_COLORS[guide]?.name}: ${level}`}
-              >
-                <span 
-                  className={`w-2 h-2 rounded-full ${level === 'high' ? 'opacity-100' : level === 'medium' ? 'opacity-60' : 'opacity-20'}`}
-                  style={{ backgroundColor: GUIDE_COLORS[guide]?.color }}
-                />
+            {/* Guide Relevance Dots */}
+            {event.guide_relevance && (
+              <div className="flex items-center gap-3">
+                <span className="font-montserrat text-xs text-cream/50">Guides:</span>
+                {Object.entries(event.guide_relevance).map(([guide, level]) => (
+                  <div 
+                    key={guide}
+                    className="flex items-center gap-1"
+                    title={`${GUIDE_COLORS[guide]?.name}: ${level}`}
+                  >
+                    <span 
+                      className={`w-2 h-2 rounded-full ${level === 'high' ? 'opacity-100' : level === 'medium' ? 'opacity-60' : 'opacity-20'}`}
+                      style={{ backgroundColor: GUIDE_COLORS[guide]?.color }}
+                    />
+                  </div>
+                ))}
               </div>
-            ))}
+            )}
           </div>
-        )}
+
+          {/* Image thumbnail - bottom right, square */}
+          {hasImage && !isExpanded && (
+            <div 
+              className="flex-shrink-0 w-20 h-20 sm:w-24 sm:h-24 rounded-lg overflow-hidden self-end"
+              style={{ 
+                border: `2px solid ${taxonomyData.color}30`,
+                boxShadow: `0 2px 12px ${taxonomyData.color}15`
+              }}
+            >
+              <img 
+                src={event.image_url || event.image?.url}
+                alt=""
+                className="w-full h-full object-cover"
+                loading="lazy"
+                onError={(e) => {
+                  e.target.parentElement.style.display = 'none';
+                }}
+              />
+            </div>
+          )}
+        </div>
 
         {/* Expanded Content */}
         <AnimatePresence>
