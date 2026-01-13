@@ -629,8 +629,16 @@ const FormStep = ({ formData, onFormChange, onToggleBeneficiary, isValid, onCont
     initial={{ opacity: 0, x: 20 }}
     animate={{ opacity: 1, x: 0 }}
     exit={{ opacity: 0, x: -20 }}
-    className="bg-slate-900/50 border border-slate-700/50 rounded-lg p-6 space-y-6"
+    className="relative bg-slate-900/50 border border-amber-900/30 rounded-lg p-6 space-y-6"
   >
+    {/* Corner accents */}
+    <div className="absolute top-0 left-0 w-8 h-8 border-l-2 border-t-2 border-amber-700/40 rounded-tl-lg" />
+    <div className="absolute top-0 right-0 w-8 h-8 border-r-2 border-t-2 border-amber-700/40 rounded-tr-lg" />
+    <div className="absolute bottom-0 left-0 w-8 h-8 border-l-2 border-b-2 border-amber-700/40 rounded-bl-lg" />
+    <div className="absolute bottom-0 right-0 w-8 h-8 border-r-2 border-b-2 border-amber-700/40 rounded-br-lg" />
+    
+    {/* Subtle lattice background */}
+    <SacredLattice className="absolute inset-0 w-full h-full text-amber-500 rounded-lg" opacity={0.03} />
     {/* Personal Intention - FREE TEXT FIRST */}
     <FormSection 
       title="What is your intention?"
