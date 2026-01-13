@@ -554,13 +554,13 @@ const BirdOracleBlock = ({ content, entries, onEntry, archetypeStyle }) => (
     <div className="flex items-center gap-3">
       <Bird className={cn("w-8 h-8", archetypeStyle.accentColor || "text-primary")} />
       <div>
-        <div className="font-cinzel text-lg">{content.bird}</div>
+        <div className="font-cinzel text-lg">{content.bird || content.bird_name}</div>
         <div className="text-sm text-muted-foreground">Oracle Message</div>
       </div>
     </div>
     
     <div className="p-4 bg-muted/30 rounded-lg italic">
-      &ldquo;{content.message}&rdquo;
+      &ldquo;{content.message || content.oracle_message}&rdquo;
     </div>
     
     {content.observation_prompt && (
