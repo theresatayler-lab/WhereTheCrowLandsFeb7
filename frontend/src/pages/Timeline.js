@@ -636,14 +636,39 @@ export const Timeline = () => {
     fetchStats();
   }, [fetchStats]);
 
-  // Filter events by decade if active
+  // Filter events by era/decade if active
   const displayEvents = useMemo(() => {
-    if (!activeDecade) return events;
-    return events.filter(e => {
-      const decade = Math.floor(e.year / 10) * 10;
-      return decade === activeDecade;
-    });
-  }, [events, activeDecade]);
+    let filtered = events;
+    
+    // Filter by era
+    if (activeEra && ERA_DEFINITIONS[activeEra]) {
+      const era = ERA_DEFINITIONS[activeEra];
+      filtered = filtered.filter(e => e.year >= era.start && e.year < era.end);
+    }
+    
+    // Filter by decade
+    if (activeDecade !== null) {
+      filtered = filtered.filter(e => {
+        let decade;
+        if (e.year < 0) {
+          decade = Math.ceil(e.year / 10) * 10;
+        } else {
+          decade = Math.floor(e.year / 10) * 10;
+        }
+        return decade === activeDecade;
+      });
+    }
+    
+    return filtered;
+  }, [events, activeDecade, activeEra]);
+
+  // Format year for display (handles BCE)
+  const formatYear = (year) => {
+    if (year < 0) {
+      return `${Math.abs(year)} BCE`;
+    }
+    return `${year} CE`;
+  };
 
   if (loading) {
     return (
@@ -656,6 +681,14 @@ export const Timeline = () => {
     );
   }
 
+  // Generate subtitle based on filters
+  const getSubtitle = () => {
+    if (activeEra && ERA_DEFINITIONS[activeEra]) {
+      return `An interactive journey through ${ERA_DEFINITIONS[activeEra].label.toLowerCase()} esoteric traditions`;
+    }
+    return "An interactive journey through occult history from antiquity to present";
+  };
+
   return (
     <PageBorderFrame>
       <DarkSection className="min-h-screen py-12 sm:py-20 px-4 sm:px-6" variant="warm">
@@ -667,12 +700,22 @@ export const Timeline = () => {
           >
             <PageHeader 
               icon={Clock}
-              title="The Occult Revival"
-              subtitle="An interactive journey through the esoteric movements of 1888-1951"
+              title="The Occult Timeline"
+              subtitle={getSubtitle()}
             />
           </motion.div>
 
           <GrandDivider variant="moon" />
+
+          {/* Era Navigation */}
+          <EraNav 
+            events={events}
+            activeEra={activeEra}
+            setActiveEra={(era) => {
+              setActiveEra(era);
+              setActiveDecade(null); // Reset decade when era changes
+            }}
+          />
 
           {/* Controls Bar */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
@@ -680,7 +723,8 @@ export const Timeline = () => {
             <DecadeNav 
               events={events} 
               activeDecade={activeDecade} 
-              setActiveDecade={setActiveDecade} 
+              setActiveDecade={setActiveDecade}
+              activeEra={activeEra}
             />
           </div>
 
@@ -696,7 +740,8 @@ export const Timeline = () => {
           {/* Events Count */}
           <div className="mb-4 font-montserrat text-sm text-cream/50">
             Showing {displayEvents.length} event{displayEvents.length !== 1 ? 's' : ''}
-            {activeDecade && ` from the ${activeDecade}s`}
+            {activeEra && ERA_DEFINITIONS[activeEra] && ` from ${ERA_DEFINITIONS[activeEra].label}`}
+            {activeDecade !== null && ` (${activeDecade < 0 ? Math.abs(activeDecade) + 's BCE' : activeDecade + 's'})`}
           </div>
 
           {/* Error State */}
