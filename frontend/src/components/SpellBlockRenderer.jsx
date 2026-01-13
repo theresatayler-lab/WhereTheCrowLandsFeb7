@@ -285,7 +285,7 @@ const BlockContent = ({
 const ColdOpenBlock = ({ content, archetypeStyle }) => (
   <div className={cn("p-6 rounded-lg", archetypeStyle.bgAccent || "bg-muted/20")} data-testid="cold-open-block">
     {content.greeting && (
-      <p className="text-lg font-cinzel mb-4 italic">"{content.greeting}"</p>
+      <p className="text-lg font-cinzel mb-4 italic">&ldquo;{content.greeting}&rdquo;</p>
     )}
     {content.scene_setting && (
       <p className="text-muted-foreground mb-3">{content.scene_setting}</p>
@@ -317,7 +317,7 @@ const MaterialsBlock = ({ content, archetypeStyle }) => (
       </div>
     ))}
     {content.gathering_note && (
-      <p className="text-sm italic text-muted-foreground mt-4">"{content.gathering_note}"</p>
+      <p className="text-sm italic text-muted-foreground mt-4">&ldquo;{content.gathering_note}&rdquo;</p>
     )}
   </div>
 );
@@ -358,7 +358,7 @@ const ChoiceBlock = ({ content, selectedChoice, onSelect, archetypeStyle }) => (
     </div>
     
     {content.consequence_hint && (
-      <p className="text-sm italic text-muted-foreground">"{content.consequence_hint}"</p>
+      <p className="text-sm italic text-muted-foreground">&ldquo;{content.consequence_hint}&rdquo;</p>
     )}
   </div>
 );
@@ -413,7 +413,7 @@ const StepperBlock = ({ content, progress = new Set(), onComplete, archetypeStyl
               {step.spoken_words && (
                 <div className="bg-muted/50 p-3 rounded-lg mb-2 italic text-sm">
                   <Quote className="w-4 h-4 inline mr-2 opacity-50" />
-                  "{step.spoken_words}"
+                  "{step.spoken_words}&rdquo;
                 </div>
               )}
               
@@ -475,7 +475,7 @@ const LoreVignetteBlock = ({ content, archetypeStyle }) => (
 const ReflectionBlock = ({ content, entries, onEntry, archetypeStyle }) => (
   <div className="space-y-4" data-testid="reflection-block">
     {content.guide_note && (
-      <p className="italic text-muted-foreground">"{content.guide_note}"</p>
+      <p className="italic text-muted-foreground">&ldquo;{content.guide_note}&rdquo;</p>
     )}
     
     {content.prompts?.map((prompt, i) => (
@@ -523,7 +523,7 @@ const ClosingBlock = ({ content, archetypeStyle }) => (
   <div className="space-y-4" data-testid="closing-block">
     {content.license_to_depart && (
       <div className="p-4 bg-muted/30 rounded-lg">
-        <p className="italic">"{content.license_to_depart}"</p>
+        <p className="italic">&ldquo;{content.license_to_depart}&rdquo;</p>
       </div>
     )}
     
@@ -536,7 +536,7 @@ const ClosingBlock = ({ content, archetypeStyle }) => (
     
     {content.empowerment_line && (
       <div className={cn("p-4 rounded-lg text-center font-cinzel", archetypeStyle.bgAccent || "bg-primary/10")}>
-        <p className="text-lg">"{content.empowerment_line}"</p>
+        <p className="text-lg">&ldquo;{content.empowerment_line}&rdquo;</p>
       </div>
     )}
     
@@ -560,7 +560,7 @@ const BirdOracleBlock = ({ content, entries, onEntry, archetypeStyle }) => (
     </div>
     
     <div className="p-4 bg-muted/30 rounded-lg italic">
-      "{content.message}"
+      &ldquo;{content.message}&rdquo;
     </div>
     
     {content.observation_prompt && (
@@ -602,7 +602,7 @@ const WardBlock = ({ content, archetypeStyle }) => (
     {content.activation_phrase && (
       <div className="p-4 bg-muted/50 rounded-lg text-center">
         <p className="text-sm text-muted-foreground mb-1">Activation Phrase:</p>
-        <p className="font-cinzel italic">"{content.activation_phrase}"</p>
+        <p className="font-cinzel italic">&ldquo;{content.activation_phrase}&rdquo;</p>
       </div>
     )}
     
@@ -631,7 +631,7 @@ const SongPromptBlock = ({ content, archetypeStyle }) => (
     
     {content.words_optional && (
       <div className="p-3 bg-muted/30 rounded-lg italic text-sm">
-        Optional words: "{content.words_optional}"
+        Optional words: &ldquo;{content.words_optional}&rdquo;
       </div>
     )}
     
@@ -689,7 +689,7 @@ const EvidenceCardBlock = ({ content, archetypeStyle }) => (
     </div>
     
     {content.pattern_note && (
-      <p className="text-sm italic text-muted-foreground">"{content.pattern_note}"</p>
+      <p className="text-sm italic text-muted-foreground">&ldquo;{content.pattern_note}&rdquo;</p>
     )}
   </div>
 );
