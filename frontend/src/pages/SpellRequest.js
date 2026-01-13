@@ -692,7 +692,7 @@ export const SpellRequest = () => {
           >
             <PageHeader 
               icon={Sparkles}
-              title="Craft Your Spell"
+              title="Craft Your Working"
               subtitle="Answer a few questions and receive a personalized ritual crafted just for you"
             />
           </motion.div>
