@@ -407,6 +407,25 @@ const EventCard = ({ event, isExpanded, onToggle, view }) => {
               className="overflow-hidden"
             >
               <div className="pt-3 border-t border-gold/20 space-y-3">
+                {/* Large Image Display (if available) */}
+                {hasImage && (
+                  <div className="flex justify-center mb-4">
+                    <div 
+                      className="w-32 h-32 rounded-lg overflow-hidden"
+                      style={{ 
+                        border: `2px solid ${taxonomyData.color}40`,
+                        boxShadow: `0 4px 20px ${taxonomyData.color}20`
+                      }}
+                    >
+                      <img 
+                        src={event.image_url || event.image?.url}
+                        alt={event.title}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  </div>
+                )}
+                
                 {/* Significance */}
                 {event.significance && (
                   <div>
