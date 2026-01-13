@@ -46,6 +46,7 @@ from research_service import (
     research_query, generate_spellbook_response, generate_combined_response,
     get_provider_status, get_research_config
 )
+from image_storage import ImageStorage, strip_images_from_asset_plan
 import random
 
 ROOT_DIR = Path(__file__).parent
