@@ -398,7 +398,9 @@ const StepperBlock = ({ content, progress = new Set(), onComplete, archetypeStyl
           key={index}
           className={cn(
             "p-4 rounded-lg border transition-all",
-            isComplete ? "bg-primary/5 border-primary/30" : "border-border"
+            isComplete 
+              ? cn(archetypeStyle.bgAccent || "bg-primary/5", archetypeStyle.borderColor || "border-primary/30")
+              : "border-slate-700 bg-slate-900/30"
           )}
         >
           <div className="flex items-start gap-3">
@@ -407,8 +409,8 @@ const StepperBlock = ({ content, progress = new Set(), onComplete, archetypeStyl
               className={cn(
                 "mt-1 w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all flex-shrink-0",
                 isComplete 
-                  ? "bg-primary border-primary text-primary-foreground" 
-                  : "border-muted-foreground hover:border-primary"
+                  ? cn(archetypeStyle.bgAccent || "bg-primary", archetypeStyle.borderColor || "border-primary", "text-white")
+                  : "border-slate-500 hover:border-slate-400"
               )}
               data-testid={`step-checkbox-${index}`}
             >
@@ -418,13 +420,14 @@ const StepperBlock = ({ content, progress = new Set(), onComplete, archetypeStyl
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-2">
                 <span className={cn(
-                  "text-xs font-medium px-2 py-0.5 rounded",
-                  archetypeStyle.bgAccent || "bg-muted"
+                  "text-xs font-medium px-2 py-0.5 rounded font-cinzel",
+                  archetypeStyle.bgAccent || "bg-muted",
+                  archetypeStyle.accentColor || "text-foreground"
                 )}>
                   Step {step.step_number}
                 </span>
                 {step.duration_hint && (
-                  <span className="text-xs text-muted-foreground flex items-center gap-1">
+                  <span className={cn("text-xs flex items-center gap-1", archetypeStyle.textMuted || "text-muted-foreground")}>
                     <Clock className="w-3 h-3" /> {step.duration_hint}
                   </span>
                 )}
@@ -435,14 +438,18 @@ const StepperBlock = ({ content, progress = new Set(), onComplete, archetypeStyl
               </p>
               
               {step.spoken_words && (
-                <div className="bg-muted/50 p-3 rounded-lg mb-2 italic text-sm">
-                  <Quote className="w-4 h-4 inline mr-2 opacity-50" />
+                <div className={cn(
+                  "p-3 rounded-lg mb-2 italic text-sm border",
+                  archetypeStyle.bgAccent || "bg-muted/50",
+                  archetypeStyle.borderColor ? archetypeStyle.borderColor.replace('border-', 'border-') + '/20' : "border-border/20"
+                )}>
+                  <Quote className={cn("w-4 h-4 inline mr-2 opacity-50", archetypeStyle.accentColor)} />
                   &ldquo;{step.spoken_words}&rdquo;
                 </div>
               )}
               
               {step.why && (
-                <div className="text-sm text-muted-foreground">
+                <div className={cn("text-sm", archetypeStyle.textMuted || "text-muted-foreground")}>
                   <span className="font-medium">Why:</span> {step.why}
                 </div>
               )}
@@ -456,7 +463,7 @@ const StepperBlock = ({ content, progress = new Set(), onComplete, archetypeStyl
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        className="p-4 bg-primary/10 rounded-lg text-center"
+        className={cn("p-4 rounded-lg text-center border", archetypeStyle.bgAccent || "bg-primary/10", archetypeStyle.borderColor || "border-primary/30")}
       >
         <Check className="w-6 h-6 mx-auto mb-2 text-primary" />
         <p className="font-cinzel">{content.completion_message}</p>
