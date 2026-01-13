@@ -145,6 +145,22 @@ export const aiAPI = {
     const response = await axios.post(`${API}/ai/generate-image`, { prompt });
     return response.data;
   },
+  
+  // V3 Blocks-based spell generation
+  generateSpellV3: async (spellSpec, beliefMode = 'SPIRITUAL', generateImages = false) => {
+    const response = await axios.post(`${API}/ai/generate-spell-v3`, {
+      spell_spec: spellSpec,
+      belief_mode: beliefMode,
+      generate_images: generateImages,
+    }, { headers: getAuthHeader() });
+    return response.data;
+  },
+  
+  // V3 configuration
+  getSpellConfigV3: async () => {
+    const response = await axios.get(`${API}/ai/spell-config-v3`);
+    return response.data;
+  },
 };
 
 // Dual-Model Research API (DeepSeek + OpenAI)
