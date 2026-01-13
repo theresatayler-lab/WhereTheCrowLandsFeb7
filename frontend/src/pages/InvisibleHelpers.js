@@ -25,11 +25,11 @@ const SPELL_VIDEO_URL = 'https://customer-assets.emergentagent.com/job_mystic-gr
 // ============================================================================
 
 const BENEFICIARIES_OPTIONS = [
-  { id: 'community', label: 'My community & neighbors' },
-  { id: 'vulnerable', label: 'The vulnerable & displaced' },
-  { id: 'journalists', label: 'Truth-tellers & witnesses' },
-  { id: 'legal', label: 'Legal advocates & defenders' },
-  { id: 'families', label: 'Families & children' },
+  { id: 'community', label: 'My community / neighbors' },
+  { id: 'vulnerable', label: 'Vulnerable people' },
+  { id: 'journalists', label: 'Journalists / truth-tellers' },
+  { id: 'legal', label: 'Legal advocates' },
+  { id: 'families', label: 'Families / children' },
   { id: 'mutual_aid', label: 'Mutual aid networks' },
 ];
 
