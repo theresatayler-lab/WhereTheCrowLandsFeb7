@@ -432,54 +432,74 @@ const EventCard = ({ event, isExpanded, onToggle, view }) => {
                         <h4 className="font-cinzel text-xs text-gold/70 uppercase mb-1">Key Figures</h4>
                         <div className="flex flex-wrap gap-2">
                           {event.figures_involved.map((figure, i) => (
-                        <span key={i} className="px-2 py-0.5 bg-navy-dark/50 rounded text-xs text-cream/80 font-montserrat">
-                          {figure}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* Traditions */}
-                {event.traditions?.length > 0 && (
-                  <div>
-                    <h4 className="font-cinzel text-xs text-gold/70 uppercase mb-1">Traditions</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {event.traditions.map((tradition, i) => (
-                        <span key={i} className="px-2 py-0.5 bg-gold/10 border border-gold/20 rounded text-xs text-gold/80 font-montserrat">
-                          {tradition.replace(/_/g, ' ')}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* Sources */}
-                {event.sources?.length > 0 && (
-                  <div>
-                    <h4 className="font-cinzel text-xs text-gold/70 uppercase mb-1">Sources</h4>
-                    <div className="space-y-1">
-                      {event.sources.slice(0, 2).map((source, i) => (
-                        <div key={i} className="flex items-start gap-2 text-xs text-cream/60 font-montserrat">
-                          <BookOpen size={12} className="mt-0.5 flex-shrink-0" />
-                          <span>
-                            {source.author && `${source.author}, `}
-                            <em>{source.title}</em>
-                            {source.year && ` (${source.year})`}
-                          </span>
+                            <span key={i} className="px-2 py-0.5 bg-navy-dark/50 rounded text-xs text-cream/80 font-montserrat">
+                              {figure}
+                            </span>
+                          ))}
                         </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
+                      </div>
+                    )}
 
-                {/* Location */}
-                {event.location && (
-                  <div className="flex items-center gap-2 text-xs text-cream/50 font-montserrat">
-                    <MapPin size={12} />
-                    <span>{event.location.name}, {event.location.region}</span>
+                    {/* Traditions */}
+                    {event.traditions?.length > 0 && (
+                      <div>
+                        <h4 className="font-cinzel text-xs text-gold/70 uppercase mb-1">Traditions</h4>
+                        <div className="flex flex-wrap gap-2">
+                          {event.traditions.map((tradition, i) => (
+                            <span key={i} className="px-2 py-0.5 bg-gold/10 border border-gold/20 rounded text-xs text-gold/80 font-montserrat">
+                              {tradition.replace(/_/g, ' ')}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Sources */}
+                    {event.sources?.length > 0 && (
+                      <div>
+                        <h4 className="font-cinzel text-xs text-gold/70 uppercase mb-1">Sources</h4>
+                        <div className="space-y-1">
+                          {event.sources.slice(0, 2).map((source, i) => (
+                            <div key={i} className="flex items-start gap-2 text-xs text-cream/60 font-montserrat">
+                              <BookOpen size={12} className="mt-0.5 flex-shrink-0" />
+                              <span>
+                                {source.author && `${source.author}, `}
+                                <em>{source.title}</em>
+                                {source.year && ` (${source.year})`}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Location */}
+                    {event.location && (
+                      <div className="flex items-center gap-2 text-xs text-cream/50 font-montserrat">
+                        <MapPin size={12} />
+                        <span>{event.location.name}, {event.location.region}</span>
+                      </div>
+                    )}
                   </div>
-                )}
+
+                  {/* Larger image on right when expanded */}
+                  {hasImage && (
+                    <div 
+                      className="flex-shrink-0 w-28 h-28 sm:w-36 sm:h-36 rounded-lg overflow-hidden self-start"
+                      style={{ 
+                        border: `2px solid ${taxonomyData.color}40`,
+                        boxShadow: `0 4px 20px ${taxonomyData.color}20`
+                      }}
+                    >
+                      <img 
+                        src={event.image_url || event.image?.url}
+                        alt={event.title}
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                      />
+                    </div>
+                  )}
+                </div>
               </div>
             </motion.div>
           )}
