@@ -414,40 +414,24 @@ const EventCard = ({ event, isExpanded, onToggle, view }) => {
               exit={{ height: 0, opacity: 0 }}
               className="overflow-hidden"
             >
-              <div className="pt-3 border-t border-gold/20 space-y-3">
-                {/* Large Image Display (if available) */}
-                {hasImage && (
-                  <div className="flex justify-center mb-4">
-                    <div 
-                      className="w-32 h-32 rounded-lg overflow-hidden"
-                      style={{ 
-                        border: `2px solid ${taxonomyData.color}40`,
-                        boxShadow: `0 4px 20px ${taxonomyData.color}20`
-                      }}
-                    >
-                      <img 
-                        src={event.image_url || event.image?.url}
-                        alt={event.title}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                  </div>
-                )}
-                
-                {/* Significance */}
-                {event.significance && (
-                  <div>
-                    <h4 className="font-cinzel text-xs text-gold/70 uppercase mb-1">Significance</h4>
-                    <p className="font-montserrat text-sm text-cream/70">{event.significance}</p>
-                  </div>
-                )}
+              <div className="pt-3 mt-3 border-t border-gold/20 space-y-3">
+                {/* Content with image on the right */}
+                <div className="flex gap-4">
+                  <div className="flex-1 space-y-3">
+                    {/* Significance */}
+                    {event.significance && (
+                      <div>
+                        <h4 className="font-cinzel text-xs text-gold/70 uppercase mb-1">Significance</h4>
+                        <p className="font-montserrat text-sm text-cream/70">{event.significance}</p>
+                      </div>
+                    )}
 
-                {/* Figures */}
-                {event.figures_involved?.length > 0 && (
-                  <div>
-                    <h4 className="font-cinzel text-xs text-gold/70 uppercase mb-1">Key Figures</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {event.figures_involved.map((figure, i) => (
+                    {/* Figures */}
+                    {event.figures_involved?.length > 0 && (
+                      <div>
+                        <h4 className="font-cinzel text-xs text-gold/70 uppercase mb-1">Key Figures</h4>
+                        <div className="flex flex-wrap gap-2">
+                          {event.figures_involved.map((figure, i) => (
                         <span key={i} className="px-2 py-0.5 bg-navy-dark/50 rounded text-xs text-cream/80 font-montserrat">
                           {figure}
                         </span>
