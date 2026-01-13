@@ -63,7 +63,7 @@ export const InvisibleHelpers = () => {
     action_commitments: [], // Changed to array for multi-select
   });
   
-  const [step, setStep] = useState('email'); // Start with email step
+  const [step, setStep] = useState('form'); // Start with form
   const [email, setEmail] = useState('');
   const [generating, setGenerating] = useState(false);
   const [generatedWorking, setGeneratedWorking] = useState(null);
