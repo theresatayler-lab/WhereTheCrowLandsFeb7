@@ -147,7 +147,7 @@ def adapt_claim_for_mode(claim: str, claim_type: str, mode: str) -> str:
         import random
         return random.choice(prefixes) + claim
     
-    elif mode == "SPIRITUAL":
+    elif mode_upper == "SPIRITUAL":
         # Soften certainty
         if "will" in claim:
             claim = claim.replace(" will ", " may ")
