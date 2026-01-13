@@ -363,7 +363,7 @@ export const InvisibleHelpers = () => {
               Magical Battle Cry Intention
             </h1>
             <p className="text-amber-600/70 text-sm italic">
-              A Working for Protection & Clarity
+              A Structured Intention for Protection & Clarity
             </p>
           </motion.div>
         </div>
@@ -845,7 +845,7 @@ const ResultStep = ({
         className="bg-slate-900/50 border border-slate-700/50 rounded-lg p-12 text-center"
       >
         <Loader2 className="w-10 h-10 animate-spin mx-auto mb-4 text-amber-500/70" />
-        <h2 className="font-cinzel text-lg text-slate-200 mb-2">Generating Your Working</h2>
+        <h2 className="font-cinzel text-lg text-slate-200 mb-2">Generating Your Intention</h2>
         <p className="text-slate-500 text-sm">Crafting your intention...</p>
       </motion.div>
     );
