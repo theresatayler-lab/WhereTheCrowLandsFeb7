@@ -41,7 +41,7 @@ const PERSONAS = [
   { id: 'cathleen', name: 'Cathleen', emoji: '🪶', title: 'Singer of Strength', description: 'Voice magic, protection, Celtic mysticism, the Morrigan' },
   { id: 'katherine', name: 'Katherine', emoji: '🪡', title: 'Weaver of Hidden Knowledge', description: 'Shadow work, mirrors, Victorian spiritualism, protocols' },
   { id: 'theresa', name: 'Theresa', emoji: '🔮', title: 'Seer & Storyteller', description: 'Truth-seeking, ancestral wisdom, genealogy, family secrets' },
-  { id: 'choose_for_me', name: 'Choose for me', emoji: '✨', title: 'Let the spell decide', description: 'Based on your needs, the right guide will emerge' }
+  { id: 'choose_for_me', name: 'Choose for me', emoji: '✨', title: 'Let the guides decide', description: 'Based on your needs, the right guide will emerge' }
 ];
 
 const FEELINGS = [
