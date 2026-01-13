@@ -558,7 +558,7 @@ export const InvisibleHelpers = () => {
 };
 
 // Form Step with personal intention and contextual explanations
-const FormStep = ({ formData, onFormChange, onToggleBeneficiary, isValid, onContinue }) => (
+const FormStep = ({ formData, onFormChange, onToggleBeneficiary, onToggleAction, isValid, onContinue }) => (
   <motion.div
     initial={{ opacity: 0, x: 20 }}
     animate={{ opacity: 1, x: 0 }}
