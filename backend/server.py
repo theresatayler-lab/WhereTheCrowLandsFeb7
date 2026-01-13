@@ -3465,6 +3465,161 @@ async def get_spell_config_v2():
     }
 
 
+# ===== V3 SPELL GENERATION - Blocks-Based Pipeline =====
+from prompts import BlocksSpellPipeline, BLOCK_TEMPLATES, CANON_ANCHORS, run_qa_blocks_validation
+
+class SpellRequestV3(BaseModel):
+    """V3 Blocks-based Spell Request"""
+    spell_spec: dict
+    belief_mode: str = "SPIRITUAL"
+    generate_images: bool = False
+
+@api_router.post('/ai/generate-spell-v3')
+async def generate_spell_v3_endpoint(request: SpellRequestV3, user = Depends(get_optional_user)):
+    """
+    V3 Spell Generation - Blocks-based experience.
+    
+    Returns spell with blocks[] array containing:
+    - cold_open: Guide's opening narrative
+    - materials: Materials with purposes
+    - choice: Interactive decision point (REQUIRED)
+    - lore_vignette: Historical/folkloric story (REQUIRED)
+    - stepper: Interactive step-by-step with checkboxes
+    - reflection: Journal prompts
+    - closing: Grounding and empowerment
+    + guide-specific blocks (bird_oracle, ward, song_prompt, evidence_card)
+    """
+    import time as time_module
+    total_start = time_module.time()
+    
+    try:
+        spell_spec = request.spell_spec
+        belief_mode = request.belief_mode.upper()
+        
+        if belief_mode not in BELIEF_MODES:
+            belief_mode = "SPIRITUAL"
+        
+        # Check spell limits
+        if user:
+            user_data = await db.users.find_one({'id': user['id']}, {'_id': 0})
+            if user_data:
+                tier = user_data.get('subscription_tier', 'free')
+                status = user_data.get('subscription_status', 'free')
+                is_paid = tier in ('pro', 'paid') or status in ('pro', 'paid')
+                if not is_paid:
+                    spell_count = user_data.get('spell_generation_count', 0)
+                    limit = 3
+                    if spell_count >= limit:
+                        raise HTTPException(status_code=403, detail={
+                            'error': 'spell_limit_reached',
+                            'message': f'Free spell limit ({limit}) reached. Upgrade to Pro!',
+                            'limit': limit,
+                            'current': spell_count
+                        })
+        
+        # Resolve persona
+        persona_id = spell_spec.get('persona_id', 'shigg')
+        id_map = {'shiggy': 'shigg', 'kathleen': 'cathleen', 'catherine': 'katherine'}
+        persona_id = id_map.get(persona_id, persona_id)
+        
+        if persona_id == 'choose_for_me':
+            feeling = spell_spec.get('desired_feeling', 'calm')
+            persona_map = {
+                'calm': 'shigg', 'protected': 'cathleen',
+                'clear': 'katherine', 'brave': 'cathleen'
+            }
+            persona_id = persona_map.get(feeling, 'shigg')
+        
+        spell_spec['persona_id'] = persona_id
+        
+        # Get guide config
+        guide_config = get_persona_config(persona_id)
+        if not guide_config:
+            guide_config = get_persona_config('shigg')
+        
+        # Initialize clients
+        deepseek_client = get_deepseek_client()
+        
+        # Create blocks pipeline
+        pipeline = BlocksSpellPipeline(
+            deepseek_client=deepseek_client,
+            openai_client=openai_client,
+            max_retries=1
+        )
+        
+        # Generate spell
+        spell_output, metadata = await pipeline.generate_spell(
+            spell_spec=spell_spec,
+            guide_config=guide_config,
+            belief_mode=belief_mode
+        )
+        
+        # Add metadata
+        spell_output['persona_id'] = persona_id
+        spell_output['spell_spec'] = spell_spec
+        
+        # Archetype info
+        archetype_info = {
+            'id': persona_id,
+            'name': guide_config.get('name', 'Guide'),
+            'title': guide_config.get('title', '')
+        }
+        
+        # Increment spell count
+        if user:
+            await increment_spell_count(user['id'])
+        
+        total_ms = int((time_module.time() - total_start) * 1000)
+        metadata['timing']['total_ms'] = total_ms
+        
+        logging.info(f"[V3] Blocks spell generated in {total_ms}ms. Blocks: {len(spell_output.get('blocks', []))}")
+        
+        return {
+            'spell': spell_output,
+            'archetype': archetype_info,
+            'metadata': metadata,
+            'belief_mode': belief_mode,
+            'validation': {
+                'qa_passed': metadata.get('qa_passed', True),
+                'qa_report': metadata.get('qa_report', {})
+            }
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logging.error(f'V3 Spell generation error: {str(e)}')
+        raise HTTPException(status_code=500, detail=f'Failed to generate spell: {str(e)}')
+
+
+@api_router.get('/ai/spell-config-v3')
+async def get_spell_config_v3():
+    """Get V3 blocks-based spell configuration"""
+    return {
+        'version': 'v3_blocks',
+        'belief_modes': list(BELIEF_MODES.keys()),
+        'guides': list(BLOCK_TEMPLATES.keys()),
+        'block_templates': {
+            k: {
+                'template_id': v['template_id'],
+                'description': v['description'],
+                'required_blocks': [b['type'] for b in v['required_blocks'] if b['required']],
+                'specialty_blocks': v['specialty_blocks']
+            }
+            for k, v in BLOCK_TEMPLATES.items()
+        },
+        'canon_anchors': {
+            k: [{'id': a['id'], 'title': a['title'], 'type': a['type']} for a in v]
+            for k, v in CANON_ANCHORS.items()
+        },
+        'block_types': [
+            'cold_open', 'materials', 'choice', 'stepper', 'lore_vignette',
+            'reflection', 'closing', 'bird_oracle', 'ward', 'song_prompt',
+            'evidence_card', 'journal_prompt', 'safety_note'
+        ]
+    }
+
+
 # Favorites endpoints
 @api_router.post('/favorites')
 async def add_favorite(request: FavoriteRequest, user = Depends(get_current_user)):
