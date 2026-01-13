@@ -524,8 +524,8 @@ export const InvisibleHelpers = () => {
               A Coordinated Working
             </p>
             
-            {/* Main title - distressed gold feel */}
-            <h1 className="font-italiana text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-gold-light mb-4"
+            {/* Main title - phantasmagoria font */}
+            <h1 className="phantasmagoria-hero text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-gold-light mb-4"
               style={{ textShadow: '0 2px 30px rgba(212, 168, 75, 0.5)' }}>
               Magical Battle Cry Intention
             </h1>
