@@ -1042,6 +1042,240 @@ async def generate_working(request: WorkingGeneratorRequest):
             error="An error occurred. Please try again."
         )
 
+# Battle Cry - Single Signature Builder
+class BattleCryRequest(BaseModel):
+    email: EmailStr
+    beneficiaries: List[str]
+    primary_quality: str
+    practice_style: str
+    time_horizon: str
+    action_pledge: str
+
+class BattleCryResponse(BaseModel):
+    success: bool
+    working: Optional[Dict] = None
+    generation_count: Optional[int] = None
+    limit_reached: Optional[bool] = False
+    error: Optional[str] = None
+
+# Battle Cry System Prompt - Combined Fortune-aligned working
+BATTLE_CRY_SYSTEM_PROMPT = """You are an ethical spell-writing assistant inside "Where the Crowlands."
+You generate Fortune-aligned, nonviolent, noncoercive ritual text called the "Magical Battle Cry Intention."
+
+This working combines:
+- Lawful Return of Misused Power (impersonal law, transmutation)
+- Clarity Against Propaganda (discernment, calm lamp)
+- Return to Sender (benevolent return to source via higher law)
+
+ABSOLUTE PROHIBITIONS:
+- Never name or imply specific individuals, agencies, parties, nations
+- Never call for harm, punishment, suffering, revenge, coercion, domination
+- Never use violent imagery or frame justice as personal vengeance
+
+REQUIRED ELEMENTS:
+- Ethical frame (this is not a curse, does not punish)
+- Transmutation clause (returned force becomes awareness/restraint)
+- No-blowback seal (grounding and protection)
+- Return to impersonal law, not individuals
+
+OUTPUT FORMAT (JSON):
+{
+  "title": "Magical Battle Cry Intention",
+  "intention": "1-2 line personalized intention using user's primary quality",
+  "anchor_phrase": "Clarity in the mind.\\nRestraint in the hand.\\nProtection in the world.\\nWhat is misused returns to law — transmuted, not weaponized.",
+  "ethical_frame": "This working is not a curse. It names no enemies and harms no one. It returns only misused authorization, coercive momentum, and distortion to impersonal law, to be transmuted into restraint, conscience, and accountability.",
+  "guided_working": [
+    {"step": 1, "title": "Ground + Seal", "duration": "1 min", "instructions": "...", "spoken_words": "I stand within my own field. No force enters me. No force leaves me distorted."},
+    {"step": 2, "title": "Call the Lamp of Clarity", "duration": "1 min", "instructions": "...", "spoken_words": null},
+    {"step": 3, "title": "Name the Patterns", "duration": "1-2 min", "instructions": "...", "spoken_words": null},
+    {"step": 4, "title": "Return to Law", "duration": "2 min", "instructions": "...", "spoken_words": "By the law that precedes all thrones, all misused force returns to its authorization, not as suffering, but as consequence."},
+    {"step": 5, "title": "Transmutation Clause", "duration": "1-2 min", "instructions": "...", "spoken_words": "Let no returned force become harm. Let it become awareness. Let it become restraint. Let it become the unmaking of false authority."},
+    {"step": 6, "title": "Benevolent Directive + Close", "duration": "1-2 min", "instructions": "...", "spoken_words": "Where fear is used as power, let clarity arise. Where harm hides, let consequence reveal. The circuit is complete. The law holds. I am clear."}
+  ],
+  "action_pledge": "Today, I will: [user's action] — to support justice in the material world.",
+  "closing_truth": "Magic does not replace resistance. It steadies those who resist."
+}
+
+TONE: Calm, disciplined, reverent. "Quiet chapel," not sensational."""
+
+@api_router.get('/invisible-helpers/check-limit')
+async def check_generation_limit(email: str):
+    """Check if user has reached generation limit"""
+    record = await db.invisible_helpers.find_one({'email': email}, {'_id': 0})
+    if record:
+        count = record.get('generation_count', 0)
+        return {
+            'count': count,
+            'limit_reached': count >= 3,
+            'remaining': max(0, 3 - count)
+        }
+    return {'count': 0, 'limit_reached': False, 'remaining': 3}
+
+class CheckoutRequest(BaseModel):
+    email: EmailStr
+    amount: int = 0  # cents
+    success_url: str
+    cancel_url: str
+
+@api_router.post('/invisible-helpers/create-checkout')
+async def create_checkout_session(request: CheckoutRequest):
+    """Create Stripe checkout session for pay-what-you-choose"""
+    import stripe
+    
+    # If $0, skip Stripe checkout
+    if request.amount == 0:
+        return {'skip_checkout': True, 'url': None}
+    
+    stripe_key = os.environ.get('STRIPE_SECRET_KEY')
+    if not stripe_key:
+        return {'error': 'Stripe not configured', 'skip_checkout': True}
+    
+    stripe.api_key = stripe_key
+    
+    try:
+        session = stripe.checkout.Session.create(
+            payment_method_types=['card'],
+            line_items=[{
+                'price_data': {
+                    'currency': 'usd',
+                    'product_data': {
+                        'name': 'Magical Battle Cry Intention - Support',
+                        'description': 'Pay-what-you-choose donation to support this portal',
+                    },
+                    'unit_amount': request.amount,
+                },
+                'quantity': 1,
+            }],
+            mode='payment',
+            success_url=request.success_url,
+            cancel_url=request.cancel_url,
+            customer_email=request.email,
+        )
+        return {'url': session.url, 'session_id': session.id}
+    except Exception as e:
+        logger.error(f"Stripe checkout error: {e}")
+        return {'error': str(e), 'skip_checkout': True}
+
+@api_router.post('/invisible-helpers/battle-cry/generate', response_model=BattleCryResponse)
+async def generate_battle_cry(request: BattleCryRequest):
+    """Generate the Magical Battle Cry Intention working"""
+    from research_service import get_deepseek_client
+    
+    try:
+        # Check generation limit
+        record = await db.invisible_helpers.find_one({'email': request.email})
+        current_count = record.get('generation_count', 0) if record else 0
+        
+        if current_count >= 3:
+            return BattleCryResponse(
+                success=False,
+                limit_reached=True,
+                generation_count=current_count,
+                error="Generation limit reached. Join early access for unlimited workings."
+            )
+        
+        # Check for banned terms
+        all_inputs = ' '.join([
+            ' '.join(request.beneficiaries),
+            request.primary_quality,
+            request.action_pledge
+        ])
+        
+        banned_found = check_banned_terms(all_inputs)
+        if banned_found:
+            return BattleCryResponse(
+                success=False,
+                error="Input contains prohibited terms. This portal focuses on protection and clarity, not harm."
+            )
+        
+        # Get DeepSeek client
+        deepseek_client = get_deepseek_client()
+        if not deepseek_client:
+            return BattleCryResponse(
+                success=False,
+                error="Generation service temporarily unavailable"
+            )
+        
+        # Build user prompt
+        beneficiaries = ', '.join([sanitize_input(b) for b in request.beneficiaries])
+        quality = sanitize_input(request.primary_quality)
+        action = sanitize_input(request.action_pledge)
+        
+        user_prompt = f"""Generate a "Magical Battle Cry Intention" working with these personalized elements:
+
+Beneficiaries being protected: {beneficiaries}
+Primary quality to strengthen: {quality}
+Practice style: {request.practice_style}
+Time horizon: {request.time_horizon}
+Real-world action pledge: {action}
+
+The working should:
+1. Ground + Seal (no-blowback protection)
+2. Call the Lamp of Clarity (discernment visualization)
+3. Name the Patterns (misused authority, dehumanization, distortion - NOT people)
+4. Return to Law (impersonal law receives misused force)
+5. Transmutation (force becomes awareness/restraint, not suffering)
+6. Benevolent Directive + Close (protection for beneficiaries, circuit closed)
+
+Personalize the intention line using their primary quality: {quality}
+Include their action pledge in the action_pledge field.
+Keep the canonical anchor phrase and ethical frame.
+
+Output valid JSON only."""
+
+        # Generate working
+        response = await deepseek_client.chat.completions.create(
+            model="deepseek-chat",
+            messages=[
+                {"role": "system", "content": BATTLE_CRY_SYSTEM_PROMPT},
+                {"role": "user", "content": user_prompt}
+            ],
+            temperature=0.7,
+            max_tokens=2500,
+            response_format={"type": "json_object"}
+        )
+        
+        content = response.choices[0].message.content
+        working_data = json.loads(content)
+        
+        # Update generation count
+        new_count = current_count + 1
+        await db.invisible_helpers.update_one(
+            {'email': request.email},
+            {
+                '$set': {
+                    'email': request.email,
+                    'generation_count': new_count,
+                    'last_generated_at': datetime.now(timezone.utc).isoformat(),
+                    'source': 'invisible-helpers'
+                }
+            },
+            upsert=True
+        )
+        
+        # TODO: Send email with working (when email service is configured)
+        # For now, just return the working
+        
+        return BattleCryResponse(
+            success=True,
+            working=working_data,
+            generation_count=new_count,
+            limit_reached=new_count >= 3
+        )
+        
+    except json.JSONDecodeError as e:
+        logger.error(f"Failed to parse battle cry JSON: {e}")
+        return BattleCryResponse(
+            success=False,
+            error="Failed to generate working. Please try again."
+        )
+    except Exception as e:
+        logger.error(f"Battle cry generation error: {e}")
+        return BattleCryResponse(
+            success=False,
+            error="An error occurred. Please try again."
+        )
+
 # Deities endpoints
 @api_router.get('/deities', response_model=List[Deity])
 async def get_deities():
