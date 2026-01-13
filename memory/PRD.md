@@ -90,10 +90,11 @@ Build "Where The Crowlands," a sophisticated full-stack application for creating
 
 ### P0 - High Priority
 - [x] Interactive Timeline Page (COMPLETED Jan 13, 2026)
-- [ ] MongoDB DocumentTooLarge Error - Spell saving with images broken
+- [x] MongoDB DocumentTooLarge Error - Fixed with GridFS image storage (COMPLETED Jan 13, 2026)
 - [ ] Visual Polish & Ornament Library (20 corners, 12 dividers, 24 glyphs)
 
 ### P1 - Medium Priority
+- [ ] Timeline images - populate events with historical paintings/illustrations
 - [ ] Back-compatibility for old spell references
 - [ ] Theresa archetype enrichment
 - [ ] Fix linting errors in server.py
@@ -111,3 +112,4 @@ Build "Where The Crowlands," a sophisticated full-stack application for creating
 - EarlyAccessGate in App.js is currently commented out
 - DeepSeek API key configured in backend/.env
 - Font loaded via index.html style tag (not CSS import due to webpack)
+- **GridFS Image Storage**: Spell images now stored in MongoDB GridFS (`spell_images` bucket) to avoid 16MB document limit. Legacy spells (storage_version=1) still work with inline base64.
