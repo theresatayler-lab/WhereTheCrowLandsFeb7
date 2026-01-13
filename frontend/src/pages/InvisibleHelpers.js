@@ -778,7 +778,7 @@ const CheckoutStep = ({ email, onCheckout, onBack, checkingOut }) => (
         </p>
       </div>
       <p className="text-amber-600/70 text-xs mt-4 italic font-cinzel">
-        So it is, love only, the war is TAMAM SHUD
+        So it is, love only, war is TAMAM SHUD
       </p>
     </div>
     
