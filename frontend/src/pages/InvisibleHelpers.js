@@ -922,37 +922,33 @@ export const InvisibleHelpers = () => {
 
                     {/* Intention */}
                     <div>
-                      <h3 className="font-cinzel text-xs text-gold tracking-wider uppercase mb-2">Intention</h3>
+                      <h3 className="font-cinzel text-xs text-gold tracking-wider uppercase mb-1">Intention</h3>
                       <p className="text-navy-dark font-crimson italic">{generatedWorking.intention}</p>
                     </div>
 
-                    <MysticalDivider light variant="moon" />
-
                     {/* Anchor Phrase */}
-                    <div className="bg-gold/5 border-l-4 border-gold p-4">
-                      <h3 className="font-cinzel text-xs text-gold tracking-wider uppercase mb-2">Anchor Phrase</h3>
+                    <div className="bg-gold/5 border-l-4 border-gold p-3">
+                      <h3 className="font-cinzel text-xs text-gold tracking-wider uppercase mb-1">Anchor Phrase</h3>
                       <p className="text-navy-dark font-crimson italic whitespace-pre-line">{generatedWorking.anchor_phrase}</p>
                     </div>
 
                     {/* Ethical Frame */}
                     <BorderFrame variant="crimson" className="bg-crimson/5">
-                      <h3 className="font-cinzel text-xs text-crimson tracking-wider uppercase mb-2">Ethical Frame</h3>
+                      <h3 className="font-cinzel text-xs text-crimson tracking-wider uppercase mb-1">Ethical Frame</h3>
                       <p className="text-navy-dark/80 font-crimson text-sm whitespace-pre-line">{generatedWorking.ethical_frame}</p>
                     </BorderFrame>
 
-                    <MysticalDivider light />
-
                     {/* The Practice */}
                     <div>
-                      <h3 className="font-cinzel text-xs text-gold tracking-wider uppercase mb-4">The Practice</h3>
-                      <div className="space-y-4">
+                      <h3 className="font-cinzel text-xs text-gold tracking-wider uppercase mb-2">The Practice</h3>
+                      <div className="space-y-3">
                         {generatedWorking.guided_working?.map((stepItem, idx) => (
-                          <div key={idx} className="relative pl-8 border-l-2 border-crimson/30">
-                            <div className="absolute left-0 top-0 -translate-x-1/2 w-4 h-4 rounded-full bg-crimson/20 border-2 border-crimson flex items-center justify-center">
-                              <span className="text-crimson text-[10px] font-bold">{stepItem.step}</span>
+                          <div key={idx} className="relative pl-6 border-l-2 border-crimson/30">
+                            <div className="absolute left-0 top-0 -translate-x-1/2 w-3 h-3 rounded-full bg-crimson/20 border border-crimson flex items-center justify-center">
+                              <span className="text-crimson text-[8px] font-bold">{stepItem.step}</span>
                             </div>
-                            <div className="flex items-center gap-2 mb-1">
-                              <span className="text-navy-dark font-cinzel text-sm font-semibold">{stepItem.title}</span>
+                            <div className="flex items-center gap-2 mb-0.5">
+                              <span className="text-navy-dark font-cinzel text-xs font-semibold">{stepItem.title}</span>
                               <span className="text-navy-dark/40 text-xs flex items-center gap-1 font-montserrat">
                                 <Clock className="w-3 h-3" />
                                 {stepItem.duration}
@@ -960,7 +956,7 @@ export const InvisibleHelpers = () => {
                             </div>
                             <p className="text-navy-dark/70 font-crimson text-sm">{stepItem.instructions}</p>
                             {stepItem.spoken_words && (
-                              <p className="mt-2 text-crimson italic text-sm font-crimson border-l-2 border-gold/30 pl-3">
+                              <p className="mt-1 text-crimson italic text-sm font-crimson border-l-2 border-gold/30 pl-2">
                                 "{stepItem.spoken_words}"
                               </p>
                             )}
@@ -969,16 +965,14 @@ export const InvisibleHelpers = () => {
                       </div>
                     </div>
 
-                    <MysticalDivider light variant="moon" />
-
                     {/* Action Pledge */}
-                    <div className="border-t-2 border-gold/30 pt-4">
-                      <h3 className="font-cinzel text-xs text-gold tracking-wider uppercase mb-2">Action Pledge</h3>
+                    <div className="border-t border-gold/30 pt-3">
+                      <h3 className="font-cinzel text-xs text-gold tracking-wider uppercase mb-1">Action Pledge</h3>
                       <p className="text-navy-dark font-crimson text-sm">{generatedWorking.action_pledge}</p>
                     </div>
 
                     {/* Closing */}
-                    <div className="text-center pt-4">
+                    <div className="text-center pt-2">
                       <p className="text-navy-dark/60 italic font-crimson text-sm">{generatedWorking.closing_truth}</p>
                     </div>
                   </div>
