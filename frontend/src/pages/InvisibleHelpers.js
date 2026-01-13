@@ -248,7 +248,7 @@ export const InvisibleHelpers = () => {
   };
 
   const formatWorkingAsText = (working) => {
-    let text = `MAGICAL BATTLE CRY INTENTION\nInspired by the Invisible Helpers\n\n`;
+    let text = `MAGICAL BATTLE CRY INTENTION\nA Working for Protection & Clarity\n\n`;
     text += `INTENTION\n${working.intention}\n\n`;
     text += `ANCHOR PHRASE\n${working.anchor_phrase}\n\n`;
     text += `ETHICAL FRAME\n${working.ethical_frame}\n\n`;
