@@ -721,6 +721,32 @@ async def join_waitlist(request: WaitlistRequest):
     
     return {'success': True, 'message': 'Successfully joined the waitlist!'}
 
+# Invisible Helpers Portal - Email Collection
+class InvisibleHelpersRequest(BaseModel):
+    email: EmailStr
+
+@api_router.post('/invisible-helpers/join')
+async def join_invisible_helpers(request: InvisibleHelpersRequest):
+    """Collect email from Invisible Helpers portal"""
+    # Check if email already registered
+    existing = await db.waitlist.find_one({'email': request.email}, {'_id': 0})
+    if existing:
+        return {'success': True, 'message': 'Email already registered', 'already_exists': True}
+    
+    # Add to waitlist with invisible-helpers source tag
+    waitlist_entry = {
+        'id': str(uuid.uuid4()),
+        'email': request.email,
+        'name': None,
+        'source': 'invisible-helpers',
+        'created_at': datetime.now(timezone.utc).isoformat(),
+        'notified': False
+    }
+    
+    await db.waitlist.insert_one(waitlist_entry)
+    
+    return {'success': True, 'message': 'Successfully joined!'}
+
 # Deities endpoints
 @api_router.get('/deities', response_model=List[Deity])
 async def get_deities():
