@@ -561,7 +561,11 @@ const ReflectionBlock = ({ content, entries, onEntry, archetypeStyle }) => (
 const ClosingBlock = ({ content, archetypeStyle }) => (
   <div className="space-y-4" data-testid="closing-block">
     {content.license_to_depart && (
-      <div className="p-4 bg-muted/30 rounded-lg">
+      <div className={cn(
+        "p-4 rounded-lg border",
+        archetypeStyle.bgAccent || "bg-muted/30",
+        archetypeStyle.borderColor ? archetypeStyle.borderColor.replace('border-', 'border-') + '/30' : "border-border/30"
+      )}>
         <p className="italic">&ldquo;{content.license_to_depart}&rdquo;</p>
       </div>
     )}
@@ -574,13 +578,17 @@ const ClosingBlock = ({ content, archetypeStyle }) => (
     )}
     
     {content.empowerment_line && (
-      <div className={cn("p-4 rounded-lg text-center font-cinzel", archetypeStyle.bgAccent || "bg-primary/10")}>
-        <p className="text-lg">&ldquo;{content.empowerment_line}&rdquo;</p>
+      <div className={cn(
+        "p-4 rounded-lg text-center font-cinzel border",
+        archetypeStyle.bgAccent || "bg-primary/10",
+        archetypeStyle.borderColor || "border-primary/30"
+      )}>
+        <p className={cn("text-lg", archetypeStyle.accentColor || "text-foreground")}>&ldquo;{content.empowerment_line}&rdquo;</p>
       </div>
     )}
     
     {content.next_steps_hint && (
-      <p className="text-sm text-muted-foreground">
+      <p className={cn("text-sm", archetypeStyle.textMuted || "text-muted-foreground")}>
         <span className="font-medium">In the next 24 hours:</span> {content.next_steps_hint}
       </p>
     )}
@@ -593,12 +601,16 @@ const BirdOracleBlock = ({ content, entries, onEntry, archetypeStyle }) => (
     <div className="flex items-center gap-3">
       <Bird className={cn("w-8 h-8", archetypeStyle.accentColor || "text-primary")} />
       <div>
-        <div className="font-cinzel text-lg">{content.bird || content.bird_name}</div>
-        <div className="text-sm text-muted-foreground">Oracle Message</div>
+        <div className={cn("font-cinzel text-lg", archetypeStyle.accentColor || "text-foreground")}>{content.bird || content.bird_name}</div>
+        <div className={cn("text-sm", archetypeStyle.textMuted || "text-muted-foreground")}>Oracle Message</div>
       </div>
     </div>
     
-    <div className="p-4 bg-muted/30 rounded-lg italic">
+    <div className={cn(
+      "p-4 rounded-lg italic border",
+      archetypeStyle.bgAccent || "bg-muted/30",
+      archetypeStyle.borderColor ? archetypeStyle.borderColor.replace('border-', 'border-') + '/30' : "border-border/30"
+    )}>
       &ldquo;{content.message || content.oracle_message}&rdquo;
     </div>
     
@@ -609,7 +621,10 @@ const BirdOracleBlock = ({ content, entries, onEntry, archetypeStyle }) => (
           <textarea
             value={entries['bird_observation'] || ''}
             onChange={(e) => onEntry('bird_observation', e.target.value)}
-            className="w-full p-2 bg-background border rounded-lg text-sm"
+            className={cn(
+              "w-full p-2 rounded-lg text-sm border bg-slate-900/50",
+              archetypeStyle.borderColor || "border-border"
+            )}
             rows={2}
             placeholder="Record what you observe..."
           />
