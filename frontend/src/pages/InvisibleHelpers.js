@@ -978,6 +978,14 @@ export const InvisibleHelpers = () => {
                       <p className="text-navy-dark font-crimson text-sm">{generatedWorking.action_pledge}</p>
                     </div>
 
+                    {/* After the Spell - Optional wrapper section */}
+                    {generatedWorking.after_the_spell && (
+                      <div className="bg-navy-dark/5 border-l-2 border-navy-dark/30 p-3">
+                        <h3 className="font-cinzel text-xs text-navy-dark/70 tracking-wider uppercase mb-1">After the Spell</h3>
+                        <p className="text-navy-dark/70 font-crimson text-sm italic">{generatedWorking.after_the_spell}</p>
+                      </div>
+                    )}
+
                     {/* Closing */}
                     <div className="text-center pt-2">
                       <p className="text-navy-dark/60 italic font-crimson text-sm">{generatedWorking.closing_truth}</p>
