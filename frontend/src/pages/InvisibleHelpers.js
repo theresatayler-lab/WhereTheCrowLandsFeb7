@@ -416,11 +416,17 @@ export const InvisibleHelpers = () => {
     <div className="min-h-screen bg-[#0a0f1a]" data-testid="invisible-helpers-page">
       {/* Hero with protective circle motif */}
       <section className="relative py-10 md:py-14 overflow-hidden">
-        {/* Protective circle background */}
+        {/* Gradient background */}
+        <div className="absolute inset-0 bg-gradient-to-b from-amber-900/10 via-transparent to-transparent" />
+        
+        {/* Protective circle background - more visible */}
         <ProtectiveCircle 
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] text-amber-500" 
-          opacity={0.12}
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] text-amber-500" 
+          opacity={0.15}
         />
+        
+        {/* Subtle radial glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-amber-500/5 rounded-full blur-3xl" />
         
         <div className="relative max-w-3xl mx-auto px-4 text-center">
           <motion.div
