@@ -10,7 +10,7 @@ import sys
 from datetime import datetime
 
 class ImageGenerationTester:
-    def __init__(self, base_url="https://occult-timeline.preview.emergentagent.com"):
+    def __init__(self, base_url="https://aiarchetypes.preview.emergentagent.com"):
         self.base_url = base_url
         self.pro_token = None
         self.tests_run = 0
