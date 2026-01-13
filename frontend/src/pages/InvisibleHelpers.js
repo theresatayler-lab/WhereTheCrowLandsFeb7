@@ -1,14 +1,19 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Shield, Sparkles, ChevronRight, ChevronDown,
-  Download, Copy, Check, Clock, Loader2
-} from 'lucide-react';
+import { Shield, Sparkles, ChevronRight, Download, Copy, Check, Clock, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
-import { cn } from '../lib/utils';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import { ElaborateCorner } from '../components/OrnateElements';
+import { 
+  DarkSection, 
+  LightSection, 
+  GrandDivider, 
+  MysticalDivider,
+  ElaborateCorner,
+  CornerFlourish,
+  LightOrnateCard,
+  BorderFrame
+} from '../components/OrnateElements';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -16,118 +21,32 @@ const API_URL = process.env.REACT_APP_BACKEND_URL;
 const SPELL_VIDEO_URL = 'https://customer-assets.emergentagent.com/job_mystic-grimoire-1/artifacts/sl3euh2k_GenericSpellWaitingVid.MOV';
 
 // ============================================================================
-// INVISIBLE HELPERS MOTIF COMPONENTS
-// Subtle, reverent, diagrammatic mysticism
-// ============================================================================
-
-// Protective Circle SVG - used in hero and result container
-const ProtectiveCircle = ({ className = '', opacity = 0.08 }) => (
-  <svg viewBox="0 0 400 400" className={className} fill="none" style={{ opacity }}>
-    {/* Outer protective boundary */}
-    <circle cx="200" cy="200" r="190" stroke="currentColor" strokeWidth="0.5" />
-    <circle cx="200" cy="200" r="180" stroke="currentColor" strokeWidth="0.3" strokeDasharray="4 8" />
-    {/* Inner sanctum */}
-    <circle cx="200" cy="200" r="120" stroke="currentColor" strokeWidth="0.5" />
-    <circle cx="200" cy="200" r="100" stroke="currentColor" strokeWidth="0.3" />
-    {/* Cardinal points */}
-    <line x1="200" y1="10" x2="200" y2="50" stroke="currentColor" strokeWidth="0.5" />
-    <line x1="200" y1="350" x2="200" y2="390" stroke="currentColor" strokeWidth="0.5" />
-    <line x1="10" y1="200" x2="50" y2="200" stroke="currentColor" strokeWidth="0.5" />
-    <line x1="350" y1="200" x2="390" y2="200" stroke="currentColor" strokeWidth="0.5" />
-    {/* Balance triangles */}
-    <path d="M200,80 L220,110 L180,110 Z" stroke="currentColor" strokeWidth="0.3" fill="none" />
-    <path d="M200,320 L220,290 L180,290 Z" stroke="currentColor" strokeWidth="0.3" fill="none" />
-  </svg>
-);
-
-// Lattice/Grid overlay - subtle geometric law
-const SacredLattice = ({ className = '', opacity = 0.05 }) => (
-  <svg viewBox="0 0 100 100" className={className} preserveAspectRatio="none" style={{ opacity }}>
-    <defs>
-      <pattern id="lattice" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
-        <path d="M0,10 L20,10 M10,0 L10,20" stroke="currentColor" strokeWidth="0.3" fill="none" />
-        <circle cx="10" cy="10" r="1" fill="currentColor" opacity="0.5" />
-      </pattern>
-    </defs>
-    <rect width="100" height="100" fill="url(#lattice)" />
-  </svg>
-);
-
-// Horizon line with mist effect for footer
-const HorizonMist = ({ className = '' }) => (
-  <div className={cn("relative h-24 overflow-hidden", className)}>
-    <svg viewBox="0 0 100 24" className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
-      <defs>
-        <linearGradient id="mistGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="currentColor" stopOpacity="0" />
-          <stop offset="50%" stopColor="currentColor" stopOpacity="0.05" />
-          <stop offset="100%" stopColor="currentColor" stopOpacity="0" />
-        </linearGradient>
-      </defs>
-      {/* Distant hills/tor silhouette */}
-      <path d="M0,18 Q25,10 50,14 Q75,8 100,16 L100,24 L0,24 Z" fill="url(#mistGrad)" />
-      {/* Horizon line */}
-      <line x1="0" y1="16" x2="100" y2="16" stroke="currentColor" strokeWidth="0.2" opacity="0.1" />
-    </svg>
-  </div>
-);
-
-// Talisman frame for the result container
-const TalismanFrame = ({ children, className = '' }) => (
-  <div className={cn("relative", className)}>
-    {/* Corner marks - talisman style */}
-    <div className="absolute top-0 left-0 w-8 h-8 border-l-2 border-t-2 border-amber-700/30 rounded-tl" />
-    <div className="absolute top-0 right-0 w-8 h-8 border-r-2 border-t-2 border-amber-700/30 rounded-tr" />
-    <div className="absolute bottom-0 left-0 w-8 h-8 border-l-2 border-b-2 border-amber-700/30 rounded-bl" />
-    <div className="absolute bottom-0 right-0 w-8 h-8 border-r-2 border-b-2 border-amber-700/30 rounded-br" />
-    {/* Inner border */}
-    <div className="absolute inset-3 border border-slate-700/30 rounded pointer-events-none" />
-    {/* Subtle lattice background */}
-    <SacredLattice className="absolute inset-0 w-full h-full text-amber-500" opacity={0.03} />
-    {children}
-  </div>
-);
-
-// Transmutation callout style
-const TransmutationCallout = ({ children, className = '' }) => (
-  <div className={cn("relative bg-amber-900/10 border border-amber-900/30 rounded-lg p-4 overflow-hidden", className)}>
-    {/* Abstract alchemical geometry background */}
-    <svg className="absolute inset-0 w-full h-full text-amber-500 opacity-5" viewBox="0 0 100 100" preserveAspectRatio="none">
-      <circle cx="50" cy="50" r="40" stroke="currentColor" strokeWidth="0.5" fill="none" />
-      <polygon points="50,15 80,70 20,70" stroke="currentColor" strokeWidth="0.3" fill="none" />
-      <polygon points="50,85 20,30 80,30" stroke="currentColor" strokeWidth="0.3" fill="none" />
-    </svg>
-    <div className="relative z-10">{children}</div>
-  </div>
-);
-
-// ============================================================================
-// FORM OPTIONS
+// FORM OPTIONS - Same data, Crowlands presentation language
 // ============================================================================
 
 const BENEFICIARIES_OPTIONS = [
-  { id: 'community', label: 'My community / neighbors' },
-  { id: 'vulnerable', label: 'Vulnerable people' },
-  { id: 'journalists', label: 'Journalists / truth-tellers' },
-  { id: 'legal', label: 'Legal advocates' },
-  { id: 'families', label: 'Families / children' },
+  { id: 'community', label: 'My community & neighbors' },
+  { id: 'vulnerable', label: 'The vulnerable & displaced' },
+  { id: 'journalists', label: 'Truth-tellers & witnesses' },
+  { id: 'legal', label: 'Legal advocates & defenders' },
+  { id: 'families', label: 'Families & children' },
   { id: 'mutual_aid', label: 'Mutual aid networks' },
 ];
 
 const QUALITY_OPTIONS = [
-  { id: 'clarity', label: 'Clarity' },
-  { id: 'restraint', label: 'Restraint' },
-  { id: 'courage', label: 'Courage' },
-  { id: 'protection', label: 'Protection' },
-  { id: 'conscience', label: 'Conscience' },
-  { id: 'truth', label: 'Truth' },
+  { id: 'clarity', label: 'Clarity', glyph: '◇' },
+  { id: 'restraint', label: 'Restraint', glyph: '◇' },
+  { id: 'courage', label: 'Courage', glyph: '◇' },
+  { id: 'protection', label: 'Protection', glyph: '◇' },
+  { id: 'conscience', label: 'Conscience', glyph: '◇' },
+  { id: 'truth', label: 'Truth', glyph: '◇' },
 ];
 
 const PRACTICE_STYLE_OPTIONS = [
-  { id: 'meditative', label: 'Quiet / secular' },
-  { id: 'prayerful', label: 'Prayerful / devotional' },
-  { id: 'folk', label: 'Folk / hearth magic' },
-  { id: 'ceremonial', label: 'Ceremonial / formal' },
+  { id: 'meditative', label: 'Quiet & secular' },
+  { id: 'prayerful', label: 'Prayerful & devotional' },
+  { id: 'folk', label: 'Folk & hearth' },
+  { id: 'ceremonial', label: 'Ceremonial & formal' },
 ];
 
 const TIME_HORIZON_OPTIONS = [
@@ -140,11 +59,109 @@ const TIME_HORIZON_OPTIONS = [
 const MAX_FREE_GENERATIONS = 3;
 
 // ============================================================================
+// RITUAL STEPPER - Crowlands style
+// ============================================================================
+
+const RitualStepper = ({ currentStep, steps }) => (
+  <div className="flex items-center justify-center gap-2 sm:gap-4 mb-8">
+    {steps.map((step, i) => (
+      <React.Fragment key={i}>
+        <div className="flex flex-col items-center">
+          <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center font-cinzel text-sm transition-all border-2 ${
+            i < currentStep 
+              ? 'bg-crimson border-crimson text-cream' 
+              : i === currentStep 
+                ? 'bg-transparent border-gold text-gold' 
+                : 'bg-transparent border-navy-mid/50 text-navy-mid/50'
+          }`}>
+            {i < currentStep ? <Check className="w-4 h-4" /> : i + 1}
+          </div>
+          <span className={`text-xs mt-1 font-montserrat tracking-wide hidden sm:block ${
+            i <= currentStep ? 'text-crimson' : 'text-navy-dark/40'
+          }`}>
+            {step}
+          </span>
+        </div>
+        {i < steps.length - 1 && (
+          <div className={`w-8 sm:w-16 h-0.5 ${
+            i < currentStep ? 'bg-crimson/60' : 'bg-navy-mid/20'
+          }`} />
+        )}
+      </React.Fragment>
+    ))}
+  </div>
+);
+
+// ============================================================================
+// CROWLANDS INPUT COMPONENTS
+// ============================================================================
+
+const CrowlandsInput = ({ value, onChange, placeholder, type = 'text', rows }) => {
+  const baseClasses = "w-full bg-white border-2 border-gold/40 focus:border-crimson focus:ring-2 focus:ring-crimson/20 rounded-sm px-4 py-3 text-navy-dark font-crimson text-sm placeholder:text-navy-dark/40 transition-all";
+  
+  if (rows) {
+    return (
+      <textarea
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
+        rows={rows}
+        className={`${baseClasses} resize-none`}
+        style={{ boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.05)' }}
+      />
+    );
+  }
+  
+  return (
+    <input
+      type={type}
+      value={value}
+      onChange={onChange}
+      placeholder={placeholder}
+      className={baseClasses}
+      style={{ boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.05)' }}
+    />
+  );
+};
+
+const CrowlandsChip = ({ label, selected, onClick, glyph }) => (
+  <button
+    type="button"
+    onClick={onClick}
+    className={`relative px-4 py-2 rounded-sm font-montserrat text-sm transition-all border-2 ${
+      selected
+        ? 'bg-crimson/10 border-crimson text-crimson shadow-sm'
+        : 'bg-white border-gold/30 text-navy-dark hover:border-gold/60 hover:bg-gold/5'
+    }`}
+    style={{ boxShadow: selected ? 'inset 0 1px 3px rgba(184, 35, 48, 0.1)' : 'none' }}
+  >
+    {glyph && <span className="mr-1 opacity-60">{glyph}</span>}
+    {label}
+    {selected && <span className="absolute -top-1 -right-1 text-crimson text-xs">◆</span>}
+  </button>
+);
+
+// ============================================================================
+// SECTION LABEL - Crowlands serif/small-caps style
+// ============================================================================
+
+const SectionLabel = ({ title, subtitle, glyph = '✦' }) => (
+  <div className="mb-4">
+    <div className="flex items-center gap-2 mb-1">
+      <span className="text-gold text-sm">{glyph}</span>
+      <h3 className="font-cinzel text-lg text-crimson tracking-wide uppercase">{title}</h3>
+    </div>
+    {subtitle && (
+      <p className="text-navy-dark/60 text-sm font-crimson italic pl-6">{subtitle}</p>
+    )}
+  </div>
+);
+
+// ============================================================================
 // MAIN COMPONENT
 // ============================================================================
 
 export const InvisibleHelpers = () => {
-  const [showFullIntro, setShowFullIntro] = useState(false);
   const [formData, setFormData] = useState({
     personal_intention: '',
     beneficiaries: [],
@@ -153,7 +170,8 @@ export const InvisibleHelpers = () => {
     time_horizon: '',
   });
   
-  const [step, setStep] = useState('form'); // Start with form
+  const [step, setStep] = useState('form');
+  const [formStep, setFormStep] = useState(0); // 0: Name, 1: Strengthen, 2: Seal
   const [email, setEmail] = useState('');
   const [generating, setGenerating] = useState(false);
   const [generatedWorking, setGeneratedWorking] = useState(null);
@@ -163,7 +181,6 @@ export const InvisibleHelpers = () => {
   
   const workingRef = useRef(null);
 
-  // Scroll to top when step changes
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -185,7 +202,6 @@ export const InvisibleHelpers = () => {
     scrollToTop();
   }, []);
 
-  // Scroll to top on step changes
   useEffect(() => {
     scrollToTop();
   }, [step]);
@@ -249,7 +265,7 @@ export const InvisibleHelpers = () => {
     }
 
     localStorage.setItem('ih_pending_email', email);
-    setStep('checkout'); // Go to checkout/donation after email
+    setStep('checkout');
   };
 
   const handleCheckout = async (amount = 0) => {
@@ -308,7 +324,7 @@ export const InvisibleHelpers = () => {
         setGeneratedWorking(data.working);
         setGenerationCount(data.generation_count || generationCount + 1);
         localStorage.setItem('ih_generation_count', String(data.generation_count || generationCount + 1));
-        toast.success('Your intention has been generated!');
+        toast.success('Your intention has been sealed.');
         localStorage.removeItem('ih_pending_email');
         localStorage.removeItem('ih_pending_form');
       } else if (data.limit_reached) {
@@ -327,6 +343,7 @@ export const InvisibleHelpers = () => {
 
   const handleCreateVariation = () => {
     setGeneratedWorking(null);
+    setFormStep(0);
     setStep('form');
   };
 
@@ -340,7 +357,7 @@ export const InvisibleHelpers = () => {
   };
 
   const formatWorkingAsText = (working) => {
-    let text = `MAGICAL BATTLE CRY INTENTION\nA Structured Intention for Protection & Clarity\n\n`;
+    let text = `MAGICAL BATTLE CRY INTENTION\nA Coordinated Working for Protection & Clarity\n\n`;
     text += `INTENTION\n${working.intention}\n\n`;
     text += `ANCHOR PHRASE\n${working.anchor_phrase}\n\n`;
     text += `ETHICAL FRAME\n${working.ethical_frame}\n\n`;
@@ -363,7 +380,7 @@ export const InvisibleHelpers = () => {
     try {
       const canvas = await html2canvas(workingRef.current, {
         scale: 2,
-        backgroundColor: '#0f172a',
+        backgroundColor: '#f5f0e6',
         logging: false,
       });
       
@@ -378,15 +395,6 @@ export const InvisibleHelpers = () => {
       let imgY = 10;
       
       pdf.addImage(imgData, 'PNG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
-      
-      let heightLeft = imgHeight * ratio - (pdfHeight - 20);
-      while (heightLeft > 0) {
-        pdf.addPage();
-        imgY = -heightLeft + 10;
-        pdf.addImage(imgData, 'PNG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
-        heightLeft -= (pdfHeight - 20);
-      }
-      
       pdf.save('magical-battle-cry-intention.pdf');
       toast.success('PDF downloaded');
     } catch (error) {
@@ -405,528 +413,21 @@ export const InvisibleHelpers = () => {
     });
     setEmail('');
     setGeneratedWorking(null);
+    setFormStep(0);
     setStep('form');
   };
 
   // ============================================================================
-  // RENDER
+  // LOADING OVERLAY - With video background
   // ============================================================================
-
-  return (
-    <div className="min-h-screen bg-[#0a0f1a]" data-testid="invisible-helpers-page">
-      {/* Hero with protective circle motif */}
-      <section className="relative py-10 md:py-14 overflow-hidden">
-        {/* Gradient background */}
-        <div className="absolute inset-0 bg-gradient-to-b from-amber-900/10 via-transparent to-transparent" />
-        
-        {/* Protective circle background - more visible */}
-        <ProtectiveCircle 
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] text-amber-500" 
-          opacity={0.15}
-        />
-        
-        {/* Subtle radial glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-amber-500/5 rounded-full blur-3xl" />
-        
-        <div className="relative max-w-3xl mx-auto px-4 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <Shield className="w-10 h-10 mx-auto mb-4 text-amber-500/70" />
-            <h1 className="font-cinzel text-2xl md:text-3xl text-slate-200 mb-2">
-              Magical Battle Cry Intention
-            </h1>
-            <p className="text-amber-600/70 text-sm italic">
-              A Structured Intention for Protection & Clarity
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Expanded Intro Section - Show on form step */}
-      {step === 'form' && (
-        <section className="px-4 pb-8">
-          <div className="max-w-3xl mx-auto">
-            <div className="relative bg-slate-900/50 border border-amber-900/30 rounded-lg overflow-hidden">
-              {/* Corner accents */}
-              <div className="absolute top-0 left-0 w-12 h-12 border-l-2 border-t-2 border-amber-700/40 rounded-tl-lg" />
-              <div className="absolute top-0 right-0 w-12 h-12 border-r-2 border-t-2 border-amber-700/40 rounded-tr-lg" />
-              <div className="absolute bottom-0 left-0 w-12 h-12 border-l-2 border-b-2 border-amber-700/40 rounded-bl-lg" />
-              <div className="absolute bottom-0 right-0 w-12 h-12 border-r-2 border-b-2 border-amber-700/40 rounded-br-lg" />
-              
-              {/* Always visible intro */}
-              <div className="p-6 md:p-8">
-                <div className="prose prose-invert prose-slate max-w-none text-sm">
-                  <p className="text-slate-300 leading-relaxed mb-4">
-                    In times of uncertainty, people have always gathered—not just to act, but to 
-                    <span className="text-slate-200"> steady themselves before acting</span>. During 
-                    World War II, groups practiced coordinated meditation for protection and clarity. 
-                    In the 1960s, activists paired inner work with outer resistance. Today, from 
-                    <span className="text-amber-500/80"> &ldquo;Etsy witches&rdquo;</span> making headlines 
-                    to artists weaving meaning into protest, people are rediscovering an old truth.
-                  </p>
-                  
-                  <p className="text-slate-400 leading-relaxed mb-4">
-                    <span className="text-slate-300">When the world feels like it&apos;s burning, 
-                    steadying the inner field matters.</span> Not as a replacement for action—never 
-                    that—but as a companion to it. Focused intention, done with clean hands and a 
-                    clear heart, can be part of how we show up.
-                  </p>
-
-                  <p className="text-slate-400 leading-relaxed">
-                    This portal draws inspiration from <span className="text-amber-500/90">Dion Fortune&apos;s</span> wartime 
-                    spiritual work and the long tradition of ethical, protective practice. What you&apos;ll 
-                    create here is a <span className="text-slate-200">structured intention</span> that 
-                    returns misused power to natural law, strengthens those who protect, and steadies 
-                    your own resolve. No curses. No targets. Just clarity, protection, and lawful return.
-                  </p>
-                </div>
-              </div>
-
-            {/* Expandable section */}
-              <AnimatePresence>
-                {showFullIntro && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="overflow-hidden border-t border-slate-700/50"
-                  >
-                    <div className="px-6 md:px-8 pb-6 md:pb-8 prose prose-invert prose-slate max-w-none text-sm">
-                      <h3 className="font-cinzel text-amber-600/80 text-base mb-3 mt-0">About Where The Crowlands</h3>
-                      <p className="text-slate-400 leading-relaxed mb-4">
-                        We&apos;re building <span className="text-slate-200">Where The Crowlands</span> as 
-                        a portal to a world where magic is practical, ethical, and a little bit fun. A place 
-                        where AI-guided rituals meet family folklore, where you can explore the history of 
-                        magical practice while crafting your own. Think of it as your digital grimoire—part 
-                        library, part workshop, part community.
-                      </p>
-
-                      <h3 className="font-cinzel text-amber-600/80 text-base mb-3">Guiding Principles</h3>
-                      <p className="text-slate-400 leading-relaxed mb-3">
-                        Ethical magical work across traditions shares common principles:
-                      </p>
-                      <ul className="text-slate-400 space-y-2 mb-4">
-                        <li><span className="text-slate-300">Language directs force</span> — vague or emotional wording causes rebound</li>
-                        <li><span className="text-slate-300">Work that violates free will rebounds</span> — we redirect, never strike</li>
-                        <li><span className="text-slate-300">Justice belongs to impersonal law</span> — not personal vengeance</li>
-                        <li><span className="text-slate-300">Defense and protection over aggression</span> — always</li>
-                      </ul>
-
-                      <h3 className="font-cinzel text-amber-600/80 text-base mb-3">What This Intention Does</h3>
-                      <p className="text-slate-400 leading-relaxed mb-4">
-                        This is a <span className="text-slate-200">Neutralizing Return to Source via Higher Law</span>. 
-                        It doesn&apos;t curse. It doesn&apos;t attack. It returns misused power—distortion, 
-                        coercion, dehumanization—to the impersonal law that governs consequence. Think of it 
-                        as redirecting energy back to where it came from, transmuted into accountability 
-                        rather than harm.
-                      </p>
-                      
-                      <p className="text-slate-400 leading-relaxed mb-4">
-                        The goal is <span className="text-amber-500/80">disruption, not destruction</span>. 
-                        A little sand in the gears of cruelty. But always with clean hands, always paired 
-                        with real-world action, and always remembering that the goal is protection and 
-                        clarity—not revenge.
-                      </p>
-
-                      <TransmutationCallout className="mt-4">
-                        <p className="text-amber-200/80 text-xs italic m-0">
-                          &ldquo;Inner work does not replace resistance. It steadies those who resist.&rdquo;
-                        </p>
-                      </TransmutationCallout>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-              
-              <button
-                onClick={() => setShowFullIntro(!showFullIntro)}
-                className="w-full py-3 px-6 border-t border-slate-700/50 text-amber-600/70 hover:text-amber-500 text-xs flex items-center justify-center gap-2 transition-colors"
-              >
-                <span>{showFullIntro ? 'Show less' : 'Read more about this intention...'}</span>
-                <ChevronDown className={cn("w-4 h-4 transition-transform", showFullIntro && "rotate-180")} />
-              </button>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Main Content - All steps */}
-      <section className="px-4 pb-16">
-        <div className="max-w-2xl mx-auto">
-          <AnimatePresence mode="wait">
-            {step === 'form' && (
-              <FormStep
-                formData={formData}
-                onFormChange={handleFormChange}
-                onToggleBeneficiary={toggleBeneficiary}
-                isValid={isFormValid()}
-                onContinue={handleContinueToEmail}
-              />
-            )}
-            
-            {step === 'email' && (
-              <EmailStep
-                email={email}
-                setEmail={setEmail}
-                onSubmit={handleEmailSubmit}
-                onBack={() => setStep('form')}
-              />
-            )}
-            
-            {step === 'checkout' && (
-              <CheckoutStep
-                email={email}
-                onCheckout={handleCheckout}
-                onBack={() => setStep('email')}
-                checkingOut={checkingOut}
-              />
-            )}
-            
-            {step === 'result' && (
-              <ResultStep
-                working={generatedWorking}
-                generating={generating}
-                workingRef={workingRef}
-                onCopy={handleCopyToClipboard}
-                onDownload={handleDownloadPDF}
-                onVariation={handleCreateVariation}
-                onReset={resetAll}
-                copied={copied}
-                generationCount={generationCount}
-                maxGenerations={MAX_FREE_GENERATIONS}
-              />
-            )}
-          </AnimatePresence>
-        </div>
-      </section>
-
-      {/* Footer with horizon mist */}
-      <section className="relative border-t border-slate-800">
-        <HorizonMist className="absolute inset-x-0 -top-12 text-slate-400" />
-        <div className="relative py-12 px-4">
-          <div className="max-w-xl mx-auto text-center">
-            <p className="font-cinzel text-base text-slate-400 italic">
-              Inner work does not replace resistance.<br />
-              <span className="text-slate-300">It steadies those who resist.</span>
-            </p>
-          </div>
-        </div>
-      </section>
-    </div>
-  );
-};
-
-// ============================================================================
-// FORM STEP
-// ============================================================================
-
-const FormStep = ({ formData, onFormChange, onToggleBeneficiary, isValid, onContinue }) => (
-  <motion.div
-    initial={{ opacity: 0, x: 20 }}
-    animate={{ opacity: 1, x: 0 }}
-    exit={{ opacity: 0, x: -20 }}
-    className="relative bg-slate-900/50 border border-amber-900/30 rounded-lg p-6 space-y-6"
-  >
-    {/* Corner accents */}
-    <div className="absolute top-0 left-0 w-8 h-8 border-l-2 border-t-2 border-amber-700/40 rounded-tl-lg" />
-    <div className="absolute top-0 right-0 w-8 h-8 border-r-2 border-t-2 border-amber-700/40 rounded-tr-lg" />
-    <div className="absolute bottom-0 left-0 w-8 h-8 border-l-2 border-b-2 border-amber-700/40 rounded-bl-lg" />
-    <div className="absolute bottom-0 right-0 w-8 h-8 border-r-2 border-b-2 border-amber-700/40 rounded-br-lg" />
-    
-    {/* Subtle lattice background */}
-    <SacredLattice className="absolute inset-0 w-full h-full text-amber-500 rounded-lg" opacity={0.03} />
-    {/* Personal Intention - FREE TEXT FIRST */}
-    <FormSection 
-      title="What is your intention?"
-      context="Write a few lines about what you're seeking protection from, or clarity about. This is for you."
-    >
-      <textarea
-        value={formData.personal_intention}
-        onChange={(e) => onFormChange('personal_intention', e.target.value)}
-        placeholder="In my own words, I seek..."
-        rows={3}
-        className="w-full px-4 py-3 bg-slate-800/50 border border-slate-700 rounded text-slate-200 placeholder:text-slate-600 focus:outline-none focus:border-amber-700/50 text-sm resize-none"
-        data-testid="personal-intention-input"
-      />
-    </FormSection>
-
-    {/* Beneficiaries */}
-    <FormSection 
-      title="Who are you protecting?"
-      context="The heart of this intention is shielding those in harm's way. Visualize protection around them, not attack on anyone."
-    >
-      <div className="flex flex-wrap gap-2">
-        {BENEFICIARIES_OPTIONS.map(opt => (
-          <ToggleChip
-            key={opt.id}
-            label={opt.label}
-            selected={formData.beneficiaries.includes(opt.label)}
-            onClick={() => onToggleBeneficiary(opt.label)}
-          />
-        ))}
-      </div>
-    </FormSection>
-
-    {/* Primary Quality */}
-    <FormSection 
-      title="Quality to strengthen"
-      context="What energy do you want to amplify? Focused visualization on positive qualities creates a 'seed idea' that spreads outward."
-    >
-      <div className="flex flex-wrap gap-2">
-        {QUALITY_OPTIONS.map(opt => (
-          <ToggleChip
-            key={opt.id}
-            label={opt.label}
-            selected={formData.primary_quality === opt.label}
-            onClick={() => onFormChange('primary_quality', opt.label)}
-          />
-        ))}
-      </div>
-    </FormSection>
-
-    {/* Practice Style */}
-    <FormSection 
-      title="Practice language"
-      context="How do you prefer your spiritual language? We'll match the tone accordingly."
-    >
-      <div className="flex flex-wrap gap-2">
-        {PRACTICE_STYLE_OPTIONS.map(opt => (
-          <ToggleChip
-            key={opt.id}
-            label={opt.label}
-            selected={formData.practice_style === opt.label}
-            onClick={() => onFormChange('practice_style', opt.label)}
-          />
-        ))}
-      </div>
-    </FormSection>
-
-    {/* Time Horizon */}
-    <FormSection 
-      title="Time horizon"
-      context="Synchronized, regular practice builds coherence. Picking a specific time helps anchor the intention in your life."
-    >
-      <div className="flex flex-wrap gap-2">
-        {TIME_HORIZON_OPTIONS.map(opt => (
-          <ToggleChip
-            key={opt.id}
-            label={opt.label}
-            selected={formData.time_horizon === opt.label}
-            onClick={() => onFormChange('time_horizon', opt.label)}
-          />
-        ))}
-      </div>
-    </FormSection>
-
-    {/* Action Commitment - Simple statement */}
-    <div className="bg-slate-800/30 border border-slate-700/30 rounded-lg p-4">
-      <label className="block text-slate-200 text-sm mb-2">
-        Your commitment to the material world
-      </label>
-      <p className="text-slate-400 text-sm">
-        By creating this intention, I understand that spellwork and storytelling are conduits to support real action. 
-        I commit to channeling this intention toward benevolent outcomes and peace.
-      </p>
-    </div>
-
-    {/* Continue Button */}
-    <button
-      onClick={onContinue}
-      disabled={!isValid}
-      className={cn(
-        "w-full py-3 rounded font-cinzel text-sm transition-all flex items-center justify-center gap-2",
-        isValid
-          ? "bg-amber-900/40 hover:bg-amber-900/60 border border-amber-700/50 text-amber-200"
-          : "bg-slate-800 border border-slate-700 text-slate-500 cursor-not-allowed"
-      )}
-      data-testid="continue-to-checkout-btn"
-    >
-      Continue
-      <ChevronRight className="w-4 h-4" />
-    </button>
-  </motion.div>
-);
-
-// Form Section with context
-const FormSection = ({ title, context, children }) => (
-  <div>
-    <label className="block text-slate-200 text-sm mb-1">{title}</label>
-    {context && (
-      <p className="text-slate-500 text-xs mb-3 italic">{context}</p>
-    )}
-    {children}
-  </div>
-);
-
-// Toggle Chip component
-const ToggleChip = ({ label, selected, onClick }) => (
-  <button
-    type="button"
-    onClick={onClick}
-    className={cn(
-      "px-3 py-1.5 rounded-full text-xs transition-all border",
-      selected
-        ? "bg-amber-900/40 border-amber-700/50 text-amber-200"
-        : "bg-slate-800/50 border-slate-700/50 text-slate-400 hover:border-slate-600"
-    )}
-  >
-    {label}
-  </button>
-);
-
-// ============================================================================
-// EMAIL STEP
-// ============================================================================
-
-const EmailStep = ({ email, setEmail, onSubmit, onBack }) => (
-  <motion.div
-    initial={{ opacity: 0, x: 20 }}
-    animate={{ opacity: 1, x: 0 }}
-    exit={{ opacity: 0, x: -20 }}
-    className="bg-slate-900/50 border border-slate-700/50 rounded-lg p-6"
-  >
-    <button onClick={onBack} className="text-slate-500 hover:text-slate-300 text-sm mb-4">
-      ← Back to form
-    </button>
-    
-    <div className="text-center mb-6">
-      <Sparkles className="w-8 h-8 mx-auto mb-3 text-amber-500/70" />
-      <h2 className="font-cinzel text-lg text-slate-200 mb-2">Receive Your Intention & Join the Chaos</h2>
-      <p className="text-slate-500 text-sm">
-        Enter your email to receive your intention and a PDF for offline use.
-      </p>
-    </div>
-    
-    <form onSubmit={onSubmit} className="space-y-4">
-      <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="your@email.com"
-        className="w-full px-4 py-3 bg-slate-800/50 border border-slate-700 rounded text-slate-200 placeholder:text-slate-600 focus:outline-none focus:border-amber-700/50"
-        required
-        data-testid="email-input"
-      />
-      <button
-        type="submit"
-        className="w-full py-3 bg-amber-900/40 hover:bg-amber-900/60 border border-amber-700/50 rounded font-cinzel text-amber-200 text-sm transition-colors flex items-center justify-center gap-2"
-        data-testid="email-submit-btn"
-      >
-        Continue
-        <ChevronRight className="w-4 h-4" />
-      </button>
-      <p className="text-slate-600 text-xs text-center">
-        You can generate up to 3 intentions as a guest. Join early access for unlimited.
-      </p>
-    </form>
-  </motion.div>
-);
-
-// ============================================================================
-// CHECKOUT STEP
-// ============================================================================
-
-const CheckoutStep = ({ email, onCheckout, onBack, checkingOut }) => (
-  <motion.div
-    initial={{ opacity: 0, x: 20 }}
-    animate={{ opacity: 1, x: 0 }}
-    exit={{ opacity: 0, x: -20 }}
-    className="bg-slate-900/50 border border-slate-700/50 rounded-lg p-6"
-  >
-    <button onClick={onBack} className="text-slate-500 hover:text-slate-300 text-sm mb-4" disabled={checkingOut}>
-      ← Back
-    </button>
-    
-    <div className="text-center mb-6">
-      <Sparkles className="w-8 h-8 mx-auto mb-3 text-amber-500/70" />
-      <h2 className="font-cinzel text-lg text-slate-200 mb-3">Support This Work</h2>
-      <div className="text-slate-400 text-sm space-y-3 text-left">
-        <p>
-          This portal is offered freely. If you&apos;re able, consider a pay-what-you-choose contribution.
-        </p>
-        <p>
-          Each spell costs the witchy woman behind the veil approximately <span className="text-amber-500">$0.02–0.05</span> in 
-          AI generation costs, and she&apos;s building this whole thing as we speak.
-        </p>
-        <p className="text-slate-500">
-          Please continue to your spell with or without a donation!
-        </p>
-      </div>
-      <p className="text-amber-600/70 text-xs mt-4 italic font-cinzel">
-        So it is, love only, war is TAMAM SHUD
-      </p>
-    </div>
-    
-    <div className="space-y-3">
-      {/* Free button - stands out in rose/pink */}
-      <button
-        onClick={() => onCheckout(0)}
-        disabled={checkingOut}
-        className="w-full py-3 bg-rose-900/30 hover:bg-rose-900/50 border border-rose-600/50 rounded text-rose-200 text-sm font-medium transition-colors disabled:opacity-50"
-        data-testid="checkout-free-btn"
-      >
-        {checkingOut ? <Loader2 className="w-4 h-4 animate-spin mx-auto" /> : '✨ Continue Free — No Judgement ✨'}
-      </button>
-      
-      <p className="text-slate-600 text-xs text-center">— or support the work —</p>
-      
-      <div className="grid grid-cols-3 gap-2">
-        {[500, 1000, 2500].map(amount => (
-          <button
-            key={amount}
-            onClick={() => onCheckout(amount)}
-            disabled={checkingOut}
-            className="py-3 bg-amber-900/20 hover:bg-amber-900/40 border border-amber-700/30 rounded text-amber-200/80 text-sm transition-colors disabled:opacity-50"
-          >
-            ${amount / 100}
-          </button>
-        ))}
-      </div>
-      
-      <button
-        onClick={() => {
-          const custom = prompt('Enter amount in dollars (e.g., 20):');
-          if (custom && !isNaN(parseFloat(custom))) {
-            onCheckout(Math.round(parseFloat(custom) * 100));
-          }
-        }}
-        disabled={checkingOut}
-        className="w-full py-2 text-slate-500 hover:text-slate-400 text-xs transition-colors disabled:opacity-50"
-      >
-        Other amount...
-      </button>
-    </div>
-  </motion.div>
-);
-
-// ============================================================================
-// RESULT STEP - With video loading and talisman frame
-// ============================================================================
-
-const ResultStep = ({ 
-  working, 
-  generating, 
-  workingRef, 
-  onCopy, 
-  onDownload, 
-  onVariation, 
-  onReset,
-  copied,
-  generationCount,
-  maxGenerations
-}) => {
-  // Loading state with video background
+  
   if (generating) {
     return (
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 bg-[#0a0f1a] z-50 flex items-center justify-center overflow-hidden"
+        className="fixed inset-0 bg-navy-dark z-50 flex items-center justify-center overflow-hidden"
       >
         {/* Background video */}
         <video
@@ -942,17 +443,16 @@ const ResultStep = ({
         </video>
         
         {/* Gradient overlays */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0f1a] via-[#0a0f1a]/70 to-[#0a0f1a]/50" />
-        <div className="absolute inset-0 bg-gradient-radial from-transparent via-transparent to-[#0a0f1a]" />
+        <div className="absolute inset-0 bg-gradient-to-t from-navy-dark via-navy-dark/70 to-navy-dark/50" />
+        <div className="absolute inset-0" style={{
+          background: 'radial-gradient(ellipse at center, transparent 0%, rgba(14, 22, 41, 0.8) 70%)'
+        }} />
         
         {/* Corner ornaments */}
         <ElaborateCorner className="absolute top-4 left-4 w-16 h-16 sm:w-24 sm:h-24" variant="gold" />
         <ElaborateCorner className="absolute top-4 right-4 w-16 h-16 sm:w-24 sm:h-24 rotate-90" variant="gold" />
         <ElaborateCorner className="absolute bottom-4 left-4 w-16 h-16 sm:w-24 sm:h-24 -rotate-90" variant="gold" />
         <ElaborateCorner className="absolute bottom-4 right-4 w-16 h-16 sm:w-24 sm:h-24 rotate-180" variant="gold" />
-        
-        {/* Protective circle */}
-        <ProtectiveCircle className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] text-amber-500" opacity={0.1} />
         
         {/* Content */}
         <div className="relative z-10 text-center px-6 max-w-lg">
@@ -968,20 +468,20 @@ const ResultStep = ({
             }}
             className="w-24 h-24 mx-auto mb-8 relative"
           >
-            <div className="absolute inset-0 rounded-full border-2 border-amber-500/40 animate-pulse" />
-            <div className="absolute inset-2 rounded-full border border-rose-500/30" />
-            <Shield className="w-full h-full text-amber-500 p-4" style={{ filter: 'drop-shadow(0 0 20px rgba(212, 168, 75, 0.5))' }} />
+            <div className="absolute inset-0 rounded-full border-2 border-gold/40 animate-pulse" />
+            <div className="absolute inset-2 rounded-full border border-crimson/30" />
+            <Shield className="w-full h-full text-gold p-4" style={{ filter: 'drop-shadow(0 0 20px rgba(212, 168, 75, 0.5))' }} />
           </motion.div>
           
-          <h2 className="font-cinzel text-2xl sm:text-3xl text-amber-500 mb-3" style={{ textShadow: '0 2px 20px rgba(212, 168, 75, 0.4)' }}>
-            Generating Your Intention
+          <h2 className="font-italiana text-2xl sm:text-3xl text-gold mb-3" style={{ textShadow: '0 2px 20px rgba(212, 168, 75, 0.4)' }}>
+            Sealing Your Intention
           </h2>
           
-          <p className="font-crimson text-lg text-slate-300/80 mb-2">
+          <p className="font-crimson text-lg text-cream/80 mb-2">
             Weaving protection and clarity...
           </p>
           
-          <p className="text-slate-500 text-sm">
+          <p className="text-silver-mist/60 text-sm font-montserrat">
             This may take a moment
           </p>
         </div>
@@ -989,129 +489,518 @@ const ResultStep = ({
     );
   }
 
-  if (!working) {
-    return (
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="text-center py-12"
-      >
-        <Loader2 className="w-8 h-8 mx-auto mb-4 text-amber-500/50 animate-spin" />
-        <p className="text-slate-500">Preparing your intention...</p>
-      </motion.div>
-    );
-  }
+  // ============================================================================
+  // MAIN RENDER
+  // ============================================================================
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="space-y-6"
-    >
-      {/* Action buttons */}
-      <div className="flex flex-wrap gap-2 justify-between items-center">
-        <div className="flex gap-2">
-          <button
-            onClick={onVariation}
-            className="px-4 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded text-slate-300 text-sm transition-colors"
-          >
-            Create Another
-          </button>
+    <div className="min-h-screen bg-navy-dark" data-testid="invisible-helpers-page">
+      
+      {/* ================================================================ */}
+      {/* CINEMATIC HERO HEADER */}
+      {/* ================================================================ */}
+      <DarkSection className="py-16 sm:py-20 md:py-24 px-4 sm:px-6" variant="warm">
+        {/* Corner flourishes */}
+        <CornerFlourish position="top-left" className="absolute top-4 left-4 w-16 h-16 sm:w-20 sm:h-20" />
+        <CornerFlourish position="top-right" className="absolute top-4 right-4 w-16 h-16 sm:w-20 sm:h-20" />
+        
+        {/* Protective circle background - subtle sigil */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] opacity-[0.08]">
+          <svg viewBox="0 0 400 400" className="w-full h-full text-gold" fill="none" stroke="currentColor">
+            <circle cx="200" cy="200" r="180" strokeWidth="1" />
+            <circle cx="200" cy="200" r="150" strokeWidth="0.5" strokeDasharray="8 4" />
+            <circle cx="200" cy="200" r="100" strokeWidth="0.5" />
+            <line x1="200" y1="20" x2="200" y2="60" strokeWidth="1" />
+            <line x1="200" y1="340" x2="200" y2="380" strokeWidth="1" />
+            <line x1="20" y1="200" x2="60" y2="200" strokeWidth="1" />
+            <line x1="340" y1="200" x2="380" y2="200" strokeWidth="1" />
+          </svg>
         </div>
-        <div className="flex gap-2">
-          <button
-            onClick={onCopy}
-            className="flex items-center gap-2 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded text-slate-300 text-xs transition-colors"
-            data-testid="copy-working-btn"
-          >
-            {copied ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
-            {copied ? 'Copied' : 'Copy'}
-          </button>
-          <button
-            onClick={onDownload}
-            className="flex items-center gap-2 px-3 py-1.5 bg-amber-900/40 hover:bg-amber-900/60 border border-amber-700/50 rounded text-amber-200 text-xs transition-colors"
-            data-testid="download-pdf-btn"
-          >
-            <Download className="w-3 h-3" />
-            PDF
-          </button>
+        
+        <div className="max-w-4xl mx-auto relative z-10">
+          <div className="text-center">
+            {/* Small caps line */}
+            <p className="font-montserrat text-xs sm:text-sm tracking-[0.3em] text-gold/70 uppercase mb-4">
+              A Coordinated Working
+            </p>
+            
+            {/* Main title - distressed gold feel */}
+            <h1 className="font-italiana text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-gold-light mb-4"
+              style={{ textShadow: '0 2px 30px rgba(212, 168, 75, 0.5)' }}>
+              Magical Battle Cry Intention
+            </h1>
+            
+            {/* Subtitle */}
+            <p className="font-montserrat text-sm sm:text-base text-silver-mist/80 mb-3">
+              For protection, clarity, and lawful return
+            </p>
+            
+            {/* Italic lore line */}
+            <p className="font-crimson text-sm italic text-cream/60">
+              A quiet working, done with clean hands and disciplined will.
+            </p>
+          </div>
         </div>
-      </div>
+        
+        {/* Grand divider - threshold */}
+        <GrandDivider variant="eye" />
+      </DarkSection>
 
-      {/* Working Content in Talisman Frame */}
-      <TalismanFrame>
-        <div 
-          ref={workingRef}
-          className="bg-slate-900/70 border border-slate-700/50 rounded-lg p-6 md:p-8 space-y-6"
-        >
-          <div className="text-center border-b border-slate-700/50 pb-4">
-            <h2 className="font-cinzel text-xl text-slate-200">Magical Battle Cry Intention</h2>
-            <p className="text-amber-600/60 text-xs italic mt-1">A Structured Intention for Protection & Clarity</p>
-          </div>
+      {/* ================================================================ */}
+      {/* MAIN CONTENT ON PARCHMENT */}
+      {/* ================================================================ */}
+      <LightSection className="py-12 sm:py-16 px-4 sm:px-6">
+        <div className="max-w-3xl mx-auto">
+          
+          <AnimatePresence mode="wait">
+            {/* FORM STEP */}
+            {step === 'form' && (
+              <motion.div
+                key="form"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+              >
+                {/* Ritual Stepper */}
+                <RitualStepper 
+                  currentStep={formStep} 
+                  steps={['Name the field', 'Choose strength', 'Seal intention']} 
+                />
+                
+                <LightOrnateCard hover={false} className="mb-8">
+                  <div className="space-y-8">
+                    
+                    {/* STEP 0: Name the field */}
+                    <div className={formStep === 0 ? 'opacity-100' : 'opacity-40'}>
+                      <SectionLabel 
+                        title="Name the Intention" 
+                        subtitle="In your own words, what do you seek protection from, or clarity about?"
+                        glyph="✦"
+                      />
+                      <CrowlandsInput
+                        value={formData.personal_intention}
+                        onChange={(e) => handleFormChange('personal_intention', e.target.value)}
+                        placeholder="In my own words, I seek..."
+                        rows={3}
+                      />
+                      
+                      <div className="mt-6">
+                        <SectionLabel 
+                          title="Who is held within the ward?" 
+                          subtitle="The heart of this intention is shielding those in harm's way."
+                          glyph="◆"
+                        />
+                        <div className="flex flex-wrap gap-2">
+                          {BENEFICIARIES_OPTIONS.map(opt => (
+                            <CrowlandsChip
+                              key={opt.id}
+                              label={opt.label}
+                              selected={formData.beneficiaries.includes(opt.label)}
+                              onClick={() => toggleBeneficiary(opt.label)}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                      
+                      {formData.beneficiaries.length > 0 && (
+                        <div className="mt-6 text-center">
+                          <button
+                            onClick={() => setFormStep(1)}
+                            className="text-crimson hover:text-crimson-bright font-montserrat text-sm underline underline-offset-4"
+                          >
+                            Continue to choose what must be strengthened →
+                          </button>
+                        </div>
+                      )}
+                    </div>
 
-          <div>
-            <h3 className="font-cinzel text-amber-600/80 text-xs mb-2 tracking-wider">INTENTION</h3>
-            <p className="text-slate-300 italic">{working.intention}</p>
-          </div>
+                    {/* Divider */}
+                    {formStep >= 1 && <MysticalDivider light variant="moon" />}
 
-          <div className="bg-slate-800/50 border-l-2 border-amber-700/50 p-4">
-            <h3 className="font-cinzel text-amber-600/80 text-xs mb-2 tracking-wider">ANCHOR PHRASE</h3>
-            <p className="text-slate-200 italic whitespace-pre-line">{working.anchor_phrase}</p>
-          </div>
+                    {/* STEP 1: Choose what is strengthened */}
+                    {formStep >= 1 && (
+                      <div className={formStep === 1 ? 'opacity-100' : 'opacity-40'}>
+                        <SectionLabel 
+                          title="What must be strengthened" 
+                          subtitle="What energy do you want to amplify?"
+                          glyph="☽"
+                        />
+                        <div className="flex flex-wrap gap-2 mb-6">
+                          {QUALITY_OPTIONS.map(opt => (
+                            <CrowlandsChip
+                              key={opt.id}
+                              label={opt.label}
+                              glyph={opt.glyph}
+                              selected={formData.primary_quality === opt.label}
+                              onClick={() => handleFormChange('primary_quality', opt.label)}
+                            />
+                          ))}
+                        </div>
+                        
+                        <SectionLabel 
+                          title="Voice of the working" 
+                          subtitle="How do you prefer your spiritual language?"
+                          glyph="❧"
+                        />
+                        <div className="flex flex-wrap gap-2 mb-6">
+                          {PRACTICE_STYLE_OPTIONS.map(opt => (
+                            <CrowlandsChip
+                              key={opt.id}
+                              label={opt.label}
+                              selected={formData.practice_style === opt.label}
+                              onClick={() => handleFormChange('practice_style', opt.label)}
+                            />
+                          ))}
+                        </div>
+                        
+                        <SectionLabel 
+                          title="Duration of the working" 
+                          subtitle="When will you perform this intention?"
+                          glyph="◇"
+                        />
+                        <div className="flex flex-wrap gap-2">
+                          {TIME_HORIZON_OPTIONS.map(opt => (
+                            <CrowlandsChip
+                              key={opt.id}
+                              label={opt.label}
+                              selected={formData.time_horizon === opt.label}
+                              onClick={() => handleFormChange('time_horizon', opt.label)}
+                            />
+                          ))}
+                        </div>
+                        
+                        {formData.primary_quality && formData.practice_style && formData.time_horizon && (
+                          <div className="mt-6 text-center">
+                            <button
+                              onClick={() => setFormStep(2)}
+                              className="text-crimson hover:text-crimson-bright font-montserrat text-sm underline underline-offset-4"
+                            >
+                              Continue to seal the intention →
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    )}
 
-          <TransmutationCallout>
-            <h3 className="font-cinzel text-amber-600/80 text-xs mb-2 tracking-wider">ETHICAL FRAME</h3>
-            <p className="text-slate-400 text-sm whitespace-pre-line">{working.ethical_frame}</p>
-          </TransmutationCallout>
+                    {/* Divider */}
+                    {formStep >= 2 && <MysticalDivider light />}
 
-          <div>
-            <h3 className="font-cinzel text-amber-600/80 text-xs mb-4 tracking-wider">THE PRACTICE</h3>
-            <div className="space-y-4">
-              {working.guided_working?.map((step, idx) => (
-                <div key={idx} className="relative pl-8 border-l border-slate-700/50">
-                  {/* Node marker - pathway progression style */}
-                  <div className="absolute left-0 top-0 -translate-x-1/2 w-3 h-3 rounded-full bg-amber-900/50 border border-amber-700/50" />
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="text-amber-600/70 text-xs font-mono">Step {step.step}</span>
-                    <span className="text-slate-500 text-xs">·</span>
-                    <span className="text-slate-400 text-xs flex items-center gap-1">
-                      <Clock className="w-3 h-3" />
-                      {step.duration}
-                    </span>
+                    {/* STEP 2: Seal the intention */}
+                    {formStep >= 2 && (
+                      <div className={formStep === 2 ? 'opacity-100' : 'opacity-40'}>
+                        <SectionLabel 
+                          title="How this is carried into the world" 
+                          subtitle="Your commitment to the material realm"
+                          glyph="⛤"
+                        />
+                        
+                        <BorderFrame variant="crimson" className="bg-cream/50">
+                          <p className="font-crimson text-navy-dark text-sm leading-relaxed">
+                            By creating this intention, I understand that spellwork and storytelling are conduits 
+                            to support real action. I commit to channeling this intention toward benevolent outcomes and peace.
+                          </p>
+                        </BorderFrame>
+                        
+                        {/* SEAL BUTTON */}
+                        <div className="mt-8 text-center">
+                          <button
+                            onClick={handleContinueToEmail}
+                            disabled={!isFormValid()}
+                            className={`relative px-8 py-4 font-cinzel text-sm tracking-wider uppercase transition-all ${
+                              isFormValid()
+                                ? 'bg-crimson hover:bg-crimson-bright text-cream border-2 border-crimson hover:border-crimson-bright shadow-lg hover:shadow-crimson/30'
+                                : 'bg-navy-mid/20 text-navy-dark/40 border-2 border-navy-mid/30 cursor-not-allowed'
+                            }`}
+                            style={{ 
+                              boxShadow: isFormValid() ? '0 0 20px rgba(184, 35, 48, 0.3)' : 'none'
+                            }}
+                            data-testid="continue-to-checkout-btn"
+                          >
+                            {isFormValid() && <span className="absolute -top-2 -left-2 text-gold text-lg">✦</span>}
+                            {isFormValid() && <span className="absolute -top-2 -right-2 text-gold text-lg">✦</span>}
+                            Seal This Intention
+                            {isFormValid() && <span className="absolute -bottom-2 -left-2 text-gold text-lg">✦</span>}
+                            {isFormValid() && <span className="absolute -bottom-2 -right-2 text-gold text-lg">✦</span>}
+                          </button>
+                          <p className="text-navy-dark/50 text-xs font-montserrat mt-2">
+                            You may revise before completion.
+                          </p>
+                        </div>
+                      </div>
+                    )}
+                    
                   </div>
-                  <h4 className="text-slate-200 text-sm font-medium mb-2">{step.title}</h4>
-                  <p className="text-slate-400 text-sm">{step.instructions}</p>
-                  {step.spoken_words && (
-                    <p className="mt-2 text-amber-200/70 text-sm italic border-l-2 border-amber-700/30 pl-3">
-                      &ldquo;{step.spoken_words}&rdquo;
+                </LightOrnateCard>
+              </motion.div>
+            )}
+
+            {/* EMAIL STEP */}
+            {step === 'email' && (
+              <motion.div
+                key="email"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+              >
+                <LightOrnateCard hover={false}>
+                  <button onClick={() => setStep('form')} className="text-crimson hover:text-crimson-bright text-sm mb-6 font-montserrat">
+                    ← Back to form
+                  </button>
+                  
+                  <div className="text-center mb-8">
+                    <Sparkles className="w-10 h-10 mx-auto mb-4 text-crimson" />
+                    <h2 className="font-italiana text-2xl text-crimson mb-2">Receive Your Intention & Join the Chaos</h2>
+                    <p className="text-navy-dark/70 text-sm font-crimson">
+                      Enter your email to receive your sealed intention.
                     </p>
-                  )}
+                  </div>
+                  
+                  <form onSubmit={handleEmailSubmit} className="space-y-4 max-w-md mx-auto">
+                    <CrowlandsInput
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="your@email.com"
+                    />
+                    <button
+                      type="submit"
+                      className="w-full py-3 bg-crimson hover:bg-crimson-bright text-cream font-cinzel text-sm tracking-wider uppercase transition-colors"
+                      data-testid="email-submit-btn"
+                    >
+                      Continue
+                    </button>
+                    <p className="text-navy-dark/50 text-xs text-center font-montserrat">
+                      You can generate up to 3 intentions as a guest.
+                    </p>
+                  </form>
+                </LightOrnateCard>
+              </motion.div>
+            )}
+
+            {/* CHECKOUT STEP */}
+            {step === 'checkout' && (
+              <motion.div
+                key="checkout"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+              >
+                <LightOrnateCard hover={false}>
+                  <button onClick={() => setStep('email')} className="text-crimson hover:text-crimson-bright text-sm mb-6 font-montserrat" disabled={checkingOut}>
+                    ← Back
+                  </button>
+                  
+                  <div className="text-center mb-6">
+                    <Sparkles className="w-10 h-10 mx-auto mb-4 text-crimson" />
+                    <h2 className="font-italiana text-2xl text-crimson mb-4">Support This Work</h2>
+                    
+                    <div className="text-navy-dark/80 text-sm font-crimson space-y-3 text-left max-w-md mx-auto">
+                      <p>
+                        This portal is offered freely. If you're able, consider a pay-what-you-choose contribution.
+                      </p>
+                      <p>
+                        Each spell costs the witchy woman behind the veil approximately <span className="text-crimson font-semibold">$0.02–0.05</span> in 
+                        AI generation costs, and she's building this whole thing as we speak.
+                      </p>
+                      <p className="text-navy-dark/60">
+                        Please continue to your spell with or without a donation!
+                      </p>
+                    </div>
+                    
+                    <p className="text-crimson text-xs mt-4 italic font-crimson">
+                      So it is, love only, war is TAMAM SHUD
+                    </p>
+                  </div>
+                  
+                  <div className="space-y-3 max-w-md mx-auto">
+                    {/* Free button */}
+                    <button
+                      onClick={() => handleCheckout(0)}
+                      disabled={checkingOut}
+                      className="w-full py-3 bg-crimson/10 hover:bg-crimson/20 border-2 border-crimson text-crimson font-cinzel text-sm tracking-wider transition-colors disabled:opacity-50"
+                      data-testid="checkout-free-btn"
+                    >
+                      {checkingOut ? <Loader2 className="w-4 h-4 animate-spin mx-auto" /> : '✦ Continue Free — No Judgement ✦'}
+                    </button>
+                    
+                    <p className="text-navy-dark/40 text-xs text-center">— or support the work —</p>
+                    
+                    <div className="grid grid-cols-3 gap-2">
+                      {[500, 1000, 2500].map(amount => (
+                        <button
+                          key={amount}
+                          onClick={() => handleCheckout(amount)}
+                          disabled={checkingOut}
+                          className="py-3 bg-gold/10 hover:bg-gold/20 border border-gold/50 text-navy-dark font-montserrat text-sm transition-colors disabled:opacity-50"
+                        >
+                          ${amount / 100}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </LightOrnateCard>
+              </motion.div>
+            )}
+
+            {/* RESULT STEP */}
+            {step === 'result' && generatedWorking && (
+              <motion.div
+                key="result"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                className="space-y-6"
+              >
+                {/* Action buttons */}
+                <div className="flex flex-wrap gap-2 justify-between items-center">
+                  <button
+                    onClick={handleCreateVariation}
+                    className="px-4 py-2 border border-crimson/50 text-crimson hover:bg-crimson/10 font-montserrat text-sm transition-colors"
+                  >
+                    Create Another
+                  </button>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={handleCopyToClipboard}
+                      className="flex items-center gap-2 px-3 py-2 border border-navy-dark/30 text-navy-dark hover:bg-navy-dark/5 text-xs transition-colors"
+                    >
+                      {copied ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
+                      {copied ? 'Copied' : 'Copy'}
+                    </button>
+                    <button
+                      onClick={handleDownloadPDF}
+                      className="flex items-center gap-2 px-3 py-2 bg-crimson hover:bg-crimson-bright text-cream text-xs transition-colors"
+                    >
+                      <Download className="w-3 h-3" />
+                      PDF
+                    </button>
+                  </div>
                 </div>
-              ))}
-            </div>
-          </div>
 
-          <div className="border-t border-slate-700/50 pt-4">
-            <h3 className="font-cinzel text-amber-600/80 text-xs mb-2 tracking-wider">ACTION PLEDGE</h3>
-            <p className="text-slate-300 text-sm">{working.action_pledge}</p>
-          </div>
+                {/* TALISMAN FRAMED OUTPUT */}
+                <div className="relative">
+                  {/* Outer border */}
+                  <div className="absolute inset-0 border-2 border-gold/60 rounded-sm" />
+                  {/* Inner border */}
+                  <div className="absolute inset-3 border border-crimson/30 rounded-sm" />
+                  
+                  {/* Corner marks */}
+                  <span className="absolute -top-2 -left-2 text-gold text-xl">✦</span>
+                  <span className="absolute -top-2 -right-2 text-gold text-xl">✦</span>
+                  <span className="absolute -bottom-2 -left-2 text-gold text-xl">✦</span>
+                  <span className="absolute -bottom-2 -right-2 text-gold text-xl">✦</span>
+                  
+                  {/* Lattice watermark */}
+                  <div className="absolute inset-6 opacity-[0.04]" style={{
+                    backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,20 L40,20 M20,0 L20,40' stroke='%23d4a84b' stroke-width='0.5' fill='none'/%3E%3Ccircle cx='20' cy='20' r='2' fill='%23d4a84b'/%3E%3C/svg%3E")`,
+                  }} />
+                  
+                  <div 
+                    ref={workingRef}
+                    className="relative z-10 bg-cream/95 p-8 md:p-10 space-y-6"
+                  >
+                    {/* Header */}
+                    <div className="text-center border-b-2 border-gold/30 pb-6">
+                      <p className="font-montserrat text-xs tracking-[0.2em] text-gold/70 uppercase mb-2">A Coordinated Working</p>
+                      <h2 className="font-italiana text-2xl sm:text-3xl text-crimson">Magical Battle Cry Intention</h2>
+                      <p className="text-navy-dark/60 text-xs italic font-crimson mt-1">For protection, clarity, and lawful return</p>
+                    </div>
 
-          <div className="text-center pt-4 border-t border-slate-700/50">
-            <p className="text-slate-500 italic text-sm">{working.closing_truth}</p>
-          </div>
+                    {/* Intention */}
+                    <div>
+                      <h3 className="font-cinzel text-xs text-gold tracking-wider uppercase mb-2">✦ Intention</h3>
+                      <p className="text-navy-dark font-crimson italic text-lg">{generatedWorking.intention}</p>
+                    </div>
+
+                    <MysticalDivider light variant="moon" />
+
+                    {/* Anchor Phrase */}
+                    <div className="bg-gold/5 border-l-4 border-gold p-4">
+                      <h3 className="font-cinzel text-xs text-gold tracking-wider uppercase mb-2">◆ Anchor Phrase</h3>
+                      <p className="text-navy-dark font-crimson italic whitespace-pre-line">{generatedWorking.anchor_phrase}</p>
+                    </div>
+
+                    {/* Ethical Frame */}
+                    <BorderFrame variant="crimson" className="bg-crimson/5">
+                      <h3 className="font-cinzel text-xs text-crimson tracking-wider uppercase mb-2">❧ Ethical Frame</h3>
+                      <p className="text-navy-dark/80 font-crimson text-sm whitespace-pre-line">{generatedWorking.ethical_frame}</p>
+                    </BorderFrame>
+
+                    <MysticalDivider light />
+
+                    {/* The Practice */}
+                    <div>
+                      <h3 className="font-cinzel text-xs text-gold tracking-wider uppercase mb-4">☽ The Practice</h3>
+                      <div className="space-y-4">
+                        {generatedWorking.guided_working?.map((step, idx) => (
+                          <div key={idx} className="relative pl-8 border-l-2 border-crimson/30">
+                            <div className="absolute left-0 top-0 -translate-x-1/2 w-4 h-4 rounded-full bg-crimson/20 border-2 border-crimson flex items-center justify-center">
+                              <span className="text-crimson text-[10px] font-bold">{step.step}</span>
+                            </div>
+                            <div className="flex items-center gap-2 mb-1">
+                              <span className="text-navy-dark font-cinzel text-sm font-semibold">{step.title}</span>
+                              <span className="text-navy-dark/40 text-xs flex items-center gap-1">
+                                <Clock className="w-3 h-3" />
+                                {step.duration}
+                              </span>
+                            </div>
+                            <p className="text-navy-dark/70 font-crimson text-sm">{step.instructions}</p>
+                            {step.spoken_words && (
+                              <p className="mt-2 text-crimson italic text-sm font-crimson border-l-2 border-gold/30 pl-3">
+                                "{step.spoken_words}"
+                              </p>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <MysticalDivider light variant="moon" />
+
+                    {/* Action Pledge */}
+                    <div className="border-t-2 border-gold/30 pt-4">
+                      <h3 className="font-cinzel text-xs text-gold tracking-wider uppercase mb-2">⛤ Action Pledge</h3>
+                      <p className="text-navy-dark font-crimson text-sm">{generatedWorking.action_pledge}</p>
+                    </div>
+
+                    {/* Closing */}
+                    <div className="text-center pt-4">
+                      <p className="text-navy-dark/60 italic font-crimson text-sm">{generatedWorking.closing_truth}</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Generation count */}
+                {generationCount > 0 && (
+                  <p className="text-center text-navy-dark/50 text-xs font-montserrat">
+                    Intentions created: {generationCount}/{MAX_FREE_GENERATIONS} · 
+                    <button onClick={resetAll} className="text-crimson hover:text-crimson-bright ml-1 underline">
+                      Join early access for unlimited
+                    </button>
+                  </p>
+                )}
+              </motion.div>
+            )}
+          </AnimatePresence>
+          
         </div>
-      </TalismanFrame>
+      </LightSection>
 
-      {/* Generation count */}
-      {generationCount > 0 && (
-        <p className="text-center text-slate-600 text-xs">
-          Intentions created: {generationCount}/{maxGenerations} · 
-          <button onClick={onReset} className="text-amber-600/70 hover:text-amber-500 ml-1">
-            Join early access for unlimited intentions
-          </button>
-        </p>
-      )}
-    </motion.div>
+      {/* ================================================================ */}
+      {/* FOOTER */}
+      {/* ================================================================ */}
+      <DarkSection className="py-12 px-4">
+        <div className="max-w-xl mx-auto text-center">
+          <MysticalDivider variant="moon" />
+          <p className="font-italiana text-lg text-gold/80 italic mt-6">
+            Inner work does not replace resistance.
+          </p>
+          <p className="font-italiana text-xl text-gold mt-1">
+            It steadies those who resist.
+          </p>
+        </div>
+      </DarkSection>
+    </div>
   );
 };
 
