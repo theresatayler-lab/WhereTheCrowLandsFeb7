@@ -767,11 +767,19 @@ class WorkingGeneratorResponse(BaseModel):
     working: Optional[Dict] = None
     error: Optional[str] = None
 
-# Banned terms for hard blocks
-BANNED_TERMS = [
-    'kill', 'hurt', 'punish', 'ruin', 'destroy', 'curse', 'hex', 'bind',
-    'death', 'suffer', 'pain', 'torture', 'revenge', 'attack', 'strike',
-    'smite', 'damn', 'condemn', 'annihilate', 'obliterate', 'crush'
+# Banned terms for hard blocks - these indicate harmful intent
+# Note: Context matters - "does not punish" is fine, "punish them" is not
+BANNED_TERMS_STRICT = [
+    'kill them', 'hurt them', 'punish them', 'ruin them', 'destroy them',
+    'curse them', 'hex them', 'bind them', 'death to', 'make them suffer',
+    'cause them pain', 'torture them', 'revenge on', 'attack them', 'strike them',
+    'smite them', 'damn them', 'condemn them', 'annihilate them', 'obliterate them', 
+    'crush them', 'kill the', 'hurt the', 'punish the', 'curse the', 'hex the'
+]
+
+# These terms are always banned regardless of context
+BANNED_TERMS_ABSOLUTE = [
+    'curse', 'hex', 'kill', 'murder', 'assassinate', 'maim', 'torture'
 ]
 
 # Soft replacement mappings for named entities
