@@ -1045,6 +1045,7 @@ async def generate_working(request: WorkingGeneratorRequest):
 # Battle Cry - Single Signature Builder
 class BattleCryRequest(BaseModel):
     email: EmailStr
+    personal_intention: Optional[str] = None
     beneficiaries: List[str]
     primary_quality: str
     practice_style: str
