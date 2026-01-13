@@ -577,7 +577,7 @@ const FormStep = ({ formData, onFormChange, onToggleBeneficiary, isValid, onCont
     {/* Primary Quality */}
     <FormSection 
       title="Quality to strengthen"
-      context="What energy do you want to amplify? Fortune taught that focused visualization on positive qualities creates a 'seed idea' in the group mind."
+      context="What energy do you want to amplify? Focused visualization on positive qualities creates a 'seed idea' that spreads outward."
     >
       <div className="flex flex-wrap gap-2">
         {QUALITY_OPTIONS.map(opt => (
