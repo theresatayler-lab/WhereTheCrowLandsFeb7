@@ -1127,7 +1127,7 @@ async def create_checkout_session(request: CheckoutRequest):
     if request.amount == 0:
         return {'skip_checkout': True, 'url': None}
     
-    stripe_key = os.environ.get('STRIPE_SECRET_KEY')
+    stripe_key = os.environ.get('STRIPE_SECRET_KEY') or os.environ.get('STRIPE_API_KEY')
     if not stripe_key:
         return {'error': 'Stripe not configured', 'skip_checkout': True}
     
