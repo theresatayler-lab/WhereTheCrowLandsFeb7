@@ -3332,7 +3332,10 @@ async def remove_favorite(request: FavoriteRequest, user = Depends(get_current_u
 # Grimoire (Saved Spells) endpoints
 @api_router.post('/grimoire/save', response_model=SavedSpellResponse)
 async def save_spell_to_grimoire(request: SaveSpellRequest, user = Depends(get_current_user)):
-    """Save a generated spell to the user's personal grimoire"""
+    """Save a generated spell to the user's personal grimoire.
+    
+    Uses GridFS for image storage to avoid MongoDB's 16MB document size limit.
+    """
     
     # Check subscription - only paid users can save
     subscription_tier = user.get('subscription_tier', 'free')
@@ -3351,6 +3354,17 @@ async def save_spell_to_grimoire(request: SaveSpellRequest, user = Depends(get_c
     # Extract title from spell data for easy display
     title = request.spell_data.get('title', 'Untitled Spell')
     
+    # Store images in GridFS (solves DocumentTooLarge error)
+    image_refs = await image_storage.store_spell_images(
+        spell_id=spell_id,
+        user_id=user['id'],
+        image_base64=request.image_base64,
+        asset_plan=request.asset_plan
+    )
+    
+    # Strip large base64 images from asset_plan before storing in document
+    cleaned_asset_plan = strip_images_from_asset_plan(request.asset_plan)
+    
     saved_spell = {
         'id': spell_id,
         'user_id': user['id'],
@@ -3358,10 +3372,11 @@ async def save_spell_to_grimoire(request: SaveSpellRequest, user = Depends(get_c
         'archetype_id': request.archetype_id,
         'archetype_name': request.archetype_name,
         'archetype_title': request.archetype_title,
-        'image_base64': request.image_base64,
-        'asset_plan': request.asset_plan,  # Save tarot, sigil, dividers, micro_icons
+        'image_refs': image_refs,  # GridFS references instead of base64
+        'asset_plan': cleaned_asset_plan,  # Cleaned (no base64 images)
         'title': title,
-        'created_at': datetime.now(timezone.utc).isoformat()
+        'created_at': datetime.now(timezone.utc).isoformat(),
+        'storage_version': 2  # Indicates GridFS storage
     }
     
     await db.user_spells.insert_one(saved_spell)
@@ -3372,21 +3387,100 @@ async def save_spell_to_grimoire(request: SaveSpellRequest, user = Depends(get_c
         {'$inc': {'total_spells_saved': 1}}
     )
     
-    return SavedSpellResponse(**saved_spell)
+    logging.info(f"Saved spell {spell_id} with {len(image_refs)} images in GridFS")
+    
+    # Return response with image_base64 for backward compatibility
+    return SavedSpellResponse(
+        id=spell_id,
+        user_id=user['id'],
+        spell_data=request.spell_data,
+        archetype_id=request.archetype_id,
+        archetype_name=request.archetype_name,
+        archetype_title=request.archetype_title,
+        image_base64=request.image_base64,  # Return original for immediate display
+        asset_plan=request.asset_plan,  # Return original for immediate display
+        title=title,
+        created_at=saved_spell['created_at']
+    )
 
 @api_router.get('/grimoire/spells', response_model=List[SavedSpellResponse])
 async def get_user_grimoire(user = Depends(get_current_user)):
-    """Retrieve all spells saved by the current user"""
+    """Retrieve all spells saved by the current user.
+    
+    Images are fetched from GridFS for v2 storage, or returned directly for legacy spells.
+    """
     spells = await db.user_spells.find(
         {'user_id': user['id']}, 
         {'_id': 0}
     ).sort('created_at', -1).to_list(100)
     
-    return spells
+    # Process spells to retrieve images from GridFS
+    processed_spells = []
+    for spell in spells:
+        storage_version = spell.get('storage_version', 1)
+        
+        if storage_version >= 2 and 'image_refs' in spell:
+            # V2 storage: fetch images from GridFS
+            images = await image_storage.get_spell_images(spell.get('image_refs', {}))
+            
+            # Reconstruct image_base64 and asset_plan with images
+            spell['image_base64'] = images.get('header_image')
+            
+            if spell.get('asset_plan'):
+                if 'generated_assets' not in spell['asset_plan']:
+                    spell['asset_plan']['generated_assets'] = {}
+                spell['asset_plan']['generated_assets'].update(images)
+        
+        processed_spells.append(spell)
+    
+    return processed_spells
+
+@api_router.get('/grimoire/spells/{spell_id}')
+async def get_spell_by_id(spell_id: str, user = Depends(get_current_user)):
+    """Retrieve a specific spell by ID with full image data."""
+    spell = await db.user_spells.find_one(
+        {'id': spell_id, 'user_id': user['id']},
+        {'_id': 0}
+    )
+    
+    if not spell:
+        raise HTTPException(status_code=404, detail='Spell not found or unauthorized')
+    
+    storage_version = spell.get('storage_version', 1)
+    
+    if storage_version >= 2 and 'image_refs' in spell:
+        # V2 storage: fetch images from GridFS
+        images = await image_storage.get_spell_images(spell.get('image_refs', {}))
+        
+        # Reconstruct image_base64 and asset_plan with images
+        spell['image_base64'] = images.get('header_image')
+        
+        if spell.get('asset_plan'):
+            if 'generated_assets' not in spell['asset_plan']:
+                spell['asset_plan']['generated_assets'] = {}
+            spell['asset_plan']['generated_assets'].update(images)
+    
+    return spell
 
 @api_router.delete('/grimoire/spells/{spell_id}')
 async def delete_saved_spell(spell_id: str, user = Depends(get_current_user)):
-    """Delete a saved spell from the user's grimoire"""
+    """Delete a saved spell from the user's grimoire, including GridFS images."""
+    
+    # First, get the spell to retrieve image refs
+    spell = await db.user_spells.find_one({
+        'id': spell_id,
+        'user_id': user['id']
+    }, {'_id': 0})
+    
+    if not spell:
+        raise HTTPException(status_code=404, detail='Spell not found or unauthorized')
+    
+    # Delete images from GridFS if v2 storage
+    if spell.get('storage_version', 1) >= 2 and 'image_refs' in spell:
+        deleted_count = await image_storage.delete_spell_images(spell['image_refs'])
+        logging.info(f"Deleted {deleted_count} images from GridFS for spell {spell_id}")
+    
+    # Delete the spell document
     result = await db.user_spells.delete_one({
         'id': spell_id,
         'user_id': user['id']
