@@ -136,7 +136,7 @@ export const InvisibleHelpers = () => {
            formData.primary_quality &&
            formData.practice_style &&
            formData.time_horizon &&
-           formData.action_pledge;
+           formData.action_commitments.length > 0;
   };
 
   const handleContinueToEmail = () => {
