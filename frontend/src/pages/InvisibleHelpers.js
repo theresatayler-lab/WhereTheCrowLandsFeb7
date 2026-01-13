@@ -43,12 +43,11 @@ const TIME_HORIZON_OPTIONS = [
 ];
 
 const ACTION_OPTIONS = [
-  { id: 'donate', label: 'Donate to mutual aid or legal defense' },
-  { id: 'check_neighbors', label: 'Check on my neighbors' },
-  { id: 'share_truth', label: 'Share vetted information' },
-  { id: 'support_journalism', label: 'Support independent journalism' },
-  { id: 'attend', label: 'Attend a community meeting' },
-  { id: 'call', label: 'Call my representatives' },
+  { id: 'mutual_aid', label: 'Mutual aid & legal defense' },
+  { id: 'neighbors', label: 'Community & neighbors' },
+  { id: 'truth', label: 'Vetted information sharing' },
+  { id: 'journalism', label: 'Independent journalism' },
+  { id: 'civic', label: 'Civic engagement' },
 ];
 
 const MAX_FREE_GENERATIONS = 3;
