@@ -426,7 +426,7 @@ export const InvisibleHelpers = () => {
                   <BuilderCard
                     key={builder.id}
                     builder={builder}
-                    onClick={() => setActiveBuilder(builder.id)}
+                    onClick={() => selectBuilder(builder.id)}
                   />
                 ))}
               </div>
