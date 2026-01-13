@@ -78,6 +78,9 @@ Build "Where The Crowlands," a sophisticated full-stack application for creating
 - `GET /api/research/config` - V3 research configuration
 - `POST /api/auth/login`, `/api/auth/register` - Authentication
 - `GET /api/spells/user` - User's saved spells
+- `GET /api/timeline/v2/events` - Enhanced timeline with filtering
+- `GET /api/timeline/v2/stats` - Timeline statistics
+- `GET /api/timeline/v2/taxonomy` - 13-category taxonomy data
 
 ## Test Credentials
 - Pro User: `sub_test@test.com` / `test123`
@@ -86,8 +89,9 @@ Build "Where The Crowlands," a sophisticated full-stack application for creating
 ## Prioritized Backlog
 
 ### P0 - High Priority
+- [x] Interactive Timeline Page (COMPLETED Jan 13, 2026)
+- [ ] MongoDB DocumentTooLarge Error - Spell saving with images broken
 - [ ] Visual Polish & Ornament Library (20 corners, 12 dividers, 24 glyphs)
-- [ ] Session persistence verification (user testing pending)
 
 ### P1 - Medium Priority
 - [ ] Back-compatibility for old spell references
