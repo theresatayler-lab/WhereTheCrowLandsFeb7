@@ -1082,6 +1082,7 @@ REQUIRED ELEMENTS:
 OUTPUT FORMAT (JSON):
 {
   "title": "Magical Battle Cry Intention",
+  "before_you_begin": "A brief, optional suggestion for posture and one simple physical cue. Keep it minimal: sitting upright, lighting a single candle, or holding a small object. No complex props or dramatic staging. Example: 'Sit comfortably with feet on the floor. If you wish, light a single candle or hold a small stone.'",
   "intention": "1-2 line personalized intention using user's primary quality",
   "anchor_phrase": "Clarity in the mind.\\nRestraint in the hand.\\nProtection in the world.\\nWhat is misused returns to law — transmuted, not weaponized.",
   "ethical_frame": "This working is not a curse. It names no enemies and harms no one. It returns only misused authorization, coercive momentum, and distortion to impersonal law, to be transmuted into restraint, conscience, and accountability.",
@@ -1094,10 +1095,12 @@ OUTPUT FORMAT (JSON):
     {"step": 6, "title": "Benevolent Directive + Close", "duration": "1-2 min", "instructions": "...", "spoken_words": "Where fear is used as power, let clarity arise. Where harm hides, let consequence reveal. The circuit is complete. The law holds. I am clear."}
   ],
   "action_pledge": "Today, I will: [user's action] — to support justice in the material world.",
-  "closing_truth": "Magic does not replace resistance. It steadies those who resist."
+  "after_the_spell": "A brief grounding suggestion to return to normal life. Keep it simple and non-dramatic: extinguishing the candle, writing one sentence of reflection, or noting a real-world action. Example: 'Extinguish the candle if you lit one. Take three breaths. Write one sentence about what you will do today to carry this intention forward.'",
+  "closing_truth": "Inner work does not replace resistance. It steadies those who resist."
 }
 
-TONE: Calm, disciplined, reverent. "Quiet chapel," not sensational."""
+TONE: Calm, disciplined, reverent. "Quiet chapel," not sensational.
+The "before_you_begin" and "after_the_spell" sections must be: optional, non-dramatic, non-theatrical, aligned with Dion Fortune's wartime discipline (simple, repeatable, ethically contained). No complex props or ritual tools."""
 
 @api_router.get('/invisible-helpers/check-limit')
 async def check_generation_limit(email: str):
