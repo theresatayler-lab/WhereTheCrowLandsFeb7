@@ -87,6 +87,7 @@ export const Navigation = ({ user, onLogout }) => {
         { to: '/library', label: 'Library', icon: Library },
         { to: '/guides', label: 'Guides', icon: Users },
         { to: '/corrie-tarot', label: 'Corrie Tarot', icon: Eye },
+        { to: '/invisible-helpers', label: 'Invisible Helpers', icon: Compass },
       ]
     },
     archives: {
