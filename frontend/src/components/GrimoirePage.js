@@ -536,7 +536,9 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
     const map = { 'shiggy': 'shigg', 'kathleen': 'cathleen', 'catherine': 'katherine' };
     return map[id] || id;
   };
-  const normalizedArchetypeId = normalizeId(archetype?.id);
+  // For blocks-based spells (V3), prefer the guide_id from the spell itself
+  const effectiveGuideId = spell?.guide_id || archetype?.id;
+  const normalizedArchetypeId = normalizeId(effectiveGuideId);
   const style = ARCHETYPE_STYLES[normalizedArchetypeId] || ARCHETYPE_STYLES[archetype?.id] || ARCHETYPE_STYLES.neutral;
   
   // Get generated assets from asset plan
