@@ -71,8 +71,12 @@ def validate_hard_limits(spell_output: dict) -> tuple[bool, list[str]]:
     """
     Validate spell output against hard limits.
     Returns (is_valid, list_of_violations)
+    Supports both flat (V2) and blocks-based (V3) spell structures.
     """
     violations = []
+    
+    # Detect if this is a blocks-based spell
+    is_blocks = "blocks" in spell_output and isinstance(spell_output.get("blocks"), list)
     
     # Check for forbidden phrases in all text content
     text_content = _extract_all_text(spell_output)
@@ -80,24 +84,91 @@ def validate_hard_limits(spell_output: dict) -> tuple[bool, list[str]]:
         if phrase.lower() in text_content.lower():
             violations.append(f"FORBIDDEN_PHRASE: '{phrase}'")
     
-    # Check step count
-    steps = spell_output.get("steps", [])
-    if len(steps) < HARD_LIMITS["validation_rules"]["min_steps"]:
-        violations.append(f"TOO_FEW_STEPS: {len(steps)} < {HARD_LIMITS['validation_rules']['min_steps']}")
-    if len(steps) > HARD_LIMITS["validation_rules"]["max_steps"]:
-        violations.append(f"TOO_MANY_STEPS: {len(steps)} > {HARD_LIMITS['validation_rules']['max_steps']}")
+    if is_blocks:
+        # BLOCKS VALIDATION
+        blocks = spell_output.get("blocks", [])
+        
+        # Extract steps from stepper block
+        stepper_blocks = [b for b in blocks if b.get("block_type") == "stepper"]
+        steps = []
+        for sb in stepper_blocks:
+            steps.extend(sb.get("content", {}).get("steps", []))
+        
+        # Extract materials from materials block
+        materials_blocks = [b for b in blocks if b.get("block_type") == "materials"]
+        materials = []
+        for mb in materials_blocks:
+            materials.extend(mb.get("content", {}).get("items", []))
+        
+        # Check step count
+        if len(steps) < HARD_LIMITS["validation_rules"]["min_steps"]:
+            violations.append(f"TOO_FEW_STEPS: {len(steps)} < {HARD_LIMITS['validation_rules']['min_steps']}")
+        if len(steps) > HARD_LIMITS["validation_rules"]["max_steps"]:
+            violations.append(f"TOO_MANY_STEPS: {len(steps)} > {HARD_LIMITS['validation_rules']['max_steps']}")
+        
+        # Check materials count
+        if len(materials) < HARD_LIMITS["validation_rules"]["min_materials"]:
+            violations.append(f"TOO_FEW_MATERIALS: {len(materials)}")
+        if len(materials) > HARD_LIMITS["validation_rules"]["max_materials"]:
+            violations.append(f"TOO_MANY_MATERIALS: {len(materials)}")
+        
+        # Check why per step
+        if HARD_LIMITS["validation_rules"]["required_why_per_step"]:
+            for i, step in enumerate(steps):
+                if not step.get("why"):
+                    violations.append(f"MISSING_WHY: step {i+1}")
+        
+        # Check required blocks exist (basic)
+        block_types = [b.get("block_type") for b in blocks]
+        if "closing" not in block_types:
+            violations.append("MISSING_REQUIRED: closing_block")
+        
+    else:
+        # FLAT (V2) VALIDATION
+        steps = spell_output.get("steps", [])
+        if len(steps) < HARD_LIMITS["validation_rules"]["min_steps"]:
+            violations.append(f"TOO_FEW_STEPS: {len(steps)} < {HARD_LIMITS['validation_rules']['min_steps']}")
+        if len(steps) > HARD_LIMITS["validation_rules"]["max_steps"]:
+            violations.append(f"TOO_MANY_STEPS: {len(steps)} > {HARD_LIMITS['validation_rules']['max_steps']}")
+        
+        materials = spell_output.get("materials", [])
+        if len(materials) < HARD_LIMITS["validation_rules"]["min_materials"]:
+            violations.append(f"TOO_FEW_MATERIALS: {len(materials)}")
+        if len(materials) > HARD_LIMITS["validation_rules"]["max_materials"]:
+            violations.append(f"TOO_MANY_MATERIALS: {len(materials)}")
+        
+        if HARD_LIMITS["validation_rules"]["required_why_per_step"]:
+            for i, step in enumerate(steps):
+                if not step.get("why"):
+                    violations.append(f"MISSING_WHY: step {i+1}")
+        
+        for element in HARD_LIMITS["required_elements"]["every_spell"]:
+            field_map = {
+                "clear_intent": "intent",
+                "safety_note": "safety_ethics",
+                "closing_ritual": "closing",
+                "ethics_statement": "ethics_statement"
+            }
+            if not spell_output.get(field_map.get(element, element)):
+                violations.append(f"MISSING_REQUIRED: {element}")
     
-    # Check materials count
-    materials = spell_output.get("materials", [])
-    if len(materials) < HARD_LIMITS["validation_rules"]["min_materials"]:
-        violations.append(f"TOO_FEW_MATERIALS: {len(materials)}")
-    if len(materials) > HARD_LIMITS["validation_rules"]["max_materials"]:
-        violations.append(f"TOO_MANY_MATERIALS: {len(materials)}")
-    
-    # Check sources count
+    # Check sources count (same for both)
     sources = spell_output.get("sources", [])
     if len(sources) < HARD_LIMITS["validation_rules"]["min_sources"]:
         violations.append(f"TOO_FEW_SOURCES: {len(sources)}")
+    if len(sources) > HARD_LIMITS["validation_rules"]["max_sources"]:
+        violations.append(f"TOO_MANY_SOURCES: {len(sources)}")
+    
+    # Check for coercion indicators
+    coercion_indicators = [
+        "make them", "force them", "without their knowledge",
+        "control their", "bind them to", "against their will"
+    ]
+    for indicator in coercion_indicators:
+        if indicator.lower() in text_content.lower():
+            violations.append(f"COERCION_DETECTED: '{indicator}'")
+    
+    return len(violations) == 0, violations
     if len(sources) > HARD_LIMITS["validation_rules"]["max_sources"]:
         violations.append(f"TOO_MANY_SOURCES: {len(sources)}")
     
