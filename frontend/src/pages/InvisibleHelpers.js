@@ -171,7 +171,6 @@ export const InvisibleHelpers = () => {
   });
   
   const [step, setStep] = useState('form');
-  const [formStep, setFormStep] = useState(0); // 0: Name, 1: Strengthen, 2: Seal
   const [email, setEmail] = useState('');
   const [generating, setGenerating] = useState(false);
   const [generatedWorking, setGeneratedWorking] = useState(null);
