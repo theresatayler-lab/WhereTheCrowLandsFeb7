@@ -815,7 +815,7 @@ const ResultStep = ({
       >
         <Loader2 className="w-10 h-10 animate-spin mx-auto mb-4 text-amber-500/70" />
         <h2 className="font-cinzel text-lg text-slate-200 mb-2">Generating Your Working</h2>
-        <p className="text-slate-500 text-sm">Calling the Invisible Helpers...</p>
+        <p className="text-slate-500 text-sm">Crafting your working...</p>
       </motion.div>
     );
   }
