@@ -611,7 +611,7 @@ const FormStep = ({ formData, onFormChange, onToggleBeneficiary, isValid, onCont
     {/* Time Horizon */}
     <FormSection 
       title="Time horizon"
-      context="Fortune's group met every Sunday at the same hour. Synchronized, regular practice builds coherence. When will you do this working?"
+      context="Synchronized, regular practice builds coherence. Picking a specific time helps anchor the working in your life."
     >
       <div className="flex flex-wrap gap-2">
         {TIME_HORIZON_OPTIONS.map(opt => (
