@@ -517,7 +517,7 @@ export const InvisibleHelpers = () => {
       <section className="py-12 px-4 border-t border-slate-800">
         <div className="max-w-xl mx-auto text-center">
           <p className="font-cinzel text-base text-slate-400 italic">
-            Magic does not replace resistance.<br />
+            Inner work does not replace resistance.<br />
             <span className="text-slate-300">It steadies those who resist.</span>
           </p>
         </div>
