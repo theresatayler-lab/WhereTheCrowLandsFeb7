@@ -641,17 +641,17 @@ const SongPromptBlock = ({ content, archetypeStyle }) => (
   </div>
 );
 
-// Evidence Card Block (Theresa specialty)
+// Inspiration Block (Theresa specialty) - formerly Evidence Card
 const EvidenceCardBlock = ({ content, archetypeStyle }) => (
-  <div className="space-y-4" data-testid="evidence-card-block">
+  <div className="space-y-4" data-testid="inspiration-block">
     <div className="grid gap-4">
       {content.known?.length > 0 && (
-        <div className="p-3 bg-green-500/10 border border-green-500/30 rounded-lg">
-          <div className="text-xs font-medium text-green-500 mb-2">KNOWN</div>
+        <div className="p-3 bg-indigo-500/10 border border-indigo-500/30 rounded-lg">
+          <div className="text-xs font-cinzel tracking-wider text-indigo-400 mb-2">What the Records Show</div>
           <ul className="space-y-1 text-sm">
             {content.known.map((item, i) => (
               <li key={i} className="flex items-start gap-2">
-                <Check className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                <Check className="w-4 h-4 text-indigo-400 mt-0.5 flex-shrink-0" />
                 {item}
               </li>
             ))}
@@ -660,12 +660,12 @@ const EvidenceCardBlock = ({ content, archetypeStyle }) => (
       )}
       
       {content.likely?.length > 0 && (
-        <div className="p-3 bg-yellow-500/10 border border-yellow-500/30 rounded-lg">
-          <div className="text-xs font-medium text-yellow-500 mb-2">LIKELY</div>
+        <div className="p-3 bg-slate-500/10 border border-slate-500/30 rounded-lg">
+          <div className="text-xs font-cinzel tracking-wider text-slate-400 mb-2">What the Patterns Suggest</div>
           <ul className="space-y-1 text-sm">
             {content.likely.map((item, i) => (
               <li key={i} className="flex items-start gap-2">
-                <Star className="w-4 h-4 text-yellow-500 mt-0.5 flex-shrink-0" />
+                <Star className="w-4 h-4 text-slate-400 mt-0.5 flex-shrink-0" />
                 {item}
               </li>
             ))}
@@ -674,12 +674,12 @@ const EvidenceCardBlock = ({ content, archetypeStyle }) => (
       )}
       
       {content.lore?.length > 0 && (
-        <div className="p-3 bg-purple-500/10 border border-purple-500/30 rounded-lg">
-          <div className="text-xs font-medium text-purple-500 mb-2">LORE</div>
+        <div className="p-3 bg-violet-500/10 border border-violet-500/30 rounded-lg">
+          <div className="text-xs font-cinzel tracking-wider text-violet-400 mb-2">What the Stories Tell</div>
           <ul className="space-y-1 text-sm">
             {content.lore.map((item, i) => (
               <li key={i} className="flex items-start gap-2">
-                <BookOpen className="w-4 h-4 text-purple-500 mt-0.5 flex-shrink-0" />
+                <BookOpen className="w-4 h-4 text-violet-400 mt-0.5 flex-shrink-0" />
                 {item}
               </li>
             ))}
