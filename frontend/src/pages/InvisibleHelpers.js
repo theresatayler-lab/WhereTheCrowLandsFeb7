@@ -725,23 +725,19 @@ const ToggleChip = ({ label, selected, onClick }) => (
   </button>
 );
 
-// Email Step
-const EmailStep = ({ email, setEmail, onSubmit, onBack }) => (
+// Email Step - Now first step
+const EmailStep = ({ email, setEmail, onSubmit }) => (
   <motion.div
-    initial={{ opacity: 0, x: 20 }}
-    animate={{ opacity: 1, x: 0 }}
-    exit={{ opacity: 0, x: -20 }}
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0, y: -20 }}
     className="bg-slate-900/50 border border-slate-700/50 rounded-lg p-6"
   >
-    <button onClick={onBack} className="text-slate-500 hover:text-slate-300 text-sm mb-4">
-      ← Back
-    </button>
-    
     <div className="text-center mb-6">
-      <Mail className="w-8 h-8 mx-auto mb-3 text-amber-500/70" />
-      <h2 className="font-cinzel text-lg text-slate-200 mb-2">Receive Your Working</h2>
+      <Sparkles className="w-8 h-8 mx-auto mb-3 text-amber-500/70" />
+      <h2 className="font-cinzel text-lg text-slate-200 mb-2">Receive Your Intention & Join the Chaos</h2>
       <p className="text-slate-500 text-sm">
-        Enter your email to receive your personalized working and a PDF you can use offline.
+        Enter your email to craft your working and receive it for offline use.
       </p>
     </div>
     
@@ -757,10 +753,11 @@ const EmailStep = ({ email, setEmail, onSubmit, onBack }) => (
       />
       <button
         type="submit"
-        className="w-full py-3 bg-amber-900/40 hover:bg-amber-900/60 border border-amber-700/50 rounded font-cinzel text-amber-200 text-sm transition-colors"
+        className="w-full py-3 bg-amber-900/40 hover:bg-amber-900/60 border border-amber-700/50 rounded font-cinzel text-amber-200 text-sm transition-colors flex items-center justify-center gap-2"
         data-testid="email-submit-btn"
       >
-        Continue
+        Let&apos;s Begin
+        <ChevronRight className="w-4 h-4" />
       </button>
       <p className="text-slate-600 text-xs text-center">
         You can generate up to 3 workings as a guest. Join early access for unlimited.
