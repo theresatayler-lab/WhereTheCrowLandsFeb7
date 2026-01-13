@@ -1,0 +1,78 @@
+{
+  "summary": "V2 Spell Generation Pipeline testing completed. 6/7 tests passed. The 4-stage pipeline (Archivist → Planner → Writer → QA) is working for all 4 guides. One intermittent issue found: step count validation sometimes allows spells with fewer than 3 steps to pass QA.",
+  
+  "backend_issues": {
+    "critical": [],
+    "minor": [
+      {
+        "endpoint": "POST /api/ai/generate-spell-v2",
+        "issue": "QA validation allows spells with <3 steps to pass. Seen 'TOO_FEW_STEPS: 1 < 3' and 'TOO_FEW_STEPS: 2 < 3' in logs. The QA verdict logic requires 3+ HIGH violations to trigger rewrite, so single step count violation passes.",
+        "priority": "MEDIUM"
+      }
+    ]
+  },
+  
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  
+  "passed_tests": [
+    "TestSpellConfigV2::test_get_spell_config_v2 - Config endpoint returns all belief modes, guides, structures",
+    "TestSpellGenerationV2::test_shigg_secular_spell - Shigg + SECULAR spell generated (85s)",
+    "TestSpellGenerationV2::test_katherine_practitioner_spell - Katherine + PRACTITIONER spell generated (82s)",
+    "TestSpellGenerationV2::test_theresa_secular_spell - Theresa + SECULAR spell generated (90s)",
+    "TestBeliefModeValidation::test_invalid_belief_mode_defaults_to_spiritual - Invalid mode defaults to SPIRITUAL",
+    "TestMetadataAndTiming::test_metadata_contains_timing - Metadata contains timing and all 4 stages"
+  ],
+  
+  "failed_tests": [
+    {
+      "test": "TestSpellGenerationV2::test_cathleen_spiritual_spell",
+      "error": "STEPS_COUNT_INVALID: 2 (expected 3-7)",
+      "note": "Intermittent - second run passed with 3 steps. LLM sometimes generates fewer steps than required."
+    }
+  ],
+  
+  "test_report_links": [
+    "/app/tests/test_spell_v2_pipeline.py"
+  ],
+  
+  "action_items": [
+    "Consider lowering QA rewrite threshold from 3 HIGH violations to 1-2 for critical structure checks like step_count",
+    "Or mark step_count as CRITICAL severity instead of HIGH to ensure rewrite is triggered"
+  ],
+  
+  "critical_code_review_comments": [
+    "4-stage pipeline (Archivist → Planner → Writer → QA) is well-implemented and working",
+    "All 4 guides (shigg, cathleen, katherine, theresa) generate spells correctly",
+    "Belief modes (SECULAR, SPIRITUAL, PRACTITIONER) are properly validated and default to SPIRITUAL for invalid values",
+    "Hard limits are checked but not strictly enforced - spells with violations are logged as warnings but still returned",
+    "QA verdict logic in /app/backend/prompts/qa.py line 208: requires 3+ HIGH violations to trigger rewrite - this allows single violations to pass",
+    "Persona-lock validation works correctly (props, sensory_cue, signature_move)",
+    "Sources are cited (2-5 per spell) - validated correctly",
+    "Materials count (2-7) and steps count (3-7) validation exists but enforcement is lenient",
+    "Every step has 'why' field with explanation - validated correctly",
+    "Response times are ~80-90 seconds per spell due to multiple LLM calls (DeepSeek + GPT-4o)"
+  ],
+  
+  "updated_files": [
+    "/app/tests/test_spell_v2_pipeline.py"
+  ],
+  
+  "success_rate": {
+    "backend": "86% (6/7 tests passed)",
+    "frontend": "N/A (backend only testing)"
+  },
+  
+  "test_credentials": "No authentication required for V2 endpoints (optional user for spell count tracking)",
+  
+  "seed_data_creation": "No seed data created - tests use live LLM generation",
+  
+  "retest_needed": false,
+  
+  "should_main_agent_self_test": true,
+  
+  "context_for_next_testing_agent": "V2 spell generation pipeline tested. All 4 guides work. Intermittent step count issue found - QA allows <3 steps sometimes. Test file at /app/tests/test_spell_v2_pipeline.py covers config endpoint, all guides with different belief modes, invalid belief mode handling, and metadata/timing validation. Each spell generation takes ~80-90 seconds."
+}
