@@ -536,8 +536,17 @@ export const SpellRequest = () => {
     setLoading(true);
     
     try {
-      // PHASE 1: Get spell text FAST (no images)
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/ai/generate-personalized-spell`, {
+      // Map belief boundary to V3 belief mode
+      const beliefModeMap = {
+        'secular_reflective': 'SECULAR',
+        'spiritual_grounded': 'SPIRITUAL',
+        'deity_friendly': 'PRACTITIONER',
+        'ancestor_friendly': 'PRACTITIONER'
+      };
+      const beliefMode = beliefModeMap[spellSpec.belief_boundary] || 'SPIRITUAL';
+      
+      // Use V3 Blocks API for richer spell experience
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/ai/generate-spell-v3`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
@@ -545,6 +554,7 @@ export const SpellRequest = () => {
         },
         body: JSON.stringify({
           spell_spec: spellSpec,
+          belief_mode: beliefMode,
           generate_images: false  // Text first for perceived speed
         })
       });
@@ -552,10 +562,9 @@ export const SpellRequest = () => {
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
         if (response.status === 403 && errorData.detail?.error === 'spell_limit_reached') {
-          // Show friendly message with upgrade option
           toast.error(
             <div className="flex flex-col gap-2">
-              <span className="font-semibold">You&apos;ve used all your free spells!</span>
+              <span className="font-semibold">You&apos;ve used all your free workings!</span>
               <span className="text-sm">Upgrade to Pro for unlimited spell crafting.</span>
             </div>,
             {
@@ -566,29 +575,33 @@ export const SpellRequest = () => {
               }
             }
           );
-          // Redirect to upgrade page after a short delay
           setTimeout(() => navigate('/upgrade'), 2000);
           setLoading(false);
           return;
         }
-        throw new Error('Failed to generate spell');
+        throw new Error('Failed to craft your working');
       }
       
       const data = await response.json();
       setSpellResult(data);
-      setLoading(false);  // Stop loading - show spell text immediately
+      setLoading(false);
       
-      // Update persona if it was chosen for them
+      // Update guide if it was chosen for them
       if (spellSpec.persona_id === 'choose_for_me' && data.archetype?.id) {
         setCurrentArchetype(data.archetype.id);
       }
       
-      toast.success('Your spell has been crafted!');
+      toast.success('Your working has been crafted!');
       window.scrollTo({ top: 0, behavior: 'smooth' });
       
       // PHASE 2: Lazy load images in background
-      if (data.asset_plan) {
-        lazyLoadImages(data.asset_plan, data.archetype?.id || spellSpec.persona_id);
+      if (data.spell?.image_prompt) {
+        const assetPlan = {
+          header: data.spell.image_prompt.header,
+          tarot: data.spell.image_prompt.tarot,
+          sigil: data.spell.image_prompt.sigil
+        };
+        lazyLoadImages(assetPlan, data.archetype?.id || spellSpec.persona_id);
       }
       
       // Update subscription status if limits changed
