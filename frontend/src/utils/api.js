@@ -73,8 +73,53 @@ export const ritualsAPI = {
 };
 
 export const timelineAPI = {
+  // Legacy simple timeline
   getAll: async () => {
     const response = await axios.get(`${API}/timeline`);
+    return response.data;
+  },
+  
+  // Enhanced V2 Timeline API
+  getEventsV2: async (filters = {}) => {
+    const params = new URLSearchParams();
+    if (filters.categories) params.append('categories', filters.categories.join(','));
+    if (filters.primaryCategories) params.append('primary_categories', filters.primaryCategories.join(','));
+    if (filters.traditions) params.append('traditions', filters.traditions.join(','));
+    if (filters.guides) params.append('guides', filters.guides.join(','));
+    if (filters.startYear) params.append('start_year', filters.startYear);
+    if (filters.endYear) params.append('end_year', filters.endYear);
+    if (filters.importance) params.append('importance', filters.importance.join(','));
+    if (filters.figures) params.append('figures', filters.figures.join(','));
+    if (filters.search) params.append('search', filters.search);
+    if (filters.limit) params.append('limit', filters.limit);
+    if (filters.skip) params.append('skip', filters.skip);
+    
+    const response = await axios.get(`${API}/timeline/v2/events?${params.toString()}`);
+    return response.data;
+  },
+  
+  getEventById: async (eventId) => {
+    const response = await axios.get(`${API}/timeline/v2/events/${eventId}`);
+    return response.data;
+  },
+  
+  getStats: async () => {
+    const response = await axios.get(`${API}/timeline/v2/stats`);
+    return response.data;
+  },
+  
+  getGraph: async (filters = {}) => {
+    const params = new URLSearchParams();
+    if (filters.categories) params.append('categories', filters.categories.join(','));
+    if (filters.traditions) params.append('traditions', filters.traditions.join(','));
+    if (filters.guides) params.append('guides', filters.guides.join(','));
+    
+    const response = await axios.get(`${API}/timeline/v2/graph?${params.toString()}`);
+    return response.data;
+  },
+  
+  getTaxonomy: async () => {
+    const response = await axios.get(`${API}/timeline/v2/taxonomy`);
     return response.data;
   },
 };
