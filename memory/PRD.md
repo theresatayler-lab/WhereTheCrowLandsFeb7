@@ -171,6 +171,29 @@ Build "Where The Crowlands," a sophisticated full-stack application for creating
 - `/app/tests/test_gridfs_and_timeline.py` - Comprehensive test suite
 - `/app/tests/test_spell_v2_pipeline.py` - V2 pipeline test suite
 
+### Session: January 13, 2026 - Invisible Helpers Spell-Builder Portal
+- **Invisible Helpers Spell-Builder Implemented** ✅
+  - Route: `/invisible-helpers`
+  - **Three constrained spell-builders** inspired by Dion Fortune's wartime spiritual work:
+    - **The Lawful Return of Misused Power**: Returns misused authority to impersonal law
+    - **Clarity Against Propaganda**: Working for discernment in times of confusion
+    - **Return to Sender**: Benevolent return of distortion to source for transmutation
+  - **Form-based personalization** with fields:
+    - Beneficiaries (multi-select + custom)
+    - Primary quality to strengthen
+    - Builder-specific fields (patterns, distortion channels, return types)
+    - Time horizon, practice style, anchor phrase length
+    - Real-world action pledge
+    - Optional custom name
+  - **AI-generated Fortune-aligned workings** via DeepSeek with:
+    - Hard guardrails preventing harmful content
+    - Soft transformations (named entities → pattern language)
+    - Post-generation validation
+  - **Output structure**: Title, Intention, Anchor Phrase, Ethical Frame, 6-step Guided Working, Action Pledge, Closing Truth
+  - **Download PDF + Copy to clipboard** functionality
+  - Navigation: Under Explore dropdown as "Invisible Helpers"
+  - Optional donation via Stripe + email lead capture
+
 ### Session: January 13, 2026 - Invisible Helpers Portal
 - **Invisible Helpers Portal Implemented** ✅
   - Route: `/invisible-helpers`
