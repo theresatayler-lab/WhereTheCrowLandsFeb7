@@ -413,7 +413,7 @@ const StepperBlock = ({ content, progress = new Set(), onComplete, archetypeStyl
               {step.spoken_words && (
                 <div className="bg-muted/50 p-3 rounded-lg mb-2 italic text-sm">
                   <Quote className="w-4 h-4 inline mr-2 opacity-50" />
-                  "{step.spoken_words}&rdquo;
+                  &ldquo;{step.spoken_words}&rdquo;
                 </div>
               )}
               
