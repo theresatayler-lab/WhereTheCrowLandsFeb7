@@ -190,6 +190,13 @@ Build "Where The Crowlands," a sophisticated full-stack application for creating
   - `POST /api/ai/generate-spell-v3` - Blocks-based spell generation
   - `GET /api/ai/spell-config-v3` - V3 configuration with block templates
   
+  **Frontend Integration:**
+  - Updated SpellRequest.js to call V3 endpoint
+  - Updated language: "Craft Your Working" not "Craft Your Spell"
+  - Belief boundary options: Secular & Reflective, Spiritual & Grounded, Practitioner
+  - SpellBlockRenderer handles field name variations (bird/bird_name, message/oracle_message)
+  - GrimoirePage detects blocks-based spells and uses SpellBlockRenderer
+  
   **Block Templates per Guide:**
   - Shigg: cold_open → materials → choice → lore_vignette → stepper → bird_oracle → journal_prompt → closing
   - Cathleen: cold_open → materials → choice → lore_vignette → song_prompt → stepper → ward → closing
