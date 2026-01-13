@@ -169,3 +169,29 @@ Build "Where The Crowlands," a sophisticated full-stack application for creating
 - `/app/test_reports/iteration_7.json` - V2 Pipeline tests (6/7 passed, 1 fixed)
 - `/app/tests/test_gridfs_and_timeline.py` - Comprehensive test suite
 - `/app/tests/test_spell_v2_pipeline.py` - V2 pipeline test suite
+
+### Session: December 2025 - Blocks-Based Spell System
+- **V3 Blocks Pipeline Implementation** ✅
+  - Extended schema with `blocks[]` array for typed block content
+  - Block types: cold_open, materials, choice, stepper, lore_vignette, reflection, closing, bird_oracle, ward, song_prompt, evidence_card, journal_prompt, safety_note
+  - Planner outputs `template_id` per persona and selects 1 canon anchor
+  - Writer outputs `blocks[]` matching template with REQUIRED choice + lore_vignette
+  - QA validates: no choice block fails, no lore vignette fails, persona-lock missing fails, blocks don't match template fails
+  
+  **New Files:**
+  - `/app/backend/prompts/planner_blocks.py` - Block templates + canon anchors per guide
+  - `/app/backend/prompts/writer_blocks.py` - Block content generation
+  - `/app/backend/prompts/qa_blocks.py` - Block-specific validation
+  - `/app/backend/prompts/pipeline_blocks.py` - Full blocks pipeline
+  - `/app/backend/schemas/spell_blocks_schema.json` - Block schema definitions
+  - `/app/frontend/src/components/SpellBlockRenderer.jsx` - Interactive block renderer with stepper checkboxes
+  
+  **New Endpoints:**
+  - `POST /api/ai/generate-spell-v3` - Blocks-based spell generation
+  - `GET /api/ai/spell-config-v3` - V3 configuration with block templates
+  
+  **Block Templates per Guide:**
+  - Shigg: cold_open → materials → choice → lore_vignette → stepper → bird_oracle → journal_prompt → closing
+  - Cathleen: cold_open → materials → choice → lore_vignette → song_prompt → stepper → ward → closing
+  - Katherine: cold_open → materials → safety_note → choice → lore_vignette → stepper → reflection → closing
+  - Theresa: cold_open → evidence_card → materials → choice → lore_vignette → stepper → bird_oracle → journal_prompt → closing
