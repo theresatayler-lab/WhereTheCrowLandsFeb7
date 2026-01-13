@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  Shield, Sparkles, ChevronRight,
-  Download, Mail, Copy, Check, Clock, Loader2, X, Lock
+  Shield, Sparkles, ChevronRight, ChevronDown,
+  Download, Mail, Copy, Check, Clock, Loader2, X, Lock, Feather
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { cn } from '../lib/utils';
@@ -11,7 +11,7 @@ import jsPDF from 'jspdf';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
-// Form options (simplified)
+// Form options
 const BENEFICIARIES_OPTIONS = [
   { id: 'community', label: 'My community / neighbors' },
   { id: 'vulnerable', label: 'Vulnerable people' },
@@ -51,12 +51,12 @@ const ACTION_OPTIONS = [
   { id: 'call', label: 'Call my representatives' },
 ];
 
-// Generation limit
 const MAX_FREE_GENERATIONS = 3;
 
 export const InvisibleHelpers = () => {
-  // Form state
+  const [showFullIntro, setShowFullIntro] = useState(false);
   const [formData, setFormData] = useState({
+    personal_intention: '',
     beneficiaries: [],
     primary_quality: '',
     practice_style: '',
@@ -64,8 +64,7 @@ export const InvisibleHelpers = () => {
     action_pledge: '',
   });
   
-  // Flow state
-  const [step, setStep] = useState('form'); // 'form' | 'email' | 'checkout' | 'result'
+  const [step, setStep] = useState('form');
   const [email, setEmail] = useState('');
   const [generating, setGenerating] = useState(false);
   const [generatedWorking, setGeneratedWorking] = useState(null);
@@ -75,7 +74,6 @@ export const InvisibleHelpers = () => {
   
   const workingRef = useRef(null);
 
-  // Check for returning from Stripe
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const sessionId = urlParams.get('session_id');
@@ -84,18 +82,14 @@ export const InvisibleHelpers = () => {
     const storedForm = localStorage.getItem('ih_pending_form');
     
     if (success === 'true' && sessionId && storedEmail && storedForm) {
-      // Returned from successful Stripe checkout
       setEmail(storedEmail);
       setFormData(JSON.parse(storedForm));
       setStep('result');
-      // Clean URL
       window.history.replaceState({}, '', window.location.pathname);
-      // Trigger generation
       handleGenerateAfterCheckout(storedEmail, JSON.parse(storedForm));
     }
   }, []);
 
-  // Load generation count from localStorage
   useEffect(() => {
     const count = parseInt(localStorage.getItem('ih_generation_count') || '0', 10);
     setGenerationCount(count);
@@ -126,7 +120,7 @@ export const InvisibleHelpers = () => {
 
   const handleContinueToEmail = () => {
     if (!isFormValid()) {
-      toast.error('Please complete all fields');
+      toast.error('Please complete all required fields');
       return;
     }
     setStep('email');
@@ -139,13 +133,11 @@ export const InvisibleHelpers = () => {
       return;
     }
 
-    // Check generation count from backend
     try {
       const countRes = await fetch(`${API_URL}/api/invisible-helpers/check-limit?email=${encodeURIComponent(email)}`);
       const countData = await countRes.json();
       
       if (countData.limit_reached) {
-        // Redirect to early access
         toast.info('You\'ve reached the guest limit. Join early access to continue.');
         window.location.href = '/early-access';
         return;
@@ -156,7 +148,6 @@ export const InvisibleHelpers = () => {
       console.error('Count check error:', error);
     }
 
-    // Store for after checkout
     localStorage.setItem('ih_pending_email', email);
     localStorage.setItem('ih_pending_form', JSON.stringify(formData));
     
@@ -166,13 +157,12 @@ export const InvisibleHelpers = () => {
   const handleCheckout = async (amount = 0) => {
     setCheckingOut(true);
     try {
-      // Create Stripe checkout session
       const response = await fetch(`${API_URL}/api/invisible-helpers/create-checkout`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           email,
-          amount, // in cents, 0 for free
+          amount,
           success_url: `${window.location.origin}/invisible-helpers?success=true&session_id={CHECKOUT_SESSION_ID}`,
           cancel_url: `${window.location.origin}/invisible-helpers`,
         }),
@@ -181,10 +171,8 @@ export const InvisibleHelpers = () => {
       const data = await response.json();
       
       if (data.url) {
-        // Redirect to Stripe
         window.location.href = data.url;
       } else if (data.skip_checkout) {
-        // $0 doesn't need Stripe redirect
         handleGenerateAfterCheckout(email, formData);
       } else {
         toast.error('Failed to create checkout session');
@@ -207,6 +195,7 @@ export const InvisibleHelpers = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           email: userEmail,
+          personal_intention: form.personal_intention || '',
           beneficiaries: form.beneficiaries,
           primary_quality: form.primary_quality,
           practice_style: form.practice_style,
@@ -222,8 +211,6 @@ export const InvisibleHelpers = () => {
         setGenerationCount(data.generation_count || generationCount + 1);
         localStorage.setItem('ih_generation_count', String(data.generation_count || generationCount + 1));
         toast.success('Your working has been generated and emailed to you.');
-        
-        // Clean up stored data
         localStorage.removeItem('ih_pending_email');
         localStorage.removeItem('ih_pending_form');
       } else if (data.limit_reached) {
@@ -246,10 +233,9 @@ export const InvisibleHelpers = () => {
       window.location.href = '/early-access';
       return;
     }
-    // Reset to email step (skip form, keep selections)
     setGeneratedWorking(null);
     setStep('checkout');
-    handleCheckout(0); // Auto-trigger $0 checkout for variation
+    handleCheckout(0);
   };
 
   const handleCopyToClipboard = async () => {
@@ -324,6 +310,7 @@ export const InvisibleHelpers = () => {
 
   const resetAll = () => {
     setFormData({
+      personal_intention: '',
       beneficiaries: [],
       primary_quality: '',
       practice_style: '',
@@ -338,7 +325,7 @@ export const InvisibleHelpers = () => {
   return (
     <div className="min-h-screen bg-[#0a0f1a]" data-testid="invisible-helpers-page">
       {/* Hero */}
-      <section className="relative py-12 md:py-16 overflow-hidden">
+      <section className="relative py-10 md:py-14 overflow-hidden">
         <div className="absolute inset-0 opacity-5">
           <div className="absolute inset-0" style={{
             backgroundImage: `radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1) 0%, transparent 50%)`,
@@ -356,20 +343,123 @@ export const InvisibleHelpers = () => {
             <h1 className="font-cinzel text-2xl md:text-3xl text-slate-200 mb-2">
               Magical Battle Cry Intention
             </h1>
-            <p className="text-amber-600/70 text-sm italic mb-6">
+            <p className="text-amber-600/70 text-sm italic">
               Inspired by the Invisible Helpers
-            </p>
-            <p className="text-slate-400 text-sm leading-relaxed max-w-xl mx-auto">
-              This portal offers a single disciplined working for times when the world feels loud, distorted, or brutal.
-              It does not punish. It does not coerce. It does not replace action.
-              It steadies the inner field so that truth, restraint, protection, and lawful consequence can take hold.
             </p>
           </motion.div>
         </div>
       </section>
 
+      {/* Expanded Intro Section */}
+      <section className="px-4 pb-8">
+        <div className="max-w-3xl mx-auto">
+          <div className="bg-slate-900/30 border border-slate-700/50 rounded-lg overflow-hidden">
+            {/* Always visible intro */}
+            <div className="p-6 md:p-8">
+              <div className="prose prose-invert prose-slate max-w-none text-sm">
+                <p className="text-slate-300 leading-relaxed mb-4">
+                  In 1940, as bombs fell on London and fear gripped a nation, a remarkable woman named 
+                  <span className="text-amber-500/90"> Dion Fortune</span> did something extraordinary. 
+                  She gathered her scattered community—unable to meet in person—and organized them into 
+                  what she called an <em className="text-slate-200">Invisible Army</em>. Every Sunday, 
+                  at the same hour, they would sit in meditation, visualizing protection, clarity, and 
+                  the strengthening of all who resisted tyranny.
+                </p>
+                
+                <p className="text-slate-400 leading-relaxed mb-4">
+                  She wasn&apos;t naive. She knew magic doesn&apos;t replace action. But she also knew 
+                  that <span className="text-slate-300">when the world feels like it&apos;s burning, 
+                  steadying the inner field matters</span>. Her letters from that period—later published 
+                  as <em>The Magical Battle of Britain</em>—remain a testament to disciplined, ethical 
+                  spiritual work in times of crisis.
+                </p>
+
+                <p className="text-slate-400 leading-relaxed">
+                  Today, we find ourselves in another moment that calls for both action and intention. 
+                  From the <span className="text-amber-500/80">&ldquo;Etsy witches&rdquo;</span> who made 
+                  headlines hexing injustice, to artists and activists weaving meaning into resistance, 
+                  people are rediscovering what Fortune knew: <span className="text-slate-300">that 
+                  focused intention, done with clean hands and a clear heart, can be part of how we 
+                  show up</span>.
+                </p>
+              </div>
+            </div>
+
+            {/* Expandable section */}
+            <div className="border-t border-slate-700/50">
+              <button
+                onClick={() => setShowFullIntro(!showFullIntro)}
+                className="w-full px-6 py-3 flex items-center justify-between text-slate-500 hover:text-slate-400 transition-colors text-sm"
+              >
+                <span>{showFullIntro ? 'Show less' : 'Read more about this working...'}</span>
+                <ChevronDown className={cn(
+                  "w-4 h-4 transition-transform",
+                  showFullIntro && "rotate-180"
+                )} />
+              </button>
+              
+              <AnimatePresence>
+                {showFullIntro && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="overflow-hidden"
+                  >
+                    <div className="px-6 md:px-8 pb-6 md:pb-8 prose prose-invert prose-slate max-w-none text-sm">
+                      <h3 className="font-cinzel text-amber-600/80 text-base mb-3 mt-0">About Where The Crowlands</h3>
+                      <p className="text-slate-400 leading-relaxed mb-4">
+                        We&apos;re building <span className="text-slate-200">Where The Crowlands</span> as 
+                        a portal to a world where magic is practical, ethical, and a little bit fun. A place 
+                        where AI-guided rituals meet family folklore, where you can explore the history of 
+                        magical practice while crafting your own. Think of it as your digital grimoire—part 
+                        library, part workshop, part community.
+                      </p>
+
+                      <h3 className="font-cinzel text-amber-600/80 text-base mb-3">Fortune&apos;s Principles</h3>
+                      <p className="text-slate-400 leading-relaxed mb-3">
+                        Dion Fortune was adamant about several things that guide this working:
+                      </p>
+                      <ul className="text-slate-400 space-y-2 mb-4">
+                        <li><span className="text-slate-300">Language directs force</span> — vague or emotional wording causes rebound</li>
+                        <li><span className="text-slate-300">Magic that violates free will rebounds</span> — we redirect, never strike</li>
+                        <li><span className="text-slate-300">Justice belongs to impersonal law</span> — not personal vengeance</li>
+                        <li><span className="text-slate-300">Defense and protection over aggression</span> — always</li>
+                      </ul>
+
+                      <h3 className="font-cinzel text-amber-600/80 text-base mb-3">What This Working Does</h3>
+                      <p className="text-slate-400 leading-relaxed mb-4">
+                        This is a <span className="text-slate-200">Neutralizing Return to Source via Higher Law</span>. 
+                        It doesn&apos;t curse. It doesn&apos;t attack. It returns misused power—distortion, 
+                        coercion, dehumanization—to the impersonal law that governs consequence. Think of it 
+                        as redirecting dark energy back to where it came from, transmuted into accountability 
+                        rather than harm.
+                      </p>
+                      
+                      <p className="text-slate-400 leading-relaxed mb-4">
+                        We&apos;re here to <span className="text-amber-500/80">create chaos, not catastrophe</span>. 
+                        A little disruption to unjust systems. A little sand in the gears of cruelty. But always 
+                        with clean hands, always paired with real-world action, and always remembering that 
+                        the goal is protection and clarity—not revenge.
+                      </p>
+
+                      <div className="bg-amber-900/10 border border-amber-900/30 rounded-lg p-4 mt-4">
+                        <p className="text-amber-200/80 text-xs italic m-0">
+                          &ldquo;Magic does not replace resistance. It steadies those who resist.&rdquo;
+                        </p>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Ethical Badge */}
-      <div className="text-center pb-8">
+      <div className="text-center pb-6">
         <span className="inline-block px-4 py-2 bg-slate-900/50 border border-slate-700/50 rounded-full text-slate-500 text-xs">
           No harm · No targets · No coercion · Only protection, clarity, and lawful return
         </span>
@@ -425,7 +515,7 @@ export const InvisibleHelpers = () => {
         </div>
       </section>
 
-      {/* Closing Truth */}
+      {/* Closing */}
       <section className="py-12 px-4 border-t border-slate-800">
         <div className="max-w-xl mx-auto text-center">
           <p className="font-cinzel text-base text-slate-400 italic">
@@ -438,7 +528,7 @@ export const InvisibleHelpers = () => {
   );
 };
 
-// Step 1: Form
+// Form Step with personal intention and contextual explanations
 const FormStep = ({ formData, onFormChange, onToggleBeneficiary, isValid, onContinue }) => (
   <motion.div
     initial={{ opacity: 0, x: 20 }}
@@ -446,13 +536,34 @@ const FormStep = ({ formData, onFormChange, onToggleBeneficiary, isValid, onCont
     exit={{ opacity: 0, x: -20 }}
     className="bg-slate-900/50 border border-slate-700/50 rounded-lg p-6 space-y-6"
   >
-    <div className="text-center mb-4">
+    <div className="text-center mb-2">
+      <Feather className="w-6 h-6 mx-auto mb-2 text-amber-500/60" />
       <h2 className="font-cinzel text-lg text-slate-200">Craft Your Working</h2>
-      <p className="text-slate-500 text-xs mt-1">All fields required</p>
+    </div>
+
+    {/* Personal Intention - FREE TEXT FIRST */}
+    <div className="bg-slate-800/30 border border-slate-700/30 rounded-lg p-4">
+      <label className="block text-slate-200 text-sm mb-2">
+        What is your intention with this working?
+      </label>
+      <p className="text-slate-500 text-xs mb-3">
+        In a few words, what do you hope to see change for the better? What needs protecting, 
+        clarifying, or returning to balance? This is your chance to co-create.
+      </p>
+      <textarea
+        value={formData.personal_intention}
+        onChange={(e) => onFormChange('personal_intention', e.target.value)}
+        placeholder="e.g., I want to see my community protected from fear and division. I want clarity to cut through the noise..."
+        rows={3}
+        className="w-full px-3 py-2 bg-slate-900/50 border border-slate-700 rounded text-slate-300 text-sm placeholder:text-slate-600 focus:outline-none focus:border-amber-700/50 resize-none"
+      />
     </div>
 
     {/* Beneficiaries */}
-    <FormSection title="Who are you protecting?">
+    <FormSection 
+      title="Who are you protecting?"
+      context="Fortune's wartime work centered on visualizing protection around those in harm's way. The Invisible Army didn't fight—they shielded."
+    >
       <div className="flex flex-wrap gap-2">
         {BENEFICIARIES_OPTIONS.map(opt => (
           <ToggleChip
@@ -466,7 +577,10 @@ const FormStep = ({ formData, onFormChange, onToggleBeneficiary, isValid, onCont
     </FormSection>
 
     {/* Primary Quality */}
-    <FormSection title="Quality to strengthen">
+    <FormSection 
+      title="Quality to strengthen"
+      context="What energy do you want to amplify? Fortune taught that focused visualization on positive qualities creates a 'seed idea' in the group mind."
+    >
       <div className="flex flex-wrap gap-2">
         {QUALITY_OPTIONS.map(opt => (
           <ToggleChip
@@ -480,7 +594,10 @@ const FormStep = ({ formData, onFormChange, onToggleBeneficiary, isValid, onCont
     </FormSection>
 
     {/* Practice Style */}
-    <FormSection title="Language style">
+    <FormSection 
+      title="Language style"
+      context="How do you connect? Some prefer quiet, grounded words. Others resonate with mystical imagery. There's no wrong answer."
+    >
       <div className="flex flex-wrap gap-2">
         {PRACTICE_STYLE_OPTIONS.map(opt => (
           <ToggleChip
@@ -494,7 +611,10 @@ const FormStep = ({ formData, onFormChange, onToggleBeneficiary, isValid, onCont
     </FormSection>
 
     {/* Time Horizon */}
-    <FormSection title="Time horizon">
+    <FormSection 
+      title="Time horizon"
+      context="Fortune's group met every Sunday at the same hour. Synchronized, regular practice builds coherence. When will you do this working?"
+    >
       <div className="flex flex-wrap gap-2">
         {TIME_HORIZON_OPTIONS.map(opt => (
           <ToggleChip
@@ -508,7 +628,10 @@ const FormStep = ({ formData, onFormChange, onToggleBeneficiary, isValid, onCont
     </FormSection>
 
     {/* Action Pledge */}
-    <FormSection title="Real-world action">
+    <FormSection 
+      title="Real-world action"
+      context="Inner work supports outer action—never replaces it. What concrete thing will you do to ground this working in material reality?"
+    >
       <div className="flex flex-wrap gap-2">
         {ACTION_OPTIONS.map(opt => (
           <ToggleChip
@@ -539,7 +662,34 @@ const FormStep = ({ formData, onFormChange, onToggleBeneficiary, isValid, onCont
   </motion.div>
 );
 
-// Step 2: Email
+// Form Section with context
+const FormSection = ({ title, context, children }) => (
+  <div>
+    <label className="block text-slate-200 text-sm mb-1">{title}</label>
+    {context && (
+      <p className="text-slate-500 text-xs mb-3 italic">{context}</p>
+    )}
+    {children}
+  </div>
+);
+
+// Toggle Chip
+const ToggleChip = ({ label, selected, onClick }) => (
+  <button
+    type="button"
+    onClick={onClick}
+    className={cn(
+      "px-3 py-1.5 rounded-full text-xs transition-all",
+      selected
+        ? "bg-amber-900/40 border border-amber-700/50 text-amber-200"
+        : "bg-slate-800/50 border border-slate-700 text-slate-400 hover:border-slate-600"
+    )}
+  >
+    {label}
+  </button>
+);
+
+// Email Step
 const EmailStep = ({ email, setEmail, onSubmit, onBack }) => (
   <motion.div
     initial={{ opacity: 0, x: 20 }}
@@ -555,7 +705,7 @@ const EmailStep = ({ email, setEmail, onSubmit, onBack }) => (
       <Mail className="w-8 h-8 mx-auto mb-3 text-amber-500/70" />
       <h2 className="font-cinzel text-lg text-slate-200 mb-2">Receive Your Working</h2>
       <p className="text-slate-500 text-sm">
-        Enter your email to receive your working and a PDF of companion intentions.
+        Enter your email to receive your personalized working and a PDF you can use offline.
       </p>
     </div>
     
@@ -577,13 +727,13 @@ const EmailStep = ({ email, setEmail, onSubmit, onBack }) => (
         Continue
       </button>
       <p className="text-slate-600 text-xs text-center">
-        We&apos;ll email your working. You can generate up to 3 as a guest.
+        You can generate up to 3 workings as a guest. Join early access for unlimited.
       </p>
     </form>
   </motion.div>
 );
 
-// Step 3: Checkout
+// Checkout Step
 const CheckoutStep = ({ email, onCheckout, onBack, checkingOut }) => (
   <motion.div
     initial={{ opacity: 0, x: 20 }}
@@ -599,10 +749,10 @@ const CheckoutStep = ({ email, onCheckout, onBack, checkingOut }) => (
       <Sparkles className="w-8 h-8 mx-auto mb-3 text-amber-500/70" />
       <h2 className="font-cinzel text-lg text-slate-200 mb-2">Support This Work</h2>
       <p className="text-slate-500 text-sm">
-        If you&apos;re able, consider supporting this portal with a pay-what-you-choose donation.
+        This portal is offered freely. If you&apos;re able, consider a pay-what-you-choose contribution.
       </p>
       <p className="text-slate-600 text-xs mt-2">
-        Receiving to: {email}
+        Sending to: {email}
       </p>
     </div>
     
@@ -645,7 +795,7 @@ const CheckoutStep = ({ email, onCheckout, onBack, checkingOut }) => (
   </motion.div>
 );
 
-// Step 4: Result
+// Result Step
 const ResultStep = ({ 
   working, 
   generating, 
@@ -667,7 +817,7 @@ const ResultStep = ({
       >
         <Loader2 className="w-10 h-10 animate-spin mx-auto mb-4 text-amber-500/70" />
         <h2 className="font-cinzel text-lg text-slate-200 mb-2">Generating Your Working</h2>
-        <p className="text-slate-500 text-sm">This may take a moment...</p>
+        <p className="text-slate-500 text-sm">Calling the Invisible Helpers...</p>
       </motion.div>
     );
   }
@@ -727,31 +877,26 @@ const ResultStep = ({
         ref={workingRef}
         className="bg-slate-900/70 border border-slate-700/50 rounded-lg p-6 md:p-8 space-y-6"
       >
-        {/* Title */}
         <div className="text-center border-b border-slate-700/50 pb-4">
           <h2 className="font-cinzel text-xl text-slate-200">Magical Battle Cry Intention</h2>
           <p className="text-amber-600/60 text-xs italic mt-1">Inspired by the Invisible Helpers</p>
         </div>
 
-        {/* Intention */}
         <div>
           <h3 className="font-cinzel text-amber-600/80 text-xs mb-2 tracking-wider">INTENTION</h3>
           <p className="text-slate-300 italic">{working.intention}</p>
         </div>
 
-        {/* Anchor Phrase */}
         <div className="bg-slate-800/50 border-l-2 border-amber-700/50 p-4">
           <h3 className="font-cinzel text-amber-600/80 text-xs mb-2 tracking-wider">ANCHOR PHRASE</h3>
           <p className="text-slate-200 italic whitespace-pre-line">{working.anchor_phrase}</p>
         </div>
 
-        {/* Ethical Frame */}
         <div className="bg-amber-900/10 border border-amber-900/30 rounded p-4">
           <h3 className="font-cinzel text-amber-600/80 text-xs mb-2 tracking-wider">ETHICAL FRAME</h3>
           <p className="text-slate-400 text-sm whitespace-pre-line">{working.ethical_frame}</p>
         </div>
 
-        {/* Guided Working */}
         <div>
           <h3 className="font-cinzel text-amber-600/80 text-xs mb-4 tracking-wider">THE WORKING</h3>
           <div className="space-y-5">
@@ -776,13 +921,11 @@ const ResultStep = ({
           </div>
         </div>
 
-        {/* Action Pledge */}
         <div className="bg-slate-800/50 rounded p-4">
           <h3 className="font-cinzel text-amber-600/80 text-xs mb-2 tracking-wider">ACTION PLEDGE</h3>
           <p className="text-slate-300 text-sm">{working.action_pledge}</p>
         </div>
 
-        {/* Closing Truth */}
         <div className="text-center pt-4 border-t border-slate-700/50">
           <p className="text-slate-500 italic text-sm">{working.closing_truth}</p>
         </div>
@@ -815,29 +958,5 @@ const ResultStep = ({
     </motion.div>
   );
 };
-
-// Form Section Component
-const FormSection = ({ title, children }) => (
-  <div>
-    <label className="block text-slate-300 text-sm mb-2">{title}</label>
-    {children}
-  </div>
-);
-
-// Toggle Chip Component
-const ToggleChip = ({ label, selected, onClick }) => (
-  <button
-    type="button"
-    onClick={onClick}
-    className={cn(
-      "px-3 py-1.5 rounded-full text-xs transition-all",
-      selected
-        ? "bg-amber-900/40 border border-amber-700/50 text-amber-200"
-        : "bg-slate-800/50 border border-slate-700 text-slate-400 hover:border-slate-600"
-    )}
-  >
-    {label}
-  </button>
-);
 
 export default InvisibleHelpers;
