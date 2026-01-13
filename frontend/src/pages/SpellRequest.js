@@ -140,7 +140,7 @@ const OptionCard = ({ selected, onClick, children, className = '', light = false
 const Step1 = ({ spellSpec, updateSpec }) => (
   <div className="space-y-6">
     <div>
-      <h3 className="font-cinzel text-xl text-crimson mb-4 font-semibold">Who will guide your spell?</h3>
+      <h3 className="font-cinzel text-xl text-crimson mb-4 font-semibold">Who will guide your working?</h3>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {PERSONAS.map((p) => (
           <OptionCard
