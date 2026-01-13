@@ -53,17 +53,6 @@ const ANCHOR_LENGTH_OPTIONS = [
   { id: 'medium', label: 'Medium (2-3 lines)' },
 ];
 
-const ACTION_PLEDGE_OPTIONS = [
-  { id: 'donate', label: 'Donate to legal defense / mutual aid' },
-  { id: 'volunteer', label: 'Volunteer hours' },
-  { id: 'call_reps', label: 'Call representatives' },
-  { id: 'support_journalism', label: 'Support journalism / subscribe' },
-  { id: 'court_watch', label: 'Court watch / community safety' },
-  { id: 'share_info', label: 'Share vetted information' },
-  { id: 'check_neighbors', label: 'Check on neighbors' },
-  { id: 'attend_meeting', label: 'Attend a meeting' },
-];
-
 // Builder-specific options
 const PATTERNS_OPTIONS = [
   { id: 'misuse_authority', label: 'Misuse of authority' },
