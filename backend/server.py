@@ -747,6 +747,274 @@ async def join_invisible_helpers(request: InvisibleHelpersRequest):
     
     return {'success': True, 'message': 'Successfully joined!'}
 
+# Invisible Helpers - Working Generator
+class WorkingGeneratorRequest(BaseModel):
+    builder_type: str  # 'lawful_return', 'clarity', 'return_to_sender'
+    beneficiaries: List[str]
+    primary_quality: str
+    time_horizon: str
+    practice_style: str
+    anchor_length: str
+    action_pledge: str
+    custom_name: Optional[str] = None
+    # Builder-specific fields
+    patterns_to_neutralize: Optional[List[str]] = None  # For lawful_return
+    distortion_channels: Optional[List[str]] = None  # For clarity
+    return_types: Optional[List[str]] = None  # For return_to_sender
+
+class WorkingGeneratorResponse(BaseModel):
+    success: bool
+    working: Optional[Dict] = None
+    error: Optional[str] = None
+
+# Banned terms for hard blocks
+BANNED_TERMS = [
+    'kill', 'hurt', 'punish', 'ruin', 'destroy', 'curse', 'hex', 'bind',
+    'death', 'suffer', 'pain', 'torture', 'revenge', 'attack', 'strike',
+    'smite', 'damn', 'condemn', 'annihilate', 'obliterate', 'crush'
+]
+
+# Soft replacement mappings for named entities
+SOFT_REPLACEMENTS = {
+    'ice': 'coercive enforcement systems',
+    'police': 'enforcement authority',
+    'military': 'state force',
+    'trump': 'misused executive authority',
+    'biden': 'political leadership',
+    'government': 'governing systems',
+    'regime': 'authoritarian structures',
+    'dictator': 'autocratic power',
+    'fascist': 'authoritarian ideology',
+    'nazi': 'dehumanizing ideology',
+    'republican': 'political forces',
+    'democrat': 'political forces',
+    'congress': 'legislative power',
+    'supreme court': 'judicial authority',
+    'fbi': 'investigative authority',
+    'cia': 'intelligence authority',
+    'dhs': 'security apparatus',
+    'cbp': 'border enforcement',
+}
+
+def sanitize_input(text: str) -> str:
+    """Apply soft replacements to user input"""
+    if not text:
+        return text
+    result = text.lower()
+    for term, replacement in SOFT_REPLACEMENTS.items():
+        result = result.replace(term, replacement)
+    return result
+
+def check_banned_terms(text: str) -> List[str]:
+    """Check for banned terms in text"""
+    found = []
+    text_lower = text.lower()
+    for term in BANNED_TERMS:
+        if term in text_lower:
+            found.append(term)
+    return found
+
+# System prompt for Fortune-aligned working generation
+WORKING_SYSTEM_PROMPT = """You are an ethical spell-writing assistant inside "Where the Crowlands."
+You must generate Fortune-aligned, nonviolent, noncoercive ritual text inspired by the wartime spiritual work of Dion Fortune.
+
+ABSOLUTE PROHIBITIONS:
+- Never name or imply specific individuals, agencies, parties, nations, or identifiable groups
+- Never call for harm, punishment, suffering, revenge, coercion, domination, or binding
+- Never use violent imagery or instructions
+- Never frame justice as personal vengeance
+
+REQUIRED ELEMENTS (always include):
+- Ethical frame stating this is not a curse and does not punish
+- Transmutation clause (returned force becomes awareness/restraint, not suffering)
+- "No blowback" seal (grounding and protection)
+- Frame justice as impersonal law and restraint
+
+OUTPUT FORMAT (JSON):
+{
+  "title": "Working title",
+  "intention": "One-line intention the user can memorize",
+  "anchor_phrase": "Short repeatable phrase (1-3 lines based on user preference)",
+  "ethical_frame": "2-4 lines establishing the non-harmful nature of this working",
+  "guided_working": [
+    {"step": 1, "title": "Step title", "duration": "X minutes", "instructions": "...", "spoken_words": "..." or null},
+    ...
+  ],
+  "action_pledge": "One sentence real-world action commitment",
+  "closing_truth": "Magic does not replace resistance. It steadies those who resist."
+}
+
+TONE: Calm, disciplined, reverent, sober. Mystical but restrained. "Quiet chapel," not sensational.
+The working should feel like guidance from a wise, protective presence - not a spell marketplace."""
+
+def build_working_user_prompt(request: WorkingGeneratorRequest) -> str:
+    """Build the user prompt based on builder type and inputs"""
+    
+    # Sanitize all text inputs
+    beneficiaries = ', '.join([sanitize_input(b) for b in request.beneficiaries])
+    quality = sanitize_input(request.primary_quality)
+    custom_name = sanitize_input(request.custom_name) if request.custom_name else None
+    
+    base_context = f"""
+Beneficiaries being protected/supported: {beneficiaries}
+Primary quality to strengthen: {quality}
+Time horizon: {request.time_horizon}
+Practice style: {request.practice_style}
+Anchor phrase length: {request.anchor_length}
+Real-world action pledge: {request.action_pledge}
+Custom name for working: {custom_name or 'Generate an appropriate name'}
+"""
+    
+    if request.builder_type == 'lawful_return':
+        patterns = ', '.join([sanitize_input(p) for p in (request.patterns_to_neutralize or [])])
+        return f"""Build a personalized working titled "The Lawful Return of Misused Power" using these inputs:
+{base_context}
+Pattern(s) to neutralize: {patterns}
+
+CONSTRAINTS:
+- Return authorization/momentum to impersonal law, NOT pain or suffering
+- No targets, no names, no specific entities
+- Include grounding seal + transmutation clause
+- 6 steps, approximately 10-12 minutes total
+- Steps should include: Ground + Seal, Name the Principle (not enemy), Invoke Impersonal Law, Transmutation Clause, Benevolent Outcome Directive, Close the Circuit
+
+Output valid JSON only."""
+
+    elif request.builder_type == 'clarity':
+        channels = ', '.join([sanitize_input(c) for c in (request.distortion_channels or [])])
+        return f"""Build a personalized working titled "Clarity Against Propaganda" using these inputs:
+{base_context}
+Where distortion is encountered: {channels}
+
+CONSTRAINTS:
+- No targets, no politics, no naming sources
+- Focus on discernment, steadiness, refusal to amplify untruth
+- Include "lamp of clarity" visualization
+- Include 3 discernment questions
+- Include "refuse amplification" commitment
+- Include grounding seal + transmutation clause
+- 6 steps, approximately 10-12 minutes total
+- End with a micro-action pledge
+
+Output valid JSON only."""
+
+    elif request.builder_type == 'return_to_sender':
+        return_types = ', '.join([sanitize_input(r) for r in (request.return_types or [])])
+        return f"""Build a personalized working titled "Return to Sender (Benevolent Return to Source)" using these inputs:
+{base_context}
+What is being returned impersonally: {return_types}
+
+CRITICAL CONSTRAINTS - THIS IS NOT A CURSE:
+- Return ONLY: misused authorization, coercive momentum, distortion, fear-as-control, lies-as-power
+- Return TO: impersonal law for transmutation into restraint, conscience, and accountability
+- NEVER return: pain, punishment, suffering, illness, death, ruin
+- No targets, no names, no faces
+- Include strong ethical frame emphasizing lawful consequence over vengeance
+- Include grounding seal + transmutation clause
+- 6 steps, approximately 10-12 minutes total
+- Steps should include: Ground + Seal, Identify Pattern (not person), Invoke Higher Law, Release to Source, Transmutation, Close and Ground
+
+Output valid JSON only."""
+
+    else:
+        raise ValueError(f"Unknown builder type: {request.builder_type}")
+
+@api_router.post('/invisible-helpers/generate', response_model=WorkingGeneratorResponse)
+async def generate_working(request: WorkingGeneratorRequest):
+    """Generate a personalized Fortune-aligned working"""
+    from research_service import get_deepseek_client
+    
+    try:
+        # Validate builder type
+        if request.builder_type not in ['lawful_return', 'clarity', 'return_to_sender']:
+            return WorkingGeneratorResponse(
+                success=False,
+                error="Invalid builder type"
+            )
+        
+        # Check for banned terms in all inputs
+        all_inputs = ' '.join([
+            ' '.join(request.beneficiaries),
+            request.primary_quality,
+            request.custom_name or '',
+            ' '.join(request.patterns_to_neutralize or []),
+            ' '.join(request.distortion_channels or []),
+            ' '.join(request.return_types or [])
+        ])
+        
+        banned_found = check_banned_terms(all_inputs)
+        if banned_found:
+            return WorkingGeneratorResponse(
+                success=False,
+                error=f"Input contains prohibited terms. This portal focuses on protection and clarity, not harm."
+            )
+        
+        # Get DeepSeek client
+        deepseek_client = get_deepseek_client()
+        if not deepseek_client:
+            return WorkingGeneratorResponse(
+                success=False,
+                error="Generation service temporarily unavailable"
+            )
+        
+        # Build user prompt
+        user_prompt = build_working_user_prompt(request)
+        
+        # Generate working
+        response = await deepseek_client.chat.completions.create(
+            model="deepseek-chat",
+            messages=[
+                {"role": "system", "content": WORKING_SYSTEM_PROMPT},
+                {"role": "user", "content": user_prompt}
+            ],
+            temperature=0.7,
+            max_tokens=2000,
+            response_format={"type": "json_object"}
+        )
+        
+        # Parse response
+        content = response.choices[0].message.content
+        working_data = json.loads(content)
+        
+        # Post-generation validation - check output for banned terms
+        output_text = json.dumps(working_data)
+        output_banned = check_banned_terms(output_text)
+        if output_banned:
+            # Regenerate with stricter prompt
+            logger.warning(f"Generated working contained banned terms: {output_banned}. Regenerating...")
+            stricter_prompt = user_prompt + "\n\nIMPORTANT: The previous generation contained harmful language. Ensure this version contains NO references to harm, punishment, pain, or suffering. Focus ONLY on protection, clarity, and lawful consequence."
+            
+            response = await deepseek_client.chat.completions.create(
+                model="deepseek-chat",
+                messages=[
+                    {"role": "system", "content": WORKING_SYSTEM_PROMPT},
+                    {"role": "user", "content": stricter_prompt}
+                ],
+                temperature=0.5,
+                max_tokens=2000,
+                response_format={"type": "json_object"}
+            )
+            content = response.choices[0].message.content
+            working_data = json.loads(content)
+        
+        return WorkingGeneratorResponse(
+            success=True,
+            working=working_data
+        )
+        
+    except json.JSONDecodeError as e:
+        logger.error(f"Failed to parse working JSON: {e}")
+        return WorkingGeneratorResponse(
+            success=False,
+            error="Failed to generate working. Please try again."
+        )
+    except Exception as e:
+        logger.error(f"Working generation error: {e}")
+        return WorkingGeneratorResponse(
+            success=False,
+            error="An error occurred. Please try again."
+        )
+
 # Deities endpoints
 @api_router.get('/deities', response_model=List[Deity])
 async def get_deities():
