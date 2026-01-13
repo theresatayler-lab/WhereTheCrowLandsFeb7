@@ -345,7 +345,9 @@ const MaterialsBlock = ({ content, archetypeStyle }) => (
 // Choice Block - Interactive decision point
 const ChoiceBlock = ({ content, selectedChoice, onSelect, archetypeStyle }) => (
   <div className="space-y-4" data-testid="choice-block">
-    <p className="text-lg font-medium">{content.prompt}</p>
+    <p className={cn("text-lg font-medium font-cinzel", archetypeStyle.accentColor || "text-foreground")}>
+      {content.prompt}
+    </p>
     
     <div className="grid gap-3">
       {content.options?.map((option) => (
@@ -355,21 +357,21 @@ const ChoiceBlock = ({ content, selectedChoice, onSelect, archetypeStyle }) => (
           className={cn(
             "p-4 rounded-lg border-2 text-left transition-all",
             selectedChoice === option.id
-              ? cn("border-primary bg-primary/10", archetypeStyle.borderColor)
-              : "border-border hover:border-muted-foreground"
+              ? cn(archetypeStyle.borderColor || "border-primary", archetypeStyle.bgAccent || "bg-primary/10")
+              : "border-slate-700 hover:border-slate-500 bg-slate-900/50"
           )}
         >
           <div className="flex items-center gap-3">
             {selectedChoice === option.id ? (
-              <Check className="w-5 h-5 text-primary" />
+              <Check className={cn("w-5 h-5", archetypeStyle.accentColor || "text-primary")} />
             ) : (
-              <Circle className="w-5 h-5 text-muted-foreground" />
+              <Circle className="w-5 h-5 text-slate-500" />
             )}
             <div>
               <div className="font-medium">{option.label}</div>
-              <div className="text-sm text-muted-foreground">{option.description}</div>
+              <div className={cn("text-sm", archetypeStyle.textMuted || "text-muted-foreground")}>{option.description}</div>
               {option.affects && (
-                <div className="text-xs text-muted-foreground mt-1 italic">{option.affects}</div>
+                <div className={cn("text-xs mt-1 italic", archetypeStyle.textMuted || "text-muted-foreground")}>{option.affects}</div>
               )}
             </div>
           </div>
@@ -378,7 +380,9 @@ const ChoiceBlock = ({ content, selectedChoice, onSelect, archetypeStyle }) => (
     </div>
     
     {content.consequence_hint && (
-      <p className="text-sm italic text-muted-foreground">&ldquo;{content.consequence_hint}&rdquo;</p>
+      <p className={cn("text-sm italic", archetypeStyle.textMuted || "text-muted-foreground")}>
+        &ldquo;{content.consequence_hint}&rdquo;
+      </p>
     )}
   </div>
 );
