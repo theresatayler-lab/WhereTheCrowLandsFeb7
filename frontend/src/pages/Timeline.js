@@ -547,7 +547,7 @@ const DecadeNav = ({ events, activeDecade, setActiveDecade, activeEra }) => {
       >
         All
       </button>
-      {decades.map(decade => (
+      {filteredDecades.map(decade => (
         <button
           key={decade}
           onClick={() => setActiveDecade(decade)}
@@ -557,7 +557,7 @@ const DecadeNav = ({ events, activeDecade, setActiveDecade, activeEra }) => {
               : 'bg-navy-mid/50 text-cream/70 hover:text-cream border border-gold/20'
           }`}
         >
-          {decade}s
+          {formatDecade(decade)}
         </button>
       ))}
     </div>
