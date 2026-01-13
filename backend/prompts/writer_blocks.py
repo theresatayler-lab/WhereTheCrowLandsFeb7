@@ -205,6 +205,26 @@ Return ONLY this JSON with full blocks[] content:
                 "empowerment_line": "Guide's closing empowerment statement",
                 "next_steps_hint": "What to do/notice in next 24 hours"
             }}
+        }},
+        {{
+            "block_type": "evidence_card",
+            "block_id": "inspiration_1",
+            "content": {{
+                "known": ["Verified fact 1 from research", "Verified fact 2"],
+                "likely": ["Probable connection 1", "Pattern that suggests..."],
+                "lore": ["Unverified tradition", "What the stories say..."],
+                "pattern_note": "Guide's observation about these patterns"
+            }}
+        }},
+        {{
+            "block_type": "bird_oracle",
+            "block_id": "bird_1",
+            "content": {{
+                "bird_name": "Name of the bird",
+                "oracle_message": "What this bird's appearance means",
+                "observation_prompt": "What to watch for in coming days",
+                "log_field": true
+            }}
         }}
     ],
     
