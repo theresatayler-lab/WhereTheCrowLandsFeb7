@@ -539,8 +539,7 @@ export const SpellRequest = () => {
       const beliefModeMap = {
         'secular_reflective': 'SECULAR',
         'spiritual_grounded': 'SPIRITUAL',
-        'deity_friendly': 'PRACTITIONER',
-        'ancestor_friendly': 'PRACTITIONER'
+        'practitioner': 'PRACTITIONER'
       };
       const beliefMode = beliefModeMap[spellSpec.belief_boundary] || 'SPIRITUAL';
       
