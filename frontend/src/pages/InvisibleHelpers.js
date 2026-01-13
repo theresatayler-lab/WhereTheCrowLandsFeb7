@@ -419,7 +419,7 @@ export const InvisibleHelpers = () => {
         {/* Protective circle background */}
         <ProtectiveCircle 
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] text-amber-500" 
-          opacity={0.06}
+          opacity={0.12}
         />
         
         <div className="relative max-w-3xl mx-auto px-4 text-center">
