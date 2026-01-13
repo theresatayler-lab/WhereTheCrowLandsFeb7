@@ -6,53 +6,44 @@ Build "Where The Crowlands," a sophisticated full-stack application for creating
 ## Core Architecture
 - **Frontend**: React + Tailwind + Shadcn/UI
 - **Backend**: FastAPI + Python
-- **Database**: MongoDB
+- **Database**: MongoDB + GridFS (for images)
 - **AI**: Dual-model (DeepSeek for research, OpenAI GPT-4o for persona voice)
 
 ## What's Been Implemented
 
-### Session: January 13, 2026
-- **Interactive Occult Revival Timeline (NEW)**
+### Session: January 13, 2026 (Latest)
+- **GridFS Image Storage - DocumentTooLarge Bug Fix**
+  - Implemented `/app/backend/image_storage.py` with GridFS-based storage
+  - Spell images (header, tarot, sigil) stored in `spell_images` GridFS bucket
+  - Updated `/api/grimoire/save` to store images in GridFS, return references
+  - Updated `/api/grimoire/spells` to fetch images from GridFS on retrieval
+  - Updated `/api/grimoire/spells/{id}` DELETE to remove images from GridFS
+  - Backward-compatible with legacy spells (storage_version=1)
+  - All 14 backend tests passed
+
+- **Timeline Images Integration**
+  - Added `image_url` field to all 79 timeline events
+  - Images sourced from Unsplash (historical paintings preference)
+  - Events span from 1250 BCE (Papyrus of Ani) to 2020 CE (WitchTok)
+  - Frontend EventImage component displays circular thumbnails
+  - Grid view shows image thumbnails on cards
+  - Timeline view shows images alongside event cards
+
+### Session: January 13, 2026 (Earlier)
+- **Interactive Occult Revival Timeline**
   - Enhanced timeline page with 3 view modes: Timeline (vertical), Grid, Network (placeholder)
   - 13-category occult taxonomy integration from master chart
-  - Decade navigation (1880s-1950s) with filtering
+  - Era navigation (Antiquity to Contemporary) with filtering
   - Taxonomy category filters with colored icons
   - Guide lens filtering (Shigg, Cathleen, Katherine, Theresa)
   - Search functionality
-  - Expandable event cards with:
-    - Significance, key figures, traditions
-    - Source citations with quality tiers
-    - Location data
-    - Guide relevance indicators (colored dots)
-  - 13 seed events covering 1888-1951 occult revival period
-  - New backend models: `TimelineEventEnhanced`, `TimelineFilterRequest`, `ConnectionGraphResponse`
-  - New API endpoints:
-    - `GET /api/timeline/v2/events` - Filtered timeline events
-    - `GET /api/timeline/v2/events/{id}` - Single event detail
-    - `GET /api/timeline/v2/stats` - Timeline statistics
-    - `GET /api/timeline/v2/graph` - Network graph data
-    - `GET /api/timeline/v2/taxonomy` - Full taxonomy configuration
-    - `POST/PUT/DELETE /api/timeline/v2/events` - Admin CRUD (Pro only)
-  - Created DeepSeek briefing document for content expansion
+  - 79 historical events from 1250 BCE to 2020 CE
+  - New API endpoints: `/api/timeline/v2/*`
 
 ### Session: January 12, 2026
 - **TC Phantasmagoria Font Integration**
-  - Custom OTF font installed at `/app/frontend/public/fonts/grimoire-accent.otf`
-  - CSS utility classes: `.font-phantasmagoria`, `.ritual-title`, `.phantasmagoria-hero`, `.phantasmagoria-accent`
-  - Applied to: Main title, page headers, spell titles, guide names
-  
 - **DeepSeek Research Pipeline V3 Enhancement**
-  - 7 new research modes (10 total): cross_traditional_analysis, material_science_context, ritual_anatomy, historical_evolution, geographic_variants, transmission_analysis, contemporary_adaptation
-  - 28 tradition tags taxonomy (expanded from 6)
-  - 7 source quality tiers with confidence levels
-  - 10 "Why This Works" framing patterns
-  - Cross-persona connection points and tension mapping
-  - Enhanced safety substitution categories (6 categories with subcategories)
-  - 6-stage reading path pedagogy (Foundation → Integration)
-  - New endpoint: `GET /api/research/config`
-
-- **Navigation Verification**
-  - Confirmed scroll-to-top behavior on all page transitions ✓
+- **Navigation scroll-to-top behavior**
 
 ### Previous Sessions
 - Dual-AI research pipeline (DeepSeek + OpenAI)
@@ -77,8 +68,9 @@ Build "Where The Crowlands," a sophisticated full-stack application for creating
 - `GET /api/health/providers` - AI provider status
 - `GET /api/research/config` - V3 research configuration
 - `POST /api/auth/login`, `/api/auth/register` - Authentication
-- `GET /api/spells/user` - User's saved spells
-- `GET /api/timeline/v2/events` - Enhanced timeline with filtering
+- `GET /api/grimoire/spells` - User's saved spells (with GridFS images)
+- `POST /api/grimoire/save` - Save spell (stores images in GridFS)
+- `GET /api/timeline/v2/events` - Enhanced timeline with filtering and images
 - `GET /api/timeline/v2/stats` - Timeline statistics
 - `GET /api/timeline/v2/taxonomy` - 13-category taxonomy data
 
@@ -90,11 +82,12 @@ Build "Where The Crowlands," a sophisticated full-stack application for creating
 
 ### P0 - High Priority
 - [x] Interactive Timeline Page (COMPLETED Jan 13, 2026)
-- [x] MongoDB DocumentTooLarge Error - Fixed with GridFS image storage (COMPLETED Jan 13, 2026)
-- [ ] Visual Polish & Ornament Library (20 corners, 12 dividers, 24 glyphs)
+- [x] MongoDB DocumentTooLarge Error - Fixed with GridFS (COMPLETED Jan 13, 2026)
+- [x] Timeline images - 79 events with Unsplash images (COMPLETED Jan 13, 2026)
+- [ ] Visual Polish & Ornament Library (20 corners, 12 dividers, 24 glyphs) - BLOCKED: awaiting user assets
 
 ### P1 - Medium Priority
-- [ ] Timeline images - populate events with historical paintings/illustrations
+- [ ] Network View - Force-directed graph visualization (d3.js)
 - [ ] Back-compatibility for old spell references
 - [ ] Theresa archetype enrichment
 - [ ] Fix linting errors in server.py
@@ -112,4 +105,9 @@ Build "Where The Crowlands," a sophisticated full-stack application for creating
 - EarlyAccessGate in App.js is currently commented out
 - DeepSeek API key configured in backend/.env
 - Font loaded via index.html style tag (not CSS import due to webpack)
-- **GridFS Image Storage**: Spell images now stored in MongoDB GridFS (`spell_images` bucket) to avoid 16MB document limit. Legacy spells (storage_version=1) still work with inline base64.
+- **GridFS Image Storage**: Spell images stored in MongoDB GridFS (`spell_images` bucket). Uses `storage_version=2` for new spells. Legacy spells (v1) still work with inline base64.
+- **Timeline Data**: 79 events seeded from `/app/backend/timeline_events_expanded.py`. Database reseeded when event count changes.
+
+## Test Reports
+- `/app/test_reports/iteration_6.json` - GridFS and Timeline tests (14/14 passed)
+- `/app/tests/test_gridfs_and_timeline.py` - Comprehensive test suite
