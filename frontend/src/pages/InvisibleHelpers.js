@@ -412,7 +412,6 @@ export const InvisibleHelpers = () => {
     });
     setEmail('');
     setGeneratedWorking(null);
-    setFormStep(0);
     setStep('form');
   };
 
