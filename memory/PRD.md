@@ -279,3 +279,17 @@ Build "Where The Crowlands," a sophisticated full-stack application for creating
   - Cathleen: cold_open → materials → choice → lore_vignette → song_prompt → stepper → ward → closing
   - Katherine: cold_open → materials → safety_note → choice → lore_vignette → stepper → reflection → closing
   - Theresa: cold_open → evidence_card → materials → choice → lore_vignette → stepper → bird_oracle → journal_prompt → closing
+
+### Session: December 2025 - Style Bible Documentation
+- **Comprehensive Style Bible Created** ✅
+  - Location: `/app/memory/STYLE_BIBLE.md`
+  - Documents the complete "Crowlands" design system:
+    - **Design Philosophy**: "Wartime Chapel + Occult Diagram" aesthetic
+    - **Color System**: Primary palette (navy, crimson, gold) + extended tokens
+    - **Typography**: TC Phantasmagoria (accent), Cinzel Decorative, Crimson Text, etc.
+    - **Component Library**: OrnateElements.js components (corners, dividers, cards, frames)
+    - **Ornament System**: 20 corner styles, 12 divider styles, 24 bestiary glyphs
+    - **Page Sections**: Dark/Light section wrappers, standard page structure
+    - **Persona Theming**: Shigg, Cathleen, Katherine, Theresa color schemes
+    - **CSS Utilities**: Glow effects, button styles, scrollbar, texture overlays
+  - Reference files documented: tailwind.config.js, index.css, OrnateElements.js, ornaments/index.js, archetypes.js
