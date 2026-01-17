@@ -502,6 +502,7 @@ export const StarGlyph = ({
 
 // ============================================================================
 // DECORATIVE FRAME — For content panels
+// Subtle lifted-paper shadow, not modern card UI
 // ============================================================================
 
 export const VellumFrame = ({ 
@@ -510,23 +511,46 @@ export const VellumFrame = ({
   cornerSize = 60,
   showCorners = true 
 }) => (
-  <div className={`relative ${className}`}>
+  <div 
+    className={`relative ${className}`}
+    style={{
+      boxShadow: '0 1px 3px rgba(14, 42, 47, 0.08), 0 4px 12px rgba(14, 42, 47, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.6)',
+    }}
+  >
     {showCorners && (
       <>
-        <div className="absolute top-2 left-2">
+        <div className="absolute top-2 left-2 pointer-events-none">
           <HaloCorner size={cornerSize} position="top-left" />
         </div>
-        <div className="absolute top-2 right-2">
+        <div className="absolute top-2 right-2 pointer-events-none">
           <HaloCorner size={cornerSize} position="top-right" />
         </div>
-        <div className="absolute bottom-2 left-2">
+        <div className="absolute bottom-2 left-2 pointer-events-none">
           <HaloCorner size={cornerSize} position="bottom-left" />
         </div>
-        <div className="absolute bottom-2 right-2">
+        <div className="absolute bottom-2 right-2 pointer-events-none">
           <HaloCorner size={cornerSize} position="bottom-right" />
         </div>
       </>
     )}
+    {children}
+  </div>
+);
+
+// Vellum panel without corners - for simpler content blocks
+export const VellumPanel = ({ 
+  children, 
+  className = '',
+  padding = 'p-6 sm:p-8'
+}) => (
+  <div 
+    className={`relative ${padding} ${className}`}
+    style={{
+      backgroundColor: NOUVEAU_COLORS.vellum,
+      border: `1px solid ${NOUVEAU_COLORS.antiqueGold}50`,
+      boxShadow: '0 1px 3px rgba(14, 42, 47, 0.08), 0 4px 12px rgba(14, 42, 47, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.6)',
+    }}
+  >
     {children}
   </div>
 );
