@@ -7,66 +7,90 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Refined color scheme: Deep navy, vibrant crimson, antique gold (eye mandala inspired)
-        background: '#0e1629',  // Deep midnight navy (slightly richer)
-        foreground: '#e8e4dc',  // Warm off-white
+        // ============================================================================
+        // ART NOUVEAU PALETTE - Luminous, celestial, occult
+        // ============================================================================
+        
+        // Primary backgrounds
+        background: '#0E2A2F',  // Midnight Teal (primary dark)
+        foreground: '#F3EFE8',  // Vellum (primary text on dark)
+        
+        // Card system
         card: {
-          DEFAULT: '#121d33',  // Slightly lighter navy
-          foreground: '#e8e4dc',
+          DEFAULT: '#123A3F',  // Celestial Blue
+          foreground: '#F3EFE8',
         },
         popover: {
-          DEFAULT: '#121d33',
-          foreground: '#e8e4dc',
+          DEFAULT: '#123A3F',
+          foreground: '#F3EFE8',
         },
+        
+        // Interactive colors
         primary: {
-          DEFAULT: '#b82330',  // Vibrant crimson red (more saturated)
-          foreground: '#f5f3ef',
+          DEFAULT: '#B94E6A',  // Ember Pink (CTAs)
+          foreground: '#F3EFE8',
         },
         secondary: {
-          DEFAULT: '#1a2d4d',  // Navy blue
-          foreground: '#f5f3ef',
+          DEFAULT: '#123A3F',  // Celestial Blue
+          foreground: '#F3EFE8',
         },
         muted: {
-          DEFAULT: '#1a3050',  // Muted navy
-          foreground: '#9aabc0',
+          DEFAULT: '#123A3F',
+          foreground: '#9E8438',  // Muted Brass
         },
         accent: {
-          DEFAULT: '#d4a84b',  // Warm antique gold (richer)
-          foreground: '#0e1629',
+          DEFAULT: '#C8A44D',  // Antique Gold
+          foreground: '#0E2A2F',
         },
         destructive: {
-          DEFAULT: '#8b1a1a',
-          foreground: '#f5f3ef',
+          DEFAULT: '#C26A5A',  // Rose Clay
+          foreground: '#F3EFE8',
         },
-        border: '#2a4163',  // Blue-tinted border
-        input: '#121d33',
-        ring: '#b82330',
-        // Legacy colors
-        'raven-black': '#1C1C1C',
-        'ash-gray': '#A8A8A8',
-        'weathered-beige': '#D8CBB3',
-        'forest-moss': '#4B5A3E',
-        'blood-red': '#b82330',
-        'midnight-blue': '#0e1629',
-        'deep-blue': '#1a2d4d',
-        'parchment': '#e8e4dc',
-        'ink-black': '#0e1629',
-        // Enhanced color palette
-        'crimson': '#b82330',
-        'crimson-bright': '#d42a3a',
-        'crimson-deep': '#8a1a24',
-        'gold': '#d4a84b',
-        'gold-light': '#e6c068',
-        'gold-dark': '#a88535',
-        'champagne': '#d4a84b',
-        'champagne-light': '#e6c068',
-        'navy-dark': '#0e1629',
-        'navy-mid': '#121d33',
-        'navy-light': '#1a2d4d',
-        'navy-accent': '#2a4163',
-        'silver-mist': '#9aabc0',
-        'blue-grey': '#5c7a9e',
-        'cream': '#f5f0e6',
+        
+        // Borders and inputs
+        border: '#C8A44D',  // Antique Gold borders
+        input: '#123A3F',
+        ring: '#B94E6A',  // Ember Pink focus
+        
+        // ============================================================================
+        // NOUVEAU COLOR TOKENS (semantic naming)
+        // ============================================================================
+        'midnight-teal': '#0E2A2F',
+        'celestial-blue': '#123A3F',
+        'vellum': '#F3EFE8',
+        'antique-gold': '#C8A44D',
+        'muted-brass': '#9E8438',
+        'rose-clay': '#C26A5A',
+        'ember-pink': '#B94E6A',
+        
+        // ============================================================================
+        // LEGACY TOKENS (maintained for backward compatibility)
+        // These map to new palette where possible
+        // ============================================================================
+        'raven-black': '#0E2A2F',
+        'ash-gray': '#9E8438',
+        'weathered-beige': '#F3EFE8',
+        'forest-moss': '#123A3F',
+        'blood-red': '#B94E6A',
+        'midnight-blue': '#0E2A2F',
+        'deep-blue': '#123A3F',
+        'parchment': '#F3EFE8',
+        'ink-black': '#0E2A2F',
+        'crimson': '#B94E6A',
+        'crimson-bright': '#C26A5A',
+        'crimson-deep': '#9E4A5A',
+        'gold': '#C8A44D',
+        'gold-light': '#D4B55D',
+        'gold-dark': '#9E8438',
+        'champagne': '#C8A44D',
+        'champagne-light': '#D4B55D',
+        'navy-dark': '#0E2A2F',
+        'navy-mid': '#123A3F',
+        'navy-light': '#1A4A4F',
+        'navy-accent': '#2A5A5F',
+        'silver-mist': '#9E8438',
+        'blue-grey': '#5A7A7F',
+        'cream': '#F3EFE8',
       },
       fontFamily: {
         'italiana': ['Italiana', 'serif'],
