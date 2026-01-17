@@ -9,8 +9,8 @@ body {
     font-family: 'Crimson Text', serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: #0e1629;
-    color: #e8e4dc;
+    background-color: #0E2A2F;
+    color: #F3EFE8;
 }
 
 code {
@@ -19,31 +19,44 @@ code {
 
 @layer base {
     :root {
-        --background: #0e1629;
-        --foreground: #e8e4dc;
-        --card: #121d33;
-        --card-foreground: #e8e4dc;
-        --popover: #121d33;
-        --popover-foreground: #e8e4dc;
-        --primary: #b82330;
-        --primary-foreground: #f5f3ef;
-        --secondary: #1a2d4d;
-        --secondary-foreground: #f5f3ef;
-        --muted: #1a3050;
-        --muted-foreground: #9aabc0;
-        --accent: #d4a84b;
-        --accent-foreground: #0e1629;
-        --destructive: #8b1a1a;
-        --destructive-foreground: #f5f3ef;
-        --border: #2a4163;
-        --input: #121d33;
-        --ring: #b82330;
+        /* ============================================================
+           ART NOUVEAU PALETTE - Luminous, celestial, occult
+           ============================================================ */
+        --background: #0E2A2F;
+        --foreground: #F3EFE8;
+        --card: #123A3F;
+        --card-foreground: #F3EFE8;
+        --popover: #123A3F;
+        --popover-foreground: #F3EFE8;
+        --primary: #B94E6A;
+        --primary-foreground: #F3EFE8;
+        --secondary: #123A3F;
+        --secondary-foreground: #F3EFE8;
+        --muted: #123A3F;
+        --muted-foreground: #9E8438;
+        --accent: #C8A44D;
+        --accent-foreground: #0E2A2F;
+        --destructive: #C26A5A;
+        --destructive-foreground: #F3EFE8;
+        --border: #C8A44D;
+        --input: #123A3F;
+        --ring: #B94E6A;
         --radius: 0.5rem;
-        /* Enhanced ornate colors */
-        --gold: #d4a84b;
-        --gold-light: #e6c068;
-        --crimson: #b82330;
-        --crimson-bright: #d42a3a;
+        
+        /* Nouveau color tokens */
+        --midnight-teal: #0E2A2F;
+        --celestial-blue: #123A3F;
+        --vellum: #F3EFE8;
+        --antique-gold: #C8A44D;
+        --muted-brass: #9E8438;
+        --rose-clay: #C26A5A;
+        --ember-pink: #B94E6A;
+        
+        /* Legacy tokens (mapped to new palette) */
+        --gold: #C8A44D;
+        --gold-light: #D4B55D;
+        --crimson: #B94E6A;
+        --crimson-bright: #C26A5A;
     }
 }
 
@@ -54,13 +67,12 @@ code {
     body {
         @apply bg-background text-foreground;
         background-image: 
-            radial-gradient(circle at 20% 30%, rgba(26, 45, 77, 0.5) 0%, transparent 40%),
-            radial-gradient(circle at 80% 70%, rgba(42, 65, 99, 0.3) 0%, transparent 40%),
-            radial-gradient(circle at 50% 50%, rgba(184, 35, 48, 0.03) 0%, transparent 60%);
+            radial-gradient(ellipse at 30% 20%, rgba(18, 58, 63, 0.6) 0%, transparent 50%),
+            radial-gradient(ellipse at 70% 80%, rgba(18, 58, 63, 0.4) 0%, transparent 40%);
     }
 }
 
-/* Subtle vignette overlay */
+/* Subtle vignette overlay - refined for teal */
 body::after {
     content: '';
     position: fixed;
@@ -69,11 +81,11 @@ body::after {
     width: 100%;
     height: 100%;
     pointer-events: none;
-    background: radial-gradient(ellipse at center, transparent 40%, rgba(14, 22, 41, 0.4) 100%);
+    background: radial-gradient(ellipse at center, transparent 40%, rgba(14, 42, 47, 0.5) 100%);
     z-index: 9998;
 }
 
-/* Paper texture overlay - adjusted for dark theme */
+/* Paper texture overlay - very subtle, luminous */
 body::before {
     content: '';
     position: fixed;
@@ -82,20 +94,20 @@ body::before {
     width: 100%;
     height: 100%;
     pointer-events: none;
-    opacity: 0.02;
+    opacity: 0.015;
     background-image: repeating-linear-gradient(
         0deg,
-        #d4a84b 0px,
+        #C8A44D 0px,
         transparent 1px,
-        transparent 3px,
-        #d4a84b 4px
+        transparent 4px,
+        #C8A44D 5px
     ),
     repeating-linear-gradient(
         90deg,
-        #d4a84b 0px,
+        #C8A44D 0px,
         transparent 1px,
-        transparent 3px,
-        #d4a84b 4px
+        transparent 4px,
+        #C8A44D 5px
     );
     z-index: 9999;
 }
