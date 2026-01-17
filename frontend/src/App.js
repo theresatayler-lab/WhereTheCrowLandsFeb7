@@ -25,6 +25,7 @@ import CorrieTarot from './pages/CorrieTarot';
 import EarlyAccessPage from './pages/EarlyAccess';
 import Library from './pages/Library';
 import { InvisibleHelpers } from './pages/InvisibleHelpers';
+import DesignPreview from './pages/DesignPreview';
 import { Footer } from './components/Footer';
 import { OnboardingModal } from './components/OnboardingModal';
 import './App.css';
