@@ -25,11 +25,13 @@ const NavDropdown = ({ label, icon: Icon, items, isActive, onItemClick }) => {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`px-3 py-2 rounded-sm font-montserrat text-xs tracking-wider transition-all duration-300 flex items-center gap-1.5 ${
-          isActive 
-            ? 'text-gold bg-gold/10' 
-            : 'text-silver-mist/80 hover:text-gold hover:bg-gold/5'
-        }`}
+        className="px-3 py-2 font-montserrat text-xs tracking-wider transition-all duration-300 flex items-center gap-1.5"
+        style={{
+          color: isActive ? '#C8A44D' : 'rgba(243, 239, 232, 0.8)',
+          backgroundColor: isActive ? 'rgba(200, 164, 77, 0.15)' : 'transparent',
+        }}
+        onMouseEnter={(e) => { if (!isActive) { e.currentTarget.style.color = '#C8A44D'; e.currentTarget.style.backgroundColor = 'rgba(200, 164, 77, 0.08)'; }}}
+        onMouseLeave={(e) => { if (!isActive) { e.currentTarget.style.color = 'rgba(243, 239, 232, 0.8)'; e.currentTarget.style.backgroundColor = 'transparent'; }}}
       >
         <Icon className="w-4 h-4" />
         <span>{label}</span>
@@ -38,14 +40,24 @@ const NavDropdown = ({ label, icon: Icon, items, isActive, onItemClick }) => {
       
       {isOpen && (
         <div 
-          className="absolute top-full left-0 mt-1 min-w-[180px] py-2 rounded-sm border shadow-xl z-50"
+          className="absolute top-full left-0 mt-2 min-w-[200px] py-3 shadow-2xl z-50"
           style={{ 
-            background: 'rgba(14, 42, 47, 0.98)', 
-            backdropFilter: 'blur(8px)',
-            borderColor: 'rgba(200, 164, 77, 0.4)',
+            background: 'linear-gradient(to bottom, rgba(14, 42, 47, 0.99) 0%, rgba(18, 58, 63, 0.98) 100%)', 
+            backdropFilter: 'blur(12px)',
+            border: '2px solid rgba(200, 164, 77, 0.5)',
+            boxShadow: '0 4px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(200, 164, 77, 0.1)',
           }}
         >
-          {items.map((item) => {
+          {/* Decorative top accent */}
+          <div className="absolute -top-px left-2 right-2 h-0.5" style={{ background: 'linear-gradient(to right, transparent, #B94E6A, #C8A44D, #B94E6A, transparent)' }} />
+          
+          {/* Corner accents */}
+          <div className="absolute top-1 left-1 w-3 h-3" style={{ borderTop: '2px solid rgba(200, 164, 77, 0.6)', borderLeft: '2px solid rgba(200, 164, 77, 0.6)' }} />
+          <div className="absolute top-1 right-1 w-3 h-3" style={{ borderTop: '2px solid rgba(200, 164, 77, 0.6)', borderRight: '2px solid rgba(200, 164, 77, 0.6)' }} />
+          <div className="absolute bottom-1 left-1 w-3 h-3" style={{ borderBottom: '2px solid rgba(200, 164, 77, 0.6)', borderLeft: '2px solid rgba(200, 164, 77, 0.6)' }} />
+          <div className="absolute bottom-1 right-1 w-3 h-3" style={{ borderBottom: '2px solid rgba(200, 164, 77, 0.6)', borderRight: '2px solid rgba(200, 164, 77, 0.6)' }} />
+          
+          {items.map((item, index) => {
             const ItemIcon = item.icon;
             return (
               <Link
@@ -55,16 +67,29 @@ const NavDropdown = ({ label, icon: Icon, items, isActive, onItemClick }) => {
                   setIsOpen(false);
                   onItemClick?.();
                 }}
-                className="flex items-center gap-2 px-4 py-2.5 font-montserrat text-xs tracking-wider transition-all"
-                style={{ color: 'rgba(200, 164, 77, 0.8)' }}
-                onMouseEnter={(e) => { e.currentTarget.style.color = '#C8A44D'; e.currentTarget.style.backgroundColor = 'rgba(200, 164, 77, 0.1)'; }}
-                onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(200, 164, 77, 0.8)'; e.currentTarget.style.backgroundColor = 'transparent'; }}
+                className="flex items-center gap-3 px-5 py-2.5 font-montserrat text-xs tracking-wider transition-all relative"
+                style={{ color: 'rgba(243, 239, 232, 0.8)' }}
+                onMouseEnter={(e) => { 
+                  e.currentTarget.style.color = '#C8A44D'; 
+                  e.currentTarget.style.backgroundColor = 'rgba(200, 164, 77, 0.15)';
+                  e.currentTarget.style.borderLeft = '3px solid #B94E6A';
+                  e.currentTarget.style.paddingLeft = '17px';
+                }}
+                onMouseLeave={(e) => { 
+                  e.currentTarget.style.color = 'rgba(243, 239, 232, 0.8)'; 
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                  e.currentTarget.style.borderLeft = '3px solid transparent';
+                  e.currentTarget.style.paddingLeft = '20px';
+                }}
               >
-                <ItemIcon className="w-4 h-4" />
+                <ItemIcon className="w-4 h-4" style={{ color: '#B94E6A' }} />
                 <span>{item.label}</span>
               </Link>
             );
           })}
+          
+          {/* Decorative bottom accent */}
+          <div className="absolute -bottom-px left-2 right-2 h-0.5" style={{ background: 'linear-gradient(to right, transparent, rgba(200, 164, 77, 0.4), transparent)' }} />
         </div>
       )}
     </div>
