@@ -9,20 +9,22 @@ export const Footer = () => {
     <footer 
       className="mt-24 relative"
       style={{
-        background: 'linear-gradient(to bottom, rgba(14, 22, 41, 0.95) 0%, rgba(10, 16, 30, 1) 100%)',
+        background: 'linear-gradient(to bottom, rgba(14, 42, 47, 0.95) 0%, rgba(10, 30, 35, 1) 100%)',
       }}
     >
-      {/* Top decorative border - enhanced */}
-      <div className="h-0.5 bg-gradient-to-r from-transparent via-crimson/50 to-transparent" />
-      <div className="h-px mt-1 bg-gradient-to-r from-transparent via-gold/40 to-transparent" />
+      {/* Top decorative border - Art Nouveau */}
+      <div className="h-1" style={{ background: 'linear-gradient(to right, transparent 10%, #B94E6A 30%, #C8A44D 50%, #B94E6A 70%, transparent 90%)' }} />
+      <div className="h-px mt-0.5" style={{ background: 'linear-gradient(to right, transparent, rgba(200, 164, 77, 0.5), transparent)' }} />
       
       {/* Decorative divider with ornate elements */}
       <div className="flex items-center justify-center gap-6 py-8">
-        <div className="h-0.5 bg-gradient-to-r from-transparent to-gold/50 flex-1 max-w-48" />
-        <span className="text-crimson text-lg glow-crimson">◆</span>
-        <span className="text-gold/60 text-2xl">❧</span>
-        <span className="text-crimson text-lg glow-crimson">◆</span>
-        <div className="h-0.5 bg-gradient-to-l from-transparent to-gold/50 flex-1 max-w-48" />
+        <div className="h-0.5 flex-1 max-w-48" style={{ background: 'linear-gradient(to right, transparent, #C8A44D)' }} />
+        <span style={{ color: '#B94E6A', filter: 'drop-shadow(0 0 6px rgba(185, 78, 106, 0.6))' }}>◆</span>
+        <span style={{ color: '#C8A44D', fontSize: '1.5rem' }}>☽</span>
+        <span style={{ color: '#C8A44D', fontSize: '1.25rem' }}>✦</span>
+        <span style={{ color: '#C8A44D', fontSize: '1.5rem' }}>☾</span>
+        <span style={{ color: '#B94E6A', filter: 'drop-shadow(0 0 6px rgba(185, 78, 106, 0.6))' }}>◆</span>
+        <div className="h-0.5 flex-1 max-w-48" style={{ background: 'linear-gradient(to left, transparent, #C8A44D)' }} />
       </div>
       
       <div className="max-w-7xl mx-auto px-6 pb-16">
@@ -32,7 +34,7 @@ export const Footer = () => {
             <div className="relative mb-6">
               <div 
                 className="absolute inset-0 blur-xl opacity-40"
-                style={{ background: 'radial-gradient(circle, rgba(212, 168, 75, 0.4) 0%, transparent 70%)' }}
+                style={{ background: 'radial-gradient(circle, rgba(200, 164, 77, 0.4) 0%, transparent 70%)' }}
               />
               <img 
                 src={SEAL_LOGO}
@@ -41,15 +43,15 @@ export const Footer = () => {
                 style={{ filter: 'brightness(1.2) contrast(1.1)' }}
               />
             </div>
-            <p className="font-crimson text-sm text-center md:text-left text-silver-mist/70 leading-relaxed">
+            <p className="font-crimson text-sm text-center md:text-left leading-relaxed" style={{ color: 'rgba(243, 239, 232, 0.7)' }}>
               Build your own practice. No gatekeepers, no expensive services—just formulas, patterns, and your power.
             </p>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h4 className="font-cinzel text-lg text-gold mb-4 tracking-wide flex items-center gap-2">
-              <span className="text-crimson text-sm">◆</span>
+            <h4 className="font-cinzel text-lg mb-4 tracking-wide flex items-center gap-2" style={{ color: '#C8A44D' }}>
+              <span style={{ color: '#B94E6A' }}>◆</span>
               Explore
             </h4>
             <ul className="space-y-2">
@@ -64,7 +66,10 @@ export const Footer = () => {
                 <li key={link.to}>
                   <Link 
                     to={link.to} 
-                    className="font-crimson text-sm text-silver-mist/70 hover:text-gold transition-colors"
+                    className="font-crimson text-sm transition-colors"
+                    style={{ color: 'rgba(243, 239, 232, 0.6)' }}
+                    onMouseEnter={(e) => e.currentTarget.style.color = '#C8A44D'}
+                    onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(243, 239, 232, 0.6)'}
                   >
                     {link.label}
                   </Link>
@@ -75,8 +80,8 @@ export const Footer = () => {
 
           {/* Resources */}
           <div>
-            <h4 className="font-cinzel text-lg text-gold mb-4 tracking-wide flex items-center gap-2">
-              <span className="text-crimson text-sm">◆</span>
+            <h4 className="font-cinzel text-lg mb-4 tracking-wide flex items-center gap-2" style={{ color: '#C8A44D' }}>
+              <span style={{ color: '#B94E6A' }}>◆</span>
               Resources
             </h4>
             <ul className="space-y-2">
@@ -89,7 +94,10 @@ export const Footer = () => {
                 <li key={link.to}>
                   <Link 
                     to={link.to} 
-                    className="font-crimson text-sm text-silver-mist/70 hover:text-gold transition-colors"
+                    className="font-crimson text-sm transition-colors"
+                    style={{ color: 'rgba(243, 239, 232, 0.6)' }}
+                    onMouseEnter={(e) => e.currentTarget.style.color = '#C8A44D'}
+                    onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(243, 239, 232, 0.6)'}
                   >
                     {link.label}
                   </Link>
@@ -97,9 +105,9 @@ export const Footer = () => {
               ))}
             </ul>
             
-            <div className="mt-6 p-4 border border-gold/30 rounded-sm bg-navy-mid/30 relative">
-              <span className="absolute -top-2 left-3 bg-navy-dark px-2 text-crimson text-xs">◆</span>
-              <p className="font-crimson text-xs text-silver-mist/60 italic">
+            <div className="mt-6 p-4 rounded-sm relative" style={{ border: '1px solid rgba(200, 164, 77, 0.3)', backgroundColor: 'rgba(18, 58, 63, 0.4)' }}>
+              <span className="absolute -top-2 left-3 px-2" style={{ backgroundColor: '#0E2A2F', color: '#B94E6A', fontSize: '0.75rem' }}>◆</span>
+              <p className="font-crimson text-xs italic" style={{ color: 'rgba(243, 239, 232, 0.5)' }}>
                 Historical note: We document the claims and practices of the 1910-1945 era with scholarly integrity.
               </p>
             </div>
@@ -108,12 +116,12 @@ export const Footer = () => {
 
         {/* Bottom Bar */}
         <div className="mt-12 pt-6 relative">
-          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/30 to-transparent" />
+          <div className="absolute top-0 left-0 right-0 h-px" style={{ background: 'linear-gradient(to right, transparent, rgba(200, 164, 77, 0.3), transparent)' }} />
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="font-crimson text-sm text-silver-mist/60">
+            <p className="font-crimson text-sm" style={{ color: 'rgba(243, 239, 232, 0.5)' }}>
               © {new Date().getFullYear()} Where The Crowlands. All rights reserved.
             </p>
-            <p className="font-crimson text-xs text-silver-mist/40 mt-2 md:mt-0">
+            <p className="font-crimson text-xs mt-2 md:mt-0" style={{ color: 'rgba(243, 239, 232, 0.35)' }}>
               Built with historical research & modern technology
             </p>
           </div>
