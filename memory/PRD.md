@@ -11,7 +11,35 @@ Build "Where The Crowlands," a sophisticated full-stack application for creating
 
 ## What's Been Implemented
 
-### Session: December 2025 (Current)
+### Session: December 2025 - Art Nouveau Visual Redesign ✅
+- **Complete Visual System Overhaul** — Luminous Art Nouveau aesthetic
+  - New color palette: Midnight Teal (#0E2A2F), Celestial Blue (#123A3F), Vellum (#F3EFE8), Antique Gold (#C8A44D), Ember Pink (#B94E6A)
+  - New ornament library: Halo arc corners, lunar dividers, raven glyphs, celestial symbols (all stroke-based)
+  - Updated all CSS variables in `tailwind.config.js` and `index.css`
+  - New Art Nouveau ornament SVG library at `/app/frontend/src/assets/ornaments/artNouveau.js`
+  - Updated `OrnateElements.js` with new component implementations
+  - Applied to Home page with full Art Nouveau styling
+  
+  **Design Principles:**
+  - Ornaments are structural (edges only), never decorative behind text
+  - Gold is stroke-only, never flat fills
+  - Text always on vellum panels or solid dark surfaces
+  - Readability is sacred (WCAG AA minimum)
+  - Luminous, not distressed aesthetic
+
+  **Style Bible:** `/app/memory/STYLE_BIBLE.md` (v3.0)
+
+### Session: December 2025 - Style Bible & Invisible Helpers
+- **Comprehensive Style Bible Created** ✅
+  - Complete design system documentation
+  - Color tokens, typography, component library reference
+
+- **Invisible Helpers UX Refinement** ✅
+  - Form → Email → Donation → Result flow
+  - "Before You Begin" and "After the Spell" wrapper sections
+  - Stripe integration (free path working, paid path blocked on valid key)
+
+### Session: December 2025 (Earlier)
 - **Production-Ready Prompt Pack V2 - 4-Stage Pipeline** ✅
   - Implemented new modular prompt system at `/app/backend/prompts/`
   - **Stage 1 - Archivist** (DeepSeek): Research facts, sources, tradition context
