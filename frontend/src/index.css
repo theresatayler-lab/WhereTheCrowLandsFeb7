@@ -112,40 +112,40 @@ body::before {
     z-index: 9999;
 }
 
-/* Custom scrollbar - updated for dark theme */
+/* Custom scrollbar - Art Nouveau teal theme */
 ::-webkit-scrollbar {
     width: 12px;
 }
 
 ::-webkit-scrollbar-track {
-    background: #121d33;
-    border-left: 1px solid #2a4163;
+    background: #123A3F;
+    border-left: 1px solid #C8A44D40;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: linear-gradient(to bottom, #b82330, #8a1a24);
+    background: linear-gradient(to bottom, #B94E6A, #9E4A5A);
     border-radius: 0;
-    border: 2px solid #d4a84b;
+    border: 2px solid #C8A44D;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(to bottom, #d42a3a, #b82330);
+    background: linear-gradient(to bottom, #C26A5A, #B94E6A);
 }
 
 /* ============================================================================
-   BOLD BUTTON STYLES - Art Deco / Romantic
+   BUTTON STYLES - Art Nouveau / Luminous
    ============================================================================ */
 
-/* Primary CTA Button - Bold Art Deco Style */
+/* Primary CTA Button - Ember Pink */
 .btn-ritual {
     font-family: 'Cinzel Decorative', serif;
     font-weight: 700;
     letter-spacing: 0.15em;
     text-transform: uppercase;
     padding: 0.875rem 2rem;
-    background: linear-gradient(135deg, #b82330 0%, #8a1a24 100%);
-    color: #f5f0e6;
-    border: 2px solid #d4a84b;
+    background: #B94E6A;
+    color: #F3EFE8;
+    border: 1px solid #C8A44D60;
     position: relative;
     overflow: hidden;
     transition: all 0.3s ease;
@@ -158,17 +158,35 @@ body::before {
     left: 2px;
     right: 2px;
     bottom: 2px;
-    border: 1px solid rgba(212, 168, 75, 0.3);
+    border: 1px solid rgba(200, 164, 77, 0.2);
     pointer-events: none;
 }
 
 .btn-ritual:hover {
-    background: linear-gradient(135deg, #d42a3a 0%, #b82330 100%);
-    box-shadow: 0 0 20px rgba(184, 35, 48, 0.4), 0 0 40px rgba(212, 168, 75, 0.2);
+    background: #C26A7A;
+    box-shadow: 0 0 20px rgba(185, 78, 106, 0.4), 0 0 40px rgba(200, 164, 77, 0.15);
     transform: translateY(-1px);
 }
 
-/* Secondary Button - Outlined Art Deco */
+.btn-ritual:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(185, 78, 106, 0.5), 0 0 0 5px rgba(200, 164, 77, 0.3);
+}
+
+.btn-ritual:active {
+    background: #A94060;
+    transform: translateY(0);
+}
+
+.btn-ritual:disabled {
+    background: #5A4A4F;
+    color: #9A9A9A;
+    border-color: #5A5A5A;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* Secondary Button - Gold Outlined */
 .btn-ritual-secondary {
     font-family: 'Playfair Display', serif;
     font-weight: 600;
@@ -176,32 +194,42 @@ body::before {
     text-transform: uppercase;
     padding: 0.75rem 1.5rem;
     background: transparent;
-    color: #d4a84b;
-    border: 2px solid #d4a84b;
+    color: #C8A44D;
+    border: 1px solid #C8A44D;
     transition: all 0.3s ease;
 }
 
 .btn-ritual-secondary:hover {
-    background: rgba(212, 168, 75, 0.1);
-    box-shadow: 0 0 15px rgba(212, 168, 75, 0.3);
+    background: rgba(200, 164, 77, 0.1);
+    box-shadow: 0 0 15px rgba(200, 164, 77, 0.2);
 }
 
-/* Ghost Button - Minimal but Bold */
+.btn-ritual-secondary:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(200, 164, 77, 0.4);
+}
+
+/* Ghost Button - Minimal */
 .btn-ritual-ghost {
     font-family: 'Cinzel Decorative', serif;
     font-weight: 400;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     padding: 0.625rem 1.25rem;
-    background: rgba(14, 22, 41, 0.6);
-    color: #e6c068;
-    border: 1px solid rgba(212, 168, 75, 0.4);
+    background: rgba(14, 42, 47, 0.6);
+    color: #C8A44D;
+    border: 1px solid rgba(200, 164, 77, 0.4);
     transition: all 0.3s ease;
 }
 
 .btn-ritual-ghost:hover {
-    background: rgba(212, 168, 75, 0.1);
-    border-color: #d4a84b;
+    background: rgba(200, 164, 77, 0.1);
+    border-color: #C8A44D;
+}
+
+.btn-ritual-ghost:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(200, 164, 77, 0.4);
 }
 
 /* ============================================================================
