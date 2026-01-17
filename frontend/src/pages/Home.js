@@ -539,24 +539,24 @@ export const Home = () => {
       {/* ================================================================ */}
       {/* FEATURES SECTION - Dark plate with cards */}
       {/* ================================================================ */}
-      <SectionPlate variant="dark" className="py-16 sm:py-20 px-6">
+      <SectionPlate variant="dark" className="py-14 sm:py-16 px-6">
         <div className="max-w-6xl mx-auto">
-          {/* Section header with ceremonial presence */}
-          <div className="text-center mb-12">
-            <div className="flex justify-center mb-4">
-              <SunDisc size={56} color={NOUVEAU_COLORS.antiqueGold} opacity={0.7} />
+          {/* Section header - balanced */}
+          <div className="text-center mb-10">
+            <div className="flex justify-center mb-3">
+              <SunDisc size={48} color={NOUVEAU_COLORS.antiqueGold} opacity={0.7} />
             </div>
             <h2 
-              className="font-cinzel text-3xl sm:text-4xl md:text-5xl tracking-wider mb-4"
+              className="font-cinzel text-xl sm:text-2xl md:text-3xl tracking-wide mb-3"
               style={{ 
                 color: NOUVEAU_COLORS.antiqueGold, 
-                textShadow: `0 2px 30px ${NOUVEAU_COLORS.antiqueGold}50`,
-                letterSpacing: '0.1em',
+                textShadow: `0 2px 20px ${NOUVEAU_COLORS.antiqueGold}40`,
+                letterSpacing: '0.08em',
               }}
             >
               Your Path Awaits
             </h2>
-            <SimpleDivider width={200} color={NOUVEAU_COLORS.antiqueGold} opacity={0.5} />
+            <SimpleDivider width={180} color={NOUVEAU_COLORS.antiqueGold} opacity={0.5} />
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
