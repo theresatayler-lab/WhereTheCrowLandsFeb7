@@ -579,4 +579,5 @@ export default {
   StarGlyph,
   // Frames
   VellumFrame,
+  VellumPanel,
 };
