@@ -134,13 +134,14 @@ export const Navigation = ({ user, onLogout }) => {
     <nav 
       className="sticky top-0 z-50"
       style={{
-        background: 'linear-gradient(to bottom, rgba(14, 22, 41, 0.98) 0%, rgba(14, 22, 41, 0.95) 100%)',
+        background: 'linear-gradient(to bottom, rgba(14, 42, 47, 0.98) 0%, rgba(14, 42, 47, 0.95) 100%)',
         backdropFilter: 'blur(8px)',
-        borderBottom: '2px solid rgba(212, 168, 75, 0.3)',
+        borderBottom: '2px solid rgba(200, 164, 77, 0.4)',
       }}
     >
-      {/* Decorative top border */}
-      <div className="h-0.5 bg-gradient-to-r from-transparent via-crimson/60 to-transparent" />
+      {/* Decorative top border - Art Nouveau */}
+      <div className="h-1" style={{ background: 'linear-gradient(to right, transparent 10%, #B94E6A 30%, #C8A44D 50%, #B94E6A 70%, transparent 90%)' }} />
+      <div className="h-px" style={{ background: 'linear-gradient(to right, transparent, rgba(200, 164, 77, 0.5), transparent)' }} />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-16 md:h-20">
