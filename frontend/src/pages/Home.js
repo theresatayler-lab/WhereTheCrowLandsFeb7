@@ -390,33 +390,29 @@ export const Home = () => {
 
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.3 }}>
             {/* Raven glyph */}
-            <div className="flex justify-center mb-6">
-              <RavenGlyph size={64} color={NOUVEAU_COLORS.antiqueGold} opacity={0.8} />
+            <div className="flex justify-center mb-5">
+              <RavenGlyph size={56} color={NOUVEAU_COLORS.antiqueGold} opacity={0.8} />
             </div>
             
-            {/* Title - LARGE, CEREMONIAL */}
+            {/* Title - balanced, not oversized */}
             <h1 
-              className="phantasmagoria-hero text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-wider mb-4 leading-none"
+              className="phantasmagoria-hero text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-wide mb-3 leading-tight"
               style={{ 
                 color: NOUVEAU_COLORS.antiqueGold, 
-                textShadow: `
-                  0 4px 40px ${NOUVEAU_COLORS.antiqueGold}60, 
-                  0 0 80px ${NOUVEAU_COLORS.emberPink}30,
-                  0 2px 0 ${NOUVEAU_COLORS.mutedBrass}40
-                `,
-                letterSpacing: '0.08em',
+                textShadow: `0 2px 30px ${NOUVEAU_COLORS.antiqueGold}50, 0 0 60px ${NOUVEAU_COLORS.emberPink}20`,
+                letterSpacing: '0.05em',
               }}
             >
               Where The Crowlands
             </h1>
             
-            {/* Subtitle - strong presence */}
+            {/* Subtitle - proportional */}
             <p 
-              className="font-cinzel text-lg sm:text-2xl md:text-3xl tracking-widest uppercase mb-4"
+              className="font-cinzel text-sm sm:text-base md:text-lg tracking-widest uppercase mb-3"
               style={{ 
                 color: NOUVEAU_COLORS.vellum, 
-                textShadow: '0 2px 20px rgba(0, 0, 0, 0.5)',
-                letterSpacing: '0.15em',
+                textShadow: '0 2px 15px rgba(0, 0, 0, 0.4)',
+                letterSpacing: '0.12em',
               }}
             >
               A place where magic and science aren't such strange bedfellows
@@ -424,10 +420,10 @@ export const Home = () => {
             
             {/* Handwritten accent */}
             <p 
-              className="phantasmagoria-accent italic text-xl sm:text-2xl md:text-3xl mb-8"
+              className="phantasmagoria-accent italic text-lg sm:text-xl mb-6"
               style={{ 
                 color: `${NOUVEAU_COLORS.antiqueGold}bb`, 
-                textShadow: '0 2px 15px rgba(0, 0, 0, 0.4)',
+                textShadow: '0 2px 10px rgba(0, 0, 0, 0.3)',
               }}
             >
               … the bird is on the wing
