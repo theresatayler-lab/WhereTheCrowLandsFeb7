@@ -857,6 +857,34 @@ EXPANDED_TIMELINE_EVENTS = [
         "needs_reconstruction": True
     },
     {
+        "id": "night_witches_588th",
+        "image_url": "https://images.unsplash.com/photo-1534481016308-0fca71578ae5?w=800",
+        "year": 1942,
+        "month": 10,
+        "title": "The Night Witches: Soviet Women Reclaim the Witch Archetype",
+        "primary_category": "Organization",
+        "secondary_category": "Military Unit / Archetypal Reclamation",
+        "taxonomy_categories": [8, 9, 3],
+        "visual_tells": ["body-as-altar", "durational acts", "moonlit rites", "demons/specters"],
+        "lane_tags": ["Witchcraft", "folk magic", "earth ritual", "ceremonial embodiment"],
+        "glossary_terms": ["Witchcraft (practice-based)", "Ritual (as performance)", "Body as tool", "Protective magic", "Archetypal possession"],
+        "description": "Under Marina Raskova's command, the Soviet 588th Night Bomber Regiment—an all-female unit—flew antiquated Po-2 biplanes on nocturnal harassment raids, cutting engines to glide silently before bombing. German soldiers, hearing only the eerie whoosh of wind over canvas wings, named them 'Nachthexen' (Night Witches). The women embraced this title, flying over 23,000 missions and transforming their enemy's superstitious fear into legendary power.",
+        "significance": "A profound modern instance of archetypal reclamation: everyday women—students, clerks, workers—accessed the feared 'witch' archetype through ritualized action (nightly flights, shared intention, psychological alchemy). Parallels Dion Fortune's contemporaneous Magical Battle of Britain, but emerges organically from Slavic folklore and the ved'ma/Baba Yaga tradition. Proves archetypal power is accessed through practice, not birthright.",
+        "figures_involved": ["Marina Raskova", "Yevdokiya Bershanskaya", "Nadezhda Popova", "Irina Sebrova"],
+        "traditions": ["slavic_folk_magic", "wartime_domestic_life", "feminine_martial_archetypes"],
+        "connections": {"influenced_by": [], "influenced": [], "related_events": ["fortune_magical_battle", "blitz_protective_magic"], "part_of_movement": []},
+        "guide_relevance": {"shigg": "high", "cathleen": "high", "katherine": "medium", "theresa": "high"},
+        "sources": [
+            {"title": "Night Witches: The Untold Story of Soviet Women in Combat", "author": "Bruce Myles", "year": 1981, "type": "book", "quality_tier": "academic_secondary"},
+            {"title": "A Dance with Death: Soviet Airwomen in World War II", "author": "Anne Noggle", "year": 1994, "type": "book", "quality_tier": "folk_archive"}
+        ],
+        "location": {"name": "Eastern Front", "region": "Soviet Union"},
+        "confidence": "high",
+        "importance": 1,
+        "is_pivotal_moment": True,
+        "crowlands_connection": "The Night Witches embody the Crowlands principle: ordinary people accessing extraordinary power through repeated, focused ritual and collective intention. They had no formal spells, but their practice—conducted in darkness, with sound as weapon—transformed them into vessels of ancient, feared power. They didn't just act like witches; they became witches."
+    },
+    {
         "id": "crowley_book_of_thoth",
         "image_url": "https://images.unsplash.com/photo-1637757960303-6b152b77e161?w=800",
         "year": 1944,
