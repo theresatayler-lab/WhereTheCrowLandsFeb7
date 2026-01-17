@@ -196,11 +196,14 @@ export const Navigation = ({ user, onLogout }) => {
             <Link
               to="/"
               data-testid="nav-home"
-              className={`px-3 py-2 rounded-sm font-montserrat text-xs tracking-wider transition-all duration-300 flex items-center gap-1.5 ${
-                location.pathname === '/' 
-                  ? 'text-gold bg-gold/10 border-b-2 border-gold' 
-                  : 'text-silver-mist/80 hover:text-gold hover:bg-gold/5'
-              }`}
+              className="px-3 py-2 font-montserrat text-xs tracking-wider transition-all duration-300 flex items-center gap-1.5"
+              style={{
+                color: location.pathname === '/' ? '#C8A44D' : 'rgba(243, 239, 232, 0.8)',
+                backgroundColor: location.pathname === '/' ? 'rgba(200, 164, 77, 0.15)' : 'transparent',
+                borderBottom: location.pathname === '/' ? '2px solid #C8A44D' : '2px solid transparent',
+              }}
+              onMouseEnter={(e) => { if (location.pathname !== '/') { e.currentTarget.style.color = '#C8A44D'; e.currentTarget.style.backgroundColor = 'rgba(200, 164, 77, 0.08)'; }}}
+              onMouseLeave={(e) => { if (location.pathname !== '/') { e.currentTarget.style.color = 'rgba(243, 239, 232, 0.8)'; e.currentTarget.style.backgroundColor = 'transparent'; }}}
             >
               <Moon className="w-4 h-4" />
               <span>Home</span>
