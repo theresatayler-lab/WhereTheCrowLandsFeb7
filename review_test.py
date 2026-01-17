@@ -4,7 +4,7 @@ import sys
 from datetime import datetime
 
 class ReviewRequestTester:
-    def __init__(self, base_url="https://crowlands-magic-2.preview.emergentagent.com"):
+    def __init__(self, base_url="https://diy-ritual-guide.preview.emergentagent.com"):
         self.base_url = base_url
         self.token = None
         self.user_id = None
