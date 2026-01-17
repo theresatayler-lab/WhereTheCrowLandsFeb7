@@ -230,11 +230,14 @@ export const Navigation = ({ user, onLogout }) => {
             
             {/* User Section */}
             {user ? (
-              <div className="flex items-center space-x-2 ml-4 pl-4 border-l border-gold/20">
+              <div className="flex items-center space-x-2 ml-4 pl-4" style={{ borderLeft: '1px solid rgba(200, 164, 77, 0.3)' }}>
                 <Link
                   to="/profile"
                   data-testid="nav-profile"
-                  className="px-3 py-2 rounded-sm font-montserrat text-xs tracking-wider transition-all duration-300 flex items-center gap-1.5 text-silver-mist/80 hover:text-gold hover:bg-gold/5"
+                  className="px-3 py-2 rounded-sm font-montserrat text-xs tracking-wider transition-all duration-300 flex items-center gap-1.5"
+                  style={{ color: 'rgba(243, 239, 232, 0.8)' }}
+                  onMouseEnter={(e) => { e.currentTarget.style.color = '#C8A44D'; e.currentTarget.style.backgroundColor = 'rgba(200, 164, 77, 0.1)'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(243, 239, 232, 0.8)'; e.currentTarget.style.backgroundColor = 'transparent'; }}
                 >
                   <User className="w-4 h-4" />
                   <span>{user.name}</span>
@@ -242,7 +245,10 @@ export const Navigation = ({ user, onLogout }) => {
                 <Link
                   to="/upgrade"
                   data-testid="nav-upgrade"
-                  className="px-3 py-2 rounded-sm font-montserrat text-xs tracking-wider transition-all duration-300 flex items-center gap-1.5 text-crimson-bright hover:text-gold hover:bg-gold/5"
+                  className="px-3 py-2 rounded-sm font-montserrat text-xs tracking-wider transition-all duration-300 flex items-center gap-1.5"
+                  style={{ color: '#B94E6A' }}
+                  onMouseEnter={(e) => { e.currentTarget.style.color = '#C8A44D'; e.currentTarget.style.backgroundColor = 'rgba(200, 164, 77, 0.1)'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.color = '#B94E6A'; e.currentTarget.style.backgroundColor = 'transparent'; }}
                 >
                   <Crown className="w-4 h-4" />
                   <span>Upgrade</span>
@@ -250,7 +256,10 @@ export const Navigation = ({ user, onLogout }) => {
                 <button
                   onClick={onLogout}
                   data-testid="nav-logout"
-                  className="px-2 py-2 rounded-sm transition-all duration-300 text-silver-mist/60 hover:text-crimson hover:bg-crimson/10"
+                  className="px-2 py-2 rounded-sm transition-all duration-300"
+                  style={{ color: 'rgba(243, 239, 232, 0.5)' }}
+                  onMouseEnter={(e) => { e.currentTarget.style.color = '#B94E6A'; e.currentTarget.style.backgroundColor = 'rgba(185, 78, 106, 0.1)'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(243, 239, 232, 0.5)'; e.currentTarget.style.backgroundColor = 'transparent'; }}
                   title="Logout"
                 >
                   <LogOut className="w-4 h-4" />
@@ -260,11 +269,17 @@ export const Navigation = ({ user, onLogout }) => {
               <Link
                 to="/auth"
                 data-testid="nav-login"
-                className="ml-4 px-5 py-2.5 relative overflow-hidden rounded-sm font-montserrat text-xs tracking-widest uppercase transition-all duration-300 group"
+                className="ml-4 px-6 py-2.5 relative overflow-hidden font-cinzel text-xs tracking-[0.2em] uppercase transition-all duration-300 group"
+                style={{
+                  backgroundColor: '#B94E6A',
+                  border: '2px solid #C8A44D',
+                  color: '#F3EFE8',
+                  boxShadow: '0 0 15px rgba(185, 78, 106, 0.3)',
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 0 25px rgba(185, 78, 106, 0.5)'; e.currentTarget.style.filter = 'brightness(1.1)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.boxShadow = '0 0 15px rgba(185, 78, 106, 0.3)'; e.currentTarget.style.filter = 'brightness(1)'; }}
               >
-                <span className="absolute inset-0 border border-gold/50 rounded-sm" />
-                <span className="absolute inset-0.5 bg-gradient-to-r from-crimson-deep via-crimson to-crimson-deep rounded-sm" />
-                <span className="relative text-cream">Login</span>
+                <span className="relative">Login</span>
               </Link>
             )}
           </div>
