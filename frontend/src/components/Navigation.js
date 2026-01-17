@@ -38,8 +38,12 @@ const NavDropdown = ({ label, icon: Icon, items, isActive, onItemClick }) => {
       
       {isOpen && (
         <div 
-          className="absolute top-full left-0 mt-1 min-w-[180px] py-2 rounded-sm border border-gold/30 shadow-xl z-50"
-          style={{ background: 'rgba(14, 22, 41, 0.98)', backdropFilter: 'blur(8px)' }}
+          className="absolute top-full left-0 mt-1 min-w-[180px] py-2 rounded-sm border shadow-xl z-50"
+          style={{ 
+            background: 'rgba(14, 42, 47, 0.98)', 
+            backdropFilter: 'blur(8px)',
+            borderColor: 'rgba(200, 164, 77, 0.4)',
+          }}
         >
           {items.map((item) => {
             const ItemIcon = item.icon;
@@ -51,7 +55,10 @@ const NavDropdown = ({ label, icon: Icon, items, isActive, onItemClick }) => {
                   setIsOpen(false);
                   onItemClick?.();
                 }}
-                className="flex items-center gap-2 px-4 py-2.5 font-montserrat text-xs tracking-wider text-silver-mist/80 hover:text-gold hover:bg-gold/5 transition-all"
+                className="flex items-center gap-2 px-4 py-2.5 font-montserrat text-xs tracking-wider transition-all"
+                style={{ color: 'rgba(200, 164, 77, 0.8)' }}
+                onMouseEnter={(e) => { e.currentTarget.style.color = '#C8A44D'; e.currentTarget.style.backgroundColor = 'rgba(200, 164, 77, 0.1)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(200, 164, 77, 0.8)'; e.currentTarget.style.backgroundColor = 'transparent'; }}
               >
                 <ItemIcon className="w-4 h-4" />
                 <span>{item.label}</span>
