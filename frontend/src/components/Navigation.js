@@ -310,20 +310,24 @@ export const Navigation = ({ user, onLogout }) => {
           <div 
             className="lg:hidden py-4 max-h-[70vh] overflow-y-auto"
             style={{
-              borderTop: '1px solid rgba(212, 168, 75, 0.3)',
-              background: 'rgba(14, 22, 41, 0.98)',
+              borderTop: '2px solid rgba(200, 164, 77, 0.5)',
+              background: 'linear-gradient(to bottom, rgba(14, 42, 47, 0.99) 0%, rgba(14, 42, 47, 0.98) 100%)',
             }}
           >
+            {/* Decorative top accent */}
+            <div className="h-px mb-3" style={{ background: 'linear-gradient(to right, transparent, rgba(185, 78, 106, 0.5), transparent)' }} />
+            
             <div className="space-y-1">
               {/* Home */}
               <Link
                 to="/"
                 onClick={handleLinkClick}
-                className={`flex items-center gap-3 px-4 py-3 rounded-sm font-montserrat text-sm transition-all ${
-                  location.pathname === '/'
-                    ? 'bg-gold/10 text-gold border-l-4 border-gold'
-                    : 'text-silver-mist/80 hover:bg-gold/5 hover:text-gold'
-                }`}
+                className="flex items-center gap-3 px-4 py-3 font-montserrat text-sm transition-all"
+                style={{
+                  backgroundColor: location.pathname === '/' ? 'rgba(200, 164, 77, 0.15)' : 'transparent',
+                  color: location.pathname === '/' ? '#C8A44D' : 'rgba(243, 239, 232, 0.8)',
+                  borderLeft: location.pathname === '/' ? '3px solid #C8A44D' : '3px solid transparent',
+                }}
               >
                 <Moon className="w-5 h-5" />
                 <span>Home</span>
@@ -334,7 +338,8 @@ export const Navigation = ({ user, onLogout }) => {
                 <div key={key}>
                   <button
                     onClick={() => setExpandedMobileSection(expandedMobileSection === key ? null : key)}
-                    className="w-full flex items-center justify-between px-4 py-3 rounded-sm font-montserrat text-sm text-gold/80 hover:bg-gold/5 transition-all"
+                    className="w-full flex items-center justify-between px-4 py-3 font-montserrat text-sm transition-all"
+                    style={{ color: '#C8A44D' }}
                   >
                     <span className="flex items-center gap-3">
                       <group.icon className="w-5 h-5" />
@@ -344,7 +349,14 @@ export const Navigation = ({ user, onLogout }) => {
                   </button>
                   
                   {expandedMobileSection === key && (
-                    <div className="pl-8 space-y-1 pb-2">
+                    <div 
+                      className="pl-8 space-y-1 pb-2"
+                      style={{ 
+                        backgroundColor: 'rgba(18, 58, 63, 0.5)',
+                        borderLeft: '2px solid rgba(200, 164, 77, 0.3)',
+                        marginLeft: '1rem',
+                      }}
+                    >
                       {group.items.map((item) => {
                         const ItemIcon = item.icon;
                         const isActive = location.pathname === item.to;
@@ -353,11 +365,11 @@ export const Navigation = ({ user, onLogout }) => {
                             key={item.to}
                             to={item.to}
                             onClick={handleLinkClick}
-                            className={`flex items-center gap-3 px-4 py-2.5 rounded-sm font-montserrat text-sm transition-all ${
-                              isActive
-                                ? 'bg-gold/10 text-gold'
-                                : 'text-silver-mist/70 hover:bg-gold/5 hover:text-gold'
-                            }`}
+                            className="flex items-center gap-3 px-4 py-2.5 font-montserrat text-sm transition-all"
+                            style={{
+                              backgroundColor: isActive ? 'rgba(200, 164, 77, 0.15)' : 'transparent',
+                              color: isActive ? '#C8A44D' : 'rgba(243, 239, 232, 0.7)',
+                            }}
                           >
                             <ItemIcon className="w-4 h-4" />
                             <span>{item.label}</span>
@@ -379,11 +391,12 @@ export const Navigation = ({ user, onLogout }) => {
                     key={link.to}
                     to={link.to}
                     onClick={handleLinkClick}
-                    className={`flex items-center gap-3 px-4 py-3 rounded-sm font-montserrat text-sm transition-all ${
-                      isActive
-                        ? 'bg-gold/10 text-gold border-l-4 border-gold'
-                        : 'text-silver-mist/80 hover:bg-gold/5 hover:text-gold'
-                    }`}
+                    className="flex items-center gap-3 px-4 py-3 font-montserrat text-sm transition-all"
+                    style={{
+                      backgroundColor: isActive ? 'rgba(200, 164, 77, 0.15)' : 'transparent',
+                      color: isActive ? '#C8A44D' : 'rgba(243, 239, 232, 0.8)',
+                      borderLeft: isActive ? '3px solid #C8A44D' : '3px solid transparent',
+                    }}
                   >
                     <Icon className="w-5 h-5" />
                     <span>{link.label}</span>
@@ -392,7 +405,7 @@ export const Navigation = ({ user, onLogout }) => {
               })}
               
               {/* Divider */}
-              <div className="h-px bg-gold/20 my-3 mx-4" />
+              <div className="h-px my-3 mx-4" style={{ background: 'linear-gradient(to right, transparent, rgba(200, 164, 77, 0.4), transparent)' }} />
               
               {/* Secondary Links */}
               {secondaryLinks.map((link) => {
