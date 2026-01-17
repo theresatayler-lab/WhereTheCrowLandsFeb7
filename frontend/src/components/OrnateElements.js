@@ -377,6 +377,176 @@ export const SectionLabel = ({ title, context }) => (
 );
 
 // ============================================================================
+// ADDITIONAL COMPONENTS - Backward compatibility
+// ============================================================================
+
+// Page Header component
+export const PageHeader = ({ title, subtitle, icon: Icon, className = '' }) => (
+  <div className={`text-center ${className}`}>
+    {Icon && (
+      <Icon 
+        className="w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-4" 
+        style={{ color: NOUVEAU_COLORS.emberPink, filter: `drop-shadow(0 0 12px ${NOUVEAU_COLORS.emberPink}40)` }} 
+      />
+    )}
+    <h1 
+      className="phantasmagoria-hero text-2xl sm:text-3xl md:text-4xl mb-2"
+      style={{ color: NOUVEAU_COLORS.antiqueGold, textShadow: `0 2px 20px ${NOUVEAU_COLORS.antiqueGold}40` }}
+    >
+      {title}
+    </h1>
+    {subtitle && (
+      <p className="font-crimson text-sm sm:text-base italic" style={{ color: `${NOUVEAU_COLORS.vellum}aa` }}>
+        {subtitle}
+      </p>
+    )}
+  </div>
+);
+
+// Page Border Frame - full page wrapper
+export const PageBorderFrame = ({ children, className = '' }) => (
+  <div className={`relative min-h-screen ${className}`} style={{ backgroundColor: NOUVEAU_COLORS.midnightTeal }}>
+    {/* Corner ornaments */}
+    <div className="absolute top-4 left-4 pointer-events-none">
+      <HaloCornerElaborate size={80} position="top-left" color={NOUVEAU_COLORS.antiqueGold} opacity={0.5} />
+    </div>
+    <div className="absolute top-4 right-4 pointer-events-none">
+      <HaloCornerElaborate size={80} position="top-right" color={NOUVEAU_COLORS.antiqueGold} opacity={0.5} />
+    </div>
+    <div className="absolute bottom-4 left-4 pointer-events-none">
+      <HaloCornerElaborate size={80} position="bottom-left" color={NOUVEAU_COLORS.antiqueGold} opacity={0.5} />
+    </div>
+    <div className="absolute bottom-4 right-4 pointer-events-none">
+      <HaloCornerElaborate size={80} position="bottom-right" color={NOUVEAU_COLORS.antiqueGold} opacity={0.5} />
+    </div>
+    <div className="relative z-10">{children}</div>
+  </div>
+);
+
+// OrnateCard - dark theme card
+export const OrnateCard = ({ children, className = '', hover = true }) => (
+  <div 
+    className={`relative p-5 sm:p-6 ${hover ? 'transition-all duration-300 hover:shadow-lg' : ''} ${className}`}
+    style={{ 
+      backgroundColor: NOUVEAU_COLORS.celestialBlue,
+      border: `1px solid ${NOUVEAU_COLORS.antiqueGold}40`,
+    }}
+  >
+    <div className="absolute top-2 left-2 pointer-events-none opacity-50">
+      <HaloCorner size={30} position="top-left" color={NOUVEAU_COLORS.antiqueGold} />
+    </div>
+    <div className="absolute top-2 right-2 pointer-events-none opacity-50">
+      <HaloCorner size={30} position="top-right" color={NOUVEAU_COLORS.antiqueGold} />
+    </div>
+    <div className="absolute bottom-2 left-2 pointer-events-none opacity-50">
+      <HaloCorner size={30} position="bottom-left" color={NOUVEAU_COLORS.antiqueGold} />
+    </div>
+    <div className="absolute bottom-2 right-2 pointer-events-none opacity-50">
+      <HaloCorner size={30} position="bottom-right" color={NOUVEAU_COLORS.antiqueGold} />
+    </div>
+    <div className="relative z-10">{children}</div>
+  </div>
+);
+
+// Page Divider - horizontal separator
+export const PageDivider = ({ className = '' }) => (
+  <div className={`flex justify-center py-4 ${className}`}>
+    <LunarDivider width={250} color={NOUVEAU_COLORS.antiqueGold} opacity={0.4} />
+  </div>
+);
+
+// Stepper Ornament - for multi-step flows
+export const StepperOrnament = ({ currentStep, totalSteps, className = '' }) => (
+  <div className={`flex items-center justify-center gap-2 ${className}`}>
+    {Array.from({ length: totalSteps }).map((_, i) => (
+      <div key={i} className="flex items-center gap-2">
+        <div 
+          className={`w-3 h-3 rounded-full border transition-all ${
+            i < currentStep ? 'border-transparent' : 'border-current'
+          }`}
+          style={{
+            backgroundColor: i < currentStep ? NOUVEAU_COLORS.emberPink : 'transparent',
+            borderColor: i < currentStep ? NOUVEAU_COLORS.emberPink : `${NOUVEAU_COLORS.antiqueGold}60`,
+          }}
+        />
+        {i < totalSteps - 1 && (
+          <div 
+            className="w-8 h-px"
+            style={{ backgroundColor: i < currentStep ? NOUVEAU_COLORS.emberPink : `${NOUVEAU_COLORS.antiqueGold}40` }}
+          />
+        )}
+      </div>
+    ))}
+  </div>
+);
+
+// Spell Border Frame - for grimoire pages
+export const SpellBorderFrame = ({ children, persona = 'default', className = '' }) => (
+  <div 
+    className={`relative p-6 sm:p-8 ${className}`}
+    style={{ 
+      backgroundColor: NOUVEAU_COLORS.vellum,
+      border: `2px solid ${NOUVEAU_COLORS.antiqueGold}60`,
+      boxShadow: '0 2px 8px rgba(14, 42, 47, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.6)',
+    }}
+  >
+    <div className="absolute top-3 left-3 pointer-events-none">
+      <HaloCornerElaborate size={50} position="top-left" color={NOUVEAU_COLORS.mutedBrass} opacity={0.5} />
+    </div>
+    <div className="absolute top-3 right-3 pointer-events-none">
+      <HaloCornerElaborate size={50} position="top-right" color={NOUVEAU_COLORS.mutedBrass} opacity={0.5} />
+    </div>
+    <div className="absolute bottom-3 left-3 pointer-events-none">
+      <HaloCornerElaborate size={50} position="bottom-left" color={NOUVEAU_COLORS.mutedBrass} opacity={0.5} />
+    </div>
+    <div className="absolute bottom-3 right-3 pointer-events-none">
+      <HaloCornerElaborate size={50} position="bottom-right" color={NOUVEAU_COLORS.mutedBrass} opacity={0.5} />
+    </div>
+    <div className="relative z-10">{children}</div>
+  </div>
+);
+
+// Section Border Frame - lighter weight
+export const SectionBorderFrame = ({ children, className = '' }) => (
+  <div 
+    className={`relative p-4 sm:p-5 ${className}`}
+    style={{ 
+      backgroundColor: `${NOUVEAU_COLORS.antiqueGold}08`,
+      borderLeft: `3px solid ${NOUVEAU_COLORS.antiqueGold}60`,
+    }}
+  >
+    {children}
+  </div>
+);
+
+// Tarot Card Frame
+export const TarotCardFrame = ({ children, className = '' }) => (
+  <div 
+    className={`relative p-4 ${className}`}
+    style={{ 
+      backgroundColor: NOUVEAU_COLORS.midnightTeal,
+      border: `2px solid ${NOUVEAU_COLORS.antiqueGold}70`,
+      boxShadow: `0 0 20px ${NOUVEAU_COLORS.antiqueGold}20`,
+    }}
+  >
+    <div className="absolute inset-2 pointer-events-none"
+      style={{ border: `1px solid ${NOUVEAU_COLORS.antiqueGold}30` }}
+    />
+    <div className="relative z-10">{children}</div>
+  </div>
+);
+
+// Persona border URLs - legacy support
+export const PERSONA_BORDER_URLS = {
+  cathleen: 'https://customer-assets.emergentagent.com/job_mystic-circle-2/artifacts/CathleenBorder.png',
+  katherine: 'https://customer-assets.emergentagent.com/job_mystic-circle-2/artifacts/KateBorder.png',
+  kate: 'https://customer-assets.emergentagent.com/job_mystic-circle-2/artifacts/KateBorder.png',
+  theresa: 'https://customer-assets.emergentagent.com/job_mystic-circle-2/artifacts/TheresaBorder.png',
+  shigg: null,
+  shiggy: null,
+};
+
+// ============================================================================
 // LEGACY EXPORTS - Maintain backward compatibility
 // ============================================================================
 
