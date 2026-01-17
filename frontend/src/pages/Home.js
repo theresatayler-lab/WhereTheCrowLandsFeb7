@@ -587,18 +587,18 @@ export const Home = () => {
       {/* ================================================================ */}
       {/* LINEAGE SECTION - Vellum plate */}
       {/* ================================================================ */}
-      <SectionPlate variant="light" className="py-16 sm:py-20 px-6">
+      <SectionPlate variant="light" className="py-14 sm:py-16 px-6">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="flex justify-center mb-6">
-            <RavenGlyph size={56} color={NOUVEAU_COLORS.mutedBrass} opacity={0.7} />
+          <div className="flex justify-center mb-4">
+            <RavenGlyph size={48} color={NOUVEAU_COLORS.mutedBrass} opacity={0.7} />
           </div>
           
           <h2 
-            className="font-cinzel text-3xl sm:text-4xl tracking-wider mb-8"
+            className="font-cinzel text-xl sm:text-2xl md:text-3xl tracking-wide mb-6"
             style={{ 
               color: NOUVEAU_COLORS.midnightTeal, 
-              textShadow: `0 2px 15px ${NOUVEAU_COLORS.emberPink}20`,
-              letterSpacing: '0.08em',
+              textShadow: `0 2px 10px ${NOUVEAU_COLORS.emberPink}15`,
+              letterSpacing: '0.06em',
             }}
           >
             The Lineage
