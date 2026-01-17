@@ -642,26 +642,26 @@ export const Home = () => {
       {/* ================================================================ */}
       {/* WAITLIST SECTION - Dark plate with vellum form */}
       {/* ================================================================ */}
-      <SectionPlate variant="dark" className="py-20 sm:py-24 px-6">
+      <SectionPlate variant="dark" className="py-16 sm:py-20 px-6">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="flex justify-center gap-4 mb-6">
-            <CrescentMoon size={32} facing="left" color={NOUVEAU_COLORS.antiqueGold} opacity={0.6} />
-            <MoonDisc size={48} color={NOUVEAU_COLORS.antiqueGold} opacity={0.8} />
-            <CrescentMoon size={32} facing="right" color={NOUVEAU_COLORS.antiqueGold} opacity={0.6} />
+          <div className="flex justify-center gap-3 mb-4">
+            <CrescentMoon size={24} facing="left" color={NOUVEAU_COLORS.antiqueGold} opacity={0.6} />
+            <MoonDisc size={40} color={NOUVEAU_COLORS.antiqueGold} opacity={0.8} />
+            <CrescentMoon size={24} facing="right" color={NOUVEAU_COLORS.antiqueGold} opacity={0.6} />
           </div>
           
           <h2 
-            className="font-cinzel text-3xl sm:text-4xl md:text-5xl tracking-wider mb-4"
+            className="font-cinzel text-xl sm:text-2xl md:text-3xl tracking-wide mb-3"
             style={{ 
               color: NOUVEAU_COLORS.antiqueGold, 
-              textShadow: `0 2px 30px ${NOUVEAU_COLORS.antiqueGold}50`,
-              letterSpacing: '0.1em',
+              textShadow: `0 2px 20px ${NOUVEAU_COLORS.antiqueGold}40`,
+              letterSpacing: '0.08em',
             }}
           >
             Join the Circle
           </h2>
           <p 
-            className="font-crimson text-lg sm:text-xl mb-10 max-w-lg mx-auto"
+            className="font-crimson text-base sm:text-lg mb-8 max-w-lg mx-auto"
             style={{ color: `${NOUVEAU_COLORS.vellum}aa` }}
           >
             Be the first to know when new features, spells, and ancestral wisdom are unveiled.
@@ -671,8 +671,8 @@ export const Home = () => {
             <WaitlistForm source="homepage" />
           </VellumPanel>
           
-          <div className="mt-12">
-            <LunarPhaseDivider width={350} color={NOUVEAU_COLORS.antiqueGold} opacity={0.4} />
+          <div className="mt-10">
+            <LunarPhaseDivider width={320} color={NOUVEAU_COLORS.antiqueGold} opacity={0.4} />
           </div>
         </div>
       </SectionPlate>
