@@ -1,6 +1,6 @@
 // ============================================================================
-// CROWLANDS ART NOUVEAU ORNAMENT LIBRARY
-// Luminous, stroke-based, structural ornaments
+// CROWLANDS ART NOUVEAU ORNAMENT LIBRARY V2.0
+// BOLD, THICK, VISUALLY STUNNING
 // Gold strokes ONLY — never fills behind text
 // ============================================================================
 
@@ -18,7 +18,7 @@ export const NOUVEAU_COLORS = {
 };
 
 // ============================================================================
-// HALO ARC CORNERS — Light, Art Nouveau geometry
+// HALO ARC CORNERS — BOLD, Architectural
 // ============================================================================
 
 export const HaloCorner = ({ 
@@ -42,48 +42,60 @@ export const HaloCorner = ({
       fill="none"
       style={{ transform: `rotate(${rotations[position]}deg)` }}
     >
-      {/* Primary arc */}
+      {/* Primary arc - BOLD */}
       <path 
-        d="M0 60 Q0 0 60 0" 
+        d="M0 65 Q0 0 65 0" 
         stroke={color} 
-        strokeWidth="1.5" 
+        strokeWidth="3" 
         opacity={opacity}
         fill="none"
       />
-      {/* Secondary inner arc */}
+      {/* Secondary arc */}
       <path 
-        d="M0 45 Q0 0 45 0" 
+        d="M0 48 Q0 0 48 0" 
         stroke={color} 
-        strokeWidth="1" 
-        opacity={opacity * 0.6}
+        strokeWidth="2" 
+        opacity={opacity * 0.7}
         fill="none"
       />
-      {/* Delicate inner arc */}
+      {/* Inner arc */}
       <path 
-        d="M0 30 Q0 0 30 0" 
+        d="M0 32 Q0 0 32 0" 
         stroke={color} 
-        strokeWidth="0.5" 
-        opacity={opacity * 0.4}
+        strokeWidth="1.5" 
+        opacity={opacity * 0.5}
         fill="none"
       />
-      {/* Small decorative circle at intersection */}
+      {/* Decorative circle cluster */}
       <circle 
-        cx="20" 
-        cy="20" 
-        r="2" 
+        cx="22" 
+        cy="22" 
+        r="5" 
         stroke={color} 
-        strokeWidth="1" 
+        strokeWidth="2" 
         fill="none" 
+        opacity={opacity * 0.8}
+      />
+      <circle 
+        cx="22" 
+        cy="22" 
+        r="2.5" 
+        stroke={color} 
+        strokeWidth="1.5" 
+        fill="none" 
+        opacity={opacity * 0.6}
+      />
+      <circle 
+        cx="22" 
+        cy="22" 
+        r="1" 
+        fill={color} 
         opacity={opacity * 0.7}
       />
-      {/* Tiny accent dot */}
-      <circle 
-        cx="20" 
-        cy="20" 
-        r="0.8" 
-        fill={color} 
-        opacity={opacity * 0.5}
-      />
+      {/* Radiating accent lines */}
+      <path d="M10 10 L16 16" stroke={color} strokeWidth="1.5" opacity={opacity * 0.4} />
+      <path d="M6 18 L12 20" stroke={color} strokeWidth="1" opacity={opacity * 0.3} />
+      <path d="M18 6 L20 12" stroke={color} strokeWidth="1" opacity={opacity * 0.3} />
     </svg>
   );
 };
@@ -110,82 +122,70 @@ export const HaloCornerElaborate = ({
       fill="none"
       style={{ transform: `rotate(${rotations[position]}deg)` }}
     >
-      {/* Outermost arc */}
+      {/* Outermost arc - EXTRA BOLD */}
       <path 
-        d="M0 75 Q0 0 75 0" 
+        d="M0 80 Q0 0 80 0" 
         stroke={color} 
-        strokeWidth="1.5" 
+        strokeWidth="4" 
         opacity={opacity}
         fill="none"
       />
-      {/* Middle arc */}
+      {/* Second arc */}
       <path 
-        d="M0 55 Q0 0 55 0" 
+        d="M0 62 Q0 0 62 0" 
         stroke={color} 
-        strokeWidth="1" 
-        opacity={opacity * 0.7}
+        strokeWidth="2.5" 
+        opacity={opacity * 0.75}
+        fill="none"
+      />
+      {/* Third arc */}
+      <path 
+        d="M0 45 Q0 0 45 0" 
+        stroke={color} 
+        strokeWidth="2" 
+        opacity={opacity * 0.55}
         fill="none"
       />
       {/* Inner arc */}
       <path 
-        d="M0 35 Q0 0 35 0" 
+        d="M0 30 Q0 0 30 0" 
         stroke={color} 
-        strokeWidth="0.75" 
-        opacity={opacity * 0.5}
+        strokeWidth="1.5" 
+        opacity={opacity * 0.4}
         fill="none"
       />
       {/* Radiating lines from corner */}
-      <path 
-        d="M8 8 L18 18" 
-        stroke={color} 
-        strokeWidth="0.5" 
-        opacity={opacity * 0.4}
-      />
-      <path 
-        d="M5 15 L12 22" 
-        stroke={color} 
-        strokeWidth="0.5" 
-        opacity={opacity * 0.3}
-      />
-      <path 
-        d="M15 5 L22 12" 
-        stroke={color} 
-        strokeWidth="0.5" 
-        opacity={opacity * 0.3}
-      />
-      {/* Decorative circle cluster */}
-      <circle 
-        cx="25" 
-        cy="25" 
-        r="4" 
-        stroke={color} 
-        strokeWidth="1" 
-        fill="none" 
-        opacity={opacity * 0.6}
-      />
-      <circle 
-        cx="25" 
-        cy="25" 
-        r="1.5" 
-        stroke={accentColor} 
-        strokeWidth="0.75" 
-        fill="none" 
-        opacity={opacity * 0.8}
-      />
+      <path d="M8 8 L20 20" stroke={color} strokeWidth="2" opacity={opacity * 0.5} />
+      <path d="M5 16 L14 22" stroke={color} strokeWidth="1.5" opacity={opacity * 0.35} />
+      <path d="M16 5 L22 14" stroke={color} strokeWidth="1.5" opacity={opacity * 0.35} />
+      <path d="M3 26 L10 28" stroke={color} strokeWidth="1" opacity={opacity * 0.25} />
+      <path d="M26 3 L28 10" stroke={color} strokeWidth="1" opacity={opacity * 0.25} />
+      
+      {/* Decorative circle cluster - BOLD */}
+      <circle cx="28" cy="28" r="8" stroke={color} strokeWidth="2.5" fill="none" opacity={opacity * 0.7} />
+      <circle cx="28" cy="28" r="4" stroke={accentColor} strokeWidth="2" fill="none" opacity={opacity * 0.9} />
+      <circle cx="28" cy="28" r="1.5" fill={color} opacity={opacity * 0.6} />
+      
       {/* Small star accent */}
       <path 
-        d="M12 12 L13 10 L14 12 L16 13 L14 14 L13 16 L12 14 L10 13 Z" 
+        d="M14 14 L15.5 11 L17 14 L20 15.5 L17 17 L15.5 20 L14 17 L11 15.5 Z" 
         stroke={color} 
-        strokeWidth="0.5" 
+        strokeWidth="1.5" 
         fill="none" 
         opacity={opacity * 0.5}
       />
+      
+      {/* Additional decorative dots */}
+      <circle cx="40" cy="8" r="1.5" fill={color} opacity={opacity * 0.3} />
+      <circle cx="8" cy="40" r="1.5" fill={color} opacity={opacity * 0.3} />
+      <circle cx="52" cy="12" r="1" fill={color} opacity={opacity * 0.2} />
+      <circle cx="12" cy="52" r="1" fill={color} opacity={opacity * 0.2} />
     </svg>
   );
 };
 
 // ============================================================================
-// LUNAR DIVIDERS — Crescent and phase-based horizontal dividers
+// LUNAR DIVIDERS — BOLD, Prominent
 // ============================================================================
 
 export const LunarDivider = ({ 
@@ -193,40 +193,39 @@ export const LunarDivider = ({
   color = NOUVEAU_COLORS.antiqueGold,
   opacity = 0.7 
 }) => (
-  <svg width={width} height="24" viewBox="0 0 300 24" fill="none" preserveAspectRatio="xMidYMid meet">
-    {/* Left line */}
-    <line 
-      x1="0" y1="12" x2="100" y2="12" 
-      stroke={color} 
-      strokeWidth="1" 
-      opacity={opacity * 0.5}
-    />
-    {/* Left crescent */}
+  <svg width={width} height="32" viewBox="0 0 300 32" fill="none" preserveAspectRatio="xMidYMid meet">
+    {/* Left line - thicker */}
+    <line x1="0" y1="16" x2="95" y2="16" stroke={color} strokeWidth="2" opacity={opacity * 0.6} />
+    
+    {/* Left crescent - BOLD */}
     <path 
-      d="M115 12 C115 7, 120 4, 125 4 C122 4, 120 7, 120 12 C120 17, 122 20, 125 20 C120 20, 115 17, 115 12" 
+      d="M112 16 C112 9, 118 4, 126 4 C121 4, 117 9, 117 16 C117 23, 121 28, 126 28 C118 28, 112 23, 112 16" 
       stroke={color} 
-      strokeWidth="1" 
+      strokeWidth="2.5" 
       fill="none" 
       opacity={opacity}
     />
-    {/* Center star */}
-    <circle cx="150" cy="12" r="3" stroke={color} strokeWidth="1" fill="none" opacity={opacity} />
-    <circle cx="150" cy="12" r="1" fill={color} opacity={opacity * 0.6} />
-    {/* Right crescent (mirrored) */}
+    
+    {/* Center sun disc - BOLD */}
+    <circle cx="150" cy="16" r="8" stroke={color} strokeWidth="3" fill="none" opacity={opacity} />
+    <circle cx="150" cy="16" r="4" stroke={color} strokeWidth="2" fill="none" opacity={opacity * 0.7} />
+    <circle cx="150" cy="16" r="1.5" fill={color} opacity={opacity * 0.8} />
+    
+    {/* Right crescent - BOLD */}
     <path 
-      d="M185 12 C185 7, 180 4, 175 4 C178 4, 180 7, 180 12 C180 17, 178 20, 175 20 C180 20, 185 17, 185 12" 
+      d="M188 16 C188 9, 182 4, 174 4 C179 4, 183 9, 183 16 C183 23, 179 28, 174 28 C182 28, 188 23, 188 16" 
       stroke={color} 
-      strokeWidth="1" 
+      strokeWidth="2.5" 
       fill="none" 
       opacity={opacity}
     />
-    {/* Right line */}
-    <line 
-      x1="200" y1="12" x2="300" y2="12" 
-      stroke={color} 
-      strokeWidth="1" 
-      opacity={opacity * 0.5}
-    />
+    
+    {/* Right line - thicker */}
+    <line x1="205" y1="16" x2="300" y2="16" stroke={color} strokeWidth="2" opacity={opacity * 0.6} />
+    
+    {/* Accent dots */}
+    <circle cx="100" cy="16" r="2" fill={color} opacity={opacity * 0.4} />
+    <circle cx="200" cy="16" r="2" fill={color} opacity={opacity * 0.4} />
   </svg>
 );
 
@@ -235,33 +234,37 @@ export const LunarPhaseDivider = ({
   color = NOUVEAU_COLORS.antiqueGold,
   opacity = 0.7 
 }) => (
-  <svg width={width} height="28" viewBox="0 0 400 28" fill="none" preserveAspectRatio="xMidYMid meet">
-    {/* Left gradient line */}
-    <line x1="0" y1="14" x2="120" y2="14" stroke={color} strokeWidth="1" opacity={opacity * 0.4} />
+  <svg width={width} height="40" viewBox="0 0 400 40" fill="none" preserveAspectRatio="xMidYMid meet">
+    {/* Left gradient line - BOLD */}
+    <line x1="0" y1="20" x2="110" y2="20" stroke={color} strokeWidth="2.5" opacity={opacity * 0.5} />
     
-    {/* Waning crescent */}
-    <circle cx="140" cy="14" r="6" stroke={color} strokeWidth="0.75" fill="none" opacity={opacity * 0.5} />
-    <path d="M143 14 C143 10, 140 8, 140 8 C140 8, 143 10, 143 14 C143 18, 140 20, 140 20 C140 20, 143 18, 143 14" fill={color} opacity={opacity * 0.3} />
+    {/* Waning crescent - larger, bolder */}
+    <circle cx="135" cy="20" r="10" stroke={color} strokeWidth="2" fill="none" opacity={opacity * 0.6} />
+    <path d="M140 20 C140 14, 135 10, 135 10 C135 10, 140 14, 140 20 C140 26, 135 30, 135 30 C135 30, 140 26, 140 20" fill={color} opacity={opacity * 0.4} />
     
     {/* Half moon */}
-    <circle cx="170" cy="14" r="6" stroke={color} strokeWidth="0.75" fill="none" opacity={opacity * 0.6} />
-    <path d="M170 8 A6 6 0 0 1 170 20" fill={color} opacity={opacity * 0.3} />
+    <circle cx="170" cy="20" r="10" stroke={color} strokeWidth="2" fill="none" opacity={opacity * 0.7} />
+    <path d="M170 10 A10 10 0 0 1 170 30" fill={color} opacity={opacity * 0.4} />
     
-    {/* Full moon (center) */}
-    <circle cx="200" cy="14" r="8" stroke={color} strokeWidth="1" fill="none" opacity={opacity} />
-    <circle cx="200" cy="14" r="5" stroke={color} strokeWidth="0.5" fill="none" opacity={opacity * 0.5} />
-    <circle cx="200" cy="14" r="2" fill={color} opacity={opacity * 0.4} />
+    {/* Full moon (center) - EXTRA BOLD */}
+    <circle cx="200" cy="20" r="14" stroke={color} strokeWidth="3.5" fill="none" opacity={opacity} />
+    <circle cx="200" cy="20" r="8" stroke={color} strokeWidth="2" fill="none" opacity={opacity * 0.6} />
+    <circle cx="200" cy="20" r="3" fill={color} opacity={opacity * 0.5} />
     
     {/* Half moon (waxing) */}
-    <circle cx="230" cy="14" r="6" stroke={color} strokeWidth="0.75" fill="none" opacity={opacity * 0.6} />
-    <path d="M230 8 A6 6 0 0 0 230 20" fill={color} opacity={opacity * 0.3} />
+    <circle cx="230" cy="20" r="10" stroke={color} strokeWidth="2" fill="none" opacity={opacity * 0.7} />
+    <path d="M230 10 A10 10 0 0 0 230 30" fill={color} opacity={opacity * 0.4} />
     
     {/* Waxing crescent */}
-    <circle cx="260" cy="14" r="6" stroke={color} strokeWidth="0.75" fill="none" opacity={opacity * 0.5} />
-    <path d="M257 14 C257 10, 260 8, 260 8 C260 8, 257 10, 257 14 C257 18, 260 20, 260 20 C260 20, 257 18, 257 14" fill={color} opacity={opacity * 0.3} />
+    <circle cx="265" cy="20" r="10" stroke={color} strokeWidth="2" fill="none" opacity={opacity * 0.6} />
+    <path d="M260 20 C260 14, 265 10, 265 10 C265 10, 260 14, 260 20 C260 26, 265 30, 265 30 C265 30, 260 26, 260 20" fill={color} opacity={opacity * 0.4} />
     
-    {/* Right gradient line */}
-    <line x1="280" y1="14" x2="400" y2="14" stroke={color} strokeWidth="1" opacity={opacity * 0.4} />
+    {/* Right gradient line - BOLD */}
+    <line x1="290" y1="20" x2="400" y2="20" stroke={color} strokeWidth="2.5" opacity={opacity * 0.5} />
+    
+    {/* Accent stars */}
+    <circle cx="115" cy="20" r="2" fill={color} opacity={opacity * 0.4} />
+    <circle cx="285" cy="20" r="2" fill={color} opacity={opacity * 0.4} />
   </svg>
 );
 
@@ -270,16 +273,17 @@ export const SimpleDivider = ({
   color = NOUVEAU_COLORS.antiqueGold,
   opacity = 0.6 
 }) => (
-  <svg width={width} height="12" viewBox="0 0 200 12" fill="none" preserveAspectRatio="xMidYMid meet">
-    <line x1="0" y1="6" x2="85" y2="6" stroke={color} strokeWidth="1" opacity={opacity * 0.5} />
-    <circle cx="100" cy="6" r="3" stroke={color} strokeWidth="1" fill="none" opacity={opacity} />
-    <circle cx="100" cy="6" r="1" fill={color} opacity={opacity * 0.6} />
-    <line x1="115" y1="6" x2="200" y2="6" stroke={color} strokeWidth="1" opacity={opacity * 0.5} />
+  <svg width={width} height="20" viewBox="0 0 200 20" fill="none" preserveAspectRatio="xMidYMid meet">
+    <line x1="0" y1="10" x2="80" y2="10" stroke={color} strokeWidth="2" opacity={opacity * 0.5} />
+    <circle cx="100" cy="10" r="6" stroke={color} strokeWidth="2.5" fill="none" opacity={opacity} />
+    <circle cx="100" cy="10" r="2.5" stroke={color} strokeWidth="1.5" fill="none" opacity={opacity * 0.7} />
+    <circle cx="100" cy="10" r="1" fill={color} opacity={opacity * 0.8} />
+    <line x1="120" y1="10" x2="200" y2="10" stroke={color} strokeWidth="2" opacity={opacity * 0.5} />
   </svg>
 );
 
 // ============================================================================
-// RAVEN GLYPH — Corvid silhouette, stroke-based
+// RAVEN GLYPH — BOLD, Prominent corvid silhouette
 // ============================================================================
 
 export const RavenGlyph = ({ 
@@ -288,40 +292,47 @@ export const RavenGlyph = ({
   opacity = 0.8 
 }) => (
   <svg width={size} height={size} viewBox="0 0 48 48" fill="none">
-    {/* Body outline */}
+    {/* Body outline - BOLD strokes */}
     <path 
-      d="M12 36 C8 32, 6 26, 8 20 C10 14, 16 10, 22 10 C26 10, 30 12, 32 16 L36 14 C38 13, 40 14, 40 16 L38 18 C40 20, 42 24, 40 30 C38 36, 32 40, 24 40 C18 40, 14 38, 12 36" 
+      d="M12 36 C7 31, 5 24, 7 18 C9 12, 16 8, 23 8 C28 8, 32 11, 35 16 L40 13 C43 11, 46 13, 45 16 L41 19 C44 22, 46 27, 43 34 C40 40, 32 44, 23 44 C16 44, 12 40, 12 36" 
+      stroke={color} 
+      strokeWidth="3" 
+      fill="none" 
+      opacity={opacity}
+    />
+    {/* Wing detail - visible */}
+    <path 
+      d="M15 30 C18 25, 24 22, 32 23 C35 23, 37 25, 38 28" 
+      stroke={color} 
+      strokeWidth="2" 
+      fill="none" 
+      opacity={opacity * 0.7}
+    />
+    {/* Secondary wing line */}
+    <path 
+      d="M18 34 C20 30, 26 28, 34 29" 
       stroke={color} 
       strokeWidth="1.5" 
       fill="none" 
-      opacity={opacity}
+      opacity={opacity * 0.5}
     />
-    {/* Wing detail */}
+    {/* Eye - prominent */}
+    <circle cx="32" cy="18" r="3.5" stroke={color} strokeWidth="2" fill="none" opacity={opacity} />
+    <circle cx="32" cy="18" r="1.5" fill={color} opacity={opacity * 0.9} />
+    {/* Beak - bold */}
     <path 
-      d="M16 28 C18 24, 22 22, 28 22 C30 22, 32 23, 34 25" 
+      d="M40 15 L48 13 L42 19" 
       stroke={color} 
-      strokeWidth="1" 
-      fill="none" 
-      opacity={opacity * 0.6}
-    />
-    {/* Eye */}
-    <circle cx="30" cy="18" r="2" stroke={color} strokeWidth="1" fill="none" opacity={opacity} />
-    <circle cx="30" cy="18" r="0.8" fill={color} opacity={opacity * 0.8} />
-    {/* Beak */}
-    <path 
-      d="M36 16 L42 15 L38 18" 
-      stroke={color} 
-      strokeWidth="1" 
+      strokeWidth="2.5" 
       fill="none" 
       opacity={opacity}
+      strokeLinejoin="round"
     />
-    {/* Tail feathers */}
-    <path 
-      d="M10 34 L6 38 M12 36 L10 42 M14 37 L14 43" 
-      stroke={color} 
-      strokeWidth="1" 
-      opacity={opacity * 0.7}
-    />
+    {/* Tail feathers - prominent */}
+    <path d="M9 33 L4 40" stroke={color} strokeWidth="2" opacity={opacity * 0.8} />
+    <path d="M11 36 L8 44" stroke={color} strokeWidth="2" opacity={opacity * 0.8} />
+    <path d="M14 38 L14 46" stroke={color} strokeWidth="2" opacity={opacity * 0.7} />
+    <path d="M17 39 L19 45" stroke={color} strokeWidth="1.5" opacity={opacity * 0.5} />
   </svg>
 );
 
@@ -332,20 +343,20 @@ export const RavenGlyphSmall = ({
 }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
     <path 
-      d="M6 18 C4 16, 3 13, 4 10 C5 7, 8 5, 11 5 C13 5, 15 6, 16 8 L18 7 C19 6.5, 20 7, 20 8 L19 9 C20 10, 21 12, 20 15 C19 18, 16 20, 12 20 C9 20, 7 19, 6 18" 
+      d="M6 18 C3 15, 2 12, 3 9 C4 6, 8 4, 12 4 C14 4, 16 5, 18 8 L20 6 C22 5, 23 6, 22 8 L20 10 C22 12, 23 15, 21 18 C19 21, 15 23, 11 23 C8 23, 6 21, 6 18" 
       stroke={color} 
-      strokeWidth="1.25" 
+      strokeWidth="2.5" 
       fill="none" 
       opacity={opacity}
     />
-    <circle cx="15" cy="9" r="1" stroke={color} strokeWidth="0.75" fill="none" opacity={opacity} />
-    <circle cx="15" cy="9" r="0.4" fill={color} opacity={opacity * 0.8} />
-    <path d="M5 17 L3 19 M6 18 L5 21" stroke={color} strokeWidth="0.75" opacity={opacity * 0.6} />
+    <circle cx="16" cy="9" r="2" stroke={color} strokeWidth="1.5" fill="none" opacity={opacity} />
+    <circle cx="16" cy="9" r="0.8" fill={color} opacity={opacity * 0.9} />
+    <path d="M4 17 L2 21 M6 19 L5 23 M8 20 L9 23" stroke={color} strokeWidth="1.5" opacity={opacity * 0.7} />
   </svg>
 );
 
 // ============================================================================
-// SUN & MOON DISCS — Celestial symbols
+// SUN & MOON DISCS — BOLD celestial symbols
 // ============================================================================
 
 export const SunDisc = ({ 
@@ -354,23 +365,23 @@ export const SunDisc = ({
   opacity = 0.8 
 }) => (
   <svg width={size} height={size} viewBox="0 0 48 48" fill="none">
-    {/* Outer rays */}
-    <path d="M24 4 L24 10" stroke={color} strokeWidth="1" opacity={opacity * 0.6} />
-    <path d="M24 38 L24 44" stroke={color} strokeWidth="1" opacity={opacity * 0.6} />
-    <path d="M4 24 L10 24" stroke={color} strokeWidth="1" opacity={opacity * 0.6} />
-    <path d="M38 24 L44 24" stroke={color} strokeWidth="1" opacity={opacity * 0.6} />
+    {/* Outer rays - BOLD */}
+    <path d="M24 2 L24 10" stroke={color} strokeWidth="2.5" opacity={opacity * 0.7} strokeLinecap="round" />
+    <path d="M24 38 L24 46" stroke={color} strokeWidth="2.5" opacity={opacity * 0.7} strokeLinecap="round" />
+    <path d="M2 24 L10 24" stroke={color} strokeWidth="2.5" opacity={opacity * 0.7} strokeLinecap="round" />
+    <path d="M38 24 L46 24" stroke={color} strokeWidth="2.5" opacity={opacity * 0.7} strokeLinecap="round" />
     {/* Diagonal rays */}
-    <path d="M9.9 9.9 L14 14" stroke={color} strokeWidth="1" opacity={opacity * 0.5} />
-    <path d="M34 34 L38.1 38.1" stroke={color} strokeWidth="1" opacity={opacity * 0.5} />
-    <path d="M38.1 9.9 L34 14" stroke={color} strokeWidth="1" opacity={opacity * 0.5} />
-    <path d="M14 34 L9.9 38.1" stroke={color} strokeWidth="1" opacity={opacity * 0.5} />
-    {/* Outer circle */}
-    <circle cx="24" cy="24" r="12" stroke={color} strokeWidth="1.5" fill="none" opacity={opacity} />
+    <path d="M8.5 8.5 L14 14" stroke={color} strokeWidth="2" opacity={opacity * 0.55} strokeLinecap="round" />
+    <path d="M34 34 L39.5 39.5" stroke={color} strokeWidth="2" opacity={opacity * 0.55} strokeLinecap="round" />
+    <path d="M39.5 8.5 L34 14" stroke={color} strokeWidth="2" opacity={opacity * 0.55} strokeLinecap="round" />
+    <path d="M14 34 L8.5 39.5" stroke={color} strokeWidth="2" opacity={opacity * 0.55} strokeLinecap="round" />
+    {/* Outer circle - EXTRA BOLD */}
+    <circle cx="24" cy="24" r="14" stroke={color} strokeWidth="3.5" fill="none" opacity={opacity} />
     {/* Inner circle */}
-    <circle cx="24" cy="24" r="7" stroke={color} strokeWidth="1" fill="none" opacity={opacity * 0.6} />
-    {/* Center dot */}
-    <circle cx="24" cy="24" r="2.5" stroke={color} strokeWidth="0.75" fill="none" opacity={opacity * 0.8} />
-    <circle cx="24" cy="24" r="1" fill={color} opacity={opacity * 0.5} />
+    <circle cx="24" cy="24" r="8" stroke={color} strokeWidth="2.5" fill="none" opacity={opacity * 0.7} />
+    {/* Center */}
+    <circle cx="24" cy="24" r="4" stroke={color} strokeWidth="2" fill="none" opacity={opacity * 0.85} />
+    <circle cx="24" cy="24" r="1.5" fill={color} opacity={opacity * 0.7} />
   </svg>
 );
 
@@ -381,27 +392,28 @@ export const MoonDisc = ({
 }) => (
   <svg width={size} height={size} viewBox="0 0 48 48" fill="none">
     {/* Outer halo */}
-    <circle cx="24" cy="24" r="18" stroke={color} strokeWidth="0.75" fill="none" opacity={opacity * 0.3} />
-    {/* Main crescent */}
+    <circle cx="24" cy="24" r="20" stroke={color} strokeWidth="1.5" fill="none" opacity={opacity * 0.35} />
+    {/* Main crescent - BOLD */}
     <path 
-      d="M32 24 C32 14.06, 24 8, 16 8 C20 8, 24 12, 24 24 C24 36, 20 40, 16 40 C24 40, 32 33.94, 32 24" 
+      d="M34 24 C34 12, 24 4, 14 4 C20 4, 26 10, 26 24 C26 38, 20 44, 14 44 C24 44, 34 36, 34 24" 
       stroke={color} 
-      strokeWidth="1.5" 
+      strokeWidth="3.5" 
       fill="none" 
       opacity={opacity}
     />
     {/* Inner detail arc */}
     <path 
-      d="M28 24 C28 17, 23 13, 18 13 C21 13, 24 16, 24 24 C24 32, 21 35, 18 35 C23 35, 28 31, 28 24" 
+      d="M30 24 C30 15, 23 9, 16 9 C21 9, 26 14, 26 24 C26 34, 21 39, 16 39 C23 39, 30 33, 30 24" 
       stroke={color} 
-      strokeWidth="0.75" 
+      strokeWidth="2" 
       fill="none" 
       opacity={opacity * 0.5}
     />
-    {/* Stars around moon */}
-    <circle cx="12" cy="14" r="1" fill={color} opacity={opacity * 0.4} />
-    <circle cx="10" cy="28" r="0.8" fill={color} opacity={opacity * 0.3} />
-    <circle cx="14" cy="36" r="0.6" fill={color} opacity={opacity * 0.3} />
+    {/* Stars around moon - more prominent */}
+    <circle cx="10" cy="12" r="2" stroke={color} strokeWidth="1.5" fill="none" opacity={opacity * 0.5} />
+    <circle cx="10" cy="12" r="0.8" fill={color} opacity={opacity * 0.4} />
+    <circle cx="8" cy="30" r="1.5" fill={color} opacity={opacity * 0.35} />
+    <circle cx="12" cy="40" r="1.5" fill={color} opacity={opacity * 0.35} />
   </svg>
 );
 
@@ -409,7 +421,7 @@ export const CrescentMoon = ({
   size = 32, 
   color = NOUVEAU_COLORS.antiqueGold,
   opacity = 0.8,
-  facing = 'right' // 'left' or 'right'
+  facing = 'right'
 }) => (
   <svg 
     width={size} 
@@ -419,17 +431,25 @@ export const CrescentMoon = ({
     style={{ transform: facing === 'left' ? 'scaleX(-1)' : 'none' }}
   >
     <path 
-      d="M22 16 C22 9, 16 4, 10 4 C13 4, 16 8, 16 16 C16 24, 13 28, 10 28 C16 28, 22 23, 22 16" 
+      d="M24 16 C24 7, 16 0, 8 0 C13 0, 18 6, 18 16 C18 26, 13 32, 8 32 C16 32, 24 25, 24 16" 
       stroke={color} 
-      strokeWidth="1.25" 
+      strokeWidth="3" 
       fill="none" 
       opacity={opacity}
+    />
+    {/* Inner detail */}
+    <path 
+      d="M20 16 C20 10, 15 5, 10 5 C13 5, 16 9, 16 16 C16 23, 13 27, 10 27 C15 27, 20 22, 20 16" 
+      stroke={color} 
+      strokeWidth="1.5" 
+      fill="none" 
+      opacity={opacity * 0.4}
     />
   </svg>
 );
 
 // ============================================================================
-// CELESTIAL EYE — All-seeing eye motif
+// CELESTIAL EYE — BOLD All-seeing eye motif
 // ============================================================================
 
 export const CelestialEye = ({ 
@@ -439,31 +459,41 @@ export const CelestialEye = ({
   opacity = 0.8 
 }) => (
   <svg width={size} height={size} viewBox="0 0 48 48" fill="none">
-    {/* Radiating lines */}
-    <path d="M24 6 L24 12" stroke={color} strokeWidth="0.75" opacity={opacity * 0.4} />
-    <path d="M24 36 L24 42" stroke={color} strokeWidth="0.75" opacity={opacity * 0.4} />
-    <path d="M12 12 L16 16" stroke={color} strokeWidth="0.75" opacity={opacity * 0.3} />
-    <path d="M32 32 L36 36" stroke={color} strokeWidth="0.75" opacity={opacity * 0.3} />
-    <path d="M36 12 L32 16" stroke={color} strokeWidth="0.75" opacity={opacity * 0.3} />
-    <path d="M16 32 L12 36" stroke={color} strokeWidth="0.75" opacity={opacity * 0.3} />
-    {/* Eye shape */}
+    {/* Radiating lines - BOLD */}
+    <path d="M24 4 L24 12" stroke={color} strokeWidth="2" opacity={opacity * 0.5} strokeLinecap="round" />
+    <path d="M24 36 L24 44" stroke={color} strokeWidth="2" opacity={opacity * 0.5} strokeLinecap="round" />
+    <path d="M10 10 L15 15" stroke={color} strokeWidth="1.5" opacity={opacity * 0.4} strokeLinecap="round" />
+    <path d="M33 33 L38 38" stroke={color} strokeWidth="1.5" opacity={opacity * 0.4} strokeLinecap="round" />
+    <path d="M38 10 L33 15" stroke={color} strokeWidth="1.5" opacity={opacity * 0.4} strokeLinecap="round" />
+    <path d="M15 33 L10 38" stroke={color} strokeWidth="1.5" opacity={opacity * 0.4} strokeLinecap="round" />
+    {/* Eye shape - EXTRA BOLD */}
     <path 
-      d="M6 24 Q24 10 42 24 Q24 38 6 24" 
+      d="M4 24 Q24 8 44 24 Q24 40 4 24" 
       stroke={color} 
-      strokeWidth="1.5" 
+      strokeWidth="3.5" 
       fill="none" 
       opacity={opacity}
     />
-    {/* Iris */}
-    <circle cx="24" cy="24" r="6" stroke={color} strokeWidth="1" fill="none" opacity={opacity * 0.8} />
-    {/* Pupil */}
-    <circle cx="24" cy="24" r="3" stroke={accentColor} strokeWidth="0.75" fill="none" opacity={opacity} />
-    <circle cx="24" cy="24" r="1.5" fill={color} opacity={opacity * 0.6} />
+    {/* Inner eye line */}
+    <path 
+      d="M10 24 Q24 14 38 24 Q24 34 10 24" 
+      stroke={color} 
+      strokeWidth="1.5" 
+      fill="none" 
+      opacity={opacity * 0.4}
+    />
+    {/* Iris - BOLD */}
+    <circle cx="24" cy="24" r="8" stroke={color} strokeWidth="3" fill="none" opacity={opacity * 0.9} />
+    {/* Pupil - accent color */}
+    <circle cx="24" cy="24" r="4" stroke={accentColor} strokeWidth="2.5" fill="none" opacity={opacity} />
+    <circle cx="24" cy="24" r="2" fill={color} opacity={opacity * 0.7} />
+    {/* Highlight */}
+    <circle cx="21" cy="21" r="1" fill={color} opacity={opacity * 0.4} />
   </svg>
 );
 
 // ============================================================================
-// STAR GLYPHS
+// STAR GLYPHS — BOLD
 // ============================================================================
 
 export const StarGlyph = ({ 
@@ -476,13 +506,14 @@ export const StarGlyph = ({
     return (
       <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
         <path 
-          d="M12 2 L13.5 10 L22 12 L13.5 14 L12 22 L10.5 14 L2 12 L10.5 10 Z" 
+          d="M12 1 L14 10 L23 12 L14 14 L12 23 L10 14 L1 12 L10 10 Z" 
           stroke={color} 
-          strokeWidth="1" 
+          strokeWidth="2" 
           fill="none" 
           opacity={opacity}
         />
-        <circle cx="12" cy="12" r="1.5" fill={color} opacity={opacity * 0.5} />
+        <circle cx="12" cy="12" r="2.5" stroke={color} strokeWidth="1.5" fill="none" opacity={opacity * 0.6} />
+        <circle cx="12" cy="12" r="1" fill={color} opacity={opacity * 0.7} />
       </svg>
     );
   }
@@ -490,12 +521,13 @@ export const StarGlyph = ({
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
       <path 
-        d="M12 2 L14 9 L21 9 L15.5 13 L17.5 20 L12 16 L6.5 20 L8.5 13 L3 9 L10 9 Z" 
+        d="M12 1 L14.5 9 L23 9 L16 14 L18.5 22 L12 17 L5.5 22 L8 14 L1 9 L9.5 9 Z" 
         stroke={color} 
-        strokeWidth="1" 
+        strokeWidth="2" 
         fill="none" 
         opacity={opacity}
       />
+      <circle cx="12" cy="12" r="1.5" fill={color} opacity={opacity * 0.6} />
     </svg>
   );
 };
