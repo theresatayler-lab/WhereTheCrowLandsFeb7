@@ -166,6 +166,7 @@ function App() {
           <Route path="/early-access" element={<EarlyAccessPage />} />
           <Route path="/library" element={<Library />} />
           <Route path="/invisible-helpers" element={<InvisibleHelpers />} />
+          <Route path="/design-preview" element={<DesignPreview />} />
           <Route path="/upgrade" element={<Upgrade />} />
           <Route path="/payment-success" element={<PaymentSuccess />} />
           <Route path="/about" element={<About />} />
