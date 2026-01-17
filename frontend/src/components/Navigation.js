@@ -241,11 +241,14 @@ export const Navigation = ({ user, onLogout }) => {
                   key={link.to}
                   to={link.to}
                   data-testid={`nav-${link.label.toLowerCase().replace(' ', '-')}`}
-                  className={`px-3 py-2 rounded-sm font-montserrat text-xs tracking-wider transition-all duration-300 flex items-center gap-1.5 ${
-                    isActive 
-                      ? 'text-gold bg-gold/10 border-b-2 border-gold' 
-                      : 'text-silver-mist/80 hover:text-gold hover:bg-gold/5'
-                  }`}
+                  className="px-3 py-2 font-montserrat text-xs tracking-wider transition-all duration-300 flex items-center gap-1.5"
+                  style={{
+                    color: isActive ? '#C8A44D' : 'rgba(243, 239, 232, 0.8)',
+                    backgroundColor: isActive ? 'rgba(200, 164, 77, 0.15)' : 'transparent',
+                    borderBottom: isActive ? '2px solid #C8A44D' : '2px solid transparent',
+                  }}
+                  onMouseEnter={(e) => { if (!isActive) { e.currentTarget.style.color = '#C8A44D'; e.currentTarget.style.backgroundColor = 'rgba(200, 164, 77, 0.08)'; }}}
+                  onMouseLeave={(e) => { if (!isActive) { e.currentTarget.style.color = 'rgba(243, 239, 232, 0.8)'; e.currentTarget.style.backgroundColor = 'transparent'; }}}
                 >
                   <Icon className="w-4 h-4" />
                   <span>{link.label}</span>
