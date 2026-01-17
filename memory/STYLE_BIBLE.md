@@ -1,7 +1,8 @@
-# Where The Crowlands — Style Bible v3.0
+# Where The Crowlands — Style Bible v3.1
 > *Art Nouveau • Luminous • Celestial • Occult*
+> *BOLD ORNAMENTS — Full Expressive Strength*
 
-**Version:** 3.0 (Art Nouveau Redesign)  
+**Version:** 3.1 (Bold Ornament Update)  
 **Last Updated:** December 2025
 
 ---
@@ -21,6 +22,17 @@ The visual language draws from:
 3. **Gold is stroke-only** — Linework, borders, glyphs (never flat fills)
 4. **Luminous, not distressed** — Clean, light paper grain (not heavy parchment)
 5. **Readability is sacred** — WCAG AA contrast minimum everywhere
+6. **BOLD EXPRESSION** — Ornaments are architectural, not decorative accents
+
+### Ornament Stroke Weights (BOLD)
+| Element | Stroke Width |
+|---------|-------------|
+| Primary arcs | 3-4px |
+| Secondary arcs | 2-2.5px |
+| Tertiary details | 1.5px |
+| Accent lines | 1-1.5px |
+| Divider lines | 2-2.5px |
+| Glyph outlines | 2.5-3.5px |
 
 ---
 
