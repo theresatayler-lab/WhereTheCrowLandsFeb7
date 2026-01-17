@@ -304,33 +304,33 @@ const FeatureCard = ({ icon: Icon, title, desc, tooltip }) => (
       <HaloCorner size={40} position="bottom-right" color={NOUVEAU_COLORS.antiqueGold} />
     </div>
     
-    <div className="relative p-8 sm:p-10 text-center">
+    <div className="relative p-6 sm:p-8 text-center">
       {/* Icon with halo */}
-      <div className="relative w-20 h-20 mx-auto mb-6">
+      <div className="relative w-14 h-14 mx-auto mb-4">
         <div 
           className="absolute inset-0 rounded-full opacity-30"
           style={{ 
             border: `1px solid ${NOUVEAU_COLORS.antiqueGold}`,
-            boxShadow: `0 0 20px ${NOUVEAU_COLORS.emberPink}30`,
+            boxShadow: `0 0 15px ${NOUVEAU_COLORS.emberPink}25`,
           }}
         />
         <div 
-          className="absolute inset-2 rounded-full opacity-20"
+          className="absolute inset-1.5 rounded-full opacity-20"
           style={{ border: `1px solid ${NOUVEAU_COLORS.antiqueGold}` }}
         />
         <Icon 
-          className="absolute inset-0 w-full h-full p-4 group-hover:scale-110 transition-transform" 
-          style={{ color: NOUVEAU_COLORS.emberPink, filter: `drop-shadow(0 0 15px ${NOUVEAU_COLORS.emberPink}50)` }} 
+          className="absolute inset-0 w-full h-full p-3 group-hover:scale-110 transition-transform" 
+          style={{ color: NOUVEAU_COLORS.emberPink, filter: `drop-shadow(0 0 10px ${NOUVEAU_COLORS.emberPink}40)` }} 
         />
       </div>
       
       <h3 
-        className="font-cinzel text-xl sm:text-2xl tracking-wide mb-4"
-        style={{ color: NOUVEAU_COLORS.antiqueGold, textShadow: `0 2px 10px ${NOUVEAU_COLORS.antiqueGold}30` }}
+        className="font-cinzel text-lg sm:text-xl tracking-wide mb-3"
+        style={{ color: NOUVEAU_COLORS.antiqueGold, textShadow: `0 2px 8px ${NOUVEAU_COLORS.antiqueGold}25` }}
       >
         {title}
       </h3>
-      <p className="font-crimson text-base leading-relaxed" style={{ color: `${NOUVEAU_COLORS.vellum}cc` }}>
+      <p className="font-crimson text-sm sm:text-base leading-relaxed" style={{ color: `${NOUVEAU_COLORS.vellum}cc` }}>
         {desc}
       </p>
       {tooltip && (
