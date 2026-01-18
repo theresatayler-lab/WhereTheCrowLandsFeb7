@@ -44,11 +44,13 @@ class TestMicroLoreWiring:
             "seeker_name": "Test User",
             "desired_feeling": "protected",
             "time_available": "15 minutes",
-            "setting": "living room"
+            "setting": "living room",
+            "persona_id": "shigg"
         }
         guide_config = PERSONA_CONFIG["shigg"]
+        research_packet = {"facts": [{"claim_type": "folklore", "claim": "test fact"}]}
         
-        prompt = build_planner_prompt(spell_spec, guide_config, "shigg")
+        prompt = build_planner_prompt(spell_spec, guide_config, research_packet)
         
         assert "MICRO-LORE DETAILS" in prompt, "Planner prompt missing MICRO-LORE section"
         assert "MUST include at least 2" in prompt, "Planner prompt missing micro_lore requirement"
