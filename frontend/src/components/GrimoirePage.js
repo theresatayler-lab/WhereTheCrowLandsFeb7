@@ -1178,9 +1178,9 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
         {/* Divider after working */}
         <GeneratedDivider imageBase64={generatedAssets?.divider_2} isLoading={isLoadingImages} />
 
-        {/* Spoken Words */}
+        {/* Spoken Words - CONTRAST LOCKED */}
         {spell.spoken_words && (
-          <section className={`p-6 bg-amber-900/10 border border-amber-800/40 rounded-sm`}>
+          <section className="p-6 bg-[#F3EFE8] border border-amber-600/40 rounded-sm shadow-sm">
             <SectionHeader 
               icon={Quote} 
               title="Words of Power" 
