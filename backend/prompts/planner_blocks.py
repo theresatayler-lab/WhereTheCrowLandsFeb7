@@ -129,6 +129,11 @@ TEXT_VARIATION_TOKENS = {
     "gesture_detail": [
         "pinning clockwise", "knotting three times", "tracing a circle with thumb",
         "pressing palm flat", "folding precisely", "stirring counterclockwise"
+    ],
+    "metaphor_detail": [
+        "seam-ripping a bad story", "setting a pot to simmer", "tuning a bell until it rings true",
+        "clearing ash from the grate", "mending what was torn", "sweeping the threshold clean",
+        "untangling a knot of thread", "polishing tarnished silver", "turning the page"
     ]
 }
 
