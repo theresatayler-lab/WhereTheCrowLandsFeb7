@@ -289,63 +289,61 @@ const BlockContent = ({
 
 // === INDIVIDUAL BLOCK COMPONENTS ===
 
-// Cold Open - Guide's opening narrative
+// Cold Open - Guide's opening narrative - CONTRAST LOCKED
 const ColdOpenBlock = ({ content, archetypeStyle }) => (
   <div className={cn(
-    "p-6 rounded-lg border",
-    archetypeStyle.bgAccent || "bg-muted/20",
-    archetypeStyle.borderColor || "border-border"
+    "p-6 rounded-lg border bg-[#F3EFE8] shadow-sm",
+    archetypeStyle.borderColor || "border-amber-600/30"
   )} data-testid="cold-open-block">
     {content.greeting && (
-      <p className={cn("text-lg font-cinzel mb-4 italic", archetypeStyle.accentColor || "text-foreground")}>
+      <p className="text-lg font-cinzel mb-4 italic text-amber-800">
         &ldquo;{content.greeting}&rdquo;
       </p>
     )}
     {content.scene_setting && (
-      <p className={cn("mb-3", archetypeStyle.textMuted || "text-muted-foreground")}>{content.scene_setting}</p>
+      <p className="mb-3 text-stone-600">{content.scene_setting}</p>
     )}
     {content.hook && (
-      <p className="text-foreground">{content.hook}</p>
+      <p className="text-stone-800">{content.hook}</p>
     )}
   </div>
 );
 
-// Materials Block
+// Materials Block - CONTRAST LOCKED
 const MaterialsBlock = ({ content, archetypeStyle }) => (
   <div className="space-y-3" data-testid="materials-block">
     {content.items?.map((item, i) => (
       <div key={i} className={cn(
-        "flex items-start gap-3 p-3 rounded-lg border",
-        archetypeStyle.bgAccent || "bg-muted/30",
-        archetypeStyle.borderColor ? archetypeStyle.borderColor.replace('border-', 'border-') + '/30' : "border-border/30"
+        "flex items-start gap-3 p-3 rounded-lg border bg-[#F3EFE8]",
+        archetypeStyle.borderColor ? archetypeStyle.borderColor.replace('border-', 'border-') + '/30' : "border-amber-600/30"
       )}>
-        <Feather className={cn("w-4 h-4 mt-1 flex-shrink-0", archetypeStyle.accentColor || "text-primary")} />
+        <Feather className={cn("w-4 h-4 mt-1 flex-shrink-0", archetypeStyle.accentColor || "text-amber-700")} />
         <div className="flex-1">
-          <div className="font-medium">{item.name}</div>
-          <div className={cn("text-sm", archetypeStyle.textMuted || "text-muted-foreground")}>{item.purpose}</div>
+          <div className="font-medium text-stone-800">{item.name}</div>
+          <div className="text-sm text-stone-600">{item.purpose}</div>
           {item.substitution && (
-            <div className={cn("text-xs mt-1", archetypeStyle.textMuted || "text-muted-foreground")}>
+            <div className="text-xs mt-1 text-stone-500">
               <span className="font-medium">Alternative:</span> {item.substitution}
             </div>
           )}
         </div>
         {item.optional && (
-          <span className="text-xs px-2 py-0.5 bg-muted rounded">optional</span>
+          <span className="text-xs px-2 py-0.5 bg-stone-200 text-stone-600 rounded">optional</span>
         )}
       </div>
     ))}
     {content.gathering_note && (
-      <p className={cn("text-sm italic mt-4", archetypeStyle.textMuted || "text-muted-foreground")}>
+      <p className="text-sm italic mt-4 text-stone-600">
         &ldquo;{content.gathering_note}&rdquo;
       </p>
     )}
   </div>
 );
 
-// Choice Block - Interactive decision point
+// Choice Block - Interactive decision point - CONTRAST LOCKED
 const ChoiceBlock = ({ content, selectedChoice, onSelect, archetypeStyle }) => (
   <div className="space-y-4" data-testid="choice-block">
-    <p className={cn("text-lg font-medium font-cinzel", archetypeStyle.accentColor || "text-foreground")}>
+    <p className={cn("text-lg font-medium font-cinzel text-stone-800")}>
       {content.prompt}
     </p>
     
@@ -355,23 +353,23 @@ const ChoiceBlock = ({ content, selectedChoice, onSelect, archetypeStyle }) => (
           key={option.id}
           onClick={() => onSelect(option.id)}
           className={cn(
-            "p-4 rounded-lg border-2 text-left transition-all",
+            "p-4 rounded-lg border-2 text-left transition-all bg-[#F3EFE8]",
             selectedChoice === option.id
-              ? cn(archetypeStyle.borderColor || "border-primary", archetypeStyle.bgAccent || "bg-primary/10")
-              : "border-slate-700 hover:border-slate-500 bg-slate-900/50"
+              ? cn(archetypeStyle.borderColor || "border-amber-600", "bg-[#EDE8DF]")
+              : "border-stone-300 hover:border-stone-400"
           )}
         >
           <div className="flex items-center gap-3">
             {selectedChoice === option.id ? (
-              <Check className={cn("w-5 h-5", archetypeStyle.accentColor || "text-primary")} />
+              <Check className={cn("w-5 h-5", archetypeStyle.accentColor || "text-amber-700")} />
             ) : (
-              <Circle className="w-5 h-5 text-slate-500" />
+              <Circle className="w-5 h-5 text-stone-400" />
             )}
             <div>
-              <div className="font-medium">{option.label}</div>
-              <div className={cn("text-sm", archetypeStyle.textMuted || "text-muted-foreground")}>{option.description}</div>
+              <div className="font-medium text-stone-800">{option.label}</div>
+              <div className="text-sm text-stone-600">{option.description}</div>
               {option.affects && (
-                <div className={cn("text-xs mt-1 italic", archetypeStyle.textMuted || "text-muted-foreground")}>{option.affects}</div>
+                <div className="text-xs mt-1 italic text-stone-500">{option.affects}</div>
               )}
             </div>
           </div>
