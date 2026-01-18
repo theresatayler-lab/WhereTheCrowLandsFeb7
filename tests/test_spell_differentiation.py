@@ -636,6 +636,13 @@ if __name__ == "__main__":
     t7.test_text_tokens_vary_across_runs()
     t7.test_micro_lore_varies_across_runs()
     
+    # Tarot composition tracking tests
+    print("\n--- TAROT COMPOSITION TRACKING ---")
+    t7b = TestTarotCompositionTracking()
+    t7b.test_compositions_defined_for_all_guides()
+    t7b.test_no_immediate_repeats_in_session()
+    t7b.test_reset_after_exhaustion()
+    
     # Cross-contamination tests
     print("\n--- CROSS-CONTAMINATION ---")
     t8 = TestCrossContamination()
