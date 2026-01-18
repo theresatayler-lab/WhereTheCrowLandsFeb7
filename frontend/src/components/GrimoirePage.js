@@ -1108,10 +1108,11 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
               {/* Support both old 'steps' format and new 'the_working.steps' format */}
               {(spell.the_working?.steps || spell.steps || []).map((step, idx) => {
                 const stepNum = step.step || step.number || idx + 1;
+                const stepsArray = spell.the_working?.steps || spell.steps || [];
                 return (
                   <motion.div 
                     key={stepNum}
-                    className={`relative pl-12 pb-4 ${stepNum < (spell.the_working?.steps || spell.steps).length ? 'border-l-2 border-amber-800/30 ml-4' : 'ml-4'}`}
+                    className={`relative pl-12 pb-4 ${stepNum < stepsArray.length ? 'border-l-2 border-amber-800/30 ml-4' : 'ml-4'}`}
                   >
                     {/* Step number circle */}
                     <div 
