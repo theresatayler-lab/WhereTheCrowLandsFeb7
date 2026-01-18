@@ -231,6 +231,14 @@ Specialty blocks for this guide: {', '.join(template['specialty_blocks'])}
 - setting_detail: {text_tokens['setting_detail']}
 - sensory_detail: {text_tokens['sensory_detail']}
 
+## MICRO-LORE DETAILS (MUST include at least 2 in the spell)
+These are lived details unique to {guide_config.get('name', 'Guide')}. Weave them naturally into cold_open or lore_vignette:
+{chr(10).join('- ' + ml for ml in micro_lore_selected) if micro_lore_selected else '- (none available)'}
+
+## TABOO THEMES/IMAGERY (DO NOT include)
+{guide_config.get('name', 'Guide')} would NEVER include these themes or imagery:
+{chr(10).join('- ' + t for t in taboos) if taboos else '- (none specified)'}
+
 ## OUTPUT FORMAT
 Return ONLY this JSON:
 
