@@ -11,6 +11,54 @@ Build "Where The Crowlands," a sophisticated full-stack application for creating
 
 ## What's Been Implemented
 
+### Session: January 2026 - V1.2 Spell Differentiation System ✅
+- **Micro-lore Wiring** — Each guide now has 10 lived details woven into spells
+  - Planner selects 2-3 micro_lore items per spell
+  - Writer must include at least 2 in cold_open or lore_vignette
+  - Validated post-generation
+  
+- **Taboos Enforcement** — Each guide has forbidden themes/imagery
+  - Taboos injected into Writer prompt as "DO NOT" list
+  - Post-generation validator checks for taboo keyword violations
+  - Cross-contamination tests prevent guide bleed
+  
+- **Text Variation Tokens** — Spells vary run-to-run
+  - setting_detail, sensory_detail, gesture_detail, metaphor_detail
+  - Randomly selected per spell for uniqueness
+  
+- **Tarot Composition Tracking** — Session-level repeat prevention
+  - 6 compositions per guide
+  - Tracks used compositions per session
+  - Auto-resets after exhaustion
+  
+- **Surprise Me Routing** — Backend guide selection
+  - Keyword-based routing (protection→Cathleen, pattern→Katherine, domestic→Shigg)
+  - Feeling-based fallback routing
+  - Routing reasons logged and returned to frontend
+  
+- **JSON Repair + Fallback System** — P0 reliability fix
+  - Single LLM repair pass on JSON parse failure
+  - Graceful fallback spell if repair fails
+  - No more UI-breaking JSON errors
+  
+- **Guide-Specific Block Enforcement** — Shigg now requires journal_prompt + bird_oracle
+  - Validation errors trigger QA rewrite
+  - Each guide has required specialty blocks
+  
+- **Parliament Crow Avatar** — Brand identity
+  - User avatars now show crow image
+  - Crow watermark added to spell pages
+  
+- **Save Ward Feature** — Wards can be saved to grimoire
+  - Save button on Cathleen's suggested wards
+  - Saved to user's grimoire collection
+
+- **Test Suite** — `/app/tests/test_spell_differentiation.py`
+  - 22 tests covering all differentiation features
+  - Cache/seed regression tests
+  - Cross-contamination tests
+  - Taboo keyword enforcement tests
+
 ### Session: December 2025 - Art Nouveau Visual Redesign ✅
 - **Complete Visual System Overhaul** — Luminous Art Nouveau aesthetic
   - New color palette: Midnight Teal (#0E2A2F), Celestial Blue (#123A3F), Vellum (#F3EFE8), Antique Gold (#C8A44D), Ember Pink (#B94E6A)
