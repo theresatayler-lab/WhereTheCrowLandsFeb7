@@ -189,14 +189,16 @@ Build "Where The Crowlands," a sophisticated full-stack application for creating
 - [x] Timeline images - 79 events with Unsplash images (COMPLETED Jan 13, 2026)
 - [x] Production Prompt Pack V2 - 4-stage pipeline (COMPLETED Dec 2025)
 - [x] Visual Consistency Across Personas - Distinct color palettes for all 4 guides (COMPLETED Jan 13, 2026)
-- [ ] Visual Polish & Ornament Library (20 corners, 12 dividers, 24 glyphs) - BLOCKED: awaiting user assets
+- [x] Atmospheric Background Images - Site-wide cream sections (COMPLETED Jan 18, 2026)
+- [x] Old Spell Compatibility Fix (COMPLETED Jan 18, 2026)
+- [ ] Visual Polish & Custom Ornaments - BLOCKED: awaiting user assets
 
 ### P1 - Medium Priority
-- [ ] Network View - Force-directed graph visualization (d3.js)
-- [ ] Back-compatibility for old spell references
-- [ ] Theresa archetype enrichment
-- [ ] Fix linting errors in server.py
-- [ ] Migrate frontend to use V2 spell generation endpoint
+- [ ] PDF generation for "companion intentions"
+- [ ] Network View - Force-directed graph for timeline (d3.js)
+- [ ] Stripe Paid Flow - BLOCKED: needs valid test key (`sk_test_...`)
+- [ ] Session Persistence Verification - awaiting user testing
+- [ ] Remaining Linting Errors (CorrieTarot.js, etc.)
 
 ### P2 - Future
 - [ ] Re-enable Early Access Gate
