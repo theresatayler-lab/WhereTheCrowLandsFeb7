@@ -17,7 +17,8 @@ export const OnboardingModal = ({ onComplete, onSelectArchetype }) => {
     // Check if user has completed onboarding
     const hasCompletedOnboarding = localStorage.getItem(ONBOARDING_KEY);
     if (!hasCompletedOnboarding) {
-      setIsOpen(true);
+      // Use a microtask to avoid synchronous state update during effect
+      queueMicrotask(() => setIsOpen(true));
     } else {
       // Load saved archetype
       const savedArchetype = localStorage.getItem(ARCHETYPE_KEY);
