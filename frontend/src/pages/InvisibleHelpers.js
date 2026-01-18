@@ -465,10 +465,6 @@ export const InvisibleHelpers = () => {
       <DarkSection 
         className="py-10 sm:py-12 md:py-14 px-4 sm:px-6" 
         variant="warm"
-        atmosphericImage={ATMOSPHERIC_IMAGES.maiden}
-        atmosphericOpacity={0.06}
-        atmosphericPosition="center top"
-        atmosphericTint="teal"
       >
         {/* Corner flourishes */}
         <CornerFlourish position="top-left" className="absolute top-4 left-4 w-14 h-14 sm:w-18 sm:h-18" />
@@ -515,10 +511,6 @@ export const InvisibleHelpers = () => {
       {step === 'form' && (
         <LightSection 
           className="py-4 sm:py-5 px-4 sm:px-6"
-          atmosphericImage={ATMOSPHERIC_IMAGES.florals}
-          atmosphericOpacity={0.035}
-          atmosphericPosition="right bottom"
-          atmosphericTint="sepia"
         >
           <div className="max-w-3xl mx-auto">
             <LightOrnateCard hover={false}>
@@ -623,10 +615,10 @@ export const InvisibleHelpers = () => {
       {/* ================================================================ */}
       <LightSection 
         className="py-4 sm:py-6 px-4 sm:px-6"
-        atmosphericImage={ATMOSPHERIC_IMAGES.peonies}
-        atmosphericOpacity={0.03}
-        atmosphericPosition="left center"
-        atmosphericTint="cream"
+        atmosphericImage={ATMOSPHERIC_IMAGES.maiden}
+        atmosphericOpacity={0.07}
+        atmosphericPosition="right center"
+        atmosphericTint="sepia"
       >
         <div className="max-w-2xl mx-auto">
           
@@ -1038,13 +1030,7 @@ export const InvisibleHelpers = () => {
       {/* ================================================================ */}
       {/* FOOTER */}
       {/* ================================================================ */}
-      <DarkSection 
-        className="py-8 px-4"
-        atmosphericImage={ATMOSPHERIC_IMAGES.florals}
-        atmosphericOpacity={0.04}
-        atmosphericPosition="center"
-        atmosphericTint="gold"
-      >
+      <DarkSection className="py-8 px-4">
         <div className="max-w-xl mx-auto text-center">
           <p className="font-crimson text-base text-silver-mist/80 italic">
             Inner work does not replace resistance.
