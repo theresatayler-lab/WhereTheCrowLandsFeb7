@@ -782,14 +782,6 @@ export const SpellRequest = () => {
           </LightOrnateCard>
           
           <MysticalDivider light />
-          
-          {/* SpellSpec Preview (for debugging - can be removed) */}
-          <details className="mt-4">
-            <summary className="font-montserrat text-xs text-navy-dark/40 cursor-pointer">View SpellSpec</summary>
-            <pre className="mt-2 p-3 bg-navy-dark/5 rounded text-xs overflow-auto">
-              {JSON.stringify(spellSpec, null, 2)}
-            </pre>
-          </details>
         </div>
       </LightSection>
 
