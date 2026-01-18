@@ -11,7 +11,7 @@ from datetime import datetime
 
 def test_spell_generation():
     """Test the Enhanced Spell Generation System"""
-    base_url = "https://diy-ritual-guide.preview.emergentagent.com"
+    base_url = "https://spellcraft-ai.preview.emergentagent.com"
     
     print("🧙‍♀️ Testing Enhanced Spell Generation System")
     print("=" * 60)
