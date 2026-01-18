@@ -70,6 +70,22 @@ Address style: {contract['voice']['address_style']}
 NEVER say:
 {chr(10).join('- ' + p for p in contract['voice']['never_says'])}
 
+## FORBIDDEN THEMES/IMAGERY (TABOOS)
+Do NOT include any of these themes or visual motifs - they are wrong for this guide:
+{chr(10).join('- ' + t for t in taboos) if taboos else '- (none specified)'}
+If the seeker explicitly asks for something taboo, gently reframe to an allowed analogue.
+
+## MICRO-LORE DETAILS (MUST INCLUDE)
+You MUST weave at least TWO of these lived details into your spell (in cold_open or lore_vignette):
+{chr(10).join('- "' + ml + '"' for ml in micro_lore_selected) if micro_lore_selected else '- (none specified)'}
+These are authentic details that make your voice unique. Include them naturally, not forced.
+
+## TEXT VARIATION TOKENS (USE THESE)
+Incorporate these specific details to make this spell unique:
+- Setting: {text_tokens.get('setting_detail', 'quiet corner')}
+- Sensory: {text_tokens.get('sensory_detail', 'warmth')}
+- Gesture: {text_tokens.get('gesture_detail', 'gentle motion')}
+
 ## SEEKER CONTEXT
 Name: {spell_spec.get('user_name', 'Seeker')}
 Query: "{spell_spec.get('user_query', '')}"
