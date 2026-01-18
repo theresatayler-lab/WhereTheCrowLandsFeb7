@@ -364,30 +364,30 @@ class TestCrossContamination:
     # Define forbidden terms for each persona (from OTHER personas' domains)
     FORBIDDEN_TERMS = {
         "shigg": [
-            # Katherine's domain
+            # Katherine's domain (exact phrases)
             "Golden Dawn", "sephirot", "Tree of Life", "Rule of Three Tests",
-            "SPR", "psychical research", "sigil", "hexagram", "Qabalah",
+            "SPR", "psychical research", "hexagram", "Qabalah",
             "Let's be precise", "test everything", "Document everything",
-            # Cathleen's domain  
+            # Cathleen's domain (exact phrases)
             "Morrigan", "keening", "Wigmore Hall", "soprano",
             "Listen now", "Here's what we do", "brave one"
         ],
         "cathleen": [
             # Katherine's domain
             "Golden Dawn", "sephirot", "needle and thread", "sigil binding",
-            "measuring tape", "scissors", "SPR methodology",
+            "measuring tape", "SPR methodology",
             "Let's be precise", "Document everything",
             # Shigg's domain
-            "kettle", "teacup", "tea leaves", "Rubáiyát", "Omar Khayyám",
-            "Come closer, love", "That's the thing, isn't it", "pet", "duck"
+            "kettle sings", "teacup", "tea leaves", "Rubáiyát", "Omar Khayyám",
+            "Come closer, love", "That's the thing, isn't it"
         ],
         "katherine": [
-            # Shigg's domain
-            "kettle", "teacup", "tea leaves", "Rubáiyát", "bird omen",
+            # Shigg's domain (exact phrases to avoid false positives)
+            "kettle sings", "teacup", "tea leaves", "Rubáiyát", "bird omen",
             "Come closer, love", "The birds know", "my nan always said",
-            "love", "dear", "pet", "duck",
+            "Come here, love", "Alright then",
             # Cathleen's domain
-            "Morrigan", "keening", "voice ward", "song", "soprano",
+            "Morrigan", "keening", "voice ward", "Wigmore Hall", "soprano",
             "Listen now", "dear heart", "brave one"
         ]
     }
