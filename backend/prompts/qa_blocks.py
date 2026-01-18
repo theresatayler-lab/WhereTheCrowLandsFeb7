@@ -107,6 +107,9 @@ def run_qa_blocks_validation(
     # 10. Guide voice check
     _check_guide_voice(spell_output, guide_id, report)
     
+    # 11. Taboo keyword check (V1.2)
+    _check_taboo_keywords(spell_output, guide_id, report)
+    
     # === DETERMINE VERDICT ===
     critical_count = sum(1 for v in report["violations"] if v["severity"] == "CRITICAL")
     high_count = sum(1 for v in report["violations"] if v["severity"] == "HIGH")
