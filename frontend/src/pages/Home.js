@@ -509,7 +509,7 @@ export const Home = () => {
               style={{ color: NOUVEAU_COLORS.midnightTeal }}
             >
               <p>
-                The magic we've abandoned isn't "woo woo"—it's intention, craft, commitment, and ritual. 
+                The magic we&apos;ve abandoned isn&apos;t &quot;woo woo&quot;—it&apos;s intention, craft, commitment, and ritual. 
                 Whether our ancestors named it or not, that power is still yours to work with. Inspired by 
                 real people—my family—and grounded in plenty of creative lore and imagination, Where the 
                 Crowlands offers a fun, practical way to bring alchemy, magic, and beauty into your life.
@@ -525,7 +525,7 @@ export const Home = () => {
               >
                 <p style={{ color: NOUVEAU_COLORS.midnightTeal }}>
                   While rooted primarily in British history and mysticism, we plan to expand, honouring all 
-                  cultures—every tradition has drawn from what lies beneath the veil. It's time to bring a 
+                  cultures—every tradition has drawn from what lies beneath the veil. It&apos;s time to bring a 
                   little magic back.
                 </p>
               </div>
