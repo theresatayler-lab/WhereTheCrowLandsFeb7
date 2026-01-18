@@ -6,7 +6,7 @@ import { ARCHETYPES, getArchetypeById } from '../data/archetypes';
 import { setCurrentArchetype, getCurrentArchetype } from '../components/OnboardingModal';
 import { Feather, BookOpen, Sparkles, Heart, ArrowRight, Check, Hand, Users, ChevronDown, ChevronUp } from 'lucide-react';
 import { toast } from 'sonner';
-import { DarkSection, LightSection, GrandDivider, MysticalDivider, ElaborateCorner, PageHeader, PageDivider, BestiaryGlyph } from '../components/OrnateElements';
+import { DarkSection, LightSection, GrandDivider, MysticalDivider, ElaborateCorner, PageHeader, PageDivider, BestiaryGlyph, ATMOSPHERIC_IMAGES } from '../components/OrnateElements';
 
 // Glyph mapping per guide
 const GUIDE_GLYPHS = {

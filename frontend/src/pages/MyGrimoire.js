@@ -5,7 +5,7 @@ import { grimoireAPI } from '../utils/api';
 import { GrimoirePage } from '../components/GrimoirePage';
 import { GrimoireDownloader } from '../components/GrimoireDownloader';
 import { toast } from 'sonner';
-import { DarkSection, LightSection, GrandDivider, MysticalDivider, PageBorderFrame, PageHeader, LightOrnateCard, OrnateCard, PageDivider, BestiaryGlyph } from '../components/OrnateElements';
+import { DarkSection, LightSection, GrandDivider, MysticalDivider, PageBorderFrame, PageHeader, LightOrnateCard, OrnateCard, PageDivider, BestiaryGlyph, ATMOSPHERIC_IMAGES } from '../components/OrnateElements';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
