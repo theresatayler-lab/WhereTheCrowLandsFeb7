@@ -378,14 +378,14 @@ const ChoiceBlock = ({ content, selectedChoice, onSelect, archetypeStyle }) => (
     </div>
     
     {content.consequence_hint && (
-      <p className={cn("text-sm italic", archetypeStyle.textMuted || "text-muted-foreground")}>
+      <p className="text-sm italic text-stone-600">
         &ldquo;{content.consequence_hint}&rdquo;
       </p>
     )}
   </div>
 );
 
-// Stepper Block - Interactive step-by-step with checkboxes
+// Stepper Block - Interactive step-by-step with checkboxes - CONTRAST LOCKED
 const StepperBlock = ({ content, progress = new Set(), onComplete, archetypeStyle }) => (
   <div className="space-y-4" data-testid="stepper-block">
     {content.steps?.map((step, index) => {
@@ -395,10 +395,10 @@ const StepperBlock = ({ content, progress = new Set(), onComplete, archetypeStyl
         <div 
           key={index}
           className={cn(
-            "p-4 rounded-lg border transition-all",
+            "p-4 rounded-lg border transition-all bg-[#F3EFE8]",
             isComplete 
-              ? cn(archetypeStyle.bgAccent || "bg-primary/5", archetypeStyle.borderColor || "border-primary/30")
-              : "border-slate-700 bg-slate-900/30"
+              ? cn(archetypeStyle.borderColor || "border-amber-600", "bg-[#EDE8DF]")
+              : "border-stone-300"
           )}
         >
           <div className="flex items-start gap-3">
@@ -407,8 +407,8 @@ const StepperBlock = ({ content, progress = new Set(), onComplete, archetypeStyl
               className={cn(
                 "mt-1 w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all flex-shrink-0",
                 isComplete 
-                  ? cn(archetypeStyle.bgAccent || "bg-primary", archetypeStyle.borderColor || "border-primary", "text-white")
-                  : "border-slate-500 hover:border-slate-400"
+                  ? "bg-amber-600 border-amber-600 text-white"
+                  : "border-stone-400 hover:border-stone-500 bg-white"
               )}
               data-testid={`step-checkbox-${index}`}
             >
@@ -418,36 +418,30 @@ const StepperBlock = ({ content, progress = new Set(), onComplete, archetypeStyl
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-2">
                 <span className={cn(
-                  "text-xs font-medium px-2 py-0.5 rounded font-cinzel",
-                  archetypeStyle.bgAccent || "bg-muted",
-                  archetypeStyle.accentColor || "text-foreground"
+                  "text-xs font-medium px-2 py-0.5 rounded font-cinzel bg-stone-200 text-stone-700"
                 )}>
                   Step {step.step_number}
                 </span>
                 {step.duration_hint && (
-                  <span className={cn("text-xs flex items-center gap-1", archetypeStyle.textMuted || "text-muted-foreground")}>
+                  <span className="text-xs flex items-center gap-1 text-stone-500">
                     <Clock className="w-3 h-3" /> {step.duration_hint}
                   </span>
                 )}
               </div>
               
-              <p className={cn("mb-2", isComplete && "line-through opacity-60")}>
+              <p className={cn("mb-2 text-stone-800", isComplete && "line-through opacity-60")}>
                 {step.action}
               </p>
               
               {step.spoken_words && (
-                <div className={cn(
-                  "p-3 rounded-lg mb-2 italic text-sm border",
-                  archetypeStyle.bgAccent || "bg-muted/50",
-                  archetypeStyle.borderColor ? archetypeStyle.borderColor.replace('border-', 'border-') + '/20' : "border-border/20"
-                )}>
-                  <Quote className={cn("w-4 h-4 inline mr-2 opacity-50", archetypeStyle.accentColor)} />
-                  &ldquo;{step.spoken_words}&rdquo;
+                <div className="p-3 rounded-lg mb-2 italic text-sm border bg-white border-amber-200">
+                  <Quote className="w-4 h-4 inline mr-2 opacity-50 text-amber-600" />
+                  <span className="text-stone-700">&ldquo;{step.spoken_words}&rdquo;</span>
                 </div>
               )}
               
               {step.why && (
-                <div className={cn("text-sm", archetypeStyle.textMuted || "text-muted-foreground")}>
+                <div className="text-sm text-stone-600">
                   <span className="font-medium">Why:</span> {step.why}
                 </div>
               )}
@@ -461,23 +455,23 @@ const StepperBlock = ({ content, progress = new Set(), onComplete, archetypeStyl
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        className={cn("p-4 rounded-lg text-center border", archetypeStyle.bgAccent || "bg-primary/10", archetypeStyle.borderColor || "border-primary/30")}
+        className="p-4 rounded-lg text-center border bg-[#EDE8DF] border-amber-500"
       >
-        <Check className="w-6 h-6 mx-auto mb-2 text-primary" />
-        <p className="font-cinzel">{content.completion_message}</p>
+        <Check className="w-6 h-6 mx-auto mb-2 text-amber-600" />
+        <p className="font-cinzel text-stone-800">{content.completion_message}</p>
       </motion.div>
     )}
   </div>
 );
 
-// Lore Vignette Block - Historical/folkloric story
+// Lore Vignette Block - Historical/folkloric story - CONTRAST LOCKED
 const LoreVignetteBlock = ({ content, archetypeStyle }) => (
   <div className="space-y-4" data-testid="lore-vignette-block">
     {content.title && (
-      <h4 className={cn("font-cinzel text-lg", archetypeStyle.accentColor || "text-foreground")}>{content.title}</h4>
+      <h4 className="font-cinzel text-lg text-stone-800">{content.title}</h4>
     )}
     
-    <div className={cn("flex items-center gap-4 text-xs", archetypeStyle.textMuted || "text-muted-foreground")}>
+    <div className="flex items-center gap-4 text-xs text-stone-500">>
       {content.era && <span>{content.era}</span>}
       {content.tradition && <span>• {content.tradition}</span>}
     </div>
