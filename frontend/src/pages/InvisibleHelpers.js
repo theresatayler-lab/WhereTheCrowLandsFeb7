@@ -616,7 +616,7 @@ export const InvisibleHelpers = () => {
       <LightSection 
         className="py-4 sm:py-6 px-4 sm:px-6"
         atmosphericImage={ATMOSPHERIC_IMAGES.maiden}
-        atmosphericOpacity={0.07}
+        atmosphericOpacity={0.10}
         atmosphericPosition="right center"
         atmosphericTint="sepia"
       >
