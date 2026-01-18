@@ -118,6 +118,29 @@ Build "Where The Crowlands," a sophisticated full-stack application for creating
 - **DeepSeek Research Pipeline V3 Enhancement**
 - **Navigation scroll-to-top behavior**
 
+### Session: January 18, 2026
+- **Atmospheric Background Images** ✅
+  - Added subtle, sepia-tinted Art Nouveau background images to cream sections site-wide
+  - Created reusable `AtmosphericBackground` component in `OrnateElements.js`
+  - Three images rotating across pages:
+    - **Maiden** (Art Nouveau woman portrait): Invisible Helpers, Ward Finder, Corrie Tarot, Privacy
+    - **Florals** (lilies with golden sun): About, Spell Request, Auth, AI Chat, Upgrade
+    - **Peonies** (botanical with gold frames): Guides, FAQ, AI Image, Profile
+  - Settings: 10% opacity, sepia tint, multiply blend mode
+  - One image per page, cream sections only (dark sections remain clean)
+  - Configurable via props: `atmosphericImage`, `atmosphericOpacity`, `atmosphericPosition`, `atmosphericTint`
+
+- **Old Spell Compatibility Fix** ✅
+  - Fixed rendering crash in `GrimoirePage.js` for legacy spell formats
+  - Added fallback: `spell.the_working?.steps || spell.steps || []`
+
+- **Major Linting Cleanup** ✅
+  - Fixed all errors in `backend/server.py`
+  - Fixed errors in `Home.js`, `InvisibleHelpers.js`, `PaymentSuccess.js`, `OnboardingModal.js`
+
+- **Timeline Content Addition** ✅
+  - Added "Night Witches" entry to timeline (now 80 total events)
+
 ### Previous Sessions
 - Dual-AI research pipeline (DeepSeek + OpenAI)
 - Four ancestral guides: Shigg, Cathleen, Katherine, Theresa
