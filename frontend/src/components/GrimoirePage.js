@@ -1077,13 +1077,13 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                 return (
                   <div 
                     key={idx}
-                    className="flex items-start gap-3 p-3 bg-amber-900/10 border border-amber-800/30 rounded-sm"
+                    className="flex items-start gap-3 p-3 bg-[#F3EFE8] border border-amber-600/30 rounded-sm shadow-sm"
                   >
-                    <div className={`p-2 bg-amber-800/20 rounded-sm`}>
+                    <div className="p-2 bg-amber-100 border border-amber-300 rounded-sm">
                       {material.icon ? (
                         <span className="text-lg">{material.icon}</span>
                       ) : (
-                        <IconComponent className={`w-5 h-5 text-amber-800`} />
+                        <IconComponent className="w-5 h-5 text-amber-700" />
                       )}
                     </div>
                     <div>
