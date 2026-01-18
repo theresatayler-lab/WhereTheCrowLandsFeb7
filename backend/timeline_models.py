@@ -24,6 +24,7 @@ class TaxonomyCategory(str, Enum):
     VISIONARY = "visionary"  # 11: Visionary/Psychedelic/Esoteric Fantastic Art
     CHAOS_MAGIC = "chaos_magic"  # 12: Chaos Magic, Sigil Culture & Modern Occult Design
     POP_CULTURE = "pop_culture"  # 13: Witch Archetype in Pop Culture
+    POLITICAL_ACTIVISM = "political_activism"  # 14: Protest, Political Action & Social Change
 
 # Full taxonomy data from master chart - expanded with all details
 TAXONOMY_DATA = {
