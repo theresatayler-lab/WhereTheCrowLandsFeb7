@@ -548,7 +548,7 @@ export const InvisibleHelpers = () => {
                     <div className="prose prose-slate max-w-none text-sm">
                       <h3 className="font-cinzel text-crimson text-base mb-3">About Where The Crowlands</h3>
                       <p className="text-navy-dark/70 leading-relaxed mb-4 font-crimson">
-                        We're building <span className="text-navy-dark font-medium">Where The Crowlands</span> as 
+                        We&apos;re building <span className="text-navy-dark font-medium">Where The Crowlands</span> as 
                         a portal to a world where magic is practical, ethical, and a little bit fun. A place 
                         where AI-guided rituals meet family folklore, where you can explore the history of 
                         magical practice while crafting your own. Think of it as your digital grimoire—part 
@@ -569,7 +569,7 @@ export const InvisibleHelpers = () => {
                       <h3 className="font-cinzel text-crimson text-base mb-3">What This Intention Does</h3>
                       <p className="text-navy-dark/70 leading-relaxed mb-4 font-crimson">
                         This is a <span className="text-navy-dark font-medium">Neutralizing Return to Source via Higher Law</span>. 
-                        It doesn't curse. It doesn't attack. It returns misused power—distortion, 
+                        It doesn&apos;t curse. It doesn&apos;t attack. It returns misused power—distortion, 
                         coercion, dehumanization—to the impersonal law that governs consequence. Think of it 
                         as redirecting energy back to where it came from, transmuted into accountability 
                         rather than harm.
@@ -584,7 +584,7 @@ export const InvisibleHelpers = () => {
 
                       <BorderFrame variant="crimson" className="bg-crimson/5">
                         <p className="text-crimson/80 text-sm italic m-0 font-crimson">
-                          "Inner work does not replace resistance. It steadies those who resist."
+                          &quot;Inner work does not replace resistance. It steadies those who resist.&quot;
                         </p>
                       </BorderFrame>
                     </div>
