@@ -801,11 +801,11 @@ export const InvisibleHelpers = () => {
                     {/* ORIGINAL COPY */}
                     <div className="text-navy-dark/80 text-sm font-crimson space-y-3 text-left max-w-md mx-auto">
                       <p>
-                        This portal is offered freely. If you're able, consider a pay-what-you-choose contribution.
+                        This portal is offered freely. If you&apos;re able, consider a pay-what-you-choose contribution.
                       </p>
                       <p>
                         Each spell costs the witchy woman behind the veil approximately <span className="text-crimson font-semibold">$0.02–0.05</span> in 
-                        AI generation costs, and she's building this whole thing as we speak.
+                        AI generation costs, and she&apos;s building this whole thing as we speak.
                       </p>
                       <p className="text-navy-dark/60">
                         Please continue to your spell with or without a donation!
