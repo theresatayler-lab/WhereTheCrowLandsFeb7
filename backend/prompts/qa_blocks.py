@@ -365,3 +365,41 @@ def _build_rewrite_instructions(violations: list) -> str:
         instructions.append(f"[HIGH] {v['check']}: {v['fix_instruction']}")
     
     return "\n".join(instructions)
+
+
+def _check_taboo_keywords(spell: dict, guide_id: str, report: dict):
+    """
+    V1.2: Check for taboo keyword violations.
+    This catches when AI output contains themes/terms forbidden for this guide.
+    """
+    keywords_map = TABOO_KEYWORDS_MAP.get(guide_id, {})
+    if not keywords_map:
+        report["checks_passed"].append("taboo_keywords")
+        return
+    
+    text = _extract_all_text(spell).lower()
+    violations_found = []
+    
+    for taboo_theme, keywords in keywords_map.items():
+        for keyword in keywords:
+            if keyword.lower() in text:
+                violations_found.append({
+                    "theme": taboo_theme,
+                    "keyword": keyword
+                })
+    
+    if violations_found:
+        # Group by theme for cleaner reporting
+        themes_violated = list(set(v["theme"] for v in violations_found))
+        keywords_violated = [v["keyword"] for v in violations_found]
+        
+        report["violations"].append({
+            "check": "taboo_keywords",
+            "severity": "HIGH",
+            "issue": f"Contains taboo content for {guide_id}: {themes_violated[:2]}",
+            "details": violations_found,
+            "fix_instruction": f"Remove or reframe these terms: {keywords_violated[:5]}. Rewrite using {guide_id}'s authentic voice and tools."
+        })
+        report["checks_failed"].append(f"taboo_keywords: {len(violations_found)} violations")
+    else:
+        report["checks_passed"].append("taboo_keywords")
