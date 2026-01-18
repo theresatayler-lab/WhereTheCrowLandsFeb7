@@ -1,0 +1,11 @@
+{
+  "started_at": "2026-01-18T02:15:35.326998+00:00",
+  "dry_run": true,
+  "spells_processed": 0,
+  "spells_updated": 0,
+  "spells_skipped": 0,
+  "sparse_content_flags": [],
+  "failures": [],
+  "updated_ids": [],
+  "completed_at": "2026-01-18T02:15:35.334963+00:00"
+}
