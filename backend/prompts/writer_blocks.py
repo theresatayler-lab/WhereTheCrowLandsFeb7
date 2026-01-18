@@ -430,6 +430,18 @@ def validate_writer_blocks_output(output: dict, guide_id: str) -> tuple[bool, li
     if isinstance(micro_lore_used, list) and len(micro_lore_used) < 2:
         errors.append(f"MICRO_LORE_INSUFFICIENT: used {len(micro_lore_used)}, need 2+")
     
+    # === V1.2: Guide-specific required blocks ===
+    if guide_id == "shigg":
+        if "journal_prompt" not in block_types:
+            errors.append("SHIGG_MISSING_JOURNAL_PROMPT")
+        if "bird_oracle" not in block_types:
+            errors.append("SHIGG_MISSING_BIRD_ORACLE")
+    elif guide_id == "cathleen":
+        if "song_prompt" not in block_types:
+            errors.append("CATHLEEN_MISSING_SONG_PROMPT")
+        if "ward" not in block_types:
+            errors.append("CATHLEEN_MISSING_WARD")
+    
     # Validate persona_lock
     lock = output.get("persona_lock", {})
     if not lock.get("props") or len(lock.get("props", [])) < 2:
