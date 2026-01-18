@@ -162,7 +162,14 @@ export const FAQ = () => {
       {/* Alternating FAQ Sections */}
       {faqs.map((section, index) => (
         index % 2 === 0 ? (
-          <LightSection key={section.category} className="py-10 sm:py-14 px-4 sm:px-6">
+          <LightSection 
+            key={section.category} 
+            className="py-10 sm:py-14 px-4 sm:px-6"
+            atmosphericImage={index === 0 ? ATMOSPHERIC_IMAGES.peonies : null}
+            atmosphericOpacity={0.10}
+            atmosphericPosition="right center"
+            atmosphericTint="sepia"
+          >
             <div className="max-w-3xl mx-auto">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
