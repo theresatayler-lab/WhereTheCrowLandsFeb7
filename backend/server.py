@@ -572,7 +572,7 @@ async def get_optional_user(credentials: HTTPAuthorizationCredentials = Depends(
         user_id = payload.get('user_id')
         user = await db.users.find_one({'id': user_id}, {'_id': 0})
         return user
-    except:
+    except Exception:
         return None
 
 # Auth endpoints
@@ -968,7 +968,7 @@ async def generate_working(request: WorkingGeneratorRequest):
         if banned_found:
             return WorkingGeneratorResponse(
                 success=False,
-                error=f"Input contains prohibited terms. This portal focuses on protection and clarity, not harm."
+                error="Input contains prohibited terms. This portal focuses on protection and clarity, not harm."
             )
         
         # Get DeepSeek client
@@ -3044,7 +3044,7 @@ async def generate_spell(
                 payload = jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALGORITHM])
                 user_id = payload.get('user_id')
                 user = await db.users.find_one({'id': user_id}, {'_id': 0})
-            except:
+            except Exception:
                 pass  # Anonymous user
         
         # Check generation limits for authenticated users
