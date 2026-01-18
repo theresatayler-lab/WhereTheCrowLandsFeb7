@@ -27,9 +27,10 @@ const TAXONOMY_CATEGORIES = {
   11: { name: "Visionary", icon: Sun, color: "#e056fd", shortName: "Visionary" },
   12: { name: "Chaos Magic", icon: Zap, color: "#636e72", shortName: "Chaos" },
   13: { name: "Pop Culture", icon: Star, color: "#a29bfe", shortName: "Pop" },
+  14: { name: "Political Activism", icon: Flame, color: "#e84393", shortName: "Activism" },
 };
 
-const EVENT_CATEGORIES = ['Publication', 'Organization', 'Figure', 'Legal', 'Site', 'Ritual'];
+const EVENT_CATEGORIES = ['Publication', 'Organization', 'Figure', 'Legal', 'Site', 'Ritual', 'Protest'];
 
 const GUIDE_COLORS = {
   shigg: { color: "#4a6fa5", name: "Shigg" },
