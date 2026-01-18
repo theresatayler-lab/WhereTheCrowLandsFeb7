@@ -13,17 +13,7 @@ export const PaymentSuccess = () => {
   const [pollCount, setPollCount] = useState(0);
   const navigate = useNavigate();
   const sessionId = searchParams.get('session_id');
-
-  useEffect(() => {
-    if (!sessionId) {
-      setStatus('error');
-      toast.error('No payment session found');
-      return;
-    }
-
-    pollPaymentStatus();
-  }, [sessionId]);
-
+  
   const pollPaymentStatus = async () => {
     const maxAttempts = 5;
     
