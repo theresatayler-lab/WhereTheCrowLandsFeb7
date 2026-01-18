@@ -119,6 +119,16 @@ Return ONLY this JSON with full blocks[] content:
         "relevance": "{canon_anchor.get('relevance', '')}"
     }},
     
+    "tarot_card": {{
+        "title": "Short evocative title (3-5 words max, captures spell essence)",
+        "symbol": "A single emoji that represents this spell's core energy",
+        "essence": "One sentence capturing the core purpose (under 15 words)",
+        "key_action": "The single most important action (under 20 words)",
+        "incantation": "A brief, memorable phrase of power (under 15 words)",
+        "timing": "When to perform (e.g., 'Full Moon, Midnight', 'Dawn', 'Any quiet moment')",
+        "warning": "One line caution if needed, or null if none"
+    }},
+    
     "blocks": [
         {{
             "block_type": "cold_open",
