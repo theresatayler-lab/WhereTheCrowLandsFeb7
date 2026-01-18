@@ -4149,6 +4149,10 @@ async def generate_spell_v3_endpoint(request: SpellRequestV3, user = Depends(get
         spell_output['persona_id'] = persona_id
         spell_output['spell_spec'] = spell_spec
         
+        # V1.2: Add routing reason if guide was auto-selected
+        if routing_reason:
+            spell_output['routing_reason'] = routing_reason
+        
         # Archetype info
         archetype_info = {
             'id': persona_id,
