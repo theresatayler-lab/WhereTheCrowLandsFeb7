@@ -283,6 +283,67 @@ class TestPlannerOutputSchema:
         print("✓ Planner JSON schema includes V1.2 fields")
 
 
+class TestTarotCompositionTracking:
+    """Test session-level tarot composition tracking prevents repeats"""
+    
+    def test_compositions_defined_for_all_guides(self):
+        """Each guide should have 6 tarot compositions"""
+        from backend.prompts.planner_blocks import TAROT_COMPOSITIONS
+        
+        for guide_id in ["shigg", "cathleen", "katherine"]:
+            comps = TAROT_COMPOSITIONS.get(guide_id, [])
+            assert len(comps) >= 6, f"{guide_id} has fewer than 6 compositions: {len(comps)}"
+            print(f"✓ {guide_id}: {len(comps)} tarot compositions")
+    
+    def test_no_immediate_repeats_in_session(self):
+        """Same session should not get immediate repeats"""
+        from backend.prompts.planner_blocks import (
+            select_tarot_composition, 
+            _used_tarot_compositions,
+            TAROT_COMPOSITIONS
+        )
+        
+        session_id = "test_session_unique"
+        persona_id = "shigg"
+        
+        # Clear any existing tracking
+        if session_id in _used_tarot_compositions:
+            del _used_tarot_compositions[session_id]
+        
+        selected_ids = []
+        for _ in range(6):
+            comp = select_tarot_composition(session_id, persona_id)
+            selected_ids.append(comp["id"])
+        
+        # All 6 should be unique (no repeats)
+        unique_ids = set(selected_ids)
+        assert len(unique_ids) == 6, f"Got {len(unique_ids)} unique compositions in 6 selections: {selected_ids}"
+        print(f"✓ 6 spells → 6 unique compositions: {selected_ids}")
+    
+    def test_reset_after_exhaustion(self):
+        """After using all 6, should reset and allow reuse"""
+        from backend.prompts.planner_blocks import (
+            select_tarot_composition, 
+            _used_tarot_compositions
+        )
+        
+        session_id = "test_session_exhaustion"
+        persona_id = "cathleen"
+        
+        # Clear any existing tracking
+        if session_id in _used_tarot_compositions:
+            del _used_tarot_compositions[session_id]
+        
+        # Use all 6
+        for _ in range(6):
+            select_tarot_composition(session_id, persona_id)
+        
+        # 7th selection should work (reset happened)
+        comp = select_tarot_composition(session_id, persona_id)
+        assert comp is not None, "Should get composition after reset"
+        print("✓ Compositions reset after exhaustion")
+
+
 class TestCacheSeedRegression:
     """
     FAILURE MODE TEST: Catches fixed RNG seed, cached plan reuse, 
