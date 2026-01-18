@@ -219,7 +219,13 @@ export const MyGrimoire = () => {
       </DarkSection>
 
       {/* Light Section - Tabs and Content */}
-      <LightSection className="py-12 sm:py-16 px-4 sm:px-6">
+      <LightSection 
+        className="py-12 sm:py-16 px-4 sm:px-6"
+        atmosphericImage={ATMOSPHERIC_IMAGES.maiden}
+        atmosphericOpacity={0.10}
+        atmosphericPosition="right center"
+        atmosphericTint="sepia"
+      >
         <div className="max-w-6xl mx-auto">
           {loading ? (
             <div className="flex flex-col items-center justify-center py-20">

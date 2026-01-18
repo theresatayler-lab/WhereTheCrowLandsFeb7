@@ -710,7 +710,13 @@ export const SpellRequest = () => {
       </DarkSection>
 
       {/* Wizard Section */}
-      <LightSection className="py-10 sm:py-14 px-4 sm:px-6">
+      <LightSection 
+        className="py-10 sm:py-14 px-4 sm:px-6"
+        atmosphericImage={ATMOSPHERIC_IMAGES.florals}
+        atmosphericOpacity={0.10}
+        atmosphericPosition="left bottom"
+        atmosphericTint="sepia"
+      >
         <div className="max-w-2xl mx-auto">
           <StepIndicator currentStep={step} totalSteps={STEPS.length} />
           

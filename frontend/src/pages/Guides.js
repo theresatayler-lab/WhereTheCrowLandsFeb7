@@ -74,7 +74,13 @@ export const Guides = () => {
       </DarkSection>
 
       {/* Light Section - Guides Grid */}
-      <LightSection className="py-12 sm:py-16 px-4 sm:px-6">
+      <LightSection 
+        className="py-12 sm:py-16 px-4 sm:px-6"
+        atmosphericImage={ATMOSPHERIC_IMAGES.peonies}
+        atmosphericOpacity={0.10}
+        atmosphericPosition="center bottom"
+        atmosphericTint="sepia"
+      >
         <div className="max-w-6xl mx-auto">
           <GrandDivider variant="eye" light />
           
