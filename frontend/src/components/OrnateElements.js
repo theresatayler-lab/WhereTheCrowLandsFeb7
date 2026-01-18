@@ -20,6 +20,57 @@ import {
 // ============================================================================
 
 // ============================================================================
+// ATMOSPHERIC BACKGROUND IMAGES
+// Subtle, tinted Art Nouveau imagery for depth
+// ============================================================================
+
+// Image URLs for atmospheric backgrounds
+export const ATMOSPHERIC_IMAGES = {
+  florals: 'https://customer-assets.emergentagent.com/job_spellcraft-ai/artifacts/y6rq27fd_1BackgroundIMagesCrowsland.png',
+  maiden: 'https://customer-assets.emergentagent.com/job_spellcraft-ai/artifacts/9vl2rlka_2BackgroundIMagesCrowsland.png',
+  peonies: 'https://customer-assets.emergentagent.com/job_spellcraft-ai/artifacts/vefnlz5z_3BackgroundIMagesCrowsland.png',
+};
+
+// Reusable atmospheric background component
+export const AtmosphericBackground = ({ 
+  image, 
+  opacity = 0.06, 
+  position = 'center', 
+  tint = 'teal', // 'teal', 'gold', 'sepia', 'none'
+  blend = 'normal', // 'normal', 'overlay', 'multiply', 'soft-light'
+  scale = 'cover' // 'cover', 'contain', '150%', etc.
+}) => {
+  // Color treatment filters based on tint
+  const tintFilters = {
+    teal: 'grayscale(100%) sepia(30%) hue-rotate(160deg) saturate(0.8)',
+    gold: 'grayscale(100%) sepia(60%) saturate(1.2)',
+    sepia: 'grayscale(100%) sepia(80%) saturate(0.7)',
+    cream: 'grayscale(100%) sepia(40%) brightness(1.2) saturate(0.5)',
+    none: 'none',
+  };
+
+  return (
+    <div 
+      className="absolute inset-0 z-0 pointer-events-none overflow-hidden"
+      aria-hidden="true"
+    >
+      <div 
+        className="absolute inset-0"
+        style={{
+          backgroundImage: `url(${image})`,
+          backgroundSize: scale,
+          backgroundPosition: position,
+          backgroundRepeat: 'no-repeat',
+          opacity: opacity,
+          filter: tintFilters[tint] || tintFilters.teal,
+          mixBlendMode: blend,
+        }}
+      />
+    </div>
+  );
+};
+
+// ============================================================================
 // CORNER ORNAMENTS - Now use halo arcs
 // ============================================================================
 
