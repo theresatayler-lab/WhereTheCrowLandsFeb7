@@ -949,26 +949,25 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
               </div>
             )}
 
-            {/* Cathleen's Suggested Ward - Special feature for her spells */}
+            {/* Cathleen's Suggested Ward - CONTRAST LOCKED: Solid vellum plate */}
         {spell.suggested_ward && (
           <section className="relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-slate-600/20 via-slate-500/10 to-slate-600/20 rounded-lg" />
-            <div className="relative p-6 border-2 border-slate-600/40 rounded-lg bg-stone-100/80">
+            <div className="relative p-6 border-2 border-teal-600/40 rounded-lg bg-[#F3EFE8] shadow-sm">
               <div className="flex items-center gap-3 mb-4">
-                <div className="p-3 bg-slate-600/20 rounded-full">
+                <div className="p-3 bg-teal-100 border border-teal-300 rounded-full">
                   <span className="text-3xl">{spell.suggested_ward.symbol || '🪶'}</span>
                 </div>
                 <div>
-                  <p className="font-cinzel text-xs text-slate-700 uppercase tracking-wider">Cathleen&apos;s Gift</p>
-                  <h3 className="font-cinzel text-xl text-slate-800">Your Ward: {spell.suggested_ward.name}</h3>
+                  <p className="font-cinzel text-xs text-teal-700 uppercase tracking-wider">Cathleen&apos;s Gift</p>
+                  <h3 className="font-cinzel text-xl text-stone-800">Your Ward: {spell.suggested_ward.name}</h3>
                 </div>
               </div>
               
               <div className="space-y-4 font-montserrat text-sm">
                 <div className="flex items-start gap-2">
-                  <Heart className="w-4 h-4 text-slate-600 mt-1 flex-shrink-0" />
+                  <Heart className="w-4 h-4 text-teal-600 mt-1 flex-shrink-0" />
                   <div>
-                    <p className="text-xs text-slate-600 uppercase tracking-wide mb-1">What It Means</p>
+                    <p className="text-xs text-teal-700 uppercase tracking-wide mb-1">What It Means</p>
                     <p className="text-stone-800">{spell.suggested_ward.meaning}</p>
                   </div>
                 </div>
