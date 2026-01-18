@@ -63,13 +63,15 @@ class TestMicroLoreWiring:
             "seeker_name": "Test",
             "desired_feeling": "calm",
             "time_available": "10 minutes",
-            "setting": "bedroom"
+            "setting": "bedroom",
+            "persona_id": "shigg"
         }
         guide_config = PERSONA_CONFIG["shigg"]
+        research_packet = {"facts": []}
         
         selections = []
         for _ in range(10):
-            prompt = build_planner_prompt(spell_spec, guide_config, "shigg")
+            prompt = build_planner_prompt(spell_spec, guide_config, research_packet)
             # Extract the micro_lore_selected from the JSON schema in the prompt
             if '"micro_lore_selected":' in prompt:
                 selections.append(prompt)
