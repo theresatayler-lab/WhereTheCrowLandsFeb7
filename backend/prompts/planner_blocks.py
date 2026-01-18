@@ -11,6 +11,78 @@ import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from persona_config import get_persona_micro_lore, get_persona_taboos
 
+
+# =============================================================================
+# SESSION-LEVEL TAROT COMPOSITION TRACKING (V1.2)
+# Prevents immediate repeats within a user session
+# =============================================================================
+
+_used_tarot_compositions = {}  # {session_id: {persona_id: [composition_ids]}}
+
+# Tarot composition library per persona
+TAROT_COMPOSITIONS = {
+    "shigg": [
+        {"id": "shigg_1", "focal": "single crow perched with teacup below", "frame": "circular wreath of rosehip and ivy"},
+        {"id": "shigg_2", "focal": "robin on windowsill with kettle", "frame": "art nouveau curved border"},
+        {"id": "shigg_3", "focal": "sparrow nest with feathers", "frame": "octagonal medallion seal"},
+        {"id": "shigg_4", "focal": "three birds in flight over rooftops", "frame": "engraved plate border with corners"},
+        {"id": "shigg_5", "focal": "windowsill still-life with offerings", "frame": "symmetrical filigree frame"},
+        {"id": "shigg_6", "focal": "detailed feather with dewdrops", "frame": "mandala pattern medallion"}
+    ],
+    "cathleen": [
+        {"id": "cathleen_1", "focal": "raven feather crossed with crescent moon", "frame": "protective circle with Brigid cross corners"},
+        {"id": "cathleen_2", "focal": "devotional candle with altar cloth", "frame": "Celtic knot border medallion"},
+        {"id": "cathleen_3", "focal": "crow silhouette in candlelight", "frame": "circular protection ward design"},
+        {"id": "cathleen_4", "focal": "brass bell with feather bundle", "frame": "arched doorway frame"},
+        {"id": "cathleen_5", "focal": "altar vignette with candles and beads", "frame": "symmetrical devotional border"},
+        {"id": "cathleen_6", "focal": "protective circle with feathers", "frame": "engraved medallion with Celtic accents"}
+    ],
+    "katherine": [
+        {"id": "katherine_1", "focal": "needle and thread crossing compass rose", "frame": "geometric sigil plate border"},
+        {"id": "katherine_2", "focal": "scrying mirror with thread spirals", "frame": "square Golden Dawn geometry"},
+        {"id": "katherine_3", "focal": "sealed letter with compass overlay", "frame": "architectural engraved frame"},
+        {"id": "katherine_4", "focal": "geometric tree of life diagram", "frame": "sephirotic path border"},
+        {"id": "katherine_5", "focal": "compass and scissors crossed", "frame": "Victorian atelier border"},
+        {"id": "katherine_6", "focal": "mirror reflecting geometric sigil", "frame": "double circle occult seal"}
+    ]
+}
+
+
+def get_available_tarot_compositions(session_id: str, persona_id: str) -> List[dict]:
+    """Get tarot compositions not yet used in this session for this persona"""
+    if session_id not in _used_tarot_compositions:
+        _used_tarot_compositions[session_id] = {}
+    
+    used = _used_tarot_compositions[session_id].get(persona_id, [])
+    all_comps = TAROT_COMPOSITIONS.get(persona_id, TAROT_COMPOSITIONS["shigg"])
+    
+    available = [c for c in all_comps if c["id"] not in used]
+    
+    # If exhausted, reset and return all
+    if not available:
+        _used_tarot_compositions[session_id][persona_id] = []
+        available = all_comps
+    
+    return available
+
+
+def record_tarot_composition(session_id: str, persona_id: str, composition_id: str):
+    """Record that a tarot composition was used"""
+    if session_id not in _used_tarot_compositions:
+        _used_tarot_compositions[session_id] = {}
+    if persona_id not in _used_tarot_compositions[session_id]:
+        _used_tarot_compositions[session_id][persona_id] = []
+    
+    _used_tarot_compositions[session_id][persona_id].append(composition_id)
+
+
+def select_tarot_composition(session_id: str, persona_id: str) -> dict:
+    """Select a tarot composition, avoiding recent repeats"""
+    available = get_available_tarot_compositions(session_id, persona_id)
+    selected = random.choice(available)
+    record_tarot_composition(session_id, persona_id, selected["id"])
+    return selected
+
 # Block templates per guide - defines required block sequence
 BLOCK_TEMPLATES = {
     "shigg": {
