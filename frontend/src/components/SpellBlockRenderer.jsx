@@ -181,7 +181,7 @@ const BlockWrapper = ({
       className={cn(
         "border rounded-lg overflow-hidden transition-all shadow-sm",
         archetypeStyle.borderColor || "border-border",
-        "bg-slate-900/50"
+        "bg-[#F3EFE8]" // CONTRAST LOCKED: Solid vellum background
       )}
       data-testid={`block-${block.block_type}`}
     >
@@ -190,31 +190,31 @@ const BlockWrapper = ({
         onClick={onToggle}
         className={cn(
           "w-full flex items-center justify-between p-4 text-left transition-colors",
-          "hover:bg-white/5",
-          archetypeStyle.bgAccent || "bg-muted/20"
+          "hover:bg-stone-200/50",
+          "bg-[#EDE8DF]" // Slightly darker vellum for header distinction
         )}
       >
         <div className="flex items-center gap-3">
-          <Icon className={cn("w-5 h-5", archetypeStyle.accentColor || "text-primary")} />
-          <span className={cn("font-medium font-cinzel", archetypeStyle.accentColor || "text-foreground")}>{label}</span>
+          <Icon className={cn("w-5 h-5", archetypeStyle.accentColor || "text-amber-700")} />
+          <span className={cn("font-medium font-cinzel text-stone-800")}>{label}</span>
           
           {/* Progress indicator for stepper */}
           {block.block_type === 'stepper' && stepperProgress && (
-            <span className={cn("text-xs", archetypeStyle.textMuted || "text-muted-foreground")}>
+            <span className="text-xs text-stone-600">
               ({stepperProgress.size || 0}/{block.content?.steps?.length || 0})
             </span>
           )}
           
           {/* Choice indicator */}
           {block.block_type === 'choice' && selectedChoice && (
-            <Check className={cn("w-4 h-4", archetypeStyle.accentColor || "text-green-500")} />
+            <Check className={cn("w-4 h-4", archetypeStyle.accentColor || "text-green-600")} />
           )}
         </div>
         
         {isExpanded ? (
-          <ChevronUp className="w-5 h-5 text-muted-foreground" />
+          <ChevronUp className="w-5 h-5 text-stone-500" />
         ) : (
-          <ChevronDown className="w-5 h-5 text-muted-foreground" />
+          <ChevronDown className="w-5 h-5 text-stone-500" />
         )}
       </button>
 
