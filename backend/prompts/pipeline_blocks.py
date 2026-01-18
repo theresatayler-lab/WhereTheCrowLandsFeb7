@@ -218,8 +218,18 @@ class BlocksSpellPipeline:
             )
             
             result_text = response.choices[0].message.content
-            result_text = self._clean_json(result_text)
-            spell_output = json.loads(result_text)
+            
+            # Use repair-capable JSON parser
+            try:
+                spell_output = await self._try_parse_json_with_repair(
+                    result_text, 
+                    schema_hint="spell object with blocks[], tarot_card, persona_lock"
+                )
+            except json.JSONDecodeError:
+                logger.error(f"[WRITER_BLOCKS] JSON repair failed, using fallback spell")
+                spell_output = self._get_fallback_spell(spell_spec, guide_id)
+                self.timing_log["writer_ms"] = int((time.time() - start) * 1000)
+                return spell_output
             
             is_valid, errors = validate_writer_blocks_output(spell_output, guide_id)
             if not is_valid:
@@ -227,7 +237,8 @@ class BlocksSpellPipeline:
                 
         except Exception as e:
             logger.error(f"[WRITER_BLOCKS] Error: {str(e)}")
-            raise
+            # Return fallback instead of raising
+            spell_output = self._get_fallback_spell(spell_spec, guide_id)
         
         self.timing_log["writer_ms"] = int((time.time() - start) * 1000)
         return spell_output
