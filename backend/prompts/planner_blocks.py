@@ -229,6 +229,7 @@ def build_planner_prompt_blocks(
     """
     
     guide_id = spell_spec.get("persona_id", "shigg")
+    session_id = spell_spec.get("session_id", "default")
     
     # Get block template for this guide
     template = BLOCK_TEMPLATES.get(guide_id, BLOCK_TEMPLATES["shigg"])
@@ -249,6 +250,9 @@ def build_planner_prompt_blocks(
     # === V1.2: GET TABOOS ===
     # Get taboo themes/imagery this guide must avoid
     taboos = get_persona_taboos(guide_id)
+    
+    # === V1.2: SELECT TAROT COMPOSITION (session-aware) ===
+    tarot_composition = select_tarot_composition(session_id, guide_id)
     
     # Extract research facts
     facts_summary = ""
