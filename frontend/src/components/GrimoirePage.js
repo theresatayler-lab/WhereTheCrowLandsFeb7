@@ -1621,6 +1621,19 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
           </div>
         </div>
 
+        {/* Parliament Crow Watermark */}
+        <div className="flex justify-center pb-4">
+          <img 
+            src={CROW_WATERMARK}
+            alt="Parliament Crow"
+            className="w-16 h-16 md:w-20 md:h-20 object-contain rounded-full"
+            style={{ 
+              opacity: 0.15,
+              filter: 'grayscale(30%)'
+            }}
+          />
+        </div>
+
         {/* Research & Origins Button */}
         <section className="border border-indigo-800/30 rounded-sm overflow-hidden">
           <button
