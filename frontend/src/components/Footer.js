@@ -107,7 +107,7 @@ export const Footer = () => {
             <div className="mt-6 p-4 rounded-sm relative" style={{ border: '1px solid rgba(200, 164, 77, 0.3)', backgroundColor: 'rgba(18, 58, 63, 0.4)' }}>
               <span className="absolute -top-2 left-3 px-2" style={{ backgroundColor: '#0E2A2F', color: '#B94E6A', fontSize: '0.75rem' }}>◆</span>
               <p className="font-crimson text-xs italic" style={{ color: 'rgba(243, 239, 232, 0.5)' }}>
-                Historical note: We document the claims and practices of the 1910-1945 era with scholarly integrity.
+                This project blends documented history, folklore, and myth. Human-curated foundations with AI-informed expansions for inspiration. Please verify sources and use in good faith.
               </p>
             </div>
           </div>
