@@ -342,13 +342,14 @@ def _get_time_guidance_blocks(time_spec: str) -> str:
 def _get_guide_specific_blocks(guide_id: str) -> str:
     """Get guide-specific block requirements"""
     specific = {
-        "shigg": """SHIGG SPECIALTY BLOCKS:
-- 'bird_oracle' block: Include bird name, message, and observation prompt
-- 'journal_prompt' block: Domestic/cozy prompts with tea/kitchen imagery""",
+        "shigg": """SHIGG SPECIALTY BLOCKS (REQUIRED):
+- 'bird_oracle' block: REQUIRED - Include bird name, message, and observation prompt
+- 'journal_prompt' block: REQUIRED - Domestic/cozy prompts with tea/kitchen imagery
+YOU MUST include BOTH bird_oracle AND journal_prompt blocks for Shigg spells.""",
         
-        "cathleen": """CATHLEEN SPECIALTY BLOCKS:
-- 'song_prompt' block: Include humming/vocalization instruction
-- 'ward' block: Include ward_name, creation_steps, activation_phrase""",
+        "cathleen": """CATHLEEN SPECIALTY BLOCKS (REQUIRED):
+- 'song_prompt' block: REQUIRED - Include humming/vocalization instruction
+- 'ward' block: REQUIRED - Include ward_name, creation_steps, activation_phrase""",
         
         "katherine": """KATHERINE SPECIALTY BLOCKS:
 - 'safety_note' block: Include precise safety considerations
