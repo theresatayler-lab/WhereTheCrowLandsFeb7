@@ -5,7 +5,7 @@ import { Bot, Send, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { 
   DarkSection, LightSection, GrandDivider, MysticalDivider, 
-  OrnateCard, CornerFlourish 
+  OrnateCard, CornerFlourish, ATMOSPHERIC_IMAGES 
 } from '../components/OrnateElements';
 
 export const AIChat = () => {

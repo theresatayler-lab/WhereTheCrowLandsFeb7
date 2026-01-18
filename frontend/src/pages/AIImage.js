@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Image as ImageIcon, Wand2, Download, Sparkles, RotateCcw, Users } from 'lucide-react';
 import { toast } from 'sonner';
-import { DarkSection, LightSection, GrandDivider, MysticalDivider, ElaborateCorner, PageHeader, LightOrnateCard, OrnateCard } from '../components/OrnateElements';
+import { DarkSection, LightSection, GrandDivider, MysticalDivider, ElaborateCorner, PageHeader, LightOrnateCard, OrnateCard, ATMOSPHERIC_IMAGES } from '../components/OrnateElements';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
