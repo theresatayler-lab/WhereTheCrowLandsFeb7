@@ -61,15 +61,23 @@ export const About = () => {
                   You don&apos;t have to believe in magic for it to work. You just have to practice it.
                 </p>
                 <p>
-                  This archive draws from documented practices tested during the occult revival period (1910-1945). 
+                  This archive draws from documented historic and mythological information from the occult revival period (1910-1945). 
                   Gardner, Fortune, Crowley, and others weren&apos;t mystics—they were experimenters synthesizing patterns 
-                  that produced results. Now you can do the same.
+                  that produced results. Human-curated foundations with AI-informed expansions inspire this work. 
+                  We encourage you to verify sources and use for inspiration.
                 </p>
               </div>
             </LightOrnateCard>
           </motion.div>
           
           <MysticalDivider light />
+          
+          {/* Historical Disclaimer */}
+          <div className="mt-4 text-center">
+            <p className="font-montserrat text-xs text-navy-dark/50 italic">
+              This project blends documented history, folklore, and myth. Please verify sources and use in good faith.
+            </p>
+          </div>
         </div>
       </LightSection>
 
