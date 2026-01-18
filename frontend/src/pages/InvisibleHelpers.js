@@ -1038,7 +1038,13 @@ export const InvisibleHelpers = () => {
       {/* ================================================================ */}
       {/* FOOTER */}
       {/* ================================================================ */}
-      <DarkSection className="py-8 px-4">
+      <DarkSection 
+        className="py-8 px-4"
+        atmosphericImage={ATMOSPHERIC_IMAGES.florals}
+        atmosphericOpacity={0.04}
+        atmosphericPosition="center"
+        atmosphericTint="gold"
+      >
         <div className="max-w-xl mx-auto text-center">
           <p className="font-crimson text-base text-silver-mist/80 italic">
             Inner work does not replace resistance.
