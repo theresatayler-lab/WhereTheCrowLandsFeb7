@@ -235,6 +235,8 @@ Specialty blocks for this guide: {', '.join(template['specialty_blocks'])}
 - closing_action: {variation_tokens['closing_action']}
 - setting_detail: {text_tokens['setting_detail']}
 - sensory_detail: {text_tokens['sensory_detail']}
+- gesture_detail: {text_tokens['gesture_detail']}
+- metaphor_detail: {text_tokens['metaphor_detail']}
 
 ## MICRO-LORE DETAILS (MUST include at least 2 in the spell)
 These are lived details unique to {guide_config.get('name', 'Guide')}. Weave them naturally into cold_open or lore_vignette:
