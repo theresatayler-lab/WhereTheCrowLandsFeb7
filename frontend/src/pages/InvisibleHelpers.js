@@ -513,7 +513,13 @@ export const InvisibleHelpers = () => {
       {/* INTRO SECTION - Only on form step */}
       {/* ================================================================ */}
       {step === 'form' && (
-        <LightSection className="py-4 sm:py-5 px-4 sm:px-6">
+        <LightSection 
+          className="py-4 sm:py-5 px-4 sm:px-6"
+          atmosphericImage={ATMOSPHERIC_IMAGES.florals}
+          atmosphericOpacity={0.035}
+          atmosphericPosition="right bottom"
+          atmosphericTint="sepia"
+        >
           <div className="max-w-3xl mx-auto">
             <LightOrnateCard hover={false}>
               {/* Always visible intro - ORIGINAL COPY */}
