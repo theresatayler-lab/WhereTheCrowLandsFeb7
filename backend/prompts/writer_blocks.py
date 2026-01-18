@@ -424,6 +424,11 @@ def validate_writer_blocks_output(output: dict, guide_id: str) -> tuple[bool, li
             if not step.get("why") or len(step.get("why", "")) < 20:
                 errors.append(f"STEPPER_STEP_{i+1}_MISSING_WHY")
     
+    # === V1.2: Validate micro_lore usage ===
+    micro_lore_used = output.get("micro_lore_used", [])
+    if isinstance(micro_lore_used, list) and len(micro_lore_used) < 2:
+        errors.append(f"MICRO_LORE_INSUFFICIENT: used {len(micro_lore_used)}, need 2+")
+    
     # Validate persona_lock
     lock = output.get("persona_lock", {})
     if not lock.get("props") or len(lock.get("props", [])) < 2:
