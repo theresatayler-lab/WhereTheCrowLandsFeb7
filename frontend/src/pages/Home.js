@@ -415,7 +415,7 @@ export const Home = () => {
                 letterSpacing: '0.12em',
               }}
             >
-              A place where magic and science aren't such strange bedfellows
+              A place where magic and science aren&apos;t such strange bedfellows
             </p>
             
             {/* Handwritten accent */}
@@ -445,9 +445,9 @@ export const Home = () => {
                     marginTop: '0.1em',
                   }}
                 >W</span>
-                here the Crowlands is a toolkit for alchemizing what you already hold. Rooted in history; from the 
+                Where the Crowlands is a toolkit for alchemizing what you already hold. Rooted in history; from the 
                 Huguenot mystics fleeing persecution, Jersey witches shaping weather and fate, Irish and Celtic keepers 
-                of forbidden knowledge, to London's table-tappers and spiritualists revealing the hidden world.
+                of forbidden knowledge, to London&apos;s table-tappers and spiritualists revealing the hidden world.
               </p>
             </div>
             
