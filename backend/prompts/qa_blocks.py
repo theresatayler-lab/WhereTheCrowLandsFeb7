@@ -7,6 +7,32 @@ from .belief_modes import validate_belief_compliance
 from .writer import WRITER_CONTRACTS
 
 
+# === TABOO KEYWORD MAP (V1.2) ===
+# Expanded keywords for each taboo theme, per persona
+TABOO_KEYWORDS_MAP = {
+    "shigg": {
+        "modern crystal shop language": ["crystal grid", "charging crystals", "crystal healing", "chakra stones", "crystal energy"],
+        "neon cyber occult aesthetics": ["neon", "cyber", "digital sigil", "tech magic", "cyber witch"],
+        "new age manifestation talk": ["manifest your", "manifestation", "law of attraction", "abundance mindset", "raise your vibration", "high vibration"],
+        "Instagram witch aesthetic": ["witchy vibes", "witch aesthetic", "cottagecore witch", "#witchesofinstagram"],
+        "generic spirituality clichés": ["the universe wants", "everything happens for a reason", "your truth", "live your best life"]
+    },
+    "cathleen": {
+        "kitchen-witch domestic aesthetics": ["kitchen witch", "hearth magic", "domestic goddess", "cozy kitchen"],
+        "teacups and cozy domesticity": ["teacup reading", "tea leaves", "cozy kitchen", "kettle charm", "tea ritual"],
+        "new age love-and-light bypassing": ["love and light", "good vibes only", "positive vibes", "toxic positivity", "just be positive"],
+        "tailoring and sewing imagery": ["needle and thread", "stitch", "measuring tape", "scissors", "hemming"]
+    },
+    "katherine": {
+        "cozy domestic teacup imagery": ["teacup", "tea leaves", "kettle sings", "cozy kitchen", "warm hearth"],
+        "warm kitchen aesthetics": ["kitchen witch", "hearth magic", "domestic magic", "cozy corner", "warm kitchen"],
+        "bird oracle work": ["bird omen", "bird oracle", "what the birds say", "feathered messenger", "sparrow says"],
+        "vague intuition-based practice": ["just feel it", "trust your gut", "intuition says", "vibe check", "feels right"],
+        "devotional hymn styling": ["blessed be", "so mote it be", "praise the", "glory to"]
+    }
+}
+
+
 def run_qa_blocks_validation(
     spell_output: dict, 
     guide_id: str, 
