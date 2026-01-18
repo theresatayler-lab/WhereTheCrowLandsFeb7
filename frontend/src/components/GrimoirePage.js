@@ -1008,14 +1008,22 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
         {spell.suggested_ward && (
           <section className="relative">
             <div className="relative p-6 border-2 border-teal-600/40 rounded-lg bg-[#F3EFE8] shadow-sm">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="p-3 bg-teal-100 border border-teal-300 rounded-full">
-                  <span className="text-3xl">{spell.suggested_ward.symbol || '🪶'}</span>
+              <div className="flex items-center justify-between gap-3 mb-4">
+                <div className="flex items-center gap-3">
+                  <div className="p-3 bg-teal-100 border border-teal-300 rounded-full">
+                    <span className="text-3xl">{spell.suggested_ward.symbol || '🪶'}</span>
+                  </div>
+                  <div>
+                    <p className="font-cinzel text-xs text-teal-700 uppercase tracking-wider">Cathleen&apos;s Gift</p>
+                    <h3 className="font-cinzel text-xl text-stone-800">Your Ward: {spell.suggested_ward.name}</h3>
+                  </div>
                 </div>
-                <div>
-                  <p className="font-cinzel text-xs text-teal-700 uppercase tracking-wider">Cathleen&apos;s Gift</p>
-                  <h3 className="font-cinzel text-xl text-stone-800">Your Ward: {spell.suggested_ward.name}</h3>
-                </div>
+                
+                {/* Save Ward Button */}
+                <SaveWardButton 
+                  ward={spell.suggested_ward}
+                  spellTitle={spell.title}
+                />
               </div>
               
               <div className="space-y-4 font-montserrat text-sm">
