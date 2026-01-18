@@ -278,6 +278,120 @@ Ensure all fixes are applied while maintaining your authentic voice."""
             text = text.split('```')[1].split('```')[0]
         return text.strip()
     
+    async def _try_parse_json_with_repair(self, text: str, schema_hint: str = "") -> dict:
+        """
+        Try to parse JSON with one repair pass if needed.
+        Returns parsed dict or raises exception.
+        """
+        import json
+        
+        # First, try direct parse
+        cleaned = self._clean_json(text)
+        try:
+            return json.loads(cleaned)
+        except json.JSONDecodeError as e:
+            logger.warning(f"[JSON_REPAIR] Initial parse failed: {str(e)[:100]}")
+        
+        # Repair pass: ask model to fix the JSON
+        repair_prompt = f"""The following text should be valid JSON but has errors.
+Fix it and return ONLY the corrected JSON, nothing else.
+
+BROKEN JSON:
+{cleaned[:3000]}
+
+{f"Expected schema hint: {schema_hint}" if schema_hint else ""}
+
+Return ONLY valid JSON:"""
+        
+        try:
+            repair_response = await self.openai_client.chat.completions.create(
+                model="gpt-4o-mini",  # Use fast model for repair
+                messages=[
+                    {"role": "system", "content": "You are a JSON repair tool. Output ONLY valid JSON."},
+                    {"role": "user", "content": repair_prompt}
+                ],
+                temperature=0.1,
+                max_tokens=4000
+            )
+            
+            repaired = repair_response.choices[0].message.content
+            repaired = self._clean_json(repaired)
+            result = json.loads(repaired)
+            logger.info("[JSON_REPAIR] Successfully repaired JSON")
+            return result
+            
+        except Exception as repair_error:
+            logger.error(f"[JSON_REPAIR] Repair also failed: {str(repair_error)[:100]}")
+            raise json.JSONDecodeError(f"JSON repair failed: {str(e)}", cleaned, 0)
+    
+    def _get_fallback_spell(self, spell_spec: dict, guide_id: str) -> dict:
+        """Return a minimal valid spell when all else fails"""
+        from .planner_blocks import BLOCK_TEMPLATES
+        template = BLOCK_TEMPLATES.get(guide_id, BLOCK_TEMPLATES["shigg"])
+        
+        return {
+            "title": "A Moment of Intention",
+            "subtitle": "A simple working while we gather ourselves",
+            "intent": spell_spec.get("intention", "A personal working"),
+            "guide_id": guide_id,
+            "belief_mode": "SPIRITUAL",
+            "template_id": template["template_id"],
+            "persona_lock": {"props": ["candle"], "sensory_cue": "warmth", "signature_move": "breath"},
+            "canon_anchor": {"id": "folk_traditions", "type": "practice", "title": "Folk Traditions", "relevance": "Simple practices ground us"},
+            "tarot_card": {
+                "title": "The Pause",
+                "symbol": "🕯️",
+                "essence": "Sometimes we simply need to begin.",
+                "key_action": "Light a candle and breathe.",
+                "incantation": "I am here. I begin.",
+                "timing": "Now"
+            },
+            "blocks": [
+                {"block_type": "cold_open", "block_id": "fallback_1", "content": {
+                    "greeting": f"Hello, {spell_spec.get('seeker_name', 'Seeker')}.",
+                    "scene_setting": "We're having a moment of technical difficulty, but the magic doesn't stop.",
+                    "hook": "Let's do something simple while things settle.",
+                    "persona_markers": ["candle", "breath"]
+                }},
+                {"block_type": "materials", "block_id": "fallback_2", "content": {
+                    "items": [{"name": "candle", "purpose": "focus", "optional": False}],
+                    "gathering_note": "Just one simple thing."
+                }},
+                {"block_type": "choice", "block_id": "fallback_3", "content": {
+                    "prompt": "What feels right?",
+                    "options": [
+                        {"id": "opt_a", "label": "Light a candle", "description": "Simple and grounding"},
+                        {"id": "opt_b", "label": "Take three breaths", "description": "Even simpler"}
+                    ],
+                    "consequence_hint": "Either choice is perfect."
+                }},
+                {"block_type": "lore_vignette", "block_id": "fallback_4", "content": {
+                    "title": "The Pause Before",
+                    "narrative": "In every tradition, there is a moment before the working begins—a pause, a gathering of intention. This is that moment. Folk practitioners have always known that the simplest acts carry the most weight when done with presence. A candle lit with attention outweighs elaborate ceremonies done by rote. So we pause here, together, and that is enough.",
+                    "era": "Timeless",
+                    "tradition": "Folk wisdom",
+                    "canon_anchor_id": "folk_traditions"
+                }},
+                {"block_type": "stepper", "block_id": "fallback_5", "content": {
+                    "steps": [
+                        {"step_number": 1, "action": "Find a quiet spot", "why": "Presence requires a container", "checkpoint": True},
+                        {"step_number": 2, "action": "Light your candle (or close your eyes)", "why": "A focal point anchors intention", "checkpoint": True},
+                        {"step_number": 3, "action": "State your intention silently or aloud", "why": "Words make it real", "checkpoint": True}
+                    ],
+                    "completion_message": "You have begun. That is the hardest part."
+                }},
+                {"block_type": "closing", "block_id": "fallback_6", "content": {
+                    "grounding_action": "Blow out the candle when ready",
+                    "empowerment_line": "You showed up. That matters.",
+                    "next_steps_hint": "Try again when the technical gremlins have passed."
+                }}
+            ],
+            "micro_lore_used": [],
+            "text_tokens_used": {},
+            "_fallback": True,
+            "_fallback_reason": "Generation encountered an error; this is a simplified working."
+        }
+    
     def _get_fallback_research(self, spell_spec: dict, guide_id: str) -> dict:
         """Fallback research when Archivist fails"""
         traditions = get_tradition_tags(guide_id)
