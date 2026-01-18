@@ -164,6 +164,15 @@ def build_planner_prompt_blocks(
     variation_tokens = {k: random.choice(v) for k, v in VARIATION_KNOBS.items()}
     text_tokens = {k: random.choice(v) for k, v in TEXT_VARIATION_TOKENS.items()}
     
+    # === V1.2: SELECT MICRO_LORE ===
+    # Get 2-3 micro_lore items for this guide to weave into the spell
+    all_micro_lore = get_persona_micro_lore(guide_id)
+    micro_lore_selected = random.sample(all_micro_lore, k=min(3, len(all_micro_lore))) if all_micro_lore else []
+    
+    # === V1.2: GET TABOOS ===
+    # Get taboo themes/imagery this guide must avoid
+    taboos = get_persona_taboos(guide_id)
+    
     # Extract research facts
     facts_summary = ""
     for fact in research_packet.get("facts", [])[:5]:
