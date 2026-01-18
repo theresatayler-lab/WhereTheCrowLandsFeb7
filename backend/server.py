@@ -4082,13 +4082,44 @@ async def generate_spell_v3_endpoint(request: SpellRequestV3, user = Depends(get
         id_map = {'shiggy': 'shigg', 'kathleen': 'cathleen', 'catherine': 'katherine'}
         persona_id = id_map.get(persona_id, persona_id)
         
-        if persona_id == 'choose_for_me':
-            feeling = spell_spec.get('desired_feeling', 'calm')
-            persona_map = {
-                'calm': 'shigg', 'protected': 'cathleen',
-                'clear': 'katherine', 'brave': 'cathleen'
+        routing_reason = None
+        
+        if persona_id == 'choose_for_me' or persona_id == 'surprise':
+            # === V1.2: SMART GUIDE ROUTING ===
+            intention = spell_spec.get('intention', '').lower()
+            feeling = spell_spec.get('desired_feeling', 'calm').lower()
+            
+            # Keyword-based routing (highest priority)
+            keyword_routes = {
+                'shigg': ['tea', 'kettle', 'bird', 'morning', 'domestic', 'kitchen', 'gentle', 'cozy', 'grief', 'loss'],
+                'cathleen': ['protect', 'voice', 'song', 'courage', 'brave', 'shield', 'guard', 'strength', 'power'],
+                'katherine': ['hidden', 'shadow', 'truth', 'reveal', 'pattern', 'thread', 'bind', 'sigil', 'precision', 'secret']
             }
-            persona_id = persona_map.get(feeling, 'shigg')
+            
+            selected_guide = None
+            for guide, keywords in keyword_routes.items():
+                if any(kw in intention for kw in keywords):
+                    selected_guide = guide
+                    routing_reason = f"keyword match in intention: {[kw for kw in keywords if kw in intention]}"
+                    break
+            
+            # Feeling-based fallback
+            if not selected_guide:
+                feeling_routes = {
+                    'calm': 'shigg',
+                    'softened': 'shigg',
+                    'protected': 'cathleen',
+                    'brave': 'cathleen',
+                    'energized': 'cathleen',
+                    'clear': 'katherine',
+                    'hidden': 'katherine',
+                    'revealed': 'katherine'
+                }
+                selected_guide = feeling_routes.get(feeling, 'shigg')
+                routing_reason = f"feeling match: {feeling} → {selected_guide}"
+            
+            persona_id = selected_guide
+            logger.info(f"[GUIDE_ROUTING] Routed to {persona_id}: {routing_reason}")
         
         spell_spec['persona_id'] = persona_id
         
