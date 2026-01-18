@@ -306,6 +306,9 @@ Return ONLY this JSON:
     "variation_tokens": {json.dumps(variation_tokens)},
     "text_tokens": {json.dumps(text_tokens)},
     
+    "micro_lore_selected": {json.dumps(micro_lore_selected)},
+    "taboos": {json.dumps(taboos)},
+    
     "tradition_tags": ["tag1", "tag2"],
     "safety_notes": ["any safety adaptations"]
 }}
