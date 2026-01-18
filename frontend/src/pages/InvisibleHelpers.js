@@ -11,7 +11,8 @@ import {
   ElaborateCorner,
   CornerFlourish,
   LightOrnateCard,
-  BorderFrame
+  BorderFrame,
+  ATMOSPHERIC_IMAGES
 } from '../components/OrnateElements';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
