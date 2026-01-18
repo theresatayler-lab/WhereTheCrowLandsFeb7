@@ -130,7 +130,7 @@ export const MyGrimoire = () => {
               ← Back to Grimoire
             </button>
             <GrimoirePage 
-              spell={selectedSpell.spell_data}
+              spell={{...selectedSpell.spell_data, tarot_card: selectedSpell.tarot_card}}
               archetype={{
                 id: selectedSpell.archetype_id,
                 name: selectedSpell.archetype_name,
