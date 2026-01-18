@@ -65,8 +65,7 @@ export const PaymentSuccess = () => {
     }
 
     pollPaymentStatus();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sessionId]);
+  }, [sessionId]); // pollPaymentStatus is stable - defined in component scope
 
   return (
     <div className="min-h-screen flex items-center justify-center px-6 py-24">
