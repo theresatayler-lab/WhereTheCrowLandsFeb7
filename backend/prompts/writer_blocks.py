@@ -296,6 +296,9 @@ Return ONLY this JSON with full blocks[] content:
 5. ALL blocks must be in guide's authentic voice
 6. Use 2-3 signature phrases naturally across blocks
 7. Address seeker by name at least twice (cold_open and closing)
+8. MUST include at least 2 micro-lore details (in cold_open or lore_vignette)
+9. MUST use the text_tokens (setting_detail, sensory_detail, gesture_detail) provided
+10. MUST NOT include any taboo themes/imagery listed above
 
 ## GUIDE-SPECIFIC BLOCKS TO INCLUDE
 {_get_guide_specific_blocks(guide_id)}"""
