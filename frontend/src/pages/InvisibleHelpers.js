@@ -515,20 +515,20 @@ export const InvisibleHelpers = () => {
                   <span className="text-navy-dark font-medium"> steady themselves before acting</span>. During 
                   World War II, groups practiced coordinated meditation for protection and clarity. 
                   In the 1960s, activists paired inner work with outer resistance. Today, from 
-                  <span className="text-crimson"> "Etsy witches"</span> making headlines 
+                  <span className="text-crimson"> &quot;Etsy witches&quot;</span> making headlines 
                   to artists weaving meaning into protest, people are rediscovering an old truth.
                 </p>
                 
                 <p className="text-navy-dark/70 leading-relaxed mb-3 font-crimson">
-                  <span className="text-navy-dark">When the world feels like it's burning, 
+                  <span className="text-navy-dark">When the world feels like it&apos;s burning, 
                   steadying the inner field matters.</span> Not as a replacement for action—never 
                   that—but as a companion to it. Focused intention, done with clean hands and a 
                   clear heart, can be part of how we show up.
                 </p>
 
                 <p className="text-navy-dark/70 leading-relaxed font-crimson">
-                  This portal draws inspiration from <span className="text-crimson">Dion Fortune's</span> wartime 
-                  spiritual work and the long tradition of ethical, protective practice. What you'll 
+                  This portal draws inspiration from <span className="text-crimson">Dion Fortune&apos;s</span> wartime 
+                  spiritual work and the long tradition of ethical, protective practice. What you&apos;ll 
                   create here is a <span className="text-navy-dark font-medium">structured intention</span> that 
                   returns misused power to natural law, strengthens those who protect, and steadies 
                   your own resolve. No curses. No targets. Just clarity, protection, and lawful return.
