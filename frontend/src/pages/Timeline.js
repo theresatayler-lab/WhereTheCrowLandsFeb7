@@ -481,6 +481,35 @@ const EventCard = ({ event, isExpanded, onToggle, view }) => {
                         <span>{event.location.name}, {event.location.region}</span>
                       </div>
                     )}
+                    
+                    {/* Expanded Context - Deep Dive */}
+                    {event.expanded_context && (
+                      <div className="mt-4 pt-3 border-t border-gold/10">
+                        <h4 className="font-cinzel text-xs text-gold/70 uppercase mb-2">Deep Dive</h4>
+                        <p className="font-montserrat text-sm text-cream/70 leading-relaxed">{event.expanded_context}</p>
+                      </div>
+                    )}
+                    
+                    {/* Learn More Links */}
+                    {event.learn_more_links?.length > 0 && (
+                      <div className="mt-3">
+                        <h4 className="font-cinzel text-xs text-gold/70 uppercase mb-2">Learn More</h4>
+                        <div className="flex flex-wrap gap-2">
+                          {event.learn_more_links.map((link, i) => (
+                            <a
+                              key={i}
+                              href={link.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1 px-3 py-1.5 bg-gold/10 hover:bg-gold/20 border border-gold/30 rounded text-xs text-gold hover:text-gold-light font-montserrat transition-all"
+                            >
+                              <ExternalLink size={10} />
+                              {link.title}
+                            </a>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
 
                   {/* Larger image on right when expanded */}
