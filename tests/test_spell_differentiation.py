@@ -170,10 +170,16 @@ class TestTextVariationTokens:
             "taboos": [],
             "tradition_tags": []
         }
-        spell_spec = {"intention": "protection", "seeker_name": "Test", "desired_feeling": "protected"}
+        spell_spec = {
+            "intention": "protection",
+            "seeker_name": "Test",
+            "desired_feeling": "protected",
+            "persona_id": "cathleen"
+        }
         guide_config = PERSONA_CONFIG["cathleen"]
+        research_packet = {"facts": []}
         
-        prompt = build_writer_prompt(plan, spell_spec, guide_config)
+        prompt = build_writer_prompt(spell_spec, guide_config, research_packet, plan)
         
         assert "TEXT VARIATION TOKENS" in prompt, "Writer prompt missing text tokens section"
         assert "corner by the fire" in prompt, "Setting detail not in prompt"
