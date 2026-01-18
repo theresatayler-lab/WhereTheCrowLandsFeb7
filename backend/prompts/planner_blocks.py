@@ -5,6 +5,12 @@ import json
 import random
 from typing import Dict, List, Any
 
+# Import persona helpers for micro_lore and taboos
+import sys
+import os
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from persona_config import get_persona_micro_lore, get_persona_taboos
+
 # Block templates per guide - defines required block sequence
 BLOCK_TEMPLATES = {
     "shigg": {
