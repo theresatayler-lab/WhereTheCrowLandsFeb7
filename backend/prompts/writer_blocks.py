@@ -42,6 +42,11 @@ def build_writer_prompt_blocks(
     block_sequence = plan.get("block_sequence", [])
     block_sequence_json = json.dumps(block_sequence, indent=2)
     
+    # === V1.2: Get micro_lore, text_tokens, and taboos from plan ===
+    micro_lore_selected = plan.get("micro_lore_selected", [])
+    text_tokens = plan.get("text_tokens", {})
+    taboos = plan.get("taboos", [])
+    
     # Get belief framing
     belief_framing = _get_belief_framing_blocks(belief_mode)
     
