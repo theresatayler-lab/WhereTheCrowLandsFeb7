@@ -256,6 +256,7 @@ class SavedSpellResponse(BaseModel):
     asset_plan: Optional[dict] = None
     created_at: str
     title: str
+    tarot_card: Optional[dict] = None
 
 class WaitlistRequest(BaseModel):
     email: EmailStr
