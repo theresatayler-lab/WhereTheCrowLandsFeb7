@@ -610,12 +610,12 @@ export const Home = () => {
               style={{ color: NOUVEAU_COLORS.midnightTeal }}
             >
               <p>
-                The druids, templars, occultists, astrologers, hermetic philosophers, "witches," midwives 
+                The druids, templars, occultists, astrologers, hermetic philosophers, &quot;witches,&quot; midwives 
                 and alchemists before them… These four women span over a century of practice—from Victorian 
                 Spitalfields to contemporary London.
               </p>
               <p className="italic" style={{ color: NOUVEAU_COLORS.mutedBrass }}>
-                You don't need to choose just one. Their wisdom overlaps, contradicts, and complements. 
+                You don&apos;t need to choose just one. Their wisdom overlaps, contradicts, and complements. 
                 Like any family, they argue. Like any lineage, they build on what came before.
               </p>
             </div>
