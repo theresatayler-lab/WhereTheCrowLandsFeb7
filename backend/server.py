@@ -2048,7 +2048,7 @@ async def get_bird_oracle_reading(request: dict):
         question = request.get('question', '')
         
         # Build the prompt
-        bird_oracle_prompt = f"""You are Shigg, the Birds of Parliament Poet Laureate. A seeker has come to you for a Bird Oracle reading.
+        bird_oracle_prompt = """You are Shigg, the Birds of Parliament Poet Laureate. A seeker has come to you for a Bird Oracle reading.
 
 The Parliament of Birds speaks through you. Choose 1-2 birds from your oracle that speak to this seeker's situation:
 
@@ -3756,7 +3756,7 @@ async def generate_personalized_spell(request: PersonalizedSpellRequest, user = 
             try:
                 # 1. Generate header image
                 header_prompt = build_image_prompt("header_image", asset_plan, persona_config, spell.get('title', 'Spell'))
-                logging.info(f"Generating header image...")
+                logging.info("Generating header image...")
                 
                 header_response = await openai_client.images.generate(
                     model="dall-e-3",
@@ -3774,7 +3774,7 @@ async def generate_personalized_spell(request: PersonalizedSpellRequest, user = 
                 
                 # 2. Generate tarot card image (with constraints for distinct composition)
                 tarot_prompt = build_image_prompt("tarot_card_image", asset_plan, persona_config, spell.get('title', 'Spell'))
-                logging.info(f"Generating tarot card image...")
+                logging.info("Generating tarot card image...")
                 
                 tarot_response = await openai_client.images.generate(
                     model="dall-e-3",
@@ -3791,7 +3791,7 @@ async def generate_personalized_spell(request: PersonalizedSpellRequest, user = 
                 
                 # 3. Generate sigil (black and white only)
                 sigil_prompt = build_image_prompt("sigil", asset_plan, persona_config, spell.get('title', 'Spell'))
-                logging.info(f"Generating sigil...")
+                logging.info("Generating sigil...")
                 
                 sigil_response = await openai_client.images.generate(
                     model="dall-e-3",
