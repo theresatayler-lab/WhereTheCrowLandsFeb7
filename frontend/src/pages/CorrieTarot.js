@@ -7,7 +7,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { setCurrentArchetype } from '../components/OnboardingModal';
-import { DarkSection, LightSection, GrandDivider, MysticalDivider, PageBorderFrame, PageHeader } from '../components/OrnateElements';
+import { DarkSection, LightSection, GrandDivider, MysticalDivider, PageBorderFrame, PageHeader, ATMOSPHERIC_IMAGES } from '../components/OrnateElements';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -403,7 +403,13 @@ const CorrieTarot = () => {
       
       {/* Light Section - Input Form */}
       {isLoggedIn && !result && (
-        <LightSection className="py-12 sm:py-16 px-4 sm:px-6">
+        <LightSection 
+          className="py-12 sm:py-16 px-4 sm:px-6"
+          atmosphericImage={ATMOSPHERIC_IMAGES.maiden}
+          atmosphericOpacity={0.10}
+          atmosphericPosition="left top"
+          atmosphericTint="sepia"
+        >
           <div className="max-w-4xl mx-auto">
             <GrandDivider variant="moon" light />
             
