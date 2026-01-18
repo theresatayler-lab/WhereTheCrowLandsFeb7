@@ -1,0 +1,295 @@
+{
+  "started_at": "2026-01-18T02:17:16.753637+00:00",
+  "dry_run": false,
+  "spells_processed": 47,
+  "spells_updated": 47,
+  "spells_skipped": 0,
+  "sparse_content_flags": [
+    {
+      "spell_id": "695accb618e6a6fa501758a5",
+      "title": "The Teacup and Torch: A Courage-Calling Conversation Spell",
+      "reason": "Limited source content - using defaults"
+    },
+    {
+      "spell_id": "695b072a8c1e896a8b3c62ce",
+      "title": "The Reckoning of Red Ribbons",
+      "reason": "Limited source content - using defaults"
+    },
+    {
+      "spell_id": "695b2aa45a147f0302f6c14f",
+      "title": "Lantern at the Veil: A Spell to Call the Hidden into Sight",
+      "reason": "Limited source content - using defaults"
+    },
+    {
+      "spell_id": "695b2c845a147f0302f6c150",
+      "title": "Through the Veil of Blood and Silence",
+      "reason": "Limited source content - using defaults"
+    },
+    {
+      "spell_id": "695c44322ea3f958d93f3c1e",
+      "title": "The Black Thread of Returning: A Tailor\u2019s Justice Working",
+      "reason": "Limited source content - using defaults"
+    },
+    {
+      "spell_id": "695c61be6f8c87bbd4d9566c",
+      "title": "Unbinding the Veiled Threads",
+      "reason": "Limited source content - using defaults"
+    },
+    {
+      "spell_id": "695c61d56f8c87bbd4d9566d",
+      "title": "Unbinding the Veiled Threads",
+      "reason": "Limited source content - using defaults"
+    },
+    {
+      "spell_id": "695c62fd6f8c87bbd4d9566e",
+      "title": "Unveiling the Path to Abundance",
+      "reason": "Limited source content - using defaults"
+    },
+    {
+      "spell_id": "695c80acc466c3d11925f2fa",
+      "title": "Stitching the Veil of Protection",
+      "reason": "Limited source content - using defaults"
+    },
+    {
+      "spell_id": "695c855cc466c3d11925f2fb",
+      "title": "The Heart's Illuminate Path",
+      "reason": "Limited source content - using defaults"
+    },
+    {
+      "spell_id": "695d647ccbdc174b150d2092",
+      "title": "The River's Gift",
+      "reason": "Limited source content - using defaults"
+    },
+    {
+      "spell_id": "695da3aedddf20ffab2b6c71",
+      "title": "The Enchanted Whisper",
+      "reason": "Limited source content - using defaults"
+    },
+    {
+      "spell_id": "695da409dddf20ffab2b6c72",
+      "title": "The Enchanted Whisper",
+      "reason": "Limited source content - using defaults"
+    },
+    {
+      "spell_id": "695daa87dddf20ffab2b6c73",
+      "title": "The Weaver's Shield",
+      "reason": "Limited source content - using defaults"
+    },
+    {
+      "spell_id": "695dc5e3f072f93f5837f15c",
+      "title": "A Light in the Blue",
+      "reason": "Limited source content - using defaults"
+    },
+    {
+      "spell_id": "695dd0952a43365ae4a3da1f",
+      "title": "Whisper of the Heart",
+      "reason": "Limited source content - using defaults"
+    },
+    {
+      "spell_id": "695dd0df2a43365ae4a3da21",
+      "title": "Whisper of the Heart",
+      "reason": "Limited source content - using defaults"
+    },
+    {
+      "spell_id": "695f1562c2eb1e3ccf58d2bd",
+      "title": "Echoing Justice",
+      "reason": "Limited source content - using defaults"
+    },
+    {
+      "spell_id": "695f1588c2eb1e3ccf58d2be",
+      "title": "Echoing Justice",
+      "reason": "Limited source content - using defaults"
+    },
+    {
+      "spell_id": "695f15dec2eb1e3ccf58d2bf",
+      "title": "Reflections of the Heart",
+      "reason": "Limited source content - using defaults"
+    },
+    {
+      "spell_id": "695f15f2c2eb1e3ccf58d2c0",
+      "title": "Reflections of the Heart",
+      "reason": "Limited source content - using defaults"
+    },
+    {
+      "spell_id": "695f16e5c2eb1e3ccf58d2c1",
+      "title": "The Tailor's Reversal",
+      "reason": "Limited source content - using defaults"
+    },
+    {
+      "spell_id": "695f1702c2eb1e3ccf58d2c2",
+      "title": "The Tailor's Reversal",
+      "reason": "Limited source content - using defaults"
+    },
+    {
+      "spell_id": "695f2890ff591504a7a272d4",
+      "title": "Tapestry of Nightly Shields",
+      "reason": "Limited source content - using defaults"
+    },
+    {
+      "spell_id": "695f332bd443f7a9cbb3b307",
+      "title": "Echoes of Equilibrium: Return to Sender",
+      "reason": "Limited source content - using defaults"
+    },
+    {
+      "spell_id": "695fe9dee5b5495e833a246b",
+      "title": "Test Spell",
+      "reason": "Limited source content - using defaults"
+    },
+    {
+      "spell_id": "69614a3e748be2ebcc416ac4",
+      "title": "The Kettle Charm",
+      "reason": "Limited source content - using defaults"
+    },
+    {
+      "spell_id": "69614a3e748be2ebcc416ac5",
+      "title": "The Windowsill Ward",
+      "reason": "Limited source content - using defaults"
+    },
+    {
+      "spell_id": "69614a3e748be2ebcc416ac6",
+      "title": "The Bird Omen Reading",
+      "reason": "Limited source content - using defaults"
+    },
+    {
+      "spell_id": "69614a3e748be2ebcc416ac7",
+      "title": "The Voice Ward",
+      "reason": "Limited source content - using defaults"
+    },
+    {
+      "spell_id": "69614a3e748be2ebcc416ac8",
+      "title": "The Home Circle Blessing",
+      "reason": "Limited source content - using defaults"
+    },
+    {
+      "spell_id": "69614a3e748be2ebcc416ac9",
+      "title": "The Keening Container",
+      "reason": "Limited source content - using defaults"
+    },
+    {
+      "spell_id": "69614a3e748be2ebcc416aca",
+      "title": "The Protection Protocol",
+      "reason": "Limited source content - using defaults"
+    },
+    {
+      "spell_id": "69614a3e748be2ebcc416acb",
+      "title": "The Mirror Inquiry",
+      "reason": "Limited source content - using defaults"
+    },
+    {
+      "spell_id": "69614a3e748be2ebcc416acc",
+      "title": "The Threadworking",
+      "reason": "Limited source content - using defaults"
+    },
+    {
+      "spell_id": "69614a3e748be2ebcc416acd",
+      "title": "The Unbinding Ritual",
+      "reason": "Limited source content - using defaults"
+    },
+    {
+      "spell_id": "69659fe68848b703c934f297",
+      "title": "Test Spell No Image ec6a3387",
+      "reason": "Limited source content - using defaults"
+    },
+    {
+      "spell_id": "69659fe68848b703c934f29a",
+      "title": "Test Spell With Image f8211053",
+      "reason": "Limited source content - using defaults"
+    },
+    {
+      "spell_id": "69659fe68848b703c934f29f",
+      "title": "Test Spell With Assets 96aebafb",
+      "reason": "Limited source content - using defaults"
+    },
+    {
+      "spell_id": "6965a0888848b703c934f2a3",
+      "title": "Test Spell No Image e84f308d",
+      "reason": "Limited source content - using defaults"
+    },
+    {
+      "spell_id": "6965a0888848b703c934f2a6",
+      "title": "Test Spell With Image 88eb9144",
+      "reason": "Limited source content - using defaults"
+    },
+    {
+      "spell_id": "6965a0888848b703c934f2ab",
+      "title": "Test Spell With Assets 8443f047",
+      "reason": "Limited source content - using defaults"
+    },
+    {
+      "spell_id": "69660176502dbbf81085261b",
+      "title": "Illumination of Hidden Truths",
+      "reason": "Limited source content - using defaults"
+    },
+    {
+      "spell_id": "69668da55d74f8c061ee0f30",
+      "title": "Tea Ritual for Morning Clarity",
+      "reason": "Limited source content - using defaults"
+    },
+    {
+      "spell_id": "69668da55d74f8c061ee0f31",
+      "title": "Protection Ward for the Home",
+      "reason": "Limited source content - using defaults"
+    },
+    {
+      "spell_id": "69668da55d74f8c061ee0f32",
+      "title": "Shadow Integration Ritual",
+      "reason": "Limited source content - using defaults"
+    },
+    {
+      "spell_id": "69668da55d74f8c061ee0f33",
+      "title": "Breaking the Silence Spell",
+      "reason": "Limited source content - using defaults"
+    }
+  ],
+  "failures": [],
+  "updated_ids": [
+    "695accb618e6a6fa501758a5",
+    "695b072a8c1e896a8b3c62ce",
+    "695b2aa45a147f0302f6c14f",
+    "695b2c845a147f0302f6c150",
+    "695c44322ea3f958d93f3c1e",
+    "695c61be6f8c87bbd4d9566c",
+    "695c61d56f8c87bbd4d9566d",
+    "695c62fd6f8c87bbd4d9566e",
+    "695c80acc466c3d11925f2fa",
+    "695c855cc466c3d11925f2fb",
+    "695d647ccbdc174b150d2092",
+    "695da3aedddf20ffab2b6c71",
+    "695da409dddf20ffab2b6c72",
+    "695daa87dddf20ffab2b6c73",
+    "695dc5e3f072f93f5837f15c",
+    "695dd0952a43365ae4a3da1f",
+    "695dd0df2a43365ae4a3da21",
+    "695f1562c2eb1e3ccf58d2bd",
+    "695f1588c2eb1e3ccf58d2be",
+    "695f15dec2eb1e3ccf58d2bf",
+    "695f15f2c2eb1e3ccf58d2c0",
+    "695f16e5c2eb1e3ccf58d2c1",
+    "695f1702c2eb1e3ccf58d2c2",
+    "695f2890ff591504a7a272d4",
+    "695f332bd443f7a9cbb3b307",
+    "695fe9dee5b5495e833a246b",
+    "69614a3e748be2ebcc416ac4",
+    "69614a3e748be2ebcc416ac5",
+    "69614a3e748be2ebcc416ac6",
+    "69614a3e748be2ebcc416ac7",
+    "69614a3e748be2ebcc416ac8",
+    "69614a3e748be2ebcc416ac9",
+    "69614a3e748be2ebcc416aca",
+    "69614a3e748be2ebcc416acb",
+    "69614a3e748be2ebcc416acc",
+    "69614a3e748be2ebcc416acd",
+    "69659fe68848b703c934f297",
+    "69659fe68848b703c934f29a",
+    "69659fe68848b703c934f29f",
+    "6965a0888848b703c934f2a3",
+    "6965a0888848b703c934f2a6",
+    "6965a0888848b703c934f2ab",
+    "69660176502dbbf81085261b",
+    "69668da55d74f8c061ee0f30",
+    "69668da55d74f8c061ee0f31",
+    "69668da55d74f8c061ee0f32",
+    "69668da55d74f8c061ee0f33"
+  ],
+  "completed_at": "2026-01-18T02:17:16.859306+00:00"
+}
