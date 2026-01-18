@@ -189,15 +189,17 @@ class TestVarianceAcrossRuns:
             "seeker_name": "TestUser",
             "desired_feeling": "brave",
             "time_available": "20 minutes",
-            "setting": "bedroom"
+            "setting": "bedroom",
+            "persona_id": "cathleen"
         }
-        guide_config = PERSONA_CONFIG["kathleen"]
+        guide_config = PERSONA_CONFIG["cathleen"]
+        research_packet = {"facts": []}
         
         setting_details = []
         sensory_details = []
         
         for _ in range(10):
-            prompt = build_planner_prompt(spell_spec, guide_config, "kathleen")
+            prompt = build_planner_prompt(spell_spec, guide_config, research_packet)
             # Extract from prompt (look for the pattern)
             for line in prompt.split('\n'):
                 if 'setting_detail:' in line:
