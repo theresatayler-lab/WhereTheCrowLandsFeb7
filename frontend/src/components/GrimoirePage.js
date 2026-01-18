@@ -41,75 +41,100 @@ const MATERIAL_ICONS = {
 };
 
 // Archetype-specific styling (supporting both legacy and new IDs)
+// CONTRAST-LOCKED: All bgAccent now uses solid vellum background for readability
 const ARCHETYPE_STYLES = {
   // Shigg - Warm amber/copper tones (kitchen witch, comfort, tea)
   shigg: {
     borderColor: 'border-amber-600',
-    accentColor: 'text-amber-500',
-    bgAccent: 'bg-amber-900/15',
+    accentColor: 'text-amber-700',
+    accentColorLight: 'text-amber-500',
+    bgAccent: 'bg-[#F3EFE8]', // Solid vellum - CONTRAST LOCKED
+    decorativeBorder: 'border-amber-600/30',
     headerGradient: 'from-amber-900/30 via-amber-800/20 to-transparent',
     cardGradient: 'from-amber-950/90 via-amber-900/80 to-amber-950/90',
-    textMuted: 'text-amber-200/70',
+    textMuted: 'text-stone-600',
+    textOnVellum: 'text-stone-800',
   },
   // Cathleen - Deep teal/emerald (Irish, protective, voice magic)
   cathleen: {
     borderColor: 'border-teal-600',
-    accentColor: 'text-teal-400',
-    bgAccent: 'bg-teal-900/15',
+    accentColor: 'text-teal-700',
+    accentColorLight: 'text-teal-400',
+    bgAccent: 'bg-[#F3EFE8]', // Solid vellum - CONTRAST LOCKED
+    decorativeBorder: 'border-teal-600/30',
     headerGradient: 'from-teal-900/30 via-teal-800/20 to-transparent',
     cardGradient: 'from-slate-900/90 via-teal-950/80 to-slate-900/90',
-    textMuted: 'text-teal-200/70',
+    textMuted: 'text-stone-600',
+    textOnVellum: 'text-stone-800',
   },
   // Katherine - Rich purple/violet (ceremonial, Golden Dawn, precise)
   katherine: {
     borderColor: 'border-violet-600',
-    accentColor: 'text-violet-400',
-    bgAccent: 'bg-violet-900/15',
+    accentColor: 'text-violet-700',
+    accentColorLight: 'text-violet-400',
+    bgAccent: 'bg-[#F3EFE8]', // Solid vellum - CONTRAST LOCKED
+    decorativeBorder: 'border-violet-600/30',
     headerGradient: 'from-violet-900/30 via-violet-800/20 to-transparent',
     cardGradient: 'from-slate-900/90 via-violet-950/80 to-slate-900/90',
-    textMuted: 'text-violet-200/70',
+    textMuted: 'text-stone-600',
+    textOnVellum: 'text-stone-800',
   },
   // Theresa - Cool indigo/slate (investigative, pattern-breaking, seer)
   theresa: {
     borderColor: 'border-indigo-500',
-    accentColor: 'text-indigo-400',
-    bgAccent: 'bg-indigo-900/15',
+    accentColor: 'text-indigo-700',
+    accentColorLight: 'text-indigo-400',
+    bgAccent: 'bg-[#F3EFE8]', // Solid vellum - CONTRAST LOCKED
+    decorativeBorder: 'border-indigo-500/30',
     headerGradient: 'from-indigo-900/30 via-slate-800/20 to-transparent',
     cardGradient: 'from-slate-900/90 via-indigo-950/80 to-slate-900/90',
-    textMuted: 'text-indigo-200/70',
+    textMuted: 'text-stone-600',
+    textOnVellum: 'text-stone-800',
   },
   // Legacy IDs (for backwards compatibility)
   shiggy: {
     borderColor: 'border-amber-600',
-    accentColor: 'text-amber-500',
-    bgAccent: 'bg-amber-900/15',
+    accentColor: 'text-amber-700',
+    accentColorLight: 'text-amber-500',
+    bgAccent: 'bg-[#F3EFE8]',
+    decorativeBorder: 'border-amber-600/30',
     headerGradient: 'from-amber-900/30 via-amber-800/20 to-transparent',
     cardGradient: 'from-amber-950/90 via-amber-900/80 to-amber-950/90',
-    textMuted: 'text-amber-200/70',
+    textMuted: 'text-stone-600',
+    textOnVellum: 'text-stone-800',
   },
   kathleen: {
     borderColor: 'border-teal-600',
-    accentColor: 'text-teal-400',
-    bgAccent: 'bg-teal-900/15',
+    accentColor: 'text-teal-700',
+    accentColorLight: 'text-teal-400',
+    bgAccent: 'bg-[#F3EFE8]',
+    decorativeBorder: 'border-teal-600/30',
     headerGradient: 'from-teal-900/30 via-teal-800/20 to-transparent',
     cardGradient: 'from-slate-900/90 via-teal-950/80 to-slate-900/90',
-    textMuted: 'text-teal-200/70',
+    textMuted: 'text-stone-600',
+    textOnVellum: 'text-stone-800',
   },
   catherine: {
     borderColor: 'border-violet-600',
-    accentColor: 'text-violet-400',
-    bgAccent: 'bg-violet-900/15',
+    accentColor: 'text-violet-700',
+    accentColorLight: 'text-violet-400',
+    bgAccent: 'bg-[#F3EFE8]',
+    decorativeBorder: 'border-violet-600/30',
     headerGradient: 'from-violet-900/30 via-violet-800/20 to-transparent',
     cardGradient: 'from-slate-900/90 via-violet-950/80 to-slate-900/90',
-    textMuted: 'text-violet-200/70',
+    textMuted: 'text-stone-600',
+    textOnVellum: 'text-stone-800',
   },
   neutral: {
-    borderColor: 'border-slate-600',
-    accentColor: 'text-slate-400',
-    bgAccent: 'bg-slate-800/30',
+    borderColor: 'border-stone-500',
+    accentColor: 'text-stone-700',
+    accentColorLight: 'text-stone-400',
+    bgAccent: 'bg-[#F3EFE8]',
+    decorativeBorder: 'border-stone-400/30',
     headerGradient: 'from-slate-800/30 to-transparent',
     cardGradient: 'from-slate-900/90 via-slate-800/80 to-slate-900/90',
-    textMuted: 'text-slate-300/70',
+    textMuted: 'text-stone-600',
+    textOnVellum: 'text-stone-800',
   },
 };
 
