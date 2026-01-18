@@ -283,6 +283,249 @@ class TestPlannerOutputSchema:
         print("✓ Planner JSON schema includes V1.2 fields")
 
 
+class TestCacheSeedRegression:
+    """
+    FAILURE MODE TEST: Catches fixed RNG seed, cached plan reuse, 
+    or tokens accidentally computed once per process.
+    """
+    
+    def test_text_tokens_vary_across_runs(self):
+        """6 runs with same prompt should produce varied text_tokens"""
+        spell_spec = {
+            "intention": "I need protection for my home",
+            "seeker_name": "TestUser",
+            "desired_feeling": "protected",
+            "time_available": "15 minutes",
+            "setting": "living room",
+            "persona_id": "shigg"
+        }
+        guide_config = PERSONA_CONFIG["shigg"]
+        research_packet = {"facts": []}
+        
+        setting_details = []
+        gesture_details = []
+        sensory_details = []
+        
+        for _ in range(6):
+            prompt = build_planner_prompt(spell_spec, guide_config, research_packet)
+            for line in prompt.split('\n'):
+                if 'setting_detail:' in line:
+                    setting_details.append(line.split('setting_detail:')[1].strip())
+                if 'gesture_detail:' in line:
+                    gesture_details.append(line.split('gesture_detail:')[1].strip())
+                if 'sensory_detail:' in line:
+                    sensory_details.append(line.split('sensory_detail:')[1].strip())
+        
+        unique_settings = len(set(setting_details))
+        unique_gestures = len(set(gesture_details))
+        unique_sensory = len(set(sensory_details))
+        
+        print(f"Settings: {unique_settings}/6 unique (need >=4)")
+        print(f"Gestures: {unique_gestures}/6 unique (need >=3)")
+        print(f"Sensory: {unique_sensory}/6 unique")
+        
+        assert unique_settings >= 4, f"Setting details not varied: {unique_settings}/6 (need >=4)"
+        assert unique_gestures >= 3, f"Gesture details not varied: {unique_gestures}/6 (need >=3)"
+        print("✓ Text tokens vary across runs (no cache/seed issue)")
+    
+    def test_micro_lore_varies_across_runs(self):
+        """6 runs should select different micro_lore combinations"""
+        spell_spec = {
+            "intention": "calm me",
+            "seeker_name": "Test",
+            "desired_feeling": "calm",
+            "persona_id": "cathleen"
+        }
+        guide_config = PERSONA_CONFIG["cathleen"]
+        research_packet = {"facts": []}
+        
+        all_selections = []
+        for _ in range(6):
+            prompt = build_planner_prompt(spell_spec, guide_config, research_packet)
+            # Extract micro_lore section
+            if "MICRO-LORE DETAILS" in prompt:
+                start = prompt.find("MICRO-LORE DETAILS")
+                end = prompt.find("## TABOO", start)
+                section = prompt[start:end] if end > start else prompt[start:start+500]
+                all_selections.append(section)
+        
+        unique_selections = len(set(all_selections))
+        print(f"Micro-lore selections: {unique_selections}/6 unique")
+        assert unique_selections >= 3, f"Micro-lore not varied: {unique_selections}/6"
+        print("✓ Micro-lore varies across runs")
+
+
+class TestCrossContamination:
+    """
+    FAILURE MODE TEST: Catches persona bleed - when one guide accidentally 
+    uses another guide's domain terms, tools, or phrases.
+    """
+    
+    # Define forbidden terms for each persona (from OTHER personas' domains)
+    FORBIDDEN_TERMS = {
+        "shigg": [
+            # Katherine's domain
+            "Golden Dawn", "sephirot", "Tree of Life", "Rule of Three Tests",
+            "SPR", "psychical research", "sigil", "hexagram", "Qabalah",
+            "Let's be precise", "test everything", "Document everything",
+            # Cathleen's domain  
+            "Morrigan", "keening", "Wigmore Hall", "soprano",
+            "Listen now", "Here's what we do", "brave one"
+        ],
+        "cathleen": [
+            # Katherine's domain
+            "Golden Dawn", "sephirot", "needle and thread", "sigil binding",
+            "measuring tape", "scissors", "SPR methodology",
+            "Let's be precise", "Document everything",
+            # Shigg's domain
+            "kettle", "teacup", "tea leaves", "Rubáiyát", "Omar Khayyám",
+            "Come closer, love", "That's the thing, isn't it", "pet", "duck"
+        ],
+        "katherine": [
+            # Shigg's domain
+            "kettle", "teacup", "tea leaves", "Rubáiyát", "bird omen",
+            "Come closer, love", "The birds know", "my nan always said",
+            "love", "dear", "pet", "duck",
+            # Cathleen's domain
+            "Morrigan", "keening", "voice ward", "song", "soprano",
+            "Listen now", "dear heart", "brave one"
+        ]
+    }
+    
+    def test_shigg_no_cross_contamination(self):
+        """Shigg output must not contain Katherine/Cathleen domain terms"""
+        self._test_persona_contamination("shigg")
+    
+    def test_cathleen_no_cross_contamination(self):
+        """Cathleen output must not contain Shigg/Katherine domain terms"""
+        self._test_persona_contamination("cathleen")
+    
+    def test_katherine_no_cross_contamination(self):
+        """Katherine output must not contain Shigg/Cathleen domain terms"""
+        self._test_persona_contamination("katherine")
+    
+    def _test_persona_contamination(self, persona_id: str):
+        """Helper to test a persona for cross-contamination"""
+        spell_spec = {
+            "intention": "I need protection and clarity",
+            "seeker_name": "TestUser",
+            "desired_feeling": "protected",
+            "time_available": "15 minutes",
+            "persona_id": persona_id
+        }
+        guide_config = PERSONA_CONFIG[persona_id]
+        research_packet = {"facts": []}
+        
+        # Build both planner and writer prompts
+        plan = {
+            "template_id": "test",
+            "canon_anchor": {"id": "test", "title": "Test"},
+            "block_sequence": ["cold_open", "stepper", "closing"],
+            "variation_tokens": {"time_of_day": "dawn", "gesture_type": "circular"},
+            "text_tokens": {"setting_detail": "corner", "sensory_detail": "warmth", "gesture_detail": "motion"},
+            "micro_lore_selected": get_persona_micro_lore(persona_id)[:2],
+            "taboos": get_persona_taboos(persona_id),
+            "tradition_tags": []
+        }
+        
+        writer_prompt = build_writer_prompt(spell_spec, guide_config, research_packet, plan)
+        
+        # Check for forbidden terms in the PROMPT (what we're asking the AI to do)
+        # The prompt should be setting up the right constraints
+        forbidden = self.FORBIDDEN_TERMS[persona_id]
+        violations = []
+        
+        # Check the micro_lore and signature phrases sections specifically
+        for term in forbidden:
+            # We're checking the SETUP not the output - but certain terms should never appear
+            # in the signature_phrases or micro_lore being injected
+            if term.lower() in writer_prompt.lower():
+                # Allow if it's in the "NEVER say" section (that's correct)
+                never_section = writer_prompt.find("NEVER say:")
+                taboo_section = writer_prompt.find("FORBIDDEN THEMES")
+                term_pos = writer_prompt.lower().find(term.lower())
+                
+                # If term is in forbidden/never sections, that's OK
+                if never_section != -1 and term_pos > never_section:
+                    continue
+                if taboo_section != -1 and term_pos > taboo_section:
+                    continue
+                    
+                violations.append(term)
+        
+        if violations:
+            print(f"✗ {persona_id} has cross-contamination: {violations}")
+        else:
+            print(f"✓ {persona_id} has no cross-contamination in prompt setup")
+        
+        # This is a soft assertion - we're checking prompt construction
+        # Real output checking would require live API calls
+        assert len(violations) == 0, f"{persona_id} prompt contains forbidden terms: {violations}"
+
+
+class TestTabooKeywordEnforcement:
+    """Test that taboo keywords are properly defined and checkable"""
+    
+    # Expanded taboo keywords for detection
+    TABOO_KEYWORDS = {
+        "shigg": {
+            "modern crystal shop language": ["crystal grid", "charging crystals", "crystal healing", "chakra stones"],
+            "neon cyber occult aesthetics": ["neon", "cyber", "digital sigil", "tech magic"],
+            "new age manifestation talk": ["manifest", "manifestation", "law of attraction", "abundance mindset", "raise your vibration"],
+            "Instagram witch aesthetic": ["witchy vibes", "witch aesthetic", "cottagecore witch"]
+        },
+        "cathleen": {
+            "kitchen-witch domestic aesthetics": ["kitchen witch", "hearth magic", "domestic goddess"],
+            "teacups and cozy domesticity": ["teacup", "tea leaves", "cozy kitchen", "kettle charm"],
+            "new age love-and-light bypassing": ["love and light", "good vibes only", "positive vibes", "toxic positivity"]
+        },
+        "katherine": {
+            "cozy domestic teacup imagery": ["teacup", "tea leaves", "kettle", "cozy kitchen"],
+            "warm kitchen aesthetics": ["kitchen witch", "hearth", "domestic magic", "cozy"],
+            "bird oracle work": ["bird omen", "bird oracle", "what the birds say", "feathered messenger"],
+            "vague intuition-based practice": ["just feel it", "trust your gut", "intuition says", "vibe check"]
+        }
+    }
+    
+    def test_taboo_keywords_defined(self):
+        """Each persona should have expanded taboo keywords"""
+        for persona_id in ["shigg", "cathleen", "katherine"]:
+            keywords = self.TABOO_KEYWORDS.get(persona_id, {})
+            assert len(keywords) >= 3, f"{persona_id} needs more taboo keyword mappings"
+            total_keywords = sum(len(v) for v in keywords.values())
+            print(f"✓ {persona_id}: {len(keywords)} taboo themes → {total_keywords} keywords")
+    
+    def test_can_detect_taboo_violations(self):
+        """Validator function should detect taboo keywords in text"""
+        # Simulate a "bad" output that violates Katherine's taboos
+        bad_output = "Let's use the kettle charm and read the tea leaves for guidance."
+        
+        violations = self._check_taboo_violations("katherine", bad_output)
+        assert len(violations) > 0, "Should detect kettle/tea violations for Katherine"
+        print(f"✓ Detected violations in bad output: {violations}")
+    
+    def test_clean_output_passes(self):
+        """Clean output should pass taboo check"""
+        clean_output = "Take the needle and thread. Bind with precision. Document your findings."
+        
+        violations = self._check_taboo_violations("katherine", clean_output)
+        assert len(violations) == 0, f"Clean output should pass: {violations}"
+        print("✓ Clean output passes taboo check")
+    
+    def _check_taboo_violations(self, persona_id: str, text: str) -> list:
+        """Check text for taboo keyword violations"""
+        violations = []
+        keywords_map = self.TABOO_KEYWORDS.get(persona_id, {})
+        text_lower = text.lower()
+        
+        for taboo_theme, keywords in keywords_map.items():
+            for keyword in keywords:
+                if keyword.lower() in text_lower:
+                    violations.append(f"{taboo_theme}: '{keyword}'")
+        
+        return violations
+
+
 if __name__ == "__main__":
     # Run tests
     print("\n" + "="*60)
