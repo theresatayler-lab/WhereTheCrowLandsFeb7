@@ -102,10 +102,14 @@ export const Profile = ({ user }) => {
         <DarkSection className="py-12 sm:py-16 md:py-20 px-4 sm:px-6" variant="warm">
           <div className="max-w-4xl mx-auto relative z-10">
           <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="text-center">
-            {/* Avatar */}
+            {/* Avatar - Parliament Crow */}
             <div className="relative inline-block mb-6">
-              <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-br from-crimson to-crimson-deep flex items-center justify-center border-2 border-gold/50">
-                <User className="w-10 h-10 sm:w-12 sm:h-12 text-gold-light" />
+              <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden border-2 border-gold/50 shadow-lg">
+                <img 
+                  src="https://customer-assets.emergentagent.com/job_arcane-rituals/artifacts/6swpo71j_wherethecrowlands_Now_can_we_create_a_full_brand_from_this_wi_416479c8-dbd6-4e10-9d1d-46e1d468e7bb_2.png"
+                  alt="Parliament Crow Avatar"
+                  className="w-full h-full object-cover"
+                />
               </div>
               {subscriptionStatus?.subscription_tier === 'paid' && (
                 <div className="absolute -bottom-1 -right-1 bg-gold text-navy-dark p-1.5 rounded-full">
