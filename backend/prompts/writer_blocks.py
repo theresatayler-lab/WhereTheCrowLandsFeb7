@@ -339,10 +339,18 @@ def validate_writer_blocks_output(output: dict, guide_id: str) -> tuple[bool, li
     errors = []
     
     # Required top-level fields
-    required = ["title", "intent", "guide_id", "template_id", "blocks", "sources", "ethics_statement", "canon_anchor", "persona_lock"]
+    required = ["title", "intent", "guide_id", "template_id", "blocks", "sources", "ethics_statement", "canon_anchor", "persona_lock", "tarot_card"]
     for field in required:
         if not output.get(field):
             errors.append(f"MISSING_FIELD: {field}")
+    
+    # Validate tarot_card structure
+    tarot = output.get("tarot_card", {})
+    if tarot:
+        tarot_required = ["title", "symbol", "essence", "key_action", "incantation", "timing"]
+        for field in tarot_required:
+            if not tarot.get(field):
+                errors.append(f"TAROT_CARD_MISSING: {field}")
     
     # Get blocks
     blocks = output.get("blocks", [])
