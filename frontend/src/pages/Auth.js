@@ -65,7 +65,13 @@ export const Auth = ({ onLogin }) => {
       </DarkSection>
 
       {/* Light Parchment Section - Form */}
-      <LightSection className="py-10 sm:py-14 px-4 sm:px-6">
+      <LightSection 
+        className="py-10 sm:py-14 px-4 sm:px-6"
+        atmosphericImage={ATMOSPHERIC_IMAGES.florals}
+        atmosphericOpacity={0.10}
+        atmosphericPosition="center"
+        atmosphericTint="sepia"
+      >
         <div className="max-w-md mx-auto">
           <MysticalDivider light />
           

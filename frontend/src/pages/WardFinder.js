@@ -333,7 +333,13 @@ const WardFinder = () => {
       <AnimatePresence mode="wait">
         {!result ? (
           /* Light Section - Form */
-          <LightSection className="py-12 sm:py-16 px-4 sm:px-6">
+          <LightSection 
+            className="py-12 sm:py-16 px-4 sm:px-6"
+            atmosphericImage={ATMOSPHERIC_IMAGES.maiden}
+            atmosphericOpacity={0.10}
+            atmosphericPosition="right bottom"
+            atmosphericTint="sepia"
+          >
             <div className="max-w-2xl mx-auto">
               <motion.form
                 key="form"

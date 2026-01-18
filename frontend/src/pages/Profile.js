@@ -136,7 +136,13 @@ export const Profile = ({ user }) => {
       </DarkSection>
 
       {/* Light Parchment Section */}
-      <LightSection className="py-10 sm:py-14 px-4 sm:px-6">
+      <LightSection 
+        className="py-10 sm:py-14 px-4 sm:px-6"
+        atmosphericImage={ATMOSPHERIC_IMAGES.peonies}
+        atmosphericOpacity={0.10}
+        atmosphericPosition="left center"
+        atmosphericTint="sepia"
+      >
         <div className="max-w-4xl mx-auto">
           <MysticalDivider light />
           
