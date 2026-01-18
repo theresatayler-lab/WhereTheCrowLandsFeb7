@@ -130,6 +130,7 @@ export const Navigation = ({ user, onLogout }) => {
         { to: '/figures', label: 'Figures', icon: Users },
         { to: '/sites', label: 'Sites', icon: MapPin },
         { to: '/rituals', label: 'Rituals', icon: Scroll },
+        { to: '/timeline', label: 'Timeline', icon: Clock },
       ]
     }
   };
