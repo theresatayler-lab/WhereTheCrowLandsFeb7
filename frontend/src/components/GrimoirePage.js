@@ -607,6 +607,91 @@ const TarotCardView = ({ spell, archetype, style, imageBase64, onViewFull, onCop
   );
 };
 
+// Save Ward Button Component
+const SaveWardButton = ({ ward, spellTitle }) => {
+  const [isSaving, setIsSaving] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
+  const navigate = useNavigate();
+  
+  const handleSaveWard = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      toast.error('Please log in to save wards to your grimoire');
+      navigate('/auth');
+      return;
+    }
+    
+    setIsSaving(true);
+    try {
+      const API_URL = process.env.REACT_APP_BACKEND_URL;
+      const response = await fetch(`${API_URL}/api/grimoire/save-ward`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          name: ward.name,
+          symbol: ward.symbol || '🪶',
+          meaning: ward.meaning,
+          how_to_find: ward.how_to_find,
+          activation: ward.activation,
+          source_spell: spellTitle,
+          guide: 'cathleen'
+        })
+      });
+      
+      if (response.ok) {
+        setIsSaved(true);
+        toast.success(`${ward.name} saved to your grimoire!`);
+      } else {
+        const data = await response.json();
+        if (data.feature === 'save_ward') {
+          toast.error('Upgrade to Pro to save wards to your grimoire!', {
+            action: {
+              label: 'Upgrade',
+              onClick: () => navigate('/profile')
+            }
+          });
+        } else {
+          throw new Error('Failed to save ward');
+        }
+      }
+    } catch (error) {
+      console.error('Error saving ward:', error);
+      toast.error('Failed to save ward. Please try again.');
+    } finally {
+      setIsSaving(false);
+    }
+  };
+  
+  if (isSaved) {
+    return (
+      <div className="flex items-center gap-1 text-teal-700">
+        <CheckCircle2 className="w-4 h-4" />
+        <span className="font-montserrat text-xs">Saved</span>
+      </div>
+    );
+  }
+  
+  return (
+    <button
+      onClick={handleSaveWard}
+      disabled={isSaving}
+      className="flex items-center gap-1 px-3 py-1.5 bg-teal-100 hover:bg-teal-200 border border-teal-400 rounded-sm transition-all disabled:opacity-50"
+      title="Save ward to your grimoire"
+      data-testid="save-ward-btn"
+    >
+      {isSaving ? (
+        <Loader2 className="w-4 h-4 animate-spin text-teal-700" />
+      ) : (
+        <Save className="w-4 h-4 text-teal-700" />
+      )}
+      <span className="font-montserrat text-xs text-teal-700">Save Ward</span>
+    </button>
+  );
+};
+
 export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSpell, isLoadingImages = false }) => {
   const [showHistoricalContext, setShowHistoricalContext] = useState(false);
   const [checklistMode, setChecklistMode] = useState(false);
