@@ -257,13 +257,31 @@ export const OccultGlyph = ({ symbol = 'pentacle', className = '', size = 'md', 
 // Now use Art Nouveau palette
 // ============================================================================
 
-export const DarkSection = ({ children, className = '', variant = 'default' }) => (
+export const DarkSection = ({ 
+  children, 
+  className = '', 
+  variant = 'default',
+  atmosphericImage = null,
+  atmosphericOpacity = 0.05,
+  atmosphericPosition = 'center',
+  atmosphericTint = 'teal'
+}) => (
   <div className={`relative ${className}`} style={{ backgroundColor: NOUVEAU_COLORS.midnightTeal }}>
     {/* Subtle texture overlay */}
     <div className="absolute inset-0 z-0 pointer-events-none" style={{
       backgroundImage: 'url(https://customer-assets.emergentagent.com/job_mystic-circle-2/artifacts/t5tfc6i3_COuld_we_creatre_more_of_these_--profile_bsfwy2d_--v_7_d08b86ee-a6ac-4cf3-a814-1344b45b3380_1.png)',
       backgroundSize: 'cover', backgroundPosition: 'center', opacity: '0.03', filter: 'hue-rotate(160deg) saturate(0.3)',
     }} />
+    {/* Atmospheric background image (optional) */}
+    {atmosphericImage && (
+      <AtmosphericBackground 
+        image={atmosphericImage}
+        opacity={atmosphericOpacity}
+        position={atmosphericPosition}
+        tint={atmosphericTint}
+        blend="soft-light"
+      />
+    )}
     {/* Gradient overlay */}
     <div className="absolute inset-0 z-0 pointer-events-none" style={{
       background: variant === 'warm' 
