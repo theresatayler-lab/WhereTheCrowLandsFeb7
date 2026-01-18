@@ -800,9 +800,9 @@ export const Timeline = () => {
   // Generate subtitle based on filters
   const getSubtitle = () => {
     if (activeEra && ERA_DEFINITIONS[activeEra]) {
-      return `An interactive journey through ${ERA_DEFINITIONS[activeEra].label.toLowerCase()} esoteric traditions`;
+      return `Documented history and mythology of ${ERA_DEFINITIONS[activeEra].label.toLowerCase()} esoteric traditions`;
     }
-    return "An interactive journey through occult history from antiquity to present";
+    return "Documented historic and mythological information, human-curated with AI-informed expansions";
   };
 
   return (
@@ -819,6 +819,13 @@ export const Timeline = () => {
               title="The Occult Timeline"
               subtitle={getSubtitle()}
             />
+            {/* Historical Disclaimer */}
+            <div className="mt-4 text-center">
+              <p className="font-montserrat text-xs text-cream/50 italic max-w-2xl mx-auto">
+                This project blends documented history, folklore, and myth. Human-curated foundations 
+                with AI-informed expansions for inspiration. Please verify sources and use in good faith.
+              </p>
+            </div>
           </motion.div>
 
           <GrandDivider variant="moon" />
