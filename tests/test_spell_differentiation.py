@@ -22,8 +22,8 @@ from backend.persona_config import (
     get_persona_taboos,
     get_persona_voice
 )
-from backend.prompts.planner_blocks import build_planner_prompt, TEXT_VARIATION_TOKENS, VARIATION_KNOBS
-from backend.prompts.writer_blocks import build_writer_prompt
+from backend.prompts.planner_blocks import build_planner_prompt_blocks as build_planner_prompt, TEXT_VARIATION_TOKENS, VARIATION_KNOBS
+from backend.prompts.writer_blocks import build_writer_prompt_blocks as build_writer_prompt
 
 
 class TestMicroLoreWiring:
