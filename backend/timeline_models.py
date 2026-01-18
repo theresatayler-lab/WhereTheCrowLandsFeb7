@@ -196,6 +196,19 @@ TAXONOMY_DATA = {
         "expanded_examples": "TV witches (Bewitched) • Teen witch movies • Buffy the Vampire Slayer • Witchy fashion trends • Social media witchcraft • Corporate wellness magic • Video game witch archetypes",
         "color": "#a29bfe",
         "icon": "star"
+    },
+    "political_activism": {
+        "id": 14,
+        "name": "Protest, Political Action & Social Change",
+        "time_period": "1848–present, with roots in witch-hunt resistance symbolism",
+        "visual_tells": ["protest banners", "hexing imagery", "binding rituals", "feminist symbols", "environmental sacred space", "street theater magic", "collective ritual"],
+        "lane_tags": ["Activism", "feminism", "social justice", "resistance"],
+        "glossary_terms": ["Binding spell", "Hex", "Magical resistance", "Sacred activism", "Ritual protest", "Decolonization", "Reclamation"],
+        "why_here": "Where occult practice meets social/political change—witches as activists, magic as resistance, spirituality as liberation theology.",
+        "core_figures": ["Victoria Woodhull", "Annie Besant", "Starhawk", "Z. Budapest", "W.I.T.C.H. collective", "Radical Faeries"],
+        "expanded_examples": "Spiritualist abolitionists • Theosophical anti-colonialism • W.I.T.C.H. feminist protests • Reclaiming Tradition activism • Magic Resistance binding spells • Occupy rituals • Climate activism • LGBTQ+ pagan communities • TikTok witchcraft activism",
+        "color": "#e84393",
+        "icon": "flame"
     }
 }
 
@@ -210,6 +223,7 @@ class EventCategory(str, Enum):
     LEGAL = "Legal"
     SITE = "Site"
     RITUAL = "Ritual"
+    PROTEST = "Protest"  # New category for political action events
 
 # ============================================================================
 # SOURCE QUALITY TIERS
