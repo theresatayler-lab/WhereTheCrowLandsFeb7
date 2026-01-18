@@ -911,9 +911,9 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
           </div>
         )}
 
-        {/* Introduction */}
+        {/* Introduction - CONTRAST LOCKED: Solid vellum plate */}
         {spell.introduction && (
-          <div className={`p-4 bg-amber-900/10 border-l-4 border-amber-800 rounded-r-sm`}>
+          <div className="p-4 bg-[#F3EFE8] border-l-4 border-amber-700 rounded-r-sm shadow-sm">
             <p className="font-crimson text-base md:text-lg text-stone-800 italic leading-relaxed">
               {spell.introduction}
             </p>
