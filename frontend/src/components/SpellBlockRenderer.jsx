@@ -597,10 +597,7 @@ const BirdOracleBlock = ({ content, entries, onEntry, archetypeStyle }) => (
           <textarea
             value={entries['bird_observation'] || ''}
             onChange={(e) => onEntry('bird_observation', e.target.value)}
-            className={cn(
-              "w-full p-2 rounded-lg text-sm border bg-slate-900/50",
-              archetypeStyle.borderColor || "border-border"
-            )}
+            className="w-full p-2 rounded-lg text-sm border bg-white border-stone-300 text-stone-800"
             rows={2}
             placeholder="Record what you observe..."
           />
@@ -610,19 +607,19 @@ const BirdOracleBlock = ({ content, entries, onEntry, archetypeStyle }) => (
   </div>
 );
 
-// Ward Block
+// Ward Block - CONTRAST LOCKED
 const WardBlock = ({ content, archetypeStyle }) => (
   <div className="space-y-4" data-testid="ward-block">
     <div className="flex items-center gap-3">
-      <Shield className={cn("w-6 h-6", archetypeStyle.accentColor || "text-primary")} />
+      <Shield className="w-6 h-6 text-teal-600" />
       <div>
-        <div className="font-cinzel text-lg">{content.ward_name}</div>
-        <div className="text-sm text-muted-foreground">{content.purpose}</div>
+        <div className="font-cinzel text-lg text-stone-800">{content.ward_name}</div>
+        <div className="text-sm text-stone-500">{content.purpose}</div>
       </div>
     </div>
     
     {content.creation_steps && (
-      <ol className="space-y-2 list-decimal list-inside">
+      <ol className="space-y-2 list-decimal list-inside text-stone-700">
         {content.creation_steps.map((step, i) => (
           <li key={i} className="text-sm">{step}</li>
         ))}
@@ -630,29 +627,29 @@ const WardBlock = ({ content, archetypeStyle }) => (
     )}
     
     {content.activation_phrase && (
-      <div className="p-4 bg-muted/50 rounded-lg text-center">
-        <p className="text-sm text-muted-foreground mb-1">Activation Phrase:</p>
-        <p className="font-cinzel italic">&ldquo;{content.activation_phrase}&rdquo;</p>
+      <div className="p-4 bg-[#F3EFE8] border border-teal-300 rounded-lg text-center">
+        <p className="text-sm text-stone-500 mb-1">Activation Phrase:</p>
+        <p className="font-cinzel italic text-stone-800">&ldquo;{content.activation_phrase}&rdquo;</p>
       </div>
     )}
     
     {content.talisman_option && (
-      <p className="text-sm text-muted-foreground">
+      <p className="text-sm text-stone-600">
         <span className="font-medium">Optional talisman:</span> {content.talisman_option}
       </p>
     )}
   </div>
 );
 
-// Song Prompt Block
+// Song Prompt Block - CONTRAST LOCKED
 const SongPromptBlock = ({ content, archetypeStyle }) => (
   <div className="space-y-4" data-testid="song-prompt-block">
     <div className="flex items-start gap-3">
-      <Music className={cn("w-6 h-6", archetypeStyle.accentColor || "text-primary")} />
+      <Music className="w-6 h-6 text-amber-600" />
       <div>
-        <p className="font-medium">{content.instruction}</p>
+        <p className="font-medium text-stone-800">{content.instruction}</p>
         {content.suggested_melody && (
-          <p className="text-sm text-muted-foreground mt-1">
+          <p className="text-sm text-stone-500 mt-1">
             Suggested melody: {content.suggested_melody}
           </p>
         )}
@@ -660,28 +657,28 @@ const SongPromptBlock = ({ content, archetypeStyle }) => (
     </div>
     
     {content.words_optional && (
-      <div className="p-3 bg-muted/30 rounded-lg italic text-sm">
+      <div className="p-3 bg-[#F3EFE8] border border-amber-300 rounded-lg italic text-sm text-stone-700">
         Optional words: &ldquo;{content.words_optional}&rdquo;
       </div>
     )}
     
     {content.purpose && (
-      <p className="text-sm text-muted-foreground">{content.purpose}</p>
+      <p className="text-sm text-stone-600">{content.purpose}</p>
     )}
   </div>
 );
 
-// Inspiration Block (Theresa specialty) - formerly Evidence Card
+// Inspiration Block (Theresa specialty) - formerly Evidence Card - CONTRAST LOCKED
 const EvidenceCardBlock = ({ content, archetypeStyle }) => (
   <div className="space-y-4" data-testid="inspiration-block">
     <div className="grid gap-4">
       {content.known?.length > 0 && (
-        <div className="p-3 bg-indigo-500/10 border border-indigo-500/30 rounded-lg">
-          <div className="text-xs font-cinzel tracking-wider text-indigo-400 mb-2">What the Records Show</div>
+        <div className="p-3 bg-[#F3EFE8] border border-indigo-400 rounded-lg">
+          <div className="text-xs font-cinzel tracking-wider text-indigo-700 mb-2">What the Records Show</div>
           <ul className="space-y-1 text-sm">
             {content.known.map((item, i) => (
-              <li key={i} className="flex items-start gap-2">
-                <Check className="w-4 h-4 text-indigo-400 mt-0.5 flex-shrink-0" />
+              <li key={i} className="flex items-start gap-2 text-stone-700">
+                <Check className="w-4 h-4 text-indigo-600 mt-0.5 flex-shrink-0" />
                 {item}
               </li>
             ))}
@@ -690,12 +687,12 @@ const EvidenceCardBlock = ({ content, archetypeStyle }) => (
       )}
       
       {content.likely?.length > 0 && (
-        <div className="p-3 bg-slate-500/10 border border-slate-500/30 rounded-lg">
-          <div className="text-xs font-cinzel tracking-wider text-slate-400 mb-2">What the Patterns Suggest</div>
+        <div className="p-3 bg-[#F3EFE8] border border-stone-400 rounded-lg">
+          <div className="text-xs font-cinzel tracking-wider text-stone-600 mb-2">What the Patterns Suggest</div>
           <ul className="space-y-1 text-sm">
             {content.likely.map((item, i) => (
-              <li key={i} className="flex items-start gap-2">
-                <Star className="w-4 h-4 text-slate-400 mt-0.5 flex-shrink-0" />
+              <li key={i} className="flex items-start gap-2 text-stone-700">
+                <Star className="w-4 h-4 text-stone-500 mt-0.5 flex-shrink-0" />
                 {item}
               </li>
             ))}
@@ -704,12 +701,12 @@ const EvidenceCardBlock = ({ content, archetypeStyle }) => (
       )}
       
       {content.lore?.length > 0 && (
-        <div className="p-3 bg-violet-500/10 border border-violet-500/30 rounded-lg">
-          <div className="text-xs font-cinzel tracking-wider text-violet-400 mb-2">What the Stories Tell</div>
+        <div className="p-3 bg-[#F3EFE8] border border-violet-400 rounded-lg">
+          <div className="text-xs font-cinzel tracking-wider text-violet-700 mb-2">What the Stories Tell</div>
           <ul className="space-y-1 text-sm">
             {content.lore.map((item, i) => (
-              <li key={i} className="flex items-start gap-2">
-                <BookOpen className="w-4 h-4 text-violet-400 mt-0.5 flex-shrink-0" />
+              <li key={i} className="flex items-start gap-2 text-stone-700">
+                <BookOpen className="w-4 h-4 text-violet-600 mt-0.5 flex-shrink-0" />
                 {item}
               </li>
             ))}
