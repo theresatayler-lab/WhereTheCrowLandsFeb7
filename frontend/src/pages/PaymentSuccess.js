@@ -57,6 +57,17 @@ export const PaymentSuccess = () => {
     checkStatus(0);
   };
 
+  useEffect(() => {
+    if (!sessionId) {
+      setStatus('error');
+      toast.error('No payment session found');
+      return;
+    }
+
+    pollPaymentStatus();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sessionId]);
+
   return (
     <div className="min-h-screen flex items-center justify-center px-6 py-24">
       <motion.div
