@@ -28,7 +28,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 MONGO_URL = os.environ.get('MONGO_URL', 'mongodb://localhost:27017')
-DB_NAME = os.environ.get('DB_NAME', 'diywizardry')
+DB_NAME = os.environ.get('DB_NAME', 'test_database')
 
 # Migration metadata marker
 MIGRATION_MARKER = "tarot_card_migration_v1"
