@@ -61,7 +61,6 @@ export const Footer = () => {
                 { to: '/deities', label: 'Deities' },
                 { to: '/figures', label: 'Historical Figures' },
                 { to: '/rituals', label: 'Rituals & Practices' },
-                { to: '/timeline', label: 'Timeline 1910-1945' },
               ].map((link) => (
                 <li key={link.to}>
                   <Link 
