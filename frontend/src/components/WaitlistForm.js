@@ -54,9 +54,9 @@ export const WaitlistForm = ({ source = 'homepage' }) => {
         className="bg-card/70 border-2 border-primary/30 rounded-sm p-6 sm:p-8 text-center max-w-md mx-auto"
       >
         <CheckCircle2 className="w-12 h-12 sm:w-16 sm:h-16 text-accent mx-auto mb-4" />
-        <h3 className="font-cinzel text-lg sm:text-xl text-secondary mb-2">You're on the list!</h3>
+        <h3 className="font-cinzel text-lg sm:text-xl text-secondary mb-2">You&apos;re on the list!</h3>
         <p className="font-montserrat text-sm text-muted-foreground">
-          We'll notify you when we launch. Get ready to reclaim your power.
+          We&apos;ll notify you when we launch. Get ready to reclaim your power.
         </p>
       </motion.div>
     );
