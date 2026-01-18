@@ -477,47 +477,39 @@ const LoreVignetteBlock = ({ content, archetypeStyle }) => (
     </div>
     
     <div className="prose prose-sm prose-invert max-w-none">
-      <p className="text-foreground/90 leading-relaxed">{content.narrative}</p>
+      <p className="text-stone-700 leading-relaxed">{content.narrative}</p>
     </div>
     
     {content.relevance_to_working && (
-      <div className={cn(
-        "p-3 rounded-lg text-sm border",
-        archetypeStyle.bgAccent || "bg-muted/30",
-        archetypeStyle.borderColor ? archetypeStyle.borderColor.replace('border-', 'border-') + '/30' : "border-border/30"
-      )}>
-        <span className={cn("font-medium", archetypeStyle.accentColor || "text-foreground")}>Connection:</span> {content.relevance_to_working}
+      <div className="p-3 rounded-lg text-sm border bg-[#F3EFE8] border-stone-300">
+        <span className="font-medium text-stone-800">Connection:</span> <span className="text-stone-700">{content.relevance_to_working}</span>
       </div>
     )}
     
     {content.source_connection && (
-      <div className={cn("text-xs italic", archetypeStyle.textMuted || "text-muted-foreground")}>
+      <div className="text-xs italic text-stone-500">
         Source: {content.source_connection}
       </div>
     )}
   </div>
 );
 
-// Reflection Block
+// Reflection Block - CONTRAST LOCKED
 const ReflectionBlock = ({ content, entries, onEntry, archetypeStyle }) => (
   <div className="space-y-4" data-testid="reflection-block">
     {content.guide_note && (
-      <p className={cn("italic", archetypeStyle.textMuted || "text-muted-foreground")}>&ldquo;{content.guide_note}&rdquo;</p>
+      <p className="italic text-stone-600">&ldquo;{content.guide_note}&rdquo;</p>
     )}
     
     {content.prompts?.map((prompt, i) => (
-      <div key={i} className={cn(
-        "p-3 rounded-lg border",
-        archetypeStyle.bgAccent || "bg-muted/30",
-        archetypeStyle.borderColor ? archetypeStyle.borderColor.replace('border-', 'border-') + '/20' : "border-border/20"
-      )}>
-        <p className="text-sm mb-2">{prompt}</p>
+      <div key={i} className="p-3 rounded-lg border bg-[#F3EFE8] border-stone-300">
+        <p className="text-sm text-stone-800">{prompt}</p>
       </div>
     ))}
     
     {content.log_fields?.map((field) => (
       <div key={field.field_id} className="space-y-2">
-        <label className="text-sm font-medium">{field.label}</label>
+        <label className="text-sm font-medium text-stone-700">{field.label}</label>
         {field.type === 'scale' ? (
           <input
             type="range"
@@ -531,7 +523,7 @@ const ReflectionBlock = ({ content, entries, onEntry, archetypeStyle }) => (
           <textarea
             value={entries[field.field_id] || ''}
             onChange={(e) => onEntry(field.field_id, e.target.value)}
-            className="w-full p-2 bg-background border rounded-lg text-sm"
+            className="w-full p-2 bg-white border border-stone-300 rounded-lg text-sm text-stone-800"
             rows={3}
             placeholder={field.placeholder}
           />
@@ -540,7 +532,7 @@ const ReflectionBlock = ({ content, entries, onEntry, archetypeStyle }) => (
             type="text"
             value={entries[field.field_id] || ''}
             onChange={(e) => onEntry(field.field_id, e.target.value)}
-            className="w-full p-2 bg-background border rounded-lg text-sm"
+            className="w-full p-2 bg-white border border-stone-300 rounded-lg text-sm text-stone-800"
             placeholder={field.placeholder}
           />
         )}
@@ -549,52 +541,44 @@ const ReflectionBlock = ({ content, entries, onEntry, archetypeStyle }) => (
   </div>
 );
 
-// Closing Block
+// Closing Block - CONTRAST LOCKED
 const ClosingBlock = ({ content, archetypeStyle }) => (
   <div className="space-y-4" data-testid="closing-block">
     {content.license_to_depart && (
-      <div className={cn(
-        "p-4 rounded-lg border",
-        archetypeStyle.bgAccent || "bg-muted/30",
-        archetypeStyle.borderColor ? archetypeStyle.borderColor.replace('border-', 'border-') + '/30' : "border-border/30"
-      )}>
-        <p className="italic">&ldquo;{content.license_to_depart}&rdquo;</p>
+      <div className="p-4 rounded-lg border bg-[#F3EFE8] border-stone-300">
+        <p className="italic text-stone-700">&ldquo;{content.license_to_depart}&rdquo;</p>
       </div>
     )}
     
     {content.grounding_action && (
       <div className="flex items-start gap-3">
-        <Moon className={cn("w-5 h-5 mt-0.5", archetypeStyle.accentColor || "text-primary")} />
-        <p>{content.grounding_action}</p>
+        <Moon className="w-5 h-5 mt-0.5 text-amber-600" />
+        <p className="text-stone-800">{content.grounding_action}</p>
       </div>
     )}
     
     {content.empowerment_line && (
-      <div className={cn(
-        "p-4 rounded-lg text-center font-cinzel border",
-        archetypeStyle.bgAccent || "bg-primary/10",
-        archetypeStyle.borderColor || "border-primary/30"
-      )}>
-        <p className={cn("text-lg", archetypeStyle.accentColor || "text-foreground")}>&ldquo;{content.empowerment_line}&rdquo;</p>
+      <div className="p-4 rounded-lg text-center font-cinzel border bg-[#EDE8DF] border-amber-500">
+        <p className="text-lg text-amber-800">&ldquo;{content.empowerment_line}&rdquo;</p>
       </div>
     )}
     
     {content.next_steps_hint && (
-      <p className={cn("text-sm", archetypeStyle.textMuted || "text-muted-foreground")}>
+      <p className="text-sm text-stone-600">
         <span className="font-medium">In the next 24 hours:</span> {content.next_steps_hint}
       </p>
     )}
   </div>
 );
 
-// Bird Oracle Block
+// Bird Oracle Block - CONTRAST LOCKED
 const BirdOracleBlock = ({ content, entries, onEntry, archetypeStyle }) => (
   <div className="space-y-4" data-testid="bird-oracle-block">
     <div className="flex items-center gap-3">
-      <Bird className={cn("w-8 h-8", archetypeStyle.accentColor || "text-primary")} />
+      <Bird className="w-8 h-8 text-amber-600" />
       <div>
-        <div className={cn("font-cinzel text-lg", archetypeStyle.accentColor || "text-foreground")}>{content.bird || content.bird_name}</div>
-        <div className={cn("text-sm", archetypeStyle.textMuted || "text-muted-foreground")}>Oracle Message</div>
+        <div className="font-cinzel text-lg text-stone-800">{content.bird || content.bird_name}</div>
+        <div className="text-sm text-stone-500">Oracle Message</div>
       </div>
     </div>
     
