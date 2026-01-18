@@ -262,11 +262,13 @@ class TestPlannerOutputSchema:
         spell_spec = {
             "intention": "test",
             "seeker_name": "Test",
-            "desired_feeling": "calm"
+            "desired_feeling": "calm",
+            "persona_id": "shigg"
         }
         guide_config = PERSONA_CONFIG["shigg"]
+        research_packet = {"facts": []}
         
-        prompt = build_planner_prompt(spell_spec, guide_config, "shigg")
+        prompt = build_planner_prompt(spell_spec, guide_config, research_packet)
         
         assert '"micro_lore_selected"' in prompt, "micro_lore_selected not in planner JSON schema"
         assert '"taboos"' in prompt, "taboos not in planner JSON schema"
