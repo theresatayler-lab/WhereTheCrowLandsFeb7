@@ -569,6 +569,26 @@ if __name__ == "__main__":
     t6 = TestPlannerOutputSchema()
     t6.test_planner_json_schema_includes_micro_lore()
     
+    # Cache/seed regression tests
+    print("\n--- CACHE/SEED REGRESSION ---")
+    t7 = TestCacheSeedRegression()
+    t7.test_text_tokens_vary_across_runs()
+    t7.test_micro_lore_varies_across_runs()
+    
+    # Cross-contamination tests
+    print("\n--- CROSS-CONTAMINATION ---")
+    t8 = TestCrossContamination()
+    t8.test_shigg_no_cross_contamination()
+    t8.test_cathleen_no_cross_contamination()
+    t8.test_katherine_no_cross_contamination()
+    
+    # Taboo keyword enforcement tests
+    print("\n--- TABOO KEYWORD ENFORCEMENT ---")
+    t9 = TestTabooKeywordEnforcement()
+    t9.test_taboo_keywords_defined()
+    t9.test_can_detect_taboo_violations()
+    t9.test_clean_output_passes()
+    
     print("\n" + "="*60)
     print("ALL TESTS PASSED ✓")
     print("="*60)
