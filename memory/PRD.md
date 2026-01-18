@@ -119,6 +119,14 @@ Build "Where The Crowlands," a sophisticated full-stack application for creating
 - **Navigation scroll-to-top behavior**
 
 ### Session: January 18, 2026
+- **Contrast-Locked Reading Surfaces** ✅ (WCAG AA Compliance)
+  - Updated `STYLE_BIBLE.md` with new mandatory rule for long-form text readability
+  - Fixed `GrimoirePage.js`: All spell sections now use solid vellum (`#F3EFE8`) backgrounds
+  - Fixed `SpellBlockRenderer.jsx`: All block types (Cold Open, Stepper, Materials, Choice, etc.) use solid backgrounds
+  - Removed all opacity-based backgrounds (`bg-*/10`, `bg-*/20`, etc.) from reading surfaces
+  - Text contrast: Minimum 4.5:1 for body, 3:1 for headings
+  - Decorative elements (gradients, atmospherics) only appear OUTSIDE reading plates
+
 - **Atmospheric Background Images** ✅
   - Added subtle, sepia-tinted Art Nouveau background images to cream sections site-wide
   - Created reusable `AtmosphericBackground` component in `OrnateElements.js`
