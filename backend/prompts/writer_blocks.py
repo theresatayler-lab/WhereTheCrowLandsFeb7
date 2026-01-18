@@ -274,6 +274,13 @@ Return ONLY this JSON with full blocks[] content:
     
     "tradition_tags": {json.dumps(plan.get('tradition_tags', []))},
     
+    "micro_lore_used": ["List the micro-lore details you wove in"],
+    "text_tokens_used": {{
+        "setting_detail": "{text_tokens.get('setting_detail', '')}",
+        "sensory_detail": "{text_tokens.get('sensory_detail', '')}",
+        "gesture_detail": "{text_tokens.get('gesture_detail', '')}"
+    }},
+    
     "image_prompt": {{
         "header": "DALL-E prompt for atmospheric header",
         "tarot": "DALL-E prompt for tarot-style card",
