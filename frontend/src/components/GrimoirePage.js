@@ -346,7 +346,14 @@ const TarotCardView = ({ spell, archetype, style, imageBase64, onViewFull, onCop
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                 </div>
               ) : (
-                <div className={`absolute inset-0 bg-gradient-to-b ${style.cardGradient}`} />
+                /* No image - show elegant dark gradient with subtle pattern */
+                <div className="absolute inset-0">
+                  <div className={`absolute inset-0 bg-gradient-to-b from-[#1a1a2e] via-[#16213e] to-[#0f0f23]`} />
+                  {/* Subtle mystical pattern overlay */}
+                  <div className="absolute inset-0 opacity-10" style={{
+                    backgroundImage: `radial-gradient(circle at 50% 50%, rgba(218,165,32,0.3) 0%, transparent 50%)`,
+                  }} />
+                </div>
               )}
               
               {/* Decorative inner borders */}
