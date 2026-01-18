@@ -61,6 +61,81 @@ Correct stacking order (top → bottom):
 
 ---
 
+## 🔐 Contrast-Locked Reading Surfaces (MANDATORY)
+
+**Rule**: Any content intended to be read for more than 2–3 lines MUST sit on a contrast-locked surface. Decorative color may exist only outside that surface.
+
+### Non-Negotiable Requirements
+
+For **spells, rituals, archives, instructions, safety notes, or any long-form prose**:
+
+#### ✅ REQUIRED
+- Text must sit on one of **two surfaces only**:
+  - **Vellum Plate**: `#F3EFE8` (or equivalent light neutral)
+  - **Solid Dark Plate**: `#0E2A2F` or darker (no gradients)
+  
+- **Minimum contrast ratio**:
+  - Body text: WCAG AA minimum (4.5:1)
+  - Headings: 3:1 minimum
+  
+- **Backgrounds inside reading surfaces**:
+  - ❌ No gradients
+  - ❌ No overlays
+  - ❌ No color blending
+  - ❌ No opacity tricks
+
+#### 🎨 ALLOWED (Outside the Plate)
+- Rich gradients
+- Ember / rose / gold atmospheres
+- Color washes, underlays, vignettes
+- Celestial or magical textures
+
+These must sit **behind or around** the reading plate, **never beneath text**.
+
+### Correct Visual Structure (Spell Pages)
+```
+[Atmospheric Background Layer]
+- gradients, magic, color richness
+
+    ↓
+
+[Vellum or Dark Plate]
+- flat background
+- high contrast text
+- generous padding
+- subtle shadow to lift from background
+
+    ↓
+
+[Text Content]
+- headings, prose, instructions
+```
+
+### ❌ Incorrect (Violates Rule)
+- Text directly on colored gradient
+- Text on semi-transparent wash
+- Borders visible but background still chromatic
+- "Readable if you squint" situations
+
+### Implementation Classes
+```css
+/* Vellum Plate - for light reading surfaces */
+.reading-plate-vellum {
+  background-color: #F3EFE8;
+  color: #1a1a1a;
+}
+
+/* Dark Plate - for dark reading surfaces */
+.reading-plate-dark {
+  background-color: #0E2A2F;
+  color: #F3EFE8;
+}
+```
+
+**If contrast is in doubt, default to vellum.**
+
+---
+
 ## Typography
 
 | Element | Font | Usage |
