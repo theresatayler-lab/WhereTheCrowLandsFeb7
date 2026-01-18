@@ -970,7 +970,7 @@ export const InvisibleHelpers = () => {
                             <p className="text-navy-dark/70 font-crimson text-sm">{stepItem.instructions}</p>
                             {stepItem.spoken_words && (
                               <p className="mt-1 text-crimson italic text-sm font-crimson border-l-2 border-gold/30 pl-2">
-                                "{stepItem.spoken_words}"
+                                &quot;{stepItem.spoken_words}&quot;
                               </p>
                             )}
                           </div>
