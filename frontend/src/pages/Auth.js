@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { authAPI } from '../utils/api';
 import { toast } from 'sonner';
-import { DarkSection, LightSection, PageBorderFrame, CornerFlourish, GrandDivider, MysticalDivider } from '../components/OrnateElements';
+import { DarkSection, LightSection, PageBorderFrame, CornerFlourish, GrandDivider, MysticalDivider, ATMOSPHERIC_IMAGES } from '../components/OrnateElements';
 import { Sparkles, User, Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import { motion } from 'framer-motion';
 
