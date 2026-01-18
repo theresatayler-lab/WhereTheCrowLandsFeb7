@@ -346,12 +346,56 @@ const TarotCardView = ({ spell, archetype, style, imageBase64, onViewFull, onCop
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                 </div>
               ) : (
-                /* No image - show elegant dark gradient with subtle pattern */
+                /* Art Nouveau Tarot Plate fallback - no image variant */
                 <div className="absolute inset-0">
-                  <div className={`absolute inset-0 bg-gradient-to-b from-[#1a1a2e] via-[#16213e] to-[#0f0f23]`} />
-                  {/* Subtle mystical pattern overlay */}
-                  <div className="absolute inset-0 opacity-10" style={{
-                    backgroundImage: `radial-gradient(circle at 50% 50%, rgba(218,165,32,0.3) 0%, transparent 50%)`,
+                  {/* Base: Midnight Teal with radial vignette to Celestial Blue */}
+                  <div className="absolute inset-0" style={{
+                    background: `radial-gradient(ellipse at 50% 30%, #123A3F 0%, #0E2A2F 70%, #0A1F24 100%)`
+                  }} />
+                  
+                  {/* Vellum inset panel */}
+                  <div className="absolute inset-6 rounded-sm" style={{
+                    backgroundColor: '#F3EFE8',
+                    boxShadow: 'inset 0 2px 8px rgba(0,0,0,0.15)'
+                  }}>
+                    {/* Double border - outer */}
+                    <div className="absolute inset-0 rounded-sm" style={{
+                      border: '2px solid #C8A44D'
+                    }} />
+                    {/* Double border - inner */}
+                    <div className="absolute inset-2 rounded-sm" style={{
+                      border: '1px solid rgba(200,164,77,0.5)'
+                    }} />
+                    
+                    {/* Placeholder Sigil Medallion - Moon & Star */}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="opacity-30">
+                        {/* Outer circle */}
+                        <circle cx="60" cy="60" r="50" stroke="#C8A44D" strokeWidth="1.5" fill="none" />
+                        {/* Inner circle */}
+                        <circle cx="60" cy="60" r="40" stroke="#C8A44D" strokeWidth="0.75" fill="none" />
+                        {/* Crescent moon */}
+                        <path d="M70 35 A25 25 0 1 1 70 85 A20 20 0 1 0 70 35" stroke="#C8A44D" strokeWidth="1.5" fill="none" />
+                        {/* Star points */}
+                        <path d="M45 60 L50 55 L55 60 L50 65 Z" stroke="#C8A44D" strokeWidth="1" fill="none" />
+                        <path d="M50 50 L52 55 L48 55 Z" stroke="#C8A44D" strokeWidth="0.75" fill="none" />
+                        <path d="M42 55 L47 57 L47 53 Z" stroke="#C8A44D" strokeWidth="0.75" fill="none" />
+                        {/* Corner flourishes */}
+                        <path d="M20 20 Q30 25 25 35" stroke="#C8A44D" strokeWidth="0.75" fill="none" />
+                        <path d="M100 20 Q90 25 95 35" stroke="#C8A44D" strokeWidth="0.75" fill="none" />
+                        <path d="M20 100 Q30 95 25 85" stroke="#C8A44D" strokeWidth="0.75" fill="none" />
+                        <path d="M100 100 Q90 95 95 85" stroke="#C8A44D" strokeWidth="0.75" fill="none" />
+                      </svg>
+                    </div>
+                  </div>
+                  
+                  {/* Top gradient for title readability */}
+                  <div className="absolute inset-x-0 top-0 h-24" style={{
+                    background: 'linear-gradient(to bottom, rgba(14,42,47,0.95) 0%, transparent 100%)'
+                  }} />
+                  {/* Bottom gradient for text readability */}
+                  <div className="absolute inset-x-0 bottom-0 h-32" style={{
+                    background: 'linear-gradient(to top, rgba(14,42,47,0.95) 0%, transparent 100%)'
                   }} />
                 </div>
               )}
