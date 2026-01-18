@@ -107,7 +107,10 @@ class BlocksSpellPipeline:
             logger.error(f"[BLOCKS] Error in spell generation: {str(e)}")
             metadata["error"] = str(e)
             metadata["timing"]["total_ms"] = int((time.time() - total_start) * 1000)
-            raise
+            
+            # Return fallback spell instead of raising
+            fallback_spell = self._get_fallback_spell(spell_spec, guide_id)
+            return fallback_spell, metadata
     
     async def _run_archivist(self, spell_spec: dict, guide_id: str) -> dict:
         """Stage 1: Run Archivist research (same as V2)"""
