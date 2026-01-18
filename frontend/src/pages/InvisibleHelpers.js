@@ -462,7 +462,14 @@ export const InvisibleHelpers = () => {
       {/* ================================================================ */}
       {/* CINEMATIC HERO HEADER */}
       {/* ================================================================ */}
-      <DarkSection className="py-10 sm:py-12 md:py-14 px-4 sm:px-6" variant="warm">
+      <DarkSection 
+        className="py-10 sm:py-12 md:py-14 px-4 sm:px-6" 
+        variant="warm"
+        atmosphericImage={ATMOSPHERIC_IMAGES.maiden}
+        atmosphericOpacity={0.06}
+        atmosphericPosition="center top"
+        atmosphericTint="teal"
+      >
         {/* Corner flourishes */}
         <CornerFlourish position="top-left" className="absolute top-4 left-4 w-14 h-14 sm:w-18 sm:h-18" />
         <CornerFlourish position="top-right" className="absolute top-4 right-4 w-14 h-14 sm:w-18 sm:h-18" />
