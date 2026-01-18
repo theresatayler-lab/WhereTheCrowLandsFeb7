@@ -61,7 +61,13 @@ export const AIChat = () => {
       </DarkSection>
 
       {/* Light Parchment Section - Chat Area */}
-      <LightSection className="py-8 sm:py-10 px-4 sm:px-6">
+      <LightSection 
+        className="py-8 sm:py-10 px-4 sm:px-6"
+        atmosphericImage={ATMOSPHERIC_IMAGES.florals}
+        atmosphericOpacity={0.10}
+        atmosphericPosition="right bottom"
+        atmosphericTint="sepia"
+      >
         <div className="max-w-4xl mx-auto">
           <MysticalDivider light />
           

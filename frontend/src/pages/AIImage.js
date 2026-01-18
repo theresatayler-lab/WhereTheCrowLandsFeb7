@@ -285,7 +285,13 @@ export const AIImage = () => {
       </DarkSection>
 
       {/* Light Section - Style Selection */}
-      <LightSection className="py-10 sm:py-14 px-4 sm:px-6">
+      <LightSection 
+        className="py-10 sm:py-14 px-4 sm:px-6"
+        atmosphericImage={ATMOSPHERIC_IMAGES.peonies}
+        atmosphericOpacity={0.10}
+        atmosphericPosition="left center"
+        atmosphericTint="sepia"
+      >
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-6">
             <div className="flex items-center justify-center gap-2 mb-2">

@@ -31,7 +31,13 @@ export const Privacy = () => {
       </DarkSection>
 
       {/* Light Section - Introduction */}
-      <LightSection className="py-10 sm:py-14 px-4 sm:px-6">
+      <LightSection 
+        className="py-10 sm:py-14 px-4 sm:px-6"
+        atmosphericImage={ATMOSPHERIC_IMAGES.maiden}
+        atmosphericOpacity={0.10}
+        atmosphericPosition="center bottom"
+        atmosphericTint="sepia"
+      >
         <div className="max-w-4xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
