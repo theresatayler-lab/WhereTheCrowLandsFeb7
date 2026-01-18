@@ -100,7 +100,7 @@ class TestTaboosWiring:
             "canon_anchor": {"id": "rubaiyat", "title": "Test"},
             "block_sequence": ["cold_open", "lore_vignette", "stepper", "closing"],
             "variation_tokens": {"time_of_day": "dawn", "gesture_type": "circular"},
-            "text_tokens": {"setting_detail": "kitchen", "sensory_detail": "steam"},
+            "text_tokens": {"setting_detail": "kitchen", "sensory_detail": "steam", "gesture_detail": "stirring"},
             "micro_lore_selected": ["the kettle that sings", "bread for the birds"],
             "taboos": ["Modern crystal shop language", "Neon cyber occult aesthetics"],
             "tradition_tags": ["kitchen_magic"]
@@ -108,11 +108,13 @@ class TestTaboosWiring:
         spell_spec = {
             "intention": "calm",
             "seeker_name": "Test",
-            "desired_feeling": "calm"
+            "desired_feeling": "calm",
+            "persona_id": "shigg"
         }
         guide_config = PERSONA_CONFIG["shigg"]
+        research_packet = {"facts": []}
         
-        prompt = build_writer_prompt(plan, spell_spec, guide_config)
+        prompt = build_writer_prompt(spell_spec, guide_config, research_packet, plan)
         
         assert "FORBIDDEN THEMES/IMAGERY" in prompt, "Writer prompt missing TABOOS section"
         assert "Modern crystal shop language" in prompt, "Taboo not injected into prompt"
