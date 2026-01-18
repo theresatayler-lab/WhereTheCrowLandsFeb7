@@ -292,31 +292,48 @@ export const DarkSection = ({
   </div>
 );
 
-export const LightSection = ({ children, className = '' }) => (
+export const LightSection = ({ 
+  children, 
+  className = '',
+  atmosphericImage = null,
+  atmosphericOpacity = 0.04,
+  atmosphericPosition = 'center',
+  atmosphericTint = 'sepia'
+}) => (
   <div className={`relative ${className}`} style={{ backgroundColor: NOUVEAU_COLORS.vellum }}>
+    {/* Atmospheric background image (optional) */}
+    {atmosphericImage && (
+      <AtmosphericBackground 
+        image={atmosphericImage}
+        opacity={atmosphericOpacity}
+        position={atmosphericPosition}
+        tint={atmosphericTint}
+        blend="multiply"
+      />
+    )}
     {/* Top accent lines */}
-    <div className="absolute top-0 left-0 right-0 h-px pointer-events-none" 
+    <div className="absolute top-0 left-0 right-0 h-px pointer-events-none z-20" 
       style={{ background: `linear-gradient(to right, transparent, ${NOUVEAU_COLORS.roseClay}, transparent)` }} />
-    <div className="absolute top-0.5 left-0 right-0 h-px pointer-events-none" 
+    <div className="absolute top-0.5 left-0 right-0 h-px pointer-events-none z-20" 
       style={{ background: `linear-gradient(to right, transparent, ${NOUVEAU_COLORS.antiqueGold}80, transparent)` }} />
     
     {/* Bottom accent lines */}
-    <div className="absolute bottom-0.5 left-0 right-0 h-px pointer-events-none" 
+    <div className="absolute bottom-0.5 left-0 right-0 h-px pointer-events-none z-20" 
       style={{ background: `linear-gradient(to right, transparent, ${NOUVEAU_COLORS.antiqueGold}80, transparent)` }} />
-    <div className="absolute bottom-0 left-0 right-0 h-px pointer-events-none" 
+    <div className="absolute bottom-0 left-0 right-0 h-px pointer-events-none z-20" 
       style={{ background: `linear-gradient(to right, transparent, ${NOUVEAU_COLORS.roseClay}, transparent)` }} />
     
     {/* Corner ornaments - structural, at edges */}
-    <div className="absolute top-3 left-3 pointer-events-none">
+    <div className="absolute top-3 left-3 pointer-events-none z-20">
       <HaloCorner size={45} position="top-left" color={NOUVEAU_COLORS.mutedBrass} opacity={0.5} />
     </div>
-    <div className="absolute top-3 right-3 pointer-events-none">
+    <div className="absolute top-3 right-3 pointer-events-none z-20">
       <HaloCorner size={45} position="top-right" color={NOUVEAU_COLORS.mutedBrass} opacity={0.5} />
     </div>
-    <div className="absolute bottom-3 left-3 pointer-events-none">
+    <div className="absolute bottom-3 left-3 pointer-events-none z-20">
       <HaloCorner size={45} position="bottom-left" color={NOUVEAU_COLORS.mutedBrass} opacity={0.5} />
     </div>
-    <div className="absolute bottom-3 right-3 pointer-events-none">
+    <div className="absolute bottom-3 right-3 pointer-events-none z-20">
       <HaloCorner size={45} position="bottom-right" color={NOUVEAU_COLORS.mutedBrass} opacity={0.5} />
     </div>
     
