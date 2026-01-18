@@ -121,7 +121,7 @@ export const PaymentSuccess = () => {
             </div>
             <h2 className="font-cinzel text-2xl text-secondary mb-2">Verification Issue</h2>
             <p className="font-montserrat text-sm text-muted-foreground mb-4">
-              We couldn't verify your payment. If you were charged, please contact support.
+              We couldn&apos;t verify your payment. If you were charged, please contact support.
             </p>
             <button
               onClick={() => navigate('/upgrade')}
