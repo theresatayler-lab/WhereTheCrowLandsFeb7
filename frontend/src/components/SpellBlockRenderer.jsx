@@ -721,22 +721,22 @@ const EvidenceCardBlock = ({ content, archetypeStyle }) => (
   </div>
 );
 
-// Journal Prompt Block - CONTRAST LOCKED
+// Journal Prompt Block
 const JournalPromptBlock = ({ content, entries, onEntry, archetypeStyle }) => (
   <div className="space-y-4" data-testid="journal-prompt-block">
     {content.prompts?.map((prompt, i) => (
-      <div key={i} className="p-3 bg-[#F3EFE8] border border-stone-300 rounded-lg">
-        <p className="text-sm text-stone-700">{prompt}</p>
+      <div key={i} className="p-3 bg-muted/30 rounded-lg">
+        <p className="text-sm">{prompt}</p>
       </div>
     ))}
     
     {content.fields?.map((field) => (
       <div key={field.id} className="space-y-2">
-        <label className="text-sm font-medium text-stone-700">{field.label}</label>
+        <label className="text-sm font-medium">{field.label}</label>
         <textarea
           value={entries[field.id] || ''}
           onChange={(e) => onEntry(field.id, e.target.value)}
-          className="w-full p-2 bg-white border border-stone-300 rounded-lg text-sm text-stone-800"
+          className="w-full p-2 bg-background border rounded-lg text-sm"
           rows={3}
           placeholder={field.placeholder}
         />
@@ -745,15 +745,15 @@ const JournalPromptBlock = ({ content, entries, onEntry, archetypeStyle }) => (
   </div>
 );
 
-// Safety Note Block - CONTRAST LOCKED (Critical readability)
+// Safety Note Block
 const SafetyNoteBlock = ({ content, archetypeStyle }) => (
-  <div className="p-4 bg-[#F3EFE8] border-2 border-amber-500 rounded-lg" data-testid="safety-note-block">
+  <div className="p-4 bg-yellow-500/10 border border-yellow-500/30 rounded-lg" data-testid="safety-note-block">
     <div className="flex items-start gap-3">
-      <AlertTriangle className="w-5 h-5 text-amber-600 flex-shrink-0" />
+      <AlertTriangle className="w-5 h-5 text-yellow-500 flex-shrink-0" />
       <div>
-        <p className="text-sm text-stone-800 font-medium">{content.note}</p>
+        <p className="text-sm">{content.note}</p>
         {content.alternatives?.length > 0 && (
-          <ul className="mt-2 space-y-1 text-sm text-stone-600">
+          <ul className="mt-2 space-y-1 text-sm text-muted-foreground">
             {content.alternatives.map((alt, i) => (
               <li key={i}>• {alt}</li>
             ))}
