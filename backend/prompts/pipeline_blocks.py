@@ -267,19 +267,32 @@ Ensure all fixes are applied while maintaining your authentic voice."""
         
         contract = WRITER_CONTRACTS.get(guide_id, WRITER_CONTRACTS["shigg"])
         
-        response = await self.openai_client.chat.completions.create(
-            model="gpt-4o",
-            messages=[
-                {"role": "system", "content": f"You are {contract['name']}. Fix the QA issues. Return ONLY valid JSON."},
-                {"role": "user", "content": fix_prompt}
-            ],
-            temperature=0.75,
-            max_tokens=4500
-        )
-        
-        result_text = response.choices[0].message.content
-        result_text = self._clean_json(result_text)
-        return json.loads(result_text)
+        try:
+            response = await self.openai_client.chat.completions.create(
+                model="gpt-4o",
+                messages=[
+                    {"role": "system", "content": f"You are {contract['name']}. Fix the QA issues. Return ONLY valid JSON."},
+                    {"role": "user", "content": fix_prompt}
+                ],
+                temperature=0.75,
+                max_tokens=4500
+            )
+            
+            result_text = response.choices[0].message.content
+            
+            # Use repair-capable JSON parser
+            try:
+                return await self._try_parse_json_with_repair(
+                    result_text,
+                    schema_hint="spell object with blocks[], tarot_card, persona_lock"
+                )
+            except json.JSONDecodeError:
+                logger.error(f"[WRITER_BLOCKS_FIX] JSON repair failed, using fallback spell")
+                return self._get_fallback_spell(spell_spec, guide_id)
+                
+        except Exception as e:
+            logger.error(f"[WRITER_BLOCKS_FIX] Error: {str(e)}")
+            return self._get_fallback_spell(spell_spec, guide_id)
     
     def _clean_json(self, text: str) -> str:
         """Clean JSON from markdown wrapping"""
