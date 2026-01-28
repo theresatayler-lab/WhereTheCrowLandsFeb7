@@ -769,20 +769,30 @@ class WorkingGeneratorResponse(BaseModel):
     error: Optional[str] = None
 
 import re
+import secrets
 
 # Banned terms for hard blocks - these indicate harmful intent
 # Note: Context matters - "does not punish" is fine, "punish them" is not
 BANNED_TERMS_STRICT = [
+    # Direct harm phrases
     'kill them', 'hurt them', 'punish them', 'ruin them', 'destroy them',
     'curse them', 'hex them', 'bind them', 'death to', 'make them suffer',
     'cause them pain', 'torture them', 'revenge on', 'attack them', 'strike them',
     'smite them', 'damn them', 'condemn them', 'annihilate them', 'obliterate them', 
-    'crush them', 'kill the', 'hurt the', 'punish the', 'curse the', 'hex the'
+    'crush them', 'kill the', 'hurt the', 'punish the', 'curse the', 'hex the',
+    # Curse/hex intent phrases
+    'put a curse on', 'cast a curse', 'place a curse', 'i want to curse', 'i will curse',
+    'put a hex on', 'cast a hex', 'place a hex', 'i want to hex', 'i will hex',
+    # Coercion/control phrases
+    'make them love', 'make them obey', 'control them', 'force them', 
+    'bind them to me', 'obsess over me', 'dominate them', 'enslave them',
+    'compel them', 'coerce them'
 ]
 
 # These terms are always banned regardless of context (word-boundary matched to avoid false positives)
+# NOTE: "curse" removed - allowed generally but harmful phrases blocked via STRICT list
 BANNED_TERMS_ABSOLUTE = [
-    'curse', 'hex', 'kill', 'murder', 'assassinate', 'maim', 'torture'
+    'hex', 'kill', 'murder', 'assassinate', 'maim', 'torture'
 ]
 
 # Precompile regex for absolute terms with word boundaries
@@ -827,13 +837,10 @@ def check_banned_terms(text: str) -> List[str]:
     found = []
     text_lower = text.lower()
     
-    # Check absolute bans with word boundaries (prevents "skill" matching "kill")
+    # Check absolute bans with word boundaries (prevents "skill" matching "kill", "hexagon" matching "hex")
     for match in BANNED_ABSOLUTE_REGEX.finditer(text_lower):
         term = match.group(1).lower()
-        # Allow "curse" in context of "not a curse" or "does not curse"
-        if term == 'curse' and ('not a curse' in text_lower or 'does not curse' in text_lower):
-            continue
-        # Allow "hex" in context of "not a hex"
+        # Allow "hex" in context of "not a hex" or "does not hex"
         if term == 'hex' and ('not a hex' in text_lower or 'does not hex' in text_lower):
             continue
         if term not in found:
