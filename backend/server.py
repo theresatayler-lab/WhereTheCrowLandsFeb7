@@ -1218,22 +1218,28 @@ async def generate_battle_cry(request: BattleCryRequest):
     }
     
     def validate_working_schema(data: dict) -> bool:
-        """Validate that working has required keys and guided_working structure"""
-        required_keys = ['intention', 'anchor_phrase', 'ethical_frame', 'guided_working', 'action_pledge', 'closing_truth']
+        """Validate that working has required keys and guided_working structure (strict)"""
+        required_keys = ['title', 'intention', 'anchor_phrase', 'ethical_frame', 'guided_working', 'action_pledge', 'closing_truth']
         for key in required_keys:
             if key not in data:
                 return False
         
-        # Validate guided_working is a list of step objects
+        # Validate guided_working is a list of exactly 6 step objects (or at minimum 5)
         gw = data.get('guided_working')
-        if not isinstance(gw, list) or len(gw) < 3:
+        if not isinstance(gw, list) or len(gw) < 5 or len(gw) > 7:
             return False
         
         for step in gw:
             if not isinstance(step, dict):
                 return False
-            if 'step' not in step or 'title' not in step or 'instructions' not in step:
+            # Required: step, title, duration, instructions
+            if 'step' not in step or 'title' not in step or 'duration' not in step or 'instructions' not in step:
                 return False
+            # spoken_words is optional but if present must be string or null
+            if 'spoken_words' in step:
+                sw = step['spoken_words']
+                if sw is not None and not isinstance(sw, str):
+                    return False
         
         return True
     
@@ -1250,11 +1256,13 @@ async def generate_battle_cry(request: BattleCryRequest):
                 error="Generation limit reached. Join early access for unlimited workings."
             )
         
-        # Check for banned terms - now includes personal_intention
+        # Check for banned terms - scans ALL relevant fields
         all_inputs = ' '.join([
             request.personal_intention or '',
             ' '.join(request.beneficiaries),
             request.primary_quality,
+            request.practice_style,
+            request.time_horizon,
             request.action_pledge
         ])
         
@@ -1265,22 +1273,24 @@ async def generate_battle_cry(request: BattleCryRequest):
                 error="Input contains prohibited terms. This portal focuses on protection and clarity, not harm."
             )
         
-        # Build user prompt
+        # Build user prompt with variation seed for distinctness
         beneficiaries = ', '.join([sanitize_input(b) for b in request.beneficiaries])
         quality = sanitize_input(request.primary_quality)
         action = sanitize_input(request.action_pledge)
         personal = sanitize_input(request.personal_intention) if request.personal_intention else ''
+        variation_seed = secrets.randbelow(1_000_000)
         
         user_prompt = f"""Generate a "Magical Battle Cry Intention" working with these personalized elements:
 
-Personal intention: {personal}
+Personal intention (user words): {personal}
 Beneficiaries being protected: {beneficiaries}
 Primary quality to strengthen: {quality}
 Practice style: {request.practice_style}
 Time horizon: {request.time_horizon}
 Real-world action pledge: {action}
+Variation seed: {variation_seed}
 
-The working should:
+The working MUST have exactly 6 steps in guided_working:
 1. Ground + Seal (no-blowback protection)
 2. Call the Lamp of Clarity (discernment visualization)
 3. Name the Patterns (misused authority, dehumanization, distortion - NOT people)
@@ -1291,6 +1301,7 @@ The working should:
 Personalize the intention line using their primary quality: {quality}
 Include their action pledge in the action_pledge field.
 Keep the canonical anchor phrase and ethical frame.
+Each step MUST include: step number, title, duration, instructions.
 
 Output valid JSON only."""
 
