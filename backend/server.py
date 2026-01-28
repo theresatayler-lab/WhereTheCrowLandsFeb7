@@ -1194,7 +1194,7 @@ Return a single JSON object that matches this schema exactly:
   ],
   "action_pledge": "string",
   "after_the_spell": "string (optional but recommended)",
-  "closing_truth": "string"
+  "closing_truth": "string (EXPLANATORY PARAGRAPH - see instructions below)"
 }
 
 CONSTRAINTS
@@ -1202,7 +1202,27 @@ CONSTRAINTS
 - Each instructions field: 1–3 sentences.
 - spoken_words: short (max ~180 characters) or null.
 - Do not add extra keys.
-- Do not wrap output in markdown."""
+- Do not wrap output in markdown.
+
+CLOSING_TRUTH FIELD (IMPORTANT)
+The closing_truth field must be a 2-3 sentence EXPLANATORY paragraph (not ritual language) that:
+1) Briefly explains how the spell was assembled from the user's inputs, needs, and time horizon.
+2) Notes inspiration from Dion Fortune's "Invisible Helpers" and Psychic Self-Defence concepts.
+3) Clarifies that "helpers" are understood as principles, qualities, or orientations—not literal entities.
+
+Use phrases like "inspired by", "draws from", "echoes the defensive logic of", "informed by".
+Avoid claims of historical authenticity, mystical authority, or channeling.
+Keep tone grounded, explanatory, and non-woo.
+
+ROTATE among these four explanation styles (vary phrasing naturally, do NOT label the style):
+
+STYLE 1 — CONSTRUCTION-FOCUSED: Emphasize how the spell was assembled from user inputs and timing, then note Fortune-inspired defensive logic.
+
+STYLE 2 — LINEAGE-FOCUSED: Lead with inspiration from Invisible Helpers / Psychic Self-Defence, then clarify modern adaptation and non-literal framing.
+
+STYLE 3 — INTERPRETIVE-FOCUSED: Explain that the system interpreted user inputs and selected structure/symbols accordingly, then reference Fortune.
+
+STYLE 4 — ETHICAL-FOCUSED: Emphasize ethical intent, non-harm, and restraint first, then reference Fortune as inspiration."""
 
 @api_router.get('/invisible-helpers/check-limit')
 async def check_generation_limit(email: str):
