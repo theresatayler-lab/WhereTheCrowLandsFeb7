@@ -1173,7 +1173,47 @@ async def create_checkout_session(request: CheckoutRequest):
 @api_router.post('/invisible-helpers/battle-cry/generate', response_model=BattleCryResponse)
 async def generate_battle_cry(request: BattleCryRequest):
     """Generate the Magical Battle Cry Intention working"""
-    from research_service import get_deepseek_client
+    from llm_providers import chat_completion
+    
+    # Safe fallback working that matches UI schema exactly
+    SAFE_FALLBACK_WORKING = {
+        "title": "Magical Battle Cry Intention",
+        "before_you_begin": "Sit comfortably with feet on the floor. Take three slow breaths.",
+        "intention": "I seek clarity, protection, and the steady resolve to act with conscience.",
+        "anchor_phrase": "Clarity in the mind.\nRestraint in the hand.\nProtection in the world.\nWhat is misused returns to law — transmuted, not weaponized.",
+        "ethical_frame": "This working is not a curse. It names no enemies and harms no one. It returns only misused authorization, coercive momentum, and distortion to impersonal law, to be transmuted into restraint, conscience, and accountability.",
+        "guided_working": [
+            {"step": 1, "title": "Ground + Seal", "duration": "1 min", "instructions": "Feel your feet on the floor. Breathe slowly. Visualize a protective boundary around you.", "spoken_words": "I stand within my own field. No force enters me. No force leaves me distorted."},
+            {"step": 2, "title": "Call the Lamp of Clarity", "duration": "1 min", "instructions": "Visualize a calm, steady lamp above you—its light reveals truth without burning.", "spoken_words": None},
+            {"step": 3, "title": "Name the Patterns", "duration": "1-2 min", "instructions": "Without naming individuals, acknowledge the patterns you oppose: coercion, dehumanization, distortion of truth.", "spoken_words": None},
+            {"step": 4, "title": "Return to Law", "duration": "2 min", "instructions": "Visualize misused force flowing back to its source, received by impersonal law.", "spoken_words": "By the law that precedes all thrones, all misused force returns to its authorization, not as suffering, but as consequence."},
+            {"step": 5, "title": "Transmutation Clause", "duration": "1-2 min", "instructions": "See the returned force transform—not into harm, but into awareness and restraint.", "spoken_words": "Let no returned force become harm. Let it become awareness. Let it become restraint. Let it become the unmaking of false authority."},
+            {"step": 6, "title": "Benevolent Directive + Close", "duration": "1-2 min", "instructions": "Send protection to those you named. Close the circuit.", "spoken_words": "Where fear is used as power, let clarity arise. Where harm hides, let consequence reveal. The circuit is complete. The law holds. I am clear."}
+        ],
+        "action_pledge": "Today, I will take one concrete action to support justice in the material world.",
+        "after_the_spell": "Take three breaths. Write one sentence about what you will do today.",
+        "closing_truth": "Inner work does not replace resistance. It steadies those who resist."
+    }
+    
+    def validate_working_schema(data: dict) -> bool:
+        """Validate that working has required keys and guided_working structure"""
+        required_keys = ['intention', 'anchor_phrase', 'ethical_frame', 'guided_working', 'action_pledge', 'closing_truth']
+        for key in required_keys:
+            if key not in data:
+                return False
+        
+        # Validate guided_working is a list of step objects
+        gw = data.get('guided_working')
+        if not isinstance(gw, list) or len(gw) < 3:
+            return False
+        
+        for step in gw:
+            if not isinstance(step, dict):
+                return False
+            if 'step' not in step or 'title' not in step or 'instructions' not in step:
+                return False
+        
+        return True
     
     try:
         # Check generation limit
@@ -1188,8 +1228,9 @@ async def generate_battle_cry(request: BattleCryRequest):
                 error="Generation limit reached. Join early access for unlimited workings."
             )
         
-        # Check for banned terms
+        # Check for banned terms - now includes personal_intention
         all_inputs = ' '.join([
+            request.personal_intention or '',
             ' '.join(request.beneficiaries),
             request.primary_quality,
             request.action_pledge
@@ -1202,21 +1243,15 @@ async def generate_battle_cry(request: BattleCryRequest):
                 error="Input contains prohibited terms. This portal focuses on protection and clarity, not harm."
             )
         
-        # Get DeepSeek client
-        deepseek_client = get_deepseek_client()
-        if not deepseek_client:
-            return BattleCryResponse(
-                success=False,
-                error="Generation service temporarily unavailable"
-            )
-        
         # Build user prompt
         beneficiaries = ', '.join([sanitize_input(b) for b in request.beneficiaries])
         quality = sanitize_input(request.primary_quality)
         action = sanitize_input(request.action_pledge)
+        personal = sanitize_input(request.personal_intention) if request.personal_intention else ''
         
         user_prompt = f"""Generate a "Magical Battle Cry Intention" working with these personalized elements:
 
+Personal intention: {personal}
 Beneficiaries being protected: {beneficiaries}
 Primary quality to strengthen: {quality}
 Practice style: {request.practice_style}
@@ -1237,20 +1272,79 @@ Keep the canonical anchor phrase and ethical frame.
 
 Output valid JSON only."""
 
-        # Generate working
-        response = await deepseek_client.chat.completions.create(
-            model="deepseek-chat",
-            messages=[
-                {"role": "system", "content": BATTLE_CRY_SYSTEM_PROMPT},
-                {"role": "user", "content": user_prompt}
-            ],
-            temperature=0.7,
-            max_tokens=2500,
-            response_format={"type": "json_object"}
-        )
+        # Generate working via abstraction layer
+        working_data = None
+        try:
+            content = await chat_completion(
+                purpose="invisible_helpers_writer",
+                system_message=BATTLE_CRY_SYSTEM_PROMPT,
+                user_message=user_prompt,
+                override_config={
+                    "response_format": {"type": "json_object"}
+                }
+            )
+            working_data = json.loads(content)
+        except json.JSONDecodeError as e:
+            logger.warning(f"Initial JSON parse failed: {e}")
+            working_data = None
+        except Exception as e:
+            logger.error(f"Initial generation failed: {e}")
+            working_data = None
         
-        content = response.choices[0].message.content
-        working_data = json.loads(content)
+        # Validate schema
+        if working_data and not validate_working_schema(working_data):
+            logger.warning("Working schema validation failed, attempting repair")
+            working_data = None
+        
+        # Repair attempt if needed
+        if working_data is None:
+            try:
+                repair_prompt = f"""The previous output was malformed. Return ONLY valid JSON matching this exact schema:
+{{
+  "title": "Magical Battle Cry Intention",
+  "before_you_begin": "optional brief setup instruction",
+  "intention": "1-2 line intention using quality: {quality}",
+  "anchor_phrase": "Clarity in the mind.\\nRestraint in the hand.\\nProtection in the world.\\nWhat is misused returns to law — transmuted, not weaponized.",
+  "ethical_frame": "This working is not a curse...",
+  "guided_working": [
+    {{"step": 1, "title": "Ground + Seal", "duration": "1 min", "instructions": "...", "spoken_words": "..."}},
+    {{"step": 2, "title": "Call the Lamp of Clarity", "duration": "1 min", "instructions": "...", "spoken_words": null}},
+    {{"step": 3, "title": "Name the Patterns", "duration": "1-2 min", "instructions": "...", "spoken_words": null}},
+    {{"step": 4, "title": "Return to Law", "duration": "2 min", "instructions": "...", "spoken_words": "..."}},
+    {{"step": 5, "title": "Transmutation Clause", "duration": "1-2 min", "instructions": "...", "spoken_words": "..."}},
+    {{"step": 6, "title": "Benevolent Directive + Close", "duration": "1-2 min", "instructions": "...", "spoken_words": "..."}}
+  ],
+  "action_pledge": "{action}",
+  "after_the_spell": "optional grounding suggestion",
+  "closing_truth": "Inner work does not replace resistance. It steadies those who resist."
+}}
+
+Personalize for: {beneficiaries}, quality: {quality}, style: {request.practice_style}"""
+
+                repair_content = await chat_completion(
+                    purpose="invisible_helpers_writer",
+                    system_message="You are a JSON repair assistant. Output ONLY valid JSON matching the requested schema.",
+                    user_message=repair_prompt,
+                    override_config={
+                        "temperature": 0.2,
+                        "response_format": {"type": "json_object"}
+                    }
+                )
+                working_data = json.loads(repair_content)
+                
+                if not validate_working_schema(working_data):
+                    logger.warning("Repair attempt also failed validation, using fallback")
+                    working_data = None
+            except Exception as e:
+                logger.error(f"Repair attempt failed: {e}")
+                working_data = None
+        
+        # Final fallback if all else fails
+        if working_data is None:
+            logger.warning("Using safe fallback working")
+            working_data = SAFE_FALLBACK_WORKING.copy()
+            # Personalize the fallback minimally
+            working_data["action_pledge"] = f"Today, I will: {action} — to support justice in the material world."
         
         # Update generation count
         new_count = current_count + 1
@@ -1267,9 +1361,6 @@ Output valid JSON only."""
             upsert=True
         )
         
-        # TODO: Send email with working (when email service is configured)
-        # For now, just return the working
-        
         return BattleCryResponse(
             success=True,
             working=working_data,
@@ -1277,12 +1368,6 @@ Output valid JSON only."""
             limit_reached=new_count >= 3
         )
         
-    except json.JSONDecodeError as e:
-        logger.error(f"Failed to parse battle cry JSON: {e}")
-        return BattleCryResponse(
-            success=False,
-            error="Failed to generate working. Please try again."
-        )
     except Exception as e:
         logger.error(f"Battle cry generation error: {e}")
         return BattleCryResponse(
