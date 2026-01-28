@@ -1173,7 +1173,6 @@ async def create_checkout_session(request: CheckoutRequest):
 @api_router.post('/invisible-helpers/battle-cry/generate', response_model=BattleCryResponse)
 async def generate_battle_cry(request: BattleCryRequest):
     """Generate the Magical Battle Cry Intention working"""
-    from llm_providers import chat_completion
     
     # Safe fallback working that matches UI schema exactly
     SAFE_FALLBACK_WORKING = {
