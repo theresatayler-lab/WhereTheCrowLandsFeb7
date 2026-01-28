@@ -49,11 +49,11 @@ PROVIDER_CONFIG = {
         "max_tokens": 3500
     },
     "invisible_helpers_writer": {
-        "provider": "deepseek",
-        "model": "deepseek-chat",
-        "use_emergent_key": False,
+        "provider": "anthropic",
+        "model": "claude-sonnet-4-20250514",
+        "use_emergent_key": True,       # Uses Emergent Universal Key for Claude
         "temperature": 0.7,
-        "max_tokens": 2500
+        "max_tokens": 1800
     }
 }
 
