@@ -1475,6 +1475,10 @@ Personalize for: {beneficiaries}, quality: {quality}, style: {request.practice_s
             working_data = SAFE_FALLBACK_WORKING.copy()
             # Personalize the fallback minimally
             working_data["action_pledge"] = f"Today, I will: {action} — to support justice in the material world."
+            logger.warning(f"[FALLBACK_USED] email={request.email}")
+        
+        # Log generation outcome for monitoring
+        logger.info(f"[GENERATION_COMPLETE] email={request.email} repair_attempted={repair_attempted} used_fallback={working_data.get('title') == SAFE_FALLBACK_WORKING.get('title') and working_data.get('intention') == SAFE_FALLBACK_WORKING.get('intention')}")
         
         # Update generation count
         new_count = current_count + 1
