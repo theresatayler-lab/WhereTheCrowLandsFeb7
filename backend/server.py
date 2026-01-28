@@ -1416,6 +1416,8 @@ Output valid JSON only."""
         
         # Repair attempt if needed (MAX 1 repair)
         if working_data is None:
+            repair_attempted = True
+            logger.info(f"[REPAIR_ATTEMPT] email={request.email} - triggering repair call")
             try:
                 repair_prompt = f"""Return JSON only. No markdown. No extra keys.
 
