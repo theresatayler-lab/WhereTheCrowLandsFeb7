@@ -1448,15 +1448,13 @@ Personalize for: {beneficiaries}, quality: {quality}, style: {request.practice_s
                         "max_tokens": 1800
                     }
                 )
-                # Strip markdown fences if present
+                # Surgical markdown extraction for repair
                 repair_content = repair_content.strip()
-                if repair_content.startswith("```json"):
-                    repair_content = repair_content[7:]
-                if repair_content.startswith("```"):
-                    repair_content = repair_content[3:]
-                if repair_content.endswith("```"):
-                    repair_content = repair_content[:-3]
-                repair_content = repair_content.strip()
+                json_fence_match = re.search(r'```json\s*([\s\S]*?)\s*```', repair_content)
+                if json_fence_match:
+                    repair_content = json_fence_match.group(1).strip()
+                elif repair_content.startswith("```") and repair_content.endswith("```"):
+                    repair_content = repair_content[3:-3].strip()
                 
                 working_data = json.loads(repair_content)
                 
