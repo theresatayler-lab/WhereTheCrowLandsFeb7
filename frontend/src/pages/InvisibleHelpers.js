@@ -280,7 +280,17 @@ export const InvisibleHelpers = () => {
       const data = await response.json();
       
       if (data.success && data.working) {
-        setGeneratedWorking(data.working);
+        // Defensive: normalize guided_working if model returns malformed data
+        const working = { ...data.working };
+        if (working.guided_working && Array.isArray(working.guided_working)) {
+          working.guided_working = working.guided_working.map((step, idx) => {
+            if (typeof step === 'string') {
+              return { step: idx + 1, title: `Step ${idx + 1}`, duration: '1-2 min', instructions: step, spoken_words: null };
+            }
+            return step;
+          });
+        }
+        setGeneratedWorking(working);
         setGenerationCount(data.generation_count || generationCount + 1);
         localStorage.setItem('ih_generation_count', String(data.generation_count || generationCount + 1));
         toast.success('Your intention has been generated!');
