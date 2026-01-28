@@ -47,6 +47,13 @@ PROVIDER_CONFIG = {
         "use_emergent_key": False,      # Use your own OpenAI key
         "temperature": 0.85,
         "max_tokens": 3500
+    },
+    "invisible_helpers_writer": {
+        "provider": "deepseek",
+        "model": "deepseek-chat",
+        "use_emergent_key": False,
+        "temperature": 0.7,
+        "max_tokens": 2500
     }
 }
 
