@@ -13,7 +13,7 @@ import os
 import base64
 import uuid
 
-BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', 'https://arcane-rituals.preview.emergentagent.com').rstrip('/')
+BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', 'https://arcane-guides.preview.emergentagent.com').rstrip('/')
 
 # Test credentials
 PRO_USER_EMAIL = "sub_test@test.com"
