@@ -1164,6 +1164,11 @@ SILENT INTERPRETATION (do NOT output this analysis)
   4) Steady Heart (fear/conflict)
   5) Home Tempering (household safety/calm)
   6) Community Lantern (collective care/morale)
+- ADDITIONAL ARCHETYPES (use when clearly relevant):
+  7) Grief Lantern (loss, mourning, tenderness; gentle language)
+  8) Nervous System Shelter (panic/insomnia; extra grounding, shorter phrases)
+  9) Truth-Speaking Spine (advocacy; boundary + calm courage)
+  10) Workplace Boundary (meetings/inbox/overreach; practical-hybrid action pledge)
 - Choose ONE symbol set to carry through all steps (lamp / threshold / cloak / mirror / stone / water / braid).
 - Time horizon affects cadence:
   - today: immediate grounding, short, direct
