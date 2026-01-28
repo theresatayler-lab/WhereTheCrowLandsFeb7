@@ -1369,17 +1369,29 @@ Each step MUST include: step number, title, duration, instructions.
 
 Output valid JSON only."""
 
-        # Generate working via abstraction layer
+        # Generate working via abstraction layer (using Claude via Emergent)
         working_data = None
         try:
             content = await chat_completion(
                 purpose="invisible_helpers_writer",
-                system_message=BATTLE_CRY_SYSTEM_PROMPT,
+                system_message=BATTLE_CRY_SYSTEM_PROMPT_CLAUDE,
                 user_message=user_prompt,
                 override_config={
-                    "response_format": {"type": "json_object"}
+                    "temperature": 0.7,
+                    "max_tokens": 1800
+                    # NOTE: No response_format for Anthropic/Emergent; rely on validator + repair
                 }
             )
+            # Strip any markdown code fences if Claude wraps output
+            content = content.strip()
+            if content.startswith("```json"):
+                content = content[7:]
+            if content.startswith("```"):
+                content = content[3:]
+            if content.endswith("```"):
+                content = content[:-3]
+            content = content.strip()
+            
             working_data = json.loads(content)
         except json.JSONDecodeError as e:
             logger.warning(f"Initial JSON parse failed: {e}")
@@ -1393,10 +1405,12 @@ Output valid JSON only."""
             logger.warning("Working schema validation failed, attempting repair")
             working_data = None
         
-        # Repair attempt if needed
+        # Repair attempt if needed (MAX 1 repair)
         if working_data is None:
             try:
-                repair_prompt = f"""The previous output was malformed. Return ONLY valid JSON matching this exact schema:
+                repair_prompt = f"""Return JSON only. No markdown. No extra keys.
+
+The previous output was malformed. Return ONLY valid JSON matching this exact schema:
 {{
   "title": "Magical Battle Cry Intention",
   "before_you_begin": "optional brief setup instruction",
@@ -1420,13 +1434,23 @@ Personalize for: {beneficiaries}, quality: {quality}, style: {request.practice_s
 
                 repair_content = await chat_completion(
                     purpose="invisible_helpers_writer",
-                    system_message="You are a JSON repair assistant. Output ONLY valid JSON matching the requested schema.",
+                    system_message="You are a JSON repair assistant. Output ONLY valid JSON matching the requested schema. No markdown. No extra keys.",
                     user_message=repair_prompt,
                     override_config={
                         "temperature": 0.2,
-                        "response_format": {"type": "json_object"}
+                        "max_tokens": 1800
                     }
                 )
+                # Strip markdown fences if present
+                repair_content = repair_content.strip()
+                if repair_content.startswith("```json"):
+                    repair_content = repair_content[7:]
+                if repair_content.startswith("```"):
+                    repair_content = repair_content[3:]
+                if repair_content.endswith("```"):
+                    repair_content = repair_content[:-3]
+                repair_content = repair_content.strip()
+                
                 working_data = json.loads(repair_content)
                 
                 if not validate_working_schema(working_data):
