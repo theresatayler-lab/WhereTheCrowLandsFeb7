@@ -1375,6 +1375,8 @@ Each step MUST include: step number, title, duration, instructions.
 Output valid JSON only."""
 
         # Generate working via abstraction layer (using Claude via Emergent)
+        # Track repair attempts for monitoring (lightweight circuit breaker)
+        repair_attempted = False
         working_data = None
         try:
             content = await chat_completion(
