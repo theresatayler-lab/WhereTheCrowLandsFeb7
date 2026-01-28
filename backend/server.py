@@ -768,6 +768,8 @@ class WorkingGeneratorResponse(BaseModel):
     working: Optional[Dict] = None
     error: Optional[str] = None
 
+import re
+
 # Banned terms for hard blocks - these indicate harmful intent
 # Note: Context matters - "does not punish" is fine, "punish them" is not
 BANNED_TERMS_STRICT = [
@@ -778,10 +780,16 @@ BANNED_TERMS_STRICT = [
     'crush them', 'kill the', 'hurt the', 'punish the', 'curse the', 'hex the'
 ]
 
-# These terms are always banned regardless of context
+# These terms are always banned regardless of context (word-boundary matched to avoid false positives)
 BANNED_TERMS_ABSOLUTE = [
     'curse', 'hex', 'kill', 'murder', 'assassinate', 'maim', 'torture'
 ]
+
+# Precompile regex for absolute terms with word boundaries
+BANNED_ABSOLUTE_REGEX = re.compile(
+    r'\b(' + '|'.join(re.escape(term) for term in BANNED_TERMS_ABSOLUTE) + r')\b',
+    re.IGNORECASE
+)
 
 # Soft replacement mappings for named entities
 SOFT_REPLACEMENTS = {
@@ -815,24 +823,25 @@ def sanitize_input(text: str) -> str:
     return result
 
 def check_banned_terms(text: str) -> List[str]:
-    """Check for banned terms in text - context-aware"""
+    """Check for banned terms in text - context-aware with word-boundary matching"""
     found = []
     text_lower = text.lower()
     
-    # Check absolute bans first
-    for term in BANNED_TERMS_ABSOLUTE:
-        if term in text_lower:
-            # Allow "curse" in context of "not a curse" or "does not curse"
-            if term == 'curse' and ('not a curse' in text_lower or 'does not curse' in text_lower):
-                continue
-            # Allow "hex" in context of "not a hex"
-            if term == 'hex' and ('not a hex' in text_lower or 'does not hex' in text_lower):
-                continue
+    # Check absolute bans with word boundaries (prevents "skill" matching "kill")
+    for match in BANNED_ABSOLUTE_REGEX.finditer(text_lower):
+        term = match.group(1).lower()
+        # Allow "curse" in context of "not a curse" or "does not curse"
+        if term == 'curse' and ('not a curse' in text_lower or 'does not curse' in text_lower):
+            continue
+        # Allow "hex" in context of "not a hex"
+        if term == 'hex' and ('not a hex' in text_lower or 'does not hex' in text_lower):
+            continue
+        if term not in found:
             found.append(term)
     
-    # Check contextual bans
+    # Check contextual bans (multi-word phrases, substring match is OK)
     for term in BANNED_TERMS_STRICT:
-        if term in text_lower:
+        if term in text_lower and term not in found:
             found.append(term)
     
     return found
