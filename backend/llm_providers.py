@@ -137,7 +137,7 @@ async def chat_completion(
         purpose: Key from PROVIDER_CONFIG (e.g., "persona_voice", "research")
         system_message: System prompt
         user_message: User's message
-        override_config: Optional overrides for temperature, max_tokens, etc.
+        override_config: Optional overrides for temperature, max_tokens, response_format, etc.
     
     Returns:
         Response text from the LLM
@@ -154,8 +154,12 @@ async def chat_completion(
     
     logger.info(f"[LLM_CALL] purpose={purpose} provider={provider} model={model} emergent={use_emergent}")
     
+    # Extract extra kwargs (e.g., response_format) excluding reserved keys
+    reserved_keys = {"provider", "model", "temperature", "max_tokens", "use_emergent_key"}
+    extra_kwargs = {k: v for k, v in config.items() if k not in reserved_keys}
+    
     try:
-        # Route 1: Emergent Universal Key
+        # Route 1: Emergent Universal Key (no extra_kwargs - avoid unexpected behavior)
         if use_emergent and provider in ["openai", "anthropic", "gemini"]:
             return await emergent_chat(
                 system_message=system_message,
@@ -166,7 +170,7 @@ async def chat_completion(
                 max_tokens=max_tokens
             )
         
-        # Route 2: DeepSeek (direct client)
+        # Route 2: DeepSeek (direct client with extra kwargs like response_format)
         elif provider == "deepseek":
             client = get_deepseek_client()
             if not client:
@@ -179,11 +183,12 @@ async def chat_completion(
                     {"role": "user", "content": user_message}
                 ],
                 temperature=temperature,
-                max_tokens=max_tokens
+                max_tokens=max_tokens,
+                **extra_kwargs
             )
             return response.choices[0].message.content
         
-        # Route 3: Direct OpenAI (fallback)
+        # Route 3: Direct OpenAI (fallback with extra kwargs)
         else:
             client = get_openai_client()
             if not client:
@@ -196,7 +201,8 @@ async def chat_completion(
                     {"role": "user", "content": user_message}
                 ],
                 temperature=temperature,
-                max_tokens=max_tokens
+                max_tokens=max_tokens,
+                **extra_kwargs
             )
             return response.choices[0].message.content
             
