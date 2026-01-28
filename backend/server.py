@@ -1387,15 +1387,17 @@ Output valid JSON only."""
                     # NOTE: No response_format for Anthropic/Emergent; rely on validator + repair
                 }
             )
-            # Strip any markdown code fences if Claude wraps output
+            # Surgical markdown extraction - only extract from fenced blocks, preserve otherwise
             content = content.strip()
-            if content.startswith("```json"):
-                content = content[7:]
-            if content.startswith("```"):
-                content = content[3:]
-            if content.endswith("```"):
-                content = content[:-3]
-            content = content.strip()
+            # If output contains a ```json fenced block, extract content inside it
+            import re
+            json_fence_match = re.search(r'```json\s*([\s\S]*?)\s*```', content)
+            if json_fence_match:
+                content = json_fence_match.group(1).strip()
+            elif content.startswith("```") and content.endswith("```"):
+                # Generic fence without json tag
+                content = content[3:-3].strip()
+            # Otherwise parse as-is (don't aggressively strip)
             
             working_data = json.loads(content)
         except json.JSONDecodeError as e:
