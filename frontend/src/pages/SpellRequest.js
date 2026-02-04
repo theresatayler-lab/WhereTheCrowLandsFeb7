@@ -6,6 +6,8 @@ import { aiAPI, subscriptionAPI } from '../utils/api';
 import { ARCHETYPES, getArchetypeById } from '../data/archetypes';
 import { getCurrentArchetype, setCurrentArchetype } from '../components/OnboardingModal';
 import { SpellLimitBanner } from '../components/UpgradePrompt';
+import HandcraftedMagicModal from '../components/HandcraftedMagicModal';
+import HandcraftedBanner from '../components/HandcraftedBanner';
 import { DarkSection, LightSection, GrandDivider, MysticalDivider, ElaborateCorner, PageHeader, OrnateCard, LightOrnateCard, StepperOrnament, BestiaryGlyph, ATMOSPHERIC_IMAGES } from '../components/OrnateElements';
 import { 
   Sparkles, ChevronRight, ChevronLeft, Check, Loader2, 
