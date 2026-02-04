@@ -1303,6 +1303,7 @@ class BespokeSpellRequest(BaseModel):
 @api_router.post('/handcrafted/grimoire-checkout')
 async def create_grimoire_checkout(request: GrimoireCheckoutRequest):
     """Create Stripe checkout for premade Crowlands Grimoire - $9.99"""
+    import stripe
     stripe_key = os.environ.get('STRIPE_SECRET_KEY') or os.environ.get('STRIPE_API_KEY')
     if not stripe_key:
         return {'error': 'Payment processing not configured', 'skip_checkout': True}
