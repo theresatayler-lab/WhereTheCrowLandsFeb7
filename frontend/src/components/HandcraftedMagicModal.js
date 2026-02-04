@@ -221,7 +221,7 @@ const HandcraftedMagicModal = ({ isOpen, onClose }) => {
                 Bespoke Spell & Resource Guide
               </h3>
               <p className="text-sm text-stone-400 mt-2">
-                I'll personally craft a spell for your intention, plus curate resources to help you develop your own practice.
+                I&apos;ll personally craft a spell for your intention, plus curate resources to help you develop your own practice.
               </p>
               <p className="text-amber-500 font-medium mt-2">$29.99 • Delivered within 3-5 days</p>
             </div>
