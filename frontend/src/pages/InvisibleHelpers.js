@@ -123,6 +123,7 @@ const SectionLabel = ({ title, context }) => (
 
 export const InvisibleHelpers = () => {
   const [showFullIntro, setShowFullIntro] = useState(false);
+  const [showHandcraftedModal, setShowHandcraftedModal] = useState(false);
   const [formData, setFormData] = useState({
     personal_intention: '',
     beneficiaries: [],
