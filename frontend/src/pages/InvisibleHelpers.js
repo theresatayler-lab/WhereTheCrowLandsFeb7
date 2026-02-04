@@ -5,6 +5,7 @@ import { toast } from 'sonner';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import HandcraftedMagicModal from '../components/HandcraftedMagicModal';
+import HandcraftedBanner from '../components/HandcraftedBanner';
 import { 
   DarkSection, 
   LightSection, 
