@@ -645,6 +645,9 @@ export const InvisibleHelpers = () => {
                 exit={{ opacity: 0, y: -20 }}
               >
                 <LightOrnateCard hover={false}>
+                  {/* Handcrafted Magic Banner - Top of Form */}
+                  <HandcraftedBanner onClick={() => setShowHandcraftedModal(true)} />
+                  
                   <div className="space-y-4">
                     
                     {/* Personal Intention - ORIGINAL COPY */}
