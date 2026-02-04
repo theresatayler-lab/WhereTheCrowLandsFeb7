@@ -1064,6 +1064,12 @@ export const InvisibleHelpers = () => {
           </p>
         </div>
       </DarkSection>
+
+      {/* Handcrafted Magic Modal */}
+      <HandcraftedMagicModal 
+        isOpen={showHandcraftedModal} 
+        onClose={() => setShowHandcraftedModal(false)} 
+      />
     </div>
   );
 };
