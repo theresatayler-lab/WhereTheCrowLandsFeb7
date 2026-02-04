@@ -723,6 +723,11 @@ export const SpellRequest = () => {
         <div className="max-w-2xl mx-auto">
           <StepIndicator currentStep={step} totalSteps={STEPS.length} />
           
+          {/* Handcrafted Magic Banner */}
+          {step === 0 && (
+            <HandcraftedBanner onClick={() => setShowHandcraftedModal(true)} />
+          )}
+          
           <LightOrnateCard hover={false}>
             <div className="mb-4">
               <h2 className="font-cinzel text-xl text-crimson">
