@@ -26,6 +26,7 @@ import EarlyAccessPage from './pages/EarlyAccess';
 import Library from './pages/Library';
 import { InvisibleHelpers } from './pages/InvisibleHelpers';
 import DesignPreview from './pages/DesignPreview';
+import HandcraftedSuccess from './pages/HandcraftedSuccess';
 import { Footer } from './components/Footer';
 import { OnboardingModal } from './components/OnboardingModal';
 import './App.css';
