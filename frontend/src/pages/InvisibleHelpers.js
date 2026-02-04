@@ -760,18 +760,6 @@ export const InvisibleHelpers = () => {
                       <ChevronRight className="w-4 h-4" />
                     </button>
                     
-                    {/* Handcrafted Magic Option */}
-                    <div className="pt-4 border-t border-gold/20">
-                      <button
-                        onClick={() => setShowHandcraftedModal(true)}
-                        className="w-full py-3 text-sm text-navy-dark/60 hover:text-crimson transition-colors flex items-center justify-center gap-2 font-montserrat"
-                        data-testid="handcrafted-magic-btn"
-                      >
-                        <Wand2 className="w-4 h-4" />
-                        No AI please — I&apos;d like handcrafted magic
-                      </button>
-                    </div>
-                    
                   </div>
                 </LightOrnateCard>
               </motion.div>
