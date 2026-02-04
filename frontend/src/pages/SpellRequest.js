@@ -893,6 +893,12 @@ export const SpellRequest = () => {
           </div>
         </div>
       </DarkSection>
+
+      {/* Handcrafted Magic Modal */}
+      <HandcraftedMagicModal 
+        isOpen={showHandcraftedModal} 
+        onClose={() => setShowHandcraftedModal(false)} 
+      />
     </div>
   );
 };
