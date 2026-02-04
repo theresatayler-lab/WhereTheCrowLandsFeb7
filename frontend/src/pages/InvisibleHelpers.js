@@ -764,7 +764,7 @@ export const InvisibleHelpers = () => {
                         data-testid="handcrafted-magic-btn"
                       >
                         <Wand2 className="w-4 h-4" />
-                        No AI please — I'd like handcrafted magic
+                        No AI please — I&apos;d like handcrafted magic
                       </button>
                     </div>
                     
