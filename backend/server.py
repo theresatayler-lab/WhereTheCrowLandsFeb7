@@ -1282,6 +1282,135 @@ async def create_checkout_session(request: CheckoutRequest):
         logger.error(f"Stripe checkout error: {e}")
         return {'error': str(e), 'skip_checkout': True}
 
+# ============================================
+# HANDCRAFTED MAGIC - Premium Offerings
+# ============================================
+
+class GrimoireCheckoutRequest(BaseModel):
+    email: EmailStr
+    success_url: str
+    cancel_url: str
+
+class BespokeSpellRequest(BaseModel):
+    email: EmailStr
+    name: str
+    intention: str
+    tradition_preferences: Optional[str] = None
+    additional_notes: Optional[str] = None
+    success_url: str
+    cancel_url: str
+
+@api_router.post('/handcrafted/grimoire-checkout')
+async def create_grimoire_checkout(request: GrimoireCheckoutRequest):
+    """Create Stripe checkout for premade Crowlands Grimoire - $9.99"""
+    stripe_key = os.environ.get('STRIPE_SECRET_KEY') or os.environ.get('STRIPE_API_KEY')
+    if not stripe_key:
+        return {'error': 'Payment processing not configured', 'skip_checkout': True}
+    
+    try:
+        stripe.api_key = stripe_key
+        session = stripe.checkout.Session.create(
+            payment_method_types=['card'],
+            line_items=[{
+                'price_data': {
+                    'currency': 'usd',
+                    'product_data': {
+                        'name': 'The Crowlands Grimoire',
+                        'description': 'A curated collection of handcrafted spells, rituals, and practices from the Crowlands tradition.',
+                    },
+                    'unit_amount': 999,  # $9.99
+                },
+                'quantity': 1,
+            }],
+            mode='payment',
+            success_url=request.success_url,
+            cancel_url=request.cancel_url,
+            customer_email=request.email,
+            metadata={
+                'product_type': 'grimoire',
+                'email': request.email
+            }
+        )
+        
+        # Log the purchase intent
+        await db.handcrafted_orders.insert_one({
+            'email': request.email,
+            'product_type': 'grimoire',
+            'amount': 999,
+            'session_id': session.id,
+            'status': 'pending',
+            'created_at': datetime.now(timezone.utc).isoformat()
+        })
+        
+        return {'url': session.url, 'session_id': session.id}
+    except Exception as e:
+        logger.error(f"Grimoire checkout error: {e}")
+        return {'error': str(e), 'skip_checkout': True}
+
+@api_router.post('/handcrafted/bespoke-checkout')
+async def create_bespoke_checkout(request: BespokeSpellRequest):
+    """Create Stripe checkout for bespoke spell request - $29.99"""
+    stripe_key = os.environ.get('STRIPE_SECRET_KEY') or os.environ.get('STRIPE_API_KEY')
+    if not stripe_key:
+        return {'error': 'Payment processing not configured', 'skip_checkout': True}
+    
+    try:
+        stripe.api_key = stripe_key
+        session = stripe.checkout.Session.create(
+            payment_method_types=['card'],
+            line_items=[{
+                'price_data': {
+                    'currency': 'usd',
+                    'product_data': {
+                        'name': 'Bespoke Spell & Resource Guide',
+                        'description': 'A handcrafted spell tailored to your intention, plus a one-pager of suggested resources and practices.',
+                    },
+                    'unit_amount': 2999,  # $29.99
+                },
+                'quantity': 1,
+            }],
+            mode='payment',
+            success_url=request.success_url,
+            cancel_url=request.cancel_url,
+            customer_email=request.email,
+            metadata={
+                'product_type': 'bespoke',
+                'email': request.email,
+                'name': request.name,
+                'intention': request.intention[:500]  # Truncate for metadata limits
+            }
+        )
+        
+        # Save the full bespoke request
+        await db.handcrafted_orders.insert_one({
+            'email': request.email,
+            'name': request.name,
+            'product_type': 'bespoke',
+            'amount': 2999,
+            'session_id': session.id,
+            'status': 'pending',
+            'intention': request.intention,
+            'tradition_preferences': request.tradition_preferences,
+            'additional_notes': request.additional_notes,
+            'created_at': datetime.now(timezone.utc).isoformat()
+        })
+        
+        logger.info(f"[BESPOKE_REQUEST] New bespoke spell request from {request.email}")
+        
+        return {'url': session.url, 'session_id': session.id}
+    except Exception as e:
+        logger.error(f"Bespoke checkout error: {e}")
+        return {'error': str(e), 'skip_checkout': True}
+
+@api_router.get('/handcrafted/orders')
+async def get_handcrafted_orders():
+    """Admin endpoint to view pending handcrafted orders"""
+    orders = await db.handcrafted_orders.find(
+        {'status': {'$in': ['pending', 'paid']}},
+        {'_id': 0}
+    ).sort('created_at', -1).to_list(100)
+    return {'orders': orders}
+
 @api_router.post('/invisible-helpers/battle-cry/generate', response_model=BattleCryResponse)
 async def generate_battle_cry(request: BattleCryRequest):
     """Generate the Magical Battle Cry Intention working"""
