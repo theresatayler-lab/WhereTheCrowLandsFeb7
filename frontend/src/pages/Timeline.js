@@ -846,7 +846,7 @@ export const Timeline = () => {
           >
             <PageHeader 
               icon={Clock}
-              title="The Occult Timeline"
+              title="The nOcult Timeline"
               subtitle={getSubtitle()}
             />
             {/* Historical Disclaimer */}
