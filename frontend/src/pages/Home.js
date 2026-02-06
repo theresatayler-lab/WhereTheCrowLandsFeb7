@@ -249,18 +249,18 @@ const VellumPanel = ({ children, className = '' }) => (
       style={{ border: `1px solid ${NOUVEAU_COLORS.antiqueGold}30` }}
     />
     
-    {/* Corner ornaments */}
+    {/* Corner ornaments - subtle framing */}
     <div className="absolute top-3 left-3 pointer-events-none">
-      <HaloCorner size={60} position="top-left" color={NOUVEAU_COLORS.mutedBrass} opacity={0.6} />
+      <HaloCorner size={50} position="top-left" color={NOUVEAU_COLORS.mutedBrass} opacity={0.4} />
     </div>
     <div className="absolute top-3 right-3 pointer-events-none">
-      <HaloCorner size={60} position="top-right" color={NOUVEAU_COLORS.mutedBrass} opacity={0.6} />
+      <HaloCorner size={50} position="top-right" color={NOUVEAU_COLORS.mutedBrass} opacity={0.4} />
     </div>
     <div className="absolute bottom-3 left-3 pointer-events-none">
-      <HaloCorner size={60} position="bottom-left" color={NOUVEAU_COLORS.mutedBrass} opacity={0.6} />
+      <HaloCorner size={50} position="bottom-left" color={NOUVEAU_COLORS.mutedBrass} opacity={0.4} />
     </div>
     <div className="absolute bottom-3 right-3 pointer-events-none">
-      <HaloCorner size={60} position="bottom-right" color={NOUVEAU_COLORS.mutedBrass} opacity={0.6} />
+      <HaloCorner size={50} position="bottom-right" color={NOUVEAU_COLORS.mutedBrass} opacity={0.4} />
     </div>
     
     <div className="relative z-10 p-6 sm:p-8">{children}</div>
