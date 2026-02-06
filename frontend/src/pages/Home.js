@@ -488,8 +488,6 @@ export const Home = () => {
               <Feather className="w-5 h-5" /> Learn Our Story
             </Link>
           </div>
-          
-          <GrandCelestialDivider variant="eye" />
         </div>
       </SectionPlate>
 
@@ -498,17 +496,10 @@ export const Home = () => {
       {/* ================================================================ */}
       <SectionPlate variant="dark" className="py-16 sm:py-20 px-6">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="flex justify-center gap-3 mb-4">
-            <CrescentMoon size={24} facing="left" color={NOUVEAU_COLORS.antiqueGold} opacity={0.6} />
-            <MoonDisc size={40} color={NOUVEAU_COLORS.antiqueGold} opacity={0.8} />
-            <CrescentMoon size={24} facing="right" color={NOUVEAU_COLORS.antiqueGold} opacity={0.6} />
-          </div>
-          
           <h2 
             className="font-cinzel text-xl sm:text-2xl md:text-3xl tracking-wide mb-3"
             style={{ 
               color: NOUVEAU_COLORS.antiqueGold, 
-              textShadow: `0 0 30px ${NOUVEAU_COLORS.emberPink}50, 0 0 60px ${NOUVEAU_COLORS.emberPink}30`,
               letterSpacing: '0.08em',
             }}
           >
