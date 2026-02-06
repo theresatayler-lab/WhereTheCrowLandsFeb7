@@ -374,21 +374,24 @@ export const Home = () => {
             initial={{ opacity: 0, scale: 0.9 }} 
             animate={{ opacity: 1, scale: 1 }} 
             transition={{ duration: 1.2 }} 
-            className="relative mb-6"
+            className="relative mb-6 flex justify-center"
           >
-            {/* Subtle radial fade behind logo - cream to teal */}
-            <div 
-              className="absolute inset-0 pointer-events-none rounded-full"
-              style={{ 
-                background: 'radial-gradient(circle, rgba(243, 239, 232, 0.95) 0%, rgba(243, 239, 232, 0.7) 40%, rgba(14, 42, 47, 0.4) 70%, transparent 100%)',
-                transform: 'scale(1.05)',
-              }} 
-            />
-            <img 
-              src="/images/brand/logo-alt.png" 
-              alt="Where The Crowlands"
-              className="relative w-56 h-56 sm:w-72 sm:h-72 md:w-80 md:h-80 mx-auto object-contain rounded-full"
-            />
+            {/* Circular container for logo with fade */}
+            <div className="relative w-56 h-56 sm:w-72 sm:h-72 md:w-80 md:h-80">
+              {/* Subtle radial fade behind logo - cream to teal */}
+              <div 
+                className="absolute inset-0 pointer-events-none rounded-full"
+                style={{ 
+                  background: 'radial-gradient(circle, rgba(243, 239, 232, 0.95) 0%, rgba(243, 239, 232, 0.8) 35%, rgba(200, 164, 77, 0.2) 55%, rgba(14, 42, 47, 0.4) 75%, transparent 100%)',
+                  transform: 'scale(1.08)',
+                }} 
+              />
+              <img 
+                src="/images/brand/logo-alt.png" 
+                alt="Where The Crowlands"
+                className="relative w-full h-full object-contain rounded-full"
+              />
+            </div>
           </motion.div>
 
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.3 }}>
