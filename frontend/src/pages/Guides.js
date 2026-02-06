@@ -230,7 +230,7 @@ const GuideCard = ({ archetype, index, isCurrentGuide, isExpanded, isBioExpanded
             
             <div>
               <div className="flex items-center gap-2">
-                <h2 className="font-phantasmagoria text-2xl text-crimson">{archetype.shortName}</h2>
+                <h2 className="font-phantasmagoria text-2xl text-crimson" style={{ textShadow: '0 0 20px rgba(185, 78, 106, 0.45)' }}>{archetype.shortName}</h2>
                 {isCurrentGuide && (
                   <span className="text-xs font-montserrat text-cream bg-crimson px-2 py-0.5 rounded-sm">
                     Your Guide
