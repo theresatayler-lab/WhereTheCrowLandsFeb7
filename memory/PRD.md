@@ -11,13 +11,17 @@ Build "Where The Crowlands," a sophisticated full-stack application for creating
 
 ## What's Been Implemented
 
-### Session: February 6, 2026 - Logo Replacement ✅
-- **New Logo Implemented** — Replaced site logo with user-provided "CrowlandsLogo.png"
-  - Features sepia-toned crow illustration with "Where The Crowlands" text
-  - Logo has transparent background - no fade effects needed
-  - Updated files: `/frontend/public/images/brand/logo.png` and `logo-alt.png`
-  - Logo appears cleanly in: Navigation bar, Footer, Home page hero, Early Access page
-  - Removed previous brightness/contrast filters and fade backgrounds for clean display
+### Session: February 6, 2026 - Logo & Visual Updates ✅
+- **New Pink Logo Implemented** — Replaced site logo with "CrowslandPinkLogo.png"
+  - Features pink/rose-toned crow illustration with transparent background
+  - Updated in: Navigation bar, Footer, Home page hero, Early Access page
+- **Pink Glow Headlines** — Added subtle pink text-shadow to key headlines
+  - Applied to: Main titles, subtitles, section headers across Home, Guides, Early Access, Invisible Helpers, SpellRequest
+  - Updated PageHeader component for site-wide consistency
+- **Moon Image Replacement** — Replaced RavenGlyph bird icon with gold moon image
+  - New asset: `/frontend/public/images/brand/moon-gold.png`
+  - Replaced SVG bird with beautiful gold sun/moon face image
+  - Appears in dividers and decorative elements throughout the site
 
 ### Session: January 2026 - V1.2 Spell Differentiation System ✅
 - **Micro-lore Wiring** — Each guide now has 10 lived details woven into spells
