@@ -6,15 +6,23 @@
 
 import React from 'react';
 
-// Color tokens from new palette
+// Color tokens from new palette - REFINED for clarity
 export const NOUVEAU_COLORS = {
+  // Backgrounds
   midnightTeal: '#0E2A2F',
-  celestialBlue: '#123A3F',
-  vellum: '#F3EFE8',
-  antiqueGold: '#C8A44D',
-  mutedBrass: '#9E8438',
-  roseClay: '#C26A5A',
-  emberPink: '#B94E6A',
+  celestialBlue: '#143D42',      // Slightly more saturated teal
+  
+  // Light tones
+  vellum: '#F5F1EA',             // Warmer, creamier
+  cream: '#EDE8DF',              // Muted cream for contrast
+  
+  // Gold accents - distinct from pink
+  antiqueGold: '#D4A84B',        // Brighter, cleaner gold
+  mutedBrass: '#A68A3C',         // Deeper brass for contrast
+  
+  // Pink/Rose accents - cleaner separation
+  roseClay: '#C46B5C',           // Warmer terracotta
+  emberPink: '#C45574',          // Cleaner pink, less muddy
 };
 
 // ============================================================================
