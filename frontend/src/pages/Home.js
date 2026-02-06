@@ -228,42 +228,41 @@ const GrandCelestialDivider = ({ variant = 'moon' }) => (
   </div>
 );
 
-// Vellum content panel with strong framing
+// Vellum content panel with cleaner framing
 const VellumPanel = ({ children, className = '' }) => (
   <div 
     className={`relative ${className}`}
     style={{
       backgroundColor: NOUVEAU_COLORS.vellum,
-      border: `2px solid ${NOUVEAU_COLORS.antiqueGold}70`,
+      border: `1px solid ${NOUVEAU_COLORS.antiqueGold}50`,
       boxShadow: `
-        0 2px 4px rgba(14, 42, 47, 0.1),
-        0 8px 24px rgba(14, 42, 47, 0.08),
-        inset 0 1px 0 rgba(255, 255, 255, 0.8),
-        inset 0 -1px 0 rgba(200, 164, 77, 0.1)
+        0 2px 4px rgba(14, 42, 47, 0.08),
+        0 8px 24px rgba(14, 42, 47, 0.06),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8)
       `,
     }}
   >
-    {/* Inner border */}
+    {/* Inner border - very subtle */}
     <div 
-      className="absolute inset-2 pointer-events-none"
-      style={{ border: `1px solid ${NOUVEAU_COLORS.antiqueGold}30` }}
+      className="absolute inset-3 pointer-events-none"
+      style={{ border: `1px solid ${NOUVEAU_COLORS.antiqueGold}15` }}
     />
     
-    {/* Corner ornaments - subtle framing */}
-    <div className="absolute top-3 left-3 pointer-events-none">
-      <HaloCorner size={50} position="top-left" color={NOUVEAU_COLORS.mutedBrass} opacity={0.4} />
+    {/* Corner ornaments - minimal */}
+    <div className="absolute top-2 left-2 pointer-events-none">
+      <HaloCorner size={40} position="top-left" color={NOUVEAU_COLORS.mutedBrass} opacity={0.25} />
     </div>
-    <div className="absolute top-3 right-3 pointer-events-none">
-      <HaloCorner size={50} position="top-right" color={NOUVEAU_COLORS.mutedBrass} opacity={0.4} />
+    <div className="absolute top-2 right-2 pointer-events-none">
+      <HaloCorner size={40} position="top-right" color={NOUVEAU_COLORS.mutedBrass} opacity={0.25} />
     </div>
-    <div className="absolute bottom-3 left-3 pointer-events-none">
-      <HaloCorner size={50} position="bottom-left" color={NOUVEAU_COLORS.mutedBrass} opacity={0.4} />
+    <div className="absolute bottom-2 left-2 pointer-events-none">
+      <HaloCorner size={40} position="bottom-left" color={NOUVEAU_COLORS.mutedBrass} opacity={0.25} />
     </div>
-    <div className="absolute bottom-3 right-3 pointer-events-none">
-      <HaloCorner size={50} position="bottom-right" color={NOUVEAU_COLORS.mutedBrass} opacity={0.4} />
+    <div className="absolute bottom-2 right-2 pointer-events-none">
+      <HaloCorner size={40} position="bottom-right" color={NOUVEAU_COLORS.mutedBrass} opacity={0.25} />
     </div>
     
-    <div className="relative z-10 p-6 sm:p-8">{children}</div>
+    <div className="relative z-10 p-8 sm:p-10">{children}</div>
   </div>
 );
 
