@@ -111,7 +111,7 @@ She was her granddaughter's greatest ally and friend, staying up all night telli
       { name: 'Goldfinch', meaning: 'Joy, beauty, lightness of being' },
       { name: 'Starling', meaning: 'Group harmony, synchronicity, adaptability' }
     ],
-    image: 'https://customer-assets.emergentagent.com/job_diywizardry/artifacts/127im9d9_Shig50.png',
+    image: '/images/guides/shigg/shigg-main.png',
     video: 'https://customer-assets.emergentagent.com/job_witchcrowland/artifacts/u0re0oda_SheilaVideo.mp4',
     galleryImages: [
       'https://customer-assets.emergentagent.com/job_diywizardry/artifacts/d1pes21d_Shig19.png',
@@ -240,7 +240,7 @@ She gave her great-granddaughter a silver rabbit teething ring that is treasured
       { name: 'Silk Scrap', meaning: 'Those who flew and fell, lightness in darkness' },
       { name: 'Small Stone', meaning: 'Grounding, connection to place, and endurance' }
     ],
-    image: 'https://customer-assets.emergentagent.com/job_diywizardry/artifacts/2yrmxbqx_Cathleen16.png',
+    image: '/images/guides/cathleen/cathleen-main.png',
     video: 'https://customer-assets.emergentagent.com/job_witchcrowland/artifacts/gsq61t9z_CathleenSpell.mp4',
     galleryImages: [
       'https://customer-assets.emergentagent.com/job_diywizardry/artifacts/zetyy6pt_Cathleen2.png',
@@ -338,7 +338,7 @@ Her magic lies in craft: every stitch is intention, every pattern holds knowledg
       { name: 'Crow\'s Vigil', category: 'Ancestor & Grief Work', description: 'Night vigil to honor and communicate with the dead' },
       { name: 'One for Sorrow, Seven for a Secret', category: 'Ancestor & Grief Work', description: 'Magpie counting ritual for ancestral messages' }
     ],
-    image: 'https://customer-assets.emergentagent.com/job_diywizardry/artifacts/9l0li5vx_Katherine8.png',
+    image: '/images/guides/katherine/katherine-main.png',
     video: 'https://customer-assets.emergentagent.com/job_witchcrowland/artifacts/6q5iwmtx_3KatherineSpellWork.mp4',
     galleryImages: [
       'https://customer-assets.emergentagent.com/job_diywizardry/artifacts/b6j9g2m5_Katherine1.png',
@@ -400,7 +400,7 @@ Her magic lies in craft: every stitch is intention, every pattern holds knowledg
       'Psychological ritual frameworks',
       'Contemporary bird mythology'
     ],
-    image: 'https://customer-assets.emergentagent.com/job_diywizardry/artifacts/daujlur9_Theresa6.png',
+    image: '/images/guides/theresa/theresa-main.png',
     video: 'https://customer-assets.emergentagent.com/job_witchcrowland/artifacts/v6otbwkr_Theresa4421_Have_the_woman_open_her_purse_and_a_bird_fly_out%2C_as_the_bird_fly.mp4',
     galleryImages: [
       'https://customer-assets.emergentagent.com/job_diywizardry/artifacts/7dqhsrv9_TheresaTayler7.png',
