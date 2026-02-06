@@ -386,7 +386,7 @@ const GuideCard = ({ archetype, index, isCurrentGuide, isExpanded, isBioExpanded
             onClick={() => navigate('/ward-finder')}
             className="w-full mt-3 px-4 py-2 bg-gold/10 text-navy-dark border border-gold/40 rounded-sm font-montserrat tracking-widest uppercase text-xs hover:bg-gold/20 transition-all flex items-center justify-center gap-2"
           >
-            <Hand className="w-4 h-4" />
+            <BrandIcon name="pentagram" size={16} opacity={0.8} />
             <span>Find Your Ward</span>
           </button>
         )}
