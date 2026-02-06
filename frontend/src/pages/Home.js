@@ -271,8 +271,8 @@ const VellumPanel = ({ children, className = '' }) => (
   </div>
 );
 
-// Feature card with Art Nouveau presence
-const FeatureCard = ({ icon: Icon, title, desc, tooltip }) => (
+// Feature card with Art Nouveau presence - supports brand icons
+const FeatureCard = ({ icon: Icon, brandIcon, title, desc, tooltip }) => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
     whileInView={{ opacity: 1, y: 0 }}
@@ -315,8 +315,8 @@ const FeatureCard = ({ icon: Icon, title, desc, tooltip }) => (
     </div>
     
     <div className="relative p-6 sm:p-8 text-center">
-      {/* Icon with halo */}
-      <div className="relative w-14 h-14 mx-auto mb-4">
+      {/* Icon with halo - supports both Lucide and brand icons */}
+      <div className="relative w-16 h-16 mx-auto mb-4">
         <div 
           className="absolute inset-0 rounded-full opacity-30"
           style={{ 
@@ -328,15 +328,26 @@ const FeatureCard = ({ icon: Icon, title, desc, tooltip }) => (
           className="absolute inset-1.5 rounded-full opacity-20"
           style={{ border: `1px solid ${NOUVEAU_COLORS.antiqueGold}` }}
         />
-        <Icon 
-          className="absolute inset-0 w-full h-full p-3 group-hover:scale-110 transition-transform" 
-          style={{ color: NOUVEAU_COLORS.emberPink, filter: `drop-shadow(0 0 10px ${NOUVEAU_COLORS.emberPink}40)` }} 
-        />
+        {brandIcon ? (
+          <div className="absolute inset-0 flex items-center justify-center group-hover:scale-110 transition-transform">
+            <BrandIcon 
+              name={brandIcon} 
+              size={42} 
+              variant="pink"
+              opacity={0.95}
+            />
+          </div>
+        ) : Icon ? (
+          <Icon 
+            className="absolute inset-0 w-full h-full p-3 group-hover:scale-110 transition-transform" 
+            style={{ color: NOUVEAU_COLORS.emberPink, filter: `drop-shadow(0 0 10px ${NOUVEAU_COLORS.emberPink}40)` }} 
+          />
+        ) : null}
       </div>
       
       <h3 
         className="font-cinzel text-lg sm:text-xl tracking-wide mb-3"
-        style={{ color: NOUVEAU_COLORS.antiqueGold, textShadow: `0 2px 8px ${NOUVEAU_COLORS.antiqueGold}25` }}
+        style={{ color: NOUVEAU_COLORS.antiqueGold, textShadow: `0 0 30px ${NOUVEAU_COLORS.emberPink}50, 0 0 60px ${NOUVEAU_COLORS.emberPink}30` }}
       >
         {title}
       </h3>
