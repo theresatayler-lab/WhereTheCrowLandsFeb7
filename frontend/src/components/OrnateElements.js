@@ -655,7 +655,6 @@ export {
   HaloCornerElaborate,
   LunarDivider,
   SimpleDivider,
-  RavenGlyph,
   SunDisc,
   MoonDisc,
   CrescentMoon,
