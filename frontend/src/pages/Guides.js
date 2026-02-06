@@ -374,7 +374,7 @@ const GuideCard = ({ archetype, index, isCurrentGuide, isExpanded, isBioExpanded
             <span className="absolute inset-0 border border-gold/50 rounded-sm" />
             <span className="absolute inset-0.5 bg-gradient-to-r from-crimson-deep via-crimson to-crimson-deep rounded-sm" />
             <span className="relative text-cream flex items-center gap-2">
-              <Heart className="w-4 h-4" />
+              <BrandIcon name="star" size={16} variant="pink" opacity={0.9} />
               <span>Choose as My Guide</span>
             </span>
           </button>
