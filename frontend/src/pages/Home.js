@@ -483,7 +483,7 @@ export const Home = () => {
                   className="relative flex items-center gap-3 font-cinzel tracking-[0.2em] uppercase text-sm sm:text-base"
                   style={{ color: NOUVEAU_COLORS.vellum }}
                 >
-                  <Sparkles className="w-5 h-5" /> Begin Your Journey
+                  <BrandIcon name="star" size={20} variant="pink" opacity={0.9} /> Begin Your Journey
                 </span>
               </Link>
               <Link 
