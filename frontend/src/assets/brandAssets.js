@@ -14,26 +14,26 @@ export const BRAND_ASSETS = {
   profileFrame: "/images/brand/profile-frame.png",
   
   // ==========================================================================
-  // DECORATIVE ICONS - Custom brand artwork
+  // DECORATIVE ICONS - Custom brand artwork (all PNG with transparency)
   // ==========================================================================
   icons: {
     // Mystical & Celestial
     moon: "/images/brand/moon-gold.png",           // Mystical, dividers, general decoration
-    sunMoon: "/images/brand/sunmoon-gold.svg",     // Balance, cycles, celestial
+    sunMoon: "/images/brand/sunmoon-gold.png",     // Balance, cycles, celestial
     eye: "/images/brand/eye-gold.png",             // Vision, insight, mystical headers
     hexagram: "/images/brand/hexagram-gold.png",   // Wisdom, celestial balance
     
     // Magic & Ritual
     pentagram: "/images/brand/pentagram-gold.png", // Spells, protection, magic features
-    star: "/images/brand/star-gold.svg",           // Featured items, magic actions, CTAs
+    star: "/images/brand/star-gold.png",           // Featured items, magic actions, CTAs
     ouroboros: "/images/brand/ouroboros-gold.png", // Cycles, eternity, timeline, loading
     
     // Knowledge & Access
-    book: "/images/brand/book-gold.svg",           // Library, Grimoire, knowledge sections
+    book: "/images/brand/book-gold.png",           // Library, Grimoire, knowledge sections
     key: "/images/brand/key-gold.png",             // Login, secrets, locked content
     
     // History & Structure
-    skull: "/images/brand/skull-gold.svg",         // Ancestors, history, lineage
+    skull: "/images/brand/skull-gold.png",         // Ancestors, history, lineage
     column: "/images/brand/column-gold.png",       // Foundations, pillars, structure
   },
   
