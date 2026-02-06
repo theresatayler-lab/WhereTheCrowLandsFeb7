@@ -180,17 +180,10 @@ export const Navigation = ({ user, onLogout }) => {
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2 group" data-testid="nav-logo" onClick={handleLinkClick}>
             <div className="relative">
-              {/* Subtle radial fade behind logo */}
-              <div 
-                className="absolute inset-0 rounded-full scale-110"
-                style={{ 
-                  background: 'radial-gradient(circle, rgba(243, 239, 232, 0.95) 0%, rgba(243, 239, 232, 0.7) 40%, rgba(14, 42, 47, 0.3) 70%, transparent 100%)',
-                }}
-              />
               <img 
                 src="/images/brand/logo-alt.png" 
                 alt="Where The Crowlands Logo"
-                className="relative h-10 sm:h-12 md:h-16 w-auto rounded-full"
+                className="relative h-10 sm:h-12 md:h-16 w-auto"
               />
             </div>
           </Link>
