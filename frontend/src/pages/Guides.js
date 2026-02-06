@@ -118,7 +118,7 @@ export const Guides = () => {
                 <div className="flex items-start gap-4">
                   <BookOpen className="w-8 h-8 text-crimson flex-shrink-0" />
                   <div>
-                    <h3 className="font-cinzel text-xl text-crimson mb-3">The Lineage</h3>
+                    <h3 className="font-cinzel text-xl text-crimson mb-3" style={{ textShadow: '0 0 20px rgba(185, 78, 106, 0.4)' }}>The Lineage</h3>
                     <p className="font-montserrat text-sm text-navy-dark/80 leading-relaxed mb-3">
                       These four women span over a century of practice—from Victorian Spitalfields to contemporary 
                       London. Each carried the magic forward in her own way: through craft, through secrets, through 
