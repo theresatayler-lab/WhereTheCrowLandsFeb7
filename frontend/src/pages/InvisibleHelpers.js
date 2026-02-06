@@ -499,8 +499,9 @@ export const InvisibleHelpers = () => {
         
         <div className="max-w-4xl mx-auto relative z-10">
           <div className="text-center">
-            <Shield className="w-12 h-12 sm:w-14 sm:h-14 mx-auto mb-4 text-crimson-bright"
-              style={{ filter: 'drop-shadow(0 0 15px rgba(184, 35, 48, 0.5))' }} />
+            <div className="flex justify-center mb-4">
+              <BrandIcon name="pentagram" size={56} variant="pink" opacity={0.95} />
+            </div>
             
             {/* Main title - phantasmagoria font */}
             <h1 className="phantasmagoria-hero text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-gold-light mb-3"
