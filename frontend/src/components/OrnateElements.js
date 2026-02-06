@@ -203,11 +203,11 @@ export const SectionDivider = ({ variant = 'default', className = '' }) => {
           <MoonDisc size={18} color={color} opacity={0.6} />
           <CrescentMoon size={14} facing="right" color={color} opacity={0.5} />
         </div>
-      ) : variant === 'birds' ? (
+      ) : variant === 'birds' || variant === 'ouroboros' ? (
         <div className="flex items-center gap-3">
-          <RavenGlyph size={20} color={color} opacity={0.5} />
+          <BrandIcon name="ouroboros" size={24} opacity={0.6} />
           <StarGlyph size={12} color={color} opacity={0.4} />
-          <RavenGlyph size={20} color={color} opacity={0.5} />
+          <BrandIcon name="ouroboros" size={24} opacity={0.6} />
         </div>
       ) : (
         <SimpleDivider width={120} color={color} opacity={0.4} />
@@ -217,16 +217,15 @@ export const SectionDivider = ({ variant = 'default', className = '' }) => {
 };
 
 // ============================================================================
-// GLYPH COMPONENTS - SVG-based
+// GLYPH COMPONENTS - Brand icons
 // ============================================================================
 
 export const BestiaryGlyph = ({ animal = 'crow', className = '', size = 'md', color }) => {
   const sizes = { sm: 20, md: 28, lg: 40 };
   const pixelSize = sizes[size] || sizes.md;
-  const glyphColor = color || NOUVEAU_COLORS.antiqueGold;
   
   if (animal === 'crow' || animal === 'raven') {
-    return <span className={className}><RavenGlyph size={pixelSize} color={glyphColor} /></span>;
+    return <span className={className}><BrandIcon name="ouroboros" size={pixelSize} opacity={0.8} /></span>;
   }
   // Fallback to emoji for other animals
   const emojiGlyphs = {
