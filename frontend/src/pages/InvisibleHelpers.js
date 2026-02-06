@@ -826,7 +826,7 @@ export const InvisibleHelpers = () => {
                   </button>
                   
                   <div className="text-center mb-6">
-                    <Sparkles className="w-10 h-10 mx-auto mb-4 text-crimson" />
+                    <BrandIcon name="star" size={44} variant="pink" opacity={0.9} className="mx-auto mb-4" />
                     <h2 className="phantasmagoria-hero text-2xl text-crimson mb-4">Support This Work</h2>
                     
                     {/* ORIGINAL COPY */}
