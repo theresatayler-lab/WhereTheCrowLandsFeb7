@@ -122,19 +122,25 @@ export const GrandDivider = ({ variant = 'default', light = false }) => {
       ) : variant === 'eye' ? (
         <div className="flex items-center gap-3">
           <StarGlyph size={16} color={color} opacity={opacity * 0.7} />
-          <CelestialEye size={36} color={color} accentColor={NOUVEAU_COLORS.roseClay} opacity={opacity} />
+          <BrandIcon name="eye" size={44} opacity={opacity} />
           <StarGlyph size={16} color={color} opacity={opacity * 0.7} />
         </div>
-      ) : variant === 'crow' ? (
+      ) : variant === 'crow' || variant === 'ouroboros' ? (
         <div className="flex items-center gap-4">
           <SimpleDivider width={80} color={color} opacity={opacity * 0.6} />
-          <RavenGlyph size={36} color={color} opacity={opacity} />
+          <BrandIcon name="ouroboros" size={44} opacity={opacity} />
+          <SimpleDivider width={80} color={color} opacity={opacity * 0.6} />
+        </div>
+      ) : variant === 'pentagram' ? (
+        <div className="flex items-center gap-4">
+          <SimpleDivider width={80} color={color} opacity={opacity * 0.6} />
+          <BrandIcon name="pentagram" size={44} opacity={opacity} />
           <SimpleDivider width={80} color={color} opacity={opacity * 0.6} />
         </div>
       ) : variant === 'sparkle' ? (
         <div className="flex items-center gap-3">
           <StarGlyph size={16} points={4} color={color} opacity={opacity * 0.6} />
-          <SunDisc size={32} color={color} opacity={opacity} />
+          <BrandIcon name="sunMoon" size={40} opacity={opacity} />
           <StarGlyph size={16} points={4} color={color} opacity={opacity * 0.6} />
         </div>
       ) : (
