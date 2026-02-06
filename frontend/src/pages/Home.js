@@ -143,83 +143,51 @@ const VellumPanel = ({ children, className = '' }) => (
   </div>
 );
 
-// Feature card with Art Nouveau presence - supports brand icons
+// Feature card - clean, minimal
 const FeatureCard = ({ icon: Icon, brandIcon, title, desc, tooltip }) => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
     whileInView={{ opacity: 1, y: 0 }}
     className="relative group"
   >
-    {/* Card with layered borders */}
+    {/* Card background */}
     <div 
       className="absolute inset-0"
       style={{ 
         backgroundColor: NOUVEAU_COLORS.celestialBlue,
-        border: `2px solid ${NOUVEAU_COLORS.antiqueGold}50`,
+        border: `1px solid ${NOUVEAU_COLORS.antiqueGold}30`,
       }}
-    />
-    <div 
-      className="absolute inset-1.5 pointer-events-none"
-      style={{ border: `1px solid ${NOUVEAU_COLORS.antiqueGold}25` }}
     />
     
     {/* Hover glow */}
     <div 
       className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" 
       style={{ 
-        background: `radial-gradient(ellipse at center, ${NOUVEAU_COLORS.emberPink}20 0%, transparent 70%)`,
-        boxShadow: `inset 0 0 30px ${NOUVEAU_COLORS.antiqueGold}15`,
+        background: `radial-gradient(ellipse at center, ${NOUVEAU_COLORS.emberPink}15 0%, transparent 70%)`,
       }} 
     />
     
-    {/* Corner ornaments - minimal on cards */}
-    <div className="absolute top-2 left-2 pointer-events-none opacity-20 group-hover:opacity-40 transition-opacity">
-      <HaloCorner size={32} position="top-left" color={NOUVEAU_COLORS.antiqueGold} />
-    </div>
-    <div className="absolute top-2 right-2 pointer-events-none opacity-20 group-hover:opacity-40 transition-opacity">
-      <HaloCorner size={32} position="top-right" color={NOUVEAU_COLORS.antiqueGold} />
-    </div>
-    <div className="absolute bottom-2 left-2 pointer-events-none opacity-20 group-hover:opacity-40 transition-opacity">
-      <HaloCorner size={32} position="bottom-left" color={NOUVEAU_COLORS.antiqueGold} />
-    </div>
-    <div className="absolute bottom-2 right-2 pointer-events-none opacity-20 group-hover:opacity-40 transition-opacity">
-      <HaloCorner size={32} position="bottom-right" color={NOUVEAU_COLORS.antiqueGold} />
-    </div>
-    
     <div className="relative p-6 sm:p-8 text-center">
-      {/* Icon with halo - supports both Lucide and brand icons */}
-      <div className="relative w-16 h-16 mx-auto mb-4">
-        <div 
-          className="absolute inset-0 rounded-full opacity-30"
-          style={{ 
-            border: `1px solid ${NOUVEAU_COLORS.antiqueGold}`,
-            boxShadow: `0 0 15px ${NOUVEAU_COLORS.emberPink}25`,
-          }}
-        />
-        <div 
-          className="absolute inset-1.5 rounded-full opacity-20"
-          style={{ border: `1px solid ${NOUVEAU_COLORS.antiqueGold}` }}
-        />
+      {/* Icon - simplified */}
+      <div className="relative w-14 h-14 mx-auto mb-4 flex items-center justify-center">
         {brandIcon ? (
-          <div className="absolute inset-0 flex items-center justify-center group-hover:scale-110 transition-transform">
-            <BrandIcon 
-              name={brandIcon} 
-              size={42} 
-              variant="pink"
-              opacity={0.95}
-            />
-          </div>
+          <BrandIcon 
+            name={brandIcon} 
+            size={40} 
+            variant="pink"
+            opacity={0.9}
+          />
         ) : Icon ? (
           <Icon 
-            className="absolute inset-0 w-full h-full p-3 group-hover:scale-110 transition-transform" 
-            style={{ color: NOUVEAU_COLORS.emberPink, filter: `drop-shadow(0 0 10px ${NOUVEAU_COLORS.emberPink}40)` }} 
+            className="w-10 h-10" 
+            style={{ color: NOUVEAU_COLORS.emberPink }} 
           />
         ) : null}
       </div>
       
       <h3 
         className="font-cinzel text-lg sm:text-xl tracking-wide mb-3"
-        style={{ color: NOUVEAU_COLORS.antiqueGold, textShadow: `0 0 30px ${NOUVEAU_COLORS.emberPink}50, 0 0 60px ${NOUVEAU_COLORS.emberPink}30` }}
+        style={{ color: NOUVEAU_COLORS.antiqueGold }}
       >
         {title}
       </h3>
