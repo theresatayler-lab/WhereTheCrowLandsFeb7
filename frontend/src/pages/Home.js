@@ -394,7 +394,7 @@ export const Home = () => {
               className="phantasmagoria-hero text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-wide mb-3 leading-tight"
               style={{ 
                 color: NOUVEAU_COLORS.antiqueGold, 
-                textShadow: `0 2px 30px ${NOUVEAU_COLORS.antiqueGold}50, 0 0 60px ${NOUVEAU_COLORS.emberPink}20`,
+                textShadow: `0 0 40px ${NOUVEAU_COLORS.emberPink}60, 0 0 80px ${NOUVEAU_COLORS.emberPink}40, 0 2px 30px ${NOUVEAU_COLORS.antiqueGold}50`,
                 letterSpacing: '0.05em',
               }}
             >
@@ -406,7 +406,7 @@ export const Home = () => {
               className="font-cinzel text-sm sm:text-base md:text-lg tracking-widest uppercase mb-3"
               style={{ 
                 color: NOUVEAU_COLORS.vellum, 
-                textShadow: '0 2px 15px rgba(0, 0, 0, 0.4)',
+                textShadow: `0 0 30px ${NOUVEAU_COLORS.emberPink}50, 0 0 60px ${NOUVEAU_COLORS.emberPink}30`,
                 letterSpacing: '0.12em',
               }}
             >
@@ -418,7 +418,7 @@ export const Home = () => {
               className="phantasmagoria-accent italic text-lg sm:text-xl mb-6"
               style={{ 
                 color: `${NOUVEAU_COLORS.antiqueGold}bb`, 
-                textShadow: '0 2px 10px rgba(0, 0, 0, 0.3)',
+                textShadow: `0 0 25px ${NOUVEAU_COLORS.emberPink}50, 0 0 50px ${NOUVEAU_COLORS.emberPink}30`,
               }}
             >
               … the bird is on the wing
