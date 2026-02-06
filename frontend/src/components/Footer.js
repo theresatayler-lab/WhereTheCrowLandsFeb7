@@ -36,7 +36,7 @@ export const Footer = () => {
                 src={SEAL_LOGO}
                 alt="Where The Crowlands Seal"
                 className="relative h-32 w-auto object-contain"
-                style={{ filter: 'hue-rotate(-30deg) saturate(1.5) brightness(1.1)' }}
+                style={{ filter: 'hue-rotate(-15deg) saturate(0.7) brightness(1.4) contrast(0.95)' }}
               />
             </div>
             <p className="font-crimson text-sm text-center md:text-left leading-relaxed" style={{ color: 'rgba(243, 239, 232, 0.7)' }}>

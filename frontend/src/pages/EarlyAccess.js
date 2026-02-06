@@ -94,7 +94,7 @@ const EarlyAccessPage = () => {
           src="/images/brand/logo-alt.png"
           alt="Where The Crowlands"
           className="w-24 h-auto sm:w-28 mx-auto mb-3 object-contain"
-          style={{ filter: 'hue-rotate(-30deg) saturate(1.5) brightness(1.1)' }}
+          style={{ filter: 'hue-rotate(-15deg) saturate(0.7) brightness(1.4) contrast(0.95)' }}
         />
         
         {/* Title */}

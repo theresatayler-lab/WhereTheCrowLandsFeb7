@@ -184,7 +184,7 @@ export const Navigation = ({ user, onLogout }) => {
                 src="/images/brand/logo-alt.png" 
                 alt="Where The Crowlands Logo"
                 className="relative h-10 sm:h-12 md:h-16 w-auto"
-                style={{ filter: 'hue-rotate(-30deg) saturate(1.5) brightness(1.1)' }}
+                style={{ filter: 'hue-rotate(-15deg) saturate(0.7) brightness(1.4) contrast(0.95)' }}
               />
             </div>
           </Link>
