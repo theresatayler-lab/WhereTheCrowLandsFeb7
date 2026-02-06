@@ -376,15 +376,18 @@ export const Home = () => {
             transition={{ duration: 1.2 }} 
             className="relative mb-6"
           >
+            {/* Subtle radial fade behind logo - cream to teal */}
             <div 
-              className="absolute inset-0 blur-3xl opacity-40 pointer-events-none" 
-              style={{ background: `radial-gradient(circle, ${NOUVEAU_COLORS.emberPink}50 0%, ${NOUVEAU_COLORS.antiqueGold}40 40%, transparent 70%)` }} 
+              className="absolute inset-0 pointer-events-none rounded-full"
+              style={{ 
+                background: 'radial-gradient(circle, rgba(243, 239, 232, 0.95) 0%, rgba(243, 239, 232, 0.7) 40%, rgba(14, 42, 47, 0.4) 70%, transparent 100%)',
+                transform: 'scale(1.05)',
+              }} 
             />
             <img 
               src="/images/brand/logo-alt.png" 
               alt="Where The Crowlands"
-              className="relative w-56 h-56 sm:w-72 sm:h-72 md:w-80 md:h-80 mx-auto object-contain"
-              style={{ filter: `brightness(1.3) contrast(1.1) drop-shadow(0 0 50px ${NOUVEAU_COLORS.antiqueGold}70)` }} 
+              className="relative w-56 h-56 sm:w-72 sm:h-72 md:w-80 md:h-80 mx-auto object-contain rounded-full"
             />
           </motion.div>
 
