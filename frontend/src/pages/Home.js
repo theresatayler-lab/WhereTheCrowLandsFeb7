@@ -403,16 +403,16 @@ export const Home = () => {
               <div 
                 className="absolute inset-0 rounded-full"
                 style={{ 
-                  background: 'radial-gradient(circle, rgba(185, 78, 106, 0.35) 0%, rgba(14, 42, 47, 0.5) 40%, transparent 65%)',
-                  transform: 'scale(1.3)',
-                  filter: 'blur(25px)',
+                  background: 'radial-gradient(circle, rgba(185, 78, 106, 0.2) 0%, rgba(14, 42, 47, 0.35) 45%, transparent 65%)',
+                  transform: 'scale(1.35)',
+                  filter: 'blur(30px)',
                 }}
               />
               <img 
                 src="/images/brand/logo-alt.png" 
                 alt="Where The Crowlands"
                 className="relative w-56 h-auto sm:w-72 md:w-80 object-contain"
-                style={{ filter: 'sepia(0.4) hue-rotate(-35deg) saturate(0.95) brightness(1.05) contrast(1.15)' }}
+                style={{ filter: 'sepia(0.5) hue-rotate(-30deg) saturate(0.6) brightness(0.8) contrast(1.05)', opacity: 0.85 }}
               />
             </div>
           </motion.div>

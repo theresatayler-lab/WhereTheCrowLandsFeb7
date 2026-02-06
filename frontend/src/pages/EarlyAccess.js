@@ -95,16 +95,16 @@ const EarlyAccessPage = () => {
           <div 
             className="absolute inset-0 rounded-full"
             style={{ 
-              background: 'radial-gradient(circle, rgba(185, 78, 106, 0.3) 0%, rgba(14, 22, 41, 0.4) 50%, transparent 70%)',
-              transform: 'scale(1.4)',
-              filter: 'blur(12px)',
+              background: 'radial-gradient(circle, rgba(185, 78, 106, 0.2) 0%, rgba(14, 22, 41, 0.3) 50%, transparent 70%)',
+              transform: 'scale(1.5)',
+              filter: 'blur(15px)',
             }}
           />
           <img 
             src="/images/brand/logo-alt.png"
             alt="Where The Crowlands"
             className="relative w-full h-auto object-contain"
-            style={{ filter: 'sepia(0.4) hue-rotate(-35deg) saturate(0.95) brightness(1.05) contrast(1.15)' }}
+            style={{ filter: 'sepia(0.5) hue-rotate(-30deg) saturate(0.6) brightness(0.8) contrast(1.05)', opacity: 0.85 }}
           />
         </div>
         
