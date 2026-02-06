@@ -24,11 +24,11 @@ import {
 // Subtle, tinted Art Nouveau imagery for depth
 // ============================================================================
 
-// Image URLs for atmospheric backgrounds
+// Image URLs for atmospheric backgrounds (now local)
 export const ATMOSPHERIC_IMAGES = {
-  florals: 'https://customer-assets.emergentagent.com/job_spellcraft-ai/artifacts/y6rq27fd_1BackgroundIMagesCrowsland.png',
-  maiden: 'https://customer-assets.emergentagent.com/job_spellcraft-ai/artifacts/9vl2rlka_2BackgroundIMagesCrowsland.png',
-  peonies: 'https://customer-assets.emergentagent.com/job_spellcraft-ai/artifacts/vefnlz5z_3BackgroundIMagesCrowsland.png',
+  florals: '/images/backgrounds/crowlands-bg-1.png',
+  maiden: '/images/backgrounds/crowlands-bg-2.png',
+  peonies: '/images/backgrounds/crowlands-bg-3.png',
 };
 
 // Reusable atmospheric background component
