@@ -13,45 +13,16 @@ import {
 // Content-first design with subtle ornamental accents
 // ============================================================================
 
-// Large decorative halo arc for hero
-const HeroHaloArc = ({ width = 400 }) => (
-  <svg width={width} height={width * 0.4} viewBox="0 0 400 160" fill="none" className="pointer-events-none">
-    {/* Outer arc */}
+// Simple decorative arc for hero
+const HeroHaloArc = ({ width = 300 }) => (
+  <svg width={width} height={width * 0.25} viewBox="0 0 300 75" fill="none" className="pointer-events-none">
     <path 
-      d="M20 150 Q200 -20 380 150" 
-      stroke={NOUVEAU_COLORS.antiqueGold} 
-      strokeWidth="2" 
-      fill="none" 
-      opacity="0.7"
-    />
-    {/* Middle arc */}
-    <path 
-      d="M50 140 Q200 10 350 140" 
-      stroke={NOUVEAU_COLORS.antiqueGold} 
-      strokeWidth="1.5" 
-      fill="none" 
-      opacity="0.5"
-    />
-    {/* Inner arc */}
-    <path 
-      d="M80 130 Q200 30 320 130" 
+      d="M30 70 Q150 0 270 70" 
       stroke={NOUVEAU_COLORS.antiqueGold} 
       strokeWidth="1" 
       fill="none" 
-      opacity="0.35"
+      opacity="0.3"
     />
-    {/* Decorative elements along the arc */}
-    <circle cx="200" cy="30" r="8" stroke={NOUVEAU_COLORS.antiqueGold} strokeWidth="1.5" fill="none" opacity="0.6" />
-    <circle cx="200" cy="30" r="4" stroke={NOUVEAU_COLORS.roseClay} strokeWidth="1" fill="none" opacity="0.5" />
-    <circle cx="200" cy="30" r="1.5" fill={NOUVEAU_COLORS.antiqueGold} opacity="0.5" />
-    {/* Side stars */}
-    <circle cx="80" cy="100" r="3" stroke={NOUVEAU_COLORS.antiqueGold} strokeWidth="1" fill="none" opacity="0.4" />
-    <circle cx="320" cy="100" r="3" stroke={NOUVEAU_COLORS.antiqueGold} strokeWidth="1" fill="none" opacity="0.4" />
-    <circle cx="50" cy="120" r="2" fill={NOUVEAU_COLORS.antiqueGold} opacity="0.3" />
-    <circle cx="350" cy="120" r="2" fill={NOUVEAU_COLORS.antiqueGold} opacity="0.3" />
-    {/* Crescent accents */}
-    <path d="M120 80 Q115 70 125 65 Q118 70 120 80" stroke={NOUVEAU_COLORS.antiqueGold} strokeWidth="1" fill="none" opacity="0.4" />
-    <path d="M280 80 Q285 70 275 65 Q282 70 280 80" stroke={NOUVEAU_COLORS.antiqueGold} strokeWidth="1" fill="none" opacity="0.4" />
   </svg>
 );
 
