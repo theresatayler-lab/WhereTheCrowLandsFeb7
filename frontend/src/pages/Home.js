@@ -397,12 +397,24 @@ export const Home = () => {
             transition={{ duration: 1.2 }} 
             className="relative mb-6 flex justify-center"
           >
-            <img 
-              src="/images/brand/logo-alt.png" 
-              alt="Where The Crowlands"
-              className="w-56 h-auto sm:w-72 md:w-80 object-contain"
-              style={{ filter: 'sepia(0.4) hue-rotate(-35deg) saturate(0.95) brightness(1.1) contrast(1.2)' }}
-            />
+            {/* Logo container with glow */}
+            <div className="relative">
+              {/* Subtle glow behind logo */}
+              <div 
+                className="absolute inset-0 rounded-full"
+                style={{ 
+                  background: 'radial-gradient(circle, rgba(185, 78, 106, 0.35) 0%, rgba(14, 42, 47, 0.5) 40%, transparent 65%)',
+                  transform: 'scale(1.3)',
+                  filter: 'blur(25px)',
+                }}
+              />
+              <img 
+                src="/images/brand/logo-alt.png" 
+                alt="Where The Crowlands"
+                className="relative w-56 h-auto sm:w-72 md:w-80 object-contain"
+                style={{ filter: 'sepia(0.4) hue-rotate(-35deg) saturate(0.95) brightness(1.05) contrast(1.15)' }}
+              />
+            </div>
           </motion.div>
 
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.3 }}>

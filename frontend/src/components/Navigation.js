@@ -180,11 +180,20 @@ export const Navigation = ({ user, onLogout }) => {
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2 group" data-testid="nav-logo" onClick={handleLinkClick}>
             <div className="relative">
+              {/* Subtle glow behind logo */}
+              <div 
+                className="absolute inset-0 rounded-full"
+                style={{ 
+                  background: 'radial-gradient(circle, rgba(185, 78, 106, 0.25) 0%, rgba(14, 42, 47, 0.4) 50%, transparent 70%)',
+                  transform: 'scale(1.3)',
+                  filter: 'blur(8px)',
+                }}
+              />
               <img 
                 src="/images/brand/logo-alt.png" 
                 alt="Where The Crowlands Logo"
                 className="relative h-10 sm:h-12 md:h-16 w-auto"
-                style={{ filter: 'sepia(0.4) hue-rotate(-35deg) saturate(0.95) brightness(1.1) contrast(1.2)' }}
+                style={{ filter: 'sepia(0.4) hue-rotate(-35deg) saturate(0.95) brightness(1.05) contrast(1.15)' }}
               />
             </div>
           </Link>
