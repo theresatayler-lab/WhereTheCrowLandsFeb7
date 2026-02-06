@@ -481,38 +481,38 @@ export const Home = () => {
             </div>
             
             {/* CTA Buttons - strong presence */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-5 mt-2">
               <Link 
                 to="/spell-request" 
                 data-testid="hero-begin-journey-btn"
-                className="group relative px-10 py-4 overflow-hidden transition-all duration-300"
+                className="group relative px-8 py-3.5 overflow-hidden transition-all duration-300"
                 style={{
                   backgroundColor: NOUVEAU_COLORS.emberPink,
-                  border: `2px solid ${NOUVEAU_COLORS.antiqueGold}`,
-                  boxShadow: `0 0 30px ${NOUVEAU_COLORS.emberPink}40`,
+                  border: `2px solid ${NOUVEAU_COLORS.emberPink}`,
+                  boxShadow: `0 4px 20px ${NOUVEAU_COLORS.emberPink}30`,
                 }}
               >
                 <span 
-                  className="relative flex items-center gap-3 font-cinzel tracking-[0.2em] uppercase text-sm sm:text-base"
-                  style={{ color: NOUVEAU_COLORS.vellum }}
+                  className="relative flex items-center gap-3 font-cinzel tracking-[0.15em] uppercase text-sm"
+                  style={{ color: '#FFF' }}
                 >
-                  <BrandIcon name="star" size={20} variant="pink" opacity={0.9} /> Begin Your Journey
+                  <BrandIcon name="star" size={18} variant="pink" opacity={0.9} /> Begin Your Journey
                 </span>
               </Link>
               <Link 
                 to="/guides" 
                 data-testid="hero-meet-guides-btn"
-                className="group relative px-10 py-4 transition-all duration-300 hover:bg-opacity-10"
+                className="group relative px-8 py-3.5 transition-all duration-300 hover:bg-white/5"
                 style={{
                   backgroundColor: 'transparent',
-                  border: `2px solid ${NOUVEAU_COLORS.antiqueGold}`,
+                  border: `2px solid ${NOUVEAU_COLORS.antiqueGold}80`,
                 }}
               >
                 <span 
-                  className="flex items-center gap-3 font-cinzel tracking-[0.2em] uppercase text-sm sm:text-base"
+                  className="flex items-center gap-3 font-cinzel tracking-[0.15em] uppercase text-sm"
                   style={{ color: NOUVEAU_COLORS.antiqueGold }}
                 >
-                  <Users className="w-5 h-5" /> Meet Your Guides
+                  <Users className="w-4 h-4" /> Meet Your Guides
                 </span>
               </Link>
             </div>
