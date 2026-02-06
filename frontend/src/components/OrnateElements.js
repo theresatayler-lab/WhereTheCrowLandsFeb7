@@ -478,15 +478,24 @@ export const SectionLabel = ({ title, context }) => (
 // ADDITIONAL COMPONENTS - Backward compatibility
 // ============================================================================
 
-// Page Header component
-export const PageHeader = ({ title, subtitle, icon: Icon, className = '' }) => (
+// Page Header component - supports both Lucide icons and brand icons
+export const PageHeader = ({ title, subtitle, icon: Icon, brandIcon, className = '' }) => (
   <div className={`text-center ${className}`}>
-    {Icon && (
+    {brandIcon ? (
+      <div className="flex justify-center mb-4">
+        <BrandIcon 
+          name={brandIcon} 
+          size={48} 
+          variant="pink"
+          opacity={0.9}
+        />
+      </div>
+    ) : Icon ? (
       <Icon 
         className="w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-4" 
         style={{ color: NOUVEAU_COLORS.emberPink, filter: `drop-shadow(0 0 12px ${NOUVEAU_COLORS.emberPink}40)` }} 
       />
-    )}
+    ) : null}
     <h1 
       className="phantasmagoria-hero text-2xl sm:text-3xl md:text-4xl mb-2"
       style={{ color: NOUVEAU_COLORS.antiqueGold, textShadow: `0 0 30px ${NOUVEAU_COLORS.emberPink}50, 0 0 60px ${NOUVEAU_COLORS.emberPink}30` }}
