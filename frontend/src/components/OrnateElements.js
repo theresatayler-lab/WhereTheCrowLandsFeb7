@@ -223,6 +223,7 @@ export const SectionDivider = ({ variant = 'default', className = '' }) => {
 export const BestiaryGlyph = ({ animal = 'crow', className = '', size = 'md', color }) => {
   const sizes = { sm: 20, md: 28, lg: 40 };
   const pixelSize = sizes[size] || sizes.md;
+  const glyphColor = color || NOUVEAU_COLORS.antiqueGold;
   
   if (animal === 'crow' || animal === 'raven') {
     return <span className={className}><BrandIcon name="ouroboros" size={pixelSize} opacity={0.8} /></span>;
