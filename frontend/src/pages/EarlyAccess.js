@@ -89,13 +89,21 @@ const EarlyAccessPage = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        {/* Logo */}
-        <img 
-          src="/images/brand/logo-alt.png"
-          alt="Where The Crowlands"
-          className="w-24 h-24 sm:w-28 sm:h-28 mx-auto mb-3 object-contain"
-          style={{ filter: 'brightness(1.3) drop-shadow(0 0 20px rgba(212, 168, 75, 0.4))' }}
-        />
+        {/* Logo with subtle fade background */}
+        <div className="relative w-24 h-24 sm:w-28 sm:h-28 mx-auto mb-3">
+          {/* Subtle radial fade behind logo */}
+          <div 
+            className="absolute inset-0 rounded-full scale-110"
+            style={{ 
+              background: 'radial-gradient(circle, rgba(243, 239, 232, 0.95) 0%, rgba(243, 239, 232, 0.6) 45%, rgba(14, 22, 41, 0.3) 75%, transparent 100%)',
+            }}
+          />
+          <img 
+            src="/images/brand/logo-alt.png"
+            alt="Where The Crowlands"
+            className="relative w-full h-full object-contain rounded-full"
+          />
+        </div>
         
         {/* Title */}
         <h1 className="font-italiana text-2xl sm:text-3xl md:text-4xl text-gold-light mb-2"
