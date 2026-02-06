@@ -14,31 +14,53 @@ export const BRAND_ASSETS = {
   profileFrame: "/images/brand/profile-frame.png",
   
   // ==========================================================================
-  // DECORATIVE ICONS - Gold versions (can be tinted pink via CSS filter)
+  // DECORATIVE ICONS - Custom brand artwork
   // ==========================================================================
   icons: {
-    moon: "/images/brand/moon-gold.png",        // Mystical, dividers, general decoration
-    book: "/images/brand/book-gold.svg",        // Library, Grimoire, knowledge sections
-    star: "/images/brand/star-gold.svg",        // Featured, magic, call-to-action
-    skull: "/images/brand/skull-gold.svg",      // Timeline, ancestors, history, lineage
-    key: "/images/brand/key-gold.png",          // Login, access, secrets, premium
-    sunMoon: "/images/brand/sunmoon-gold.svg",  // Celestial, balance, cycles
+    // Mystical & Celestial
+    moon: "/images/brand/moon-gold.png",           // Mystical, dividers, general decoration
+    sunMoon: "/images/brand/sunmoon-gold.svg",     // Balance, cycles, celestial
+    eye: "/images/brand/eye-gold.png",             // Vision, insight, mystical headers
+    hexagram: "/images/brand/hexagram-gold.png",   // Wisdom, celestial balance
+    
+    // Magic & Ritual
+    pentagram: "/images/brand/pentagram-gold.png", // Spells, protection, magic features
+    star: "/images/brand/star-gold.svg",           // Featured items, magic actions, CTAs
+    ouroboros: "/images/brand/ouroboros-gold.png", // Cycles, eternity, timeline, loading
+    
+    // Knowledge & Access
+    book: "/images/brand/book-gold.svg",           // Library, Grimoire, knowledge sections
+    key: "/images/brand/key-gold.png",             // Login, secrets, locked content
+    
+    // History & Structure
+    skull: "/images/brand/skull-gold.svg",         // Ancestors, history, lineage
+    column: "/images/brand/column-gold.jpg",       // Foundations, pillars, structure
   },
   
   // ==========================================================================
   // ICON USAGE GUIDE
   // ==========================================================================
-  // Moon:    Dividers, general mystical decoration
-  // Book:    Library page, Grimoire, Archives, knowledge cards
-  // Star:    Featured items, spell creation, magic actions, CTAs
-  // Skull:   Timeline, history sections, ancestor/lineage content
-  // Key:     Authentication, locked content, secrets revealed
-  // SunMoon: Day/night cycles, balance themes, celestial sections
+  // DIVIDERS & HEADERS:
+  //   eye      - Major section dividers, "all-seeing" mystical headers
+  //   moon     - General dividers, mystical decoration
+  //   ouroboros - Timeline dividers, cycle/loop concepts
+  //
+  // FEATURE CARDS (use pink variant):
+  //   star     - "Craft Your Spell" / magic actions
+  //   book     - "The Grimoire" / knowledge/library
+  //   moon     - "Invisible Helpers" / mystical features
+  //   key      - Premium/locked content, authentication
+  //
+  // PAGE-SPECIFIC:
+  //   pentagram - Spell creation, magic rituals
+  //   hexagram  - Wisdom sections, celestial balance
+  //   skull     - Timeline, ancestors, history
+  //   column    - Lineage section, foundations
+  //   sunMoon   - Day/night, balance themes
   //
   // COLOR VARIANTS:
-  // - Gold (default): Standard decoration
-  // - Pink (CSS filter): Highlighted, active, or call-to-action states
-  //   Use filter: 'hue-rotate(-30deg) saturate(1.5)' for pink tint
+  //   Gold (default) - Standard decoration, headers, dividers
+  //   Pink (filter)  - Call-to-action, highlighted, feature cards
   // ==========================================================================
   
   // Spell watermark settings
@@ -46,14 +68,14 @@ export const BRAND_ASSETS = {
     url: "/images/brand/crow-avatar.png",
     opacity: 0.08,
     size: "80px",
-    position: "bottom-center" // bottom-center or bottom-right
+    position: "bottom-center"
   },
   
   // PDF watermark settings
   pdfWatermark: {
     url: "/images/brand/crow-avatar.png",
     opacity: 0.1,
-    size: 60, // pixels
+    size: 60,
     position: "center-bottom"
   },
   
