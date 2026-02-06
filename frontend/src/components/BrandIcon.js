@@ -9,31 +9,35 @@ import { BRAND_ASSETS, PINK_FILTER } from '../assets/brandAssets';
 
 // Icon name to path mapping
 const ICON_MAP = {
+  // Mystical & Celestial
   moon: BRAND_ASSETS.icons.moon,
-  book: BRAND_ASSETS.icons.book,
-  star: BRAND_ASSETS.icons.star,
-  skull: BRAND_ASSETS.icons.skull,
-  key: BRAND_ASSETS.icons.key,
   sunMoon: BRAND_ASSETS.icons.sunMoon,
+  eye: BRAND_ASSETS.icons.eye,
+  hexagram: BRAND_ASSETS.icons.hexagram,
+  
+  // Magic & Ritual
+  pentagram: BRAND_ASSETS.icons.pentagram,
+  star: BRAND_ASSETS.icons.star,
+  ouroboros: BRAND_ASSETS.icons.ouroboros,
+  
+  // Knowledge & Access
+  book: BRAND_ASSETS.icons.book,
+  key: BRAND_ASSETS.icons.key,
+  
+  // History & Structure
+  skull: BRAND_ASSETS.icons.skull,
+  column: BRAND_ASSETS.icons.column,
 };
 
 /**
  * BrandIcon - Renders a decorative brand icon
  * 
- * @param {string} name - Icon name: 'moon', 'book', 'star', 'skull', 'key', 'sunMoon'
+ * @param {string} name - Icon name (see ICON_MAP above)
  * @param {number} size - Size in pixels (default: 48)
  * @param {string} variant - 'gold' (default) or 'pink'
  * @param {number} opacity - Opacity 0-1 (default: 1)
  * @param {string} className - Additional CSS classes
  * @param {object} style - Additional inline styles
- * 
- * USAGE GUIDE:
- * - Moon:    Dividers, general mystical decoration
- * - Book:    Library page, Grimoire, Archives, knowledge cards
- * - Star:    Featured items, spell creation, magic actions, CTAs
- * - Skull:   Timeline, history sections, ancestor/lineage content
- * - Key:     Authentication, locked content, secrets revealed
- * - SunMoon: Day/night cycles, balance themes, celestial sections
  */
 export const BrandIcon = ({ 
   name, 
@@ -69,10 +73,15 @@ export const BrandIcon = ({
 
 // Convenience exports for specific icons
 export const MoonIcon = (props) => <BrandIcon name="moon" {...props} />;
-export const BookIcon = (props) => <BrandIcon name="book" {...props} />;
-export const StarIcon = (props) => <BrandIcon name="star" {...props} />;
-export const SkullIcon = (props) => <BrandIcon name="skull" {...props} />;
-export const KeyIcon = (props) => <BrandIcon name="key" {...props} />;
 export const SunMoonIcon = (props) => <BrandIcon name="sunMoon" {...props} />;
+export const EyeIcon = (props) => <BrandIcon name="eye" {...props} />;
+export const HexagramIcon = (props) => <BrandIcon name="hexagram" {...props} />;
+export const PentagramIcon = (props) => <BrandIcon name="pentagram" {...props} />;
+export const StarIcon = (props) => <BrandIcon name="star" {...props} />;
+export const OuroborosIcon = (props) => <BrandIcon name="ouroboros" {...props} />;
+export const BookIcon = (props) => <BrandIcon name="book" {...props} />;
+export const KeyIcon = (props) => <BrandIcon name="key" {...props} />;
+export const SkullIcon = (props) => <BrandIcon name="skull" {...props} />;
+export const ColumnIcon = (props) => <BrandIcon name="column" {...props} />;
 
 export default BrandIcon;
