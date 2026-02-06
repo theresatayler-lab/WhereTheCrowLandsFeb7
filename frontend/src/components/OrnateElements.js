@@ -477,12 +477,12 @@ export const PageHeader = ({ title, subtitle, icon: Icon, className = '' }) => (
     )}
     <h1 
       className="phantasmagoria-hero text-2xl sm:text-3xl md:text-4xl mb-2"
-      style={{ color: NOUVEAU_COLORS.antiqueGold, textShadow: `0 2px 20px ${NOUVEAU_COLORS.antiqueGold}40` }}
+      style={{ color: NOUVEAU_COLORS.antiqueGold, textShadow: `0 0 30px ${NOUVEAU_COLORS.emberPink}50, 0 0 60px ${NOUVEAU_COLORS.emberPink}30` }}
     >
       {title}
     </h1>
     {subtitle && (
-      <p className="font-crimson text-sm sm:text-base italic" style={{ color: `${NOUVEAU_COLORS.vellum}aa` }}>
+      <p className="font-crimson text-sm sm:text-base italic" style={{ color: `${NOUVEAU_COLORS.vellum}aa`, textShadow: `0 0 20px ${NOUVEAU_COLORS.emberPink}30` }}>
         {subtitle}
       </p>
     )}
