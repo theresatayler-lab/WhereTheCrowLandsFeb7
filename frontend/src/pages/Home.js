@@ -128,58 +128,54 @@ const SectionPlate = ({ children, variant = 'dark', className = '' }) => {
         }}
       />
       
-      {/* Large corner ornaments - architectural scale */}
+      {/* Large corner ornaments - refined opacity for balance */}
       <div className="absolute top-4 left-4 pointer-events-none">
         <HaloCornerElaborate 
-          size={140} 
+          size={120} 
           position="top-left" 
           color={isDark ? NOUVEAU_COLORS.antiqueGold : NOUVEAU_COLORS.mutedBrass} 
           accentColor={NOUVEAU_COLORS.roseClay}
-          opacity={isDark ? 0.7 : 0.5} 
+          opacity={isDark ? 0.45 : 0.35} 
         />
       </div>
       <div className="absolute top-4 right-4 pointer-events-none">
         <HaloCornerElaborate 
-          size={140} 
+          size={120} 
           position="top-right" 
           color={isDark ? NOUVEAU_COLORS.antiqueGold : NOUVEAU_COLORS.mutedBrass}
           accentColor={NOUVEAU_COLORS.roseClay}
-          opacity={isDark ? 0.7 : 0.5} 
+          opacity={isDark ? 0.45 : 0.35} 
         />
       </div>
       <div className="absolute bottom-4 left-4 pointer-events-none">
         <HaloCornerElaborate 
-          size={140} 
+          size={120} 
           position="bottom-left" 
           color={isDark ? NOUVEAU_COLORS.antiqueGold : NOUVEAU_COLORS.mutedBrass}
           accentColor={NOUVEAU_COLORS.roseClay}
-          opacity={isDark ? 0.7 : 0.5} 
+          opacity={isDark ? 0.45 : 0.35} 
         />
       </div>
       <div className="absolute bottom-4 right-4 pointer-events-none">
         <HaloCornerElaborate 
-          size={140} 
+          size={120} 
           position="bottom-right" 
           color={isDark ? NOUVEAU_COLORS.antiqueGold : NOUVEAU_COLORS.mutedBrass}
           accentColor={NOUVEAU_COLORS.roseClay}
-          opacity={isDark ? 0.7 : 0.5} 
+          opacity={isDark ? 0.45 : 0.35} 
         />
       </div>
       
-      {/* Side rail ornaments */}
-      <div className="hidden md:flex absolute left-6 top-1/2 -translate-y-1/2 flex-col items-center gap-4 opacity-50 pointer-events-none">
-        <div className="w-px h-20" style={{ background: `linear-gradient(to bottom, transparent, ${NOUVEAU_COLORS.antiqueGold}, transparent)` }} />
-        <CrescentMoon size={20} facing="right" color={NOUVEAU_COLORS.antiqueGold} opacity={0.7} />
-        <div className="w-px h-20" style={{ background: `linear-gradient(to bottom, transparent, ${NOUVEAU_COLORS.antiqueGold}, transparent)` }} />
-        <StarGlyph size={16} color={NOUVEAU_COLORS.antiqueGold} opacity={0.6} />
-        <div className="w-px h-20" style={{ background: `linear-gradient(to bottom, transparent, ${NOUVEAU_COLORS.antiqueGold}, transparent)` }} />
+      {/* Side rail ornaments - subtle accent */}
+      <div className="hidden lg:flex absolute left-6 top-1/2 -translate-y-1/2 flex-col items-center gap-4 opacity-30 pointer-events-none">
+        <div className="w-px h-16" style={{ background: `linear-gradient(to bottom, transparent, ${NOUVEAU_COLORS.antiqueGold}, transparent)` }} />
+        <CrescentMoon size={16} facing="right" color={NOUVEAU_COLORS.antiqueGold} opacity={0.5} />
+        <div className="w-px h-16" style={{ background: `linear-gradient(to bottom, transparent, ${NOUVEAU_COLORS.antiqueGold}, transparent)` }} />
       </div>
-      <div className="hidden md:flex absolute right-6 top-1/2 -translate-y-1/2 flex-col items-center gap-4 opacity-50 pointer-events-none">
-        <div className="w-px h-20" style={{ background: `linear-gradient(to bottom, transparent, ${NOUVEAU_COLORS.antiqueGold}, transparent)` }} />
-        <CrescentMoon size={20} facing="left" color={NOUVEAU_COLORS.antiqueGold} opacity={0.7} />
-        <div className="w-px h-20" style={{ background: `linear-gradient(to bottom, transparent, ${NOUVEAU_COLORS.antiqueGold}, transparent)` }} />
-        <StarGlyph size={16} color={NOUVEAU_COLORS.antiqueGold} opacity={0.6} />
-        <div className="w-px h-20" style={{ background: `linear-gradient(to bottom, transparent, ${NOUVEAU_COLORS.antiqueGold}, transparent)` }} />
+      <div className="hidden lg:flex absolute right-6 top-1/2 -translate-y-1/2 flex-col items-center gap-4 opacity-30 pointer-events-none">
+        <div className="w-px h-16" style={{ background: `linear-gradient(to bottom, transparent, ${NOUVEAU_COLORS.antiqueGold}, transparent)` }} />
+        <CrescentMoon size={16} facing="left" color={NOUVEAU_COLORS.antiqueGold} opacity={0.5} />
+        <div className="w-px h-16" style={{ background: `linear-gradient(to bottom, transparent, ${NOUVEAU_COLORS.antiqueGold}, transparent)` }} />
       </div>
       
       <div className="relative z-10">{children}</div>
