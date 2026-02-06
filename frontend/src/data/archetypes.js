@@ -339,13 +339,13 @@ Her magic lies in craft: every stitch is intention, every pattern holds knowledg
       { name: 'One for Sorrow, Seven for a Secret', category: 'Ancestor & Grief Work', description: 'Magpie counting ritual for ancestral messages' }
     ],
     image: '/images/guides/katherine/katherine-main.png',
-    video: 'https://customer-assets.emergentagent.com/job_witchcrowland/artifacts/6q5iwmtx_3KatherineSpellWork.mp4',
+    video: '/images/guides/videos/katherine-video.mp4',
     galleryImages: [
-      'https://customer-assets.emergentagent.com/job_diywizardry/artifacts/b6j9g2m5_Katherine1.png',
-      'https://customer-assets.emergentagent.com/job_diywizardry/artifacts/zy35xehu_Katherine4.png',
-      'https://customer-assets.emergentagent.com/job_diywizardry/artifacts/fhb3fcwi_Katherine5.png',
-      'https://customer-assets.emergentagent.com/job_diywizardry/artifacts/i3fgjwiw_Katherine7.png',
-      'https://customer-assets.emergentagent.com/job_diywizardry/artifacts/9l0li5vx_Katherine8.png'
+      '/images/guides/katherine/katherine-1.png',
+      '/images/guides/katherine/katherine-4.png',
+      '/images/guides/katherine/katherine-5.png',
+      '/images/guides/katherine/katherine-7.png',
+      '/images/guides/katherine/katherine-main.png'
     ]
   },
   {
