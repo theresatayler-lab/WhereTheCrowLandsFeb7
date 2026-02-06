@@ -1,13 +1,21 @@
 // CROWLANDS BRAND ASSETS V1.0
 // Central location for all brand imagery
+// All assets now stored locally in /public/images/ for portability
 
 export const BRAND_ASSETS = {
   // The Parliament Crow - used for user avatars and watermarks
-  crowAvatar: "https://customer-assets.emergentagent.com/job_arcane-rituals/artifacts/6swpo71j_wherethecrowlands_Now_can_we_create_a_full_brand_from_this_wi_416479c8-dbd6-4e10-9d1d-46e1d468e7bb_2.png",
+  crowAvatar: "/images/brand/crow-avatar.png",
+  
+  // Main logo
+  logo: "/images/brand/logo.png",
+  logoAlt: "/images/brand/logo-alt.png",
+  
+  // Profile frame
+  profileFrame: "/images/brand/profile-frame.png",
   
   // Spell watermark settings
   spellWatermark: {
-    url: "https://customer-assets.emergentagent.com/job_arcane-rituals/artifacts/6swpo71j_wherethecrowlands_Now_can_we_create_a_full_brand_from_this_wi_416479c8-dbd6-4e10-9d1d-46e1d468e7bb_2.png",
+    url: "/images/brand/crow-avatar.png",
     opacity: 0.08,
     size: "80px",
     position: "bottom-center" // bottom-center or bottom-right
@@ -15,10 +23,25 @@ export const BRAND_ASSETS = {
   
   // PDF watermark settings
   pdfWatermark: {
-    url: "https://customer-assets.emergentagent.com/job_arcane-rituals/artifacts/6swpo71j_wherethecrowlands_Now_can_we_create_a_full_brand_from_this_wi_416479c8-dbd6-4e10-9d1d-46e1d468e7bb_2.png",
+    url: "/images/brand/crow-avatar.png",
     opacity: 0.1,
     size: 60, // pixels
     position: "center-bottom"
+  },
+  
+  // Background images
+  backgrounds: {
+    crowlands1: "/images/backgrounds/crowlands-bg-1.png",
+    crowlands2: "/images/backgrounds/crowlands-bg-2.png",
+    crowlands3: "/images/backgrounds/crowlands-bg-3.png"
+  },
+  
+  // Guide borders
+  borders: {
+    cathleen: "/images/borders/cathleen-border-alt.png",
+    kate: "/images/borders/kate-border-alt.png",
+    theresa: "/images/borders/theresa-border-alt.png",
+    siteCorners: "/images/borders/site-corners.png"
   }
 };
 
