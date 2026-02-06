@@ -84,7 +84,7 @@ export const ElaborateCorner = ({ className, variant = 'gold' }) => {
   
   return (
     <div className={`pointer-events-none ${className}`}>
-      <HaloCornerElaborate size={size} color={color} accentColor={accentColor} position="top-left" opacity={0.4} />
+      <HaloCornerElaborate size={size} color={color} accentColor={accentColor} position="top-left" opacity={0.25} />
     </div>
   );
 };
@@ -98,7 +98,7 @@ export const CornerFlourish = ({ position = 'top-left', variant = 'gold', classN
   
   return (
     <div className={`pointer-events-none ${className}`}>
-      <HaloCorner size={size} color={color} position={position} opacity={0.4} />
+      <HaloCorner size={size} color={color} position={position} opacity={0.25} />
     </div>
   );
 };
