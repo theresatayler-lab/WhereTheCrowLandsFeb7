@@ -401,6 +401,7 @@ export const Home = () => {
               src="/images/brand/logo-alt.png" 
               alt="Where The Crowlands"
               className="w-56 h-auto sm:w-72 md:w-80 object-contain"
+              style={{ filter: 'hue-rotate(-30deg) saturate(1.5) brightness(1.1)' }}
             />
           </motion.div>
 
