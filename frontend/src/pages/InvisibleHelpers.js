@@ -447,7 +447,7 @@ export const InvisibleHelpers = () => {
           >
             <div className="absolute inset-0 rounded-full border-2 border-gold/40 animate-pulse" />
             <div className="absolute inset-2 rounded-full border border-crimson/30" />
-            <Shield className="w-full h-full text-gold p-4" style={{ filter: 'drop-shadow(0 0 20px rgba(212, 168, 75, 0.5))' }} />
+            <BrandIcon name="pentagram" size={80} opacity={0.9} style={{ filter: 'drop-shadow(0 0 20px rgba(212, 168, 75, 0.5))' }} />
           </motion.div>
           
           <h2 className="phantasmagoria-hero text-2xl sm:text-3xl text-gold mb-3" style={{ textShadow: '0 0 30px rgba(185, 78, 106, 0.5), 0 0 60px rgba(185, 78, 106, 0.3)' }}>
