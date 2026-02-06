@@ -577,18 +577,18 @@ export const Home = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
             <FeatureCard 
-              icon={Sparkles} 
+              brandIcon="star"
               title="Craft Your Spells" 
               desc="Generate personalized rituals guided by four ancestral archetypes, each with their own voice and wisdom." 
             />
             <FeatureCard 
-              icon={BookOpen} 
+              brandIcon="book"
               title="Build Your Grimoire" 
               desc="A living archive of wonder—save spells, collect wards, and build your personal magical practice over time." 
               tooltip="From the French for 'grammar'—every ritual has its own language for shaping reality" 
             />
             <FeatureCard 
-              icon={Moon} 
+              brandIcon="moon"
               title="Explore the Archives" 
               desc="Discover historical practices, deities, sacred sites, and the hidden knowledge of those who came before." 
             />
