@@ -298,7 +298,7 @@ export const Home = () => {
               … the bird is on the wing
             </p>
             
-            <GrandCelestialDivider variant="moon" />
+            <SimpleSectionDivider />
             
             {/* Intro text with drop cap */}
             <div 
@@ -359,10 +359,7 @@ export const Home = () => {
           </motion.div>
         </div>
         
-        {/* Bottom divider */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 pointer-events-none">
-          <LunarPhaseDivider width={400} color={NOUVEAU_COLORS.antiqueGold} opacity={0.5} />
-        </div>
+        {/* Remove bottom divider - cleaner transition */}
       </SectionPlate>
 
       {/* ================================================================ */}
@@ -370,8 +367,6 @@ export const Home = () => {
       {/* ================================================================ */}
       <SectionPlate variant="light" className="py-16 sm:py-20 px-6">
         <div className="max-w-4xl mx-auto">
-          <GrandCelestialDivider variant="raven" />
-          
           <VellumPanel className="max-w-3xl mx-auto">
             <div 
               className="font-crimson text-base sm:text-lg leading-loose space-y-6"
