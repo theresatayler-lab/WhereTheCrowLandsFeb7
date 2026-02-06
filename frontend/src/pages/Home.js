@@ -405,9 +405,9 @@ export const Home = () => {
           </motion.div>
 
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.3 }}>
-            {/* Raven glyph */}
+            {/* Moon glyph */}
             <div className="flex justify-center mb-5">
-              <RavenGlyph size={56} color={NOUVEAU_COLORS.antiqueGold} opacity={0.8} />
+              <BrandIcon name="moon" size={64} opacity={0.85} />
             </div>
             
             {/* Title - balanced, not oversized */}
