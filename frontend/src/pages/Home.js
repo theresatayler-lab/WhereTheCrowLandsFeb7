@@ -195,17 +195,26 @@ const GrandCelestialDivider = ({ variant = 'moon' }) => (
         <div className="flex items-center gap-4">
           <div className="w-16 sm:w-24 h-px" style={{ background: `linear-gradient(to right, transparent, ${NOUVEAU_COLORS.antiqueGold})` }} />
           <CrescentMoon size={24} facing="left" color={NOUVEAU_COLORS.antiqueGold} opacity={0.7} />
-          <SunDisc size={40} color={NOUVEAU_COLORS.antiqueGold} opacity={0.8} />
+          <BrandIcon name="sunMoon" size={48} opacity={0.85} />
           <CrescentMoon size={24} facing="right" color={NOUVEAU_COLORS.antiqueGold} opacity={0.7} />
           <div className="w-16 sm:w-24 h-px" style={{ background: `linear-gradient(to left, transparent, ${NOUVEAU_COLORS.antiqueGold})` }} />
         </div>
         <LunarPhaseDivider width={320} color={NOUVEAU_COLORS.antiqueGold} opacity={0.5} />
       </>
-    ) : variant === 'raven' ? (
+    ) : variant === 'eye' ? (
       <>
         <div className="flex items-center gap-6">
           <div className="w-20 sm:w-32 h-px" style={{ background: `linear-gradient(to right, transparent, ${NOUVEAU_COLORS.antiqueGold})` }} />
-          <RavenGlyph size={56} color={NOUVEAU_COLORS.antiqueGold} opacity={0.8} />
+          <BrandIcon name="eye" size={64} opacity={0.85} />
+          <div className="w-20 sm:w-32 h-px" style={{ background: `linear-gradient(to left, transparent, ${NOUVEAU_COLORS.antiqueGold})` }} />
+        </div>
+        <SimpleDivider width={180} color={NOUVEAU_COLORS.antiqueGold} opacity={0.4} />
+      </>
+    ) : variant === 'ouroboros' ? (
+      <>
+        <div className="flex items-center gap-6">
+          <div className="w-20 sm:w-32 h-px" style={{ background: `linear-gradient(to right, transparent, ${NOUVEAU_COLORS.antiqueGold})` }} />
+          <BrandIcon name="ouroboros" size={64} opacity={0.85} />
           <div className="w-20 sm:w-32 h-px" style={{ background: `linear-gradient(to left, transparent, ${NOUVEAU_COLORS.antiqueGold})` }} />
         </div>
         <SimpleDivider width={180} color={NOUVEAU_COLORS.antiqueGold} opacity={0.4} />
@@ -214,7 +223,7 @@ const GrandCelestialDivider = ({ variant = 'moon' }) => (
       <>
         <div className="flex items-center gap-3">
           <StarGlyph size={16} color={NOUVEAU_COLORS.antiqueGold} opacity={0.5} />
-          <CelestialEye size={48} color={NOUVEAU_COLORS.antiqueGold} accentColor={NOUVEAU_COLORS.roseClay} opacity={0.8} />
+          <BrandIcon name="hexagram" size={56} opacity={0.85} />
           <StarGlyph size={16} color={NOUVEAU_COLORS.antiqueGold} opacity={0.5} />
         </div>
         <LunarDivider width={260} color={NOUVEAU_COLORS.antiqueGold} opacity={0.5} />
