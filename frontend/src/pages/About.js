@@ -90,8 +90,8 @@ export const About = () => {
             transition={{ delay: 0.2 }}
           >
             <OrnateCard hover={false}>
-              <h2 className="font-cinzel text-xl sm:text-2xl text-gold-light mb-6 flex items-center gap-2">
-                <Heart className="w-5 h-5 sm:w-6 sm:h-6 text-crimson-bright" />
+              <h2 className="font-cinzel text-xl sm:text-2xl text-gold-light mb-6 flex items-center gap-3">
+                <BrandIcon name="skull" size={28} opacity={0.85} />
                 The Four Guides
               </h2>
               <div className="space-y-6">
