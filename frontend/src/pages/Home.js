@@ -395,8 +395,6 @@ export const Home = () => {
               </div>
             </div>
           </VellumPanel>
-          
-          <GrandCelestialDivider variant="eye" />
         </div>
       </SectionPlate>
 
@@ -405,22 +403,18 @@ export const Home = () => {
       {/* ================================================================ */}
       <SectionPlate variant="dark" className="py-14 sm:py-16 px-6">
         <div className="max-w-6xl mx-auto">
-          {/* Section header - balanced */}
+          {/* Section header - clean */}
           <div className="text-center mb-10">
-            <div className="flex justify-center mb-3">
-              <SunDisc size={48} color={NOUVEAU_COLORS.antiqueGold} opacity={0.7} />
-            </div>
             <h2 
               className="font-cinzel text-xl sm:text-2xl md:text-3xl tracking-wide mb-3"
               style={{ 
                 color: NOUVEAU_COLORS.antiqueGold, 
-                textShadow: `0 0 30px ${NOUVEAU_COLORS.emberPink}50, 0 0 60px ${NOUVEAU_COLORS.emberPink}30`,
                 letterSpacing: '0.08em',
               }}
             >
               Your Path Awaits
             </h2>
-            <SimpleDivider width={180} color={NOUVEAU_COLORS.antiqueGold} opacity={0.5} />
+            <SimpleSectionDivider />
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
@@ -440,10 +434,6 @@ export const Home = () => {
               title="Explore the Archives" 
               desc="Discover historical practices, deities, sacred sites, and the hidden knowledge of those who came before." 
             />
-          </div>
-          
-          <div className="mt-12">
-            <GrandCelestialDivider variant="moon" />
           </div>
         </div>
       </SectionPlate>
