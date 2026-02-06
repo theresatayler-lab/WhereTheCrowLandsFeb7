@@ -156,19 +156,25 @@ export const MysticalDivider = ({ variant = 'default', light = false }) => {
   
   return (
     <div className="flex items-center justify-center py-4 sm:py-5">
-      {variant === 'crow' ? (
+      {variant === 'crow' || variant === 'ouroboros' ? (
         <div className="flex items-center gap-3">
           <SimpleDivider width={60} color={color} opacity={opacity * 0.6} />
-          <RavenGlyph size={28} color={color} opacity={opacity} />
+          <BrandIcon name="ouroboros" size={36} opacity={opacity} />
           <SimpleDivider width={60} color={color} opacity={opacity * 0.6} />
         </div>
       ) : variant === 'moon' ? (
         <div className="flex items-center gap-2">
           <SimpleDivider width={50} color={color} opacity={opacity * 0.6} />
           <CrescentMoon size={20} facing="left" color={color} opacity={opacity} />
-          <MoonDisc size={24} color={color} opacity={opacity} />
+          <BrandIcon name="moon" size={32} opacity={opacity} />
           <CrescentMoon size={20} facing="right" color={color} opacity={opacity} />
           <SimpleDivider width={50} color={color} opacity={opacity * 0.6} />
+        </div>
+      ) : variant === 'hexagram' ? (
+        <div className="flex items-center gap-3">
+          <SimpleDivider width={60} color={color} opacity={opacity * 0.6} />
+          <BrandIcon name="hexagram" size={36} opacity={opacity} />
+          <SimpleDivider width={60} color={color} opacity={opacity * 0.6} />
         </div>
       ) : (
         <SimpleDivider width={160} color={color} opacity={opacity} />
