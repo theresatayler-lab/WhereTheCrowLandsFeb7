@@ -31,7 +31,7 @@ const getArchetypeVideo = (personaId) => {
 };
 
 // Generic fallback video for non-persona spells
-const GENERIC_SPELL_VIDEO = 'https://customer-assets.emergentagent.com/job_mystic-grimoire-1/artifacts/sl3euh2k_GenericSpellWaitingVid.MOV';
+const GENERIC_SPELL_VIDEO = '/images/ui/spell-waiting-video.mov';
 
 // Get all available videos for random selection (for choose_for_me fallback)
 const ALL_ARCHETYPE_VIDEOS = ARCHETYPES.filter(a => a.video).map(a => a.video);

@@ -12,7 +12,7 @@ import { DarkSection, LightSection, GrandDivider, MysticalDivider, PageBorderFra
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 // Shigg's image
-const SHIGG_IMAGE = "https://customer-assets.emergentagent.com/job_diywizardry/artifacts/127im9d9_Shig50.png";
+const SHIGG_IMAGE = "/images/guides/shigg/shigg-main.png";
 
 // Occult card symbols for decoration
 const CardSymbols = () => (

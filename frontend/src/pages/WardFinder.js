@@ -11,7 +11,7 @@ import { DarkSection, LightSection, GrandDivider, MysticalDivider, ElaborateCorn
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 // Cathleen's image
-const CATHLEEN_IMAGE = "https://customer-assets.emergentagent.com/job_diywizardry/artifacts/2yrmxbqx_Cathleen16.png";
+const CATHLEEN_IMAGE = "/images/guides/cathleen/cathleen-main.png";
 
 const WardCard = ({ ward, index, situation, onSave, isSaving, isSaved, isLight }) => {
   const [expanded, setExpanded] = useState(false);

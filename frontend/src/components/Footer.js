@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 // Seal logo URL
-const SEAL_LOGO = "https://customer-assets.emergentagent.com/job_870e50df-769b-4f54-87c7-dc69482a19cb/artifacts/jdsp7esr_WhereTheCrowLandsLogo.png";
+const SEAL_LOGO = "/images/brand/logo.png";
 
 export const Footer = () => {
   return (

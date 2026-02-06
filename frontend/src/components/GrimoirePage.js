@@ -17,7 +17,7 @@ import { SpellBlockRenderer } from './SpellBlockRenderer';
 import { BRAND_ASSETS, getSpellWatermarkStyle } from '../assets/brandAssets';
 
 // Ornate seal logo for spell pages
-const SEAL_LOGO_URL = "https://customer-assets.emergentagent.com/job_870e50df-769b-4f54-87c7-dc69482a19cb/artifacts/jdsp7esr_WhereTheCrowLandsLogo.png";
+const SEAL_LOGO_URL = "/images/brand/logo.png";
 
 // Parliament Crow watermark
 const CROW_WATERMARK = BRAND_ASSETS.crowAvatar;

@@ -20,7 +20,7 @@ import {
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 // Generic spell video for loading state
-const SPELL_VIDEO_URL = 'https://customer-assets.emergentagent.com/job_mystic-grimoire-1/artifacts/sl3euh2k_GenericSpellWaitingVid.MOV';
+const SPELL_VIDEO_URL = '/images/ui/spell-waiting-video.mov';
 
 // ============================================================================
 // FORM OPTIONS - ORIGINAL LABELS PRESERVED
