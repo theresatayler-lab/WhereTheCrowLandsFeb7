@@ -515,10 +515,6 @@ export const Home = () => {
           <VellumPanel className="max-w-md mx-auto">
             <WaitlistForm source="homepage" />
           </VellumPanel>
-          
-          <div className="mt-10">
-            <LunarPhaseDivider width={320} color={NOUVEAU_COLORS.antiqueGold} opacity={0.4} />
-          </div>
         </div>
       </SectionPlate>
     </div>
