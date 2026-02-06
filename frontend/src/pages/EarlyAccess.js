@@ -98,12 +98,13 @@ const EarlyAccessPage = () => {
         
         {/* Title */}
         <h1 className="font-italiana text-2xl sm:text-3xl md:text-4xl text-gold-light mb-2"
-          style={{ textShadow: '0 2px 15px rgba(212, 168, 75, 0.5)' }}>
+          style={{ textShadow: '0 0 30px rgba(185, 78, 106, 0.5), 0 0 60px rgba(185, 78, 106, 0.3)' }}>
           Where The Crowlands
         </h1>
         
         {/* Subhead */}
-        <p className="font-cinzel text-sm sm:text-base text-cream/80 mb-3 italic">
+        <p className="font-cinzel text-sm sm:text-base text-cream/80 mb-3 italic"
+          style={{ textShadow: '0 0 20px rgba(185, 78, 106, 0.4), 0 0 40px rgba(185, 78, 106, 0.25)' }}>
           A place where magic and science aren't such strange bedfellows
         </p>
         
