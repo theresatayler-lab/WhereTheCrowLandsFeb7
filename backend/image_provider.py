@@ -29,29 +29,34 @@ def get_image_provider() -> ImageProvider:
 # These are used when IMAGE_PROVIDER=library OR as fallbacks
 # ============================================================================
 
+# NOTE: These URLs now point to local assets in frontend/public/images/
+# When served, the frontend uses relative paths like /images/borders/...
+# For backend processing, we still reference the external URLs as fallback
+# but the frontend will use local paths
+
 STATIC_DIVIDERS = {
     "shigg": [
-        "https://customer-assets.emergentagent.com/job_mystic-grimoire-1/artifacts/jcxzlb20_SiteOverallCorners%20and%20any%20borders.png",
+        "/images/borders/site-corners.png",
     ],
     "cathleen": [
-        "https://customer-assets.emergentagent.com/job_mystic-grimoire-1/artifacts/12ds6wfx_CathleenBorder.png",
+        "/images/borders/cathleen-border-alt.png",
     ],
     "katherine": [
-        "https://customer-assets.emergentagent.com/job_mystic-grimoire-1/artifacts/85szfipf_KateBorder.png",
+        "/images/borders/kate-border-alt.png",
     ],
     "theresa": [
-        "https://customer-assets.emergentagent.com/job_mystic-grimoire-1/artifacts/8jgu6o97_TheresaBorder.png",
+        "/images/borders/theresa-border-alt.png",
     ],
     "default": [
-        "https://customer-assets.emergentagent.com/job_mystic-grimoire-1/artifacts/jcxzlb20_SiteOverallCorners%20and%20any%20borders.png",
+        "/images/borders/site-corners.png",
     ]
 }
 
 STATIC_CORNER_ORNAMENTS = {
-    "crow_celtic": "https://customer-assets.emergentagent.com/job_mystic-grimoire-1/artifacts/jcxzlb20_SiteOverallCorners%20and%20any%20borders.png",
-    "cathleen_scroll": "https://customer-assets.emergentagent.com/job_mystic-grimoire-1/artifacts/12ds6wfx_CathleenBorder.png",
-    "katherine_geo": "https://customer-assets.emergentagent.com/job_mystic-grimoire-1/artifacts/85szfipf_KateBorder.png",
-    "theresa_organic": "https://customer-assets.emergentagent.com/job_mystic-grimoire-1/artifacts/8jgu6o97_TheresaBorder.png",
+    "crow_celtic": "/images/borders/site-corners.png",
+    "cathleen_scroll": "/images/borders/cathleen-border-alt.png",
+    "katherine_geo": "/images/borders/kate-border-alt.png",
+    "theresa_organic": "/images/borders/theresa-border-alt.png",
 }
 
 # Placeholder static images for library mode (to be replaced with real Midjourney assets)
