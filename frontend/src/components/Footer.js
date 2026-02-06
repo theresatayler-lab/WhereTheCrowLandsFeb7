@@ -32,15 +32,17 @@ export const Footer = () => {
           {/* Seal Logo and Description */}
           <div className="flex flex-col items-center md:items-start">
             <div className="relative mb-6">
+              {/* Subtle radial fade behind logo */}
               <div 
-                className="absolute inset-0 blur-xl opacity-40"
-                style={{ background: 'radial-gradient(circle, rgba(200, 164, 77, 0.4) 0%, transparent 70%)' }}
+                className="absolute inset-0 rounded-full scale-110"
+                style={{ 
+                  background: 'radial-gradient(circle, rgba(243, 239, 232, 0.95) 0%, rgba(243, 239, 232, 0.6) 45%, rgba(14, 42, 47, 0.2) 75%, transparent 100%)',
+                }}
               />
               <img 
                 src={SEAL_LOGO}
                 alt="Where The Crowlands Seal"
-                className="relative h-32 w-32 object-contain"
-                style={{ filter: 'brightness(1.2) contrast(1.1)' }}
+                className="relative h-32 w-32 object-contain rounded-full"
               />
             </div>
             <p className="font-crimson text-sm text-center md:text-left leading-relaxed" style={{ color: 'rgba(243, 239, 232, 0.7)' }}>
