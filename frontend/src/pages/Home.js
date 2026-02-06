@@ -67,21 +67,19 @@ const HeroHaloArc = ({ width = 400 }) => (
   </svg>
 );
 
-// Grand section plate frame - illuminated manuscript style
+// Grand section plate frame - clean, minimal
 const SectionPlate = ({ children, variant = 'dark', className = '' }) => {
   const isDark = variant === 'dark';
   
   return (
     <div className={`relative ${className}`}>
-      {/* Background with gradient depth */}
+      {/* Background with subtle gradient depth */}
       <div 
         className="absolute inset-0"
         style={{
           backgroundColor: isDark ? NOUVEAU_COLORS.midnightTeal : NOUVEAU_COLORS.vellum,
           backgroundImage: isDark 
-            ? `radial-gradient(ellipse at 50% 0%, ${NOUVEAU_COLORS.celestialBlue}80 0%, transparent 50%),
-               radial-gradient(ellipse at 20% 80%, ${NOUVEAU_COLORS.celestialBlue}40 0%, transparent 40%),
-               radial-gradient(ellipse at 80% 60%, ${NOUVEAU_COLORS.celestialBlue}30 0%, transparent 35%)`
+            ? `radial-gradient(ellipse at 50% 0%, ${NOUVEAU_COLORS.celestialBlue}60 0%, transparent 50%)`
             : 'none',
         }}
       />
@@ -91,92 +89,26 @@ const SectionPlate = ({ children, variant = 'dark', className = '' }) => {
         <div 
           className="absolute inset-0 pointer-events-none"
           style={{
-            background: 'radial-gradient(ellipse at center, transparent 30%, rgba(14, 42, 47, 0.4) 100%)',
+            background: 'radial-gradient(ellipse at center, transparent 40%, rgba(14, 42, 47, 0.3) 100%)',
           }}
         />
       )}
       
-      {/* Top border ornament */}
+      {/* Single top border line */}
       <div 
-        className="absolute top-0 left-0 right-0 h-1 pointer-events-none"
+        className="absolute top-0 left-0 right-0 h-px pointer-events-none"
         style={{ 
-          background: isDark 
-            ? `linear-gradient(to right, transparent 5%, ${NOUVEAU_COLORS.antiqueGold}60 20%, ${NOUVEAU_COLORS.antiqueGold} 50%, ${NOUVEAU_COLORS.antiqueGold}60 80%, transparent 95%)`
-            : `linear-gradient(to right, transparent 5%, ${NOUVEAU_COLORS.roseClay}80 20%, ${NOUVEAU_COLORS.roseClay} 50%, ${NOUVEAU_COLORS.roseClay}80 80%, transparent 95%)`,
-        }}
-      />
-      <div 
-        className="absolute top-1 left-0 right-0 h-px pointer-events-none"
-        style={{ 
-          background: `linear-gradient(to right, transparent 10%, ${NOUVEAU_COLORS.antiqueGold}50 30%, ${NOUVEAU_COLORS.antiqueGold}50 70%, transparent 90%)`,
+          background: `linear-gradient(to right, transparent 15%, ${NOUVEAU_COLORS.antiqueGold}40 50%, transparent 85%)`,
         }}
       />
       
-      {/* Bottom border ornament */}
+      {/* Single bottom border line */}
       <div 
-        className="absolute bottom-1 left-0 right-0 h-px pointer-events-none"
+        className="absolute bottom-0 left-0 right-0 h-px pointer-events-none"
         style={{ 
-          background: `linear-gradient(to right, transparent 10%, ${NOUVEAU_COLORS.antiqueGold}50 30%, ${NOUVEAU_COLORS.antiqueGold}50 70%, transparent 90%)`,
+          background: `linear-gradient(to right, transparent 15%, ${NOUVEAU_COLORS.antiqueGold}40 50%, transparent 85%)`,
         }}
       />
-      <div 
-        className="absolute bottom-0 left-0 right-0 h-1 pointer-events-none"
-        style={{ 
-          background: isDark 
-            ? `linear-gradient(to right, transparent 5%, ${NOUVEAU_COLORS.antiqueGold}60 20%, ${NOUVEAU_COLORS.antiqueGold} 50%, ${NOUVEAU_COLORS.antiqueGold}60 80%, transparent 95%)`
-            : `linear-gradient(to right, transparent 5%, ${NOUVEAU_COLORS.roseClay}80 20%, ${NOUVEAU_COLORS.roseClay} 50%, ${NOUVEAU_COLORS.roseClay}80 80%, transparent 95%)`,
-        }}
-      />
-      
-      {/* Large corner ornaments - very subtle framing */}
-      <div className="absolute top-4 left-4 pointer-events-none">
-        <HaloCornerElaborate 
-          size={100} 
-          position="top-left" 
-          color={isDark ? NOUVEAU_COLORS.antiqueGold : NOUVEAU_COLORS.mutedBrass} 
-          accentColor={NOUVEAU_COLORS.roseClay}
-          opacity={isDark ? 0.3 : 0.2} 
-        />
-      </div>
-      <div className="absolute top-4 right-4 pointer-events-none">
-        <HaloCornerElaborate 
-          size={100} 
-          position="top-right" 
-          color={isDark ? NOUVEAU_COLORS.antiqueGold : NOUVEAU_COLORS.mutedBrass}
-          accentColor={NOUVEAU_COLORS.roseClay}
-          opacity={isDark ? 0.3 : 0.2} 
-        />
-      </div>
-      <div className="absolute bottom-4 left-4 pointer-events-none">
-        <HaloCornerElaborate 
-          size={100} 
-          position="bottom-left" 
-          color={isDark ? NOUVEAU_COLORS.antiqueGold : NOUVEAU_COLORS.mutedBrass}
-          accentColor={NOUVEAU_COLORS.roseClay}
-          opacity={isDark ? 0.3 : 0.2} 
-        />
-      </div>
-      <div className="absolute bottom-4 right-4 pointer-events-none">
-        <HaloCornerElaborate 
-          size={100} 
-          position="bottom-right" 
-          color={isDark ? NOUVEAU_COLORS.antiqueGold : NOUVEAU_COLORS.mutedBrass}
-          accentColor={NOUVEAU_COLORS.roseClay}
-          opacity={isDark ? 0.3 : 0.2} 
-        />
-      </div>
-      
-      {/* Side rail ornaments - minimal accent, hidden on most screens */}
-      <div className="hidden xl:flex absolute left-6 top-1/2 -translate-y-1/2 flex-col items-center gap-4 opacity-20 pointer-events-none">
-        <div className="w-px h-12" style={{ background: `linear-gradient(to bottom, transparent, ${NOUVEAU_COLORS.antiqueGold}, transparent)` }} />
-        <CrescentMoon size={14} facing="right" color={NOUVEAU_COLORS.antiqueGold} opacity={0.4} />
-        <div className="w-px h-12" style={{ background: `linear-gradient(to bottom, transparent, ${NOUVEAU_COLORS.antiqueGold}, transparent)` }} />
-      </div>
-      <div className="hidden xl:flex absolute right-6 top-1/2 -translate-y-1/2 flex-col items-center gap-4 opacity-20 pointer-events-none">
-        <div className="w-px h-12" style={{ background: `linear-gradient(to bottom, transparent, ${NOUVEAU_COLORS.antiqueGold}, transparent)` }} />
-        <CrescentMoon size={14} facing="left" color={NOUVEAU_COLORS.antiqueGold} opacity={0.4} />
-        <div className="w-px h-12" style={{ background: `linear-gradient(to bottom, transparent, ${NOUVEAU_COLORS.antiqueGold}, transparent)` }} />
-      </div>
       
       <div className="relative z-10">{children}</div>
     </div>
