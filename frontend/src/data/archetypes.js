@@ -241,15 +241,15 @@ She gave her great-granddaughter a silver rabbit teething ring that is treasured
       { name: 'Small Stone', meaning: 'Grounding, connection to place, and endurance' }
     ],
     image: '/images/guides/cathleen/cathleen-main.png',
-    video: 'https://customer-assets.emergentagent.com/job_witchcrowland/artifacts/gsq61t9z_CathleenSpell.mp4',
+    video: '/images/guides/videos/cathleen-video.mp4',
     galleryImages: [
-      'https://customer-assets.emergentagent.com/job_diywizardry/artifacts/zetyy6pt_Cathleen2.png',
-      'https://customer-assets.emergentagent.com/job_diywizardry/artifacts/ya1q64yz_Cathleen3.png',
-      'https://customer-assets.emergentagent.com/job_diywizardry/artifacts/iae9o8u3_Cathleen4.png',
-      'https://customer-assets.emergentagent.com/job_diywizardry/artifacts/bbknm9gp_Cathleen9.png',
-      'https://customer-assets.emergentagent.com/job_diywizardry/artifacts/3xf9t95m_Cathleen13.png',
-      'https://customer-assets.emergentagent.com/job_diywizardry/artifacts/09q07so8_Cathleen15.png',
-      'https://customer-assets.emergentagent.com/job_diywizardry/artifacts/2yrmxbqx_Cathleen16.png'
+      '/images/guides/cathleen/cathleen-2.png',
+      '/images/guides/cathleen/cathleen-3.png',
+      '/images/guides/cathleen/cathleen-4.png',
+      '/images/guides/cathleen/cathleen-9.png',
+      '/images/guides/cathleen/cathleen-13.png',
+      '/images/guides/cathleen/cathleen-15.png',
+      '/images/guides/cathleen/cathleen-main.png'
     ]
   },
   {
