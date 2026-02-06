@@ -112,18 +112,18 @@ She was her granddaughter's greatest ally and friend, staying up all night telli
       { name: 'Starling', meaning: 'Group harmony, synchronicity, adaptability' }
     ],
     image: '/images/guides/shigg/shigg-main.png',
-    video: 'https://customer-assets.emergentagent.com/job_witchcrowland/artifacts/u0re0oda_SheilaVideo.mp4',
+    video: '/images/guides/videos/shigg-video.mp4',
     galleryImages: [
-      'https://customer-assets.emergentagent.com/job_diywizardry/artifacts/d1pes21d_Shig19.png',
-      'https://customer-assets.emergentagent.com/job_diywizardry/artifacts/38tunfde_Shig22.png',
-      'https://customer-assets.emergentagent.com/job_diywizardry/artifacts/fla207tv_Shig24.png',
-      'https://customer-assets.emergentagent.com/job_diywizardry/artifacts/t0qin8h2_Shig25.png',
-      'https://customer-assets.emergentagent.com/job_diywizardry/artifacts/nfowp4lh_Shig27.png',
-      'https://customer-assets.emergentagent.com/job_diywizardry/artifacts/acpoc8g8_Shig32.png',
-      'https://customer-assets.emergentagent.com/job_diywizardry/artifacts/rx4ibeoh_Shig34.png',
-      'https://customer-assets.emergentagent.com/job_diywizardry/artifacts/zy2lhhwp_Shig41.png',
-      'https://customer-assets.emergentagent.com/job_diywizardry/artifacts/127im9d9_Shig50.png',
-      'https://customer-assets.emergentagent.com/job_diywizardry/artifacts/ml25inzb_Shig52.png'
+      '/images/guides/shigg/shigg-19.png',
+      '/images/guides/shigg/shigg-22.png',
+      '/images/guides/shigg/shigg-24.png',
+      '/images/guides/shigg/shigg-25.png',
+      '/images/guides/shigg/shigg-27.png',
+      '/images/guides/shigg/shigg-32.png',
+      '/images/guides/shigg/shigg-34.png',
+      '/images/guides/shigg/shigg-41.png',
+      '/images/guides/shigg/shigg-main.png',
+      '/images/guides/shigg/shigg-52.png'
     ]
   },
   {
