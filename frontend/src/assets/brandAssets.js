@@ -1,4 +1,4 @@
-// CROWLANDS BRAND ASSETS V1.0
+// CROWLANDS BRAND ASSETS V2.0
 // Central location for all brand imagery
 // All assets now stored locally in /public/images/ for portability
 
@@ -12,6 +12,34 @@ export const BRAND_ASSETS = {
   
   // Profile frame
   profileFrame: "/images/brand/profile-frame.png",
+  
+  // ==========================================================================
+  // DECORATIVE ICONS - Gold versions (can be tinted pink via CSS filter)
+  // ==========================================================================
+  icons: {
+    moon: "/images/brand/moon-gold.png",        // Mystical, dividers, general decoration
+    book: "/images/brand/book-gold.svg",        // Library, Grimoire, knowledge sections
+    star: "/images/brand/star-gold.svg",        // Featured, magic, call-to-action
+    skull: "/images/brand/skull-gold.svg",      // Timeline, ancestors, history, lineage
+    key: "/images/brand/key-gold.png",          // Login, access, secrets, premium
+    sunMoon: "/images/brand/sunmoon-gold.svg",  // Celestial, balance, cycles
+  },
+  
+  // ==========================================================================
+  // ICON USAGE GUIDE
+  // ==========================================================================
+  // Moon:    Dividers, general mystical decoration
+  // Book:    Library page, Grimoire, Archives, knowledge cards
+  // Star:    Featured items, spell creation, magic actions, CTAs
+  // Skull:   Timeline, history sections, ancestor/lineage content
+  // Key:     Authentication, locked content, secrets revealed
+  // SunMoon: Day/night cycles, balance themes, celestial sections
+  //
+  // COLOR VARIANTS:
+  // - Gold (default): Standard decoration
+  // - Pink (CSS filter): Highlighted, active, or call-to-action states
+  //   Use filter: 'hue-rotate(-30deg) saturate(1.5)' for pink tint
+  // ==========================================================================
   
   // Spell watermark settings
   spellWatermark: {
@@ -47,6 +75,18 @@ export const BRAND_ASSETS = {
 
 // Default user avatar (the crow)
 export const DEFAULT_USER_AVATAR = BRAND_ASSETS.crowAvatar;
+
+// CSS filter to convert gold icons to pink/rose color
+export const PINK_FILTER = 'hue-rotate(-30deg) saturate(1.5) brightness(1.1)';
+
+// Icon component helper - returns style object for pink variant
+export const getIconStyle = (size = 48, variant = 'gold', opacity = 1) => ({
+  width: size,
+  height: size,
+  opacity: opacity,
+  objectFit: 'contain',
+  filter: variant === 'pink' ? PINK_FILTER : 'none',
+});
 
 // Spell watermark component props
 export const getSpellWatermarkStyle = () => ({
