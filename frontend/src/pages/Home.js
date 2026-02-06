@@ -1,8 +1,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Moon, BookOpen, Users, Sparkles, Feather } from 'lucide-react';
+import { Users, Feather } from 'lucide-react';
 import { WaitlistForm } from '../components/WaitlistForm';
+import { BrandIcon } from '../components/BrandIcon';
+import { PINK_FILTER } from '../assets/brandAssets';
 import {
   NOUVEAU_COLORS,
   HaloCorner,
@@ -10,7 +12,6 @@ import {
   LunarDivider,
   LunarPhaseDivider,
   SimpleDivider,
-  RavenGlyph,
   SunDisc,
   MoonDisc,
   CrescentMoon,
