@@ -182,7 +182,7 @@ export const Navigation = ({ user, onLogout }) => {
             <div className="relative">
               <div className="absolute inset-0 blur-md opacity-0 group-hover:opacity-50 transition-opacity bg-gold/30" />
               <img 
-                src="https://customer-assets.emergentagent.com/job_mystic-circle-2/artifacts/li34ks3x_Where%20the%20Crowlands%20Logos.png" 
+                src="/images/brand/logo-alt.png" 
                 alt="Where The Crowlands Logo"
                 className="relative h-10 sm:h-12 md:h-16 w-auto"
                 style={{ filter: 'brightness(1.3) contrast(1.1)' }}

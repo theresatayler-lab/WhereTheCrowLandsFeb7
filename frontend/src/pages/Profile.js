@@ -106,7 +106,7 @@ export const Profile = ({ user }) => {
             <div className="relative inline-block mb-6">
               <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden border-2 border-gold/50 shadow-lg">
                 <img 
-                  src="https://customer-assets.emergentagent.com/job_arcane-rituals/artifacts/6swpo71j_wherethecrowlands_Now_can_we_create_a_full_brand_from_this_wi_416479c8-dbd6-4e10-9d1d-46e1d468e7bb_2.png"
+                  src="/images/brand/crow-avatar.png"
                   alt="Parliament Crow Avatar"
                   className="w-full h-full object-cover"
                 />
