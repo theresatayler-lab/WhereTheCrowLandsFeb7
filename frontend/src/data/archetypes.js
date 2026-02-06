@@ -401,14 +401,14 @@ Her magic lies in craft: every stitch is intention, every pattern holds knowledg
       'Contemporary bird mythology'
     ],
     image: '/images/guides/theresa/theresa-main.png',
-    video: 'https://customer-assets.emergentagent.com/job_witchcrowland/artifacts/v6otbwkr_Theresa4421_Have_the_woman_open_her_purse_and_a_bird_fly_out%2C_as_the_bird_fly.mp4',
+    video: '/images/guides/videos/theresa-video.mp4',
     galleryImages: [
-      'https://customer-assets.emergentagent.com/job_diywizardry/artifacts/7dqhsrv9_TheresaTayler7.png',
-      'https://customer-assets.emergentagent.com/job_diywizardry/artifacts/ti6j94bg_TheresaTayler8.png',
-      'https://customer-assets.emergentagent.com/job_diywizardry/artifacts/k16w6kaw_TheresaTayler9.png',
-      'https://customer-assets.emergentagent.com/job_diywizardry/artifacts/3ianlho1_Theresa1.png',
-      'https://customer-assets.emergentagent.com/job_diywizardry/artifacts/5uwgdmmv_Theresa4.png',
-      'https://customer-assets.emergentagent.com/job_diywizardry/artifacts/daujlur9_Theresa6.png'
+      '/images/guides/theresa/theresa-7.png',
+      '/images/guides/theresa/theresa-8.png',
+      '/images/guides/theresa/theresa-9.png',
+      '/images/guides/theresa/theresa-main.png',
+      '/images/guides/theresa/theresa-4.png',
+      '/images/guides/theresa/theresa-6.png'
     ]
   }
 ];
