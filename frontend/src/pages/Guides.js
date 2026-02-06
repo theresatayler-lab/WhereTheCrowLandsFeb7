@@ -117,7 +117,7 @@ export const Guides = () => {
               
               <div className="relative z-10 p-6">
                 <div className="flex items-start gap-4">
-                  <BookOpen className="w-8 h-8 text-crimson flex-shrink-0" />
+                  <BrandIcon name="book" size={36} opacity={0.9} />
                   <div>
                     <h3 className="font-cinzel text-xl text-crimson mb-3" style={{ textShadow: '0 0 20px rgba(185, 78, 106, 0.4)' }}>The Lineage</h3>
                     <p className="font-montserrat text-sm text-navy-dark/80 leading-relaxed mb-3">
