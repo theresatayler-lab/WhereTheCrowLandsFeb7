@@ -4,25 +4,13 @@ import { Link } from 'react-router-dom';
 import { Users, Feather } from 'lucide-react';
 import { WaitlistForm } from '../components/WaitlistForm';
 import { BrandIcon } from '../components/BrandIcon';
-import { PINK_FILTER } from '../assets/brandAssets';
 import {
   NOUVEAU_COLORS,
-  HaloCorner,
-  HaloCornerElaborate,
-  LunarDivider,
-  LunarPhaseDivider,
-  SimpleDivider,
-  SunDisc,
-  MoonDisc,
-  CrescentMoon,
-  CelestialEye,
-  StarGlyph,
 } from '../assets/ornaments/artNouveau';
 
 // ============================================================================
-// ART NOUVEAU HOME PAGE - FULL EXPRESSIVE STRENGTH
-// Illuminated manuscript rendered as modern UI
-// Ornaments are architectural, not decorative accents
+// ART NOUVEAU HOME PAGE - CLEAN & MINIMAL
+// Content-first design with subtle ornamental accents
 // ============================================================================
 
 // Large decorative halo arc for hero
