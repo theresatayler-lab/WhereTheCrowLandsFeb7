@@ -291,49 +291,16 @@ export const RavenGlyph = ({
   color = NOUVEAU_COLORS.antiqueGold,
   opacity = 0.8 
 }) => (
-  <svg width={size} height={size} viewBox="0 0 48 48" fill="none">
-    {/* Body outline - BOLD strokes */}
-    <path 
-      d="M12 36 C7 31, 5 24, 7 18 C9 12, 16 8, 23 8 C28 8, 32 11, 35 16 L40 13 C43 11, 46 13, 45 16 L41 19 C44 22, 46 27, 43 34 C40 40, 32 44, 23 44 C16 44, 12 40, 12 36" 
-      stroke={color} 
-      strokeWidth="3" 
-      fill="none" 
-      opacity={opacity}
-    />
-    {/* Wing detail - visible */}
-    <path 
-      d="M15 30 C18 25, 24 22, 32 23 C35 23, 37 25, 38 28" 
-      stroke={color} 
-      strokeWidth="2" 
-      fill="none" 
-      opacity={opacity * 0.7}
-    />
-    {/* Secondary wing line */}
-    <path 
-      d="M18 34 C20 30, 26 28, 34 29" 
-      stroke={color} 
-      strokeWidth="1.5" 
-      fill="none" 
-      opacity={opacity * 0.5}
-    />
-    {/* Eye - prominent */}
-    <circle cx="32" cy="18" r="3.5" stroke={color} strokeWidth="2" fill="none" opacity={opacity} />
-    <circle cx="32" cy="18" r="1.5" fill={color} opacity={opacity * 0.9} />
-    {/* Beak - bold */}
-    <path 
-      d="M40 15 L48 13 L42 19" 
-      stroke={color} 
-      strokeWidth="2.5" 
-      fill="none" 
-      opacity={opacity}
-      strokeLinejoin="round"
-    />
-    {/* Tail feathers - prominent */}
-    <path d="M9 33 L4 40" stroke={color} strokeWidth="2" opacity={opacity * 0.8} />
-    <path d="M11 36 L8 44" stroke={color} strokeWidth="2" opacity={opacity * 0.8} />
-    <path d="M14 38 L14 46" stroke={color} strokeWidth="2" opacity={opacity * 0.7} />
-    <path d="M17 39 L19 45" stroke={color} strokeWidth="1.5" opacity={opacity * 0.5} />
-  </svg>
+  <img 
+    src="/images/brand/moon-gold.png" 
+    alt="Moon"
+    style={{ 
+      width: size, 
+      height: size, 
+      opacity: opacity,
+      objectFit: 'contain',
+    }}
+  />
 );
 
 export const RavenGlyphSmall = ({ 
