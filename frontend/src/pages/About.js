@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Feather, Heart, BookOpen, Sparkles } from 'lucide-react';
+import { BrandIcon } from '../components/BrandIcon';
 import { DarkSection, LightSection, GrandDivider, MysticalDivider, ElaborateCorner, PageHeader, LightOrnateCard, OrnateCard, ATMOSPHERIC_IMAGES } from '../components/OrnateElements';
 
 export const About = () => {
@@ -17,7 +17,7 @@ export const About = () => {
             animate={{ opacity: 1, y: 0 }}
           >
             <PageHeader 
-              icon={Feather}
+              brandIcon="book"
               title="About Where The Crowlands"
               subtitle="A digital grimoire and ritual builder that demystifies magic"
             />
@@ -26,7 +26,7 @@ export const About = () => {
             </p>
           </motion.div>
           
-          <GrandDivider variant="crow" />
+          <GrandDivider variant="ouroboros" />
         </div>
       </DarkSection>
 
@@ -45,8 +45,8 @@ export const About = () => {
             transition={{ delay: 0.1 }}
           >
             <LightOrnateCard hover={false}>
-              <h2 className="font-cinzel text-xl sm:text-2xl text-crimson mb-4 flex items-center gap-2">
-                <Sparkles className="w-5 h-5 sm:w-6 sm:h-6" />
+              <h2 className="font-cinzel text-xl sm:text-2xl text-crimson mb-4 flex items-center gap-3">
+                <BrandIcon name="star" size={28} variant="pink" opacity={0.9} />
                 The Vision
               </h2>
               <div className="space-y-4 font-montserrat text-sm sm:text-base text-navy-dark/80 leading-relaxed">
