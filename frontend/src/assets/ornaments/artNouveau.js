@@ -513,27 +513,27 @@ export const StarGlyph = ({
 export const VellumFrame = ({ 
   children, 
   className = '',
-  cornerSize = 50,
+  cornerSize = 40,
   showCorners = true 
 }) => (
   <div 
     className={`relative ${className}`}
     style={{
-      boxShadow: '0 1px 3px rgba(14, 42, 47, 0.08), 0 4px 12px rgba(14, 42, 47, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.6)',
+      boxShadow: '0 1px 3px rgba(14, 42, 47, 0.06), 0 4px 12px rgba(14, 42, 47, 0.03), inset 0 1px 0 rgba(255, 255, 255, 0.6)',
     }}
   >
     {showCorners && (
       <>
-        <div className="absolute -top-1 -left-1 pointer-events-none opacity-30">
+        <div className="absolute -top-1 -left-1 pointer-events-none opacity-20">
           <HaloCorner size={cornerSize} position="top-left" />
         </div>
-        <div className="absolute -top-1 -right-1 pointer-events-none opacity-30">
+        <div className="absolute -top-1 -right-1 pointer-events-none opacity-20">
           <HaloCorner size={cornerSize} position="top-right" />
         </div>
-        <div className="absolute -bottom-1 -left-1 pointer-events-none opacity-30">
+        <div className="absolute -bottom-1 -left-1 pointer-events-none opacity-20">
           <HaloCorner size={cornerSize} position="bottom-left" />
         </div>
-        <div className="absolute -bottom-1 -right-1 pointer-events-none opacity-30">
+        <div className="absolute -bottom-1 -right-1 pointer-events-none opacity-20">
           <HaloCorner size={cornerSize} position="bottom-right" />
         </div>
       </>
