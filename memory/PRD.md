@@ -11,6 +11,14 @@ Build "Where The Crowlands," a sophisticated full-stack application for creating
 
 ## What's Been Implemented
 
+### Session: February 6, 2026 - Logo Replacement ✅
+- **New Logo Implemented** — Replaced site logo throughout with new crow illustration
+  - New logo: "Where The Crowlands" text with detailed crow/raven on branch, surrounded by ornate frame with hourglass, rose, skulls, moon, and runic symbols
+  - Processed with ImageMagick to remove white background and add transparency
+  - Updated files: `/frontend/public/images/brand/logo.png` and `logo-alt.png`
+  - Logo appears in: Navigation bar, Footer, Home page hero, Early Access page
+  - Original logo files backed up and removed
+
 ### Session: January 2026 - V1.2 Spell Differentiation System ✅
 - **Micro-lore Wiring** — Each guide now has 10 lived details woven into spells
   - Planner selects 2-3 micro_lore items per spell
