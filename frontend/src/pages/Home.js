@@ -295,18 +295,18 @@ const FeatureCard = ({ icon: Icon, brandIcon, title, desc, tooltip }) => (
       }} 
     />
     
-    {/* Corner ornaments - subtle on cards */}
-    <div className="absolute top-2 left-2 pointer-events-none opacity-35 group-hover:opacity-55 transition-opacity">
-      <HaloCorner size={36} position="top-left" color={NOUVEAU_COLORS.antiqueGold} />
+    {/* Corner ornaments - minimal on cards */}
+    <div className="absolute top-2 left-2 pointer-events-none opacity-20 group-hover:opacity-40 transition-opacity">
+      <HaloCorner size={32} position="top-left" color={NOUVEAU_COLORS.antiqueGold} />
     </div>
-    <div className="absolute top-2 right-2 pointer-events-none opacity-35 group-hover:opacity-55 transition-opacity">
-      <HaloCorner size={36} position="top-right" color={NOUVEAU_COLORS.antiqueGold} />
+    <div className="absolute top-2 right-2 pointer-events-none opacity-20 group-hover:opacity-40 transition-opacity">
+      <HaloCorner size={32} position="top-right" color={NOUVEAU_COLORS.antiqueGold} />
     </div>
-    <div className="absolute bottom-2 left-2 pointer-events-none opacity-35 group-hover:opacity-55 transition-opacity">
-      <HaloCorner size={36} position="bottom-left" color={NOUVEAU_COLORS.antiqueGold} />
+    <div className="absolute bottom-2 left-2 pointer-events-none opacity-20 group-hover:opacity-40 transition-opacity">
+      <HaloCorner size={32} position="bottom-left" color={NOUVEAU_COLORS.antiqueGold} />
     </div>
-    <div className="absolute bottom-2 right-2 pointer-events-none opacity-35 group-hover:opacity-55 transition-opacity">
-      <HaloCorner size={36} position="bottom-right" color={NOUVEAU_COLORS.antiqueGold} />
+    <div className="absolute bottom-2 right-2 pointer-events-none opacity-20 group-hover:opacity-40 transition-opacity">
+      <HaloCorner size={32} position="bottom-right" color={NOUVEAU_COLORS.antiqueGold} />
     </div>
     
     <div className="relative p-6 sm:p-8 text-center">
