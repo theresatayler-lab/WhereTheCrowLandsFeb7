@@ -503,12 +503,13 @@ export const InvisibleHelpers = () => {
             
             {/* Main title - phantasmagoria font */}
             <h1 className="phantasmagoria-hero text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-gold-light mb-3"
-              style={{ textShadow: '0 2px 30px rgba(212, 168, 75, 0.5)' }}>
+              style={{ textShadow: '0 0 40px rgba(185, 78, 106, 0.5), 0 0 80px rgba(185, 78, 106, 0.3)' }}>
               Magical Battle Cry Intention
             </h1>
             
             {/* Subtitle */}
-            <p className="font-crimson text-sm sm:text-base text-silver-mist/80 italic">
+            <p className="font-crimson text-sm sm:text-base text-silver-mist/80 italic"
+              style={{ textShadow: '0 0 20px rgba(185, 78, 106, 0.35)' }}>
               A Structured Intention for Protection & Clarity
             </p>
           </div>
