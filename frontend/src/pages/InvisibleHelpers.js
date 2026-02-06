@@ -1,11 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Shield, Sparkles, ChevronRight, ChevronDown, Download, Copy, Check, Clock, Loader2 } from 'lucide-react';
+import { ChevronRight, ChevronDown, Download, Copy, Check, Clock, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import HandcraftedMagicModal from '../components/HandcraftedMagicModal';
 import HandcraftedBanner from '../components/HandcraftedBanner';
+import { BrandIcon } from '../components/BrandIcon';
 import { 
   DarkSection, 
   LightSection, 
