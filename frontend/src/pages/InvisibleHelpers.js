@@ -782,7 +782,7 @@ export const InvisibleHelpers = () => {
                   </button>
                   
                   <div className="text-center mb-8">
-                    <Sparkles className="w-10 h-10 mx-auto mb-4 text-crimson" />
+                    <BrandIcon name="star" size={44} variant="pink" opacity={0.9} className="mx-auto mb-4" />
                     <h2 className="phantasmagoria-hero text-2xl text-crimson mb-2">Receive Your Intention & Join the Chaos</h2>
                     <p className="text-navy-dark/70 text-sm font-crimson">
                       Enter your email to receive your intention and a PDF for offline use.
