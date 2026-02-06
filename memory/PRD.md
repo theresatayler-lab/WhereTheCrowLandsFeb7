@@ -22,6 +22,14 @@ Build "Where The Crowlands," a sophisticated full-stack application for creating
   - New asset: `/frontend/public/images/brand/moon-gold.png`
   - Replaced SVG bird with beautiful gold sun/moon face image
   - Appears in dividers and decorative elements throughout the site
+- **Brand Icon Library Overhaul** — Full custom icon system
+  - Downloaded 11 custom gold icons: moon, book, star, skull, key, sunMoon, eye, ouroboros, pentagram, hexagram, column
+  - Created `BrandIcon` component with gold/pink variants (CSS filter for pink)
+  - Replaced all feature card icons: Star (Craft Spells), Book (Grimoire), Moon (Archives)
+  - Replaced divider icons: Eye (major dividers), Ouroboros (cycles), SunMoon (celestial)
+  - Replaced section icons: Skull (Lineage/ancestors section)
+  - Updated GrandDivider, MysticalDivider, and SectionDivider components
+  - Icon usage guide documented in `/frontend/src/assets/brandAssets.js`
 
 ### Session: January 2026 - V1.2 Spell Differentiation System ✅
 - **Micro-lore Wiring** — Each guide now has 10 lived details woven into spells
