@@ -11,6 +11,18 @@ Build "Where The Crowlands," a sophisticated full-stack application for creating
 
 ## What's Been Implemented
 
+### Session: February 6, 2026 - Visual Polish & Ornament Refinement ✅
+- **Corner Ornament Opacity Reduction** — Reduced all corner ornaments from 0.7→0.45 (dark) and 0.5→0.35 (light) opacity
+  - Updated `SectionPlate` corners in `Home.js`: size 140→120, opacity 0.7→0.45
+  - Updated `VellumPanel` corners: size 60→50, opacity 0.6→0.4
+  - Updated `FeatureCard` corners: size 40→36, opacity 0.50→0.35
+  - Updated `ElaborateCorner` and `CornerFlourish` components in `OrnateElements.js`: opacity 0.7→0.4, 0.6→0.4
+  - Updated `VellumFrame` default in `artNouveau.js`: opacity 0.4→0.3
+- **Side Rail Ornament Simplification** — Reduced visual clutter on section side rails
+  - Removed `StarGlyph` from side rails, kept only `CrescentMoon`
+  - Reduced height (20→16), opacity (0.5→0.3), and made visible only on `lg` screens (was `md`)
+- **Overall Visual Balance Achieved** — Decorative elements now support rather than compete with content
+
 ### Session: February 6, 2026 - Logo & Visual Updates ✅
 - **New Pink Logo Implemented** — Replaced site logo with "CrowslandPinkLogo.png"
   - Features pink/rose-toned crow illustration with transparent background
