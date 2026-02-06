@@ -308,18 +308,16 @@ export const RavenGlyphSmall = ({
   color = NOUVEAU_COLORS.antiqueGold,
   opacity = 0.8 
 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-    <path 
-      d="M6 18 C3 15, 2 12, 3 9 C4 6, 8 4, 12 4 C14 4, 16 5, 18 8 L20 6 C22 5, 23 6, 22 8 L20 10 C22 12, 23 15, 21 18 C19 21, 15 23, 11 23 C8 23, 6 21, 6 18" 
-      stroke={color} 
-      strokeWidth="2.5" 
-      fill="none" 
-      opacity={opacity}
-    />
-    <circle cx="16" cy="9" r="2" stroke={color} strokeWidth="1.5" fill="none" opacity={opacity} />
-    <circle cx="16" cy="9" r="0.8" fill={color} opacity={opacity * 0.9} />
-    <path d="M4 17 L2 21 M6 19 L5 23 M8 20 L9 23" stroke={color} strokeWidth="1.5" opacity={opacity * 0.7} />
-  </svg>
+  <img 
+    src="/images/brand/moon-gold.png" 
+    alt="Moon"
+    style={{ 
+      width: size, 
+      height: size, 
+      opacity: opacity,
+      objectFit: 'contain',
+    }}
+  />
 );
 
 // ============================================================================
