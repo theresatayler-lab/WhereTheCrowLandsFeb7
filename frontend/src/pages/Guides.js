@@ -47,7 +47,7 @@ export const Guides = () => {
             animate={{ opacity: 1, y: 0 }}
           >
             <PageHeader 
-              icon={Users}
+              brandIcon="skull"
               title="Meet the Guides"
               subtitle="Four generations of women who practiced in secret, each with her own wisdom, ritual style, and way of seeing the world."
             />
