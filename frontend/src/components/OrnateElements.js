@@ -1,11 +1,11 @@
 import React from 'react';
+import { BrandIcon } from './BrandIcon';
 import {
   NOUVEAU_COLORS,
   HaloCorner,
   HaloCornerElaborate,
   LunarDivider,
   SimpleDivider,
-  RavenGlyph,
   SunDisc,
   MoonDisc,
   CrescentMoon,
