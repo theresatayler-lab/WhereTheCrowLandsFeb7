@@ -91,7 +91,7 @@ const EarlyAccessPage = () => {
       >
         {/* Logo */}
         <img 
-          src="https://customer-assets.emergentagent.com/job_mystic-circle-2/artifacts/li34ks3x_Where%20the%20Crowlands%20Logos.png"
+          src="/images/brand/logo-alt.png"
           alt="Where The Crowlands"
           className="w-24 h-24 sm:w-28 sm:h-28 mx-auto mb-3 object-contain"
           style={{ filter: 'brightness(1.3) drop-shadow(0 0 20px rgba(212, 168, 75, 0.4))' }}

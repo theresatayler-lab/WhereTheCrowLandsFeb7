@@ -831,7 +831,7 @@ const Library = () => {
       <div className="relative py-14 sm:py-20 bg-navy-dark overflow-hidden">
         {/* Background image */}
         <div className="absolute inset-0 opacity-5" style={{
-          backgroundImage: 'url(https://customer-assets.emergentagent.com/job_mystic-circle-2/artifacts/t5tfc6i3_COuld_we_creatre_more_of_these_--profile_bsfwy2d_--v_7_d08b86ee-a6ac-4cf3-a814-1344b45b3380_1.png)',
+          backgroundImage: 'url(/images/brand/profile-frame.png)',
           backgroundSize: 'cover', backgroundPosition: 'center',
         }} />
         
