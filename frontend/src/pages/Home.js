@@ -606,7 +606,7 @@ export const Home = () => {
       <SectionPlate variant="light" className="py-14 sm:py-16 px-6">
         <div className="max-w-4xl mx-auto text-center">
           <div className="flex justify-center mb-4">
-            <RavenGlyph size={48} color={NOUVEAU_COLORS.mutedBrass} opacity={0.7} />
+            <BrandIcon name="skull" size={56} opacity={0.75} />
           </div>
           
           <h2 
