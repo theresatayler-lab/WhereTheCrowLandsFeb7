@@ -10,7 +10,7 @@ import sys
 def test_personalized_spell_generation():
     """Test the personalized spell generation endpoint with Visual System V1.1"""
     
-    base_url = "https://arcane-guides.preview.emergentagent.com"
+    base_url = "https://selfcontained-magic.preview.emergentagent.com"
     
     # First, login with the test credentials
     login_data = {
