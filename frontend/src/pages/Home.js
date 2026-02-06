@@ -545,7 +545,7 @@ export const Home = () => {
               className="font-cinzel text-xl sm:text-2xl md:text-3xl tracking-wide mb-3"
               style={{ 
                 color: NOUVEAU_COLORS.antiqueGold, 
-                textShadow: `0 2px 20px ${NOUVEAU_COLORS.antiqueGold}40`,
+                textShadow: `0 0 30px ${NOUVEAU_COLORS.emberPink}50, 0 0 60px ${NOUVEAU_COLORS.emberPink}30`,
                 letterSpacing: '0.08em',
               }}
             >
