@@ -187,8 +187,8 @@ export const About = () => {
             transition={{ delay: 0.4 }}
           >
             <OrnateCard hover={false}>
-              <h2 className="font-cinzel text-xl sm:text-2xl text-gold-light mb-4 flex items-center gap-2">
-                <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-crimson-bright" />
+              <h2 className="font-cinzel text-xl sm:text-2xl text-gold-light mb-4 flex items-center gap-3">
+                <BrandIcon name="hexagram" size={28} opacity={0.9} />
                 Our Philosophy
               </h2>
               <div className="space-y-4 font-crimson text-sm sm:text-base text-cream/80 leading-relaxed italic">
