@@ -524,16 +524,16 @@ export const VellumFrame = ({
   >
     {showCorners && (
       <>
-        <div className="absolute -top-1 -left-1 pointer-events-none opacity-40">
+        <div className="absolute -top-1 -left-1 pointer-events-none opacity-30">
           <HaloCorner size={cornerSize} position="top-left" />
         </div>
-        <div className="absolute -top-1 -right-1 pointer-events-none opacity-40">
+        <div className="absolute -top-1 -right-1 pointer-events-none opacity-30">
           <HaloCorner size={cornerSize} position="top-right" />
         </div>
-        <div className="absolute -bottom-1 -left-1 pointer-events-none opacity-40">
+        <div className="absolute -bottom-1 -left-1 pointer-events-none opacity-30">
           <HaloCorner size={cornerSize} position="bottom-left" />
         </div>
-        <div className="absolute -bottom-1 -right-1 pointer-events-none opacity-40">
+        <div className="absolute -bottom-1 -right-1 pointer-events-none opacity-30">
           <HaloCorner size={cornerSize} position="bottom-right" />
         </div>
       </>
