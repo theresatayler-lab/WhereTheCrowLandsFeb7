@@ -359,7 +359,7 @@ export const Home = () => {
       <SectionPlate variant="dark" className="min-h-screen flex items-center justify-center overflow-hidden py-16">
         {/* Subtle texture overlay */}
         <div className="absolute inset-0 z-0 pointer-events-none" style={{
-          backgroundImage: 'url(https://customer-assets.emergentagent.com/job_mystic-circle-2/artifacts/t5tfc6i3_COuld_we_creatre_more_of_these_--profile_bsfwy2d_--v_7_d08b86ee-a6ac-4cf3-a814-1344b45b3380_1.png)',
+          backgroundImage: 'url(/images/brand/profile-frame.png)',
           backgroundSize: 'cover', backgroundPosition: 'center', opacity: '0.03', filter: 'hue-rotate(160deg) saturate(0.3)',
         }} />
         
@@ -381,7 +381,7 @@ export const Home = () => {
               style={{ background: `radial-gradient(circle, ${NOUVEAU_COLORS.emberPink}50 0%, ${NOUVEAU_COLORS.antiqueGold}40 40%, transparent 70%)` }} 
             />
             <img 
-              src="https://customer-assets.emergentagent.com/job_mystic-circle-2/artifacts/li34ks3x_Where%20the%20Crowlands%20Logos.png" 
+              src="/images/brand/logo-alt.png" 
               alt="Where The Crowlands"
               className="relative w-56 h-56 sm:w-72 sm:h-72 md:w-80 md:h-80 mx-auto object-contain"
               style={{ filter: `brightness(1.3) contrast(1.1) drop-shadow(0 0 50px ${NOUVEAU_COLORS.antiqueGold}70)` }} 
