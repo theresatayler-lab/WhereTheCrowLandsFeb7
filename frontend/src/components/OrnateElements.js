@@ -622,12 +622,12 @@ export const TarotCardFrame = ({ children, className = '' }) => (
   </div>
 );
 
-// Persona border URLs - legacy support
+// Persona border URLs - now local
 export const PERSONA_BORDER_URLS = {
-  cathleen: 'https://customer-assets.emergentagent.com/job_mystic-circle-2/artifacts/CathleenBorder.png',
-  katherine: 'https://customer-assets.emergentagent.com/job_mystic-circle-2/artifacts/KateBorder.png',
-  kate: 'https://customer-assets.emergentagent.com/job_mystic-circle-2/artifacts/KateBorder.png',
-  theresa: 'https://customer-assets.emergentagent.com/job_mystic-circle-2/artifacts/TheresaBorder.png',
+  cathleen: '/images/borders/cathleen-border.png',
+  katherine: '/images/borders/kate-border.png',
+  kate: '/images/borders/kate-border.png',
+  theresa: '/images/borders/theresa-border.png',
   shigg: null,
   shiggy: null,
 };
