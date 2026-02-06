@@ -247,6 +247,7 @@ Build "Where The Crowlands," a sophisticated full-stack application for creating
 - [x] Visual Consistency Across Personas - Distinct color palettes for all 4 guides (COMPLETED Jan 13, 2026)
 - [x] Atmospheric Background Images - Site-wide cream sections (COMPLETED Jan 18, 2026)
 - [x] Old Spell Compatibility Fix (COMPLETED Jan 18, 2026)
+- [x] Logo Replacement - New crow illustration logo with transparent background (COMPLETED Feb 6, 2026)
 - [ ] Visual Polish & Custom Ornaments - BLOCKED: awaiting user assets
 
 ### P1 - Medium Priority
