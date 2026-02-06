@@ -34,7 +34,7 @@ export const BRAND_ASSETS = {
     
     // History & Structure
     skull: "/images/brand/skull-gold.svg",         // Ancestors, history, lineage
-    column: "/images/brand/column-gold.jpg",       // Foundations, pillars, structure
+    column: "/images/brand/column-gold.png",       // Foundations, pillars, structure
   },
   
   // ==========================================================================
