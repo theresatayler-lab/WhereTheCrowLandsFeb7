@@ -403,7 +403,7 @@ export const Navigation = ({ user, onLogout }) => {
                               color: isActive ? '#C8A44D' : 'rgba(243, 239, 232, 0.7)',
                             }}
                           >
-                            <BrandIcon name={item.brandIcon} size={16} variant="pink" opacity={0.9} />
+                            <BrandIcon name={item.brandIcon} size={20} variant="pink" opacity={0.95} />
                             <span>{item.label}</span>
                           </Link>
                         );
@@ -429,7 +429,7 @@ export const Navigation = ({ user, onLogout }) => {
                       borderLeft: isActive ? '3px solid #C8A44D' : '3px solid transparent',
                     }}
                   >
-                    <BrandIcon name={link.brandIcon} size={20} variant="gold" opacity={0.9} />
+                    <BrandIcon name={link.brandIcon} size={24} variant="gold" opacity={0.95} />
                     <span>{link.label}</span>
                   </Link>
                 );
