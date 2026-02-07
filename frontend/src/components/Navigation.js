@@ -90,7 +90,7 @@ const NavDropdown = ({ label, brandIcon, items, isActive, onItemClick }) => {
                 e.currentTarget.style.paddingLeft = '20px';
               }}
             >
-              <BrandIcon name={item.brandIcon} size={16} variant="pink" opacity={0.9} />
+              <BrandIcon name={item.brandIcon} size={20} variant="pink" opacity={0.95} />
               <span>{item.label}</span>
             </Link>
           ))}
