@@ -89,9 +89,18 @@ const SimpleSectionDivider = ({ light = false }) => (
 );
 
 // Three stars horizontal divider
-const ThreeStarsDivider = ({ size = 120, variant = 'gold', opacity = 0.8 }) => (
-  <div className="py-4 flex justify-center">
-    <BrandIcon name="threestarsHorizontal" size={size} variant={variant} opacity={opacity} style={{ width: 'auto', height: size / 3 }} />
+const ThreeStarsDivider = ({ height = 24, variant = 'gold', opacity = 0.7 }) => (
+  <div className="py-3 flex justify-center">
+    <img 
+      src="/images/brand/threestars-horizontal-gold.png"
+      alt="Three stars divider"
+      style={{ 
+        height: height,
+        width: 'auto',
+        opacity: opacity,
+        filter: variant === 'pink' ? 'hue-rotate(-30deg) saturate(1.5) brightness(1.1)' : 'none',
+      }}
+    />
   </div>
 );
 
