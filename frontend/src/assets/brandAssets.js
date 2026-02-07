@@ -42,6 +42,13 @@ export const BRAND_ASSETS = {
     rose: "/images/brand/rose-gold.png",           // Beauty, love spells, botanical
     threestars: "/images/brand/threestars-gold.png", // Vertical arrangement
     threestarsHorizontal: "/images/brand/threestars-horizontal-gold.png", // Horizontal dividers
+    
+    // MORE ICONS - Mystical & Tools
+    halfmoon: "/images/brand/halfmoon-gold.png",   // Lunar phases, night magic
+    snake: "/images/brand/snake-gold.png",         // Transformation, wisdom, healing
+    sacredheart: "/images/brand/sacredheart-gold.png", // Love, devotion, passion
+    eightstar: "/images/brand/eightstar-gold.png", // Chaos magic, 8-fold path
+    scissors: "/images/brand/scissors-gold.png",   // Cutting ties, craft, sewing magic
   },
   
   // ==========================================================================

@@ -34,6 +34,13 @@ const ICON_MAP = {
   rose: BRAND_ASSETS.icons.rose,
   threestars: BRAND_ASSETS.icons.threestars,
   threestarsHorizontal: BRAND_ASSETS.icons.threestarsHorizontal,
+  
+  // Mystical & Tools (NEW)
+  halfmoon: BRAND_ASSETS.icons.halfmoon,
+  snake: BRAND_ASSETS.icons.snake,
+  sacredheart: BRAND_ASSETS.icons.sacredheart,
+  eightstar: BRAND_ASSETS.icons.eightstar,
+  scissors: BRAND_ASSETS.icons.scissors,
 };
 
 /**
@@ -96,5 +103,11 @@ export const BuckIcon = (props) => <BrandIcon name="buck" {...props} />;
 export const RoseIcon = (props) => <BrandIcon name="rose" {...props} />;
 export const ThreeStarsIcon = (props) => <BrandIcon name="threestars" {...props} />;
 export const ThreeStarsHorizontalIcon = (props) => <BrandIcon name="threestarsHorizontal" {...props} />;
+// More new icons
+export const HalfmoonIcon = (props) => <BrandIcon name="halfmoon" {...props} />;
+export const SnakeIcon = (props) => <BrandIcon name="snake" {...props} />;
+export const SacredHeartIcon = (props) => <BrandIcon name="sacredheart" {...props} />;
+export const EightStarIcon = (props) => <BrandIcon name="eightstar" {...props} />;
+export const ScissorsIcon = (props) => <BrandIcon name="scissors" {...props} />;
 
 export default BrandIcon;
