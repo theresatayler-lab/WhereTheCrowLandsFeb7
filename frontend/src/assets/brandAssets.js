@@ -35,6 +35,12 @@ export const BRAND_ASSETS = {
     // History & Structure
     skull: "/images/brand/skull-gold.png",         // Ancestors, history, lineage
     column: "/images/brand/column-gold.png",       // Foundations, pillars, structure
+    
+    // NEW ICONS - Nature & Symbols
+    bird: "/images/brand/bird-gold.png",           // Flight, freedom, messages
+    buck: "/images/brand/buck-gold.png",           // Strength, nature, wild magic
+    rose: "/images/brand/rose-gold.png",           // Beauty, love spells, botanical
+    threestars: "/images/brand/threestars-gold.png", // Ratings, dividers, horizontal accents
   },
   
   // ==========================================================================
