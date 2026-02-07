@@ -27,6 +27,12 @@ const ICON_MAP = {
   // History & Structure
   skull: BRAND_ASSETS.icons.skull,
   column: BRAND_ASSETS.icons.column,
+  
+  // Nature & Symbols (NEW)
+  bird: BRAND_ASSETS.icons.bird,
+  buck: BRAND_ASSETS.icons.buck,
+  rose: BRAND_ASSETS.icons.rose,
+  threestars: BRAND_ASSETS.icons.threestars,
 };
 
 /**
@@ -83,5 +89,10 @@ export const BookIcon = (props) => <BrandIcon name="book" {...props} />;
 export const KeyIcon = (props) => <BrandIcon name="key" {...props} />;
 export const SkullIcon = (props) => <BrandIcon name="skull" {...props} />;
 export const ColumnIcon = (props) => <BrandIcon name="column" {...props} />;
+// NEW icons
+export const BirdIcon = (props) => <BrandIcon name="bird" {...props} />;
+export const BuckIcon = (props) => <BrandIcon name="buck" {...props} />;
+export const RoseIcon = (props) => <BrandIcon name="rose" {...props} />;
+export const ThreeStarsIcon = (props) => <BrandIcon name="threestars" {...props} />;
 
 export default BrandIcon;
