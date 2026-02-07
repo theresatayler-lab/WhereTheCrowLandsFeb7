@@ -6,12 +6,12 @@ import {
 import { BrandIcon } from './BrandIcon';
 
 // Custom icon wrapper for brand icons in navigation
-const NavBrandIcon = ({ name, className = "w-4 h-4" }) => (
+const NavBrandIcon = ({ name, className = "w-5 h-5" }) => (
   <BrandIcon 
     name={name} 
-    size={16} 
+    size={20} 
     variant="gold" 
-    opacity={0.9}
+    opacity={0.95}
     className={className}
   />
 );
