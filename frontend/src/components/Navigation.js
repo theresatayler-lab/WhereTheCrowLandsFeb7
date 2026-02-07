@@ -179,23 +179,12 @@ export const Navigation = ({ user, onLogout }) => {
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2 group" data-testid="nav-logo" onClick={handleLinkClick}>
-            <div className="relative">
-              {/* Subtle glow behind logo */}
-              <div 
-                className="absolute inset-0 rounded-full"
-                style={{ 
-                  background: 'radial-gradient(circle, rgba(185, 78, 106, 0.2) 0%, rgba(14, 42, 47, 0.3) 50%, transparent 70%)',
-                  transform: 'scale(1.4)',
-                  filter: 'blur(10px)',
-                }}
-              />
-              <img 
-                src="/images/brand/logo-alt.png" 
-                alt="Where The Crowlands Logo"
-                className="relative h-10 sm:h-12 md:h-16 w-auto"
-                style={{ filter: 'sepia(0.5) hue-rotate(-30deg) saturate(0.6) brightness(0.8) contrast(1.05)', opacity: 0.85 }}
-              />
-            </div>
+            <img 
+              src="/images/brand/logo-alt.png" 
+              alt="Where The Crowlands Logo"
+              className="h-10 sm:h-12 md:h-16 w-auto"
+              style={{ opacity: 0.85, mixBlendMode: 'soft-light' }}
+            />
           </Link>
           
           {/* Desktop Navigation */}
