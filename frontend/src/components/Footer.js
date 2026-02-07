@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-// Seal logo URL - transparent version
-const SEAL_LOGO = "/images/brand/logo-transparent.png";
+// Seal logo URL - new design
+const SEAL_LOGO = "/images/brand/new-logo.png";
 
 export const Footer = () => {
   return (

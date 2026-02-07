@@ -177,16 +177,12 @@ export const Navigation = ({ user, onLogout }) => {
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-16 md:h-20">
-          {/* Logo - transparent with rose/gold tones */}
+          {/* Logo - new clean design */}
           <Link to="/" className="flex items-center space-x-2 group" data-testid="nav-logo" onClick={handleLinkClick}>
             <img 
-              src="/images/brand/logo-alt-transparent.png" 
+              src="/images/brand/new-logo.png" 
               alt="Where The Crowlands Logo"
               className="h-10 sm:h-12 md:h-16 w-auto"
-              style={{ 
-                filter: 'hue-rotate(-30deg) saturate(1.0) brightness(0.95)',
-                opacity: 0.95,
-              }}
             />
           </Link>
           
