@@ -177,13 +177,16 @@ export const Navigation = ({ user, onLogout }) => {
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-16 md:h-20">
-          {/* Logo */}
+          {/* Logo - rose tinted to match brand icons */}
           <Link to="/" className="flex items-center space-x-2 group" data-testid="nav-logo" onClick={handleLinkClick}>
             <img 
               src="/images/brand/logo-alt.png" 
               alt="Where The Crowlands Logo"
               className="h-10 sm:h-12 md:h-16 w-auto"
-              style={{ opacity: 0.85, mixBlendMode: 'soft-light' }}
+              style={{ 
+                filter: 'sepia(0.5) hue-rotate(-15deg) saturate(0.9) brightness(0.9)',
+                opacity: 0.8,
+              }}
             />
           </Link>
           
