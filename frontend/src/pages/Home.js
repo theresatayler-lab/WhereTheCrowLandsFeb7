@@ -201,8 +201,8 @@ export const Home = () => {
               alt="Where The Crowlands"
               className="relative w-56 h-auto sm:w-72 md:w-80 object-contain"
               style={{ 
-                opacity: 0.85,
-                mixBlendMode: 'luminosity',
+                opacity: 0.9,
+                mixBlendMode: 'soft-light',
               }}
             />
           </motion.div>
