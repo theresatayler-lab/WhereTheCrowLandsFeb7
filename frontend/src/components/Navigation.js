@@ -16,8 +16,8 @@ const NavBrandIcon = ({ name, className = "w-4 h-4" }) => (
   />
 );
 
-// Dropdown component
-const NavDropdown = ({ label, icon: Icon, items, isActive, onItemClick }) => {
+// Dropdown component - supports both Lucide icons and brand icon names
+const NavDropdown = ({ label, brandIcon, items, isActive, onItemClick }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
   
@@ -43,9 +43,9 @@ const NavDropdown = ({ label, icon: Icon, items, isActive, onItemClick }) => {
         onMouseEnter={(e) => { if (!isActive) { e.currentTarget.style.color = '#C8A44D'; e.currentTarget.style.backgroundColor = 'rgba(200, 164, 77, 0.08)'; }}}
         onMouseLeave={(e) => { if (!isActive) { e.currentTarget.style.color = 'rgba(243, 239, 232, 0.8)'; e.currentTarget.style.backgroundColor = 'transparent'; }}}
       >
-        <Icon className="w-4 h-4" />
+        <NavBrandIcon name={brandIcon} />
         <span>{label}</span>
-        <ChevronDown className={`w-3 h-3 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+        <ChevronDown className="w-3 h-3 transition-transform" style={{ transform: isOpen ? 'rotate(180deg)' : 'none' }} />
       </button>
       
       {isOpen && (
@@ -67,36 +67,33 @@ const NavDropdown = ({ label, icon: Icon, items, isActive, onItemClick }) => {
           <div className="absolute bottom-1 left-1 w-3 h-3" style={{ borderBottom: '2px solid rgba(200, 164, 77, 0.6)', borderLeft: '2px solid rgba(200, 164, 77, 0.6)' }} />
           <div className="absolute bottom-1 right-1 w-3 h-3" style={{ borderBottom: '2px solid rgba(200, 164, 77, 0.6)', borderRight: '2px solid rgba(200, 164, 77, 0.6)' }} />
           
-          {items.map((item, index) => {
-            const ItemIcon = item.icon;
-            return (
-              <Link
-                key={item.to}
-                to={item.to}
-                onClick={() => {
-                  setIsOpen(false);
-                  onItemClick?.();
-                }}
-                className="flex items-center gap-3 px-5 py-2.5 font-montserrat text-xs tracking-wider transition-all relative"
-                style={{ color: 'rgba(243, 239, 232, 0.8)' }}
-                onMouseEnter={(e) => { 
-                  e.currentTarget.style.color = '#C8A44D'; 
-                  e.currentTarget.style.backgroundColor = 'rgba(200, 164, 77, 0.15)';
-                  e.currentTarget.style.borderLeft = '3px solid #B94E6A';
-                  e.currentTarget.style.paddingLeft = '17px';
-                }}
-                onMouseLeave={(e) => { 
-                  e.currentTarget.style.color = 'rgba(243, 239, 232, 0.8)'; 
-                  e.currentTarget.style.backgroundColor = 'transparent';
-                  e.currentTarget.style.borderLeft = '3px solid transparent';
-                  e.currentTarget.style.paddingLeft = '20px';
-                }}
-              >
-                <ItemIcon className="w-4 h-4" style={{ color: '#B94E6A' }} />
-                <span>{item.label}</span>
-              </Link>
-            );
-          })}
+          {items.map((item) => (
+            <Link
+              key={item.to}
+              to={item.to}
+              onClick={() => {
+                setIsOpen(false);
+                onItemClick?.();
+              }}
+              className="flex items-center gap-3 px-5 py-2.5 font-montserrat text-xs tracking-wider transition-all relative"
+              style={{ color: 'rgba(243, 239, 232, 0.8)' }}
+              onMouseEnter={(e) => { 
+                e.currentTarget.style.color = '#C8A44D'; 
+                e.currentTarget.style.backgroundColor = 'rgba(200, 164, 77, 0.15)';
+                e.currentTarget.style.borderLeft = '3px solid #B94E6A';
+                e.currentTarget.style.paddingLeft = '17px';
+              }}
+              onMouseLeave={(e) => { 
+                e.currentTarget.style.color = 'rgba(243, 239, 232, 0.8)'; 
+                e.currentTarget.style.backgroundColor = 'transparent';
+                e.currentTarget.style.borderLeft = '3px solid transparent';
+                e.currentTarget.style.paddingLeft = '20px';
+              }}
+            >
+              <BrandIcon name={item.brandIcon} size={16} variant="pink" opacity={0.9} />
+              <span>{item.label}</span>
+            </Link>
+          ))}
           
           {/* Decorative bottom accent */}
           <div className="absolute -bottom-px left-2 right-2 h-0.5" style={{ background: 'linear-gradient(to right, transparent, rgba(200, 164, 77, 0.4), transparent)' }} />
