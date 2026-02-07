@@ -108,48 +108,48 @@ export const Navigation = ({ user, onLogout }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [expandedMobileSection, setExpandedMobileSection] = useState(null);
   
-  // Grouped navigation structure
+  // Grouped navigation structure - using brand icons
   const navGroups = {
     create: {
       label: 'Create',
-      icon: Sparkles,
+      brandIcon: 'star',
       items: [
-        { to: '/spell-request', label: 'Request Spell', icon: Wand2 },
-        { to: '/ward-finder', label: 'Ward Finder', icon: Shield },
-        { to: '/ai-image', label: 'AI Image', icon: Image },
+        { to: '/spell-request', label: 'Request Spell', brandIcon: 'pentagram' },
+        { to: '/ward-finder', label: 'Ward Finder', brandIcon: 'eightstar' },
+        { to: '/ai-image', label: 'AI Image', brandIcon: 'eye' },
       ]
     },
     explore: {
       label: 'Explore',
-      icon: BookOpen,
+      brandIcon: 'book',
       items: [
-        { to: '/library', label: 'Library', icon: Library },
-        { to: '/guides', label: 'Guides', icon: Users },
-        { to: '/corrie-tarot', label: 'Corrie Tarot', icon: Eye },
-        { to: '/invisible-helpers', label: 'Invisible Helpers', icon: Compass },
+        { to: '/library', label: 'Library', brandIcon: 'book' },
+        { to: '/guides', label: 'Guides', brandIcon: 'bird' },
+        { to: '/corrie-tarot', label: 'Corrie Tarot', brandIcon: 'moon' },
+        { to: '/invisible-helpers', label: 'Invisible Helpers', brandIcon: 'sunMoon' },
       ]
     },
     archives: {
       label: 'Archives',
-      icon: Scroll,
+      brandIcon: 'skull',
       items: [
-        { to: '/deities', label: 'Deities', icon: Moon },
-        { to: '/figures', label: 'Figures', icon: Users },
-        { to: '/sites', label: 'Sites', icon: MapPin },
-        { to: '/rituals', label: 'Rituals', icon: Scroll },
-        { to: '/timeline', label: 'Timeline', icon: Clock },
+        { to: '/deities', label: 'Deities', brandIcon: 'halfmoon' },
+        { to: '/figures', label: 'Figures', brandIcon: 'column' },
+        { to: '/sites', label: 'Sites', brandIcon: 'hexagram' },
+        { to: '/rituals', label: 'Rituals', brandIcon: 'ouroboros' },
+        { to: '/timeline', label: 'Timeline', brandIcon: 'snake' },
       ]
     }
   };
   
   const standaloneLinks = [
-    { to: '/ai-chat', label: 'Research', icon: Bot },
-    { to: '/my-grimoire', label: 'My Grimoire', icon: BookOpen, requiresAuth: true },
+    { to: '/ai-chat', label: 'Research', brandIcon: 'eye' },
+    { to: '/my-grimoire', label: 'My Grimoire', brandIcon: 'book', requiresAuth: true },
   ];
   
   const secondaryLinks = [
-    { to: '/about', label: 'About', icon: Feather },
-    { to: '/faq', label: 'FAQ', icon: HelpCircle },
+    { to: '/about', label: 'About', brandIcon: 'bird' },
+    { to: '/faq', label: 'FAQ', brandIcon: 'key' },
   ];
   
   const handleLinkClick = () => {
