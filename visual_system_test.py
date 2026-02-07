@@ -10,7 +10,7 @@ import json
 from datetime import datetime
 
 class VisualSystemTester:
-    def __init__(self, base_url="https://brand-icon-library.preview.emergentagent.com"):
+    def __init__(self, base_url="https://visual-rebrand-10.preview.emergentagent.com"):
         self.base_url = base_url
         self.token = None
         self.tests_run = 0
