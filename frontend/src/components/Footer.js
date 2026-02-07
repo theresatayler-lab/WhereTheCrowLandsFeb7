@@ -37,9 +37,9 @@ export const Footer = () => {
                 alt="Where The Crowlands Seal"
                 className="h-32 w-auto object-contain"
                 style={{ 
-                  filter: 'sepia(0.8) hue-rotate(-15deg) saturate(0.6)',
+                  filter: 'sepia(0.5) saturate(0.8) hue-rotate(-30deg) brightness(0.85)',
                   mixBlendMode: 'multiply',
-                  opacity: 0.9,
+                  opacity: 0.85,
                 }}
               />
             </div>
