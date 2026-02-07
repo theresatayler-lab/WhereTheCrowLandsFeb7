@@ -362,7 +362,7 @@ export const Navigation = ({ user, onLogout }) => {
                   borderLeft: location.pathname === '/' ? '3px solid #C8A44D' : '3px solid transparent',
                 }}
               >
-                <Moon className="w-5 h-5" />
+                <BrandIcon name="moon" size={20} variant="gold" opacity={0.9} />
                 <span>Home</span>
               </Link>
               
@@ -375,7 +375,7 @@ export const Navigation = ({ user, onLogout }) => {
                     style={{ color: '#C8A44D' }}
                   >
                     <span className="flex items-center gap-3">
-                      <group.icon className="w-5 h-5" />
+                      <BrandIcon name={group.brandIcon} size={20} variant="gold" opacity={0.9} />
                       <span>{group.label}</span>
                     </span>
                     <ChevronDown className={`w-4 h-4 transition-transform ${expandedMobileSection === key ? 'rotate-180' : ''}`} />
