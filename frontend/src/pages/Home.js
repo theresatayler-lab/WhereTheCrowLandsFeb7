@@ -88,6 +88,13 @@ const SimpleSectionDivider = ({ light = false }) => (
   </div>
 );
 
+// Three stars horizontal divider
+const ThreeStarsDivider = ({ size = 48, variant = 'gold', opacity = 0.8 }) => (
+  <div className="py-4 flex justify-center">
+    <BrandIcon name="threestars" size={size} variant={variant} opacity={opacity} />
+  </div>
+);
+
 // Vellum content panel - clean and simple
 const VellumPanel = ({ children, className = '' }) => (
   <div 
