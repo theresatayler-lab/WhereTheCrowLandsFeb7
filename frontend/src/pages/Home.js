@@ -189,7 +189,7 @@ export const Home = () => {
             <HeroHaloArc width={360} />
           </div>
           
-          {/* LOGO - rose-tinted with background blending through */}
+          {/* LOGO - rose/pink tinted to match brand style */}
           <motion.div 
             initial={{ opacity: 0, scale: 0.9 }} 
             animate={{ opacity: 1, scale: 1 }} 
@@ -201,17 +201,17 @@ export const Home = () => {
               alt="Where The Crowlands"
               className="relative w-56 h-auto sm:w-72 md:w-80 object-contain"
               style={{ 
-                filter: 'sepia(0.8) hue-rotate(-15deg) saturate(0.6)',
+                filter: 'sepia(0.5) saturate(0.8) hue-rotate(-30deg) brightness(0.85)',
                 mixBlendMode: 'multiply',
-                opacity: 0.9,
+                opacity: 0.85,
               }}
             />
           </motion.div>
 
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.3 }}>
-            {/* Moon glyph */}
+            {/* Moon glyph - pink variant to match logo */}
             <div className="flex justify-center mb-5">
-              <BrandIcon name="moon" size={64} opacity={0.85} />
+              <BrandIcon name="moon" size={64} variant="pink" opacity={0.85} />
             </div>
             
             {/* Title - balanced, not oversized */}
