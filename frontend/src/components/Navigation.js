@@ -391,7 +391,6 @@ export const Navigation = ({ user, onLogout }) => {
                       }}
                     >
                       {group.items.map((item) => {
-                        const ItemIcon = item.icon;
                         const isActive = location.pathname === item.to;
                         return (
                           <Link
@@ -404,7 +403,7 @@ export const Navigation = ({ user, onLogout }) => {
                               color: isActive ? '#C8A44D' : 'rgba(243, 239, 232, 0.7)',
                             }}
                           >
-                            <ItemIcon className="w-4 h-4" />
+                            <BrandIcon name={item.brandIcon} size={16} variant="pink" opacity={0.9} />
                             <span>{item.label}</span>
                           </Link>
                         );
@@ -417,7 +416,6 @@ export const Navigation = ({ user, onLogout }) => {
               {/* Standalone Links */}
               {standaloneLinks.map((link) => {
                 if (link.requiresAuth && !user) return null;
-                const Icon = link.icon;
                 const isActive = location.pathname === link.to;
                 return (
                   <Link
@@ -431,7 +429,7 @@ export const Navigation = ({ user, onLogout }) => {
                       borderLeft: isActive ? '3px solid #C8A44D' : '3px solid transparent',
                     }}
                   >
-                    <Icon className="w-5 h-5" />
+                    <BrandIcon name={link.brandIcon} size={20} variant="gold" opacity={0.9} />
                     <span>{link.label}</span>
                   </Link>
                 );
