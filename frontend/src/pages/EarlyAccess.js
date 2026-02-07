@@ -89,22 +89,13 @@ const EarlyAccessPage = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        {/* Logo with glow */}
-        <div className="relative w-24 sm:w-28 mx-auto mb-3">
-          {/* Subtle glow behind logo */}
-          <div 
-            className="absolute inset-0 rounded-full"
-            style={{ 
-              background: 'radial-gradient(circle, rgba(185, 78, 106, 0.2) 0%, rgba(14, 22, 41, 0.3) 50%, transparent 70%)',
-              transform: 'scale(1.5)',
-              filter: 'blur(15px)',
-            }}
-          />
+        {/* Logo with blend mode */}
+        <div className="w-24 sm:w-28 mx-auto mb-3">
           <img 
             src="/images/brand/logo-alt.png"
             alt="Where The Crowlands"
-            className="relative w-full h-auto object-contain"
-            style={{ filter: 'sepia(0.5) hue-rotate(-30deg) saturate(0.6) brightness(0.8) contrast(1.05)', opacity: 0.85 }}
+            className="w-full h-auto object-contain"
+            style={{ opacity: 0.85, mixBlendMode: 'soft-light' }}
           />
         </div>
         
