@@ -189,7 +189,7 @@ export const Home = () => {
             <HeroHaloArc width={360} />
           </div>
           
-          {/* LOGO - rose/pink tinted to match brand style */}
+          {/* LOGO - with transparent background */}
           <motion.div 
             initial={{ opacity: 0, scale: 0.9 }} 
             animate={{ opacity: 1, scale: 1 }} 
@@ -197,13 +197,12 @@ export const Home = () => {
             className="relative mb-6 flex justify-center"
           >
             <img 
-              src="/images/brand/logo-alt.png" 
+              src="/images/brand/logo-alt-transparent.png" 
               alt="Where The Crowlands"
               className="relative w-56 h-auto sm:w-72 md:w-80 object-contain"
               style={{ 
-                filter: 'sepia(0.5) saturate(0.8) hue-rotate(-30deg) brightness(0.85)',
-                mixBlendMode: 'multiply',
-                opacity: 0.85,
+                filter: 'sepia(0.4) saturate(0.7) hue-rotate(-25deg) brightness(0.9)',
+                opacity: 0.9,
               }}
             />
           </motion.div>
