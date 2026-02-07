@@ -446,7 +446,7 @@ export const Navigation = ({ user, onLogout }) => {
                   onClick={handleLinkClick}
                   className="flex items-center gap-3 px-4 py-2.5 rounded-sm font-montserrat text-xs text-silver-mist/60 hover:bg-gold/5 hover:text-gold transition-all"
                 >
-                  <BrandIcon name={link.brandIcon} size={16} variant="gold" opacity={0.7} />
+                  <BrandIcon name={link.brandIcon} size={18} variant="gold" opacity={0.8} />
                   <span>{link.label}</span>
                 </Link>
               ))}
@@ -460,7 +460,7 @@ export const Navigation = ({ user, onLogout }) => {
                     onClick={handleLinkClick}
                     className="flex items-center gap-3 px-4 py-3 rounded-sm font-montserrat text-sm text-crimson-bright hover:bg-crimson/10 transition-all"
                   >
-                    <BrandIcon name="star" size={20} variant="pink" opacity={0.9} />
+                    <BrandIcon name="star" size={24} variant="pink" opacity={0.95} />
                     <span>Upgrade to Pro</span>
                   </Link>
                   <button
