@@ -31,21 +31,12 @@ export const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           {/* Seal Logo and Description */}
           <div className="flex flex-col items-center md:items-start">
-            <div className="relative mb-6">
-              {/* Subtle glow behind logo */}
-              <div 
-                className="absolute inset-0 rounded-full"
-                style={{ 
-                  background: 'radial-gradient(circle, rgba(185, 78, 106, 0.2) 0%, rgba(14, 42, 47, 0.3) 50%, transparent 70%)',
-                  transform: 'scale(1.5)',
-                  filter: 'blur(18px)',
-                }}
-              />
+            <div className="mb-6">
               <img 
                 src={SEAL_LOGO}
                 alt="Where The Crowlands Seal"
-                className="relative h-32 w-auto object-contain"
-                style={{ filter: 'sepia(0.5) hue-rotate(-30deg) saturate(0.6) brightness(0.8) contrast(1.05)', opacity: 0.85 }}
+                className="h-32 w-auto object-contain"
+                style={{ opacity: 0.85, mixBlendMode: 'soft-light' }}
               />
             </div>
             <p className="font-crimson text-sm text-center md:text-left leading-relaxed" style={{ color: 'rgba(243, 239, 232, 0.7)' }}>
