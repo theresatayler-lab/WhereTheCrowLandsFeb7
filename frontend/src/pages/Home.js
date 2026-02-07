@@ -189,31 +189,22 @@ export const Home = () => {
             <HeroHaloArc width={360} />
           </div>
           
-          {/* LOGO - PRESERVED EXACTLY */}
+          {/* LOGO - blended with background */}
           <motion.div 
             initial={{ opacity: 0, scale: 0.9 }} 
             animate={{ opacity: 1, scale: 1 }} 
             transition={{ duration: 1.2 }} 
             className="relative mb-6 flex justify-center"
           >
-            {/* Logo container with glow */}
-            <div className="relative">
-              {/* Subtle glow behind logo */}
-              <div 
-                className="absolute inset-0 rounded-full"
-                style={{ 
-                  background: 'radial-gradient(circle, rgba(185, 78, 106, 0.2) 0%, rgba(14, 42, 47, 0.35) 45%, transparent 65%)',
-                  transform: 'scale(1.35)',
-                  filter: 'blur(30px)',
-                }}
-              />
-              <img 
-                src="/images/brand/logo-alt.png" 
-                alt="Where The Crowlands"
-                className="relative w-56 h-auto sm:w-72 md:w-80 object-contain"
-                style={{ filter: 'sepia(0.5) hue-rotate(-30deg) saturate(0.6) brightness(0.8) contrast(1.05)', opacity: 0.85 }}
-              />
-            </div>
+            <img 
+              src="/images/brand/logo-alt.png" 
+              alt="Where The Crowlands"
+              className="relative w-56 h-auto sm:w-72 md:w-80 object-contain"
+              style={{ 
+                opacity: 0.7,
+                mixBlendMode: 'screen',
+              }}
+            />
           </motion.div>
 
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.3 }}>
