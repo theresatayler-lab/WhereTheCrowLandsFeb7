@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-// Seal logo URL
-const SEAL_LOGO = "/images/brand/logo.png";
+// Seal logo URL - transparent version
+const SEAL_LOGO = "/images/brand/logo-transparent.png";
 
 export const Footer = () => {
   return (
@@ -37,9 +37,8 @@ export const Footer = () => {
                 alt="Where The Crowlands Seal"
                 className="h-32 w-auto object-contain"
                 style={{ 
-                  filter: 'sepia(0.5) saturate(0.8) hue-rotate(-30deg) brightness(0.85)',
-                  mixBlendMode: 'multiply',
-                  opacity: 0.85,
+                  filter: 'sepia(0.3) saturate(0.9) hue-rotate(-15deg) brightness(1.05)',
+                  opacity: 0.95,
                 }}
               />
             </div>

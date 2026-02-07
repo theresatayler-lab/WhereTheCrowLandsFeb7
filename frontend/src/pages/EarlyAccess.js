@@ -89,16 +89,15 @@ const EarlyAccessPage = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        {/* Logo with rose/pink tint */}
+        {/* Logo with rose tint - transparent */}
         <div className="w-24 sm:w-28 mx-auto mb-3">
           <img 
-            src="/images/brand/logo-alt.png"
+            src="/images/brand/logo-alt-transparent.png"
             alt="Where The Crowlands"
             className="w-full h-auto object-contain"
             style={{ 
-              filter: 'sepia(0.5) saturate(0.8) hue-rotate(-30deg) brightness(0.85)',
-              mixBlendMode: 'multiply',
-              opacity: 0.85,
+              filter: 'sepia(0.3) saturate(0.9) hue-rotate(-15deg) brightness(1.05)',
+              opacity: 0.95,
             }}
           />
         </div>
