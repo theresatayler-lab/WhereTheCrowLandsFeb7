@@ -618,7 +618,7 @@ const WardBlock = ({ content, archetypeStyle }) => (
       </div>
     </div>
     
-    {content.creation_steps && (
+    {content.creation_steps && Array.isArray(content.creation_steps) && content.creation_steps.length > 0 && (
       <ol className="space-y-2 list-decimal list-inside text-stone-700">
         {content.creation_steps.map((step, i) => (
           <li key={i} className="text-sm">{step}</li>
