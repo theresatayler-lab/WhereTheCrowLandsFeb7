@@ -40,7 +40,8 @@ export const BRAND_ASSETS = {
     bird: "/images/brand/bird-gold.png",           // Flight, freedom, messages
     buck: "/images/brand/buck-gold.png",           // Strength, nature, wild magic
     rose: "/images/brand/rose-gold.png",           // Beauty, love spells, botanical
-    threestars: "/images/brand/threestars-gold.png", // Ratings, dividers, horizontal accents
+    threestars: "/images/brand/threestars-gold.png", // Vertical arrangement
+    threestarsHorizontal: "/images/brand/threestars-horizontal-gold.png", // Horizontal dividers
   },
   
   // ==========================================================================

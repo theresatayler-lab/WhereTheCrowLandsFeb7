@@ -33,6 +33,7 @@ const ICON_MAP = {
   buck: BRAND_ASSETS.icons.buck,
   rose: BRAND_ASSETS.icons.rose,
   threestars: BRAND_ASSETS.icons.threestars,
+  threestarsHorizontal: BRAND_ASSETS.icons.threestarsHorizontal,
 };
 
 /**
@@ -94,5 +95,6 @@ export const BirdIcon = (props) => <BrandIcon name="bird" {...props} />;
 export const BuckIcon = (props) => <BrandIcon name="buck" {...props} />;
 export const RoseIcon = (props) => <BrandIcon name="rose" {...props} />;
 export const ThreeStarsIcon = (props) => <BrandIcon name="threestars" {...props} />;
+export const ThreeStarsHorizontalIcon = (props) => <BrandIcon name="threestarsHorizontal" {...props} />;
 
 export default BrandIcon;
