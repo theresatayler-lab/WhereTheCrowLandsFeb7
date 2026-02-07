@@ -439,20 +439,17 @@ export const Navigation = ({ user, onLogout }) => {
               <div className="h-px my-3 mx-4" style={{ background: 'linear-gradient(to right, transparent, rgba(200, 164, 77, 0.4), transparent)' }} />
               
               {/* Secondary Links */}
-              {secondaryLinks.map((link) => {
-                const Icon = link.icon;
-                return (
-                  <Link
-                    key={link.to}
-                    to={link.to}
-                    onClick={handleLinkClick}
-                    className="flex items-center gap-3 px-4 py-2.5 rounded-sm font-montserrat text-xs text-silver-mist/60 hover:bg-gold/5 hover:text-gold transition-all"
-                  >
-                    <Icon className="w-4 h-4" />
-                    <span>{link.label}</span>
-                  </Link>
-                );
-              })}
+              {secondaryLinks.map((link) => (
+                <Link
+                  key={link.to}
+                  to={link.to}
+                  onClick={handleLinkClick}
+                  className="flex items-center gap-3 px-4 py-2.5 rounded-sm font-montserrat text-xs text-silver-mist/60 hover:bg-gold/5 hover:text-gold transition-all"
+                >
+                  <BrandIcon name={link.brandIcon} size={16} variant="gold" opacity={0.7} />
+                  <span>{link.label}</span>
+                </Link>
+              ))}
               
               {/* User Actions */}
               {user ? (
@@ -463,7 +460,7 @@ export const Navigation = ({ user, onLogout }) => {
                     onClick={handleLinkClick}
                     className="flex items-center gap-3 px-4 py-3 rounded-sm font-montserrat text-sm text-crimson-bright hover:bg-crimson/10 transition-all"
                   >
-                    <Crown className="w-5 h-5" />
+                    <BrandIcon name="star" size={20} variant="pink" opacity={0.9} />
                     <span>Upgrade to Pro</span>
                   </Link>
                   <button
