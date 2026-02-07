@@ -1,10 +1,20 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { 
-  Moon, BookOpen, Users, MapPin, Scroll, Clock, Bot, Sparkles, User, LogOut, 
-  Menu, X, HelpCircle, Shield, Feather, ChevronDown, Wand2, Eye, Library,
-  Crown, Image, Compass
+  Menu, X, ChevronDown, LogOut, User
 } from 'lucide-react';
+import { BrandIcon } from './BrandIcon';
+
+// Custom icon wrapper for brand icons in navigation
+const NavBrandIcon = ({ name, className = "w-4 h-4" }) => (
+  <BrandIcon 
+    name={name} 
+    size={16} 
+    variant="gold" 
+    opacity={0.9}
+    className={className}
+  />
+);
 
 // Dropdown component
 const NavDropdown = ({ label, icon: Icon, items, isActive, onItemClick }) => {
