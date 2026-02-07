@@ -208,14 +208,14 @@ export const Navigation = ({ user, onLogout }) => {
               onMouseEnter={(e) => { if (location.pathname !== '/') { e.currentTarget.style.color = '#C8A44D'; e.currentTarget.style.backgroundColor = 'rgba(200, 164, 77, 0.08)'; }}}
               onMouseLeave={(e) => { if (location.pathname !== '/') { e.currentTarget.style.color = 'rgba(243, 239, 232, 0.8)'; e.currentTarget.style.backgroundColor = 'transparent'; }}}
             >
-              <Moon className="w-4 h-4" />
+              <NavBrandIcon name="moon" />
               <span>Home</span>
             </Link>
             
             {/* Dropdown Groups */}
             <NavDropdown 
               label={navGroups.create.label}
-              icon={navGroups.create.icon}
+              brandIcon={navGroups.create.brandIcon}
               items={navGroups.create.items}
               isActive={isGroupActive(navGroups.create.items)}
               onItemClick={handleLinkClick}
@@ -223,7 +223,7 @@ export const Navigation = ({ user, onLogout }) => {
             
             <NavDropdown 
               label={navGroups.explore.label}
-              icon={navGroups.explore.icon}
+              brandIcon={navGroups.explore.brandIcon}
               items={navGroups.explore.items}
               isActive={isGroupActive(navGroups.explore.items)}
               onItemClick={handleLinkClick}
@@ -231,7 +231,7 @@ export const Navigation = ({ user, onLogout }) => {
             
             <NavDropdown 
               label={navGroups.archives.label}
-              icon={navGroups.archives.icon}
+              brandIcon={navGroups.archives.brandIcon}
               items={navGroups.archives.items}
               isActive={isGroupActive(navGroups.archives.items)}
               onItemClick={handleLinkClick}
@@ -240,7 +240,6 @@ export const Navigation = ({ user, onLogout }) => {
             {/* Standalone Links */}
             {standaloneLinks.map((link) => {
               if (link.requiresAuth && !user) return null;
-              const Icon = link.icon;
               const isActive = location.pathname === link.to;
               return (
                 <Link
@@ -256,7 +255,7 @@ export const Navigation = ({ user, onLogout }) => {
                   onMouseEnter={(e) => { if (!isActive) { e.currentTarget.style.color = '#C8A44D'; e.currentTarget.style.backgroundColor = 'rgba(200, 164, 77, 0.08)'; }}}
                   onMouseLeave={(e) => { if (!isActive) { e.currentTarget.style.color = 'rgba(243, 239, 232, 0.8)'; e.currentTarget.style.backgroundColor = 'transparent'; }}}
                 >
-                  <Icon className="w-4 h-4" />
+                  <NavBrandIcon name={link.brandIcon} />
                   <span>{link.label}</span>
                 </Link>
               );
