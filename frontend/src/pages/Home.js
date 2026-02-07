@@ -143,18 +143,18 @@ const FeatureCard = ({ icon: Icon, brandIcon, title, desc, tooltip }) => (
     />
     
     <div className="relative p-6 sm:p-8 text-center">
-      {/* Icon - simplified */}
-      <div className="relative w-14 h-14 mx-auto mb-4 flex items-center justify-center">
+      {/* Icon - larger for visibility */}
+      <div className="relative w-20 h-20 mx-auto mb-5 flex items-center justify-center">
         {brandIcon ? (
           <BrandIcon 
             name={brandIcon} 
-            size={40} 
+            size={64} 
             variant="pink"
-            opacity={0.9}
+            opacity={0.95}
           />
         ) : Icon ? (
           <Icon 
-            className="w-10 h-10" 
+            className="w-14 h-14" 
             style={{ color: NOUVEAU_COLORS.emberPink }} 
           />
         ) : null}
