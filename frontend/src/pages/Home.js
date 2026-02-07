@@ -273,6 +273,9 @@ export const Home = () => {
               </p>
             </div>
             
+            {/* Three stars divider before buttons */}
+            <ThreeStarsDivider size={64} variant="gold" opacity={0.7} />
+            
             {/* CTA Buttons - strong presence */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-5 mt-2">
               <Link 
