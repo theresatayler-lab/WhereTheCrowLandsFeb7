@@ -878,31 +878,12 @@ export const Timeline = () => {
     fetchStats();
   }, [fetchStats]);
 
-  // Filter events by era/decade if active
+  // displayEvents - API handles all filtering now, so just use events directly
+  // Only apply client-side filtering if API call failed and we're using legacy data
   const displayEvents = useMemo(() => {
-    let filtered = events;
-    
-    // Filter by era
-    if (activeEra && ERA_DEFINITIONS[activeEra]) {
-      const era = ERA_DEFINITIONS[activeEra];
-      filtered = filtered.filter(e => e.year >= era.start && e.year < era.end);
-    }
-    
-    // Filter by decade
-    if (activeDecade !== null) {
-      filtered = filtered.filter(e => {
-        let decade;
-        if (e.year < 0) {
-          decade = Math.ceil(e.year / 10) * 10;
-        } else {
-          decade = Math.floor(e.year / 10) * 10;
-        }
-        return decade === activeDecade;
-      });
-    }
-    
-    return filtered;
-  }, [events, activeDecade, activeEra]);
+    // API now handles era/decade filtering, so just return events
+    return events;
+  }, [events]);
 
   // Format year for display (handles BCE)
   const formatYear = (year) => {
