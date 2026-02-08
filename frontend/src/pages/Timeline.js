@@ -596,6 +596,15 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick, allEvents
   const taxonomyData = TAXONOMY_CATEGORIES[primaryTaxonomy] || TAXONOMY_CATEGORIES[6];
   const TaxonomyIcon = taxonomyData.icon;
   
+  // Toggle between factual and narrative descriptions
+  const [showNarrative, setShowNarrative] = useState(true);
+  const hasNarrativeDesc = Boolean(event.description_narrative);
+  
+  // Get the current description based on toggle state
+  const currentDescription = showNarrative && hasNarrativeDesc 
+    ? event.description_narrative 
+    : event.description;
+  
   // Handle clickable filter elements
   const handleFigureClick = (e, figure) => {
     e.stopPropagation();
