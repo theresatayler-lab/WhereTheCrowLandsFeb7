@@ -1,0 +1,17 @@
+Persona ID,Format ID,Description,Section Order,Tone Range,Linked Scenarios
+shigg,kitchen_charm,Simple domestic magic performed in the kitchen,introduction → materials → preparation → the_working → spoken_words → closing_gesture,"gentle, practical","kettle_charm, herb_packet, tea_ring_unknotting"
+shigg,bird_oracle,Divination and guidance through bird signs,introduction → materials → opening_verse → bird_omen → the_working → spoken_words → aftercare,"gentle, practical, intense",bird_omen_reading
+shigg,windowsill_ward,Protective magic using the threshold of the window,introduction → materials → preparation → windowsill_element → the_working → spoken_words → closing_gesture,"gentle, practical",windowsill_ward
+shigg,tea_meditation,Contemplative ritual centered on tea preparation,introduction → materials → tea_ritual → the_working → spoken_words → aftercare,gentle,"kettle_charm, tea_ring_unknotting"
+shigg,verse_working,Poetry-driven spell with Rubáiyát influences,introduction → opening_verse → materials → the_working → spoken_words → closing_gesture → aftercare,"gentle, intense","bird_omen_reading, tea_ring_unknotting"
+cathleen,home_blessing,Protective blessing for household and family,introduction → materials → invocation → the_working → voice_element → closing_seal,"gentle, practical","home_circle_blessing, token_talisman"
+cathleen,voice_ward,Using song or spoken word as primary magical tool,introduction → materials → invocation → voice_element → the_working → closing_seal → aftercare,"gentle, practical, intense","voice_ward, keening_container"
+cathleen,morrigan_working,Calling on the Morrigan for transformation or protection,introduction → materials → invocation → morrigan_call → the_working → voice_element → closing_seal,intense,home_circle_blessing
+cathleen,circle_ritual,Formal circle casting for focused intention,introduction → materials → invocation → circle_casting → the_working → voice_element → closing_seal → aftercare,"practical, intense",home_circle_blessing
+cathleen,talisman_work,Charging and empowering protective objects,introduction → materials → invocation → talisman_charging → the_working → closing_seal,"gentle, practical",token_talisman
+katherine,protection_protocol,Systematic approach to establishing protection,introduction → materials → preparation → the_protocol → the_working → verification → closing,"practical, intense","protection_protocol, threadworking"
+katherine,discernment_protocol,Methods for seeking clarity and truth,introduction → materials → preparation → the_protocol → the_working → verification → closing → aftercare,practical,"discernment_protocol, mirror_inquiry_safe, record_and_repeat"
+katherine,shadow_work,Confronting and integrating shadow aspects,introduction → materials → preparation → shadow_inquiry → the_working → verification → closing → aftercare,intense,unbinding_ritual
+katherine,mirror_inquiry,Using mirrors for reflection and revelation,introduction → materials → preparation → mirror_element → the_working → verification → closing,"practical, intense",mirror_inquiry_safe
+katherine,unbinding_ritual,"Releasing ties, patterns, or attachments",introduction → materials → preparation → the_protocol → the_working → verification → closing → aftercare,"practical, intense",unbinding_ritual
+katherine,record_ritual,Documenting and grounding experiences,introduction → materials → preparation → record_keeping → the_working → verification → closing,"gentle, practical",record_and_repeat
