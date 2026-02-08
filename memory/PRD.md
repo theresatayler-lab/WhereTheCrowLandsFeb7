@@ -20,7 +20,7 @@ Build "Where The Crowlands," a sophisticated full-stack application for creating
 
 ## What's Been Implemented
 
-### Session: February 2025 - Claude Sonnet as Primary Writer ✅
+### Session: February 2025 - Claude Primary + Timeline Cleanup + UI Toggle ✅
 - **Switched spell_writer to Claude Sonnet as primary model**
   - Updated `llm_providers.py`: spell_writer now routes to `anthropic/claude-sonnet-4-20250514`
   - Updated `pipeline_blocks.py`: default writer_model is now Claude Sonnet
@@ -35,6 +35,22 @@ Build "Where The Crowlands," a sophisticated full-stack application for creating
   - Comprehensive guide for AI assistants working on codebase
   - Includes guide personas, design system, directory structure, API reference
   - Located at `/app/CLAUDE.md`
+
+- **Cleaned up broken timeline connections**
+  - Removed 19 broken connection references to non-existent events
+  - Cleaned both `timeline_events_expanded.py` and `political_activism_events.py`
+  - All 94 events now have valid connections only
+  
+- **Added Factual/Narrative description toggle to Timeline**
+  - EventCard component now shows toggle when event has `description_narrative`
+  - 46/94 events currently enhanced with narrative descriptions
+  - Toggle persists per-card with "Factual" (gold) and "Narrative" (violet) buttons
+  - "Enhanced" indicator shows which events have AI-enriched content
+
+- **PDF generation for Invisible Helpers**
+  - Already implemented using jsPDF + html2canvas
+  - Downloads as "magical-battle-cry-intention.pdf"
+  - Available after generating a working
 
 - **Verified Claude is being used**
   - Backend logs show: `[WRITER_BLOCKS] Using Claude model: claude-sonnet-4-20250514`
