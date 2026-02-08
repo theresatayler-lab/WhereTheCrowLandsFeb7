@@ -4641,22 +4641,66 @@ async def generate_spell_v3_endpoint(request: SpellRequestV3, user = Depends(get
         if not guide_config:
             guide_config = get_persona_config('shigg')
         
+        # === TIER SELECTION ===
+        user_subscription_tier = 'free'
+        is_first_spell = False
+        if user:
+            user_data = await db.users.find_one({'id': user['id']}, {'_id': 0})
+            if user_data:
+                user_subscription_tier = user_data.get('subscription_tier', 'free')
+                is_first_spell = user_data.get('spell_generation_count', 0) == 0
+        
+        # Select appropriate tier based on context
+        intention = spell_spec.get('intention', spell_spec.get('user_query', ''))
+        selected_tier, tier_reason = select_spell_tier(
+            persona_id=persona_id,
+            intention=intention,
+            user_tier=user_subscription_tier,
+            is_first_spell=is_first_spell,
+            explicit_choice=request.tier_preference
+        )
+        
+        tier_config = get_tier_config(selected_tier)
+        tier_config['tier_name'] = selected_tier.value
+        logger.info(f"[TIER] Selected {selected_tier.value}: {tier_reason}")
+        
         # Initialize clients
         deepseek_client = get_deepseek_client()
         
-        # Create blocks pipeline
+        # Initialize Claude client if needed for DEEP tier or Claude writer
+        claude_client = None
+        if selected_tier == SpellTier.DEEP or 'claude' in tier_config.get('writer_model', '').lower():
+            try:
+                import anthropic
+                anthropic_key = os.environ.get('ANTHROPIC_API_KEY')
+                if anthropic_key:
+                    claude_client = anthropic.Anthropic(api_key=anthropic_key)
+            except Exception as e:
+                logger.warning(f"[TIER] Claude client init failed, falling back to GPT-4o: {e}")
+        
+        # Create blocks pipeline with tier config
         pipeline = BlocksSpellPipeline(
             deepseek_client=deepseek_client,
             openai_client=openai_client,
-            max_retries=1
+            claude_client=claude_client,
+            max_retries=1,
+            tier_config=tier_config
         )
         
-        # Generate spell
+        # Generate spell with tier configuration
         spell_output, metadata = await pipeline.generate_spell(
             spell_spec=spell_spec,
             guide_config=guide_config,
-            belief_mode=belief_mode
+            belief_mode=belief_mode,
+            tier_config=tier_config
         )
+        
+        # Add tier info to metadata
+        metadata['tier'] = {
+            'selected': selected_tier.value,
+            'reason': tier_reason,
+            'expected_time_seconds': tier_config.get('expected_time_seconds', 40)
+        }
         
         # Add metadata
         spell_output['persona_id'] = persona_id
