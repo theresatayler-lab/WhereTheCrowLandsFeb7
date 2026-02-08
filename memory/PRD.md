@@ -357,8 +357,9 @@ Build "Where The Crowlands," a sophisticated full-stack application for creating
 - [ ] Visual Polish & Custom Ornaments - BLOCKED: awaiting user assets
 
 ### P1 - Medium Priority
+- [x] Network View - Force-directed graph for timeline (react-force-graph-2d) ✅ COMPLETED Feb 2025
+- [x] Tiered AI System - Quick/Standard/Deep modes integrated ✅ COMPLETED Feb 2025
 - [ ] PDF generation for "companion intentions"
-- [ ] Network View - Force-directed graph for timeline (d3.js)
 - [ ] Stripe Paid Flow - BLOCKED: needs valid test key (`sk_test_...`)
 - [ ] Session Persistence Verification - awaiting user testing
 - [ ] Remaining Linting Errors (CorrieTarot.js, etc.)
