@@ -86,17 +86,24 @@ async def get_timeline_events(
         if filters.figures:
             and_conditions.append({"figures_involved": {"$in": filters.figures}})
         
-        # Search filter - searches across multiple fields (OR within search)
+        # Search filter - searches across multiple fields including sources (OR within search)
         if filters.search:
             search_regex = {"$regex": filters.search, "$options": "i"}
             and_conditions.append({
                 "$or": [
                     {"title": search_regex},
                     {"description": search_regex},
+                    {"description_narrative": search_regex},
+                    {"description_factual": search_regex},
                     {"significance": search_regex},
                     {"figures_involved": search_regex},
+                    {"figures_involved.name": search_regex},  # For object format
                     {"traditions": search_regex},
-                    {"glossary_terms": search_regex}
+                    {"glossary_terms": search_regex},
+                    {"sources.author": search_regex},  # Search source authors
+                    {"sources.work": search_regex},    # Search source titles
+                    {"sources.title": search_regex},   # Alternative field name
+                    {"connections.related_figures": search_regex}  # Related figures
                 ]
             })
     
