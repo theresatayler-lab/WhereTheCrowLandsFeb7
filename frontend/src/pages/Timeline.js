@@ -210,23 +210,34 @@ const NetworkGraph = ({ events, onEventClick }) => {
     <div ref={containerRef} className="relative w-full rounded-lg overflow-hidden border border-gold/20 bg-navy-dark/50">
       {/* Legend */}
       <div className="absolute top-4 left-4 z-10 bg-navy-dark/90 p-3 rounded-lg border border-gold/20">
-        <h4 className="font-cinzel text-xs text-gold mb-2">Legend</h4>
+        <h4 className="font-cinzel text-xs text-gold mb-2">Connections</h4>
         <div className="space-y-1 text-[10px] font-montserrat">
           <div className="flex items-center gap-2">
-            <div className="w-3 h-0.5 bg-gold/40"></div>
+            <div className="w-4 h-0.5 bg-teal-500"></div>
+            <span className="text-cream/60">Direct influence</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-0.5 bg-gold/40"></div>
             <span className="text-cream/60">Shared tradition</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-3 h-0.5 bg-crimson/60"></div>
+            <div className="w-4 h-0.5 bg-crimson/60"></div>
             <span className="text-cream/60">Shared figure</span>
           </div>
-          <div className="flex items-center gap-2 mt-2">
+        </div>
+        <h4 className="font-cinzel text-xs text-gold mb-2 mt-3">Event Types</h4>
+        <div className="space-y-1 text-[10px] font-montserrat">
+          <div className="flex items-center gap-2">
             <div className="w-2 h-2 rounded-full bg-gold"></div>
-            <span className="text-cream/60">Occult Revival</span>
+            <span className="text-cream/60">Ceremonial</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 rounded-full bg-[#6b8e23]"></div>
             <span className="text-cream/60">Folk Magic</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 rounded-full bg-violet-500"></div>
+            <span className="text-cream/60">Spirit Work</span>
           </div>
         </div>
       </div>
