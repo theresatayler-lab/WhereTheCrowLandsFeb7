@@ -181,6 +181,7 @@ async def get_connection_graph(
     nodes = []
     edges = []
     figure_nodes = set()
+    tradition_nodes = set()
     
     for event in events:
         # Add event node
@@ -192,24 +193,52 @@ async def get_connection_graph(
             "category": event.get("primary_category", "Unknown"),
             "taxonomy": event.get("taxonomy_categories", []),
             "importance": event.get("importance", 2),
-            "is_pivotal": event.get("is_pivotal_moment", False)
+            "is_pivotal": event.get("is_pivotal_moment", False),
+            "traditions": event.get("traditions", [])
         })
         
-        # Add figure nodes
+        # Add figure nodes - handle both string and dict formats
         for figure in event.get("figures_involved", []):
-            if figure not in figure_nodes:
-                figure_nodes.add(figure)
+            # Extract figure name (handle both string and object format)
+            if isinstance(figure, dict):
+                figure_name = figure.get("name", "Unknown")
+            else:
+                figure_name = str(figure)
+            
+            figure_id = f"figure_{figure_name.lower().replace(' ', '_').replace('.', '')}"
+            
+            if figure_name not in figure_nodes:
+                figure_nodes.add(figure_name)
                 nodes.append({
-                    "id": f"figure_{figure.lower().replace(' ', '_')}",
+                    "id": figure_id,
                     "type": "figure",
-                    "label": figure
+                    "label": figure_name
                 })
             
             # Add edge from figure to event
             edges.append({
-                "source": f"figure_{figure.lower().replace(' ', '_')}",
+                "source": figure_id,
                 "target": event["id"],
                 "type": "involvement"
+            })
+        
+        # Add tradition nodes and edges
+        for tradition in event.get("traditions", []):
+            tradition_id = f"tradition_{tradition.lower().replace(' ', '_')}"
+            
+            if tradition not in tradition_nodes:
+                tradition_nodes.add(tradition)
+                nodes.append({
+                    "id": tradition_id,
+                    "type": "tradition",
+                    "label": tradition.replace("_", " ").title()
+                })
+            
+            # Add edge from tradition to event
+            edges.append({
+                "source": tradition_id,
+                "target": event["id"],
+                "type": "tradition_link"
             })
         
         # Add connection edges
