@@ -46,6 +46,11 @@ const GUIDE_COLORS = {
 const FilterPanel = ({ filters, setFilters, stats, isOpen, setIsOpen }) => {
   const [localSearch, setLocalSearch] = useState(filters.search || '');
 
+  // Sync local search with filters
+  useEffect(() => {
+    setLocalSearch(filters.search || '');
+  }, [filters.search]);
+
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     setFilters(prev => ({ ...prev, search: localSearch }));
@@ -70,16 +75,89 @@ const FilterPanel = ({ filters, setFilters, stats, isOpen, setIsOpen }) => {
       return { ...prev, guides: newGuides.length > 0 ? newGuides : null };
     });
   };
+  
+  const removeTradition = (tradition) => {
+    setFilters(prev => {
+      const current = prev.traditions || [];
+      const newTraditions = current.filter(t => t !== tradition);
+      return { ...prev, traditions: newTraditions.length > 0 ? newTraditions : null };
+    });
+  };
 
   const clearFilters = () => {
     setFilters({});
     setLocalSearch('');
   };
 
-  const hasActiveFilters = filters.categories?.length > 0 || filters.guides?.length > 0 || filters.search;
+  const hasActiveFilters = filters.categories?.length > 0 || filters.guides?.length > 0 || filters.search || filters.traditions?.length > 0;
 
   return (
     <div className="mb-6">
+      {/* Active Filters Display */}
+      {hasActiveFilters && (
+        <div className="flex flex-wrap items-center gap-2 mb-3 p-3 bg-gold/5 border border-gold/20 rounded-lg">
+          <span className="font-montserrat text-xs text-cream/50">Active:</span>
+          
+          {/* Search term */}
+          {filters.search && (
+            <span className="inline-flex items-center gap-1 px-2 py-1 bg-crimson/20 border border-crimson/30 rounded text-xs text-cream">
+              Search: "{filters.search}"
+              <button onClick={() => setFilters(prev => ({ ...prev, search: null }))} className="hover:text-crimson">
+                <X size={12} />
+              </button>
+            </span>
+          )}
+          
+          {/* Categories */}
+          {filters.categories?.map(catId => (
+            <span 
+              key={catId}
+              className="inline-flex items-center gap-1 px-2 py-1 rounded text-xs"
+              style={{ 
+                backgroundColor: `${TAXONOMY_CATEGORIES[catId]?.color}20`,
+                border: `1px solid ${TAXONOMY_CATEGORIES[catId]?.color}40`,
+                color: TAXONOMY_CATEGORIES[catId]?.color
+              }}
+            >
+              {TAXONOMY_CATEGORIES[catId]?.shortName}
+              <button onClick={() => toggleCategory(catId)} className="hover:opacity-60">
+                <X size={12} />
+              </button>
+            </span>
+          ))}
+          
+          {/* Guides */}
+          {filters.guides?.map(guide => (
+            <span 
+              key={guide}
+              className="inline-flex items-center gap-1 px-2 py-1 rounded text-xs text-cream"
+              style={{ 
+                backgroundColor: `${GUIDE_COLORS[guide]?.color}20`,
+                border: `1px solid ${GUIDE_COLORS[guide]?.color}40`
+              }}
+            >
+              {GUIDE_COLORS[guide]?.name}
+              <button onClick={() => toggleGuide(guide)} className="hover:opacity-60">
+                <X size={12} />
+              </button>
+            </span>
+          ))}
+          
+          {/* Traditions */}
+          {filters.traditions?.map(tradition => (
+            <span 
+              key={tradition}
+              className="inline-flex items-center gap-1 px-2 py-1 bg-gold/20 border border-gold/40 rounded text-xs text-gold"
+            >
+              {tradition.replace(/_/g, ' ')}
+              <button onClick={() => removeTradition(tradition)} className="hover:opacity-60">
+                <X size={12} />
+              </button>
+            </span>
+          ))}
+        </div>
+      )}
+      
       {/* Filter Toggle Button */}
       <div className="flex items-center gap-4 mb-4">
         <button
