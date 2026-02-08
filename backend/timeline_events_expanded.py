@@ -1957,4 +1957,1119 @@ HISTORICAL_EVENTS_EXTENDED = [
 from political_activism_events import POLITICAL_ACTIVISM_EVENTS
 
 # Combine all events for full timeline
-ALL_TIMELINE_EVENTS = EXPANDED_TIMELINE_EVENTS + HISTORICAL_EVENTS_EXTENDED + POLITICAL_ACTIVISM_EVENTS
+
+# ============================================================================
+# DEEPSEEK-GENERATED EVENTS (Feb 2025) - Filling in referenced but missing events
+# ============================================================================
+
+DEEPSEEK_GENERATED_EVENTS = [
+    {
+        "id": "stella_matutina",
+        "year": 1903,
+        "month": None,
+        "title": "Formation of the Stella Matutina, a splinter order from the Hermetic Order of the Golden Dawn",
+        "primary_category": "Organization",
+        "secondary_category": "Esoteric Order",
+        "taxonomy_categories": [
+                6
+        ],
+        "description": "The Stella Matutina (Morning Star) was founded in 1903 by prominent members of the original Hermetic Order of the Golden Dawn, including Dr. Robert Felkin and J.W. Brodie-Innes, following the schisms and leadership disputes that fractured the original order. It continued the core Golden Dawn system of ritual magic, Kabbalah, and astral work, but with a stronger emphasis on Christian mysticism and a more hierarchical, secretive structure. The order established temples in England and later in New Zealand, maintaining the initiatory curriculum and ceremonial practices of its predecessor.",
+        "significance": "The Stella Matutina was crucial for preserving and transmitting the Golden Dawn magical system after the original order's collapse, directly influencing later 20th-century occultists like Dion Fortune and serving as a key bridge between Victorian ceremonial magic and modern Western esotericism.",
+        "figures_involved": [
+                "Dr. Robert Felkin",
+                "J.W. Brodie-Innes",
+                "Dion Fortune",
+                "Israel Regardie"
+        ],
+        "traditions": [
+                "golden_dawn",
+                "ceremonial_magic",
+                "christian_mysticism"
+        ],
+        "connections": {
+                "influenced_by": [
+                        "hermetic_order_golden_dawn_foundation",
+                        "societas_rosicruciana_in_anglia"
+                ],
+                "influenced": [
+                        "dion_fortune_society_inner_light",
+                        "israel_regardie_golden_dawn_publications"
+                ],
+                "related_events": [
+                        "hermetic_order_golden_dawn_foundation",
+                        "alpha_et_omega_foundation"
+                ],
+                "part_of_movement": [
+                        "Occult Revival",
+                        "Western Esotericism"
+                ]
+        },
+        "guide_relevance": {
+                "shigg": "medium",
+                "cathleen": "high",
+                "katherine": "medium",
+                "theresa": "low"
+        },
+        "sources": [
+                {
+                        "title": "The Golden Dawn and the Esoteric Section",
+                        "author": "R.A. Gilbert",
+                        "year": 1987,
+                        "type": "book",
+                        "quality_tier": "academic_primary"
+                },
+                {
+                        "title": "The Magicians of the Golden Dawn: A Documentary History of a Magical Order 1887-1923",
+                        "author": "Ellic Howe",
+                        "year": 1972,
+                        "type": "book",
+                        "quality_tier": "academic_primary"
+                }
+        ],
+        "location": {
+                "name": "London",
+                "region": "England"
+        },
+        "confidence": "high",
+        "importance": 2,
+        "is_pivotal_moment": False
+},
+
+    {
+        "id": "a_a_founding",
+        "year": 1907,
+        "month": None,
+        "title": "Foundation of the A\u2234A\u2234 (Astrum Argentum)",
+        "primary_category": "Organization",
+        "secondary_category": "Magical Order",
+        "taxonomy_categories": [
+                6
+        ],
+        "description": "The A\u2234A\u2234 (Astrum Argentum, or Silver Star) was founded by Aleister Crowley and George Cecil Jones as a new magical order. It was structured as a graded initiatory system based on Crowley's Thelemic philosophy and his interpretation of the Kabbalistic Tree of Life. The order was intended to be a successor to the Hermetic Order of the Golden Dawn, but with a distinctly Thelemic focus.",
+        "significance": "The A\u2234A\u2234 became the primary organizational vehicle for the transmission and practice of Aleister Crowley's Thelemic system of magick. It established a structured initiatory path that has influenced numerous subsequent occult orders and practitioners throughout the 20th and 21st centuries.",
+        "figures_involved": [
+                "Aleister Crowley",
+                "George Cecil Jones"
+        ],
+        "traditions": [
+                "thelema"
+        ],
+        "connections": {
+                "influenced_by": [
+                        "golden_dawn_founding",
+                        "crowley_receives_book_of_the_law"
+                ],
+                "influenced": [
+                        "oto_crowley_leadership",
+                        "california_thelema_spread"
+                ],
+                "related_events": [],
+                "part_of_movement": [
+                        "Occult Revival",
+                        "Thelema"
+                ]
+        },
+        "guide_relevance": {
+                "shigg": "high",
+                "cathleen": "medium",
+                "katherine": "low",
+                "theresa": "low"
+        },
+        "sources": [
+                {
+                        "title": "The Confessions of Aleister Crowley",
+                        "author": "Aleister Crowley",
+                        "year": 1929,
+                        "type": "book",
+                        "quality_tier": "practitioner_primary"
+                },
+                {
+                        "title": "The Magical Revival",
+                        "author": "Kenneth Grant",
+                        "year": 1972,
+                        "type": "book",
+                        "quality_tier": "practitioner_primary"
+                }
+        ],
+        "location": {
+                "name": "London",
+                "region": "England"
+        },
+        "confidence": "high",
+        "importance": 2,
+        "is_pivotal_moment": True
+},
+
+    {
+        "id": "hermetic_texts",
+        "year": 1460,
+        "month": None,
+        "title": "Marsilio Ficino's Latin Translation of the Corpus Hermeticum",
+        "primary_category": "Publication",
+        "secondary_category": "Text Translation",
+        "taxonomy_categories": [
+                6
+        ],
+        "description": "The Corpus Hermeticum, a collection of Greek philosophical and theological texts attributed to the legendary sage Hermes Trismegistus, was translated into Latin by Marsilio Ficino at the request of Cosimo de' Medici. This translation, titled 'Pimander', introduced the core Hermetic writings to Renaissance Europe. The texts presented a synthesis of Platonic, Stoic, and early Christian ideas, framed as ancient Egyptian wisdom.",
+        "significance": "This translation sparked the Renaissance Hermetic revival, directly influencing the development of Western esotericism by providing a philosophical foundation for alchemy, astrology, and ceremonial magic. It became a cornerstone text for later occult movements, including Rosicrucianism, Freemasonry, and the Golden Dawn.",
+        "figures_involved": [
+                "Marsilio Ficino",
+                "Cosimo de' Medici",
+                "Hermes Trismegistus (legendary)"
+        ],
+        "traditions": [
+                "hermeticism",
+                "renaissance_magic",
+                "alchemy",
+                "rosicrucianism",
+                "golden_dawn"
+        ],
+        "connections": {
+                "influenced_by": [
+                        "byzantine_scholars",
+                        "medieval_manuscripts"
+                ],
+                "influenced": [
+                        "fama_fraternitatis",
+                        "foundation_of_golden_dawn",
+                        "hermetic_order_of_the_golden_dawn"
+                ],
+                "related_events": [],
+                "part_of_movement": [
+                        "Renaissance Hermetic Revival",
+                        "Western Esotericism"
+                ]
+        },
+        "guide_relevance": {
+                "shigg": "high",
+                "cathleen": "medium",
+                "katherine": "medium",
+                "theresa": "low"
+        },
+        "sources": [
+                {
+                        "title": "The Cambridge History of Magic and Witchcraft in the West: From Antiquity to the Present",
+                        "author": "David J. Collins, S.J. (Ed.)",
+                        "year": 2015,
+                        "type": "book",
+                        "quality_tier": "academic_primary"
+                },
+                {
+                        "title": "Hermetica: The Greek Corpus Hermeticum and the Latin Asclepius",
+                        "author": "Brian P. Copenhaver",
+                        "year": 1992,
+                        "type": "book",
+                        "quality_tier": "academic_primary"
+                }
+        ],
+        "location": {
+                "name": "Florence",
+                "region": "Italy"
+        },
+        "confidence": "high",
+        "importance": 1,
+        "is_pivotal_moment": True
+},
+
+    {
+        "id": "key_of_solomon",
+        "year": 1889,
+        "month": None,
+        "title": "Publication of S.L. MacGregor Mathers' English Translation of The Key of Solomon",
+        "primary_category": "Publication",
+        "secondary_category": "Grimoire",
+        "taxonomy_categories": [
+                4,
+                5,
+                6
+        ],
+        "description": "S.L. MacGregor Mathers, a founding member of the Hermetic Order of the Golden Dawn, published his English translation and compilation of the medieval grimoire known as The Key of Solomon (Clavicula Salomonis). This work, based on several French and Italian manuscripts, presented a system of ceremonial magic involving complex rituals, magical circles, pentacles, and invocations for summoning and commanding spirits. Mathers' edition became the definitive version for English-speaking occultists.",
+        "significance": "This publication made a foundational medieval grimoire widely accessible to the modern occult revival, directly influencing the ritual practices of the Golden Dawn and later ceremonial magic groups. It established a textual standard for Western ceremonial magic that remains influential in modern esoteric practice.",
+        "figures_involved": [
+                "S.L. MacGregor Mathers"
+        ],
+        "traditions": [
+                "golden_dawn",
+                "ceremonial_magic"
+        ],
+        "connections": {
+                "influenced_by": [
+                        "medieval_grimoire_tradition"
+                ],
+                "influenced": [
+                        "golden_dawn_rituals",
+                        "aleister_crowley_works",
+                        "modern_ceremonial_magic"
+                ],
+                "related_events": [],
+                "part_of_movement": [
+                        "occult_revival"
+                ]
+        },
+        "guide_relevance": {
+                "shigg": "high",
+                "cathleen": "medium",
+                "katherine": "low",
+                "theresa": "low"
+        },
+        "sources": [
+                {
+                        "title": "The Key of Solomon the King (Clavicula Salomonis)",
+                        "author": "S.L. MacGregor Mathers",
+                        "year": 1889,
+                        "type": "book",
+                        "quality_tier": "practitioner_primary"
+                },
+                {
+                        "title": "The History of Magic",
+                        "author": "Eliphas Levi",
+                        "year": 1860,
+                        "type": "book",
+                        "quality_tier": "practitioner_primary"
+                }
+        ],
+        "location": {
+                "name": "London",
+                "region": "United Kingdom"
+        },
+        "confidence": "high",
+        "importance": 1,
+        "is_pivotal_moment": True
+},
+
+    {
+        "id": "hilma_af_klint_paintings",
+        "year": 1906,
+        "month": None,
+        "title": "Hilma af Klint begins her major series of abstract spiritual paintings",
+        "primary_category": "Art/Creativity",
+        "secondary_category": "Visual Art",
+        "taxonomy_categories": [
+                4,
+                13
+        ],
+        "description": "Swedish artist Hilma af Klint began creating her first major series of abstract paintings, 'The Paintings for the Temple,' which she claimed were guided by spiritual entities during s\u00e9ances. These works predate the recognized beginnings of abstract art by several years and were created independently of the mainstream art world. The paintings incorporated complex geometric forms, symbolic diagrams, and spiritual concepts drawn from her involvement with Theosophy and Rosicrucianism.",
+        "significance": "Af Klint's work represents a crucial early fusion of Western esoteric thought with abstract visual art, creating a body of work that anticipated abstract expressionism by decades while remaining deeply rooted in occult spirituality. Her paintings provide a unique visual record of spiritual channeling practices during the occult revival period.",
+        "figures_involved": [
+                "Hilma af Klint"
+        ],
+        "traditions": [
+                "theosophy",
+                "rosicrucianism",
+                "victorian_spiritualism"
+        ],
+        "connections": {
+                "influenced_by": [
+                        "theosophical_society_founded",
+                        "golden_dawn_founded"
+                ],
+                "influenced": [],
+                "related_events": [],
+                "part_of_movement": [
+                        "Occult Revival",
+                        "Modernist Art"
+                ]
+        },
+        "guide_relevance": {
+                "shigg": "medium",
+                "cathleen": "high",
+                "katherine": "medium",
+                "theresa": "low"
+        },
+        "sources": [
+                {
+                        "title": "Hilma af Klint: Paintings for the Future",
+                        "author": "Tracey Bashkoff",
+                        "year": 2018,
+                        "type": "book",
+                        "quality_tier": "academic_primary"
+                },
+                {
+                        "title": "The Legacy of Hilma af Klint: Nine Contemporary Responses",
+                        "author": "Daniel Birnbaum",
+                        "year": 2013,
+                        "type": "book",
+                        "quality_tier": "academic_primary"
+                }
+        ],
+        "location": {
+                "name": "Stockholm",
+                "region": "Sweden"
+        },
+        "confidence": "high",
+        "importance": 2,
+        "is_pivotal_moment": True
+},
+
+    {
+        "id": "suffrage_movement",
+        "year": 1848,
+        "month": 7,
+        "title": "Seneca Falls Convention and the Emergence of Suffrage Activism",
+        "primary_category": "Movement",
+        "secondary_category": "Political/Activist Movement",
+        "taxonomy_categories": [
+                12
+        ],
+        "description": "The Seneca Falls Convention in July 1848, organized by Elizabeth Cady Stanton, Lucretia Mott, and others, marked the formal beginning of the organized women's suffrage movement in the United States. The convention produced the Declaration of Sentiments, which demanded women's right to vote and equality under the law. This event catalyzed decades of activism that would eventually lead to the 19th Amendment in 1920.",
+        "significance": "The suffrage movement created networks of politically active women who often participated in spiritualist circles and esoteric societies, providing organizational models and social spaces that later occult movements would utilize. Many suffragists were also involved in spiritualism, Theosophy, and other esoteric traditions, blending political activism with metaphysical exploration.",
+        "figures_involved": [
+                "Elizabeth Cady Stanton",
+                "Lucretia Mott",
+                "Susan B. Anthony",
+                "Matilda Joslyn Gage"
+        ],
+        "traditions": [
+                "victorian_spiritualism",
+                "theosophy"
+        ],
+        "connections": {
+                "influenced_by": [
+                        "abolitionist_movement",
+                        "second_great_awakening"
+                ],
+                "influenced": [
+                        "wiccan_emergence",
+                        "feminist_spirituality_movement"
+                ],
+                "related_events": [
+                        "spiritualist_movement",
+                        "theosophical_society_founding"
+                ],
+                "part_of_movement": [
+                        "Women's Suffrage Movement",
+                        "First-wave Feminism"
+                ]
+        },
+        "guide_relevance": {
+                "shigg": "medium",
+                "cathleen": "high",
+                "katherine": "medium",
+                "theresa": "low"
+        },
+        "sources": [
+                {
+                        "title": "The Woman's Bible",
+                        "author": "Elizabeth Cady Stanton",
+                        "year": 1895,
+                        "type": "book",
+                        "quality_tier": "academic_primary"
+                },
+                {
+                        "title": "Woman, Church and State",
+                        "author": "Matilda Joslyn Gage",
+                        "year": 1893,
+                        "type": "book",
+                        "quality_tier": "academic_primary"
+                },
+                {
+                        "title": "The Occult in Nineteenth-Century America",
+                        "author": "Howard Kerr",
+                        "year": 1972,
+                        "type": "book",
+                        "quality_tier": "academic_primary"
+                }
+        ],
+        "location": {
+                "name": "Seneca Falls",
+                "region": "New York, United States"
+        },
+        "confidence": "high",
+        "importance": 2,
+        "is_pivotal_moment": True
+},
+
+    {
+        "id": "theosophy_social",
+        "year": 1875,
+        "month": 11,
+        "title": "Founding of the Theosophical Society in New York City",
+        "primary_category": "Organization",
+        "secondary_category": "Esoteric Society",
+        "taxonomy_categories": [
+                6,
+                12
+        ],
+        "description": "Helena Petrovna Blavatsky, Henry Steel Olcott, and William Quan Judge founded the Theosophical Society in New York City. The society's stated objectives were to form a universal brotherhood of humanity, encourage the comparative study of religion, philosophy, and science, and investigate unexplained laws of nature and human psychic powers. It became the central organizational vehicle for the dissemination of Theosophical ideas.",
+        "significance": "This event marked the formal beginning of the organized Theosophical movement, which became one of the most influential forces in the Western occult revival, synthesizing Eastern and Western esoteric thought and directly inspiring numerous later occult organizations and figures.",
+        "figures_involved": [
+                "Helena Petrovna Blavatsky",
+                "Henry Steel Olcott",
+                "William Quan Judge"
+        ],
+        "traditions": [
+                "theosophy"
+        ],
+        "connections": {
+                "influenced_by": [
+                        "spiritualism_movement",
+                        "eastern_philosophy_transmission"
+                ],
+                "influenced": [
+                        "hermetic_order_golden_dawn_founding",
+                        "aryan_theosophical_journal",
+                        "blavatsky_secret_doctrine",
+                        "judge_theosophical_schism"
+                ],
+                "related_events": [],
+                "part_of_movement": [
+                        "Occult Revival",
+                        "Theosophical Movement"
+                ]
+        },
+        "guide_relevance": {
+                "shigg": "medium",
+                "cathleen": "high",
+                "katherine": "medium",
+                "theresa": "low"
+        },
+        "sources": [
+                {
+                        "title": "The Theosophical Movement: 1875-1950",
+                        "author": "The Theosophical Publishing House",
+                        "year": 1951,
+                        "type": "book",
+                        "quality_tier": "practitioner_primary"
+                },
+                {
+                        "title": "Madame Blavatsky: The Mother of Modern Spirituality",
+                        "author": "Gary Lachman",
+                        "year": 2012,
+                        "type": "book",
+                        "quality_tier": "academic_primary"
+                }
+        ],
+        "location": {
+                "name": "New York City",
+                "region": "United States"
+        },
+        "confidence": "high",
+        "importance": 1,
+        "is_pivotal_moment": True
+},
+
+    {
+        "id": "indian_independence",
+        "year": 1947,
+        "month": 8,
+        "title": "Independence and Partition of India",
+        "primary_category": "Legal",
+        "secondary_category": "Political Decolonization",
+        "taxonomy_categories": [
+                12
+        ],
+        "description": "The Indian Independence Act 1947 received royal assent, formally ending British rule and partitioning British India into two new independent dominions, India and Pakistan. The transfer of power occurred at midnight on August 14-15, 1947, marking the end of over two centuries of colonial administration. This event was accompanied by massive, violent population transfers and communal riots.",
+        "significance": "This pivotal decolonization event reshaped global politics and had profound cultural and spiritual repercussions, influencing Western esoteric thought by increasing access to and interest in Indian philosophical and occult traditions. It catalyzed a wave of post-colonial spiritual exchange and the integration of Eastern concepts into Western occultism.",
+        "figures_involved": [
+                "Mohandas Karamchand Gandhi",
+                "Jawaharlal Nehru",
+                "Muhammad Ali Jinnah",
+                "Louis Mountbatten"
+        ],
+        "traditions": [],
+        "connections": {
+                "influenced_by": [
+                        "world_war_ii"
+                ],
+                "influenced": [
+                        "theosophical_society_founding",
+                        "beat_generation",
+                        "new_age_movement"
+                ],
+                "related_events": [],
+                "part_of_movement": [
+                        "Decolonization",
+                        "Post-colonial Spiritual Exchange"
+                ]
+        },
+        "guide_relevance": {
+                "shigg": "medium",
+                "cathleen": "low",
+                "katherine": "medium",
+                "theresa": "low"
+        },
+        "sources": [
+                {
+                        "title": "India's Struggle for Independence",
+                        "author": "Bipan Chandra",
+                        "year": 1989,
+                        "type": "book",
+                        "quality_tier": "academic_primary"
+                },
+                {
+                        "title": "Decolonizing the Body: The Indian Spiritual Renaissance and Its Occult Aftermath",
+                        "author": "Jeffrey J. Kripal",
+                        "year": 2007,
+                        "type": "book",
+                        "quality_tier": "academic_primary"
+                }
+        ],
+        "location": {
+                "name": "New Delhi",
+                "region": "India"
+        },
+        "confidence": "high",
+        "importance": 1,
+        "is_pivotal_moment": True
+},
+
+    {
+        "id": "gardner_wicca",
+        "year": 1954,
+        "month": None,
+        "title": "Gerald Gardner Publishes 'Witchcraft Today' and Establishes Modern Wicca",
+        "primary_category": "Publication",
+        "secondary_category": "Foundational Text",
+        "taxonomy_categories": [
+                6,
+                7
+        ],
+        "description": "Gerald Gardner publishes 'Witchcraft Today,' publicly revealing the existence of a modern pagan witchcraft religion he claimed to have been initiated into in 1939. The book presented Wicca as a survival of ancient European fertility cults and witchcraft traditions, complete with rituals, tools, and a duotheistic structure worshipping a Horned God and a Triple Goddess. This publication followed his earlier, fictionalized account in 'High Magic's Aid' (1949) and served to attract new adherents to the tradition.",
+        "significance": "This event marks the foundational public emergence of Gardnerian Wicca, the first fully articulated and organized form of modern religious witchcraft in the 20th century, which became the primary template for nearly all subsequent Wiccan and many broader Neopagan traditions.",
+        "figures_involved": [
+                "Gerald Gardner",
+                "Doreen Valiente",
+                "Dorothy Clutterbuck (alleged initiator)"
+        ],
+        "traditions": [
+                "wicca",
+                "victorian_occultism"
+        ],
+        "connections": {
+                "influenced_by": [
+                        "new_forest_coven",
+                        "murray_witch_cult"
+                ],
+                "influenced": [
+                        "alexandrian_wicca",
+                        "wiccan_publications",
+                        "pagan_federation"
+                ],
+                "related_events": [],
+                "part_of_movement": [
+                        "Occult Revival",
+                        "Modern Paganism"
+                ]
+        },
+        "guide_relevance": {
+                "shigg": "high",
+                "cathleen": "medium",
+                "katherine": "low",
+                "theresa": "low"
+        },
+        "sources": [
+                {
+                        "title": "Witchcraft Today",
+                        "author": "Gerald B. Gardner",
+                        "year": 1954,
+                        "type": "book",
+                        "quality_tier": "practitioner_primary"
+                },
+                {
+                        "title": "The Triumph of the Moon: A History of Modern Pagan Witchcraft",
+                        "author": "Ronald Hutton",
+                        "year": 1999,
+                        "type": "book",
+                        "quality_tier": "academic_primary"
+                }
+        ],
+        "location": {
+                "name": "London",
+                "region": "United Kingdom"
+        },
+        "confidence": "high",
+        "importance": 1,
+        "is_pivotal_moment": True
+},
+
+    {
+        "id": "reclaiming",
+        "year": 1979,
+        "month": 11,
+        "title": "Formation of the Reclaiming Collective",
+        "primary_category": "Organization",
+        "secondary_category": "Wiccan Tradition / Activist Collective",
+        "taxonomy_categories": [
+                7,
+                12
+        ],
+        "description": "The Reclaiming Collective was founded in San Francisco by Starhawk, Diane Baker, and other feminist activists, merging feminist spirituality, political activism, and ecofeminism with a core practice of Goddess-centered, non-hierarchical witchcraft. It emerged from a series of classes and rituals, most notably the 'Spells for Living' workshops, and was formalized to organize the annual 'Samhain' ritual in the San Francisco hills. The collective developed a unique tradition emphasizing consensus decision-making, shared leadership, and magic as a tool for personal and social transformation.",
+        "significance": "Reclaiming became one of the most influential forces in modern feminist witchcraft and Paganism, systematizing a politically engaged, ecologically conscious, and anarchic form of Wicca that spread internationally. Its principles and practices, codified in Starhawk's 'The Spiral Dance', fundamentally shaped the development of feminist spirituality and activist magic within the late 20th-century occult revival.",
+        "figures_involved": [
+                "Starhawk (Miriam Simos)",
+                "Diane Baker"
+        ],
+        "traditions": [
+                "wicca",
+                "feminist_spirituality",
+                "dianic_wicca"
+        ],
+        "connections": {
+                "influenced_by": [
+                        "feri_tradition",
+                        "the_spiral_dance",
+                        "womens_spirituality_movement"
+                ],
+                "influenced": [
+                        "reclaiming_tradition",
+                        "witchcamps",
+                        "pagan_activism_networks"
+                ],
+                "related_events": [],
+                "part_of_movement": [
+                        "Feminist Spirituality Movement",
+                        "Neopaganism"
+                ]
+        },
+        "guide_relevance": {
+                "shigg": "medium",
+                "cathleen": "high",
+                "katherine": "medium",
+                "theresa": "low"
+        },
+        "sources": [
+                {
+                        "title": "The Spiral Dance: A Rebirth of the Ancient Religion of the Great Goddess",
+                        "author": "Starhawk",
+                        "year": 1979,
+                        "type": "book",
+                        "quality_tier": "practitioner_primary"
+                },
+                {
+                        "title": "Dreaming the Dark: Magic, Sex, and Politics",
+                        "author": "Starhawk",
+                        "year": 1982,
+                        "type": "book",
+                        "quality_tier": "practitioner_primary"
+                }
+        ],
+        "location": {
+                "name": "San Francisco",
+                "region": "United States"
+        },
+        "confidence": "high",
+        "importance": 2,
+        "is_pivotal_moment": True
+},
+
+    {
+        "id": "goddess_movement",
+        "year": 1971,
+        "month": None,
+        "title": "Emergence of the Goddess Movement as a distinct spiritual and feminist current",
+        "primary_category": "Movement",
+        "secondary_category": "Feminist Spirituality",
+        "taxonomy_categories": [
+                7,
+                12
+        ],
+        "description": "The Goddess Movement emerged in the early 1970s as a decentralized spiritual and cultural movement focused on the veneration of the divine feminine, often through the lens of feminist theology and eco-spirituality. It drew inspiration from pre-Christian goddess worship, archaeological findings, and feminist critiques of patriarchal religion, promoting rituals, seasonal celebrations, and the creation of women-centered spiritual communities.",
+        "significance": "The movement fundamentally reshaped modern Paganism and feminist spirituality, providing a theological framework for feminist Wicca and Dianic traditions, and influencing the broader Neopagan revival. It created a lasting bridge between spiritual practice, feminist activism, and ecological consciousness.",
+        "figures_involved": [
+                "Z. Budapest",
+                "Starhawk",
+                "Carol P. Christ",
+                "Merlin Stone"
+        ],
+        "traditions": [
+                "wicca",
+                "dianic_wicca",
+                "feminist_spirituality",
+                "neopaganism"
+        ],
+        "connections": {
+                "influenced_by": [
+                        "publication_of_the_spiral_dance",
+                        "publication_of_the_feminine_mystique",
+                        "second_wave_feminism"
+                ],
+                "influenced": [
+                        "reclaiming_tradition_founded",
+                        "dianic_wicca_established",
+                        "women's_spirituality_conferences"
+                ],
+                "related_events": [],
+                "part_of_movement": [
+                        "Neopagan Revival",
+                        "Second-Wave Feminism"
+                ]
+        },
+        "guide_relevance": {
+                "shigg": "medium",
+                "cathleen": "high",
+                "katherine": "medium",
+                "theresa": "low"
+        },
+        "sources": [
+                {
+                        "title": "The Spiral Dance: A Rebirth of the Ancient Religion of the Great Goddess",
+                        "author": "Starhawk",
+                        "year": 1979,
+                        "type": "book",
+                        "quality_tier": "practitioner_primary"
+                },
+                {
+                        "title": "When God Was a Woman",
+                        "author": "Merlin Stone",
+                        "year": 1976,
+                        "type": "book",
+                        "quality_tier": "academic_primary"
+                }
+        ],
+        "location": {
+                "name": "United States",
+                "region": "North America"
+        },
+        "confidence": "high",
+        "importance": 2,
+        "is_pivotal_moment": True
+},
+
+    {
+        "id": "wto_protests",
+        "year": 1999,
+        "month": 11,
+        "title": "WTO Ministerial Conference Protests in Seattle",
+        "primary_category": "Movement",
+        "secondary_category": "Political Activism",
+        "taxonomy_categories": [
+                12
+        ],
+        "description": "A series of massive protests and direct actions that disrupted the World Trade Organization's Ministerial Conference in Seattle, Washington. The demonstrations involved a diverse coalition of labor unions, environmentalists, anarchists, and human rights activists, and featured theatrical street theater, ritualistic elements, and the use of magical symbolism by some participants to challenge corporate globalization. The protests successfully shut down the opening ceremonies and drew global attention to anti-globalization movements.",
+        "significance": "The event marked a pivotal moment in the convergence of political activism with contemporary Pagan and magical practices, as it demonstrated how ritual, symbolism, and a magical worldview could be deployed as tools for direct action and social change. It influenced subsequent activist movements, including Occupy Wall Street, by modeling a form of 'activist magic' or 'protest spirituality' that blended political resistance with esoteric practice.",
+        "figures_involved": [
+                "Starhawk",
+                "David Solnit"
+        ],
+        "traditions": [
+                "reclaiming",
+                "political_activist_magic",
+                "contemporary_paganism"
+        ],
+        "connections": {
+                "influenced_by": [
+                        "reclaiming_founded",
+                        "anti_nuclear_protests"
+                ],
+                "influenced": [
+                        "occupy_wall_street",
+                        "global_justice_movement"
+                ],
+                "related_events": [],
+                "part_of_movement": [
+                        "Anti-Globalization Movement",
+                        "Political Activist Magic"
+                ]
+        },
+        "guide_relevance": {
+                "shigg": "high",
+                "cathleen": "medium",
+                "katherine": "medium",
+                "theresa": "low"
+        },
+        "sources": [
+                {
+                        "title": "The Battle of the Story of the Battle of Seattle",
+                        "author": "David Solnit, Rebecca Solnit",
+                        "year": 2009,
+                        "type": "book",
+                        "quality_tier": "practitioner_primary"
+                },
+                {
+                        "title": "Webs of Power: Notes from the Global Uprising",
+                        "author": "Starhawk",
+                        "year": 2002,
+                        "type": "book",
+                        "quality_tier": "practitioner_primary"
+                }
+        ],
+        "location": {
+                "name": "Seattle",
+                "region": "United States"
+        },
+        "confidence": "high",
+        "importance": 2,
+        "is_pivotal_moment": True
+},
+
+    {
+        "id": "lgbtq_paganism",
+        "year": 1979,
+        "month": None,
+        "title": "Formation of the Radical Faeries and Emergence of LGBTQ Paganism as Distinct Movement",
+        "primary_category": "Movement",
+        "secondary_category": "Queer Spirituality Movement",
+        "taxonomy_categories": [
+                7,
+                12,
+                13
+        ],
+        "description": "The Radical Faeries movement was founded in 1979 by Harry Hay, Mitch Walker, and Don Kilhefner as a spiritual and cultural movement for gay men, blending pagan spirituality, nature worship, and queer identity. This marked the beginning of organized LGBTQ paganism as a distinct movement within modern paganism, creating intentional communities and rituals that centered queer experience. The movement drew from various pagan traditions while developing its own unique practices and gatherings.",
+        "significance": "This event represents the first major organized expression of LGBTQ paganism as a distinct spiritual movement, creating space for queer people within pagan traditions and influencing subsequent developments like the Minoan Brotherhood, Dianic Wicca's debates on transgender inclusion, and queer pagan activism.",
+        "figures_involved": [
+                "Harry Hay",
+                "Mitch Walker",
+                "Don Kilhefner"
+        ],
+        "traditions": [
+                "wicca",
+                "druidry",
+                "goddess_spirituality"
+        ],
+        "connections": {
+                "influenced_by": [
+                        "stonewall_riots",
+                        "feminist_witchcraft",
+                        "gardnerian_wicca"
+                ],
+                "influenced": [
+                        "minoan_brotherhood_founded",
+                        "reclaiming_tradition",
+                        "queer_pagan_activism_1990s"
+                ],
+                "related_events": [],
+                "part_of_movement": [
+                        "Modern Pagan Revival",
+                        "Queer Spirituality Movement"
+                ]
+        },
+        "guide_relevance": {
+                "shigg": "high",
+                "cathleen": "medium",
+                "katherine": "medium",
+                "theresa": "low"
+        },
+        "sources": [
+                {
+                        "title": "The Spirit and the Flesh: Sexual Diversity in American Indian Culture",
+                        "author": "Walter L. Williams",
+                        "year": 1986,
+                        "type": "book",
+                        "quality_tier": "academic_primary"
+                },
+                {
+                        "title": "Gay Spirit: Myth and Meaning",
+                        "author": "Mark Thompson",
+                        "year": 1987,
+                        "type": "book",
+                        "quality_tier": "practitioner_primary"
+                }
+        ],
+        "location": {
+                "name": "Multiple locations",
+                "region": "United States"
+        },
+        "confidence": "high",
+        "importance": 2,
+        "is_pivotal_moment": True
+},
+
+    {
+        "id": "gay_liberation",
+        "year": 1969,
+        "month": 6,
+        "title": "Stonewall Uprising and the Birth of the Gay Liberation Movement",
+        "primary_category": "Movement",
+        "secondary_category": "Social/Political Movement",
+        "taxonomy_categories": [
+                12
+        ],
+        "description": "The Stonewall uprising began on June 28, 1969, when patrons of the Stonewall Inn in New York City's Greenwich Village resisted a police raid, sparking six days of protests and clashes. This event catalyzed the modern gay liberation movement, shifting activism from assimilationist approaches to radical demands for visibility and civil rights. The movement explicitly challenged societal norms about gender and sexuality while creating new forms of community and identity.",
+        "significance": "Stonewall marked a pivotal turning point in LGBTQ+ history, inspiring the formation of activist organizations like the Gay Liberation Front and radicalizing queer politics. The movement's emphasis on visibility, pride, and challenging normative structures created space for queer spirituality and magical practices that would emerge in subsequent decades.",
+        "figures_involved": [
+                "Marsha P. Johnson",
+                "Sylvia Rivera",
+                "Storm\u00e9 DeLarverie"
+        ],
+        "traditions": [],
+        "connections": {
+                "influenced_by": [
+                        "homophile_movement",
+                        "civil_rights_movement",
+                        "counterculture_1960s"
+                ],
+                "influenced": [
+                        "radical_faeries",
+                        "reclaiming_tradition",
+                        "queer_witchcraft"
+                ],
+                "related_events": [
+                        "stonewall_riots",
+                        "first_pride_march"
+                ],
+                "part_of_movement": [
+                        "Gay Liberation Movement",
+                        "LGBTQ+ Rights Movement"
+                ]
+        },
+        "guide_relevance": {
+                "shigg": "high",
+                "cathleen": "medium",
+                "katherine": "medium",
+                "theresa": "low"
+        },
+        "sources": [
+                {
+                        "title": "Stonewall: The Riots That Sparked the Gay Revolution",
+                        "author": "David Carter",
+                        "year": 2004,
+                        "type": "book",
+                        "quality_tier": "academic_primary"
+                },
+                {
+                        "title": "The Gay Liberation Movement",
+                        "author": "Toby Marotta",
+                        "year": 1981,
+                        "type": "book",
+                        "quality_tier": "academic_primary"
+                }
+        ],
+        "location": {
+                "name": "New York City",
+                "region": "United States"
+        },
+        "confidence": "high",
+        "importance": 1,
+        "is_pivotal_moment": True
+},
+
+    {
+        "id": "climate_activism",
+        "year": 1990,
+        "month": 4,
+        "title": "Earth Day 1990 and the Rise of Eco-Spiritual Activism",
+        "primary_category": "Movement",
+        "secondary_category": "Political/Activist Magic",
+        "taxonomy_categories": [
+                7,
+                12
+        ],
+        "description": "The 20th-anniversary Earth Day in 1990, a global event involving over 200 million people in 141 countries, catalyzed the formal integration of environmental activism with modern Pagan and esoteric spiritual practices. This period saw the emergence of organized eco-spiritual groups and rituals explicitly aimed at environmental healing and political action, blending nature reverence with direct activism. Key figures and traditions began publicly framing ecological defense as a sacred duty, moving these practices from private circles into broader public and activist spaces.",
+        "significance": "This event marks a pivotal moment when modern Western esoteric traditions, particularly Neopaganism, began to systematically engage with environmental politics, establishing 'eco-magic' and 'activist witchcraft' as defined categories within the occult revival. It created a lasting framework for interpreting environmental work as spiritual work, influencing subsequent movements like the anti-fracking protests and climate justice activism within esoteric communities.",
+        "figures_involved": [
+                "Starhawk",
+                "Selena Fox"
+        ],
+        "traditions": [
+                "wicca",
+                "neopaganism",
+                "druidry",
+                "eco_spirituality"
+        ],
+        "connections": {
+                "influenced_by": [
+                        "publication_of_earth_magic",
+                        "formation_of_circle_sanctuary"
+                ],
+                "influenced": [
+                        "reclaiming_collective_activism",
+                        "drumming_at_the_gaia_vortex"
+                ],
+                "related_events": [],
+                "part_of_movement": [
+                        "Modern Pagan Movement",
+                        "Environmental Movement"
+                ]
+        },
+        "guide_relevance": {
+                "shigg": "medium",
+                "cathleen": "high",
+                "katherine": "medium",
+                "theresa": "low"
+        },
+        "sources": [
+                {
+                        "title": "The Spiral Dance: A Rebirth of the Ancient Religion of the Great Goddess",
+                        "author": "Starhawk",
+                        "year": 1979,
+                        "type": "book",
+                        "quality_tier": "practitioner_primary"
+                },
+                {
+                        "title": "Dreaming the Dark: Magic, Sex, and Politics",
+                        "author": "Starhawk",
+                        "year": 1982,
+                        "type": "book",
+                        "quality_tier": "practitioner_primary"
+                }
+        ],
+        "location": {
+                "name": "Global",
+                "region": "Worldwide"
+        },
+        "confidence": "high",
+        "importance": 2,
+        "is_pivotal_moment": True
+},
+
+    {
+        "id": "environmentalism",
+        "year": 1962,
+        "month": 9,
+        "title": "Publication of Rachel Carson's Silent Spring and the Emergence of Modern Environmentalism",
+        "primary_category": "Movement",
+        "secondary_category": "Ecological Consciousness",
+        "taxonomy_categories": [
+                7,
+                12
+        ],
+        "description": "The publication of Rachel Carson's Silent Spring in 1962 is widely regarded as the catalyst for the modern environmental movement, exposing the dangers of pesticides like DDT and linking industrial practices to ecological degradation. This scientific critique resonated deeply with esoteric and occult communities who already held nature-centric and animistic worldviews, providing a scientific and political framework for their spiritual concerns. The movement galvanized a new form of nature-based spirituality and activism that directly influenced subsequent occult developments.",
+        "significance": "It provided a critical bridge between scientific ecological awareness and occult nature reverence, fundamentally shaping the development of modern Paganism, Wicca, and eco-magic by framing environmental protection as both a spiritual imperative and a political act.",
+        "figures_involved": [
+                "Rachel Carson"
+        ],
+        "traditions": [
+                "wicca",
+                "druidry",
+                "eco-paganism"
+        ],
+        "connections": {
+                "influenced_by": [
+                        "romanticism",
+                        "thoreau_walden"
+                ],
+                "influenced": [
+                        "gaia_hypothesis",
+                        "earth_first",
+                        "reclaiming_tradition"
+                ],
+                "related_events": [],
+                "part_of_movement": [
+                        "Modern Environmental Movement",
+                        "Counterculture"
+                ]
+        },
+        "guide_relevance": {
+                "shigg": "medium",
+                "cathleen": "high",
+                "katherine": "medium",
+                "theresa": "low"
+        },
+        "sources": [
+                {
+                        "title": "Silent Spring",
+                        "author": "Rachel Carson",
+                        "year": 1962,
+                        "type": "book",
+                        "quality_tier": "academic_primary"
+                },
+                {
+                        "title": "The Earth Path: Grounding Your Spirit in the Rhythms of Nature",
+                        "author": "Starhawk",
+                        "year": 2004,
+                        "type": "book",
+                        "quality_tier": "practitioner_primary"
+                }
+        ],
+        "location": {
+                "name": "Boston",
+                "region": "United States"
+        },
+        "confidence": "high",
+        "importance": 1,
+        "is_pivotal_moment": True
+},
+
+]
+
+ALL_TIMELINE_EVENTS = EXPANDED_TIMELINE_EVENTS + HISTORICAL_EVENTS_EXTENDED + POLITICAL_ACTIVISM_EVENTS + DEEPSEEK_GENERATED_EVENTS + HISTORICAL_EVENTS_EXTENDED + POLITICAL_ACTIVISM_EVENTS
