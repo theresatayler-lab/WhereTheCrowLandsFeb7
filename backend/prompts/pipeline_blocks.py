@@ -261,19 +261,37 @@ class BlocksSpellPipeline:
             is_claude_model = "claude" in writer_model.lower()
             
             if is_claude_model and self.claude_client:
-                # Use Claude for writing
-                response = self.claude_client.messages.create(
-                    model=writer_model,
-                    messages=[{"role": "user", "content": prompt}],
-                    system=f"You are {contract['name']}, {contract['title']}. Write blocks-based spells in your unique voice. Return ONLY valid JSON.",
-                    max_tokens=writer_tokens
-                )
-                result_text = response.content[0].text
-                logger.info(f"[WRITER_BLOCKS] Using Claude model: {writer_model}")
+                # Use Claude for writing (async)
+                try:
+                    response = await self.claude_client.messages.create(
+                        model=writer_model,
+                        messages=[{"role": "user", "content": prompt}],
+                        system=f"You are {contract['name']}, {contract['title']}. Write blocks-based spells in your unique voice. Return ONLY valid JSON.",
+                        max_tokens=writer_tokens
+                    )
+                    result_text = response.content[0].text
+                    logger.info(f"[WRITER_BLOCKS] Using Claude model: {writer_model}")
+                except Exception as claude_error:
+                    # Fall back to OpenAI if Claude fails
+                    logger.warning(f"[WRITER_BLOCKS] Claude failed ({str(claude_error)[:100]}), falling back to GPT-4o")
+                    response = await self.openai_client.chat.completions.create(
+                        model="gpt-4o",
+                        messages=[
+                            {"role": "system", "content": f"You are {contract['name']}, {contract['title']}. Write blocks-based spells in your unique voice. Return ONLY valid JSON."},
+                            {"role": "user", "content": prompt}
+                        ],
+                        temperature=writer_temp,
+                        max_tokens=writer_tokens
+                    )
+                    result_text = response.choices[0].message.content
+                    logger.info("[WRITER_BLOCKS] Using OpenAI fallback: gpt-4o")
             else:
-                # Use OpenAI (default)
+                # Use OpenAI (fallback when Claude not available)
+                fallback_model = "gpt-4o"
+                if not is_claude_model:
+                    fallback_model = writer_model
                 response = await self.openai_client.chat.completions.create(
-                    model=writer_model if not is_claude_model else "gpt-4o",
+                    model=fallback_model,
                     messages=[
                         {"role": "system", "content": f"You are {contract['name']}, {contract['title']}. Write blocks-based spells in your unique voice. Return ONLY valid JSON."},
                         {"role": "user", "content": prompt}
@@ -282,7 +300,10 @@ class BlocksSpellPipeline:
                     max_tokens=writer_tokens
                 )
                 result_text = response.choices[0].message.content
-                logger.info(f"[WRITER_BLOCKS] Using OpenAI model: {writer_model if not is_claude_model else 'gpt-4o'}")
+                if is_claude_model:
+                    logger.info(f"[WRITER_BLOCKS] Claude unavailable, using OpenAI fallback: {fallback_model}")
+                else:
+                    logger.info(f"[WRITER_BLOCKS] Using OpenAI model: {fallback_model}")
             
             # Use repair-capable JSON parser
             try:
