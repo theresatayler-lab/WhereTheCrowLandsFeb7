@@ -24,21 +24,46 @@ class BlocksSpellPipeline:
     Stages:
     1. ARCHIVIST (DeepSeek) - Research facts, sources, tradition context
     2. PLANNER (GPT-4o) - Block template, canon anchor, block sequence
-    3. WRITER (GPT-4o) - Full blocks[] content in guide's voice
+    3. WRITER (GPT-4o or Claude) - Full blocks[] content in guide's voice
     4. QA (Programmatic) - Validate required blocks, choice, lore_vignette, persona_lock
+    
+    Supports tiered operation:
+    - QUICK: DeepSeek research only, GPT-4o writer
+    - STANDARD: DeepSeek research, GPT-4o planner, Claude writer
+    - DEEP: DeepSeek research, Claude reasoning, Claude writer (higher tokens)
     """
     
-    def __init__(self, deepseek_client, openai_client, max_retries: int = 1):
+    def __init__(
+        self, 
+        deepseek_client, 
+        openai_client, 
+        claude_client=None,
+        max_retries: int = 1,
+        tier_config: dict = None
+    ):
         self.deepseek_client = deepseek_client
         self.openai_client = openai_client
+        self.claude_client = claude_client
         self.max_retries = max_retries
         self.timing_log = {}
+        
+        # Default tier config (STANDARD)
+        self.tier_config = tier_config or {
+            "research_model": "deepseek-chat",
+            "research_tokens": 1200,
+            "research_temperature": 0.6,
+            "writer_model": "gpt-4o",
+            "writer_tokens": 2500,
+            "writer_temperature": 0.8,
+            "tier_name": "standard"
+        }
     
     async def generate_spell(
         self,
         spell_spec: dict,
         guide_config: dict,
-        belief_mode: str = "SPIRITUAL"
+        belief_mode: str = "SPIRITUAL",
+        tier_config: dict = None
     ) -> Tuple[dict, dict]:
         """
         Generate a blocks-based spell through the 4-stage pipeline.
