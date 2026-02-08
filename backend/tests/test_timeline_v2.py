@@ -86,9 +86,16 @@ class TestTimelineV2Events:
             shigg_level = guide_relevance.get("shigg", "low")
             assert shigg_level in ["high", "medium"], f"Event {event['id']} has shigg={shigg_level}"
             
-            # Check search term
-            event_text = f"{event.get('title', '')} {event.get('description', '')}".lower()
-            assert "golden" in event_text, f"Event {event['id']} doesn't contain 'golden'"
+            # Check search term - search covers title, description, significance, figures, traditions, glossary
+            searchable_text = " ".join([
+                event.get('title', ''),
+                event.get('description', ''),
+                event.get('significance', ''),
+                " ".join(event.get('figures_involved', [])),
+                " ".join(event.get('traditions', [])),
+                " ".join(event.get('glossary_terms', []))
+            ]).lower()
+            assert "golden" in searchable_text, f"Event {event['id']} doesn't contain 'golden' in searchable fields"
     
     def test_combined_filters_category_and_guide(self):
         """Test combining category and guide filters"""
