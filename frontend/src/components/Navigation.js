@@ -283,7 +283,7 @@ export const Navigation = ({ user, onLogout }) => {
                   onMouseEnter={(e) => { e.currentTarget.style.color = '#C8A44D'; e.currentTarget.style.backgroundColor = 'rgba(200, 164, 77, 0.1)'; }}
                   onMouseLeave={(e) => { e.currentTarget.style.color = '#B94E6A'; e.currentTarget.style.backgroundColor = 'transparent'; }}
                 >
-                  <Crown className="w-4 h-4" />
+                  <NavBrandIcon name="star" className="w-4 h-4" />
                   <span>Upgrade</span>
                 </Link>
                 <button
