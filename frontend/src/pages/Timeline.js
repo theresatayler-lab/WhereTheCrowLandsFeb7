@@ -393,6 +393,7 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick, allEvents
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       className={`relative ${view === 'grid' ? '' : 'pl-16 sm:pl-20'}`}
+      data-event-id={event.id}
     >
       {/* Year Marker (Timeline view only) - Shows date, NOT image */}
       {view === 'timeline' && (
