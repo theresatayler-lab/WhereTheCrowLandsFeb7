@@ -974,66 +974,113 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick, allEvents
                       </div>
                     )}
 
-                    {/* Connections - Influenced By & Influenced (only show if valid connections exist) */}
+                    {/* Connections - Influenced By & Influenced (show all, color-coded by existence) */}
                     {(() => {
-                      const influencedBy = (event.connections?.influenced_by || [])
-                        .filter(connId => allEvents?.some(e => e.id === connId));
-                      const influenced = (event.connections?.influenced || [])
-                        .filter(connId => allEvents?.some(e => e.id === connId));
+                      const rawInfluencedBy = event.connections?.influenced_by || [];
+                      const rawInfluenced = event.connections?.influenced || [];
                       
-                      if (influencedBy.length === 0 && influenced.length === 0) {
+                      // Separate into existing (clickable) and referenced (info only)
+                      const influencedByExisting = rawInfluencedBy.filter(connId => allEvents?.some(e => e.id === connId));
+                      const influencedByReferenced = rawInfluencedBy.filter(connId => !allEvents?.some(e => e.id === connId));
+                      const influencedExisting = rawInfluenced.filter(connId => allEvents?.some(e => e.id === connId));
+                      const influencedReferenced = rawInfluenced.filter(connId => !allEvents?.some(e => e.id === connId));
+                      
+                      if (rawInfluencedBy.length === 0 && rawInfluenced.length === 0) {
                         return null;
                       }
                       
+                      // Helper to format ID into readable title
+                      const formatId = (id) => id.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                      
                       return (
                         <div className="mt-4 pt-3 border-t border-gold/10">
-                          <h4 className="font-cinzel text-xs text-gold/70 uppercase mb-2">Connections</h4>
+                          <div className="flex items-center gap-3 mb-2">
+                            <h4 className="font-cinzel text-xs text-gold/70 uppercase">Connections</h4>
+                            <div className="flex items-center gap-2 text-[9px] font-montserrat">
+                              <span className="flex items-center gap-1">
+                                <span className="w-2 h-2 rounded-full bg-teal-500"></span>
+                                <span className="text-cream/40">Linked</span>
+                              </span>
+                              <span className="flex items-center gap-1">
+                                <span className="w-2 h-2 rounded-full bg-amber-600/50 border border-dashed border-amber-500"></span>
+                                <span className="text-cream/40">Referenced</span>
+                              </span>
+                            </div>
+                          </div>
                           <div className="space-y-2">
                             {/* Influenced By */}
-                            {influencedBy.length > 0 && (
+                            {rawInfluencedBy.length > 0 && (
                               <div className="flex flex-wrap items-center gap-2">
                                 <span className="text-[10px] text-cream/40 font-montserrat uppercase">Influenced by:</span>
-                                {influencedBy.slice(0, 4).map((connId, i) => {
+                                {/* Existing events - clickable, teal */}
+                                {influencedByExisting.slice(0, 4).map((connId, i) => {
                                   const connectedEvent = allEvents?.find(e => e.id === connId);
                                   return (
                                     <button
-                                      key={i}
-                                      className="px-2 py-0.5 bg-crimson/10 hover:bg-crimson/25 border border-crimson/30 hover:border-crimson/50 rounded text-[11px] text-cream/70 hover:text-cream font-montserrat transition-all"
+                                      key={`exist-${i}`}
+                                      className="px-2 py-0.5 bg-teal-600/20 hover:bg-teal-600/30 border border-teal-500/40 hover:border-teal-500/60 rounded text-[11px] text-teal-300 hover:text-teal-200 font-montserrat transition-all cursor-pointer"
                                       onClick={(e) => {
                                         e.stopPropagation();
                                         onNavigateToEvent?.(connectedEvent.id);
                                       }}
-                                      title={`${connectedEvent.title} (${connectedEvent.year})`}
+                                      title={`Click to view: ${connectedEvent.title} (${connectedEvent.year})`}
                                     >
-                                      {connectedEvent.title.length > 30 ? connectedEvent.title.slice(0, 30) + '...' : connectedEvent.title}
-                                      <span className="text-cream/40 ml-1">({connectedEvent.year})</span>
+                                      {connectedEvent.title.length > 25 ? connectedEvent.title.slice(0, 25) + '...' : connectedEvent.title}
+                                      <span className="text-teal-400/60 ml-1">({connectedEvent.year})</span>
                                     </button>
                                   );
                                 })}
+                                {/* Referenced events - not clickable, amber/dashed */}
+                                {influencedByReferenced.slice(0, 3).map((connId, i) => (
+                                  <span
+                                    key={`ref-${i}`}
+                                    className="px-2 py-0.5 bg-amber-900/20 border border-dashed border-amber-600/40 rounded text-[11px] text-amber-500/70 font-montserrat italic"
+                                    title={`Referenced: Event not yet in timeline`}
+                                  >
+                                    {formatId(connId)}
+                                  </span>
+                                ))}
+                                {influencedByReferenced.length > 3 && (
+                                  <span className="text-[10px] text-amber-600/50 italic">+{influencedByReferenced.length - 3} more</span>
+                                )}
                               </div>
                             )}
                             
                             {/* Influenced */}
-                            {influenced.length > 0 && (
+                            {rawInfluenced.length > 0 && (
                               <div className="flex flex-wrap items-center gap-2">
                                 <span className="text-[10px] text-cream/40 font-montserrat uppercase">Influenced:</span>
-                                {influenced.slice(0, 4).map((connId, i) => {
+                                {/* Existing events - clickable, gold */}
+                                {influencedExisting.slice(0, 4).map((connId, i) => {
                                   const connectedEvent = allEvents?.find(e => e.id === connId);
                                   return (
                                     <button
-                                      key={i}
-                                      className="px-2 py-0.5 bg-gold/10 hover:bg-gold/25 border border-gold/30 hover:border-gold/50 rounded text-[11px] text-cream/70 hover:text-cream font-montserrat transition-all"
+                                      key={`exist-${i}`}
+                                      className="px-2 py-0.5 bg-gold/15 hover:bg-gold/25 border border-gold/40 hover:border-gold/60 rounded text-[11px] text-gold hover:text-gold font-montserrat transition-all cursor-pointer"
                                       onClick={(e) => {
                                         e.stopPropagation();
                                         onNavigateToEvent?.(connectedEvent.id);
                                       }}
-                                      title={`${connectedEvent.title} (${connectedEvent.year})`}
+                                      title={`Click to view: ${connectedEvent.title} (${connectedEvent.year})`}
                                     >
-                                      {connectedEvent.title.length > 30 ? connectedEvent.title.slice(0, 30) + '...' : connectedEvent.title}
-                                      <span className="text-cream/40 ml-1">({connectedEvent.year})</span>
+                                      {connectedEvent.title.length > 25 ? connectedEvent.title.slice(0, 25) + '...' : connectedEvent.title}
+                                      <span className="text-gold/60 ml-1">({connectedEvent.year})</span>
                                     </button>
                                   );
                                 })}
+                                {/* Referenced events - not clickable, amber/dashed */}
+                                {influencedReferenced.slice(0, 3).map((connId, i) => (
+                                  <span
+                                    key={`ref-${i}`}
+                                    className="px-2 py-0.5 bg-amber-900/20 border border-dashed border-amber-600/40 rounded text-[11px] text-amber-500/70 font-montserrat italic"
+                                    title={`Referenced: Event not yet in timeline`}
+                                  >
+                                    {formatId(connId)}
+                                  </span>
+                                ))}
+                                {influencedReferenced.length > 3 && (
+                                  <span className="text-[10px] text-amber-600/50 italic">+{influencedReferenced.length - 3} more</span>
+                                )}
                               </div>
                             )}
                           </div>
