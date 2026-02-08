@@ -1,0 +1,307 @@
+Node ID,Node Type,Label,Year,Category/Tradition,Connected Events Count
+gd_founding,event,Hermetic Order of the Golden Dawn Founded,1888,Organization,3
+crowley_book_of_law,event,Aleister Crowley Receives The Book of the Law,1904,Ritual,3
+waite_smith_tarot,event,Rider-Waite-Smith Tarot Published,1909,Publication,2
+crowley_equinox_journal,event,Crowley Starts 'The Equinox' Journal,1910,Publication,2
+waite_ceremonial_magic,event,Waite's 'Book of Ceremonial Magic' Published,1911,Publication,1
+crowley_oto_head,event,Aleister Crowley Becomes Head of British OTO,1912,Organization,3
+spare_book_of_pleasure,event,Austin Osman Spare Publishes The Book of Pleasure,1913,Publication,0
+crowley_magick_book,event,Crowley Publishes 'Magick' in The Equinox,1913,Publication,2
+yeats_hour_glass,event,Yeats' 'The Hour Glass' Esoteric Play,1913,Publication,2
+wwi_outbreak_occult,event,WWI Outbreak Disrupts Occult Networks,1914,Legal,2
+wwi_trench_magic,event,Trench Folk Magic Emerges in WWI,1914,Ritual,1
+psychic_gazette_founded,event,'The International Psychic Gazette' Founded,1915,Publication,1
+trench_letter_charms,event,Trench Letter Charm Networks,1916,Ritual,2
+spiritualism_boom_1917,event,Spiritualism Boom After Passchendaele,1917,Organization,2
+moina_mathers_leadership,event,Moina Mathers Takes Over Alpha et Omega,1918,Organization,2
+fortune_psychic_crisis,event,Dion Fortune's Psychic Crisis & Healing,1919,Figure,3
+gardner_returns_colonial,event,Gerald Gardner Returns from Colonial Service,1919,Figure,1
+witch_column_1920,event,'The Witch' Column in John O'London's Weekly,1920,Publication,1
+abbey_thelema,event,Crowley Founds Abbey of Thelema,1920,Site,2
+murray_witch_cult,event,Margaret Murray Publishes The Witch-Cult in Western Europe,1921,Publication,1
+fortune_joins_alpha_omega,event,Dion Fortune Joins Alpha et Omega,1921,Organization,3
+crowley_expelled_italy,event,Crowley Expelled from Italy,1922,Legal,2
+fortune_psychic_defense_articles,event,Dion Fortune's 'Psychic Self-Defense' Articles,1922,Publication,2
+abbey_thelema_raided,event,Abbey of Thelema Raided by Mussolini's Police,1923,Legal,1
+inner_light,event,Dion Fortune Founds Fraternity of Inner Light,1924,Organization,4
+yeats_vision,event,W.B. Yeats Publishes A Vision,1925,Publication,2
+crowley_magick_theory_practice,event,Crowley Publishes 'Magick in Theory and Practice',1929,Publication,3
+dion_fortune_psychic_defense,event,Dion Fortune Publishes Psychic Self-Defense,1930,Publication,3
+gardner_folklore_society,event,Gerald Gardner Joins The Folklore Society,1934,Figure,2
+fortune_mystical_qabalah,event,Dion Fortune Publishes 'The Mystical Qabalah',1935,Publication,2
+regardie_golden_dawn,event,Israel Regardie Publishes Golden Dawn Materials,1937,Publication,1
+murray_god_of_witches,event,Margaret Murray Publishes 'The God of the Witches',1939,Publication,2
+gardner_new_forest_initiation,event,Gardner's Claimed New Forest Coven Initiation,1939,Ritual,3
+blitz_begins,event,The London Blitz Begins,1940,Legal,1
+fortune_magical_battle,event,Dion Fortune's 'Magical Battle of Britain' Letters Begin,1940,Ritual,2
+blitz_protective_magic,event,Protective Folk Magic During the Blitz,1940,Ritual,2
+night_witches_588th,event,The Night Witches: Soviet Women Reclaim the Witch Archetype,1942,Organization,0
+crowley_book_of_thoth,event,Crowley Publishes 'The Book of Thoth',1944,Publication,2
+dion_fortune_death,event,Dion Fortune Dies,1946,Figure,0
+crowley_death,event,Aleister Crowley Dies,1947,Figure,0
+witchcraft_act_repeal,event,Witchcraft Act of 1735 Repealed,1951,Legal,1
+papyrus_ani,event,Papyrus of Ani (Egyptian Book of the Dead),-1250,Publication,1
+orphic_tablets,event,Orphic Gold Tablets,-400,Ritual,0
+cantong_qi,event,Wei Boyang's Cantong Qi,142,Publication,0
+zosimos_visions,event,Zosimos of Panopolis' Visions,300,Publication,0
+pgm_papyri,event,Greek Magical Papyri (PGM),200,Publication,0
+anglo_saxon_leechbooks,event,Anglo-Saxon Leechbooks,900,Publication,0
+picatrix_translation,event,Picatrix Translation,1050,Publication,1
+sefer_hazohar,event,Sefer HaZohar Publication,1250,Publication,1
+malleus_maleficarum,event,Malleus Maleficarum Publication,1486,Publication,0
+john_dee_monas,event,John Dee's Monas Hieroglyphica,1564,Publication,1
+basil_valentine_keys,event,Basil Valentine's Twelve Keys,1599,Publication,0
+atalanta_fugiens,event,Michael Maier's Atalanta Fugiens,1617,Publication,0
+kircher_ars_magna,event,Athanasius Kircher's Ars Magna Lucis et Umbrae,1646,Publication,0
+rosicrucian_revival,event,Rosicrucian Revival in Germany,1750,Organization,1
+fuseli_nightmare,event,Henry Fuseli's The Nightmare,1781,Publication,0
+lewis_monk,event,Matthew Lewis' The Monk,1796,Publication,0
+barrett_magus,event,Francis Barrett's The Magus,1804,Publication,2
+fox_sisters_hydesville,event,Fox Sisters' Hydesville Rappings,1848,Ritual,1
+levi_dogme_rituel,event,Eliphas Lévi's Dogme et Rituel,1857,Publication,2
+houghton_spirit_drawings,event,Georgiana Houghton's Spirit Drawings,1865,Ritual,2
+salon_rose_croix,event,Salon de la Rose+Croix Opens,1892,Organization,0
+leland_aradia,event,Charles Leland's Aradia Published,1899,Publication,2
+gardner_witchcraft_today,event,Gerald Gardner's Witchcraft Today,1954,Publication,3
+kenneth_anger_inauguration,event,Kenneth Anger's Inauguration of the Pleasure Dome,1954,Publication,1
+roberts_seth_material,event,Jane Roberts Begins Seth Material,1963,Ritual,1
+beuys_dead_hare,event,Joseph Beuys' How to Explain Pictures to a Dead Hare,1965,Ritual,0
+church_of_satan,event,Church of Satan Founded,1966,Organization,0
+klarwein_bitches_brew,event,Mati Klarwein's Bitches Brew Cover,1969,Publication,0
+jodorowsky_holy_mountain,event,Jodorowsky's The Holy Mountain,1973,Publication,1
+schneemann_interior_scroll,event,Carolee Schneemann's Interior Scroll,1975,Ritual,1
+giger_necronomicon,event,H.R. Giger's Necronomicon,1977,Publication,0
+carroll_liber_null,event,Peter Carroll's Liber Null,1978,Publication,1
+alex_grey_sacred_mirrors,event,Alex Grey Begins Sacred Mirrors Series,1980,Publication,1
+topy_founding,event,Genesis P-Orridge Founds Thee Temple ov Psychick Youth,1981,Organization,2
+the_craft_film,event,The Craft Film Release,1996,Publication,1
+chapel_sacred_mirrors,event,Chapel of Sacred Mirrors Opens,2004,Site,1
+instagram_witch_aesthetic,event,Instagram Witch Aesthetic Emerges,2010,Organization,2
+ahs_coven,event,American Horror Story: Coven,2013,Publication,2
+witchtok_trend,event,WitchTok Trend Peaks,2020,Organization,2
+witch_hunt_reclamation,event,The Witch as Symbol of Anti-Patriarchal Resistance,1600,Figure,3
+fox_sisters_spiritualism,event,Fox Sisters & Birth of Progressive Spiritualism,1848,Organization,2
+theosophy_anticolonial,event,Theosophical Society & Anti-Colonial Reform,1875,Organization,3
+gardner_wicca_politics,event,Gerald Gardner & Progressive Wiccan Ethics,1954,Publication,5
+witch_1968,event,W.I.T.C.H. (Women's International Terrorist Conspiracy from ,1968,Protest,5
+dianic_wicca,event,Z. Budapest Founds Dianic Wicca,1971,Organization,4
+spiral_dance,event,Starhawk's 'The Spiral Dance' & Activist Witchcraft,1979,Publication,4
+radical_faeries,event,Radical Faeries Founded,1979,Organization,3
+pentacle_headstones,event,Pentacle Approved for Veteran Headstones,2007,Legal,1
+magic_resistance,event,#MagicResistance & Mass Binding Spells,2017,Protest,4
+hex_patriarchy,event,Hex the Patriarchy Movement,2018,Protest,3
+occupy_rituals,event,Occupy Wall Street & Ritual Consensus,2011,Protest,2
+witchtok_activism,event,WitchTok Activism & Accessible Resistance,2020,Organization,2
+decolonial_paganism,event,Standing Rock & Decolonial Pagan Solidarity,2016,Protest,2
+stella_matutina,event,"Formation of the Stella Matutina, a splinter order from the ",1903,Organization,4
+a_a_founding,event,Foundation of the A∴A∴ (Astrum Argentum),1907,Organization,4
+hermetic_texts,event,Marsilio Ficino's Latin Translation of the Corpus Hermeticum,1460,Publication,5
+key_of_solomon,event,Publication of S.L. MacGregor Mathers' English Translation o,1889,Publication,4
+hilma_af_klint_paintings,event,Hilma af Klint begins her major series of abstract spiritual,1906,Art/Creativity,2
+suffrage_movement,event,Seneca Falls Convention and the Emergence of Suffrage Activi,1848,Movement,4
+theosophy_social,event,Founding of the Theosophical Society in New York City,1875,Organization,6
+indian_independence,event,Independence and Partition of India,1947,Legal,4
+gardner_wicca,event,Gerald Gardner Publishes 'Witchcraft Today' and Establishes ,1954,Publication,5
+reclaiming,event,Formation of the Reclaiming Collective,1979,Organization,6
+goddess_movement,event,Emergence of the Goddess Movement as a distinct spiritual an,1971,Movement,6
+wto_protests,event,WTO Ministerial Conference Protests in Seattle,1999,Movement,4
+lgbtq_paganism,event,Formation of the Radical Faeries and Emergence of LGBTQ Paga,1979,Movement,6
+gay_liberation,event,Stonewall Uprising and the Birth of the Gay Liberation Movem,1969,Movement,6
+climate_activism,event,Earth Day 1990 and the Rise of Eco-Spiritual Activism,1990,Movement,4
+environmentalism,event,Publication of Rachel Carson's Silent Spring and the Emergen,1962,Movement,5
+figure_macgregor_mathers,figure,MacGregor Mathers,,,2
+figure_william_wynn_westcott,figure,William Wynn Westcott,,,1
+figure_william_robert_woodman,figure,William Robert Woodman,,,1
+figure_aleister_crowley,figure,Aleister Crowley,,,11
+figure_rose_edith_kelly,figure,Rose Edith Kelly,,,1
+figure_arthur_edward_waite,figure,Arthur Edward Waite,,,2
+figure_pamela_colman_smith,figure,Pamela Colman Smith,,,1
+figure_theodor_reuss,figure,Theodor Reuss,,,1
+figure_austin_osman_spare,figure,Austin Osman Spare,,,1
+figure_w.b._yeats,figure,W.B. Yeats,,,2
+figure_arthur_conan_doyle,figure,Arthur Conan Doyle,,,1
+figure_moina_mathers,figure,Moina Mathers,,,2
+figure_dion_fortune,figure,Dion Fortune,,,9
+figure_theodore_moriarty,figure,Theodore Moriarty,,,1
+figure_gerald_gardner,figure,Gerald Gardner,,,7
+figure_leah_hirsig,figure,Leah Hirsig,,,1
+figure_raoul_loveday,figure,Raoul Loveday,,,1
+figure_margaret_murray,figure,Margaret Murray,,,2
+figure_george_yeats,figure,George Yeats,,,1
+figure_israel_regardie,figure,Israel Regardie,,,2
+figure_dorothy_clutterbuck,figure,Dorothy Clutterbuck,,,1
+figure_marina_raskova,figure,Marina Raskova,,,1
+figure_yevdokiya_bershanskaya,figure,Yevdokiya Bershanskaya,,,1
+figure_nadezhda_popova,figure,Nadezhda Popova,,,1
+figure_irina_sebrova,figure,Irina Sebrova,,,1
+figure_lady_frieda_harris,figure,Lady Frieda Harris,,,1
+figure_egyptian_scribes,figure,Egyptian scribes,,,1
+figure_ani,figure,Ani,,,1
+figure_orphic_mystery_cult,figure,Orphic mystery cult,,,1
+figure_wei_boyang,figure,Wei Boyang,,,1
+figure_zosimos_of_panopolis,figure,Zosimos of Panopolis,,,1
+figure_various_practitioners,figure,Various practitioners,,,1
+figure_unknown_scribes,figure,Unknown scribes,,,1
+figure_maslama_al-majriti,figure,Maslama al-Majriti,,,1
+figure_moses_de_león,figure,Moses de León,,,1
+figure_heinrich_kramer,figure,Heinrich Kramer,,,1
+figure_john_dee,figure,John Dee,,,1
+figure_basil_valentine,figure,Basil Valentine,,,1
+figure_michael_maier,figure,Michael Maier,,,1
+figure_athanasius_kircher,figure,Athanasius Kircher,,,1
+figure_various_masonic_reformers,figure,Various Masonic reformers,,,1
+figure_henry_fuseli,figure,Henry Fuseli,,,1
+figure_matthew_lewis,figure,Matthew Lewis,,,1
+figure_francis_barrett,figure,Francis Barrett,,,1
+figure_margaret_fox,figure,Margaret Fox,,,2
+figure_kate_fox,figure,Kate Fox,,,2
+figure_leah_fox,figure,Leah Fox,,,1
+figure_eliphas_lévi,figure,Eliphas Lévi,,,1
+figure_georgiana_houghton,figure,Georgiana Houghton,,,1
+figure_joséphin_péladan,figure,Joséphin Péladan,,,1
+figure_fernand_khnopff,figure,Fernand Khnopff,,,1
+figure_jean_delville,figure,Jean Delville,,,1
+figure_charles_leland,figure,Charles Leland,,,1
+figure_maddalena,figure,Maddalena,,,1
+figure_kenneth_anger,figure,Kenneth Anger,,,1
+figure_marjorie_cameron,figure,Marjorie Cameron,,,1
+figure_jane_roberts,figure,Jane Roberts,,,1
+figure_robert_butts,figure,Robert Butts,,,1
+figure_joseph_beuys,figure,Joseph Beuys,,,1
+figure_anton_lavey,figure,Anton LaVey,,,1
+figure_mati_klarwein,figure,Mati Klarwein,,,1
+figure_miles_davis,figure,Miles Davis,,,1
+figure_alejandro_jodorowsky,figure,Alejandro Jodorowsky,,,1
+figure_carolee_schneemann,figure,Carolee Schneemann,,,1
+figure_h.r._giger,figure,H.R. Giger,,,1
+figure_peter_carroll,figure,Peter Carroll,,,1
+figure_alex_grey,figure,Alex Grey,,,2
+figure_genesis_p-orridge,figure,Genesis P-Orridge,,,1
+figure_andrew_fleming,figure,Andrew Fleming,,,1
+figure_allyson_grey,figure,Allyson Grey,,,1
+figure_various_influencers,figure,Various influencers,,,1
+figure_ryan_murphy,figure,Ryan Murphy,,,1
+figure_various_creators,figure,Various creators,,,1
+figure_accused_'witches',figure,Accused 'witches',,,1
+figure_midwives,figure,Midwives,,,1
+figure_herbal_healers,figure,Herbal healers,,,1
+figure_victoria_woodhull,figure,Victoria Woodhull,,,1
+figure_lydia_pinkham,figure,Lydia Pinkham,,,1
+figure_sojourner_truth,figure,Sojourner Truth,,,1
+figure_helena_blavatsky,figure,Helena Blavatsky,,,1
+figure_annie_besant,figure,Annie Besant,,,1
+figure_henry_steel_olcott,figure,Henry Steel Olcott,,,2
+figure_mohandas_gandhi,figure,Mohandas Gandhi,,,1
+figure_jiddu_krishnamurti,figure,Jiddu Krishnamurti,,,1
+figure_doreen_valiente,figure,Doreen Valiente,,,2
+figure_alex_sanders,figure,Alex Sanders,,,1
+figure_sybil_leek,figure,Sybil Leek,,,1
+figure_robin_morgan,figure,Robin Morgan,,,1
+figure_florika,figure,Florika,,,1
+figure_naomi_jaffe,figure,Naomi Jaffe,,,1
+figure_peggy_dobbins,figure,Peggy Dobbins,,,1
+figure_zsuzsanna_budapest,figure,Zsuzsanna Budapest,,,1
+figure_ruth_barrett,figure,Ruth Barrett,,,1
+figure_falcon_river,figure,Falcon River,,,1
+figure_starhawk_(miriam_simos),figure,Starhawk (Miriam Simos),,,2
+figure_reclaiming_collective,figure,Reclaiming Collective,,,1
+figure_rose_may_dance,figure,Rose May Dance,,,1
+figure_harry_hay,figure,Harry Hay,,,2
+figure_don_kilhefner,figure,Don Kilhefner,,,2
+figure_mitch_walker,figure,Mitch Walker,,,2
+figure_john_burnside,figure,John Burnside,,,1
+figure_selena_fox,figure,Selena Fox,,,2
+figure_circle_sanctuary,figure,Circle Sanctuary,,,1
+figure_roberta_stewart,figure,Roberta Stewart,,,1
+figure_patrick_stewart_(fallen_soldie,figure,Patrick Stewart (fallen soldier),,,1
+figure_michael_m._hughes,figure,Michael M. Hughes,,,1
+figure_various_online_practitioners,figure,Various online practitioners,,,1
+figure_various_activists,figure,Various activists,,,1
+figure_catland_books,figure,Catland Books,,,1
+figure_dakota_bracciale,figure,Dakota Bracciale,,,1
+figure_starhawk,figure,Starhawk,,,4
+figure_various_pagan_activists,figure,Various pagan activists,,,1
+figure_occupy_organizers,figure,Occupy organizers,,,1
+figure_various_tiktok_creators,figure,Various TikTok creators,,,1
+figure_witchtok_community,figure,WitchTok community,,,1
+figure_standing_rock_sioux,figure,Standing Rock Sioux,,,1
+figure_various_pagan_groups,figure,Various pagan groups,,,1
+figure_water_protectors,figure,Water Protectors,,,1
+figure_dr._robert_felkin,figure,Dr. Robert Felkin,,,1
+figure_j.w._brodie-innes,figure,J.W. Brodie-Innes,,,1
+figure_george_cecil_jones,figure,George Cecil Jones,,,1
+figure_marsilio_ficino,figure,Marsilio Ficino,,,1
+figure_cosimo_de'_medici,figure,Cosimo de' Medici,,,1
+figure_hermes_trismegistus_(legendary,figure,Hermes Trismegistus (legendary),,,1
+figure_s.l._macgregor_mathers,figure,S.L. MacGregor Mathers,,,1
+figure_hilma_af_klint,figure,Hilma af Klint,,,1
+figure_elizabeth_cady_stanton,figure,Elizabeth Cady Stanton,,,1
+figure_lucretia_mott,figure,Lucretia Mott,,,1
+figure_susan_b._anthony,figure,Susan B. Anthony,,,1
+figure_matilda_joslyn_gage,figure,Matilda Joslyn Gage,,,1
+figure_helena_petrovna_blavatsky,figure,Helena Petrovna Blavatsky,,,1
+figure_william_quan_judge,figure,William Quan Judge,,,1
+figure_mohandas_karamchand_gandhi,figure,Mohandas Karamchand Gandhi,,,1
+figure_jawaharlal_nehru,figure,Jawaharlal Nehru,,,1
+figure_muhammad_ali_jinnah,figure,Muhammad Ali Jinnah,,,1
+figure_louis_mountbatten,figure,Louis Mountbatten,,,1
+figure_dorothy_clutterbuck_(alleged_i,figure,Dorothy Clutterbuck (alleged initiator),,,1
+figure_diane_baker,figure,Diane Baker,,,1
+figure_z._budapest,figure,Z. Budapest,,,1
+figure_carol_p._christ,figure,Carol P. Christ,,,1
+figure_merlin_stone,figure,Merlin Stone,,,1
+figure_david_solnit,figure,David Solnit,,,1
+figure_marsha_p._johnson,figure,Marsha P. Johnson,,,1
+figure_sylvia_rivera,figure,Sylvia Rivera,,,1
+figure_stormé_delarverie,figure,Stormé DeLarverie,,,1
+figure_rachel_carson,figure,Rachel Carson,,,1
+tradition_golden_dawn,tradition,Golden Dawn,,,32
+tradition_victorian_spiritualism,tradition,Victorian Spiritualism,,,17
+tradition_thelema,tradition,Thelema,,,11
+tradition_grimoire_tradition,tradition,Grimoire Tradition,,,8
+tradition_celtic_devotional,tradition,Celtic Devotional,,,3
+tradition_british_folk_magic,tradition,British Folk Magic,,,17
+tradition_wartime_domestic_life,tradition,Wartime Domestic Life,,,7
+tradition_traveller_charms,tradition,Traveller Charms,,,2
+tradition_lorica_prayers,tradition,Lorica Prayers,,,2
+tradition_cunning_folk,tradition,Cunning Folk,,,8
+tradition_postwar_makeshift_magic,tradition,Postwar Makeshift Magic,,,1
+tradition_kitchen_witchery,tradition,Kitchen Witchery,,,1
+tradition_slavic_folk_magic,tradition,Slavic Folk Magic,,,1
+tradition_feminine_martial_archetypes,tradition,Feminine Martial Archetypes,,,1
+tradition_folk_magic,tradition,Folk Magic,,,2
+tradition_cunning_craft,tradition,Cunning Craft,,,1
+tradition_spiritualism,tradition,Spiritualism,,,1
+tradition_american_spiritualism,tradition,American Spiritualism,,,1
+tradition_theosophy,tradition,Theosophy,,,4
+tradition_eastern_philosophy,tradition,Eastern Philosophy,,,1
+tradition_gardnerian_wicca,tradition,Gardnerian Wicca,,,1
+tradition_alexandrian_wicca,tradition,Alexandrian Wicca,,,1
+tradition_feminist_spirituality,tradition,Feminist Spirituality,,,3
+tradition_dianic_wicca,tradition,Dianic Wicca,,,3
+tradition_feminist_witchcraft,tradition,Feminist Witchcraft,,,2
+tradition_reclaiming,tradition,Reclaiming,,,3
+tradition_ecofeminism,tradition,Ecofeminism,,,1
+tradition_radical_faeries,tradition,Radical Faeries,,,1
+tradition_queer_paganism,tradition,Queer Paganism,,,1
+tradition_wicca,tradition,Wicca,,,7
+tradition_modern_paganism,tradition,Modern Paganism,,,2
+tradition_chaos_magic,tradition,Chaos Magic,,,1
+tradition_eclectic_witchcraft,tradition,Eclectic Witchcraft,,,2
+tradition_activist_spirituality,tradition,Activist Spirituality,,,1
+tradition_pop_witchcraft,tradition,Pop Witchcraft,,,1
+tradition_earth_spirituality,tradition,Earth Spirituality,,,1
+tradition_ceremonial_magic,tradition,Ceremonial Magic,,,2
+tradition_christian_mysticism,tradition,Christian Mysticism,,,1
+tradition_hermeticism,tradition,Hermeticism,,,1
+tradition_renaissance_magic,tradition,Renaissance Magic,,,1
+tradition_alchemy,tradition,Alchemy,,,1
+tradition_rosicrucianism,tradition,Rosicrucianism,,,2
+tradition_victorian_occultism,tradition,Victorian Occultism,,,1
+tradition_neopaganism,tradition,Neopaganism,,,2
+tradition_political_activist_magic,tradition,Political Activist Magic,,,1
+tradition_contemporary_paganism,tradition,Contemporary Paganism,,,1
+tradition_druidry,tradition,Druidry,,,3
+tradition_goddess_spirituality,tradition,Goddess Spirituality,,,1
+tradition_eco_spirituality,tradition,Eco Spirituality,,,1
+tradition_eco-paganism,tradition,Eco-Paganism,,,1

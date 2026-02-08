@@ -1,0 +1,244 @@
+Source Event ID,Source Title,Connection Type,Target Event ID,Target Exists
+gd_founding,Hermetic Order of the Golden Dawn Founded,influenced,stella_matutina,Yes
+gd_founding,Hermetic Order of the Golden Dawn Founded,influenced,a_a_founding,Yes
+gd_founding,Hermetic Order of the Golden Dawn Founded,influenced,inner_light,Yes
+crowley_book_of_law,Aleister Crowley Receives The Book of the Law,influenced_by,gd_founding,Yes
+crowley_book_of_law,Aleister Crowley Receives The Book of the Law,influenced,abbey_thelema,Yes
+crowley_book_of_law,Aleister Crowley Receives The Book of the Law,influenced,a_a_founding,Yes
+waite_smith_tarot,Rider-Waite-Smith Tarot Published,influenced_by,gd_founding,Yes
+waite_smith_tarot,Rider-Waite-Smith Tarot Published,influenced,crowley_book_of_thoth,Yes
+crowley_equinox_journal,Crowley Starts 'The Equinox' Journal,influenced_by,crowley_book_of_law,Yes
+crowley_equinox_journal,Crowley Starts 'The Equinox' Journal,influenced,crowley_magick_book,Yes
+waite_ceremonial_magic,Waite's 'Book of Ceremonial Magic' Published,influenced_by,gd_founding,Yes
+waite_ceremonial_magic,Waite's 'Book of Ceremonial Magic' Published,related_events,waite_smith_tarot,Yes
+crowley_oto_head,Aleister Crowley Becomes Head of British OTO,influenced_by,crowley_book_of_law,Yes
+crowley_oto_head,Aleister Crowley Becomes Head of British OTO,influenced,crowley_magick_book,Yes
+crowley_oto_head,Aleister Crowley Becomes Head of British OTO,influenced,abbey_thelema,Yes
+crowley_magick_book,Crowley Publishes 'Magick' in The Equinox,influenced_by,crowley_book_of_law,Yes
+crowley_magick_book,Crowley Publishes 'Magick' in The Equinox,influenced,crowley_magick_theory_practice,Yes
+crowley_magick_book,Crowley Publishes 'Magick' in The Equinox,related_events,crowley_oto_head,Yes
+yeats_hour_glass,Yeats' 'The Hour Glass' Esoteric Play,influenced_by,gd_founding,Yes
+yeats_hour_glass,Yeats' 'The Hour Glass' Esoteric Play,influenced,yeats_vision,Yes
+wwi_outbreak_occult,WWI Outbreak Disrupts Occult Networks,influenced,wwi_trench_magic,Yes
+wwi_outbreak_occult,WWI Outbreak Disrupts Occult Networks,influenced,spiritualism_boom_1917,Yes
+wwi_trench_magic,Trench Folk Magic Emerges in WWI,influenced,blitz_protective_magic,Yes
+wwi_trench_magic,Trench Folk Magic Emerges in WWI,related_events,wwi_outbreak_occult,Yes
+psychic_gazette_founded,'The International Psychic Gazette' Founded,influenced,spiritualism_boom_1917,Yes
+psychic_gazette_founded,'The International Psychic Gazette' Founded,related_events,wwi_outbreak_occult,Yes
+trench_letter_charms,Trench Letter Charm Networks,influenced_by,wwi_trench_magic,Yes
+trench_letter_charms,Trench Letter Charm Networks,influenced,blitz_protective_magic,Yes
+spiritualism_boom_1917,Spiritualism Boom After Passchendaele,influenced_by,wwi_outbreak_occult,Yes
+spiritualism_boom_1917,Spiritualism Boom After Passchendaele,influenced,fortune_psychic_crisis,Yes
+moina_mathers_leadership,Moina Mathers Takes Over Alpha et Omega,influenced_by,gd_founding,Yes
+moina_mathers_leadership,Moina Mathers Takes Over Alpha et Omega,influenced,fortune_joins_alpha_omega,Yes
+fortune_psychic_crisis,Dion Fortune's Psychic Crisis & Healing,influenced_by,spiritualism_boom_1917,Yes
+fortune_psychic_crisis,Dion Fortune's Psychic Crisis & Healing,influenced,fortune_psychic_defense_articles,Yes
+fortune_psychic_crisis,Dion Fortune's Psychic Crisis & Healing,influenced,inner_light,Yes
+fortune_psychic_crisis,Dion Fortune's Psychic Crisis & Healing,related_events,fortune_joins_alpha_omega,Yes
+gardner_returns_colonial,Gerald Gardner Returns from Colonial Service,influenced,gardner_folklore_society,Yes
+witch_column_1920,'The Witch' Column in John O'London's Weekly,influenced,murray_witch_cult,Yes
+abbey_thelema,Crowley Founds Abbey of Thelema,influenced_by,crowley_book_of_law,Yes
+abbey_thelema,Crowley Founds Abbey of Thelema,influenced,crowley_expelled_italy,Yes
+murray_witch_cult,Margaret Murray Publishes The Witch-Cult in Wester,influenced,gardner_witchcraft_today,Yes
+fortune_joins_alpha_omega,Dion Fortune Joins Alpha et Omega,influenced_by,fortune_psychic_crisis,Yes
+fortune_joins_alpha_omega,Dion Fortune Joins Alpha et Omega,influenced_by,moina_mathers_leadership,Yes
+fortune_joins_alpha_omega,Dion Fortune Joins Alpha et Omega,influenced,inner_light,Yes
+crowley_expelled_italy,Crowley Expelled from Italy,influenced_by,abbey_thelema,Yes
+crowley_expelled_italy,Crowley Expelled from Italy,influenced,abbey_thelema_raided,Yes
+fortune_psychic_defense_articles,Dion Fortune's 'Psychic Self-Defense' Articles,influenced_by,fortune_psychic_crisis,Yes
+fortune_psychic_defense_articles,Dion Fortune's 'Psychic Self-Defense' Articles,influenced,dion_fortune_psychic_defense,Yes
+abbey_thelema_raided,Abbey of Thelema Raided by Mussolini's Police,influenced_by,crowley_expelled_italy,Yes
+inner_light,Dion Fortune Founds Fraternity of Inner Light,influenced_by,fortune_joins_alpha_omega,Yes
+inner_light,Dion Fortune Founds Fraternity of Inner Light,influenced_by,fortune_psychic_crisis,Yes
+inner_light,Dion Fortune Founds Fraternity of Inner Light,influenced,dion_fortune_psychic_defense,Yes
+inner_light,Dion Fortune Founds Fraternity of Inner Light,influenced,fortune_magical_battle,Yes
+yeats_vision,W.B. Yeats Publishes A Vision,influenced_by,gd_founding,Yes
+yeats_vision,W.B. Yeats Publishes A Vision,influenced_by,yeats_hour_glass,Yes
+crowley_magick_theory_practice,Crowley Publishes 'Magick in Theory and Practice',influenced_by,crowley_magick_book,Yes
+crowley_magick_theory_practice,Crowley Publishes 'Magick in Theory and Practice',influenced_by,abbey_thelema,Yes
+crowley_magick_theory_practice,Crowley Publishes 'Magick in Theory and Practice',influenced,crowley_book_of_thoth,Yes
+dion_fortune_psychic_defense,Dion Fortune Publishes Psychic Self-Defense,influenced_by,inner_light,Yes
+dion_fortune_psychic_defense,Dion Fortune Publishes Psychic Self-Defense,influenced_by,fortune_psychic_defense_articles,Yes
+dion_fortune_psychic_defense,Dion Fortune Publishes Psychic Self-Defense,influenced,fortune_magical_battle,Yes
+gardner_folklore_society,Gerald Gardner Joins The Folklore Society,influenced_by,murray_witch_cult,Yes
+gardner_folklore_society,Gerald Gardner Joins The Folklore Society,influenced,gardner_witchcraft_today,Yes
+fortune_mystical_qabalah,Dion Fortune Publishes 'The Mystical Qabalah',influenced_by,inner_light,Yes
+fortune_mystical_qabalah,Dion Fortune Publishes 'The Mystical Qabalah',influenced_by,gd_founding,Yes
+regardie_golden_dawn,Israel Regardie Publishes Golden Dawn Materials,influenced_by,gd_founding,Yes
+murray_god_of_witches,Margaret Murray Publishes 'The God of the Witches',influenced_by,murray_witch_cult,Yes
+murray_god_of_witches,Margaret Murray Publishes 'The God of the Witches',influenced,gardner_witchcraft_today,Yes
+gardner_new_forest_initiation,Gardner's Claimed New Forest Coven Initiation,influenced_by,murray_witch_cult,Yes
+gardner_new_forest_initiation,Gardner's Claimed New Forest Coven Initiation,influenced_by,gardner_folklore_society,Yes
+gardner_new_forest_initiation,Gardner's Claimed New Forest Coven Initiation,influenced,gardner_witchcraft_today,Yes
+blitz_begins,The London Blitz Begins,influenced,blitz_protective_magic,Yes
+blitz_begins,The London Blitz Begins,related_events,fortune_magical_battle,Yes
+fortune_magical_battle,Dion Fortune's 'Magical Battle of Britain' Letters,influenced_by,inner_light,Yes
+fortune_magical_battle,Dion Fortune's 'Magical Battle of Britain' Letters,influenced_by,dion_fortune_psychic_defense,Yes
+fortune_magical_battle,Dion Fortune's 'Magical Battle of Britain' Letters,related_events,blitz_begins,Yes
+blitz_protective_magic,Protective Folk Magic During the Blitz,influenced_by,wwi_trench_magic,Yes
+blitz_protective_magic,Protective Folk Magic During the Blitz,influenced_by,blitz_begins,Yes
+blitz_protective_magic,Protective Folk Magic During the Blitz,related_events,fortune_magical_battle,Yes
+night_witches_588th,The Night Witches: Soviet Women Reclaim the Witch ,related_events,fortune_magical_battle,Yes
+night_witches_588th,The Night Witches: Soviet Women Reclaim the Witch ,related_events,blitz_protective_magic,Yes
+crowley_book_of_thoth,Crowley Publishes 'The Book of Thoth',influenced_by,waite_smith_tarot,Yes
+crowley_book_of_thoth,Crowley Publishes 'The Book of Thoth',influenced_by,crowley_magick_theory_practice,Yes
+witchcraft_act_repeal,Witchcraft Act of 1735 Repealed,influenced,gardner_witchcraft_today,Yes
+papyrus_ani,Papyrus of Ani (Egyptian Book of the Dead),influenced,hermetic_texts,Yes
+picatrix_translation,Picatrix Translation,influenced,key_of_solomon,Yes
+sefer_hazohar,Sefer HaZohar Publication,influenced,gd_founding,Yes
+john_dee_monas,John Dee's Monas Hieroglyphica,influenced,gd_founding,Yes
+rosicrucian_revival,Rosicrucian Revival in Germany,influenced,gd_founding,Yes
+barrett_magus,Francis Barrett's The Magus,influenced,levi_dogme_rituel,Yes
+barrett_magus,Francis Barrett's The Magus,influenced,gd_founding,Yes
+fox_sisters_hydesville,Fox Sisters' Hydesville Rappings,influenced,spiritualism_boom_1917,Yes
+levi_dogme_rituel,Eliphas Lévi's Dogme et Rituel,influenced_by,barrett_magus,Yes
+levi_dogme_rituel,Eliphas Lévi's Dogme et Rituel,influenced,gd_founding,Yes
+houghton_spirit_drawings,Georgiana Houghton's Spirit Drawings,influenced_by,fox_sisters_hydesville,Yes
+houghton_spirit_drawings,Georgiana Houghton's Spirit Drawings,influenced,hilma_af_klint_paintings,Yes
+leland_aradia,Charles Leland's Aradia Published,influenced,murray_witch_cult,Yes
+leland_aradia,Charles Leland's Aradia Published,influenced,gardner_witchcraft_today,Yes
+gardner_witchcraft_today,Gerald Gardner's Witchcraft Today,influenced_by,witchcraft_act_repeal,Yes
+gardner_witchcraft_today,Gerald Gardner's Witchcraft Today,influenced_by,murray_witch_cult,Yes
+gardner_witchcraft_today,Gerald Gardner's Witchcraft Today,influenced_by,leland_aradia,Yes
+kenneth_anger_inauguration,Kenneth Anger's Inauguration of the Pleasure Dome,influenced_by,crowley_book_of_thoth,Yes
+roberts_seth_material,Jane Roberts Begins Seth Material,influenced_by,fox_sisters_hydesville,Yes
+jodorowsky_holy_mountain,Jodorowsky's The Holy Mountain,influenced_by,kenneth_anger_inauguration,Yes
+schneemann_interior_scroll,Carolee Schneemann's Interior Scroll,influenced_by,beuys_dead_hare,Yes
+carroll_liber_null,Peter Carroll's Liber Null,influenced_by,spare_book_of_pleasure,Yes
+carroll_liber_null,Peter Carroll's Liber Null,related_events,topy_founding,Yes
+alex_grey_sacred_mirrors,Alex Grey Begins Sacred Mirrors Series,influenced_by,klarwein_bitches_brew,Yes
+topy_founding,Genesis P-Orridge Founds Thee Temple ov Psychick Y,influenced_by,carroll_liber_null,Yes
+topy_founding,Genesis P-Orridge Founds Thee Temple ov Psychick Y,influenced_by,spare_book_of_pleasure,Yes
+the_craft_film,The Craft Film Release,influenced,instagram_witch_aesthetic,Yes
+chapel_sacred_mirrors,Chapel of Sacred Mirrors Opens,influenced_by,alex_grey_sacred_mirrors,Yes
+instagram_witch_aesthetic,Instagram Witch Aesthetic Emerges,influenced_by,the_craft_film,Yes
+instagram_witch_aesthetic,Instagram Witch Aesthetic Emerges,influenced,witchtok_trend,Yes
+ahs_coven,American Horror Story: Coven,influenced_by,the_craft_film,Yes
+ahs_coven,American Horror Story: Coven,influenced,witchtok_trend,Yes
+witchtok_trend,WitchTok Trend Peaks,influenced_by,instagram_witch_aesthetic,Yes
+witchtok_trend,WitchTok Trend Peaks,influenced_by,ahs_coven,Yes
+witch_hunt_reclamation,The Witch as Symbol of Anti-Patriarchal Resistance,influenced,witch_1968,Yes
+witch_hunt_reclamation,The Witch as Symbol of Anti-Patriarchal Resistance,influenced,dianic_wicca,Yes
+witch_hunt_reclamation,The Witch as Symbol of Anti-Patriarchal Resistance,influenced,hex_patriarchy,Yes
+fox_sisters_spiritualism,Fox Sisters & Birth of Progressive Spiritualism,influenced,suffrage_movement,Yes
+fox_sisters_spiritualism,Fox Sisters & Birth of Progressive Spiritualism,influenced,theosophy_social,Yes
+theosophy_anticolonial,Theosophical Society & Anti-Colonial Reform,influenced_by,fox_sisters_spiritualism,Yes
+theosophy_anticolonial,Theosophical Society & Anti-Colonial Reform,influenced,indian_independence,Yes
+theosophy_anticolonial,Theosophical Society & Anti-Colonial Reform,influenced,gardner_wicca,Yes
+gardner_wicca_politics,Gerald Gardner & Progressive Wiccan Ethics,influenced_by,theosophy_anticolonial,Yes
+gardner_wicca_politics,Gerald Gardner & Progressive Wiccan Ethics,influenced_by,gd_founding,Yes
+gardner_wicca_politics,Gerald Gardner & Progressive Wiccan Ethics,influenced,dianic_wicca,Yes
+gardner_wicca_politics,Gerald Gardner & Progressive Wiccan Ethics,influenced,spiral_dance,Yes
+gardner_wicca_politics,Gerald Gardner & Progressive Wiccan Ethics,influenced,reclaiming,Yes
+witch_1968,W.I.T.C.H. (Women's International Terrorist Conspi,influenced_by,witch_hunt_reclamation,Yes
+witch_1968,W.I.T.C.H. (Women's International Terrorist Conspi,influenced_by,fox_sisters_spiritualism,Yes
+witch_1968,W.I.T.C.H. (Women's International Terrorist Conspi,influenced,dianic_wicca,Yes
+witch_1968,W.I.T.C.H. (Women's International Terrorist Conspi,influenced,reclaiming,Yes
+witch_1968,W.I.T.C.H. (Women's International Terrorist Conspi,influenced,hex_patriarchy,Yes
+dianic_wicca,Z. Budapest Founds Dianic Wicca,influenced_by,witch_1968,Yes
+dianic_wicca,Z. Budapest Founds Dianic Wicca,influenced_by,gardner_wicca_politics,Yes
+dianic_wicca,Z. Budapest Founds Dianic Wicca,influenced,reclaiming,Yes
+dianic_wicca,Z. Budapest Founds Dianic Wicca,influenced,goddess_movement,Yes
+spiral_dance,Starhawk's 'The Spiral Dance' & Activist Witchcraf,influenced_by,dianic_wicca,Yes
+spiral_dance,Starhawk's 'The Spiral Dance' & Activist Witchcraf,influenced_by,gardner_wicca_politics,Yes
+spiral_dance,Starhawk's 'The Spiral Dance' & Activist Witchcraf,influenced,occupy_rituals,Yes
+spiral_dance,Starhawk's 'The Spiral Dance' & Activist Witchcraf,influenced,magic_resistance,Yes
+spiral_dance,Starhawk's 'The Spiral Dance' & Activist Witchcraf,related_events,wto_protests,Yes
+radical_faeries,Radical Faeries Founded,influenced_by,gardner_wicca_politics,Yes
+radical_faeries,Radical Faeries Founded,influenced_by,gay_liberation,Yes
+radical_faeries,Radical Faeries Founded,influenced,lgbtq_paganism,Yes
+pentacle_headstones,Pentacle Approved for Veteran Headstones,influenced_by,gardner_wicca_politics,Yes
+magic_resistance,#MagicResistance & Mass Binding Spells,influenced_by,witch_1968,Yes
+magic_resistance,#MagicResistance & Mass Binding Spells,influenced_by,spiral_dance,Yes
+magic_resistance,#MagicResistance & Mass Binding Spells,influenced,hex_patriarchy,Yes
+magic_resistance,#MagicResistance & Mass Binding Spells,influenced,witchtok_activism,Yes
+hex_patriarchy,Hex the Patriarchy Movement,influenced_by,witch_1968,Yes
+hex_patriarchy,Hex the Patriarchy Movement,influenced_by,magic_resistance,Yes
+hex_patriarchy,Hex the Patriarchy Movement,influenced,witchtok_activism,Yes
+occupy_rituals,Occupy Wall Street & Ritual Consensus,influenced_by,spiral_dance,Yes
+occupy_rituals,Occupy Wall Street & Ritual Consensus,influenced,climate_activism,Yes
+witchtok_activism,WitchTok Activism & Accessible Resistance,influenced_by,magic_resistance,Yes
+witchtok_activism,WitchTok Activism & Accessible Resistance,influenced_by,hex_patriarchy,Yes
+decolonial_paganism,Standing Rock & Decolonial Pagan Solidarity,influenced_by,spiral_dance,Yes
+decolonial_paganism,Standing Rock & Decolonial Pagan Solidarity,influenced_by,environmentalism,Yes
+stella_matutina,"Formation of the Stella Matutina, a splinter order",influenced_by,hermetic_order_golden_dawn_foundation,No
+stella_matutina,"Formation of the Stella Matutina, a splinter order",influenced_by,societas_rosicruciana_in_anglia,No
+stella_matutina,"Formation of the Stella Matutina, a splinter order",influenced,dion_fortune_society_inner_light,No
+stella_matutina,"Formation of the Stella Matutina, a splinter order",influenced,israel_regardie_golden_dawn_publications,No
+stella_matutina,"Formation of the Stella Matutina, a splinter order",related_events,hermetic_order_golden_dawn_foundation,No
+stella_matutina,"Formation of the Stella Matutina, a splinter order",related_events,alpha_et_omega_foundation,No
+a_a_founding,Foundation of the A∴A∴ (Astrum Argentum),influenced_by,golden_dawn_founding,No
+a_a_founding,Foundation of the A∴A∴ (Astrum Argentum),influenced_by,crowley_receives_book_of_the_law,No
+a_a_founding,Foundation of the A∴A∴ (Astrum Argentum),influenced,oto_crowley_leadership,No
+a_a_founding,Foundation of the A∴A∴ (Astrum Argentum),influenced,california_thelema_spread,No
+hermetic_texts,Marsilio Ficino's Latin Translation of the Corpus ,influenced_by,byzantine_scholars,No
+hermetic_texts,Marsilio Ficino's Latin Translation of the Corpus ,influenced_by,medieval_manuscripts,No
+hermetic_texts,Marsilio Ficino's Latin Translation of the Corpus ,influenced,fama_fraternitatis,No
+hermetic_texts,Marsilio Ficino's Latin Translation of the Corpus ,influenced,foundation_of_golden_dawn,No
+hermetic_texts,Marsilio Ficino's Latin Translation of the Corpus ,influenced,hermetic_order_of_the_golden_dawn,No
+key_of_solomon,Publication of S.L. MacGregor Mathers' English Tra,influenced_by,medieval_grimoire_tradition,No
+key_of_solomon,Publication of S.L. MacGregor Mathers' English Tra,influenced,golden_dawn_rituals,No
+key_of_solomon,Publication of S.L. MacGregor Mathers' English Tra,influenced,aleister_crowley_works,No
+key_of_solomon,Publication of S.L. MacGregor Mathers' English Tra,influenced,modern_ceremonial_magic,No
+hilma_af_klint_paintings,Hilma af Klint begins her major series of abstract,influenced_by,theosophical_society_founded,No
+hilma_af_klint_paintings,Hilma af Klint begins her major series of abstract,influenced_by,golden_dawn_founded,No
+suffrage_movement,Seneca Falls Convention and the Emergence of Suffr,influenced_by,abolitionist_movement,No
+suffrage_movement,Seneca Falls Convention and the Emergence of Suffr,influenced_by,second_great_awakening,No
+suffrage_movement,Seneca Falls Convention and the Emergence of Suffr,influenced,wiccan_emergence,No
+suffrage_movement,Seneca Falls Convention and the Emergence of Suffr,influenced,feminist_spirituality_movement,No
+suffrage_movement,Seneca Falls Convention and the Emergence of Suffr,related_events,spiritualist_movement,No
+suffrage_movement,Seneca Falls Convention and the Emergence of Suffr,related_events,theosophical_society_founding,No
+theosophy_social,Founding of the Theosophical Society in New York C,influenced_by,spiritualism_movement,No
+theosophy_social,Founding of the Theosophical Society in New York C,influenced_by,eastern_philosophy_transmission,No
+theosophy_social,Founding of the Theosophical Society in New York C,influenced,hermetic_order_golden_dawn_founding,No
+theosophy_social,Founding of the Theosophical Society in New York C,influenced,aryan_theosophical_journal,No
+theosophy_social,Founding of the Theosophical Society in New York C,influenced,blavatsky_secret_doctrine,No
+theosophy_social,Founding of the Theosophical Society in New York C,influenced,judge_theosophical_schism,No
+indian_independence,Independence and Partition of India,influenced_by,world_war_ii,No
+indian_independence,Independence and Partition of India,influenced,theosophical_society_founding,No
+indian_independence,Independence and Partition of India,influenced,beat_generation,No
+indian_independence,Independence and Partition of India,influenced,new_age_movement,No
+gardner_wicca,Gerald Gardner Publishes 'Witchcraft Today' and Es,influenced_by,new_forest_coven,No
+gardner_wicca,Gerald Gardner Publishes 'Witchcraft Today' and Es,influenced_by,murray_witch_cult,Yes
+gardner_wicca,Gerald Gardner Publishes 'Witchcraft Today' and Es,influenced,alexandrian_wicca,No
+gardner_wicca,Gerald Gardner Publishes 'Witchcraft Today' and Es,influenced,wiccan_publications,No
+gardner_wicca,Gerald Gardner Publishes 'Witchcraft Today' and Es,influenced,pagan_federation,No
+reclaiming,Formation of the Reclaiming Collective,influenced_by,feri_tradition,No
+reclaiming,Formation of the Reclaiming Collective,influenced_by,the_spiral_dance,No
+reclaiming,Formation of the Reclaiming Collective,influenced_by,womens_spirituality_movement,No
+reclaiming,Formation of the Reclaiming Collective,influenced,reclaiming_tradition,No
+reclaiming,Formation of the Reclaiming Collective,influenced,witchcamps,No
+reclaiming,Formation of the Reclaiming Collective,influenced,pagan_activism_networks,No
+goddess_movement,Emergence of the Goddess Movement as a distinct sp,influenced_by,publication_of_the_spiral_dance,No
+goddess_movement,Emergence of the Goddess Movement as a distinct sp,influenced_by,publication_of_the_feminine_mystique,No
+goddess_movement,Emergence of the Goddess Movement as a distinct sp,influenced_by,second_wave_feminism,No
+goddess_movement,Emergence of the Goddess Movement as a distinct sp,influenced,reclaiming_tradition_founded,No
+goddess_movement,Emergence of the Goddess Movement as a distinct sp,influenced,dianic_wicca_established,No
+goddess_movement,Emergence of the Goddess Movement as a distinct sp,influenced,women's_spirituality_conferences,No
+wto_protests,WTO Ministerial Conference Protests in Seattle,influenced_by,reclaiming_founded,No
+wto_protests,WTO Ministerial Conference Protests in Seattle,influenced_by,anti_nuclear_protests,No
+wto_protests,WTO Ministerial Conference Protests in Seattle,influenced,occupy_wall_street,No
+wto_protests,WTO Ministerial Conference Protests in Seattle,influenced,global_justice_movement,No
+lgbtq_paganism,Formation of the Radical Faeries and Emergence of ,influenced_by,stonewall_riots,No
+lgbtq_paganism,Formation of the Radical Faeries and Emergence of ,influenced_by,feminist_witchcraft,No
+lgbtq_paganism,Formation of the Radical Faeries and Emergence of ,influenced_by,gardnerian_wicca,No
+lgbtq_paganism,Formation of the Radical Faeries and Emergence of ,influenced,minoan_brotherhood_founded,No
+lgbtq_paganism,Formation of the Radical Faeries and Emergence of ,influenced,reclaiming_tradition,No
+lgbtq_paganism,Formation of the Radical Faeries and Emergence of ,influenced,queer_pagan_activism_1990s,No
+gay_liberation,Stonewall Uprising and the Birth of the Gay Libera,influenced_by,homophile_movement,No
+gay_liberation,Stonewall Uprising and the Birth of the Gay Libera,influenced_by,civil_rights_movement,No
+gay_liberation,Stonewall Uprising and the Birth of the Gay Libera,influenced_by,counterculture_1960s,No
+gay_liberation,Stonewall Uprising and the Birth of the Gay Libera,influenced,radical_faeries,Yes
+gay_liberation,Stonewall Uprising and the Birth of the Gay Libera,influenced,reclaiming_tradition,No
+gay_liberation,Stonewall Uprising and the Birth of the Gay Libera,influenced,queer_witchcraft,No
+gay_liberation,Stonewall Uprising and the Birth of the Gay Libera,related_events,stonewall_riots,No
+gay_liberation,Stonewall Uprising and the Birth of the Gay Libera,related_events,first_pride_march,No
+climate_activism,Earth Day 1990 and the Rise of Eco-Spiritual Activ,influenced_by,publication_of_earth_magic,No
+climate_activism,Earth Day 1990 and the Rise of Eco-Spiritual Activ,influenced_by,formation_of_circle_sanctuary,No
+climate_activism,Earth Day 1990 and the Rise of Eco-Spiritual Activ,influenced,reclaiming_collective_activism,No
+climate_activism,Earth Day 1990 and the Rise of Eco-Spiritual Activ,influenced,drumming_at_the_gaia_vortex,No
+environmentalism,Publication of Rachel Carson's Silent Spring and t,influenced_by,romanticism,No
+environmentalism,Publication of Rachel Carson's Silent Spring and t,influenced_by,thoreau_walden,No
+environmentalism,Publication of Rachel Carson's Silent Spring and t,influenced,gaia_hypothesis,No
+environmentalism,Publication of Rachel Carson's Silent Spring and t,influenced,earth_first,No
+environmentalism,Publication of Rachel Carson's Silent Spring and t,influenced,reclaiming_tradition,No

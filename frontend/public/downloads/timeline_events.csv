@@ -1,0 +1,111 @@
+ID,Year,Title,Primary Category,Secondary Category,Traditions,Figures Involved,Taxonomy Categories,Guide Relevance (Shigg),Guide Relevance (Cathleen),Guide Relevance (Katherine),Influenced By (count),Influenced (count),Related Events (count),Has Narrative Desc,Location,Importance,Is Pivotal
+gd_founding,1888,Hermetic Order of the Golden Dawn Founded,Organization,Lodge Founding,"golden_dawn, victorian_spiritualism","MacGregor Mathers, William Wynn Westcott, William Robert Woodman",6,low,medium,high,0,3,0,No,London,1,Yes
+crowley_book_of_law,1904,Aleister Crowley Receives The Book of the Law,Ritual,Channeled Text,"golden_dawn, victorian_spiritualism","Aleister Crowley, Rose Edith Kelly","6, 4",low,low,high,1,2,0,No,Cairo,1,Yes
+waite_smith_tarot,1909,Rider-Waite-Smith Tarot Published,Publication,Divination Deck,"golden_dawn, victorian_spiritualism","Arthur Edward Waite, Pamela Colman Smith","6, 5",medium,medium,high,1,1,0,No,London,1,Yes
+crowley_equinox_journal,1910,Crowley Starts 'The Equinox' Journal,Publication,Periodical,"thelema, golden_dawn",Aleister Crowley,"6, 12",low,medium,high,1,1,0,No,London,2,No
+waite_ceremonial_magic,1911,Waite's 'Book of Ceremonial Magic' Published,Publication,Reference Work,"golden_dawn, grimoire_tradition",Arthur Edward Waite,"1, 6",low,medium,high,1,0,1,No,,2,No
+crowley_oto_head,1912,Aleister Crowley Becomes Head of British OTO,Organization,Leadership Succession,"thelema, golden_dawn, grimoire_tradition","Aleister Crowley, Theodor Reuss","6, 12",low,medium,high,1,2,0,No,,2,No
+spare_book_of_pleasure,1913,Austin Osman Spare Publishes The Book of Pleasure,Publication,Magical Treatise,golden_dawn,Austin Osman Spare,"7, 12",low,low,high,0,0,0,No,London,2,No
+crowley_magick_book,1913,Crowley Publishes 'Magick' in The Equinox,Publication,Theory Publication,"thelema, golden_dawn",Aleister Crowley,"6, 12",low,medium,high,1,1,1,No,,1,Yes
+yeats_hour_glass,1913,Yeats' 'The Hour Glass' Esoteric Play,Publication,Drama,"golden_dawn, celtic_devotional",W.B. Yeats,"5, 6",medium,high,medium,1,1,0,No,Dublin,2,No
+wwi_outbreak_occult,1914,WWI Outbreak Disrupts Occult Networks,Legal,Social Upheaval,"british_folk_magic, wartime_domestic_life",,"8, 9",high,high,high,0,2,0,No,,1,Yes
+wwi_trench_magic,1914,Trench Folk Magic Emerges in WWI,Ritual,Folk Practice Adaptation,"british_folk_magic, wartime_domestic_life, traveller_charms, lorica_prayers",,"8, 9",high,high,medium,0,1,1,No,,2,No
+psychic_gazette_founded,1915,'The International Psychic Gazette' Founded,Publication,Periodical,victorian_spiritualism,,4,medium,high,medium,0,1,1,No,London,2,No
+trench_letter_charms,1916,Trench Letter Charm Networks,Ritual,Folk Practice,"british_folk_magic, wartime_domestic_life, lorica_prayers",,8,high,high,low,1,1,0,No,,2,No
+spiritualism_boom_1917,1917,Spiritualism Boom After Passchendaele,Organization,Social Movement,victorian_spiritualism,Arthur Conan Doyle,4,medium,high,medium,1,1,0,No,London,2,No
+moina_mathers_leadership,1918,Moina Mathers Takes Over Alpha et Omega,Organization,Leadership Succession,golden_dawn,"Moina Mathers, MacGregor Mathers",6,low,high,high,1,1,0,No,Paris,2,No
+fortune_psychic_crisis,1919,Dion Fortune's Psychic Crisis & Healing,Figure,Personal Transformation,"golden_dawn, victorian_spiritualism","Dion Fortune, Theodore Moriarty","4, 6",medium,high,high,1,2,1,No,,2,No
+gardner_returns_colonial,1919,Gerald Gardner Returns from Colonial Service,Figure,Personal Milestone,british_folk_magic,Gerald Gardner,8,medium,medium,low,0,1,0,No,,2,No
+witch_column_1920,1920,'The Witch' Column in John O'London's Weekly,Publication,Column,british_folk_magic,,"3, 13",medium,medium,medium,0,1,0,No,London,3,No
+abbey_thelema,1920,Crowley Founds Abbey of Thelema,Site,Temple Founding,golden_dawn,"Aleister Crowley, Leah Hirsig, Raoul Loveday","6, 7",low,low,medium,1,1,0,No,Cefalù,2,No
+murray_witch_cult,1921,Margaret Murray Publishes The Witch-Cult in Western Europe,Publication,Academic Study,"british_folk_magic, cunning_folk",Margaret Murray,"3, 8",medium,medium,high,0,1,0,No,Oxford,1,Yes
+fortune_joins_alpha_omega,1921,Dion Fortune Joins Alpha et Omega,Organization,Initiation,golden_dawn,"Dion Fortune, Moina Mathers",6,low,high,high,2,1,0,No,London,2,No
+crowley_expelled_italy,1922,Crowley Expelled from Italy,Legal,Expulsion,thelema,Aleister Crowley,"6, 10",low,low,medium,1,1,0,No,Cefalù,2,No
+fortune_psychic_defense_articles,1922,Dion Fortune's 'Psychic Self-Defense' Articles,Publication,Article Series,"golden_dawn, victorian_spiritualism",Dion Fortune,"4, 6",medium,high,high,1,1,0,No,,2,No
+abbey_thelema_raided,1923,Abbey of Thelema Raided by Mussolini's Police,Legal,Police Action,thelema,Aleister Crowley,"6, 10",low,low,medium,1,0,0,No,Cefalù,2,No
+inner_light,1924,Dion Fortune Founds Fraternity of Inner Light,Organization,Order Founding,"golden_dawn, victorian_spiritualism, celtic_devotional",Dion Fortune,"4, 6",medium,high,high,2,2,0,No,London,1,Yes
+yeats_vision,1925,W.B. Yeats Publishes A Vision,Publication,Magical Philosophy,"golden_dawn, celtic_devotional, victorian_spiritualism","W.B. Yeats, George Yeats","5, 6, 4",medium,medium,high,2,0,0,No,Dublin,2,No
+crowley_magick_theory_practice,1929,Crowley Publishes 'Magick in Theory and Practice',Publication,Comprehensive Theory,"thelema, golden_dawn",Aleister Crowley,"6, 12",low,medium,high,2,1,0,No,,1,Yes
+dion_fortune_psychic_defense,1930,Dion Fortune Publishes Psychic Self-Defense,Publication,Manual,"golden_dawn, victorian_spiritualism, british_folk_magic",Dion Fortune,"6, 4",high,high,high,2,1,0,No,London,1,Yes
+gardner_folklore_society,1934,Gerald Gardner Joins The Folklore Society,Figure,Academic Association,"british_folk_magic, cunning_folk",Gerald Gardner,"8, 13",medium,high,medium,1,1,0,No,,2,No
+fortune_mystical_qabalah,1935,Dion Fortune Publishes 'The Mystical Qabalah',Publication,Manual,"golden_dawn, grimoire_tradition",Dion Fortune,"6, 1",low,medium,high,2,0,0,No,London,1,Yes
+regardie_golden_dawn,1937,Israel Regardie Publishes Golden Dawn Materials,Publication,Ritual Compilation,golden_dawn,Israel Regardie,6,low,medium,high,1,0,0,No,London,1,Yes
+murray_god_of_witches,1939,Margaret Murray Publishes 'The God of the Witches',Publication,Academic Theory,"british_folk_magic, cunning_folk",Margaret Murray,"3, 8",medium,medium,high,1,1,0,No,,2,No
+gardner_new_forest_initiation,1939,Gardner's Claimed New Forest Coven Initiation,Ritual,Initiation,"british_folk_magic, cunning_folk","Gerald Gardner, Dorothy Clutterbuck",8,medium,high,medium,2,1,0,No,New Forest,1,Yes
+blitz_begins,1940,The London Blitz Begins,Legal,Historical Event,"british_folk_magic, wartime_domestic_life, postwar_makeshift_magic",,8,high,high,medium,0,1,1,No,London,1,Yes
+fortune_magical_battle,1940,Dion Fortune's 'Magical Battle of Britain' Letters Begin,Ritual,Group Working,"golden_dawn, victorian_spiritualism, wartime_domestic_life",Dion Fortune,"6, 8",high,high,high,2,0,1,No,London,1,Yes
+blitz_protective_magic,1940,Protective Folk Magic During the Blitz,Ritual,Folk Practice Adaptation,"british_folk_magic, wartime_domestic_life, kitchen_witchery, traveller_charms",,"8, 9",high,high,high,2,0,1,No,,2,No
+night_witches_588th,1942,The Night Witches: Soviet Women Reclaim the Witch Archetype,Organization,Military Unit / Archetypal Reclamation,"slavic_folk_magic, wartime_domestic_life, feminine_martial_archetypes","Marina Raskova, Yevdokiya Bershanskaya, Nadezhda Popova, Irina Sebrova","8, 9, 3",high,high,medium,0,0,2,No,Eastern Front,1,Yes
+crowley_book_of_thoth,1944,Crowley Publishes 'The Book of Thoth',Publication,Tarot System,"thelema, golden_dawn","Aleister Crowley, Lady Frieda Harris","6, 2",low,medium,high,2,0,0,No,,1,Yes
+dion_fortune_death,1946,Dion Fortune Dies,Figure,Death,"golden_dawn, victorian_spiritualism",Dion Fortune,"6, 4",medium,high,high,0,0,0,No,London,2,No
+crowley_death,1947,Aleister Crowley Dies,Figure,Death,"thelema, golden_dawn",Aleister Crowley,"6, 12",low,low,high,0,0,0,No,Hastings,2,No
+witchcraft_act_repeal,1951,Witchcraft Act of 1735 Repealed,Legal,Law Change,"british_folk_magic, cunning_folk",Gerald Gardner,"8, 6",medium,high,medium,0,1,0,No,London,1,Yes
+papyrus_ani,-1250,Papyrus of Ani (Egyptian Book of the Dead),Publication,Funerary Text,,"Egyptian scribes, Ani",1,low,low,high,0,1,0,No,Thebes,1,Yes
+orphic_tablets,-400,Orphic Gold Tablets,Ritual,Funerary Object,,Orphic mystery cult,1,low,low,high,0,0,0,No,Greece/Italy,2,No
+cantong_qi,142,Wei Boyang's Cantong Qi,Publication,Alchemical Text,,Wei Boyang,2,low,low,high,0,0,0,No,China,2,No
+zosimos_visions,300,Zosimos of Panopolis' Visions,Publication,Alchemical Text,,Zosimos of Panopolis,2,low,low,high,0,0,0,No,Alexandria,1,Yes
+pgm_papyri,200,Greek Magical Papyri (PGM),Publication,Magical Collection,british_folk_magic,Various practitioners,"8, 1",medium,medium,high,0,0,0,No,Egypt,1,Yes
+anglo_saxon_leechbooks,900,Anglo-Saxon Leechbooks,Publication,Medical-Magical Text,"british_folk_magic, cunning_folk",Unknown scribes,8,high,high,medium,0,0,0,No,England,2,No
+picatrix_translation,1050,Picatrix Translation,Publication,Grimoire,grimoire_tradition,Maslama al-Majriti,"1, 6",low,low,high,0,1,0,No,Al-Andalus,1,Yes
+sefer_hazohar,1250,Sefer HaZohar Publication,Publication,Mystical Text,"golden_dawn, grimoire_tradition",Moses de León,1,low,medium,high,0,1,0,No,Spain,1,Yes
+malleus_maleficarum,1486,Malleus Maleficarum Publication,Publication,Witch-Hunt Manual,,Heinrich Kramer,3,medium,high,high,0,0,0,No,Germany,1,Yes
+john_dee_monas,1564,John Dee's Monas Hieroglyphica,Publication,Hermetic Symbol,"golden_dawn, grimoire_tradition",John Dee,"1, 2",low,medium,high,0,1,0,No,Antwerp,2,No
+basil_valentine_keys,1599,Basil Valentine's Twelve Keys,Publication,Alchemical Text,,Basil Valentine,2,low,low,high,0,0,0,No,Germany,2,No
+atalanta_fugiens,1617,Michael Maier's Atalanta Fugiens,Publication,Alchemical Emblem Book,,Michael Maier,2,low,low,high,0,0,0,No,Oppenheim,1,Yes
+kircher_ars_magna,1646,Athanasius Kircher's Ars Magna Lucis et Umbrae,Publication,Encyclopedic Work,,Athanasius Kircher,1,low,low,high,0,0,0,No,Rome,2,No
+rosicrucian_revival,1750,Rosicrucian Revival in Germany,Organization,Order Founding,golden_dawn,Various Masonic reformers,6,low,medium,high,0,1,0,No,Germany,1,Yes
+fuseli_nightmare,1781,Henry Fuseli's The Nightmare,Publication,Painting,,Henry Fuseli,3,medium,high,medium,0,0,0,No,London,1,Yes
+lewis_monk,1796,Matthew Lewis' The Monk,Publication,Gothic Novel,,Matthew Lewis,3,medium,high,medium,0,0,0,No,London,2,No
+barrett_magus,1804,Francis Barrett's The Magus,Publication,Grimoire Compilation,"golden_dawn, grimoire_tradition",Francis Barrett,"6, 1",low,medium,high,0,2,0,No,London,2,No
+fox_sisters_hydesville,1848,Fox Sisters' Hydesville Rappings,Ritual,Séance,victorian_spiritualism,"Margaret Fox, Kate Fox, Leah Fox",4,medium,high,medium,0,1,0,No,Hydesville,1,Yes
+levi_dogme_rituel,1857,Eliphas Lévi's Dogme et Rituel,Publication,Magical Theory,"golden_dawn, grimoire_tradition",Eliphas Lévi,6,low,medium,high,1,1,0,No,Paris,1,Yes
+houghton_spirit_drawings,1865,Georgiana Houghton's Spirit Drawings,Ritual,Automatic Art,victorian_spiritualism,Georgiana Houghton,4,medium,high,high,1,1,0,No,London,2,No
+salon_rose_croix,1892,Salon de la Rose+Croix Opens,Organization,Art Exhibition,,"Joséphin Péladan, Fernand Khnopff, Jean Delville","5, 6",low,medium,high,0,0,0,No,Paris,1,Yes
+leland_aradia,1899,Charles Leland's Aradia Published,Publication,Folk Witchcraft,"british_folk_magic, cunning_folk","Charles Leland, Maddalena","8, 3",medium,high,high,0,2,0,No,Florence,1,Yes
+gardner_witchcraft_today,1954,Gerald Gardner's Witchcraft Today,Publication,Witchcraft Manual,"british_folk_magic, cunning_folk",Gerald Gardner,"8, 13",medium,high,medium,3,0,0,No,Isle of Man,1,Yes
+kenneth_anger_inauguration,1954,Kenneth Anger's Inauguration of the Pleasure Dome,Publication,Film,thelema,"Kenneth Anger, Marjorie Cameron","10, 6",low,medium,high,1,0,0,No,Hollywood,1,Yes
+roberts_seth_material,1963,Jane Roberts Begins Seth Material,Ritual,Channeling,victorian_spiritualism,"Jane Roberts, Robert Butts",4,medium,high,medium,1,0,0,No,Elmira,2,No
+beuys_dead_hare,1965,Joseph Beuys' How to Explain Pictures to a Dead Hare,Ritual,Performance,,Joseph Beuys,9,medium,high,medium,0,0,0,No,Düsseldorf,1,Yes
+church_of_satan,1966,Church of Satan Founded,Organization,Religious Organization,,Anton LaVey,"13, 10",low,medium,medium,0,0,0,No,San Francisco,1,Yes
+klarwein_bitches_brew,1969,Mati Klarwein's Bitches Brew Cover,Publication,Album Art,,"Mati Klarwein, Miles Davis",11,low,medium,medium,0,0,0,No,New York,2,No
+jodorowsky_holy_mountain,1973,Jodorowsky's The Holy Mountain,Publication,Film,thelema,Alejandro Jodorowsky,"10, 7",low,medium,high,1,0,0,No,Mexico City,1,Yes
+schneemann_interior_scroll,1975,Carolee Schneemann's Interior Scroll,Ritual,Performance,,Carolee Schneemann,9,medium,high,medium,1,0,0,No,East Hampton,1,Yes
+giger_necronomicon,1977,H.R. Giger's Necronomicon,Publication,Art Book,,H.R. Giger,11,low,medium,high,0,0,0,No,Zurich,1,Yes
+carroll_liber_null,1978,Peter Carroll's Liber Null,Publication,Magical Manual,,Peter Carroll,12,low,medium,high,1,0,1,No,London,1,Yes
+alex_grey_sacred_mirrors,1980,Alex Grey Begins Sacred Mirrors Series,Publication,Painting Series,,Alex Grey,11,low,medium,medium,1,0,0,No,New York,1,Yes
+topy_founding,1981,Genesis P-Orridge Founds Thee Temple ov Psychick Youth,Organization,Magical Network,,Genesis P-Orridge,12,low,medium,medium,2,0,0,No,London,1,Yes
+the_craft_film,1996,The Craft Film Release,Publication,Film,,Andrew Fleming,13,medium,high,low,0,1,0,No,Hollywood,1,Yes
+chapel_sacred_mirrors,2004,Chapel of Sacred Mirrors Opens,Site,Art Museum/Temple,,"Alex Grey, Allyson Grey",11,low,medium,medium,1,0,0,No,Wappingers Falls,2,No
+instagram_witch_aesthetic,2010,Instagram Witch Aesthetic Emerges,Organization,Social Media Movement,,Various influencers,13,medium,medium,low,1,1,0,No,Global,1,Yes
+ahs_coven,2013,American Horror Story: Coven,Publication,Television Series,,Ryan Murphy,"13, 10",medium,medium,low,1,1,0,No,Los Angeles,2,No
+witchtok_trend,2020,WitchTok Trend Peaks,Organization,Social Media Movement,,Various creators,13,medium,medium,low,2,0,0,No,Global,1,Yes
+witch_hunt_reclamation,1600,The Witch as Symbol of Anti-Patriarchal Resistance,Figure,Cultural Symbol,"folk_magic, cunning_craft","Accused 'witches', Midwives, Herbal healers","14, 8",medium,high,high,0,3,0,No,Europe,1,Yes
+fox_sisters_spiritualism,1848,Fox Sisters & Birth of Progressive Spiritualism,Organization,Movement Founding,"spiritualism, american_spiritualism","Kate Fox, Margaret Fox, Victoria Woodhull, Lydia Pinkham, Sojourner Truth","14, 4",high,high,medium,0,2,0,No,"Hydesville, New York",1,Yes
+theosophy_anticolonial,1875,Theosophical Society & Anti-Colonial Reform,Organization,Social Movement,"theosophy, eastern_philosophy","Helena Blavatsky, Annie Besant, Henry Steel Olcott, Mohandas Gandhi, Jiddu Krishnamurti","14, 6",low,medium,high,1,2,0,No,"New York & Adyar, India",1,Yes
+gardner_wicca_politics,1954,Gerald Gardner & Progressive Wiccan Ethics,Publication,Religious Movement,"gardnerian_wicca, alexandrian_wicca","Gerald Gardner, Doreen Valiente, Alex Sanders, Sybil Leek","14, 8",high,high,medium,2,3,0,No,England,1,Yes
+witch_1968,1968,W.I.T.C.H. (Women's International Terrorist Conspiracy from Hell),Protest,Feminist Action Group,feminist_spirituality,"Robin Morgan, Florika, Naomi Jaffe, Peggy Dobbins",14,medium,high,medium,2,3,0,No,New York City,1,Yes
+dianic_wicca,1971,Z. Budapest Founds Dianic Wicca,Organization,Feminist Tradition,"dianic_wicca, feminist_witchcraft","Zsuzsanna Budapest, Ruth Barrett, Falcon River","14, 8",high,high,medium,2,2,0,No,Los Angeles,1,Yes
+spiral_dance,1979,Starhawk's 'The Spiral Dance' & Activist Witchcraft,Publication,Movement Text,"reclaiming, ecofeminism","Starhawk (Miriam Simos), Reclaiming Collective, Rose May Dance","14, 8",high,high,medium,2,2,1,No,San Francisco,1,Yes
+radical_faeries,1979,Radical Faeries Founded,Organization,Queer Spiritual Community,"radical_faeries, queer_paganism","Harry Hay, Don Kilhefner, Mitch Walker, John Burnside","14, 9",medium,high,low,2,1,0,No,United States,1,Yes
+pentacle_headstones,2007,Pentacle Approved for Veteran Headstones,Legal,Religious Freedom Victory,"wicca, modern_paganism","Selena Fox, Circle Sanctuary, Roberta Stewart, Patrick Stewart (fallen soldier)",14,low,medium,medium,1,0,0,No,Washington D.C.,1,Yes
+magic_resistance,2017,#MagicResistance & Mass Binding Spells,Protest,Digital Activism,"chaos_magic, eclectic_witchcraft","Michael M. Hughes, Various online practitioners","14, 12",low,high,medium,2,2,0,No,Global,1,Yes
+hex_patriarchy,2018,Hex the Patriarchy Movement,Protest,Feminist Activism,"feminist_witchcraft, folk_magic","Various activists, Catland Books, Dakota Bracciale",14,low,high,medium,2,1,0,No,"Brooklyn, New York",2,No
+occupy_rituals,2011,Occupy Wall Street & Ritual Consensus,Protest,Movement Ritual,"reclaiming, activist_spirituality","Starhawk, Various pagan activists, Occupy organizers","14, 9",low,high,low,1,1,0,No,New York City,2,No
+witchtok_activism,2020,WitchTok Activism & Accessible Resistance,Organization,Digital Movement,"eclectic_witchcraft, pop_witchcraft","Various TikTok creators, WitchTok community","14, 13",medium,medium,low,2,0,0,No,Global,2,No
+decolonial_paganism,2016,Standing Rock & Decolonial Pagan Solidarity,Protest,Environmental/Indigenous Rights,"earth_spirituality, modern_paganism","Standing Rock Sioux, Various pagan groups, Water Protectors",14,medium,medium,low,2,0,0,No,"Standing Rock, North Dakota",2,No
+stella_matutina,1903,"Formation of the Stella Matutina, a splinter order from the Hermetic Order of the Golden Dawn",Organization,Esoteric Order,"golden_dawn, ceremonial_magic, christian_mysticism","Dr. Robert Felkin, J.W. Brodie-Innes, Dion Fortune, Israel Regardie",6,medium,high,medium,2,2,2,No,London,2,No
+a_a_founding,1907,Foundation of the A∴A∴ (Astrum Argentum),Organization,Magical Order,thelema,"Aleister Crowley, George Cecil Jones",6,high,medium,low,2,2,0,No,London,2,Yes
+hermetic_texts,1460,Marsilio Ficino's Latin Translation of the Corpus Hermeticum,Publication,Text Translation,"hermeticism, renaissance_magic, alchemy, rosicrucianism, golden_dawn","Marsilio Ficino, Cosimo de' Medici, Hermes Trismegistus (legendary)",6,high,medium,medium,2,3,0,No,Florence,1,Yes
+key_of_solomon,1889,Publication of S.L. MacGregor Mathers' English Translation of The Key of Solomon,Publication,Grimoire,"golden_dawn, ceremonial_magic",S.L. MacGregor Mathers,"4, 5, 6",high,medium,low,1,3,0,No,London,1,Yes
+hilma_af_klint_paintings,1906,Hilma af Klint begins her major series of abstract spiritual paintings,Art/Creativity,Visual Art,"theosophy, rosicrucianism, victorian_spiritualism",Hilma af Klint,"4, 13",medium,high,medium,2,0,0,No,Stockholm,2,Yes
+suffrage_movement,1848,Seneca Falls Convention and the Emergence of Suffrage Activism,Movement,Political/Activist Movement,"victorian_spiritualism, theosophy","Elizabeth Cady Stanton, Lucretia Mott, Susan B. Anthony, Matilda Joslyn Gage",12,medium,high,medium,2,2,2,No,Seneca Falls,2,Yes
+theosophy_social,1875,Founding of the Theosophical Society in New York City,Organization,Esoteric Society,theosophy,"Helena Petrovna Blavatsky, Henry Steel Olcott, William Quan Judge","6, 12",medium,high,medium,2,4,0,No,New York City,1,Yes
+indian_independence,1947,Independence and Partition of India,Legal,Political Decolonization,,"Mohandas Karamchand Gandhi, Jawaharlal Nehru, Muhammad Ali Jinnah, Louis Mountbatten",12,medium,low,medium,1,3,0,No,New Delhi,1,Yes
+gardner_wicca,1954,Gerald Gardner Publishes 'Witchcraft Today' and Establishes Modern Wicca,Publication,Foundational Text,"wicca, victorian_occultism","Gerald Gardner, Doreen Valiente, Dorothy Clutterbuck (alleged initiator)","6, 7",high,medium,low,2,3,0,No,London,1,Yes
+reclaiming,1979,Formation of the Reclaiming Collective,Organization,Wiccan Tradition / Activist Collective,"wicca, feminist_spirituality, dianic_wicca","Starhawk (Miriam Simos), Diane Baker","7, 12",medium,high,medium,3,3,0,No,San Francisco,2,Yes
+goddess_movement,1971,Emergence of the Goddess Movement as a distinct spiritual and feminist current,Movement,Feminist Spirituality,"wicca, dianic_wicca, feminist_spirituality, neopaganism","Z. Budapest, Starhawk, Carol P. Christ, Merlin Stone","7, 12",medium,high,medium,3,3,0,No,United States,2,Yes
+wto_protests,1999,WTO Ministerial Conference Protests in Seattle,Movement,Political Activism,"reclaiming, political_activist_magic, contemporary_paganism","Starhawk, David Solnit",12,high,medium,medium,2,2,0,No,Seattle,2,Yes
+lgbtq_paganism,1979,Formation of the Radical Faeries and Emergence of LGBTQ Paganism as Distinct Movement,Movement,Queer Spirituality Movement,"wicca, druidry, goddess_spirituality","Harry Hay, Mitch Walker, Don Kilhefner","7, 12, 13",high,medium,medium,3,3,0,No,Multiple locations,2,Yes
+gay_liberation,1969,Stonewall Uprising and the Birth of the Gay Liberation Movement,Movement,Social/Political Movement,,"Marsha P. Johnson, Sylvia Rivera, Stormé DeLarverie",12,high,medium,medium,3,3,2,No,New York City,1,Yes
+climate_activism,1990,Earth Day 1990 and the Rise of Eco-Spiritual Activism,Movement,Political/Activist Magic,"wicca, neopaganism, druidry, eco_spirituality","Starhawk, Selena Fox","7, 12",medium,high,medium,2,2,0,No,Global,2,Yes
+environmentalism,1962,Publication of Rachel Carson's Silent Spring and the Emergence of Modern Environmentalism,Movement,Ecological Consciousness,"wicca, druidry, eco-paganism",Rachel Carson,"7, 12",medium,high,medium,2,3,0,No,Boston,1,Yes
