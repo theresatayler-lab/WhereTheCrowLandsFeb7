@@ -451,47 +451,71 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick }) => {
                       </div>
                     )}
 
-                    {/* Figures */}
+                    {/* Figures - CLICKABLE */}
                     {event.figures_involved?.length > 0 && (
                       <div>
                         <h4 className="font-cinzel text-xs text-gold/70 uppercase mb-1">Key Figures</h4>
                         <div className="flex flex-wrap gap-2">
                           {event.figures_involved.map((figure, i) => (
-                            <span key={i} className="px-2 py-0.5 bg-navy-dark/50 rounded text-xs text-cream/80 font-montserrat">
+                            <button 
+                              key={i} 
+                              className="px-2 py-0.5 bg-navy-dark/50 hover:bg-navy-dark/80 hover:ring-1 hover:ring-gold/40 rounded text-xs text-cream/80 hover:text-cream font-montserrat transition-all cursor-pointer"
+                              onClick={(e) => handleFigureClick(e, figure)}
+                              title={`Search for ${figure}`}
+                            >
                               {figure}
-                            </span>
+                            </button>
                           ))}
                         </div>
                       </div>
                     )}
 
-                    {/* Traditions */}
+                    {/* Traditions - CLICKABLE */}
                     {event.traditions?.length > 0 && (
                       <div>
                         <h4 className="font-cinzel text-xs text-gold/70 uppercase mb-1">Traditions</h4>
                         <div className="flex flex-wrap gap-2">
                           {event.traditions.map((tradition, i) => (
-                            <span key={i} className="px-2 py-0.5 bg-gold/10 border border-gold/20 rounded text-xs text-gold/80 font-montserrat">
+                            <button 
+                              key={i} 
+                              className="px-2 py-0.5 bg-gold/10 hover:bg-gold/25 border border-gold/20 hover:border-gold/50 rounded text-xs text-gold/80 hover:text-gold font-montserrat transition-all cursor-pointer"
+                              onClick={(e) => handleTraditionClick(e, tradition)}
+                              title={`Filter by ${tradition.replace(/_/g, ' ')}`}
+                            >
                               {tradition.replace(/_/g, ' ')}
-                            </span>
+                            </button>
                           ))}
                         </div>
                       </div>
                     )}
 
-                    {/* Sources */}
+                    {/* Sources - with clickable links */}
                     {event.sources?.length > 0 && (
                       <div>
                         <h4 className="font-cinzel text-xs text-gold/70 uppercase mb-1">Sources</h4>
                         <div className="space-y-1">
-                          {event.sources.slice(0, 2).map((source, i) => (
+                          {event.sources.slice(0, 3).map((source, i) => (
                             <div key={i} className="flex items-start gap-2 text-xs text-cream/60 font-montserrat">
                               <BookOpen size={12} className="mt-0.5 flex-shrink-0" />
-                              <span>
-                                {source.author && `${source.author}, `}
-                                <em>{source.title}</em>
-                                {source.year && ` (${source.year})`}
-                              </span>
+                              {source.url ? (
+                                <a 
+                                  href={source.url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="hover:text-gold transition-colors underline underline-offset-2"
+                                  onClick={(e) => e.stopPropagation()}
+                                >
+                                  {source.author && `${source.author}, `}
+                                  <em>{source.title}</em>
+                                  {source.year && ` (${source.year})`}
+                                </a>
+                              ) : (
+                                <span>
+                                  {source.author && `${source.author}, `}
+                                  <em>{source.title}</em>
+                                  {source.year && ` (${source.year})`}
+                                </span>
+                              )}
                             </div>
                           ))}
                         </div>
