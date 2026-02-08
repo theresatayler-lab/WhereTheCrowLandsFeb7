@@ -684,6 +684,68 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick }) => {
                         <p className="font-montserrat text-sm text-cream/70 leading-relaxed">{event.expanded_context}</p>
                       </div>
                     )}
+
+                    {/* Connections - Influenced By & Influenced */}
+                    {(event.connections?.influenced_by?.length > 0 || event.connections?.influenced?.length > 0) && (
+                      <div className="mt-4 pt-3 border-t border-gold/10">
+                        <h4 className="font-cinzel text-xs text-gold/70 uppercase mb-2">Connections</h4>
+                        <div className="space-y-2">
+                          {/* Influenced By */}
+                          {event.connections?.influenced_by?.length > 0 && (
+                            <div className="flex flex-wrap items-center gap-2">
+                              <span className="text-[10px] text-cream/40 font-montserrat uppercase">Influenced by:</span>
+                              {event.connections.influenced_by.slice(0, 4).map((connId, i) => {
+                                const connectedEvent = allEvents?.find(e => e.id === connId);
+                                if (connectedEvent) {
+                                  return (
+                                    <button
+                                      key={i}
+                                      className="px-2 py-0.5 bg-crimson/10 hover:bg-crimson/25 border border-crimson/30 hover:border-crimson/50 rounded text-[11px] text-cream/70 hover:text-cream font-montserrat transition-all"
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        onNavigateToEvent?.(connectedEvent.id);
+                                      }}
+                                      title={`${connectedEvent.title} (${connectedEvent.year})`}
+                                    >
+                                      {connectedEvent.title.length > 30 ? connectedEvent.title.slice(0, 30) + '...' : connectedEvent.title}
+                                      <span className="text-cream/40 ml-1">({connectedEvent.year})</span>
+                                    </button>
+                                  );
+                                }
+                                return null;
+                              })}
+                            </div>
+                          )}
+                          
+                          {/* Influenced */}
+                          {event.connections?.influenced?.length > 0 && (
+                            <div className="flex flex-wrap items-center gap-2">
+                              <span className="text-[10px] text-cream/40 font-montserrat uppercase">Influenced:</span>
+                              {event.connections.influenced.slice(0, 4).map((connId, i) => {
+                                const connectedEvent = allEvents?.find(e => e.id === connId);
+                                if (connectedEvent) {
+                                  return (
+                                    <button
+                                      key={i}
+                                      className="px-2 py-0.5 bg-gold/10 hover:bg-gold/25 border border-gold/30 hover:border-gold/50 rounded text-[11px] text-cream/70 hover:text-cream font-montserrat transition-all"
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        onNavigateToEvent?.(connectedEvent.id);
+                                      }}
+                                      title={`${connectedEvent.title} (${connectedEvent.year})`}
+                                    >
+                                      {connectedEvent.title.length > 30 ? connectedEvent.title.slice(0, 30) + '...' : connectedEvent.title}
+                                      <span className="text-cream/40 ml-1">({connectedEvent.year})</span>
+                                    </button>
+                                  );
+                                }
+                                return null;
+                              })}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )}
                     
                     {/* Learn More Links */}
                     {event.learn_more_links?.length > 0 && (
