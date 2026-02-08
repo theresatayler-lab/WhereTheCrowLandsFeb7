@@ -9,16 +9,36 @@ Build "Where The Crowlands," a sophisticated full-stack application for creating
 - **Database**: MongoDB + GridFS (for images)
 - **AI**: Tiered dual-model system
   - DeepSeek: Research, facts, source verification
-  - Claude Sonnet: Creative writing, storytelling, guide voices
+  - Claude Sonnet: Creative writing, storytelling, guide voices (PRIMARY)
   - Claude Opus: Deep reasoning (Deep tier only)
-  - GPT-4o: Fallback only
+  - GPT-4o: Fallback only (when Claude unavailable)
 
 ## AI Tier System (Implemented Feb 2025)
-- **Quick Mode**: DeepSeek → Sonnet (~20s, ~$0.02/spell)
-- **Standard Mode**: DeepSeek → Sonnet storytelling → Sonnet writing (~40s, ~$0.05/spell)
-- **Deep Mode**: DeepSeek → Opus reasoning → Sonnet storytelling → Sonnet writing (~75s, ~$0.15/spell)
+- **Quick Mode**: DeepSeek → Claude Sonnet (~20s, ~$0.02/spell)
+- **Standard Mode**: DeepSeek → Claude Sonnet storytelling → Claude Sonnet writing (~40s, ~$0.05/spell)
+- **Deep Mode**: DeepSeek → Opus reasoning → Claude Sonnet storytelling → Claude Sonnet writing (~75s, ~$0.15/spell)
 
 ## What's Been Implemented
+
+### Session: February 2025 - Claude Sonnet as Primary Writer ✅
+- **Switched spell_writer to Claude Sonnet as primary model**
+  - Updated `llm_providers.py`: spell_writer now routes to `anthropic/claude-sonnet-4-20250514`
+  - Updated `pipeline_blocks.py`: default writer_model is now Claude Sonnet
+  - Fixed async/sync bug: Claude calls now use `await` with `AsyncAnthropic` client
+  - GPT-4o remains as automatic fallback if ANTHROPIC_API_KEY not set or Claude fails
+  
+- **Always initialize Claude client**
+  - Server.py now creates `AsyncAnthropic` client for all tiers (not just DEEP)
+  - Proper fallback chain: Claude → GPT-4o with logging
+  
+- **Created CLAUDE.md documentation**
+  - Comprehensive guide for AI assistants working on codebase
+  - Includes guide personas, design system, directory structure, API reference
+  - Located at `/app/CLAUDE.md`
+
+- **Verified Claude is being used**
+  - Backend logs show: `[WRITER_BLOCKS] Using Claude model: claude-sonnet-4-20250514`
+  - Spell generation working end-to-end with Claude
 
 ### Session: February 2025 - Timeline Network View & Tiered AI System ✅
 - **Fixed Graph API Bug** — Backend `get_connection_graph()` was failing due to mixed figure formats
@@ -41,13 +61,13 @@ Build "Where The Crowlands," a sophisticated full-stack application for creating
   - Three tiers: QUICK (15-25s), STANDARD (30-45s), DEEP (60-90s)
   - Tier selection based on: persona, intention keywords, user subscription, first spell bonus
   - Added `tier_preference` field to `SpellRequestV3` for explicit user override
-  - Claude client initialized when DEEP tier or Claude writer selected
+  - Claude client initialized for all spell generation
   - Metadata now includes tier info: `tier.selected`, `tier.reason`, `tier.expected_time_seconds`
 
 - **Pipeline Enhancements** ✅
   - `BlocksSpellPipeline` now accepts `tier_config` and `claude_client`
   - Archivist stage uses tier's `research_tokens` and `research_temperature`
-  - Writer stage can route to Claude or OpenAI based on `writer_model`
+  - Writer stage routes to Claude (primary) or OpenAI (fallback) based on availability
   - Model selection logged for debugging
 
 - **Files Modified:**
