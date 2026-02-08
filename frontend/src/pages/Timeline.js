@@ -462,7 +462,10 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick }) => {
           {/* Description - takes most space */}
           <div className="flex-1">
             <p className="font-montserrat text-sm text-cream/85 leading-relaxed mb-3">
-              {isExpanded ? event.description : event.description?.slice(0, 200) + (event.description?.length > 200 ? '...' : '')}
+              {/* Show narrative description if enhanced, otherwise original */}
+              {isExpanded 
+                ? (event.description_narrative || event.description)
+                : (event.description_narrative || event.description)?.slice(0, 200) + ((event.description_narrative || event.description)?.length > 200 ? '...' : '')}
             </p>
 
             {/* Guide Relevance Dots */}
