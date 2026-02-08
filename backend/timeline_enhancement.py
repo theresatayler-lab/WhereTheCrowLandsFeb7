@@ -27,7 +27,14 @@ EVENT TO RESEARCH:
 - Current Traditions: {traditions}
 
 ## YOUR TASK
-Enhance this event with verified research. Output STRICT JSON.
+Enhance this event with VERIFIED research. Output STRICT JSON.
+
+## CRITICAL SOURCE RULES
+1. ONLY cite sources you are CERTAIN exist (real books, real authors)
+2. Include ISBN when possible for books
+3. For URLs, ONLY use trusted domains: archive.org, books.google.com, jstor.org, worldcat.org, or .edu sites
+4. If you cannot verify a source exists, DO NOT include it
+5. Mark quality_tier honestly - if it's folklore, say so
 
 ## OUTPUT SCHEMA
 {{
@@ -36,7 +43,8 @@ Enhance this event with verified research. Output STRICT JSON.
             "fact": "Specific factual claim about this event",
             "source_ref": "source_id",
             "confidence": "high|medium|low",
-            "claim_type": "historical|academic|folklore"
+            "claim_type": "historical|academic|folklore",
+            "verification_note": "How this can be verified"
         }}
     ],
     "figures_involved": [
@@ -50,17 +58,21 @@ Enhance this event with verified research. Output STRICT JSON.
     "sources": [
         {{
             "source_id": "unique_id",
-            "author": "Author name",
-            "work": "Book/article title",
+            "author": "Author name (must be real person)",
+            "work": "Exact book/article title (must exist)",
             "year": 1900,
-            "quality_tier": "academic_primary|folk_archive|practitioner_primary|modern_scholar_practitioner",
-            "url": "URL if available, null if not"
+            "isbn": "ISBN if known, null if not",
+            "quality_tier": "academic_primary|folk_archive|practitioner_primary|modern_scholar_practitioner|community_tradition",
+            "url": "ONLY archive.org, books.google.com, jstor.org, worldcat.org, or .edu URLs - null if none available",
+            "relevance": "Why this source matters for this event",
+            "verification_status": "verified|likely_exists|traditional_knowledge"
         }}
     ],
     "connections": {{
         "influenced_by": ["event_ids this was influenced by"],
         "influenced": ["event_ids this influenced"],
         "related_traditions": ["tradition tags"],
+        "related_figures": ["other historical figures connected"],
         "thematic_links": ["thematic keywords"]
     }},
     "guide_relevance": {{
@@ -74,7 +86,7 @@ Enhance this event with verified research. Output STRICT JSON.
         "country": "Country",
         "significance": "Why this location matters"
     }},
-    "accuracy_notes": "Any caveats or uncertainties about this event"
+    "accuracy_notes": "Any caveats, uncertainties, or areas where folklore differs from historical record"
 }}
 
 ## RULES
