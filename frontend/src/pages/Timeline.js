@@ -343,13 +343,15 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick }) => {
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2 mb-3">
           <div className="flex items-start gap-3 flex-1">
-            {/* Taxonomy Icon */}
-            <div 
-              className="p-2 rounded-lg flex-shrink-0"
+            {/* Taxonomy Icon - CLICKABLE */}
+            <button 
+              className="p-2 rounded-lg flex-shrink-0 hover:ring-2 hover:ring-gold/50 transition-all cursor-pointer"
               style={{ backgroundColor: `${taxonomyData.color}20` }}
+              onClick={(e) => handleTaxonomyClick(e, primaryTaxonomy)}
+              title={`Filter by ${taxonomyData.name}`}
             >
               <TaxonomyIcon size={18} style={{ color: taxonomyData.color }} />
-            </div>
+            </button>
             
             <div className="flex-1 min-w-0">
               <h3 className="font-phantasmagoria text-lg sm:text-xl text-gold leading-tight" style={{ textShadow: '0 2px 10px rgba(212, 168, 75, 0.3)' }}>
