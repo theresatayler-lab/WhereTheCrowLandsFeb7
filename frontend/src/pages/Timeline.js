@@ -1019,9 +1019,22 @@ export const Timeline = () => {
       
       const data = await timelineAPI.getEventsV2(filterParams);
       setEvents(data);
+      
+      // Show feedback for search results
+      if (filters.search && data.length === 0) {
+        toast.error(`No events found for "${filters.search}"`, {
+          duration: 3000,
+          description: "Try a different search term or browse by era"
+        });
+      } else if (filters.search && data.length > 0) {
+        toast.success(`Found ${data.length} event${data.length !== 1 ? 's' : ''} for "${filters.search}"`, {
+          duration: 2000
+        });
+      }
     } catch (err) {
       console.error('Failed to fetch timeline:', err);
       setError('Failed to load timeline events');
+      toast.error("Failed to load timeline", { description: "Please try again" });
       // Fallback to legacy API
       try {
         const legacyData = await timelineAPI.getAll();
