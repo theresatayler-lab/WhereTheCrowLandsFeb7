@@ -747,6 +747,67 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick, allEvents
                         </div>
                       </div>
                     )}
+
+                    {/* Related Events - Based on shared traditions/figures */}
+                    {allEvents && allEvents.length > 0 && (
+                      <div className="mt-4 pt-3 border-t border-gold/10">
+                        <h4 className="font-cinzel text-xs text-gold/70 uppercase mb-2">Related Events</h4>
+                        <div className="flex flex-wrap gap-2">
+                          {(() => {
+                            // Find related events based on shared traditions
+                            const eventTraditions = event.traditions || [];
+                            const eventFigures = (event.figures_involved || []).map(f => 
+                              typeof f === 'object' ? f.name : f
+                            );
+                            
+                            const related = allEvents
+                              .filter(e => e.id !== event.id)
+                              .map(e => {
+                                let score = 0;
+                                // Score by shared traditions
+                                const eTraditions = e.traditions || [];
+                                score += eventTraditions.filter(t => eTraditions.includes(t)).length * 2;
+                                // Score by shared figures
+                                const eFigures = (e.figures_involved || []).map(f => 
+                                  typeof f === 'object' ? f.name : f
+                                );
+                                score += eventFigures.filter(f => eFigures.includes(f)).length * 3;
+                                // Score by same category
+                                if (e.taxonomy_categories?.some(c => event.taxonomy_categories?.includes(c))) {
+                                  score += 1;
+                                }
+                                return { ...e, _relationScore: score };
+                              })
+                              .filter(e => e._relationScore > 0)
+                              .sort((a, b) => b._relationScore - a._relationScore)
+                              .slice(0, 4);
+                            
+                            if (related.length === 0) {
+                              return (
+                                <span className="text-xs text-cream/40 font-montserrat">
+                                  No closely related events found
+                                </span>
+                              );
+                            }
+                            
+                            return related.map((relEvent, i) => (
+                              <button
+                                key={i}
+                                className="px-2 py-1 bg-navy-dark/50 hover:bg-navy-dark/80 border border-cream/10 hover:border-gold/30 rounded text-[11px] text-cream/60 hover:text-cream font-montserrat transition-all"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  onNavigateToEvent?.(relEvent.id);
+                                }}
+                                title={`${relEvent.title} - ${relEvent._relationScore} connection points`}
+                              >
+                                {relEvent.title.length > 35 ? relEvent.title.slice(0, 35) + '...' : relEvent.title}
+                                <span className="text-cream/30 ml-1">({relEvent.year})</span>
+                              </button>
+                            ));
+                          })()}
+                        </div>
+                      </div>
+                    )}
                     
                     {/* Learn More Links */}
                     {event.learn_more_links?.length > 0 && (
