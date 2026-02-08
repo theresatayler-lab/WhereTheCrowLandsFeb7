@@ -1245,6 +1245,22 @@ export const Timeline = () => {
                     onToggle={() => setExpandedEvent(expandedEvent === event.id ? null : event.id)}
                     view="timeline"
                     onFilterClick={handleFilterClick}
+                    allEvents={events}
+                    onNavigateToEvent={(eventId) => {
+                      // Clear filters and navigate to event
+                      setFilters({});
+                      setActiveEra(null);
+                      setActiveDecade(null);
+                      setExpandedEvent(eventId);
+                      toast.info("Navigating to connected event");
+                      // Scroll to the event after a brief delay
+                      setTimeout(() => {
+                        const element = document.querySelector(`[data-event-id="${eventId}"]`);
+                        if (element) {
+                          element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }
+                      }, 300);
+                    }}
                   />
                 ))}
               </div>
@@ -1262,6 +1278,20 @@ export const Timeline = () => {
                   onToggle={() => setExpandedEvent(expandedEvent === event.id ? null : event.id)}
                   view="grid"
                   onFilterClick={handleFilterClick}
+                  allEvents={events}
+                  onNavigateToEvent={(eventId) => {
+                    setFilters({});
+                    setActiveEra(null);
+                    setActiveDecade(null);
+                    setExpandedEvent(eventId);
+                    toast.info("Navigating to connected event");
+                    setTimeout(() => {
+                      const element = document.querySelector(`[data-event-id="${eventId}"]`);
+                      if (element) {
+                        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                      }
+                    }, 300);
+                  }}
                 />
               ))}
             </div>
