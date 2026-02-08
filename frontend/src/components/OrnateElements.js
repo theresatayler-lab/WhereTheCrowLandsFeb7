@@ -531,13 +531,14 @@ export const PageBorderFrame = ({ children, className = '' }) => (
 );
 
 // OrnateCard - dark theme card
-export const OrnateCard = ({ children, className = '', hover = true }) => (
+export const OrnateCard = ({ children, className = '', hover = true, onClick }) => (
   <div 
     className={`relative p-5 sm:p-6 ${hover ? 'transition-all duration-300 hover:shadow-lg' : ''} ${className}`}
     style={{ 
       backgroundColor: NOUVEAU_COLORS.celestialBlue,
       border: `1px solid ${NOUVEAU_COLORS.antiqueGold}40`,
     }}
+    onClick={onClick}
   >
     <div className="absolute top-2 left-2 pointer-events-none opacity-50">
       <HaloCorner size={30} position="top-left" color={NOUVEAU_COLORS.antiqueGold} />
