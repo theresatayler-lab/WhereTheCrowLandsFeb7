@@ -4667,16 +4667,18 @@ async def generate_spell_v3_endpoint(request: SpellRequestV3, user = Depends(get
         # Initialize clients
         deepseek_client = get_deepseek_client()
         
-        # Initialize Claude client if needed for DEEP tier or Claude writer
+        # Always initialize Claude client (async) - Claude is now primary writer
         claude_client = None
-        if selected_tier == SpellTier.DEEP or 'claude' in tier_config.get('writer_model', '').lower():
-            try:
-                import anthropic
-                anthropic_key = os.environ.get('ANTHROPIC_API_KEY')
-                if anthropic_key:
-                    claude_client = anthropic.Anthropic(api_key=anthropic_key)
-            except Exception as e:
-                logger.warning(f"[TIER] Claude client init failed, falling back to GPT-4o: {e}")
+        try:
+            import anthropic
+            anthropic_key = os.environ.get('ANTHROPIC_API_KEY')
+            if anthropic_key:
+                claude_client = anthropic.AsyncAnthropic(api_key=anthropic_key)
+                logger.info("[TIER] Claude client initialized (AsyncAnthropic)")
+            else:
+                logger.warning("[TIER] ANTHROPIC_API_KEY not set, will use GPT-4o fallback")
+        except Exception as e:
+            logger.warning(f"[TIER] Claude client init failed, will use GPT-4o fallback: {e}")
         
         # Create blocks pipeline with tier config
         pipeline = BlocksSpellPipeline(
