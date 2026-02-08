@@ -266,10 +266,31 @@ const EventImage = ({ event, size = 'md' }) => {
   );
 };
 
-const EventCard = ({ event, isExpanded, onToggle, view }) => {
+const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick }) => {
   const primaryTaxonomy = event.taxonomy_categories?.[0];
   const taxonomyData = TAXONOMY_CATEGORIES[primaryTaxonomy] || TAXONOMY_CATEGORIES[6];
   const TaxonomyIcon = taxonomyData.icon;
+  
+  // Handle clickable filter elements
+  const handleFigureClick = (e, figure) => {
+    e.stopPropagation();
+    onFilterClick?.({ type: 'figure', value: figure });
+  };
+  
+  const handleTraditionClick = (e, tradition) => {
+    e.stopPropagation();
+    onFilterClick?.({ type: 'tradition', value: tradition });
+  };
+  
+  const handleTaxonomyClick = (e, taxId) => {
+    e.stopPropagation();
+    onFilterClick?.({ type: 'category', value: taxId });
+  };
+  
+  const handleGuideClick = (e, guide) => {
+    e.stopPropagation();
+    onFilterClick?.({ type: 'guide', value: guide });
+  };
 
   const getCategoryIcon = (category) => {
     switch(category) {
