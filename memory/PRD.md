@@ -20,7 +20,41 @@ Build "Where The Crowlands," a sophisticated full-stack application for creating
 
 ## What's Been Implemented
 
-### Session: February 8, 2025 - Timeline Functionality Fix ✅
+### Session: February 2025 - Timeline Network View & Tiered AI System ✅
+- **Fixed Graph API Bug** — Backend `get_connection_graph()` was failing due to mixed figure formats
+  - `figures_involved` can be strings or objects with `{name, role, dates}`
+  - Updated `timeline_service.py` to handle both formats
+  - Added tradition nodes to the graph for richer connections
+  - Graph now returns: 94 events, 129 figures, 36 traditions, 407 edges
+
+- **Network View Implementation Verified** ✅
+  - `react-force-graph-2d` installed and working
+  - `NetworkGraph` component in `Timeline.js` fully functional
+  - Shows event nodes colored by taxonomy category
+  - Links events by shared traditions and figures
+  - Interactive: hover shows details, click navigates to event
+  - Legend displays connection types and category colors
+  - Instructions for pan/zoom/click visible
+
+- **Tiered AI System Integration** ✅
+  - Integrated `spell_tiers.py` into V3 spell generation endpoint
+  - Three tiers: QUICK (15-25s), STANDARD (30-45s), DEEP (60-90s)
+  - Tier selection based on: persona, intention keywords, user subscription, first spell bonus
+  - Added `tier_preference` field to `SpellRequestV3` for explicit user override
+  - Claude client initialized when DEEP tier or Claude writer selected
+  - Metadata now includes tier info: `tier.selected`, `tier.reason`, `tier.expected_time_seconds`
+
+- **Pipeline Enhancements** ✅
+  - `BlocksSpellPipeline` now accepts `tier_config` and `claude_client`
+  - Archivist stage uses tier's `research_tokens` and `research_temperature`
+  - Writer stage can route to Claude or OpenAI based on `writer_model`
+  - Model selection logged for debugging
+
+- **Files Modified:**
+  - `backend/timeline_service.py` - Fixed graph API, added tradition nodes
+  - `backend/prompts/pipeline_blocks.py` - Added tier config support, Claude client
+  - `backend/server.py` - Integrated tier selection in V3 endpoint, added tier_preference
+
 - **Fixed Critical Filter Bug** — Backend `$or` conflict resolved
   - Guide filter `$or` was being overwritten by search filter `$or`
   - Refactored `timeline_service.py` to use `$and` array for combining filter conditions
