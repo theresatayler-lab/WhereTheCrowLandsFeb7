@@ -134,6 +134,42 @@ const NetworkGraph = ({ events, onEventClick }) => {
       }
     });
     
+    // Add direct influence connections (documented relationships)
+    events.forEach(event => {
+      const connections = event.connections || {};
+      
+      // Influenced links - teal for existing, amber dashed for referenced
+      (connections.influenced || []).forEach(targetId => {
+        if (nodeMap.has(targetId)) {
+          // Target exists - solid teal link
+          links.push({
+            source: event.id,
+            target: targetId,
+            type: 'direct_influence',
+            color: 'rgba(20, 184, 166, 0.6)', // teal
+            strength: 4,
+            isDirectConnection: true
+          });
+        }
+        // Referenced but doesn't exist - we don't add these to the graph
+        // since there's no target node
+      });
+      
+      // Influenced_by links - same logic
+      (connections.influenced_by || []).forEach(sourceId => {
+        if (nodeMap.has(sourceId)) {
+          links.push({
+            source: sourceId,
+            target: event.id,
+            type: 'direct_influence',
+            color: 'rgba(20, 184, 166, 0.6)', // teal
+            strength: 4,
+            isDirectConnection: true
+          });
+        }
+      });
+    });
+    
     return { nodes, links };
   }, [events]);
   
