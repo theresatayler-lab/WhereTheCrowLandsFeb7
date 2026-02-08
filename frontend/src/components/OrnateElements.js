@@ -24,11 +24,11 @@ import {
 // Subtle, tinted Art Nouveau imagery for depth
 // ============================================================================
 
-// Image URLs for atmospheric backgrounds (now local)
+// Image URLs for atmospheric backgrounds (now local, optimized JPEGs)
 export const ATMOSPHERIC_IMAGES = {
-  florals: '/images/backgrounds/crowlands-bg-1.png',
-  maiden: '/images/backgrounds/crowlands-bg-2.png',
-  peonies: '/images/backgrounds/crowlands-bg-3.png',
+  florals: '/images/backgrounds/crowlands-bg-1.jpg',
+  maiden: '/images/backgrounds/crowlands-bg-2.jpg',
+  peonies: '/images/backgrounds/crowlands-bg-3.jpg',
 };
 
 // Reusable atmospheric background component
