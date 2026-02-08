@@ -291,7 +291,7 @@ class BlocksSpellPipeline:
                     schema_hint="spell object with blocks[], tarot_card, persona_lock"
                 )
             except json.JSONDecodeError:
-                logger.error(f"[WRITER_BLOCKS] JSON repair failed, using fallback spell")
+                logger.error("[WRITER_BLOCKS] JSON repair failed, using fallback spell")
                 spell_output = self._get_fallback_spell(spell_spec, guide_id)
                 self.timing_log["writer_ms"] = int((time.time() - start) * 1000)
                 return spell_output
@@ -352,7 +352,7 @@ Ensure all fixes are applied while maintaining your authentic voice."""
                     schema_hint="spell object with blocks[], tarot_card, persona_lock"
                 )
             except json.JSONDecodeError:
-                logger.error(f"[WRITER_BLOCKS_FIX] JSON repair failed, using fallback spell")
+                logger.error("[WRITER_BLOCKS_FIX] JSON repair failed, using fallback spell")
                 return self._get_fallback_spell(spell_spec, guide_id)
                 
         except Exception as e:
