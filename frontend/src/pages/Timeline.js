@@ -686,18 +686,27 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick, allEvents
                       </div>
                     )}
 
-                    {/* Connections - Influenced By & Influenced */}
-                    {(event.connections?.influenced_by?.length > 0 || event.connections?.influenced?.length > 0) && (
-                      <div className="mt-4 pt-3 border-t border-gold/10">
-                        <h4 className="font-cinzel text-xs text-gold/70 uppercase mb-2">Connections</h4>
-                        <div className="space-y-2">
-                          {/* Influenced By */}
-                          {event.connections?.influenced_by?.length > 0 && (
-                            <div className="flex flex-wrap items-center gap-2">
-                              <span className="text-[10px] text-cream/40 font-montserrat uppercase">Influenced by:</span>
-                              {event.connections.influenced_by.slice(0, 4).map((connId, i) => {
-                                const connectedEvent = allEvents?.find(e => e.id === connId);
-                                if (connectedEvent) {
+                    {/* Connections - Influenced By & Influenced (only show if valid connections exist) */}
+                    {(() => {
+                      const influencedBy = (event.connections?.influenced_by || [])
+                        .filter(connId => allEvents?.some(e => e.id === connId));
+                      const influenced = (event.connections?.influenced || [])
+                        .filter(connId => allEvents?.some(e => e.id === connId));
+                      
+                      if (influencedBy.length === 0 && influenced.length === 0) {
+                        return null;
+                      }
+                      
+                      return (
+                        <div className="mt-4 pt-3 border-t border-gold/10">
+                          <h4 className="font-cinzel text-xs text-gold/70 uppercase mb-2">Connections</h4>
+                          <div className="space-y-2">
+                            {/* Influenced By */}
+                            {influencedBy.length > 0 && (
+                              <div className="flex flex-wrap items-center gap-2">
+                                <span className="text-[10px] text-cream/40 font-montserrat uppercase">Influenced by:</span>
+                                {influencedBy.slice(0, 4).map((connId, i) => {
+                                  const connectedEvent = allEvents?.find(e => e.id === connId);
                                   return (
                                     <button
                                       key={i}
@@ -712,19 +721,16 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick, allEvents
                                       <span className="text-cream/40 ml-1">({connectedEvent.year})</span>
                                     </button>
                                   );
-                                }
-                                return null;
-                              })}
-                            </div>
-                          )}
-                          
-                          {/* Influenced */}
-                          {event.connections?.influenced?.length > 0 && (
-                            <div className="flex flex-wrap items-center gap-2">
-                              <span className="text-[10px] text-cream/40 font-montserrat uppercase">Influenced:</span>
-                              {event.connections.influenced.slice(0, 4).map((connId, i) => {
-                                const connectedEvent = allEvents?.find(e => e.id === connId);
-                                if (connectedEvent) {
+                                })}
+                              </div>
+                            )}
+                            
+                            {/* Influenced */}
+                            {influenced.length > 0 && (
+                              <div className="flex flex-wrap items-center gap-2">
+                                <span className="text-[10px] text-cream/40 font-montserrat uppercase">Influenced:</span>
+                                {influenced.slice(0, 4).map((connId, i) => {
+                                  const connectedEvent = allEvents?.find(e => e.id === connId);
                                   return (
                                     <button
                                       key={i}
@@ -739,14 +745,13 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick, allEvents
                                       <span className="text-cream/40 ml-1">({connectedEvent.year})</span>
                                     </button>
                                   );
-                                }
-                                return null;
-                              })}
-                            </div>
-                          )}
+                                })}
+                              </div>
+                            )}
+                          </div>
                         </div>
-                      </div>
-                    )}
+                      );
+                    })()}
 
                     {/* Related Events - Based on shared traditions/figures */}
                     {allEvents && allEvents.length > 0 && (
