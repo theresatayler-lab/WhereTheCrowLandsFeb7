@@ -240,27 +240,49 @@ class BlocksSpellPipeline:
         guide_config: dict,
         research_packet: dict,
         plan: dict,
-        belief_mode: str
+        belief_mode: str,
+        tier_config: dict = None
     ) -> dict:
-        """Stage 3: Run Writer (Blocks version)"""
+        """Stage 3: Run Writer (Blocks version) - Uses tier config for model selection"""
         start = time.time()
         guide_id = spell_spec.get("persona_id", "shigg")
+        
+        # Use tier config for model parameters
+        config = tier_config or self.tier_config
+        writer_model = config.get("writer_model", "gpt-4o")
+        writer_tokens = config.get("writer_tokens", 2500)
+        writer_temp = config.get("writer_temperature", 0.85)
         
         prompt = build_writer_prompt_blocks(spell_spec, guide_config, research_packet, plan, belief_mode)
         contract = WRITER_CONTRACTS.get(guide_id, WRITER_CONTRACTS["shigg"])
         
         try:
-            response = await self.openai_client.chat.completions.create(
-                model="gpt-4o",
-                messages=[
-                    {"role": "system", "content": f"You are {contract['name']}, {contract['title']}. Write blocks-based spells in your unique voice. Return ONLY valid JSON."},
-                    {"role": "user", "content": prompt}
-                ],
-                temperature=0.85,
-                max_tokens=4500  # Blocks need more tokens
-            )
+            # Determine which client to use based on model
+            is_claude_model = "claude" in writer_model.lower()
             
-            result_text = response.choices[0].message.content
+            if is_claude_model and self.claude_client:
+                # Use Claude for writing
+                response = self.claude_client.messages.create(
+                    model=writer_model,
+                    messages=[{"role": "user", "content": prompt}],
+                    system=f"You are {contract['name']}, {contract['title']}. Write blocks-based spells in your unique voice. Return ONLY valid JSON.",
+                    max_tokens=writer_tokens
+                )
+                result_text = response.content[0].text
+                logger.info(f"[WRITER_BLOCKS] Using Claude model: {writer_model}")
+            else:
+                # Use OpenAI (default)
+                response = await self.openai_client.chat.completions.create(
+                    model=writer_model if not is_claude_model else "gpt-4o",
+                    messages=[
+                        {"role": "system", "content": f"You are {contract['name']}, {contract['title']}. Write blocks-based spells in your unique voice. Return ONLY valid JSON."},
+                        {"role": "user", "content": prompt}
+                    ],
+                    temperature=writer_temp,
+                    max_tokens=writer_tokens
+                )
+                result_text = response.choices[0].message.content
+                logger.info(f"[WRITER_BLOCKS] Using OpenAI model: {writer_model if not is_claude_model else 'gpt-4o'}")
             
             # Use repair-capable JSON parser
             try:
