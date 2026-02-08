@@ -411,7 +411,7 @@ Return ONLY valid JSON:"""
             
         except Exception as repair_error:
             logger.error(f"[JSON_REPAIR] Repair also failed: {str(repair_error)[:100]}")
-            raise json.JSONDecodeError(f"JSON repair failed: {str(e)}", cleaned, 0)
+            raise json.JSONDecodeError(f"JSON repair failed: {str(repair_error)}", cleaned, 0)
     
     def _get_fallback_spell(self, spell_spec: dict, guide_id: str) -> dict:
         """Return a minimal valid spell when all else fails"""
