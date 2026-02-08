@@ -580,36 +580,92 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick }) => {
                       </div>
                     )}
 
-                    {/* Sources - with clickable links */}
+                    {/* Sources - with hybrid linking (internal + trusted external) */}
                     {event.sources?.length > 0 && (
                       <div>
                         <h4 className="font-cinzel text-xs text-gold/70 uppercase mb-1">Sources</h4>
-                        <div className="space-y-1">
-                          {event.sources.slice(0, 3).map((source, i) => (
-                            <div key={i} className="flex items-start gap-2 text-xs text-cream/60 font-montserrat">
-                              <BookOpen size={12} className="mt-0.5 flex-shrink-0" />
-                              {source.url ? (
-                                <a 
-                                  href={source.url}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="hover:text-gold transition-colors underline underline-offset-2"
-                                  onClick={(e) => e.stopPropagation()}
-                                >
-                                  {source.author && `${source.author}, `}
-                                  <em>{source.title}</em>
-                                  {source.year && ` (${source.year})`}
-                                </a>
-                              ) : (
-                                <span>
-                                  {source.author && `${source.author}, `}
-                                  <em>{source.title}</em>
-                                  {source.year && ` (${source.year})`}
-                                </span>
-                              )}
-                            </div>
-                          ))}
+                        <div className="space-y-2">
+                          {event.sources.slice(0, 3).map((source, i) => {
+                            // Determine trust level and if URL is from trusted domain
+                            const trustedDomains = ['archive.org', 'books.google.com', 'jstor.org', 'worldcat.org', '.edu'];
+                            const url = source.url || source.learn_more_url;
+                            const isTrustedUrl = url && trustedDomains.some(domain => url.includes(domain));
+                            
+                            // Quality tier badges
+                            const qualityBadge = {
+                              'academic_primary': { color: 'text-green-400', icon: '●', label: 'Academic' },
+                              'practitioner_primary': { color: 'text-blue-400', icon: '●', label: 'Primary' },
+                              'modern_scholar_practitioner': { color: 'text-yellow-400', icon: '●', label: 'Scholar' },
+                              'folk_archive': { color: 'text-purple-400', icon: '●', label: 'Folk' },
+                              'community_tradition': { color: 'text-purple-400', icon: '○', label: 'Tradition' },
+                            }[source.quality_tier] || { color: 'text-cream/40', icon: '○', label: '' };
+                            
+                            return (
+                              <div key={i} className="flex items-start gap-2 text-xs font-montserrat group">
+                                <BookOpen size={12} className="mt-0.5 flex-shrink-0 text-cream/50" />
+                                <div className="flex-1">
+                                  <div className="flex items-center gap-2">
+                                    {/* Author - clickable to search */}
+                                    {source.author && (
+                                      <button
+                                        className="text-cream/70 hover:text-gold transition-colors"
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          handleFigureClick(e, source.author);
+                                        }}
+                                        title={`Find more sources by ${source.author}`}
+                                      >
+                                        {source.author}
+                                      </button>
+                                    )}
+                                    {source.author && <span className="text-cream/40">—</span>}
+                                    
+                                    {/* Title - link if trusted URL exists */}
+                                    {isTrustedUrl ? (
+                                      <a 
+                                        href={url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-cream/80 hover:text-gold transition-colors italic"
+                                        onClick={(e) => e.stopPropagation()}
+                                        title="Opens in new tab (trusted source)"
+                                      >
+                                        {source.title || source.work}
+                                        <span className="ml-1 text-[10px] text-green-400/70">↗</span>
+                                      </a>
+                                    ) : (
+                                      <span className="text-cream/80 italic">
+                                        {source.title || source.work}
+                                      </span>
+                                    )}
+                                    
+                                    {/* Year */}
+                                    {source.year && (
+                                      <span className="text-cream/50">({source.year})</span>
+                                    )}
+                                    
+                                    {/* Quality badge */}
+                                    {qualityBadge.label && (
+                                      <span className={`${qualityBadge.color} text-[10px] opacity-70`} title={qualityBadge.label}>
+                                        {qualityBadge.icon}
+                                      </span>
+                                    )}
+                                  </div>
+                                  
+                                  {/* Relevance note if present */}
+                                  {source.relevance && (
+                                    <p className="text-[10px] text-cream/40 mt-0.5 leading-tight">{source.relevance}</p>
+                                  )}
+                                </div>
+                              </div>
+                            );
+                          })}
                         </div>
+                        
+                        {/* Subtle disclaimer */}
+                        <p className="text-[9px] text-cream/30 mt-2 italic">
+                          Sources provided for research. Verify independently for academic use.
+                        </p>
                       </div>
                     )}
 
