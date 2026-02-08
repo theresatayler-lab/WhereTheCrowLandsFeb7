@@ -344,7 +344,7 @@ const EventImage = ({ event, size = 'md' }) => {
   );
 };
 
-const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick }) => {
+const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick, allEvents, onNavigateToEvent }) => {
   const primaryTaxonomy = event.taxonomy_categories?.[0];
   const taxonomyData = TAXONOMY_CATEGORIES[primaryTaxonomy] || TAXONOMY_CATEGORIES[6];
   const TaxonomyIcon = taxonomyData.icon;
