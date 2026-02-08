@@ -93,11 +93,11 @@ export const BRAND_ASSETS = {
     position: "center-bottom"
   },
   
-  // Background images
+  // Background images (optimized JPEGs)
   backgrounds: {
-    crowlands1: "/images/backgrounds/crowlands-bg-1.png",
-    crowlands2: "/images/backgrounds/crowlands-bg-2.png",
-    crowlands3: "/images/backgrounds/crowlands-bg-3.png"
+    crowlands1: "/images/backgrounds/crowlands-bg-1.jpg",
+    crowlands2: "/images/backgrounds/crowlands-bg-2.jpg",
+    crowlands3: "/images/backgrounds/crowlands-bg-3.jpg"
   },
   
   // Guide borders
