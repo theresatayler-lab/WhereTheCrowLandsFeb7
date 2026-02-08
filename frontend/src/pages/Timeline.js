@@ -1204,15 +1204,51 @@ export const Timeline = () => {
             </div>
           )}
 
-          {/* Empty State */}
+          {/* Empty State - with helpful message and clear filters option */}
           {displayEvents.length === 0 && !loading && (
-            <div className="flex flex-col items-center justify-center py-20 text-center">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="flex flex-col items-center justify-center py-20 text-center"
+            >
               <Clock size={48} className="text-gold/40 mb-4" />
               <h3 className="font-cinzel text-xl text-gold mb-2">No Events Found</h3>
-              <p className="font-montserrat text-sm text-cream/60">
-                Try adjusting your filters or search terms.
+              <p className="font-montserrat text-sm text-cream/60 mb-4 max-w-md">
+                {filters.search 
+                  ? `No timeline events match "${filters.search}". This might be a source author, historical figure, or topic not yet in our timeline.`
+                  : "No events match your current filters."
+                }
               </p>
-            </div>
+              <div className="flex gap-3">
+                <button
+                  onClick={() => {
+                    setFilters({});
+                    setActiveEra(null);
+                    setActiveDecade(null);
+                    toast.success("Filters cleared - showing all events");
+                  }}
+                  className="px-4 py-2 bg-gold/20 hover:bg-gold/30 border border-gold/40 rounded-lg font-montserrat text-sm text-gold transition-all"
+                >
+                  Clear All Filters
+                </button>
+                <button
+                  onClick={() => {
+                    setActiveEra('occult_revival');
+                    setFilters({});
+                    setActiveDecade(null);
+                    toast.info("Showing Occult Revival era (most content)");
+                  }}
+                  className="px-4 py-2 bg-crimson/20 hover:bg-crimson/30 border border-crimson/40 rounded-lg font-montserrat text-sm text-cream/80 transition-all"
+                >
+                  Browse Occult Revival
+                </button>
+              </div>
+              {filters.search && (
+                <p className="font-montserrat text-xs text-cream/40 mt-6 max-w-sm">
+                  Tip: Try searching for well-known figures like "Aleister Crowley", "Dion Fortune", or topics like "Golden Dawn", "Wicca"
+                </p>
+              )}
+            </motion.div>
           )}
         </div>
       </DarkSection>
