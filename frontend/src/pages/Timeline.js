@@ -529,21 +529,31 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick }) => {
                       </div>
                     )}
 
-                    {/* Figures - CLICKABLE */}
+                    {/* Figures - CLICKABLE (handles both string and object format) */}
                     {event.figures_involved?.length > 0 && (
                       <div>
                         <h4 className="font-cinzel text-xs text-gold/70 uppercase mb-1">Key Figures</h4>
                         <div className="flex flex-wrap gap-2">
-                          {event.figures_involved.map((figure, i) => (
-                            <button 
-                              key={i} 
-                              className="px-2 py-0.5 bg-navy-dark/50 hover:bg-navy-dark/80 hover:ring-1 hover:ring-gold/40 rounded text-xs text-cream/80 hover:text-cream font-montserrat transition-all cursor-pointer"
-                              onClick={(e) => handleFigureClick(e, figure)}
-                              title={`Search for ${figure}`}
-                            >
-                              {figure}
-                            </button>
-                          ))}
+                          {event.figures_involved.map((figure, i) => {
+                            // Handle both string and object formats
+                            const figureName = typeof figure === 'object' ? figure.name : figure;
+                            const figureRole = typeof figure === 'object' ? figure.role : null;
+                            const figureDates = typeof figure === 'object' ? figure.dates : null;
+                            
+                            return (
+                              <button 
+                                key={i} 
+                                className="px-2 py-1 bg-navy-dark/50 hover:bg-navy-dark/80 hover:ring-1 hover:ring-gold/40 rounded text-xs text-cream/80 hover:text-cream font-montserrat transition-all cursor-pointer text-left"
+                                onClick={(e) => handleFigureClick(e, figureName)}
+                                title={figureRole ? `${figureName}${figureDates ? ` (${figureDates})` : ''}: ${figureRole}` : `Search for ${figureName}`}
+                              >
+                                <span className="font-medium">{figureName}</span>
+                                {figureRole && (
+                                  <span className="block text-cream/50 text-[10px] mt-0.5">{figureRole.slice(0, 40)}{figureRole.length > 40 ? '...' : ''}</span>
+                                )}
+                              </button>
+                            );
+                          })}
                         </div>
                       </div>
                     )}
