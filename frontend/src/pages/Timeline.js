@@ -1364,16 +1364,22 @@ export const Timeline = () => {
             </div>
           )}
 
-          {/* Network View Placeholder */}
-          {view === 'network' && (
-            <div className="flex flex-col items-center justify-center py-20 text-center">
-              <Network size={48} className="text-gold/40 mb-4" />
-              <h3 className="font-cinzel text-xl text-gold mb-2">Network View Coming Soon</h3>
-              <p className="font-montserrat text-sm text-cream/60 max-w-md">
-                The interactive network graph will visualize connections between events, 
-                figures, and movements. Use Timeline or Grid view for now.
-              </p>
-            </div>
+          {/* Network View - Interactive Force Graph */}
+          {view === 'network' && displayEvents.length > 0 && (
+            <NetworkGraph 
+              events={displayEvents}
+              onEventClick={(eventId) => {
+                setExpandedEvent(eventId);
+                setView('timeline');
+                toast.info("Switched to timeline view");
+                setTimeout(() => {
+                  const element = document.querySelector(`[data-event-id="${eventId}"]`);
+                  if (element) {
+                    element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                  }
+                }, 300);
+              }}
+            />
           )}
 
           {/* Empty State - with helpful message and clear filters option */}
