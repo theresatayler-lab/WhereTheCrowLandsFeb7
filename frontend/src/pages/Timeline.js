@@ -774,6 +774,54 @@ export const Timeline = () => {
   const [activeDecade, setActiveDecade] = useState(null);
   const [activeEra, setActiveEra] = useState(null);
 
+  // Handle filter clicks from EventCard elements (figures, traditions, taxonomy, guides)
+  const handleFilterClick = useCallback(({ type, value }) => {
+    switch (type) {
+      case 'figure':
+        // Search by figure name
+        setFilters(prev => ({ ...prev, search: value }));
+        setFilterPanelOpen(true);
+        break;
+      case 'tradition':
+        // Filter by tradition
+        setFilters(prev => {
+          const current = prev.traditions || [];
+          if (!current.includes(value)) {
+            return { ...prev, traditions: [...current, value] };
+          }
+          return prev;
+        });
+        setFilterPanelOpen(true);
+        break;
+      case 'category':
+        // Filter by taxonomy category
+        setFilters(prev => {
+          const current = prev.categories || [];
+          if (!current.includes(value)) {
+            return { ...prev, categories: [...current, value] };
+          }
+          return prev;
+        });
+        setFilterPanelOpen(true);
+        break;
+      case 'guide':
+        // Filter by guide
+        setFilters(prev => {
+          const current = prev.guides || [];
+          if (!current.includes(value)) {
+            return { ...prev, guides: [...current, value] };
+          }
+          return prev;
+        });
+        setFilterPanelOpen(true);
+        break;
+      default:
+        break;
+    }
+    // Scroll to top to show filtered results
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
+
   // Fetch events
   const fetchEvents = useCallback(async () => {
     try {
