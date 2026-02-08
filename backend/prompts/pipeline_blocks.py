@@ -73,6 +73,10 @@ class BlocksSpellPipeline:
         total_start = time.time()
         guide_id = spell_spec.get("persona_id", "shigg")
         
+        # Use provided tier_config or fall back to instance default
+        active_tier_config = tier_config or self.tier_config
+        tier_name = active_tier_config.get("tier_name", "standard")
+        
         # Normalize belief mode
         belief_mode = belief_mode.upper()
         if belief_mode not in BELIEF_MODES:
@@ -85,12 +89,17 @@ class BlocksSpellPipeline:
             "stages_completed": [],
             "retries": 0,
             "qa_report": None,
-            "pipeline_version": "blocks_v1"
+            "pipeline_version": "blocks_v1",
+            "tier": tier_name,
+            "tier_config": {
+                "research_model": active_tier_config.get("research_model"),
+                "writer_model": active_tier_config.get("writer_model"),
+            }
         }
         
         try:
             # === STAGE 1: ARCHIVIST ===
-            research_packet = await self._run_archivist(spell_spec, guide_id)
+            research_packet = await self._run_archivist(spell_spec, guide_id, active_tier_config)
             metadata["stages_completed"].append("archivist")
             metadata["timing"]["archivist_ms"] = self.timing_log.get("archivist_ms", 0)
             
@@ -100,7 +109,7 @@ class BlocksSpellPipeline:
             metadata["timing"]["planner_ms"] = self.timing_log.get("planner_ms", 0)
             
             # === STAGE 3: WRITER (BLOCKS) ===
-            spell_output = await self._run_writer_blocks(spell_spec, guide_config, research_packet, plan, belief_mode)
+            spell_output = await self._run_writer_blocks(spell_spec, guide_config, research_packet, plan, belief_mode, active_tier_config)
             metadata["stages_completed"].append("writer")
             metadata["timing"]["writer_ms"] = self.timing_log.get("writer_ms", 0)
             
