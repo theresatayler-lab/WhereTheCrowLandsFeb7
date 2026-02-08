@@ -11,7 +11,34 @@ Build "Where The Crowlands," a sophisticated full-stack application for creating
 
 ## What's Been Implemented
 
-### Session: February 6, 2026 - Major Visual Simplification ✅
+### Session: February 8, 2025 - Timeline Functionality Fix ✅
+- **Fixed Critical Filter Bug** — Backend `$or` conflict resolved
+  - Guide filter `$or` was being overwritten by search filter `$or`
+  - Refactored `timeline_service.py` to use `$and` array for combining filter conditions
+  - All filter combinations now work together: era + guide + search + category
+  
+- **Interactive Clickable Elements** — Added click-to-filter functionality
+  - **Key Figures** buttons now trigger search filter on click
+  - **Traditions** buttons now trigger tradition filter on click
+  - **Taxonomy icons** now trigger category filter on click
+  - **Guide dots** now trigger guide filter on click
+  
+- **Active Filter Display** — Shows removable filter chips
+  - Active search, categories, guides, and traditions shown with X buttons
+  - Clear indication of what filters are applied
+  
+- **OrnateCard onClick Fix** — Testing agent identified and fixed
+  - OrnateCard component wasn't passing onClick prop to div
+  - Event cards now properly expand/collapse on click
+  
+- **Files Modified:**
+  - `backend/timeline_service.py` - Fixed filter logic
+  - `frontend/src/pages/Timeline.js` - Added handleFilterClick(), clickable elements, active filter display
+  - `frontend/src/components/OrnateElements.js` - Added onClick prop to OrnateCard
+  
+- **Test Suite:** `/app/backend/tests/test_timeline_v2.py` - 17 tests covering all filter combinations
+
+### Session: February 6, 2025 - Major Visual Simplification ✅
 - **Complete Home Page Declutter** — Removed all corner ornaments and excessive decorative elements
   - Removed all `HaloCornerElaborate` ornaments from `SectionPlate` component
   - Removed all `HaloCorner` ornaments from `VellumPanel` and `FeatureCard` components
