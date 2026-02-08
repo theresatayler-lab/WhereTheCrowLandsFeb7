@@ -392,16 +392,17 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick }) => {
               <div className="flex items-center gap-3">
                 <span className="font-montserrat text-xs text-cream/50">Guides:</span>
                 {Object.entries(event.guide_relevance).map(([guide, level]) => (
-                  <div 
+                  <button 
                     key={guide}
-                    className="flex items-center gap-1"
-                    title={`${GUIDE_COLORS[guide]?.name}: ${level}`}
+                    className="flex items-center gap-1 hover:scale-110 transition-transform cursor-pointer"
+                    title={`Filter by ${GUIDE_COLORS[guide]?.name}: ${level}`}
+                    onClick={(e) => handleGuideClick(e, guide)}
                   >
                     <span 
-                      className={`w-2 h-2 rounded-full ${level === 'high' ? 'opacity-100' : level === 'medium' ? 'opacity-60' : 'opacity-20'}`}
+                      className={`w-2.5 h-2.5 rounded-full ${level === 'high' ? 'opacity-100 ring-1 ring-white/30' : level === 'medium' ? 'opacity-60' : 'opacity-20'}`}
                       style={{ backgroundColor: GUIDE_COLORS[guide]?.color }}
                     />
-                  </div>
+                  </button>
                 ))}
               </div>
             )}
