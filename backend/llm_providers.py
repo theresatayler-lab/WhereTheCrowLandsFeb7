@@ -42,9 +42,9 @@ PROVIDER_CONFIG = {
         "max_tokens": 2500
     },
     "spell_writer": {
-        "provider": "openai",
-        "model": "gpt-4o",
-        "use_emergent_key": False,      # Use your own OpenAI key
+        "provider": "anthropic",
+        "model": "claude-sonnet-4-20250514",
+        "use_emergent_key": False,      # Use your own Anthropic key (falls back to GPT-4o if unavailable)
         "temperature": 0.85,
         "max_tokens": 3500
     },
