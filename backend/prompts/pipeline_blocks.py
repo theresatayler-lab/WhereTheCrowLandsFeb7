@@ -47,12 +47,12 @@ class BlocksSpellPipeline:
         self.max_retries = max_retries
         self.timing_log = {}
         
-        # Default tier config (STANDARD)
+        # Default tier config (STANDARD) - Claude primary, GPT-4o fallback
         self.tier_config = tier_config or {
             "research_model": "deepseek-chat",
             "research_tokens": 1200,
             "research_temperature": 0.6,
-            "writer_model": "gpt-4o",
+            "writer_model": "claude-sonnet-4-20250514",
             "writer_tokens": 2500,
             "writer_temperature": 0.8,
             "tier_name": "standard"
