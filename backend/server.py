@@ -4533,17 +4533,24 @@ async def get_spell_config_v2():
 
 # ===== V3 SPELL GENERATION - Blocks-Based Pipeline =====
 from prompts import BlocksSpellPipeline, BLOCK_TEMPLATES, CANON_ANCHORS, run_qa_blocks_validation
+from spell_tiers import select_spell_tier, get_tier_config, SpellTier
 
 class SpellRequestV3(BaseModel):
     """V3 Blocks-based Spell Request"""
     spell_spec: dict
     belief_mode: str = "SPIRITUAL"
     generate_images: bool = False
+    tier_preference: str = None  # "quick", "standard", "deep" - optional user override
 
 @api_router.post('/ai/generate-spell-v3')
 async def generate_spell_v3_endpoint(request: SpellRequestV3, user = Depends(get_optional_user)):
     """
-    V3 Spell Generation - Blocks-based experience.
+    V3 Spell Generation - Blocks-based experience with TIERED AI.
+    
+    Tiers:
+    - QUICK (15-25s): Simple spells for daily practice
+    - STANDARD (30-45s): Rich spells with good depth (default)
+    - DEEP (60-90s): Maximum depth for complex intentions (Pro)
     
     Returns spell with blocks[] array containing:
     - cold_open: Guide's opening narrative
