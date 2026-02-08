@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { timelineAPI } from '../utils/api';
 import { 
@@ -8,6 +8,253 @@ import {
   Flame, Leaf, Film, Sun, Zap, Wand2
 } from 'lucide-react';
 import { DarkSection, PageBorderFrame, PageHeader, OrnateCard, GrandDivider } from '../components/OrnateElements';
+import ForceGraph2D from 'react-force-graph-2d';
+
+// ============================================================================
+// NETWORK GRAPH COMPONENT
+// ============================================================================
+
+const NetworkGraph = ({ events, onEventClick }) => {
+  const graphRef = useRef();
+  const containerRef = useRef();
+  const [dimensions, setDimensions] = useState({ width: 800, height: 600 });
+  const [hoveredNode, setHoveredNode] = useState(null);
+  
+  // Update dimensions on resize
+  useEffect(() => {
+    const updateDimensions = () => {
+      if (containerRef.current) {
+        setDimensions({
+          width: containerRef.current.offsetWidth,
+          height: Math.min(600, window.innerHeight - 300)
+        });
+      }
+    };
+    updateDimensions();
+    window.addEventListener('resize', updateDimensions);
+    return () => window.removeEventListener('resize', updateDimensions);
+  }, []);
+  
+  // Build graph data from events
+  const graphData = useMemo(() => {
+    const nodes = [];
+    const links = [];
+    const nodeMap = new Map();
+    
+    // Create event nodes
+    events.forEach(event => {
+      const primaryTaxonomy = event.taxonomy_categories?.[0] || 6;
+      const color = TAXONOMY_CATEGORIES[primaryTaxonomy]?.color || '#d4a84b';
+      
+      nodes.push({
+        id: event.id,
+        name: event.title,
+        year: event.year,
+        type: 'event',
+        color: color,
+        val: event.importance === 1 ? 12 : 8, // Node size based on importance
+        taxonomy: primaryTaxonomy,
+        traditions: event.traditions || [],
+        figures: (event.figures_involved || []).map(f => typeof f === 'object' ? f.name : f)
+      });
+      nodeMap.set(event.id, true);
+    });
+    
+    // Create links based on shared traditions
+    const traditionMap = new Map();
+    events.forEach(event => {
+      (event.traditions || []).forEach(tradition => {
+        if (!traditionMap.has(tradition)) {
+          traditionMap.set(tradition, []);
+        }
+        traditionMap.get(tradition).push(event.id);
+      });
+    });
+    
+    // Link events that share traditions
+    traditionMap.forEach((eventIds, tradition) => {
+      for (let i = 0; i < eventIds.length; i++) {
+        for (let j = i + 1; j < eventIds.length; j++) {
+          // Only create link if both events are in our current view
+          if (nodeMap.has(eventIds[i]) && nodeMap.has(eventIds[j])) {
+            const existingLink = links.find(l => 
+              (l.source === eventIds[i] && l.target === eventIds[j]) ||
+              (l.source === eventIds[j] && l.target === eventIds[i])
+            );
+            if (!existingLink) {
+              links.push({
+                source: eventIds[i],
+                target: eventIds[j],
+                type: 'tradition',
+                label: tradition,
+                color: 'rgba(212, 168, 75, 0.3)'
+              });
+            }
+          }
+        }
+      }
+    });
+    
+    // Also link by shared figures
+    const figureMap = new Map();
+    events.forEach(event => {
+      const figures = (event.figures_involved || []).map(f => typeof f === 'object' ? f.name : f);
+      figures.forEach(figure => {
+        if (!figureMap.has(figure)) {
+          figureMap.set(figure, []);
+        }
+        figureMap.get(figure).push(event.id);
+      });
+    });
+    
+    figureMap.forEach((eventIds, figure) => {
+      if (eventIds.length > 1) {
+        for (let i = 0; i < eventIds.length; i++) {
+          for (let j = i + 1; j < eventIds.length; j++) {
+            if (nodeMap.has(eventIds[i]) && nodeMap.has(eventIds[j])) {
+              const existingLink = links.find(l => 
+                (l.source === eventIds[i] && l.target === eventIds[j]) ||
+                (l.source === eventIds[j] && l.target === eventIds[i])
+              );
+              if (existingLink) {
+                existingLink.strength = (existingLink.strength || 1) + 1;
+              } else {
+                links.push({
+                  source: eventIds[i],
+                  target: eventIds[j],
+                  type: 'figure',
+                  label: figure,
+                  color: 'rgba(139, 34, 50, 0.4)',
+                  strength: 2
+                });
+              }
+            }
+          }
+        }
+      }
+    });
+    
+    return { nodes, links };
+  }, [events]);
+  
+  // Custom node renderer
+  const nodeCanvasObject = useCallback((node, ctx, globalScale) => {
+    const label = node.name.length > 20 ? node.name.slice(0, 20) + '...' : node.name;
+    const fontSize = 10 / globalScale;
+    ctx.font = `${fontSize}px Montserrat, sans-serif`;
+    
+    // Draw node circle
+    ctx.beginPath();
+    ctx.arc(node.x, node.y, node.val, 0, 2 * Math.PI);
+    ctx.fillStyle = node.color;
+    ctx.fill();
+    
+    // Draw border if hovered
+    if (hoveredNode === node.id) {
+      ctx.strokeStyle = '#d4a84b';
+      ctx.lineWidth = 2 / globalScale;
+      ctx.stroke();
+    }
+    
+    // Draw label if zoomed in enough
+    if (globalScale > 0.7) {
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'top';
+      ctx.fillStyle = 'rgba(255, 250, 240, 0.9)';
+      ctx.fillText(label, node.x, node.y + node.val + 2);
+      
+      // Year below name
+      ctx.fillStyle = 'rgba(255, 250, 240, 0.5)';
+      ctx.font = `${fontSize * 0.8}px Montserrat, sans-serif`;
+      ctx.fillText(node.year, node.x, node.y + node.val + fontSize + 4);
+    }
+  }, [hoveredNode]);
+  
+  return (
+    <div ref={containerRef} className="relative w-full rounded-lg overflow-hidden border border-gold/20 bg-navy-dark/50">
+      {/* Legend */}
+      <div className="absolute top-4 left-4 z-10 bg-navy-dark/90 p-3 rounded-lg border border-gold/20">
+        <h4 className="font-cinzel text-xs text-gold mb-2">Legend</h4>
+        <div className="space-y-1 text-[10px] font-montserrat">
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-0.5 bg-gold/40"></div>
+            <span className="text-cream/60">Shared tradition</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-0.5 bg-crimson/60"></div>
+            <span className="text-cream/60">Shared figure</span>
+          </div>
+          <div className="flex items-center gap-2 mt-2">
+            <div className="w-2 h-2 rounded-full bg-gold"></div>
+            <span className="text-cream/60">Occult Revival</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 rounded-full bg-[#6b8e23]"></div>
+            <span className="text-cream/60">Folk Magic</span>
+          </div>
+        </div>
+      </div>
+      
+      {/* Hovered node info */}
+      {hoveredNode && (
+        <div className="absolute bottom-4 left-4 z-10 bg-navy-dark/95 p-3 rounded-lg border border-gold/30 max-w-xs">
+          {(() => {
+            const node = graphData.nodes.find(n => n.id === hoveredNode);
+            if (!node) return null;
+            return (
+              <>
+                <h4 className="font-cinzel text-sm text-gold">{node.name}</h4>
+                <p className="text-xs text-cream/60 font-montserrat">{node.year}</p>
+                {node.traditions?.length > 0 && (
+                  <p className="text-[10px] text-cream/40 font-montserrat mt-1">
+                    Traditions: {node.traditions.slice(0, 3).join(', ')}
+                  </p>
+                )}
+                <p className="text-[10px] text-gold/60 font-montserrat mt-1">Click to view details</p>
+              </>
+            );
+          })()}
+        </div>
+      )}
+      
+      {/* Instructions */}
+      <div className="absolute top-4 right-4 z-10 text-[10px] text-cream/40 font-montserrat">
+        Drag to pan • Scroll to zoom • Click node for details
+      </div>
+      
+      <ForceGraph2D
+        ref={graphRef}
+        graphData={graphData}
+        width={dimensions.width}
+        height={dimensions.height}
+        backgroundColor="transparent"
+        nodeCanvasObject={nodeCanvasObject}
+        nodePointerAreaPaint={(node, color, ctx) => {
+          ctx.beginPath();
+          ctx.arc(node.x, node.y, node.val + 5, 0, 2 * Math.PI);
+          ctx.fillStyle = color;
+          ctx.fill();
+        }}
+        linkColor={link => link.color || 'rgba(212, 168, 75, 0.2)'}
+        linkWidth={link => link.strength || 1}
+        linkDirectionalParticles={0}
+        onNodeClick={(node) => {
+          if (onEventClick) {
+            onEventClick(node.id);
+          }
+        }}
+        onNodeHover={(node) => {
+          setHoveredNode(node ? node.id : null);
+          if (containerRef.current) {
+            containerRef.current.style.cursor = node ? 'pointer' : 'grab';
+          }
+        }}
+        cooldownTicks={100}
+        onEngineStop={() => graphRef.current?.zoomToFit(400, 50)}
+      />
+    </div>
+  );
+};
 
 // ============================================================================
 // TAXONOMY CONFIGURATION (13 Categories from Master Chart)
