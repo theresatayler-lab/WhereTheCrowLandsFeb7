@@ -718,11 +718,43 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick, allEvents
         <div className="flex gap-4">
           {/* Description - takes most space */}
           <div className="flex-1">
+            {/* Description Toggle (only show if event has narrative) */}
+            {hasNarrativeDesc && (
+              <div className="flex items-center gap-2 mb-2">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowNarrative(false);
+                  }}
+                  className={`px-2 py-0.5 rounded text-xs font-montserrat transition-all ${
+                    !showNarrative 
+                      ? 'bg-gold/20 text-gold border border-gold/40' 
+                      : 'text-cream/50 hover:text-cream/70'
+                  }`}
+                >
+                  Factual
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowNarrative(true);
+                  }}
+                  className={`px-2 py-0.5 rounded text-xs font-montserrat transition-all ${
+                    showNarrative 
+                      ? 'bg-violet-600/20 text-violet-400 border border-violet-500/40' 
+                      : 'text-cream/50 hover:text-cream/70'
+                  }`}
+                >
+                  Narrative
+                </button>
+                <span className="text-[10px] text-cream/40 italic ml-1">Enhanced</span>
+              </div>
+            )}
+            
             <p className="font-montserrat text-sm text-cream/85 leading-relaxed mb-3">
-              {/* Show narrative description if enhanced, otherwise original */}
               {isExpanded 
-                ? (event.description_narrative || event.description)
-                : (event.description_narrative || event.description)?.slice(0, 200) + ((event.description_narrative || event.description)?.length > 200 ? '...' : '')}
+                ? currentDescription
+                : currentDescription?.slice(0, 200) + (currentDescription?.length > 200 ? '...' : '')}
             </p>
 
             {/* Guide Relevance Dots */}
