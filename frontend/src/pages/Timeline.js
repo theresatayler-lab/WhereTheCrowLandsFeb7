@@ -909,6 +909,8 @@ const DecadeNav = ({ events, activeDecade, setActiveDecade, activeEra }) => {
 // MAIN TIMELINE COMPONENT
 // ============================================================================
 
+import { toast } from 'sonner';
+
 export const Timeline = () => {
   const [events, setEvents] = useState([]);
   const [stats, setStats] = useState(null);
@@ -920,13 +922,33 @@ export const Timeline = () => {
   const [expandedEvent, setExpandedEvent] = useState(null);
   const [activeDecade, setActiveDecade] = useState(null);
   const [activeEra, setActiveEra] = useState(null);
+  const [lastSearchTerm, setLastSearchTerm] = useState(null);
 
   // Handle filter clicks from EventCard elements (figures, traditions, taxonomy, guides)
   const handleFilterClick = useCallback(({ type, value }) => {
+    // Close any expanded event
+    setExpandedEvent(null);
+    
+    // Show feedback toast
+    const typeLabels = {
+      'figure': 'Searching for',
+      'tradition': 'Filtering by tradition:',
+      'category': 'Filtering by category:',
+      'guide': 'Filtering by guide:',
+      'author': 'Searching sources by'
+    };
+    
+    toast.info(`${typeLabels[type] || 'Searching for'} "${value}"`, {
+      duration: 2000,
+      position: 'top-center'
+    });
+    
     switch (type) {
       case 'figure':
-        // Search by figure name
+      case 'author':
+        // Search by figure/author name
         setFilters(prev => ({ ...prev, search: value }));
+        setLastSearchTerm(value);
         setFilterPanelOpen(true);
         break;
       case 'tradition':
@@ -965,6 +987,11 @@ export const Timeline = () => {
       default:
         break;
     }
+    
+    // Clear era/decade filters when doing a new search
+    setActiveEra(null);
+    setActiveDecade(null);
+    
     // Scroll to top to show filtered results
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
