@@ -1014,6 +1014,7 @@ export const Timeline = () => {
                     isExpanded={expandedEvent === event.id}
                     onToggle={() => setExpandedEvent(expandedEvent === event.id ? null : event.id)}
                     view="timeline"
+                    onFilterClick={handleFilterClick}
                   />
                 ))}
               </div>
@@ -1030,6 +1031,7 @@ export const Timeline = () => {
                   isExpanded={expandedEvent === event.id}
                   onToggle={() => setExpandedEvent(expandedEvent === event.id ? null : event.id)}
                   view="grid"
+                  onFilterClick={handleFilterClick}
                 />
               ))}
             </div>
