@@ -146,9 +146,15 @@ class BlocksSpellPipeline:
             fallback_spell = self._get_fallback_spell(spell_spec, guide_id)
             return fallback_spell, metadata
     
-    async def _run_archivist(self, spell_spec: dict, guide_id: str) -> dict:
+    async def _run_archivist(self, spell_spec: dict, guide_id: str, tier_config: dict = None) -> dict:
         """Stage 1: Run Archivist research (same as V2)"""
         start = time.time()
+        
+        # Use tier config for model parameters
+        config = tier_config or self.tier_config
+        research_model = config.get("research_model", "deepseek-chat")
+        research_tokens = config.get("research_tokens", 1200)
+        research_temp = config.get("research_temperature", 0.6)
         
         canon_context = get_canon_context(spell_spec.get("user_query", ""), guide_id)
         
@@ -164,13 +170,13 @@ class BlocksSpellPipeline:
         if self.deepseek_client:
             try:
                 response = await self.deepseek_client.chat.completions.create(
-                    model="deepseek-chat",
+                    model=research_model,
                     messages=[
                         {"role": "system", "content": ARCHIVIST_SYSTEM_PROMPT},
                         {"role": "user", "content": prompt}
                     ],
-                    temperature=0.6,
-                    max_tokens=2500,
+                    temperature=research_temp,
+                    max_tokens=research_tokens,
                     response_format={"type": "json_object"}
                 )
                 
