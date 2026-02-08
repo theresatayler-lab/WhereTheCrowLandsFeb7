@@ -1,13 +1,22 @@
 # Where The Crowlands - Product Requirements Document
 
 ## Original Problem Statement
-Build "Where The Crowlands," a sophisticated full-stack application for creating DIY rituals guided by AI archetypes. The app features a dual-AI architecture with DeepSeek (research/factual) and OpenAI (persona voice).
+Build "Where The Crowlands," a sophisticated full-stack application for creating DIY rituals guided by AI archetypes. The app features a dual-AI architecture with DeepSeek (research/factual) and Claude (creative writing/persona voice).
 
 ## Core Architecture
 - **Frontend**: React + Tailwind + Shadcn/UI
 - **Backend**: FastAPI + Python
 - **Database**: MongoDB + GridFS (for images)
-- **AI**: Dual-model (DeepSeek for research, OpenAI GPT-4o for persona voice)
+- **AI**: Tiered dual-model system
+  - DeepSeek: Research, facts, source verification
+  - Claude Sonnet: Creative writing, storytelling, guide voices
+  - Claude Opus: Deep reasoning (Deep tier only)
+  - GPT-4o: Fallback only
+
+## AI Tier System (Implemented Feb 2025)
+- **Quick Mode**: DeepSeek → Sonnet (~20s, ~$0.02/spell)
+- **Standard Mode**: DeepSeek → Sonnet storytelling → Sonnet writing (~40s, ~$0.05/spell)
+- **Deep Mode**: DeepSeek → Opus reasoning → Sonnet storytelling → Sonnet writing (~75s, ~$0.15/spell)
 
 ## What's Been Implemented
 
