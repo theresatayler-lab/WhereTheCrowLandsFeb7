@@ -43,55 +43,66 @@ async def get_timeline_events(
     limit: int = 200,
     skip: int = 0
 ) -> List[Dict[str, Any]]:
-    """Get timeline events with optional filtering"""
+    """Get timeline events with optional filtering - FIXED: proper $and/$or logic"""
     query = {}
+    and_conditions = []
     
     if filters:
         # Taxonomy category filter
         if filters.categories:
-            query["taxonomy_categories"] = {"$in": filters.categories}
+            and_conditions.append({"taxonomy_categories": {"$in": filters.categories}})
         
         # Primary category filter
         if filters.primary_categories:
-            query["primary_category"] = {"$in": filters.primary_categories}
+            and_conditions.append({"primary_category": {"$in": filters.primary_categories}})
         
         # Tradition filter
         if filters.traditions:
-            query["traditions"] = {"$in": filters.traditions}
+            and_conditions.append({"traditions": {"$in": filters.traditions}})
         
-        # Guide relevance filter
+        # Guide relevance filter - match ANY selected guide (OR within guides)
         if filters.guides:
             guide_conditions = []
             for guide in filters.guides:
                 guide_conditions.append({f"guide_relevance.{guide}": {"$in": ["high", "medium"]}})
             if guide_conditions:
-                query["$or"] = guide_conditions
+                and_conditions.append({"$or": guide_conditions})
         
         # Date range filter
         if filters.date_range:
+            year_condition = {}
             if "start" in filters.date_range:
-                query["year"] = query.get("year", {})
-                query["year"]["$gte"] = filters.date_range["start"]
+                year_condition["$gte"] = filters.date_range["start"]
             if "end" in filters.date_range:
-                query["year"] = query.get("year", {})
-                query["year"]["$lte"] = filters.date_range["end"]
+                year_condition["$lte"] = filters.date_range["end"]
+            if year_condition:
+                and_conditions.append({"year": year_condition})
         
         # Importance filter
         if filters.importance:
-            query["importance"] = {"$in": filters.importance}
+            and_conditions.append({"importance": {"$in": filters.importance}})
         
         # Figures filter
         if filters.figures:
-            query["figures_involved"] = {"$in": filters.figures}
+            and_conditions.append({"figures_involved": {"$in": filters.figures}})
         
-        # Search filter
+        # Search filter - searches across multiple fields (OR within search)
         if filters.search:
             search_regex = {"$regex": filters.search, "$options": "i"}
-            query["$or"] = [
-                {"title": search_regex},
-                {"description": search_regex},
-                {"figures_involved": search_regex}
-            ]
+            and_conditions.append({
+                "$or": [
+                    {"title": search_regex},
+                    {"description": search_regex},
+                    {"significance": search_regex},
+                    {"figures_involved": search_regex},
+                    {"traditions": search_regex},
+                    {"glossary_terms": search_regex}
+                ]
+            })
+    
+    # Combine all conditions with $and
+    if and_conditions:
+        query = {"$and": and_conditions} if len(and_conditions) > 1 else and_conditions[0]
     
     events = await db.timeline_events_v2.find(query, {"_id": 0}).sort("year", 1).skip(skip).limit(limit).to_list(limit)
     return events
