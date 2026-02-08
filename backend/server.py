@@ -1829,6 +1829,133 @@ async def delete_timeline_event_v2(event_id: str, current_user: dict = Depends(g
         raise HTTPException(status_code=404, detail='Event not found')
     return {"success": True}
 
+# =============================================================================
+# TIMELINE ENHANCEMENT ENDPOINTS (DeepSeek + Claude)
+# =============================================================================
+
+from timeline_enhancement import (
+    enhance_timeline_event_full,
+    enhance_timeline_event_research,
+    enhance_timeline_event_narrative,
+    batch_enhance_timeline_events
+)
+import anthropic
+
+def get_claude_client():
+    """Get Claude client for narrative enhancement"""
+    api_key = os.environ.get('ANTHROPIC_API_KEY')
+    if not api_key:
+        return None
+    return anthropic.Anthropic(api_key=api_key)
+
+@api_router.post('/timeline/v2/events/{event_id}/enhance')
+async def enhance_single_event(event_id: str, current_user: dict = Depends(get_current_user)):
+    """
+    Enhance a single timeline event with DeepSeek research + Claude narrative.
+    Requires Pro subscription.
+    """
+    if current_user.get('subscription_tier') not in ('pro', 'paid'):
+        raise HTTPException(status_code=403, detail='Pro subscription required for AI enhancement')
+    
+    # Get existing event
+    event = await get_event_by_id(db, event_id)
+    if not event:
+        raise HTTPException(status_code=404, detail='Event not found')
+    
+    # Get clients
+    deepseek = get_deepseek_client()
+    claude = get_claude_client()
+    
+    if not deepseek:
+        raise HTTPException(status_code=500, detail='DeepSeek not configured')
+    if not claude:
+        raise HTTPException(status_code=500, detail='Claude not configured')
+    
+    try:
+        # Run enhancement
+        enhanced = await enhance_timeline_event_full(event, deepseek, claude)
+        
+        # Save to database
+        await db.timeline_events_v2.update_one(
+            {"id": event_id},
+            {"$set": enhanced}
+        )
+        
+        return {"success": True, "event": enhanced}
+        
+    except Exception as e:
+        logger.error(f"Enhancement failed for {event_id}: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@api_router.post('/timeline/v2/enhance-batch')
+async def enhance_batch_events(
+    limit: int = 10,
+    skip_enhanced: bool = True,
+    current_user: dict = Depends(get_current_user)
+):
+    """
+    Batch enhance timeline events. Admin only.
+    """
+    # Check admin key
+    admin_key = os.environ.get('ADMIN_KEY')
+    if not admin_key or current_user.get('subscription_tier') != 'pro':
+        raise HTTPException(status_code=403, detail='Admin access required')
+    
+    # Get events that haven't been enhanced
+    query = {"_enhanced": {"$ne": True}} if skip_enhanced else {}
+    events = await db.timeline_events_v2.find(query, {"_id": 0}).limit(limit).to_list(limit)
+    
+    if not events:
+        return {"success": True, "message": "No events to enhance", "enhanced_count": 0}
+    
+    deepseek = get_deepseek_client()
+    claude = get_claude_client()
+    
+    if not deepseek or not claude:
+        raise HTTPException(status_code=500, detail='AI clients not configured')
+    
+    try:
+        enhanced_events = await batch_enhance_timeline_events(events, deepseek, claude)
+        
+        # Save all enhanced events
+        for event in enhanced_events:
+            await db.timeline_events_v2.update_one(
+                {"id": event["id"]},
+                {"$set": event}
+            )
+        
+        return {
+            "success": True,
+            "enhanced_count": len(enhanced_events),
+            "events": [{"id": e["id"], "title": e["title"]} for e in enhanced_events]
+        }
+        
+    except Exception as e:
+        logger.error(f"Batch enhancement failed: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@api_router.get('/timeline/v2/events/{event_id}/narrative')
+async def get_event_narrative(event_id: str):
+    """
+    Get the narrative description of an event.
+    If not enhanced, returns the original description.
+    """
+    event = await get_event_by_id(db, event_id)
+    if not event:
+        raise HTTPException(status_code=404, detail='Event not found')
+    
+    return {
+        "id": event_id,
+        "title": event.get("title"),
+        "year": event.get("year"),
+        "description_factual": event.get("description_factual", event.get("description")),
+        "description_narrative": event.get("description_narrative", event.get("description")),
+        "description_short": event.get("description_short", event.get("title", "")[:100]),
+        "sources": event.get("sources", []),
+        "figures_involved": event.get("figures_involved", []),
+        "enhanced": event.get("_enhanced", False)
+    }
+
 # Archetype personas for AI spell generation
 ARCHETYPE_PERSONAS = {
     'shiggy': {
