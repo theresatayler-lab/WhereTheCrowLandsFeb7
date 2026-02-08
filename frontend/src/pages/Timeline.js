@@ -608,12 +608,12 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick }) => {
                                     {/* Author - clickable to search */}
                                     {source.author && (
                                       <button
-                                        className="text-cream/70 hover:text-gold transition-colors"
+                                        className="text-cream/70 hover:text-gold transition-colors font-medium"
                                         onClick={(e) => {
                                           e.stopPropagation();
-                                          handleFigureClick(e, source.author);
+                                          onFilterClick?.({ type: 'author', value: source.author });
                                         }}
-                                        title={`Find more sources by ${source.author}`}
+                                        title={`Find more citing ${source.author}`}
                                       >
                                         {source.author}
                                       </button>
