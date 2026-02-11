@@ -4,7 +4,7 @@ import sys
 from datetime import datetime
 
 class SubscriptionSystemTester:
-    def __init__(self, base_url="https://timelineai.preview.emergentagent.com"):
+    def __init__(self, base_url="https://magical-lore-hub.preview.emergentagent.com"):
         self.base_url = base_url
         self.token = None
         self.user_id = None
