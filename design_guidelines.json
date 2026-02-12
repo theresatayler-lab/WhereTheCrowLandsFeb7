@@ -1,145 +1,145 @@
 {
-  "design_system": {
-    "identity": {
-      "name": "The Bloomsbury Coven",
-      "aesthetic": "Rich Bloomsbury (1920s-40s) meets Ancient Mysticism",
-      "core_values": ["Historical Authenticity", "Intellectual Sophistication", "Mysterious Depth", "Artistic Freedom"],
-      "mood": "A dimly lit library in 1920s London, filled with velvet armchairs, ancient grimoires, and the scent of incense."
+  "project_name": "Where The Crowlands",
+  "design_philosophy": {
+    "identity": "E1 - The Anti-AI Designer",
+    "core_principles": [
+      "Fusion over Imitation: Mix Victorian aesthetics with modern SaaS functionality.",
+      "Emotion First: Every interaction should feel like a ritual.",
+      "Content is King: The lore (Shigg, Cathleen, etc.) drives the design.",
+      "Negative Space: Use deep dark spaces to create mystery.",
+      "Contrast: Gold on Teal, Light on Dark, Rough Texture vs Smooth Glass."
+    ],
+    "anti_patterns": [
+      "No generic 'Bootstrap' grids.",
+      "No pure black (#000000) backgrounds - use Midnight Teal or Deep Obsidian.",
+      "No 'Inter' font for headings.",
+      "No flat gradients - use noise and texture."
+    ]
+  },
+  "typography": {
+    "headings": {
+      "font_family": "Cinzel Decorative, serif",
+      "weights": ["700", "900"],
+      "usage": "Main page titles, Hero sections, Ritual names",
+      "letter_spacing": "tracking-wider"
     },
-    "typography": {
-      "font_families": {
-        "primary_heading": "Italiana, serif",
-        "secondary_heading": "Cinzel Decorative, serif",
-        "body": "Montserrat, sans-serif",
-        "mono": "JetBrains Mono, monospace"
-      },
-      "usage_rules": {
-        "h1": "Italiana, text-5xl md:text-7xl, tracking-tight, leading-none, text-accent-gold",
-        "h2": "Italiana, text-3xl md:text-5xl, tracking-wide, text-foreground",
-        "h3": "Cinzel Decorative, text-xl md:text-2xl, font-bold, text-accent-rose",
-        "body": "Montserrat, text-base md:text-lg, leading-relaxed, font-light",
-        "caption": "Montserrat, text-xs, tracking-[0.2em], uppercase, text-muted-foreground"
-      },
-      "google_fonts_import": "https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Italiana&family=Montserrat:wght@300;400;500;600&display=swap"
+    "subheadings": {
+      "font_family": "Playfair Display, serif",
+      "weights": ["600", "700"],
+      "usage": "Section headers, Card titles",
+      "letter_spacing": "tracking-wide"
     },
-    "colors": {
-      "palette": {
-        "background": "#120f14",
-        "foreground": "#f3f2e9",
-        "card": "#1c1821",
-        "card_foreground": "#f3f2e9",
-        "popover": "#1c1821",
-        "popover_foreground": "#f3f2e9",
-        "primary": "#d4af37",
-        "primary_foreground": "#120f14",
-        "secondary": "#2d2436",
-        "secondary_foreground": "#d4af37",
-        "muted": "#2a2430",
-        "muted_foreground": "#9ca3af",
-        "accent": "#c08e9b",
-        "accent_foreground": "#120f14",
-        "destructive": "#7f1d1d",
-        "destructive_foreground": "#f3f2e9",
-        "border": "#383042",
-        "input": "#2a2430",
-        "ring": "#d4af37"
-      },
-      "extended_palette": {
-        "bloomsbury_rose": "#c08e9b",
-        "artichoke_green": "#6b8e4a",
-        "burnt_orange": "#cc5500",
-        "deep_aubergine": "#3d1b24",
-        "midnight_blue": "#1e1b2e",
-        "gold_deco": "#d4af37"
-      },
-      "gradients": {
-        "mystic_overlay": "linear-gradient(to bottom, rgba(18, 15, 20, 0) 0%, rgba(18, 15, 20, 0.8) 100%)",
-        "gold_shimmer": "linear-gradient(45deg, #d4af37 0%, #f3e5ab 50%, #d4af37 100%)"
-      }
+    "body": {
+      "font_family": "Crimson Text, serif",
+      "weights": ["400", "600"],
+      "usage": "Long form text, lore descriptions, spell instructions",
+      "line_height": "leading-relaxed"
     },
-    "spacing": {
-      "scale": {
-        "section_padding": "py-24 md:py-32",
-        "container_padding": "px-6 md:px-12",
-        "element_gap": "gap-8 md:gap-12"
-      },
-      "layout_rules": "Use generous negative space. Avoid clutter. Let the typography breathe."
-    },
-    "visual_enhancers": {
-      "borders": "1px solid rgba(212, 175, 55, 0.2)",
-      "radius": "rounded-sm",
-      "shadows": {
-        "glow": "0 0 20px rgba(212, 175, 55, 0.1)",
-        "deep": "0 10px 30px rgba(0, 0, 0, 0.5)"
-      },
-      "textures": {
-        "noise": "url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjMTIwZjE0Ii8+CjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiLz4KPC9zdmc+')",
-        "paper": "Use a subtle paper grain overlay on cards with 5% opacity."
-      }
-    },
-    "components": {
-      "buttons": {
-        "primary": "bg-primary text-primary-foreground hover:bg-primary/90 font-serif tracking-widest uppercase text-sm px-8 py-3 rounded-sm border border-primary/50 shadow-glow transition-all duration-300",
-        "secondary": "bg-transparent text-primary border border-primary/30 hover:bg-primary/10 font-serif tracking-widest uppercase text-sm px-8 py-3 rounded-sm transition-all duration-300",
-        "ghost": "text-accent hover:text-accent/80 font-serif italic hover:underline transition-all"
-      },
-      "cards": {
-        "base": "bg-card/50 backdrop-blur-md border border-border p-8 rounded-sm hover:border-primary/30 transition-colors duration-500 group relative overflow-hidden",
-        "interactive": "cursor-pointer hover:-translate-y-1 transition-transform duration-300"
-      },
-      "inputs": {
-        "base": "bg-input/50 border-border focus:border-primary focus:ring-1 focus:ring-primary/50 font-body text-foreground placeholder:text-muted-foreground/50 rounded-sm"
-      }
-    },
-    "layout_strategies": {
-      "grid_system": "Use the 'Tetris' grid (Mode A) for browsing. Mix wide hero cards (col-span-2) with tall vertical cards (row-span-2) and small square fillers.",
-      "asymmetry": "Avoid perfect symmetry. Offset text blocks. Use overlapping images with z-index.",
-      "alignment": "Center headings for dramatic effect, but keep body text left-aligned for readability."
-    },
-    "motion": {
-      "transitions": "transition-all duration-500 ease-out",
-      "hover_effects": "Subtle lift (-translate-y-1), glow intensification, border color shift.",
-      "page_load": "Staggered fade-in with slight upward motion (framer-motion)."
+    "accents": {
+      "font_family": "Italiana, serif",
+      "usage": "Dates, small labels, navigation items",
+      "transform": "uppercase"
     }
   },
-  "assets": {
-    "images": {
-      "hero_background": "https://images.unsplash.com/photo-1643324896137-f0928e76202a?crop=entropy&cs=srgb&fm=jpg&q=85",
-      "deities": {
-        "hecate": "https://images.unsplash.com/photo-1711906485337-af335d9810a4?crop=entropy&cs=srgb&fm=jpg&q=85",
-        "morrigan": "https://images.unsplash.com/photo-1745520470002-391193461501?crop=entropy&cs=srgb&fm=jpg&q=85",
-        "cerridwen": "https://images.unsplash.com/photo-1661619669807-784e46af8029?crop=entropy&cs=srgb&fm=jpg&q=85"
-      },
-      "sacred_sites": {
-        "stonehenge": "https://images.unsplash.com/photo-1588578507406-f90d1df22e8e?crop=entropy&cs=srgb&fm=jpg&q=85",
-        "glastonbury": "https://images.unsplash.com/photo-1659016596573-cb626781048a?crop=entropy&cs=srgb&fm=jpg&q=85",
-        "ancient_grove": "https://images.unsplash.com/photo-1588578507491-879ec69e07d8?crop=entropy&cs=srgb&fm=jpg&q=85"
-      },
-      "textures": {
-        "art_deco_gold": "https://images.unsplash.com/photo-1643324897407-54f8ae049132?crop=entropy&cs=srgb&fm=jpg&q=85",
-        "floral_illustration": "https://images.unsplash.com/photo-1604263710021-2ac5cd439907?crop=entropy&cs=srgb&fm=jpg&q=85"
-      }
+  "colors": {
+    "palette": {
+      "midnight_teal": "#0E2A2F",
+      "deep_obsidian": "#0A1F22",
+      "vellum": "#F3EFE8",
+      "antique_gold": "#C8A44D",
+      "muted_brass": "#9E8438",
+      "ember_pink": "#B94E6A",
+      "rose_clay": "#C26A5A",
+      "celestial_blue": "#123A3F"
     },
-    "icons": "Use 'Lucide React' with thin stroke width (1.5px) to match the elegant aesthetic."
+    "usage": {
+      "background_primary": "midnight_teal",
+      "background_secondary": "celestial_blue",
+      "text_primary": "vellum",
+      "text_secondary": "muted_brass",
+      "accent_primary": "antique_gold",
+      "accent_secondary": "ember_pink",
+      "border_default": "antique_gold (opacity 30%)"
+    },
+    "persona_schemes": {
+      "shigg": { "primary": "#4A5D23", "accent": "#D4B55D" },
+      "cathleen": { "primary": "#8B3A3A", "accent": "#E0C097" },
+      "katherine": { "primary": "#2F4F4F", "accent": "#A9A9A9" },
+      "theresa": { "primary": "#5D4037", "accent": "#D7CCC8" },
+      "brenda": { "primary": "#483D8B", "accent": "#E6E6FA" }
+    }
   },
-  "instructions_to_main_agent": {
-    "setup": [
-      "Install dependencies: `npm install framer-motion lucide-react clsx tailwind-merge`",
-      "Update `tailwind.config.js` with the colors and fonts defined in `design_system`.",
-      "Add the Google Fonts import to `index.css`.",
-      "Create a `Layout` component that applies the background color and texture globally."
-    ],
-    "implementation_priorities": [
-      "Implement the 'Bloomsbury' color palette immediately. No default shadcn slate/zinc.",
-      "Build the 'Tetris Grid' layout for the Deities and Historical Figures pages.",
-      "Create a reusable 'GlassCard' component that implements the visual enhancers (border, blur, noise).",
-      "Ensure all text is readable against the dark background (check contrast)."
-    ],
-    "universal_rules": [
-      "Do NOT use gradients for text.",
-      "Do NOT use default scrollbars (customize them to be thin and gold).",
-      "Always add `data-testid` to interactive elements.",
-      "Use `framer-motion` for page transitions."
-    ]
-  }
+  "layout_strategy": {
+    "grid_system": "Bento Grid (Tetris Mode)",
+    "spacing": {
+      "container_padding": "p-8 md:p-12 lg:p-20",
+      "element_gap": "gap-8 md:gap-12",
+      "internal_padding": "p-6"
+    },
+    "containers": {
+      "ornate_frame": "border-2 border-antique_gold/30 relative p-8 bg-midnight_teal/90 backdrop-blur-sm",
+      "glass_panel": "bg-midnight_teal/60 backdrop-blur-md border border-white/10 shadow-xl"
+    }
+  },
+  "components": {
+    "buttons": {
+      "ritual_primary": "bg-ember_pink text-vellum font-cinzel tracking-widest hover:bg-rose_clay transition-all duration-300 shadow-[0_0_15px_rgba(185,78,106,0.4)] border border-antique_gold/50",
+      "ghost_gold": "bg-transparent border border-antique_gold text-antique_gold hover:bg-antique_gold/10 font-playfair tracking-wide"
+    },
+    "cards": {
+      "tarot_style": "aspect-[2/3] bg-celestial_blue border-2 border-antique_gold/40 rounded-lg hover:transform hover:-translate-y-2 transition-transform duration-500 shadow-2xl relative overflow-hidden group",
+      "lore_entry": "bg-midnight_teal border-l-4 border-antique_gold p-6 shadow-lg"
+    },
+    "inputs": {
+      "vintage_field": "bg-transparent border-b-2 border-antique_gold/30 focus:border-ember_pink outline-none text-vellum placeholder-muted_brass/50 font-crimson text-lg py-2 transition-colors"
+    }
+  },
+  "visual_enhancers": {
+    "textures": {
+      "noise_overlay": "fixed inset-0 opacity-[0.03] pointer-events-none z-50 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]",
+      "paper_grain": "bg-[url('https://images.unsplash.com/photo-1637589467890-1d0600734e12?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Nzh8MHwxfHNlYXJjaHwzfHxvbGQlMjBwYXBlciUyMHBhcmNobWVudCUyMHRleHR1cmUlMjBncnVuZ2UlMjB2aW50YWdlfGVufDB8fHx8MTc3MDkzNzYxM3ww&ixlib=rb-4.1.0&q=85')] bg-blend-overlay opacity-10"
+    },
+    "effects": {
+      "glow_gold": "drop-shadow-[0_0_8px_rgba(200,164,77,0.5)]",
+      "glow_ember": "drop-shadow-[0_0_10px_rgba(185,78,106,0.6)]",
+      "vignette": "radial-gradient(circle at center, transparent 0%, #0E2A2F 100%)"
+    }
+  },
+  "page_specifics": {
+    "home": {
+      "hero_image": "https://images.unsplash.com/photo-1747946924215-f61a62911fd9?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzh8MHwxfHNlYXJjaHw0fHx2aW50YWdlJTIwcmF2ZW4lMjBjcm93JTIwaWxsdXN0cmF0aW9uJTIwYW50aXF1ZSUyMHN0eWxlfGVufDB8fHx8MTc3MDkzNzYwMHww&ixlib=rb-4.1.0&q=85",
+      "layout": "Full screen hero with centered ornate title, parallax scrolling into lore sections."
+    },
+    "guides": {
+      "layout": "Bento grid of 5 columns (mobile 1), each representing a persona.",
+      "images": [
+        "https://images.unsplash.com/photo-1680633292770-0f19090b167f?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2OTF8MHwxfHNlYXJjaHwyfHxhbnRpcXVlJTIwdmljdG9yaWFuJTIwd29tYW4lMjBwb3J0cmFpdCUyMHNlcGlhJTIwdmludGFnZSUyMHBob3RvfGVufDB8fHx8MTc3MDkzNzYwN3ww&ixlib=rb-4.1.0&q=85",
+        "https://images.unsplash.com/photo-1743348230324-b7e4742209f6?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2OTF8MHwxfHNlYXJjaHwzfHxhbnRpcXVlJTIwdmljdG9yaWFuJTIwd29tYW4lMjBwb3J0cmFpdCUyMHNlcGlhJTIwdmludGFnZSUyMHBob3RvfGVufDB8fHx8MTc3MDkzNzYwN3ww&ixlib=rb-4.1.0&q=85"
+      ]
+    },
+    "timeline": {
+      "layout": "Vertical 'Snake' line with alternating left/right cards. Each event card is an 'Ornate Frame'.",
+      "interaction": "Scroll-triggered fade-ins."
+    },
+    "tarot": {
+      "card_back": "https://images.unsplash.com/photo-1622794444123-4e3900991f74?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMzJ8MHwxfHNlYXJjaHwxfHxteXN0aWNhbCUyMHRhcm90JTIwY2FyZCUyMGJhY2slMjBkZXNpZ24lMjB2aW50YWdlJTIwb2NjdWx0fGVufDB8fHx8MTc3MDkzNzYyNXww&ixlib=rb-4.1.0&q=85",
+      "layout": "Tabletop view, cards spread in a semi-circle."
+    }
+  },
+  "instructions_to_main_agent": [
+    "1. Apply the 'Midnight Teal' theme globally in index.css.",
+    "2. Refactor the 'Button' component to use the 'Ritual' styles.",
+    "3. Implement the 'Bento Grid' for the Guides page.",
+    "4. Use the provided image URLs for backgrounds and placeholders.",
+    "5. Ensure all text is readable (WCAG AA) against the dark backgrounds - increase font weight if needed.",
+    "6. Add 'data-testid' to all interactive elements.",
+    "7. Do NOT use default Shadcn cards; customize them with the 'Ornate Frame' borders."
+  ],
+  "universal_guidelines": [
+    "Avoid 'AI Slop' - no generic centered layouts.",
+    "Use 2-3x more spacing than usual.",
+    "Dark colors must be rich (Teal, Obsidian), not just black.",
+    "Use 'sonner' for toasts.",
+    "Components must use named exports."
+  ]
 }
