@@ -685,6 +685,20 @@ MICRO_ICONS = {
         "circle": "⭕",
         "key": "🔑",
         "grimoire": "📖"
+    },
+    "brenda": {
+        "crow": "🐦‍⬛",
+        "typewriter": "⌨️",
+        "photograph": "🖼️",
+        "letter": "✉️",
+        "locket": "📿",
+        "clock": "🕰️",
+        "recipe": "📝",
+        "garden": "🌻",
+        "bread": "🍞",
+        "flower": "🌸",
+        "book": "📖",
+        "candle": "🕯️"
     }
 }
 
