@@ -481,9 +481,39 @@ export const InvisibleHelpers = () => {
       {/* CINEMATIC HERO HEADER */}
       {/* ================================================================ */}
       <DarkSection 
-        className="py-10 sm:py-12 md:py-14 px-4 sm:px-6" 
+        className="py-10 sm:py-12 md:py-14 px-4 sm:px-6 relative overflow-hidden" 
         variant="warm"
       >
+        {/* Brenda - The Chronicler - positioned left, faded into background */}
+        <div 
+          className="absolute left-0 bottom-0 w-[400px] h-[500px] opacity-[0.12] pointer-events-none hidden lg:block"
+          style={{
+            backgroundImage: `url(${BRENDA_IMAGE})`,
+            backgroundSize: 'contain',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'left bottom',
+            mixBlendMode: 'luminosity',
+            filter: 'sepia(30%) contrast(1.1)',
+            maskImage: 'linear-gradient(to right, transparent 0%, black 30%, black 70%, transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 30%, black 70%, transparent 100%)'
+          }}
+        />
+        
+        {/* Family image - positioned right, faded into background */}
+        <div 
+          className="absolute right-0 top-0 w-[350px] h-[350px] opacity-[0.10] pointer-events-none hidden lg:block"
+          style={{
+            backgroundImage: `url(${BRENDA_FAMILY_IMAGE})`,
+            backgroundSize: 'contain',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'right top',
+            mixBlendMode: 'luminosity',
+            filter: 'sepia(40%) contrast(1.05)',
+            maskImage: 'linear-gradient(to left, transparent 0%, black 40%, black 60%, transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to left, transparent 0%, black 40%, black 60%, transparent 100%)'
+          }}
+        />
+        
         {/* Corner flourishes */}
         <CornerFlourish position="top-left" className="absolute top-4 left-4 w-14 h-14 sm:w-18 sm:h-18" />
         <CornerFlourish position="top-right" className="absolute top-4 right-4 w-14 h-14 sm:w-18 sm:h-18" />
