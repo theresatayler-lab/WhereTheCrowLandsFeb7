@@ -62,6 +62,7 @@ PERSONA_DEFAULT_TIERS = {
     "cathleen": SpellTier.STANDARD,   # Voice-focused, needs good prose
     "katherine": SpellTier.DEEP,      # Academic spiritualist - needs sources!
     "theresa": SpellTier.STANDARD,    # Family lore, can go deep for ancestral
+    "brenda": SpellTier.STANDARD,     # Family chronicler, warm and nostalgic
 }
 
 # =============================================================================
