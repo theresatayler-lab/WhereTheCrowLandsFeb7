@@ -2345,12 +2345,13 @@ PERSONA_CONFIG = {
 # ============================================================================
 
 FEELING_SCENARIO_MAP = {
-    "calm": ["kettle_charm", "tea_ring_unknotting", "home_circle_blessing", "keening_container", "mirror_inquiry_safe", "record_and_repeat"],
-    "brave": ["bird_omen_reading", "herb_packet", "voice_ward", "token_talisman", "protection_protocol", "discernment_protocol"],
-    "clear": ["bird_omen_reading", "tea_ring_unknotting", "candle_letter", "discernment_protocol", "mirror_inquiry_safe", "record_and_repeat"],
+    "calm": ["kettle_charm", "tea_ring_unknotting", "home_circle_blessing", "keening_container", "mirror_inquiry_safe", "record_and_repeat", "memory_keeping"],
+    "brave": ["bird_omen_reading", "herb_packet", "voice_ward", "token_talisman", "protection_protocol", "discernment_protocol", "crow_communion"],
+    "clear": ["bird_omen_reading", "tea_ring_unknotting", "candle_letter", "discernment_protocol", "mirror_inquiry_safe", "record_and_repeat", "memory_keeping", "crow_communion"],
     "protected": ["windowsill_ward", "herb_packet", "home_circle_blessing", "voice_ward", "token_talisman", "protection_protocol", "threadworking"],
-    "softened": ["kettle_charm", "tea_ring_unknotting", "keening_container", "candle_letter", "threadworking"],
-    "energized": ["herb_packet", "voice_ward", "token_talisman", "unbinding_ritual"]
+    "softened": ["kettle_charm", "tea_ring_unknotting", "keening_container", "candle_letter", "threadworking", "memory_keeping"],
+    "energized": ["herb_packet", "voice_ward", "token_talisman", "unbinding_ritual"],
+    "connected": ["memory_keeping", "crow_communion"]
 }
 
 # ============================================================================
