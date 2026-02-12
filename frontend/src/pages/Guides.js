@@ -14,7 +14,8 @@ const GUIDE_GLYPHS = {
   theresa: { main: 'feather', secondary: 'crescent' },
   corrie: { main: 'owl', secondary: 'crescent' },
   cathleen: { main: 'triquetra', secondary: 'serpent' },
-  emily: { main: 'candle', secondary: 'key' }
+  emily: { main: 'candle', secondary: 'key' },
+  brenda: { main: 'crow', secondary: 'scroll' }
 };
 
 export const Guides = () => {
