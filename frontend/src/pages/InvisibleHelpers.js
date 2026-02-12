@@ -23,6 +23,10 @@ const API_URL = process.env.REACT_APP_BACKEND_URL;
 // Generic spell video for loading state
 const SPELL_VIDEO_URL = '/images/ui/spell-waiting-video.mov';
 
+// Brenda images for atmosphere
+const BRENDA_IMAGE = '/images/personas/brenda.png';
+const BRENDA_FAMILY_IMAGE = '/images/personas/brenda-family.png';
+
 // ============================================================================
 // FORM OPTIONS - ORIGINAL LABELS PRESERVED
 // ============================================================================
