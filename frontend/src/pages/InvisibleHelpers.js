@@ -1081,10 +1081,25 @@ export const InvisibleHelpers = () => {
       </LightSection>
 
       {/* ================================================================ */}
-      {/* FOOTER */}
+      {/* FOOTER WITH ATMOSPHERIC IMAGERY */}
       {/* ================================================================ */}
-      <DarkSection className="py-8 px-4">
-        <div className="max-w-xl mx-auto text-center">
+      <DarkSection className="py-8 px-4 relative overflow-hidden">
+        {/* Subtle Brenda presence in footer - very faded */}
+        <div 
+          className="absolute left-1/2 -translate-x-1/2 bottom-0 w-[600px] h-[200px] opacity-[0.06] pointer-events-none"
+          style={{
+            backgroundImage: `url(${BRENDA_FAMILY_IMAGE})`,
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center bottom',
+            mixBlendMode: 'luminosity',
+            filter: 'sepia(50%)',
+            maskImage: 'radial-gradient(ellipse at center bottom, black 0%, transparent 70%)',
+            WebkitMaskImage: 'radial-gradient(ellipse at center bottom, black 0%, transparent 70%)'
+          }}
+        />
+        
+        <div className="max-w-xl mx-auto text-center relative z-10">
           <p className="font-crimson text-base text-silver-mist/80 italic">
             Inner work does not replace resistance.
           </p>
