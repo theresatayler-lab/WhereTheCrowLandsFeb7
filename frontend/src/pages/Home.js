@@ -302,7 +302,7 @@ export const Home = () => {
                   className="relative flex items-center gap-3 font-cinzel tracking-[0.15em] uppercase text-sm"
                   style={{ color: '#FFF' }}
                 >
-                  <BrandIcon name="star" size={18} variant="pink" opacity={0.9} /> Begin Your Journey
+                  <BrandIcon name="star" size={18} variant="pink" opacity={0.9} /> We&apos;ve Got a Spell for That
                 </span>
               </Link>
               <Link 
