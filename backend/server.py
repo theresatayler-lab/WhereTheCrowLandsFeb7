@@ -2529,7 +2529,7 @@ async def admin_seed_katherine_spells(admin_key: str):
     try:
         count = await seed_katherine_spells(db)
         return {"message": f"Successfully seeded {count} Katherine sample spells", "count": count}
-    except Exception as e:
+    except Exception:
         raise HTTPException(status_code=500, detail="Seed operation failed")
 
 @api_router.post('/admin/seed-cathleen-spells')
@@ -2539,7 +2539,7 @@ async def admin_seed_cathleen_spells(admin_key: str):
     try:
         count = await seed_cathleen_spells(db)
         return {"message": f"Successfully seeded {count} Cathleen sample spells", "count": count}
-    except Exception as e:
+    except Exception:
         raise HTTPException(status_code=500, detail="Seed operation failed")
 
 @api_router.post('/admin/seed-shigg-spells')
@@ -2549,7 +2549,7 @@ async def admin_seed_shigg_spells(admin_key: str):
     try:
         count = await seed_shigg_spells(db)
         return {"message": f"Successfully seeded {count} Shigg sample spells", "count": count}
-    except Exception as e:
+    except Exception:
         raise HTTPException(status_code=500, detail="Seed operation failed")
 
 # Bird Oracle - Shigg's integrated feature
