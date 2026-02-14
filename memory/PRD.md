@@ -20,6 +20,34 @@ Build "Where The Crowlands," a sophisticated full-stack application for creating
 
 ## What's Been Implemented
 
+### Session: February 14, 2025 - Working Types Integration + Async Spell Generation ✅
+
+#### Working Types System (From GitHub Branch) ✅
+- Pulled and deployed `claude/code-review-bugs-8aaZC` branch
+- **Guide-specific anchor objects**: Each guide now has unique anchors
+  - Shigg: Tea, Bird, Bread, Herb/Sprig, A Poem
+  - Cathleen: Song/Voice, Bell, Feather, Salt, Candle  
+  - Katherine: Thread & Needle, Mirror, Compass, Scissors, Sealed Letter
+  - Theresa: Notebook & Pen, Photograph, Map/Family Tree, Red Thread, Magnifying Glass
+  - Brenda: Letter/Envelope, Family Photo, Heirloom/Keepsake, Recipe Card, Crow Feather
+- **Guide-specific feelings filter**: Each guide has distinct emotional options
+- **Canon anchors verified**: Brenda uses `family_chronicle`, Theresa uses `pattern_breaking` (not Shigg's anchors)
+
+#### Async Spell Generation (P0 Fix) ✅
+- **Problem**: Cloudflare 60s proxy timeout killed connections during 2+ minute spell generation
+- **Solution**: Implemented job-based async pattern
+  - `POST /api/ai/generate-spell-job` - Returns job_id immediately
+  - `GET /api/ai/spell-job/{job_id}` - Poll for status (pending/processing/complete/failed)
+  - Frontend polls every 5s until complete
+- **MongoDB collection**: `spell_jobs` stores job state and results
+- **Tested & verified**: Spells complete in ~2 minutes, connection stays clean
+
+#### Silent Army Video Background ✅
+- Optimized `SilentArmySpells.mov` from 12MB → 1.8MB (H.264 MP4)
+- Video plays during spell generation loading overlay
+- Used for: Invisible Helpers, SpellRequest pages
+- Location: `/app/frontend/public/videos/silent-army-spells.mp4`
+
 ### Session: February 12, 2025 - Security Fixes + Brenda Persona + Bug Fixes ✅
 
 #### Security Hardening (CRITICAL)
