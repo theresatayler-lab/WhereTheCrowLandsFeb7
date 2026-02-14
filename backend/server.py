@@ -65,7 +65,10 @@ app = FastAPI()
 api_router = APIRouter(prefix="/api")
 security = HTTPBearer()
 
-JWT_SECRET = os.environ.get('JWT_SECRET', 'your-secret-key-change-in-production')
+# SECURITY: JWT_SECRET must be set in environment - no fallback
+JWT_SECRET = os.environ.get('JWT_SECRET')
+if not JWT_SECRET:
+    raise RuntimeError("CRITICAL: JWT_SECRET environment variable must be set")
 JWT_ALGORITHM = 'HS256'
 OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY', '')
 STRIPE_API_KEY = os.environ.get('STRIPE_API_KEY', '')
