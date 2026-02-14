@@ -109,7 +109,7 @@ async def emergent_chat_completion(messages: list, model: str = "gpt-4o", temper
 # Models
 class UserRegister(BaseModel):
     email: EmailStr
-    password: str
+    password: str = Field(..., min_length=8, description="Password must be at least 8 characters")
     name: str
 
 class UserLogin(BaseModel):
