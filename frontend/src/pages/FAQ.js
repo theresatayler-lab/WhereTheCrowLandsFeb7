@@ -13,7 +13,7 @@ const faqs = [
       },
       {
         q: 'Who are the four guides?',
-        a: 'Shigg - The Birds of Parliament Poet Laureate, drawing on Rubáiyát wisdom and bird oracle traditions; Cathleen - The Singer of Strength, bridging British Spiritualism and voice magic; Katherine - The Weaver of Hidden Knowledge, master of craft-based sympathetic magic; and Theresa - The Seer & Storyteller. Each guide has a unique voice, ritual style, and area of expertise spanning over a century of practice.'
+        a: 'Shigg - The Birds of Parliament Poet Laureate, drawing on Rubáiyát wisdom and bird oracle traditions; Cathleen - The Singer of Strength, bridging British Spiritualism and voice magic; Katherine - The Weaver of Hidden Knowledge, master of craft-based sympathetic magic; and Brenda - The Family Chronicler, keeper of memory and crow communion. Each guide has a unique voice, ritual style, and area of expertise spanning over a century of practice.'
       },
       {
         q: 'Do I have to choose a guide?',
