@@ -276,9 +276,10 @@ export const Home = () => {
                     marginTop: '0.1em',
                   }}
                 >W</span>
-                Where the Crowlands is a toolkit for alchemizing what you already hold. Rooted in history; from the 
+                here the Crowlands is a toolkit for alchemizing what you already hold. Rooted in history; from the 
                 Huguenot mystics fleeing persecution, Jersey witches shaping weather and fate, Irish and Celtic keepers 
                 of forbidden knowledge, to London&apos;s table-tappers and spiritualists revealing the hidden world.
+                The mystics and silent defenders of life and lineage.
               </p>
             </div>
             
