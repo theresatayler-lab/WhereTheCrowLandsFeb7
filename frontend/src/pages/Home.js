@@ -246,7 +246,7 @@ export const Home = () => {
                 letterSpacing: '0.12em',
               }}
             >
-              A place where magic is normalized, formula, alchemized from head, heart, space and time
+              Alchemize spells and rituals, build your own Grimoire, find your flock
             </p>
             
             {/* Handwritten accent */}
