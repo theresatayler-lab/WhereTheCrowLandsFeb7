@@ -4,7 +4,7 @@
 
 ```
 STACK:        React 18 + FastAPI + MongoDB + Multi-LLM
-GUIDES:       Shigg (amber), Cathleen (teal), Katherine (violet) - Theresa NOT implemented
+GUIDES:       Shigg (amber), Cathleen (teal), Katherine (violet), Theresa (investigator), Brenda (chronicler)
 AI ROUTING:   DeepSeek (research) → Claude Sonnet (writing) → GPT-4o (fallback)
 COLORS:       Navy (#0a1628), Cream (#F3EFE8), Gold (#C8A44D), Crimson (#8b2232)
 ```
@@ -15,7 +15,7 @@ COLORS:       Navy (#0a1628), Cream (#F3EFE8), Gold (#C8A44D), Crimson (#8b2232)
 
 **Where The Crowlands** (also "nOcult") is a full-stack web application for creating AI-generated DIY rituals and spellwork guided by ancestral archetypes. It blends documented occult history, folklore, and myth with AI-powered personalization.
 
-**Core Concept:** Users interact with one of three ancestral "Guides" (AI personas) who help craft personalized workings based on intentions. Magic is treated as psychological/narrative tool for self-reflection, not supernatural claims.
+**Core Concept:** Users interact with one of five ancestral "Guides" (AI personas) who help craft personalized workings based on intentions. Magic is treated as psychological/narrative tool for self-reflection, not supernatural claims.
 
 **Target Audience:** Modern witches, pagans, secular spiritualists, folklore enthusiasts, ritual-as-meaning-making practitioners.
 
@@ -49,8 +49,21 @@ COLORS:       Navy (#0a1628), Cream (#F3EFE8), Gold (#C8A44D), Crimson (#8b2232)
 - **Taboos:** Never fluffy/warm, never domestic/cozy language
 - **Colors:** `violet-600`, `violet-400`, `violet-900/15`
 
-### THERESA - NOT IMPLEMENTED
-Theresa appears in design docs as "Appalachian grandmother" but does NOT exist in `persona_config.py`. Only 3 guides are functional.
+### THERESA (Investigator)
+- **Archetype:** Seer-Archivist, pattern breaker, truth seeker
+- **Voice:** Direct, investigative, evidence/pattern metaphors
+- **Specialty:** Family secrets, genealogical magic, pattern breaking, truth seeking
+- **Signature:** Notebooks, magnifying glass, red thread, photographs, maps
+- **Taboos:** Never vague/mystical, never domestic/cozy language
+- **Anchors:** Notebook & Pen, Photograph, Map/Family Tree, Red Thread, Magnifying Glass
+
+### BRENDA (Chronicler)
+- **Archetype:** Family chronicler, memory keeper, crow communer
+- **Voice:** Warm, nostalgic, letter/memory/family metaphors
+- **Specialty:** Memory keeping, letter spells, crow communion, family stories
+- **Signature:** Letters, family photos, heirlooms, recipe cards, crow feathers
+- **Taboos:** Never clinical/analytical, never impersonal
+- **Anchors:** Letter/Envelope, Family Photo, Heirloom/Keepsake, Recipe Card, Crow Feather
 
 ---
 
@@ -268,7 +281,7 @@ curl -s "$API_URL/api/timeline/v2/stats"
 - Invisible Helpers portal
 
 ### Gaps
-- Theresa guide NOT implemented
+- All 5 guides functional (Shigg, Cathleen, Katherine, Theresa, Brenda)
 - ~35/94 timeline events have rich narratives
 - 98 broken connection references in timeline
 - Stripe payments BLOCKED (needs valid key)

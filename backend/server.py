@@ -61,6 +61,7 @@ db = client[os.environ['DB_NAME']]
 # Initialize GridFS-based image storage (solves DocumentTooLarge error)
 image_storage = ImageStorage(db)
 
+
 # Create the main app
 app = FastAPI()
 api_router = APIRouter(prefix="/api")
@@ -1509,8 +1510,11 @@ async def create_bespoke_checkout(request: BespokeSpellRequest):
         return {'error': str(e), 'skip_checkout': True}
 
 @api_router.get('/handcrafted/orders')
-async def get_handcrafted_orders():
-    """Admin endpoint to view pending handcrafted orders"""
+async def get_handcrafted_orders(admin_key: str = None):
+    """Admin endpoint to view pending handcrafted orders. Requires admin_key."""
+    expected_key = os.environ.get('ADMIN_KEY')
+    if not expected_key or admin_key != expected_key:
+        raise HTTPException(status_code=403, detail='Admin access required')
     orders = await db.handcrafted_orders.find(
         {'status': {'$in': ['pending', 'paid']}},
         {'_id': 0}
@@ -2819,8 +2823,11 @@ async def get_all_sample_spells():
     return spells
 
 @api_router.post('/admin/seed-katherine-spells')
-async def admin_seed_katherine_spells():
+async def admin_seed_katherine_spells(admin_key: str = None):
     """Seed Katherine's sample spells into the database (admin only)"""
+    expected_key = os.environ.get('ADMIN_KEY')
+    if not expected_key or admin_key != expected_key:
+        raise HTTPException(status_code=403, detail='Admin access required')
     try:
         count = await seed_katherine_spells(db)
         return {"message": f"Successfully seeded {count} Katherine sample spells", "count": count}
@@ -2828,8 +2835,11 @@ async def admin_seed_katherine_spells():
         raise HTTPException(status_code=500, detail=safe_error_detail(e, "seeding Katherine spells"))
 
 @api_router.post('/admin/seed-cathleen-spells')
-async def admin_seed_cathleen_spells():
+async def admin_seed_cathleen_spells(admin_key: str = None):
     """Seed Cathleen's sample spells into the database (admin only)"""
+    expected_key = os.environ.get('ADMIN_KEY')
+    if not expected_key or admin_key != expected_key:
+        raise HTTPException(status_code=403, detail='Admin access required')
     try:
         count = await seed_cathleen_spells(db)
         return {"message": f"Successfully seeded {count} Cathleen sample spells", "count": count}
@@ -2837,8 +2847,11 @@ async def admin_seed_cathleen_spells():
         raise HTTPException(status_code=500, detail=safe_error_detail(e, "seeding Cathleen spells"))
 
 @api_router.post('/admin/seed-shigg-spells')
-async def admin_seed_shigg_spells():
+async def admin_seed_shigg_spells(admin_key: str = None):
     """Seed Shigg's sample spells into the database (admin only)"""
+    expected_key = os.environ.get('ADMIN_KEY')
+    if not expected_key or admin_key != expected_key:
+        raise HTTPException(status_code=403, detail='Admin access required')
     try:
         count = await seed_shigg_spells(db)
         return {"message": f"Successfully seeded {count} Shigg sample spells", "count": count}
@@ -5898,6 +5911,12 @@ logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
+
+@app.on_event('startup')
+async def startup_ensure_indexes():
+    """Create TTL index on spell_jobs so completed jobs auto-delete after 30 days."""
+    await db.spell_jobs.create_index('created_at', expireAfterSeconds=86400 * 30)
+    logger.info("[STARTUP] TTL index ensured on spell_jobs (30 day expiry)")
 
 @app.on_event('shutdown')
 async def shutdown_db_client():
