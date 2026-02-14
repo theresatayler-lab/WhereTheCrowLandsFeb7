@@ -2590,13 +2590,36 @@ FEELING_SCENARIO_MAP = {
 # ============================================================================
 
 ANCHOR_SCENARIO_MAP = {
+    # Shigg anchors
     "tea": ["kettle_charm", "tea_ring_unknotting", "bird_omen_reading"],
-    "thread": ["token_talisman", "threadworking", "unbinding_ritual"],
-    "candle": ["windowsill_ward", "home_circle_blessing", "voice_ward", "keening_container", "token_talisman", "candle_letter", "protection_protocol", "discernment_protocol", "mirror_inquiry_safe", "record_and_repeat"],
-    "salt": ["windowsill_ward", "home_circle_blessing", "token_talisman", "protection_protocol", "unbinding_ritual"],
     "bird": ["windowsill_ward", "bird_omen_reading"],
+    "bread": ["kettle_charm", "bird_omen_reading"],
+    "herb": ["kettle_charm", "windowsill_ward", "herb_packet"],
+    "poetry": ["tea_ring_unknotting", "bird_omen_reading"],
+    # Cathleen anchors
+    "song": ["home_circle_blessing", "voice_ward", "keening_container"],
+    "bell": ["home_circle_blessing", "voice_ward", "protection_protocol"],
+    "feather": ["voice_ward", "token_talisman", "bird_omen_reading"],
+    "salt": ["windowsill_ward", "home_circle_blessing", "token_talisman", "protection_protocol", "unbinding_ritual"],
+    "candle": ["windowsill_ward", "home_circle_blessing", "voice_ward", "keening_container", "token_talisman", "candle_letter", "protection_protocol", "discernment_protocol", "mirror_inquiry_safe", "record_and_repeat"],
+    # Katherine anchors
+    "thread": ["token_talisman", "threadworking", "unbinding_ritual"],
     "mirror": ["keening_container", "protection_protocol", "mirror_inquiry_safe"],
-    "song": ["home_circle_blessing", "voice_ward", "keening_container"]
+    "compass": ["discernment_protocol", "protection_protocol", "record_and_repeat"],
+    "scissors": ["threadworking", "unbinding_ritual", "token_talisman"],
+    "sealed_letter": ["candle_letter", "discernment_protocol", "record_and_repeat"],
+    # Theresa anchors
+    "notebook": ["pattern_investigation", "truth_seeking"],
+    "photograph": ["pattern_investigation", "truth_seeking"],
+    "map": ["pattern_investigation"],
+    "red_thread": ["pattern_investigation", "truth_seeking"],
+    "magnifying_glass": ["truth_seeking", "pattern_investigation"],
+    # Brenda anchors
+    "letter": ["memory_keeping", "crow_communion"],
+    "family_photo": ["memory_keeping"],
+    "heirloom": ["memory_keeping", "crow_communion"],
+    "recipe_card": ["memory_keeping"],
+    "crow_feather": ["crow_communion", "memory_keeping"]
 }
 
 # ============================================================================
