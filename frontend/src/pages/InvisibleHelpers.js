@@ -140,11 +140,12 @@ export const InvisibleHelpers = () => {
   
   const [step, setStep] = useState('form');
   const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
   const [generating, setGenerating] = useState(false);
   const [generatedWorking, setGeneratedWorking] = useState(null);
   const [generationCount, setGenerationCount] = useState(0);
   const [copied, setCopied] = useState(false);
-  const [checkingOut, setCheckingOut] = useState(false);
+  const [remainingSpells, setRemainingSpells] = useState(3);
   
   const workingRef = useRef(null);
 
@@ -153,18 +154,10 @@ export const InvisibleHelpers = () => {
   };
 
   useEffect(() => {
+    // Clear any old checkout-related URL params
     const urlParams = new URLSearchParams(window.location.search);
-    const sessionId = urlParams.get('session_id');
-    const success = urlParams.get('success');
-    const storedEmail = localStorage.getItem('ih_pending_email');
-    const storedForm = localStorage.getItem('ih_pending_form');
-    
-    if (success === 'true' && sessionId && storedEmail && storedForm) {
-      setEmail(storedEmail);
-      setFormData(JSON.parse(storedForm));
-      setStep('result');
+    if (urlParams.has('session_id') || urlParams.has('success')) {
       window.history.replaceState({}, '', window.location.pathname);
-      handleGenerateAfterCheckout(storedEmail, JSON.parse(storedForm));
     }
     scrollToTop();
   }, []);
