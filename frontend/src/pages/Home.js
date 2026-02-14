@@ -246,7 +246,7 @@ export const Home = () => {
                 letterSpacing: '0.12em',
               }}
             >
-              A place where magic and science aren&apos;t such strange bedfellows
+              A place where magic is normalized, formula, alchemized from head, heart, space and time
             </p>
             
             {/* Handwritten accent */}
