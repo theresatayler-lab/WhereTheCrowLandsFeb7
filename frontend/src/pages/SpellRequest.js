@@ -19,11 +19,12 @@ import { toast } from 'sonner';
 // ===== DERIVE VIDEOS FROM ARCHETYPES.JS (single source of truth) =====
 const getArchetypeVideo = (personaId) => {
   // Map persona IDs (from PERSONAS) to archetype IDs (from ARCHETYPES)
-  const idMap = { 
-    'shigg': 'shiggy', 
-    'cathleen': 'kathleen', 
+  const idMap = {
+    'shigg': 'shiggy',
+    'cathleen': 'kathleen',
     'katherine': 'catherine',
-    'theresa': 'theresa'
+    'theresa': 'theresa',
+    'brenda': 'brenda'
   };
   const archetypeId = idMap[personaId] || personaId;
   const archetype = ARCHETYPES.find(a => a.id === archetypeId);
@@ -42,17 +43,19 @@ const PERSONAS = [
   { id: 'shigg', name: 'Shigg', emoji: '🐦', title: 'Birds of Parliament', description: 'Gentle domestic magic, bird omens, tea rituals, poetry' },
   { id: 'cathleen', name: 'Cathleen', emoji: '🪶', title: 'Singer of Strength', description: 'Voice magic, protection, Celtic mysticism, the Morrigan' },
   { id: 'katherine', name: 'Katherine', emoji: '🪡', title: 'Weaver of Hidden Knowledge', description: 'Shadow work, mirrors, Victorian spiritualism, protocols' },
-  { id: 'theresa', name: 'Theresa', emoji: '🔮', title: 'Seer & Storyteller', description: 'Truth-seeking, ancestral wisdom, genealogy, family secrets' },
+  { id: 'theresa', name: 'Theresa', emoji: '🔍', title: 'The Seer-Archivist', description: 'Pattern breaking, family secrets, evidence-based investigation' },
+  { id: 'brenda', name: 'Brenda', emoji: '🐦‍⬛', title: 'The Family Chronicler', description: 'Memory keeping, letter spells, crow communion, family stories' },
   { id: 'choose_for_me', name: 'Choose for me', emoji: '✨', title: 'Let the guides decide', description: 'Based on your needs, the right guide will emerge' }
 ];
 
 const FEELINGS = [
-  { id: 'calm', label: 'Calm', icon: Cloud, color: 'text-blue-400' },
-  { id: 'brave', label: 'Brave', icon: Shield, color: 'text-amber-400' },
-  { id: 'clear', label: 'Clear', icon: Eye, color: 'text-purple-400' },
-  { id: 'protected', label: 'Protected', icon: Shield, color: 'text-green-400' },
-  { id: 'softened', label: 'Softened', icon: Heart, color: 'text-pink-400' },
-  { id: 'energized', label: 'Energized', icon: Zap, color: 'text-yellow-400' }
+  { id: 'calm', label: 'Calm', icon: Cloud, color: 'text-blue-400', forPersonas: ['shigg', 'brenda', 'katherine'] },
+  { id: 'brave', label: 'Brave', icon: Shield, color: 'text-amber-400', forPersonas: ['cathleen', 'theresa', 'katherine'] },
+  { id: 'clear', label: 'Clear', icon: Eye, color: 'text-purple-400', forPersonas: ['katherine', 'theresa', 'shigg'] },
+  { id: 'protected', label: 'Protected', icon: Shield, color: 'text-green-400', forPersonas: ['cathleen', 'katherine'] },
+  { id: 'softened', label: 'Softened', icon: Heart, color: 'text-pink-400', forPersonas: ['shigg', 'brenda', 'cathleen'] },
+  { id: 'energized', label: 'Energized', icon: Zap, color: 'text-yellow-400', forPersonas: ['cathleen', 'theresa'] },
+  { id: 'connected', label: 'Connected', icon: Heart, color: 'text-rose-400', forPersonas: ['brenda', 'shigg'] }
 ];
 
 const TIMES = [
@@ -74,13 +77,36 @@ const BELIEF_BOUNDARIES = [
 ];
 
 const ANCHORS = [
+  // Shigg - domestic, birds, tea, kitchen
   { id: 'tea', label: 'Tea', emoji: '☕', forPersonas: ['shigg'] },
-  { id: 'thread', label: 'Thread', emoji: '🧵', forPersonas: ['katherine', 'cathleen'] },
-  { id: 'candle', label: 'Candle', emoji: '🕯️', forPersonas: ['shigg', 'cathleen', 'katherine'] },
-  { id: 'salt', label: 'Salt', emoji: '🧂', forPersonas: ['shigg', 'cathleen', 'katherine'] },
   { id: 'bird', label: 'Bird', emoji: '🐦', forPersonas: ['shigg'] },
-  { id: 'mirror', label: 'Mirror', emoji: '🪞', forPersonas: ['katherine', 'cathleen'] },
-  { id: 'song', label: 'Song/Voice', emoji: '🎵', forPersonas: ['cathleen'] }
+  { id: 'bread', label: 'Bread', emoji: '🍞', forPersonas: ['shigg'] },
+  { id: 'herb', label: 'Herb/Sprig', emoji: '🌿', forPersonas: ['shigg'] },
+  { id: 'poetry', label: 'A Poem', emoji: '📜', forPersonas: ['shigg'] },
+  // Cathleen - voice, protection, Irish mysticism
+  { id: 'song', label: 'Song/Voice', emoji: '🎵', forPersonas: ['cathleen'] },
+  { id: 'bell', label: 'Bell', emoji: '🔔', forPersonas: ['cathleen'] },
+  { id: 'feather', label: 'Feather', emoji: '🪶', forPersonas: ['cathleen'] },
+  { id: 'salt', label: 'Salt', emoji: '🧂', forPersonas: ['cathleen'] },
+  { id: 'candle', label: 'Candle', emoji: '🕯️', forPersonas: ['cathleen'] },
+  // Katherine - thread, mirrors, precision, Victorian
+  { id: 'thread', label: 'Thread & Needle', emoji: '🧵', forPersonas: ['katherine'] },
+  { id: 'mirror', label: 'Mirror', emoji: '🪞', forPersonas: ['katherine'] },
+  { id: 'compass', label: 'Compass', emoji: '🧭', forPersonas: ['katherine'] },
+  { id: 'scissors', label: 'Scissors', emoji: '✂️', forPersonas: ['katherine'] },
+  { id: 'sealed_letter', label: 'Sealed Letter', emoji: '🔏', forPersonas: ['katherine'] },
+  // Theresa - investigation, evidence, patterns
+  { id: 'notebook', label: 'Notebook & Pen', emoji: '📓', forPersonas: ['theresa'] },
+  { id: 'photograph', label: 'Photograph', emoji: '📷', forPersonas: ['theresa'] },
+  { id: 'map', label: 'Map / Family Tree', emoji: '🗺️', forPersonas: ['theresa'] },
+  { id: 'red_thread', label: 'Red Thread', emoji: '🧵', forPersonas: ['theresa'] },
+  { id: 'magnifying_glass', label: 'Magnifying Glass', emoji: '🔍', forPersonas: ['theresa'] },
+  // Brenda - memory, family, chronicles
+  { id: 'letter', label: 'Letter / Envelope', emoji: '✉️', forPersonas: ['brenda'] },
+  { id: 'family_photo', label: 'Family Photo', emoji: '🖼️', forPersonas: ['brenda'] },
+  { id: 'heirloom', label: 'Heirloom / Keepsake', emoji: '📿', forPersonas: ['brenda'] },
+  { id: 'recipe_card', label: 'Recipe Card', emoji: '📝', forPersonas: ['brenda'] },
+  { id: 'crow_feather', label: 'Crow Feather', emoji: '🐦‍⬛', forPersonas: ['brenda'] }
 ];
 
 const SETTINGS = [
@@ -178,7 +204,11 @@ const Step1 = ({ spellSpec, updateSpec }) => (
     <div>
       <h3 className="font-cinzel text-xl text-crimson mb-3 font-semibold">How do you want to feel after?</h3>
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-        {FEELINGS.map((f) => {
+        {FEELINGS.filter(f =>
+          !f.forPersonas ||
+          f.forPersonas.includes(spellSpec.persona_id) ||
+          spellSpec.persona_id === 'choose_for_me'
+        ).map((f) => {
           const Icon = f.icon;
           return (
             <OptionCard
@@ -409,8 +439,20 @@ export const SpellRequest = () => {
     }
   }, [spellSpec.persona_id]);
 
+  // Default anchor per guide (first anchor listed for each)
+  const DEFAULT_ANCHORS = {
+    'shigg': 'tea', 'cathleen': 'song', 'katherine': 'thread',
+    'theresa': 'notebook', 'brenda': 'letter', 'choose_for_me': 'candle'
+  };
+
   const updateSpec = (updates) => {
-    setSpellSpec(prev => ({ ...prev, ...updates }));
+    setSpellSpec(prev => {
+      // When persona changes, reset anchor to that guide's default
+      if (updates.persona_id && updates.persona_id !== prev.persona_id) {
+        updates.anchor_object = DEFAULT_ANCHORS[updates.persona_id] || 'candle';
+      }
+      return { ...prev, ...updates };
+    });
   };
 
   const canProceed = () => {

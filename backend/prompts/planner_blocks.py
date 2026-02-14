@@ -44,6 +44,22 @@ TAROT_COMPOSITIONS = {
         {"id": "katherine_4", "focal": "geometric tree of life diagram", "frame": "sephirotic path border"},
         {"id": "katherine_5", "focal": "compass and scissors crossed", "frame": "Victorian atelier border"},
         {"id": "katherine_6", "focal": "mirror reflecting geometric sigil", "frame": "double circle occult seal"}
+    ],
+    "theresa": [
+        {"id": "theresa_1", "focal": "magnifying glass over family tree with red threads", "frame": "documentary corkboard border with pinned corners"},
+        {"id": "theresa_2", "focal": "crow perched on open notebook with compass", "frame": "manila folder edge border with stamps"},
+        {"id": "theresa_3", "focal": "camera lens reflecting gravestone inscription", "frame": "newspaper column border"},
+        {"id": "theresa_4", "focal": "red thread connecting photographs on dark surface", "frame": "geometric investigation board frame"},
+        {"id": "theresa_5", "focal": "skeleton key crossing pen over sealed envelope", "frame": "archival document border with wax seal"},
+        {"id": "theresa_6", "focal": "binoculars with crow feather and map fragments", "frame": "cartographic border with compass rose"}
+    ],
+    "brenda": [
+        {"id": "brenda_1", "focal": "typewriter with crow perched on carriage return", "frame": "vintage photograph border with scalloped edges"},
+        {"id": "brenda_2", "focal": "stack of letters tied with ribbon beside candle", "frame": "recipe card border with handwritten notes"},
+        {"id": "brenda_3", "focal": "locket open showing tiny photographs", "frame": "family album border with pressed flowers"},
+        {"id": "brenda_4", "focal": "crow on garden gate with breadcrumbs below", "frame": "picket fence and vine border"},
+        {"id": "brenda_5", "focal": "index cards with recipes spread on kitchen table", "frame": "warm sepia domestic border with lace"},
+        {"id": "brenda_6", "focal": "old clock beside family photographs and pen", "frame": "ornate mantelpiece frame with botanical accents"}
     ]
 }
 
