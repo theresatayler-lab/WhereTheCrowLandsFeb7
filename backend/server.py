@@ -1,4 +1,4 @@
-from fastapi import FastAPI, APIRouter, HTTPException, Depends, status, Request
+from fastapi import FastAPI, APIRouter, HTTPException, Depends, status, Request, BackgroundTasks
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
@@ -13,6 +13,7 @@ import json
 from datetime import datetime, timezone, timedelta
 import bcrypt
 import jwt
+import asyncio
 from openai import AsyncOpenAI
 from emergentintegrations.payments.stripe.checkout import StripeCheckout, CheckoutSessionResponse, CheckoutStatusResponse, CheckoutSessionRequest
 import base64
@@ -1515,6 +1516,209 @@ async def get_handcrafted_orders():
         {'_id': 0}
     ).sort('created_at', -1).to_list(100)
     return {'orders': orders}
+
+
+# ============================================
+# INVISIBLE HELPERS - Simplified Lead Gen Flow
+# ============================================
+
+class LeadCaptureRequest(BaseModel):
+    """Request model for lead capture with spell generation"""
+    email: EmailStr
+    name: str = ""
+    personal_intention: str = ""
+    beneficiaries: List[str] = []
+    primary_quality: str = ""
+    practice_style: str = ""
+    time_horizon: str = ""
+    source: str = "invisible_helpers"
+
+@api_router.post('/invisible-helpers/capture-and-generate')
+async def capture_lead_and_generate(request: LeadCaptureRequest):
+    """
+    Simplified lead capture + spell generation in one step.
+    No Stripe checkout - just capture email/name and generate spell immediately.
+    
+    Stores lead in 'invisible_helpers_leads' collection for later access.
+    Returns generated spell for immediate display.
+    """
+    try:
+        # Check generation limit (3 free per email)
+        existing = await db.invisible_helpers_leads.find_one({'email': request.email})
+        generation_count = existing.get('generation_count', 0) if existing else 0
+        
+        if generation_count >= 3:
+            return {
+                'success': False,
+                'limit_reached': True,
+                'generation_count': generation_count,
+                'error': 'You\'ve reached the free limit (3 spells). Join early access for unlimited!'
+            }
+        
+        # Store/update lead
+        lead_data = {
+            'email': request.email,
+            'name': request.name,
+            'personal_intention': request.personal_intention,
+            'beneficiaries': request.beneficiaries,
+            'primary_quality': request.primary_quality,
+            'practice_style': request.practice_style,
+            'time_horizon': request.time_horizon,
+            'source': request.source,
+            'updated_at': datetime.now(timezone.utc).isoformat(),
+        }
+        
+        if existing:
+            # Update existing lead
+            result = await db.invisible_helpers_leads.update_one(
+                {'email': request.email},
+                {
+                    '$set': lead_data,
+                    '$inc': {'generation_count': 1},
+                    '$push': {
+                        'generations': {
+                            'timestamp': datetime.now(timezone.utc).isoformat(),
+                            'intention': request.personal_intention[:200]
+                        }
+                    }
+                }
+            )
+            generation_count += 1
+            logger.info(f"[LEAD_CAPTURE] Updated existing lead: {result.modified_count} modified")
+        else:
+            # New lead
+            lead_data['created_at'] = datetime.now(timezone.utc).isoformat()
+            lead_data['generation_count'] = 1
+            lead_data['generations'] = [{
+                'timestamp': datetime.now(timezone.utc).isoformat(),
+                'intention': request.personal_intention[:200]
+            }]
+            lead_data['email_sent'] = False  # For future email integration
+            result = await db.invisible_helpers_leads.insert_one(lead_data)
+            generation_count = 1
+            logger.info(f"[LEAD_CAPTURE] Inserted new lead: {result.inserted_id}")
+        
+        logger.info(f"[LEAD_CAPTURE] Captured lead: {request.email}, generation #{generation_count}")
+        
+        # Now generate the spell (reuse existing generation logic)
+        # Convert to BattleCryRequest format
+        battle_cry_request = BattleCryRequest(
+            email=request.email,
+            personal_intention=request.personal_intention,
+            beneficiaries=request.beneficiaries,
+            primary_quality=request.primary_quality,
+            practice_style=request.practice_style,
+            time_horizon=request.time_horizon,
+            action_pledge="I commit to channeling this intention toward benevolent outcomes and peace."
+        )
+        
+        # Call the existing generation function
+        result = await generate_battle_cry(battle_cry_request)
+        
+        # Add lead info to response
+        return {
+            'success': result.success,
+            'working': result.working,
+            'generation_count': generation_count,
+            'remaining': max(0, 3 - generation_count),
+            'limit_reached': result.limit_reached,
+            'lead_captured': True,
+            'name': request.name,
+            'email': request.email
+        }
+        
+    except Exception as e:
+        logger.error(f"[LEAD_CAPTURE] Error: {e}")
+        return {
+            'success': False,
+            'error': str(e),
+            'lead_captured': False
+        }
+
+
+@api_router.get('/admin/leads')
+async def get_leads(
+    source: str = None,
+    limit: int = 100,
+    skip: int = 0,
+    admin_key: str = None
+):
+    """
+    Admin endpoint to retrieve captured leads.
+    Requires admin_key query parameter.
+    
+    Query params:
+    - source: Filter by source (e.g., 'invisible_helpers')
+    - limit: Max results (default 100)
+    - skip: Pagination offset
+    """
+    expected_key = os.environ.get('ADMIN_KEY')
+    if not expected_key or admin_key != expected_key:
+        raise HTTPException(status_code=403, detail='Admin access required')
+    
+    query = {}
+    if source:
+        query['source'] = source
+    
+    leads = await db.invisible_helpers_leads.find(
+        query,
+        {'_id': 0}
+    ).sort('created_at', -1).skip(skip).limit(limit).to_list(limit)
+    
+    total = await db.invisible_helpers_leads.count_documents(query)
+    
+    return {
+        'leads': leads,
+        'total': total,
+        'limit': limit,
+        'skip': skip
+    }
+
+
+@api_router.get('/admin/leads/export')
+async def export_leads_csv(
+    source: str = None,
+    admin_key: str = None
+):
+    """
+    Export leads as CSV for download.
+    Requires admin_key query parameter.
+    """
+    from fastapi.responses import StreamingResponse
+    import io
+    import csv
+    
+    expected_key = os.environ.get('ADMIN_KEY')
+    if not expected_key or admin_key != expected_key:
+        raise HTTPException(status_code=403, detail='Admin access required')
+    
+    query = {}
+    if source:
+        query['source'] = source
+    
+    leads = await db.invisible_helpers_leads.find(query, {'_id': 0}).to_list(10000)
+    
+    # Create CSV in memory
+    output = io.StringIO()
+    if leads:
+        fieldnames = ['email', 'name', 'created_at', 'generation_count', 'personal_intention', 'beneficiaries', 'source']
+        writer = csv.DictWriter(output, fieldnames=fieldnames, extrasaction='ignore')
+        writer.writeheader()
+        for lead in leads:
+            # Convert lists to strings for CSV
+            lead_copy = dict(lead)
+            if isinstance(lead_copy.get('beneficiaries'), list):
+                lead_copy['beneficiaries'] = ', '.join(lead_copy['beneficiaries'])
+            writer.writerow(lead_copy)
+    
+    output.seek(0)
+    
+    return StreamingResponse(
+        iter([output.getvalue()]),
+        media_type='text/csv',
+        headers={'Content-Disposition': f'attachment; filename=leads_{datetime.now().strftime("%Y%m%d")}.csv'}
+    )
+
 
 @api_router.post('/invisible-helpers/battle-cry/generate', response_model=BattleCryResponse)
 async def generate_battle_cry(request: BattleCryRequest):
@@ -4884,6 +5088,300 @@ async def get_spell_config_v3():
             for k, v in WORKING_TYPES.items()
         }
     }
+
+
+# ===== ASYNC SPELL GENERATION - Job-based pattern to avoid proxy timeouts =====
+
+async def _generate_spell_background(job_id: str, request_data: dict, user_id: Optional[str] = None):
+    """
+    Background task that generates the spell and updates the job status.
+    This runs independently of the HTTP connection, avoiding proxy timeouts.
+    """
+    import time as time_module
+    total_start = time_module.time()
+    
+    try:
+        # Update job status to 'processing'
+        await db.spell_jobs.update_one(
+            {'job_id': job_id},
+            {'$set': {'status': 'processing', 'updated_at': datetime.now(timezone.utc)}}
+        )
+        
+        spell_spec = request_data.get('spell_spec', {})
+        belief_mode = request_data.get('belief_mode', 'SPIRITUAL').upper()
+        
+        if belief_mode not in BELIEF_MODES:
+            belief_mode = "SPIRITUAL"
+        
+        # Sanitize user-provided text fields
+        for key in ('user_query', 'intention', 'desired_feeling', 'user_name', 'anchor_object', 'setting', 'situation'):
+            if key in spell_spec and isinstance(spell_spec[key], str):
+                spell_spec[key] = sanitize_for_prompt(spell_spec[key])
+        
+        # Resolve persona
+        persona_id = spell_spec.get('persona_id', 'shigg')
+        id_map = {'shiggy': 'shigg', 'kathleen': 'cathleen', 'catherine': 'katherine'}
+        persona_id = id_map.get(persona_id, persona_id)
+        
+        routing_reason = None
+        
+        if persona_id == 'choose_for_me' or persona_id == 'surprise':
+            intention = spell_spec.get('intention', '').lower()
+            feeling = spell_spec.get('desired_feeling', 'calm').lower()
+            
+            keyword_routes = {
+                'shigg': ['tea', 'kettle', 'bird', 'morning', 'domestic', 'kitchen', 'gentle', 'cozy', 'grief', 'loss'],
+                'cathleen': ['protect', 'voice', 'song', 'courage', 'brave', 'shield', 'guard', 'strength', 'power'],
+                'katherine': ['hidden', 'shadow', 'truth', 'reveal', 'pattern', 'thread', 'bind', 'sigil', 'precision', 'secret'],
+                'theresa': ['family', 'secret', 'pattern', 'break', 'investigate', 'genealog', 'ancestor'],
+                'brenda': ['memory', 'remember', 'letter', 'ancestor', 'chronicle', 'family', 'heirloom']
+            }
+            
+            selected_guide = None
+            for guide, keywords in keyword_routes.items():
+                if any(kw in intention for kw in keywords):
+                    selected_guide = guide
+                    routing_reason = f"keyword match: {[kw for kw in keywords if kw in intention]}"
+                    break
+            
+            if not selected_guide:
+                feeling_routes = {
+                    'calm': 'shigg', 'softened': 'shigg', 'connected': 'brenda',
+                    'protected': 'cathleen', 'brave': 'cathleen', 'energized': 'cathleen',
+                    'clear': 'katherine', 'hidden': 'katherine', 'revealed': 'theresa'
+                }
+                selected_guide = feeling_routes.get(feeling, 'shigg')
+                routing_reason = f"feeling match: {feeling}"
+            
+            persona_id = selected_guide
+            logger.info(f"[ASYNC_JOB] Routed to {persona_id}: {routing_reason}")
+        
+        spell_spec['persona_id'] = persona_id
+        guide_config = get_persona_config(persona_id) or get_persona_config('shigg')
+        
+        # Tier selection
+        user_subscription_tier = 'free'
+        is_first_spell = False
+        if user_id:
+            user_data = await db.users.find_one({'id': user_id}, {'_id': 0})
+            if user_data:
+                user_subscription_tier = user_data.get('subscription_tier', 'free')
+                is_first_spell = user_data.get('spell_generation_count', 0) == 0
+        
+        intention = spell_spec.get('intention', spell_spec.get('user_query', ''))
+        selected_tier, tier_reason = select_spell_tier(
+            persona_id=persona_id,
+            intention=intention,
+            user_tier=user_subscription_tier,
+            is_first_spell=is_first_spell,
+            explicit_choice=request_data.get('tier_preference')
+        )
+        
+        tier_config = get_tier_config(selected_tier)
+        tier_config['tier_name'] = selected_tier.value
+        
+        # Initialize clients
+        deepseek_client = get_deepseek_client()
+        claude_client = None
+        try:
+            import anthropic
+            anthropic_key = os.environ.get('ANTHROPIC_API_KEY')
+            if anthropic_key:
+                claude_client = anthropic.AsyncAnthropic(api_key=anthropic_key)
+        except Exception:
+            pass
+        
+        # Create pipeline
+        pipeline = BlocksSpellPipeline(
+            deepseek_client=deepseek_client,
+            openai_client=openai_client,
+            claude_client=claude_client,
+            max_retries=1,
+            tier_config=tier_config
+        )
+        
+        # Generate spell
+        spell_output, metadata = await pipeline.generate_spell(
+            spell_spec=spell_spec,
+            guide_config=guide_config,
+            belief_mode=belief_mode,
+            tier_config=tier_config
+        )
+        
+        # Add metadata
+        metadata['tier'] = {
+            'selected': selected_tier.value,
+            'reason': tier_reason,
+            'expected_time_seconds': tier_config.get('expected_time_seconds', 40)
+        }
+        
+        spell_output['persona_id'] = persona_id
+        spell_output['spell_spec'] = spell_spec
+        if routing_reason:
+            spell_output['routing_reason'] = routing_reason
+        
+        archetype_info = {
+            'id': persona_id,
+            'name': guide_config.get('name', 'Guide'),
+            'title': guide_config.get('title', '')
+        }
+        
+        # Update spell count for user
+        if user_id:
+            await db.users.update_one(
+                {'id': user_id},
+                {'$inc': {'spell_generation_count': 1, 'total_spells_generated': 1}}
+            )
+        
+        total_ms = int((time_module.time() - total_start) * 1000)
+        metadata['timing']['total_ms'] = total_ms
+        
+        # Update job with completed result
+        result = {
+            'spell': spell_output,
+            'archetype': archetype_info,
+            'metadata': metadata,
+            'belief_mode': belief_mode,
+            'validation': {
+                'qa_passed': metadata.get('qa_passed', True),
+                'qa_report': metadata.get('qa_report', {})
+            }
+        }
+        
+        await db.spell_jobs.update_one(
+            {'job_id': job_id},
+            {'$set': {
+                'status': 'complete',
+                'result': result,
+                'completed_at': datetime.now(timezone.utc),
+                'updated_at': datetime.now(timezone.utc),
+                'generation_time_ms': total_ms
+            }}
+        )
+        
+        logger.info(f"[ASYNC_JOB] Job {job_id} completed in {total_ms}ms")
+        
+    except Exception as e:
+        error_msg = str(e)
+        logger.error(f"[ASYNC_JOB] Job {job_id} failed: {error_msg}")
+        
+        await db.spell_jobs.update_one(
+            {'job_id': job_id},
+            {'$set': {
+                'status': 'failed',
+                'error': error_msg,
+                'updated_at': datetime.now(timezone.utc)
+            }}
+        )
+
+
+@api_router.post('/ai/generate-spell-job')
+async def create_spell_job(request: SpellRequestV3, background_tasks: BackgroundTasks, user = Depends(get_optional_user)):
+    """
+    Create an async spell generation job.
+    Returns immediately with a job_id that can be polled for completion.
+    
+    This bypasses Cloudflare's 60-second proxy timeout by running generation in background.
+    
+    Response: {"job_id": "xyz", "status": "pending", "poll_url": "/api/ai/spell-job/xyz"}
+    
+    Poll the job every 5 seconds until status is "complete" or "failed".
+    """
+    job_id = str(uuid.uuid4())
+    user_id = user['id'] if user else None
+    
+    # Check spell limits for free users
+    if user:
+        user_data = await db.users.find_one({'id': user['id']}, {'_id': 0})
+        if user_data:
+            tier = user_data.get('subscription_tier', 'free')
+            status = user_data.get('subscription_status', 'free')
+            is_paid = tier in ('pro', 'paid') or status in ('pro', 'paid')
+            if not is_paid:
+                limit = 3
+                spell_count = user_data.get('spell_generation_count', 0)
+                if spell_count >= limit:
+                    raise HTTPException(status_code=403, detail={
+                        'error': 'spell_limit_reached',
+                        'message': f'Free spell limit ({limit}) reached. Upgrade to Pro!',
+                        'limit': limit,
+                        'current': spell_count
+                    })
+    
+    # Create job record
+    job_doc = {
+        'job_id': job_id,
+        'status': 'pending',
+        'request': {
+            'spell_spec': request.spell_spec,
+            'belief_mode': request.belief_mode,
+            'generate_images': request.generate_images,
+            'tier_preference': request.tier_preference
+        },
+        'user_id': user_id,
+        'created_at': datetime.now(timezone.utc),
+        'updated_at': datetime.now(timezone.utc)
+    }
+    
+    await db.spell_jobs.insert_one(job_doc)
+    
+    # Start background generation
+    background_tasks.add_task(
+        _generate_spell_background,
+        job_id,
+        job_doc['request'],
+        user_id
+    )
+    
+    logger.info(f"[ASYNC_JOB] Created job {job_id} for user {user_id}")
+    
+    return {
+        'job_id': job_id,
+        'status': 'pending',
+        'poll_url': f'/api/ai/spell-job/{job_id}',
+        'estimated_time_seconds': 120,
+        'message': 'Spell generation started. Poll the job_id for status updates.'
+    }
+
+
+@api_router.get('/ai/spell-job/{job_id}')
+async def get_spell_job_status(job_id: str):
+    """
+    Poll the status of a spell generation job.
+    
+    Returns:
+    - status: "pending" | "processing" | "complete" | "failed"
+    - result: The spell data (only when status is "complete")
+    - error: Error message (only when status is "failed")
+    - progress: Estimated progress percentage
+    """
+    job = await db.spell_jobs.find_one({'job_id': job_id}, {'_id': 0})
+    
+    if not job:
+        raise HTTPException(status_code=404, detail='Job not found')
+    
+    response = {
+        'job_id': job_id,
+        'status': job.get('status', 'unknown'),
+        'created_at': job.get('created_at').isoformat() if job.get('created_at') else None,
+        'updated_at': job.get('updated_at').isoformat() if job.get('updated_at') else None
+    }
+    
+    if job.get('status') == 'complete':
+        response['result'] = job.get('result')
+        response['generation_time_ms'] = job.get('generation_time_ms')
+    elif job.get('status') == 'failed':
+        response['error'] = job.get('error', 'Unknown error')
+    elif job.get('status') == 'processing':
+        # Estimate progress based on elapsed time
+        created = job.get('created_at')
+        if created:
+            elapsed = (datetime.now(timezone.utc) - created).total_seconds()
+            estimated_total = 120  # 2 minutes expected
+            progress = min(int((elapsed / estimated_total) * 100), 95)
+            response['progress'] = progress
+    
+    return response
 
 
 # Favorites endpoints

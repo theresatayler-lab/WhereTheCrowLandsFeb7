@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronRight, ChevronDown, Download, Copy, Check, Clock, Loader2 } from 'lucide-react';
+import { ChevronRight, ChevronDown, Download, Copy, Check, Clock, Loader2, Sparkles } from 'lucide-react';
 import { toast } from 'sonner';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
@@ -20,8 +20,8 @@ import {
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
-// Generic spell video for loading state
-const SPELL_VIDEO_URL = '/images/ui/spell-waiting-video.mov';
+// Generic spell video for loading state - Silent Army video for magical workings
+const SPELL_VIDEO_URL = '/videos/silent-army-spells.mp4';
 
 // Brenda images for atmosphere
 const BRENDA_IMAGE = '/images/personas/brenda.png';
@@ -140,11 +140,12 @@ export const InvisibleHelpers = () => {
   
   const [step, setStep] = useState('form');
   const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
   const [generating, setGenerating] = useState(false);
   const [generatedWorking, setGeneratedWorking] = useState(null);
   const [generationCount, setGenerationCount] = useState(0);
   const [copied, setCopied] = useState(false);
-  const [checkingOut, setCheckingOut] = useState(false);
+  const [remainingSpells, setRemainingSpells] = useState(3);
   
   const workingRef = useRef(null);
 
@@ -153,18 +154,10 @@ export const InvisibleHelpers = () => {
   };
 
   useEffect(() => {
+    // Clear any old checkout-related URL params
     const urlParams = new URLSearchParams(window.location.search);
-    const sessionId = urlParams.get('session_id');
-    const success = urlParams.get('success');
-    const storedEmail = localStorage.getItem('ih_pending_email');
-    const storedForm = localStorage.getItem('ih_pending_form');
-    
-    if (success === 'true' && sessionId && storedEmail && storedForm) {
-      setEmail(storedEmail);
-      setFormData(JSON.parse(storedForm));
-      setStep('result');
+    if (urlParams.has('session_id') || urlParams.has('success')) {
       window.history.replaceState({}, '', window.location.pathname);
-      handleGenerateAfterCheckout(storedEmail, JSON.parse(storedForm));
     }
     scrollToTop();
   }, []);
@@ -205,90 +198,46 @@ export const InvisibleHelpers = () => {
       toast.error('Please complete all required fields');
       return;
     }
-    localStorage.setItem('ih_pending_form', JSON.stringify(formData));
     setStep('email');
   };
 
+  // SIMPLIFIED: Single submit that captures lead AND generates spell
   const handleEmailSubmit = async (e) => {
     e.preventDefault();
     if (!email || !email.includes('@')) {
       toast.error('Please enter a valid email');
       return;
     }
-
-    try {
-      const countRes = await fetch(`${API_URL}/api/invisible-helpers/check-limit?email=${encodeURIComponent(email)}`);
-      const countData = await countRes.json();
-      
-      if (countData.limit_reached) {
-        toast.info('You\'ve reached the guest limit. Join early access to continue.');
-        window.location.href = '/early-access';
-        return;
-      }
-      
-      setGenerationCount(countData.count || 0);
-    } catch (error) {
-      console.error('Count check error:', error);
+    if (!name.trim()) {
+      toast.error('Please enter your name');
+      return;
     }
 
-    localStorage.setItem('ih_pending_email', email);
-    setStep('checkout');
-  };
-
-  const handleCheckout = async (amount = 0) => {
-    setCheckingOut(true);
-    try {
-      const response = await fetch(`${API_URL}/api/invisible-helpers/create-checkout`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email,
-          amount,
-          success_url: `${window.location.origin}/invisible-helpers?success=true&session_id={CHECKOUT_SESSION_ID}`,
-          cancel_url: `${window.location.origin}/invisible-helpers`,
-        }),
-      });
-      
-      const data = await response.json();
-      
-      if (data.url) {
-        window.location.href = data.url;
-      } else if (data.skip_checkout) {
-        handleGenerateAfterCheckout(email, formData);
-      } else {
-        toast.error('Failed to create checkout session');
-        setCheckingOut(false);
-      }
-    } catch (error) {
-      console.error('Checkout error:', error);
-      toast.error('Checkout failed. Please try again.');
-      setCheckingOut(false);
-    }
-  };
-
-  const handleGenerateAfterCheckout = async (userEmail, form) => {
+    // Go directly to generation - no checkout step
     setGenerating(true);
     setStep('result');
     
     try {
-      const response = await fetch(`${API_URL}/api/invisible-helpers/battle-cry/generate`, {
+      // Use new simplified endpoint that captures lead AND generates
+      const response = await fetch(`${API_URL}/api/invisible-helpers/capture-and-generate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          email: userEmail,
-          personal_intention: form.personal_intention || '',
-          beneficiaries: form.beneficiaries,
-          primary_quality: form.primary_quality,
-          practice_style: form.practice_style,
-          time_horizon: form.time_horizon,
-          action_pledge: 'Benevolent outcomes and peace',
+          email,
+          name: name.trim(),
+          personal_intention: formData.personal_intention || '',
+          beneficiaries: formData.beneficiaries,
+          primary_quality: formData.primary_quality,
+          practice_style: formData.practice_style,
+          time_horizon: formData.time_horizon,
+          source: 'invisible_helpers'
         }),
       });
       
       const data = await response.json();
       
       if (data.success && data.working) {
-        // Defensive: normalize guided_working if model returns malformed data
+        // Normalize guided_working if malformed
         const working = { ...data.working };
         if (working.guided_working && Array.isArray(working.guided_working)) {
           working.guided_working = working.guided_working.map((step, idx) => {
@@ -299,20 +248,21 @@ export const InvisibleHelpers = () => {
           });
         }
         setGeneratedWorking(working);
-        setGenerationCount(data.generation_count || generationCount + 1);
-        localStorage.setItem('ih_generation_count', String(data.generation_count || generationCount + 1));
-        toast.success('Your intention has been generated!');
-        localStorage.removeItem('ih_pending_email');
-        localStorage.removeItem('ih_pending_form');
+        setGenerationCount(data.generation_count || 1);
+        setRemainingSpells(data.remaining || 0);
+        toast.success(`Your intention has materialized, ${name.split(' ')[0]}!`);
       } else if (data.limit_reached) {
-        toast.info('You\'ve reached the guest limit.');
-        window.location.href = '/early-access';
+        toast.info('You\'ve reached the free limit (3 spells). Join early access for unlimited!');
+        setStep('form');
+        // Could redirect to early-access here
       } else {
         toast.error(data.error || 'Failed to generate intention');
+        setStep('form');
       }
     } catch (error) {
       console.error('Generation error:', error);
       toast.error('An error occurred. Please try again.');
+      setStep('form');
     } finally {
       setGenerating(false);
     }
@@ -394,6 +344,7 @@ export const InvisibleHelpers = () => {
       time_horizon: '',
     });
     setEmail('');
+    setName('');
     setGeneratedWorking(null);
     setStep('form');
   };
@@ -420,7 +371,6 @@ export const InvisibleHelpers = () => {
           style={{ filter: 'saturate(0.7) contrast(1.1)' }}
         >
           <source src={SPELL_VIDEO_URL} type="video/mp4" />
-          <source src={SPELL_VIDEO_URL} type="video/quicktime" />
         </video>
         
         {/* Gradient overlays */}
@@ -802,7 +752,7 @@ export const InvisibleHelpers = () => {
               </motion.div>
             )}
 
-            {/* EMAIL STEP */}
+            {/* EMAIL STEP - Simplified: Just name + email, then generate */}
             {step === 'email' && (
               <motion.div
                 key="email"
@@ -817,110 +767,44 @@ export const InvisibleHelpers = () => {
                   
                   <div className="text-center mb-8">
                     <BrandIcon name="star" size={44} variant="pink" opacity={0.9} className="mx-auto mb-4" />
-                    <h2 className="phantasmagoria-hero text-2xl text-crimson mb-2">Receive Your Intention & Join the Chaos</h2>
+                    <h2 className="phantasmagoria-hero text-2xl text-crimson mb-2">Almost There...</h2>
                     <p className="text-navy-dark/70 text-sm font-crimson">
-                      Enter your email to receive your intention and a PDF for offline use.
+                      Enter your name and email to receive your personalized intention.
                     </p>
                   </div>
                   
                   <form onSubmit={handleEmailSubmit} className="space-y-4 max-w-md mx-auto">
                     <CrowlandsInput
+                      type="text"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      placeholder="Your name (or magical alias)"
+                      data-testid="name-input"
+                    />
+                    <CrowlandsInput
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="your@email.com"
+                      data-testid="email-input"
                     />
                     <button
                       type="submit"
-                      className="w-full py-3 bg-crimson hover:bg-crimson-bright text-cream font-cinzel text-sm tracking-wider uppercase transition-colors flex items-center justify-center gap-2"
+                      disabled={!email || !name.trim()}
+                      className={`w-full py-4 font-cinzel text-sm tracking-wider uppercase transition-all flex items-center justify-center gap-2 ${
+                        email && name.trim()
+                          ? 'bg-crimson hover:bg-crimson-bright text-cream'
+                          : 'bg-navy-mid/20 text-navy-dark/40 cursor-not-allowed'
+                      }`}
                       data-testid="email-submit-btn"
                     >
-                      Continue
-                      <ChevronRight className="w-4 h-4" />
+                      <Sparkles className="w-4 h-4" />
+                      Unleash My Intention
                     </button>
                     <p className="text-navy-dark/50 text-xs text-center font-montserrat">
-                      You can generate up to 3 intentions as a guest. Join early access for unlimited.
+                      You can generate up to 3 free intentions. Your spell will appear on screen and you can download as PDF.
                     </p>
                   </form>
-                </LightOrnateCard>
-              </motion.div>
-            )}
-
-            {/* CHECKOUT STEP */}
-            {step === 'checkout' && (
-              <motion.div
-                key="checkout"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-              >
-                <LightOrnateCard hover={false}>
-                  <button onClick={() => setStep('email')} className="text-crimson hover:text-crimson-bright text-sm mb-6 font-montserrat" disabled={checkingOut}>
-                    ← Back
-                  </button>
-                  
-                  <div className="text-center mb-6">
-                    <BrandIcon name="star" size={44} variant="pink" opacity={0.9} className="mx-auto mb-4" />
-                    <h2 className="phantasmagoria-hero text-2xl text-crimson mb-4">Support This Work</h2>
-                    
-                    {/* ORIGINAL COPY */}
-                    <div className="text-navy-dark/80 text-sm font-crimson space-y-3 text-left max-w-md mx-auto">
-                      <p>
-                        This portal is offered freely. If you&apos;re able, consider a pay-what-you-choose contribution.
-                      </p>
-                      <p>
-                        Each spell costs the witchy woman behind the veil approximately <span className="text-crimson font-semibold">$0.02–0.05</span> in 
-                        AI generation costs, and she&apos;s building this whole thing as we speak.
-                      </p>
-                      <p className="text-navy-dark/60">
-                        Please continue to your spell with or without a donation!
-                      </p>
-                    </div>
-                    
-                    <p className="text-crimson text-xs mt-4 italic font-crimson">
-                      So it is, love only, war is TAMAM SHUD
-                    </p>
-                  </div>
-                  
-                  <div className="space-y-3 max-w-md mx-auto">
-                    {/* Free button */}
-                    <button
-                      onClick={() => handleCheckout(0)}
-                      disabled={checkingOut}
-                      className="w-full py-3 bg-crimson/10 hover:bg-crimson/20 border-2 border-crimson text-crimson font-cinzel text-sm tracking-wider transition-colors disabled:opacity-50"
-                      data-testid="checkout-free-btn"
-                    >
-                      {checkingOut ? <Loader2 className="w-4 h-4 animate-spin mx-auto" /> : '✦ Continue Free — No Judgement ✦'}
-                    </button>
-                    
-                    <p className="text-navy-dark/40 text-xs text-center font-montserrat">— or support the work —</p>
-                    
-                    <div className="grid grid-cols-3 gap-2">
-                      {[500, 1000, 2500].map(amount => (
-                        <button
-                          key={amount}
-                          onClick={() => handleCheckout(amount)}
-                          disabled={checkingOut}
-                          className="py-3 bg-gold/10 hover:bg-gold/20 border border-gold/50 text-navy-dark font-montserrat text-sm transition-colors disabled:opacity-50"
-                        >
-                          ${amount / 100}
-                        </button>
-                      ))}
-                    </div>
-                    
-                    <button
-                      onClick={() => {
-                        const custom = prompt('Enter amount in dollars (e.g., 20):');
-                        if (custom && !isNaN(parseFloat(custom))) {
-                          handleCheckout(Math.round(parseFloat(custom) * 100));
-                        }
-                      }}
-                      disabled={checkingOut}
-                      className="w-full py-2 text-navy-dark/50 hover:text-navy-dark/70 text-xs transition-colors disabled:opacity-50 font-montserrat"
-                    >
-                      Other amount...
-                    </button>
-                  </div>
                 </LightOrnateCard>
               </motion.div>
             )}
@@ -934,6 +818,18 @@ export const InvisibleHelpers = () => {
                 exit={{ opacity: 0, y: -20 }}
                 className="space-y-6"
               >
+                {/* Welcome message with name */}
+                {name && (
+                  <div className="text-center mb-4">
+                    <p className="text-crimson font-crimson text-lg">
+                      {name.split(' ')[0]}, your intention has materialized...
+                    </p>
+                    <p className="text-navy-dark/60 text-sm font-montserrat">
+                      {remainingSpells > 0 ? `You have ${remainingSpells} free ${remainingSpells === 1 ? 'spell' : 'spells'} remaining` : 'This was your last free spell'}
+                    </p>
+                  </div>
+                )}
+                
                 {/* Action buttons */}
                 <div className="flex flex-wrap gap-2 justify-between items-center">
                   <button
