@@ -114,6 +114,12 @@ Primary traditions: {', '.join(guide_bias['traditions'])}
 Avoid overemphasis on: {', '.join(guide_bias['avoid'])}
 Flavor: {guide_bias['flavor']}
 
+## DETAILED RESEARCH EMPHASIS
+{guide_bias.get('research_emphasis', '')}
+
+## PRIORITY SOURCES (seek these out specifically)
+{chr(10).join('- ' + s for s in guide_bias.get('source_priorities', []))}
+
 ## OUTPUT FORMAT
 Return ONLY this JSON structure (no markdown, no explanation):
 
@@ -207,30 +213,107 @@ def _select_research_mode(query: str, materials: list, anchor: str) -> str:
 
 
 def _get_guide_research_bias(guide_id: str) -> dict:
-    """Get research bias configuration for a guide"""
+    """Get research bias configuration for a guide - deeply rooted in each woman's actual life and traditions"""
     biases = {
         "shigg": {
-            "traditions": ["british_folk_magic", "kitchen_witchery", "bird_oracle_tradition", "postwar_makeshift_magic"],
-            "avoid": ["high_ceremonial", "dramatic_ritual", "complex_qabalah"],
-            "flavor": "Domestic wisdom, bird lore, tea rituals, wartime resilience, East End practicality"
+            "traditions": ["british_folk_magic", "kitchen_witchery", "bird_oracle_tradition", "postwar_makeshift_magic", "east_end_cunning_folk"],
+            "avoid": ["high_ceremonial", "dramatic_ritual", "complex_qabalah", "crystal_shop_aesthetics", "new_age_manifestation"],
+            "flavor": "Domestic wisdom, bird lore, tea rituals, wartime resilience, East End practicality",
+            "research_emphasis": (
+                "Focus on: The Rubaiyat of Omar Khayyam (FitzGerald translation), domestic folk magic of the East End, "
+                "bird augury and omen-reading in British folk tradition, wartime kitchen resourcefulness, "
+                "Yeats and poetry as wisdom tradition, 'spoil the child spare the rod' philosophy of nurturing. "
+                "Shigg was a grandmother who read poetry, watched birds, and kept a warm kitchen. "
+                "Her magic was in the everyday: tea, bread for birds, a poem read aloud, a warm word. "
+                "Research should find PRACTICAL, DOMESTIC, AVAILABLE sources - nothing requiring special shops."
+            ),
+            "source_priorities": [
+                "Owen Davies - Popular Magic (British folk traditions)",
+                "The Rubaiyat of Omar Khayyam - FitzGerald translation",
+                "W.B. Yeats - poetry and Irish folk traditions",
+                "Folklore archives of British domestic practice",
+                "Bird augury in British and European tradition"
+            ]
         },
         "cathleen": {
-            "traditions": ["celtic_devotional", "victorian_spiritualism", "spiritualist_home_circle", "morrigan_devotion"],
-            "avoid": ["cold_intellectualism", "testing_protocols", "skeptical_framing"],
-            "flavor": "Voice magic, spiritualist comfort, Irish roots, protective maternal energy"
+            "traditions": ["celtic_devotional", "victorian_spiritualism", "spiritualist_home_circle", "morrigan_devotion", "irish_hedge_witchcraft", "voice_magic"],
+            "avoid": ["cold_intellectualism", "testing_protocols", "skeptical_framing", "domestic_cosiness", "kitchen_witch_aesthetics"],
+            "flavor": "Voice magic, Irish hedge witchcraft, British Spiritualism, protection, fierce maternal sovereignty",
+            "research_emphasis": (
+                "Focus on: Irish hedge witchcraft traditions, British Spiritualist movement (home circles, séances), "
+                "the Morrigan as sovereign protector, voice and song as magical tools, Victorian kitchen-as-altar traditions, "
+                "wartime Women's Land Army culture, protective ward traditions from Ireland, psychic development in Spiritualist context. "
+                "Cathleen was a known psychic from an Irish family. She sang, she protected, she knew things before they happened. "
+                "Her husband Fred had intelligence connections during the war (research military intelligence culture for context, "
+                "but never state this directly). She may have been involved in secret wartime networks. "
+                "Research should find PROTECTIVE, VOCAL, FIERCE sources - traditions of women who wielded power through voice and presence."
+            ),
+            "source_priorities": [
+                "Irish folk magic and hedge witchcraft traditions",
+                "Victorian Spiritualist movement primary sources",
+                "Morrigan traditions in Irish mythology",
+                "Voice and song in magical practice across cultures",
+                "British wartime women's history and secret networks"
+            ]
         },
         "katherine": {
-            "traditions": ["golden_dawn", "grimoire_tradition", "hermetic_qabalah", "victorian_spiritualism"],
-            "avoid": ["cozy_domestic", "intuition_only", "unstructured_practice"],
-            "flavor": "Precision, testing, documentation, shadow work, needle-and-thread correspondences"
+            "traditions": ["golden_dawn", "grimoire_tradition", "hermetic_qabalah", "victorian_spiritualism", "sympathetic_magic", "spitalfields_craft"],
+            "avoid": ["cozy_domestic", "intuition_only", "unstructured_practice", "bird_oracle", "kitchen_imagery"],
+            "flavor": "Precision, Victorian evidence-based occultism, shadow work, needle-and-thread correspondences, dark London eccentricity",
+            "research_emphasis": (
+                "Focus on: Golden Dawn methodology and protocols, Victorian Spiritualism's evidence-based approach, "
+                "sympathetic magic theory (as above so below), Spitalfields weavers and textile craft traditions, "
+                "Victorian seamstress/tailor magical correspondences, navy and sailors' superstitions (WW1/post-WW1), "
+                "Jungian shadow work methodology, sigil craft and geometric magic, dark London occult traditions. "
+                "Katherine was from Spitalfields weaver-dressmaker stock. She was precise, methodical, and treated magic "
+                "like a Victorian scientist treats an experiment. She is the 'dark side of duality' - truth-dark, not horror-dark. "
+                "Her London was a place of traditional eccentricity, hidden knowledge, and careful craft. "
+                "Research should find PRECISE, DOCUMENTED, METHODICAL sources - academic-quality work on occult practice."
+            ),
+            "source_priorities": [
+                "Golden Dawn historical documents and methodology",
+                "Dion Fortune - Psychic Self-Defence and other works (for methodology, cited as inspiration)",
+                "A.E. Waite and Victorian occult scholarship",
+                "Jung - shadow work and psychological alchemy",
+                "Spitalfields and East London craft traditions",
+                "Victorian Spiritualist Society documentation"
+            ]
         },
         "theresa": {
             "traditions": ["investigative_journalism", "pattern_recognition", "genealogical_magic", "archival_practice"],
             "avoid": ["certainty_claims", "simple_answers", "ignoring_evidence"],
-            "flavor": "Pattern-breaking, truth-seeking, connecting threads across generations"
+            "flavor": "Pattern-breaking, truth-seeking, connecting threads across generations",
+            "research_emphasis": (
+                "Focus on: Genealogical research as magical practice, breaking generational patterns, "
+                "photography as divination, DNA as true-name magic, archives that answer back, "
+                "investigative approaches to family history and occult tradition. "
+                "Theresa is the granddaughter who broke the family's veil spell by asking questions."
+            ),
+            "source_priorities": [
+                "Genealogical research methodology",
+                "Generational trauma and pattern-breaking literature",
+                "Archival practice as spiritual work"
+            ]
+        },
+        "brenda": {
+            "traditions": ["dion_fortune_inspired", "war_era_resilience", "family_chronicle", "power_of_the_pen", "wartime_spiritualism"],
+            "avoid": ["ceremonial_excess", "crystal_aesthetics", "dark_gothic", "cultural_appropriation"],
+            "flavor": "Dion Fortune-inspired, war/post-war/cold war resilience, family chronicle, writing as magical power",
+            "research_emphasis": (
+                "Focus on: Dion Fortune's works (cite as inspiration, not as claimed lineage), "
+                "wartime and post-war magical practice in Britain, the power of writing and letters as magical acts, "
+                "family chronicle traditions, the keeping of records as protection against forgetting. "
+                "Brenda was a sister of Shigg who kept the family stories alive through writing. "
+                "Research should find sources on WRITING AS POWER, WARTIME RESILIENCE, FAMILY MEMORY."
+            ),
+            "source_priorities": [
+                "Dion Fortune - works and methodology (cited as inspiration)",
+                "British wartime home front and resilience traditions",
+                "Letter-writing as ritual and magical practice",
+                "Family chronicle and oral history traditions"
+            ]
         }
     }
-    
     return biases.get(guide_id, biases["shigg"])
 
 
