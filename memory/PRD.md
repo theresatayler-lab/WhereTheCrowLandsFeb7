@@ -48,6 +48,20 @@ Build "Where The Crowlands," a sophisticated full-stack application for creating
 - Used for: Invisible Helpers, SpellRequest pages
 - Location: `/app/frontend/public/videos/silent-army-spells.mp4`
 
+#### Invisible Helpers - Simplified Lead Gen Flow ✅
+- **Removed double sign-up**: No more Stripe checkout step
+- **Single email capture**: Name + Email → Generate spell immediately
+- **Lead storage**: MongoDB collection `invisible_helpers_leads`
+- **Admin API endpoints**:
+  - `GET /api/admin/leads?admin_key=XXX` - View all leads (JSON)
+  - `GET /api/admin/leads/export?admin_key=XXX` - Download as CSV
+- **Data captured per lead**:
+  - Email, Name, Intention, Beneficiaries
+  - Quality selected, Practice style, Time horizon
+  - Generation count, Timestamps
+  - `email_sent: false` (ready for future email integration)
+- **Limit**: 3 free spells per email address
+
 ### Session: February 12, 2025 - Security Fixes + Brenda Persona + Bug Fixes ✅
 
 #### Security Hardening (CRITICAL)
