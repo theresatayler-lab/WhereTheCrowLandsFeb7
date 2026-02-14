@@ -5058,8 +5058,9 @@ async def get_subscription_status(user = Depends(get_current_user)):
 @api_router.post('/subscription/upgrade-manual')
 async def manual_upgrade_user(user_email: str, admin_key: str):
     """Admin endpoint to manually upgrade a user (for testing before Stripe)"""
-    # Simple admin key check (change this in production!)
-    if admin_key != os.environ.get('ADMIN_KEY', 'change-me-in-production'):
+    # SECURITY: Admin key must be set in environment
+    expected_key = os.environ.get('ADMIN_KEY')
+    if not expected_key or admin_key != expected_key:
         raise HTTPException(status_code=403, detail='Unauthorized')
     
     user = await db.users.find_one({'email': user_email}, {'_id': 0})
