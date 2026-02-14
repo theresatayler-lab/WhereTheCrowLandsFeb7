@@ -588,8 +588,8 @@ export const SpellRequest = () => {
       };
       const beliefMode = beliefModeMap[spellSpec.belief_boundary] || 'SPIRITUAL';
       
-      // Use V3 Blocks API for richer spell experience
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/ai/generate-spell-v3`, {
+      // Use async job pattern to avoid proxy timeouts (spell generation takes 2+ minutes)
+      const createJobResponse = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/ai/generate-spell-job`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
@@ -602,9 +602,9 @@ export const SpellRequest = () => {
         })
       });
       
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        if (response.status === 403 && errorData.detail?.error === 'spell_limit_reached') {
+      if (!createJobResponse.ok) {
+        const errorData = await createJobResponse.json().catch(() => ({}));
+        if (createJobResponse.status === 403 && errorData.detail?.error === 'spell_limit_reached') {
           toast.error(
             <div className="flex flex-col gap-2">
               <span className="font-semibold">You&apos;ve used all your free workings!</span>
@@ -622,10 +622,51 @@ export const SpellRequest = () => {
           setLoading(false);
           return;
         }
-        throw new Error('Failed to craft your working');
+        throw new Error('Failed to start spell crafting');
       }
       
-      const data = await response.json();
+      const jobData = await createJobResponse.json();
+      const jobId = jobData.job_id;
+      
+      // Poll for job completion
+      let attempts = 0;
+      const maxAttempts = 60; // 5 minutes max (5s * 60)
+      let pollDelay = 5000; // Start with 5 seconds
+      
+      const pollJob = async () => {
+        while (attempts < maxAttempts) {
+          attempts++;
+          
+          try {
+            const statusResponse = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/ai/spell-job/${jobId}`);
+            const statusData = await statusResponse.json();
+            
+            if (statusData.status === 'complete') {
+              // Success! Return the result
+              return statusData.result;
+            } else if (statusData.status === 'failed') {
+              throw new Error(statusData.error || 'Spell generation failed');
+            }
+            
+            // Show progress if available
+            if (statusData.progress && statusData.progress > 0) {
+              // Could update a progress bar here
+              console.log(`Spell generation progress: ${statusData.progress}%`);
+            }
+            
+          } catch (pollError) {
+            console.error('Poll error:', pollError);
+            // Continue polling on transient errors
+          }
+          
+          // Wait before next poll
+          await new Promise(resolve => setTimeout(resolve, pollDelay));
+        }
+        
+        throw new Error('Spell generation timed out. Please try again.');
+      };
+      
+      const data = await pollJob();
       setSpellResult(data);
       setLoading(false);
       
