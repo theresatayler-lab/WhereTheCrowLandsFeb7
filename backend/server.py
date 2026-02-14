@@ -1408,8 +1408,9 @@ async def create_bespoke_checkout(request: BespokeSpellRequest):
         return {'error': str(e), 'skip_checkout': True}
 
 @api_router.get('/handcrafted/orders')
-async def get_handcrafted_orders():
+async def get_handcrafted_orders(admin_key: str):
     """Admin endpoint to view pending handcrafted orders"""
+    verify_admin_key(admin_key)
     orders = await db.handcrafted_orders.find(
         {'status': {'$in': ['pending', 'paid']}},
         {'_id': 0}
