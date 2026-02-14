@@ -1606,7 +1606,8 @@ async def capture_lead_and_generate(request: LeadCaptureRequest):
             beneficiaries=request.beneficiaries,
             primary_quality=request.primary_quality,
             practice_style=request.practice_style,
-            time_horizon=request.time_horizon
+            time_horizon=request.time_horizon,
+            action_pledge="I commit to channeling this intention toward benevolent outcomes and peace."
         )
         
         # Call the existing generation function
