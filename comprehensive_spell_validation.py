@@ -3,7 +3,7 @@ import json
 from datetime import datetime
 
 class DetailedSpellValidationTester:
-    def __init__(self, base_url="https://magical-lore-hub.preview.emergentagent.com"):
+    def __init__(self, base_url="https://timeline-audit.preview.emergentagent.com"):
         self.base_url = base_url
         self.token = None
         self.validation_results = []
