@@ -196,7 +196,7 @@ body::before {
     background: transparent;
     color: #C8A44D;
     border: 1px solid #C8A44D;
-    transition: all 0.3s ease;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .btn-ritual-secondary:hover {
