@@ -1570,7 +1570,7 @@ async def capture_lead_and_generate(request: LeadCaptureRequest):
         
         if existing:
             # Update existing lead
-            await db.invisible_helpers_leads.update_one(
+            result = await db.invisible_helpers_leads.update_one(
                 {'email': request.email},
                 {
                     '$set': lead_data,
@@ -1584,6 +1584,7 @@ async def capture_lead_and_generate(request: LeadCaptureRequest):
                 }
             )
             generation_count += 1
+            logger.info(f"[LEAD_CAPTURE] Updated existing lead: {result.modified_count} modified")
         else:
             # New lead
             lead_data['created_at'] = datetime.now(timezone.utc).isoformat()
@@ -1593,8 +1594,9 @@ async def capture_lead_and_generate(request: LeadCaptureRequest):
                 'intention': request.personal_intention[:200]
             }]
             lead_data['email_sent'] = False  # For future email integration
-            await db.invisible_helpers_leads.insert_one(lead_data)
+            result = await db.invisible_helpers_leads.insert_one(lead_data)
             generation_count = 1
+            logger.info(f"[LEAD_CAPTURE] Inserted new lead: {result.inserted_id}")
         
         logger.info(f"[LEAD_CAPTURE] Captured lead: {request.email}, generation #{generation_count}")
         
