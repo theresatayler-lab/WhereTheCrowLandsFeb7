@@ -1517,6 +1517,206 @@ async def get_handcrafted_orders():
     ).sort('created_at', -1).to_list(100)
     return {'orders': orders}
 
+
+# ============================================
+# INVISIBLE HELPERS - Simplified Lead Gen Flow
+# ============================================
+
+class LeadCaptureRequest(BaseModel):
+    """Request model for lead capture with spell generation"""
+    email: EmailStr
+    name: str = ""
+    personal_intention: str = ""
+    beneficiaries: List[str] = []
+    primary_quality: str = ""
+    practice_style: str = ""
+    time_horizon: str = ""
+    source: str = "invisible_helpers"
+
+@api_router.post('/invisible-helpers/capture-and-generate')
+async def capture_lead_and_generate(request: LeadCaptureRequest):
+    """
+    Simplified lead capture + spell generation in one step.
+    No Stripe checkout - just capture email/name and generate spell immediately.
+    
+    Stores lead in 'invisible_helpers_leads' collection for later access.
+    Returns generated spell for immediate display.
+    """
+    try:
+        # Check generation limit (3 free per email)
+        existing = await db.invisible_helpers_leads.find_one({'email': request.email})
+        generation_count = existing.get('generation_count', 0) if existing else 0
+        
+        if generation_count >= 3:
+            return {
+                'success': False,
+                'limit_reached': True,
+                'generation_count': generation_count,
+                'error': 'You\'ve reached the free limit (3 spells). Join early access for unlimited!'
+            }
+        
+        # Store/update lead
+        lead_data = {
+            'email': request.email,
+            'name': request.name,
+            'personal_intention': request.personal_intention,
+            'beneficiaries': request.beneficiaries,
+            'primary_quality': request.primary_quality,
+            'practice_style': request.practice_style,
+            'time_horizon': request.time_horizon,
+            'source': request.source,
+            'updated_at': datetime.now(timezone.utc).isoformat(),
+        }
+        
+        if existing:
+            # Update existing lead
+            await db.invisible_helpers_leads.update_one(
+                {'email': request.email},
+                {
+                    '$set': lead_data,
+                    '$inc': {'generation_count': 1},
+                    '$push': {
+                        'generations': {
+                            'timestamp': datetime.now(timezone.utc).isoformat(),
+                            'intention': request.personal_intention[:200]
+                        }
+                    }
+                }
+            )
+            generation_count += 1
+        else:
+            # New lead
+            lead_data['created_at'] = datetime.now(timezone.utc).isoformat()
+            lead_data['generation_count'] = 1
+            lead_data['generations'] = [{
+                'timestamp': datetime.now(timezone.utc).isoformat(),
+                'intention': request.personal_intention[:200]
+            }]
+            lead_data['email_sent'] = False  # For future email integration
+            await db.invisible_helpers_leads.insert_one(lead_data)
+            generation_count = 1
+        
+        logger.info(f"[LEAD_CAPTURE] Captured lead: {request.email}, generation #{generation_count}")
+        
+        # Now generate the spell (reuse existing generation logic)
+        # Convert to BattleCryRequest format
+        battle_cry_request = BattleCryRequest(
+            email=request.email,
+            personal_intention=request.personal_intention,
+            beneficiaries=request.beneficiaries,
+            primary_quality=request.primary_quality,
+            practice_style=request.practice_style,
+            time_horizon=request.time_horizon
+        )
+        
+        # Call the existing generation function
+        result = await generate_battle_cry(battle_cry_request)
+        
+        # Add lead info to response
+        return {
+            'success': result.success,
+            'working': result.working,
+            'generation_count': generation_count,
+            'remaining': max(0, 3 - generation_count),
+            'limit_reached': result.limit_reached,
+            'lead_captured': True,
+            'name': request.name,
+            'email': request.email
+        }
+        
+    except Exception as e:
+        logger.error(f"[LEAD_CAPTURE] Error: {e}")
+        return {
+            'success': False,
+            'error': str(e),
+            'lead_captured': False
+        }
+
+
+@api_router.get('/admin/leads')
+async def get_leads(
+    source: str = None,
+    limit: int = 100,
+    skip: int = 0,
+    admin_key: str = None
+):
+    """
+    Admin endpoint to retrieve captured leads.
+    Requires admin_key query parameter.
+    
+    Query params:
+    - source: Filter by source (e.g., 'invisible_helpers')
+    - limit: Max results (default 100)
+    - skip: Pagination offset
+    """
+    expected_key = os.environ.get('ADMIN_KEY')
+    if not expected_key or admin_key != expected_key:
+        raise HTTPException(status_code=403, detail='Admin access required')
+    
+    query = {}
+    if source:
+        query['source'] = source
+    
+    leads = await db.invisible_helpers_leads.find(
+        query,
+        {'_id': 0}
+    ).sort('created_at', -1).skip(skip).limit(limit).to_list(limit)
+    
+    total = await db.invisible_helpers_leads.count_documents(query)
+    
+    return {
+        'leads': leads,
+        'total': total,
+        'limit': limit,
+        'skip': skip
+    }
+
+
+@api_router.get('/admin/leads/export')
+async def export_leads_csv(
+    source: str = None,
+    admin_key: str = None
+):
+    """
+    Export leads as CSV for download.
+    Requires admin_key query parameter.
+    """
+    from fastapi.responses import StreamingResponse
+    import io
+    import csv
+    
+    expected_key = os.environ.get('ADMIN_KEY')
+    if not expected_key or admin_key != expected_key:
+        raise HTTPException(status_code=403, detail='Admin access required')
+    
+    query = {}
+    if source:
+        query['source'] = source
+    
+    leads = await db.invisible_helpers_leads.find(query, {'_id': 0}).to_list(10000)
+    
+    # Create CSV in memory
+    output = io.StringIO()
+    if leads:
+        fieldnames = ['email', 'name', 'created_at', 'generation_count', 'personal_intention', 'beneficiaries', 'source']
+        writer = csv.DictWriter(output, fieldnames=fieldnames, extrasaction='ignore')
+        writer.writeheader()
+        for lead in leads:
+            # Convert lists to strings for CSV
+            lead_copy = dict(lead)
+            if isinstance(lead_copy.get('beneficiaries'), list):
+                lead_copy['beneficiaries'] = ', '.join(lead_copy['beneficiaries'])
+            writer.writerow(lead_copy)
+    
+    output.seek(0)
+    
+    return StreamingResponse(
+        iter([output.getvalue()]),
+        media_type='text/csv',
+        headers={'Content-Disposition': f'attachment; filename=leads_{datetime.now().strftime("%Y%m%d")}.csv'}
+    )
+
+
 @api_router.post('/invisible-helpers/battle-cry/generate', response_model=BattleCryResponse)
 async def generate_battle_cry(request: BattleCryRequest):
     """Generate the Magical Battle Cry Intention working"""
