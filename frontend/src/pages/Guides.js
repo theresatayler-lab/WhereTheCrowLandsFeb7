@@ -4,7 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { GlassCard } from '../components/GlassCard';
 import { ARCHETYPES, getArchetypeById } from '../data/archetypes';
 import { setCurrentArchetype, getCurrentArchetype } from '../components/OnboardingModal';
-import { ArrowRight, Check, ChevronDown, ChevronUp } from 'lucide-react';
+import { ArrowRight, Check, ChevronDown, ChevronUp, Sparkles } from 'lucide-react';
 import { toast } from 'sonner';
 import { BrandIcon } from '../components/BrandIcon';
 import { DarkSection, LightSection, GrandDivider, MysticalDivider, ElaborateCorner, PageHeader, PageDivider, BestiaryGlyph, ATMOSPHERIC_IMAGES } from '../components/OrnateElements';
