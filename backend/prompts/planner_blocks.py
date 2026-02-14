@@ -625,6 +625,13 @@ CANON_ANCHORS = {
         {"id": "journalist_occult", "type": "figure", "title": "Investigative Occultism", "year": None, "era": "Contemporary", "relevance": "Following evidence to truth"},
         {"id": "veil_spell", "type": "practice", "title": "The Family Veil Spell", "year": None, "era": "Contemporary", "relevance": "Secrets hidden across generations"},
         {"id": "bird_log", "type": "practice", "title": "Bird Observation Log", "year": None, "era": "Contemporary", "relevance": "Systematic recording of omens"}
+    ],
+    "brenda": [
+        {"id": "dion_fortune_letters", "type": "figure", "title": "Dion Fortune's War Letters", "year": 1940, "era": "WWII", "relevance": "Magical resistance through letter-writing during wartime"},
+        {"id": "family_chronicle", "type": "practice", "title": "Family Chronicle Keeping", "year": None, "era": "Timeless", "relevance": "Recording family stories as sacred preservation"},
+        {"id": "corvid_messenger", "type": "tradition", "title": "Corvid as Family Messenger", "year": None, "era": "Folk", "relevance": "Crows carrying messages between the living and departed"},
+        {"id": "domestic_memory_magic", "type": "practice", "title": "Domestic Memory Magic", "year": 1950, "era": "Post-War", "relevance": "Using household objects as anchors for family memory"},
+        {"id": "recipe_as_spell", "type": "practice", "title": "Recipe as Spell", "year": None, "era": "Timeless", "relevance": "Cooking family recipes as acts of ancestral connection"}
     ]
 }
 

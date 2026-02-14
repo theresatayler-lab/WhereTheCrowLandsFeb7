@@ -29,6 +29,18 @@ TABOO_KEYWORDS_MAP = {
         "bird oracle work": ["bird omen", "bird oracle", "what the birds say", "feathered messenger", "sparrow says"],
         "vague intuition-based practice": ["just feel it", "trust your gut", "intuition says", "vibe check", "feels right"],
         "devotional hymn styling": ["blessed be", "so mote it be", "praise the", "glory to"]
+    },
+    "theresa": {
+        "blind faith language": ["just trust", "don't question", "have faith", "the universe will"],
+        "cozy domestic comfort": ["cozy kitchen", "warm hearth", "kettle sings", "cup of tea"],
+        "love-and-light bypassing": ["love and light", "good vibes only", "positive vibes", "raise your vibration"],
+        "vague mystical pronouncements": ["the stars say", "destiny calls", "it was meant to be", "everything happens for a reason"]
+    },
+    "brenda": {
+        "ceremonial magic language": ["invoke the", "banishing ritual", "ceremonial circle", "ritual robes"],
+        "crystal shop aesthetics": ["crystal grid", "charging crystals", "crystal healing", "chakra alignment"],
+        "dark gothic imagery": ["blood ritual", "dark moon curse", "shadow binding", "death magic"],
+        "new age manifestation": ["manifest your", "law of attraction", "raise your vibration", "abundance mindset"]
     }
 }
 
@@ -112,6 +124,9 @@ def run_qa_blocks_validation(
 
     # 12. Sources and further reading check
     _check_sources_citation(spell_output, report)
+
+    # 13. Specialty block content validation (poetry_reading, observation_task, further_reading)
+    _check_specialty_block_content(spell_output, report)
 
     # === DETERMINE VERDICT ===
     critical_count = sum(1 for v in report["violations"] if v["severity"] == "CRITICAL")
@@ -441,3 +456,57 @@ def _check_taboo_keywords(spell: dict, guide_id: str, report: dict):
         report["checks_failed"].append(f"taboo_keywords: {len(violations_found)} violations")
     else:
         report["checks_passed"].append("taboo_keywords")
+
+
+def _check_specialty_block_content(spell: dict, report: dict):
+    """Validate content structure of specialty blocks: poetry_reading, observation_task, further_reading"""
+    blocks = spell.get("blocks", [])
+
+    for block in blocks:
+        block_type = block.get("block_type")
+        content = block.get("content", {})
+
+        if block_type == "poetry_reading":
+            if not content.get("poem_text") and not content.get("text"):
+                report["violations"].append({
+                    "check": "specialty_block_content",
+                    "severity": "HIGH",
+                    "issue": "poetry_reading block missing poem_text/text",
+                    "fix_instruction": "Add poem_text with the actual poem or passage to read"
+                })
+                report["checks_failed"].append("specialty_block: poetry_reading_missing_text")
+            elif not content.get("commentary") and not content.get("guide_commentary"):
+                report["violations"].append({
+                    "check": "specialty_block_content",
+                    "severity": "MEDIUM",
+                    "issue": "poetry_reading block missing guide commentary",
+                    "fix_instruction": "Add commentary explaining why this poem matters"
+                })
+                report["checks_failed"].append("specialty_block: poetry_reading_missing_commentary")
+            else:
+                report["checks_passed"].append("specialty_block: poetry_reading")
+
+        elif block_type == "observation_task":
+            if not content.get("task") and not content.get("instruction"):
+                report["violations"].append({
+                    "check": "specialty_block_content",
+                    "severity": "HIGH",
+                    "issue": "observation_task block missing task/instruction",
+                    "fix_instruction": "Add a specific observation task for the seeker"
+                })
+                report["checks_failed"].append("specialty_block: observation_task_missing_task")
+            else:
+                report["checks_passed"].append("specialty_block: observation_task")
+
+        elif block_type == "further_reading":
+            recommendations = content.get("recommendations", content.get("books", []))
+            if not recommendations and not content.get("title"):
+                report["violations"].append({
+                    "check": "specialty_block_content",
+                    "severity": "HIGH",
+                    "issue": "further_reading block missing recommendations/books/title",
+                    "fix_instruction": "Add at least one specific book or passage recommendation"
+                })
+                report["checks_failed"].append("specialty_block: further_reading_missing_content")
+            else:
+                report["checks_passed"].append("specialty_block: further_reading")
