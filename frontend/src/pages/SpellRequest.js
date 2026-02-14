@@ -31,8 +31,8 @@ const getArchetypeVideo = (personaId) => {
   return archetype?.video || null;
 };
 
-// Generic fallback video for non-persona spells
-const GENERIC_SPELL_VIDEO = '/images/ui/spell-waiting-video.mov';
+// Generic fallback video for non-persona spells - Silent Army video for magical workings
+const GENERIC_SPELL_VIDEO = '/videos/silent-army-spells.mp4';
 
 // Get all available videos for random selection (for choose_for_me fallback)
 const ALL_ARCHETYPE_VIDEOS = ARCHETYPES.filter(a => a.video).map(a => a.video);
