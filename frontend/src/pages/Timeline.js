@@ -1793,7 +1793,7 @@ export const Timeline = () => {
                 </button>
                 <button
                   onClick={() => {
-                    setActiveEra('occult_revival');
+                    setActiveEra('revival');
                     setFilters({});
                     setActiveDecade(null);
                     toast.info("Showing Occult Revival era (most content)");
