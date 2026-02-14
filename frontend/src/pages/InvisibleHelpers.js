@@ -344,6 +344,7 @@ export const InvisibleHelpers = () => {
       time_horizon: '',
     });
     setEmail('');
+    setName('');
     setGeneratedWorking(null);
     setStep('form');
   };
