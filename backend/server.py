@@ -2514,32 +2514,42 @@ async def get_all_sample_spells():
     spells = await db.sample_spells.find({}, {"_id": 0}).to_list(100)
     return spells
 
+# Helper function for admin auth check
+def verify_admin_key(admin_key: str):
+    """Verify admin key from environment"""
+    expected_key = os.environ.get('ADMIN_KEY')
+    if not expected_key or admin_key != expected_key:
+        raise HTTPException(status_code=403, detail='Unauthorized - Invalid admin key')
+
 @api_router.post('/admin/seed-katherine-spells')
-async def admin_seed_katherine_spells():
+async def admin_seed_katherine_spells(admin_key: str):
     """Seed Katherine's sample spells into the database (admin only)"""
+    verify_admin_key(admin_key)
     try:
         count = await seed_katherine_spells(db)
         return {"message": f"Successfully seeded {count} Katherine sample spells", "count": count}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail="Seed operation failed")
 
 @api_router.post('/admin/seed-cathleen-spells')
-async def admin_seed_cathleen_spells():
+async def admin_seed_cathleen_spells(admin_key: str):
     """Seed Cathleen's sample spells into the database (admin only)"""
+    verify_admin_key(admin_key)
     try:
         count = await seed_cathleen_spells(db)
         return {"message": f"Successfully seeded {count} Cathleen sample spells", "count": count}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail="Seed operation failed")
 
 @api_router.post('/admin/seed-shigg-spells')
-async def admin_seed_shigg_spells():
+async def admin_seed_shigg_spells(admin_key: str):
     """Seed Shigg's sample spells into the database (admin only)"""
+    verify_admin_key(admin_key)
     try:
         count = await seed_shigg_spells(db)
         return {"message": f"Successfully seeded {count} Shigg sample spells", "count": count}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail="Seed operation failed")
 
 # Bird Oracle - Shigg's integrated feature
 @api_router.get('/ai/bird-oracle')
