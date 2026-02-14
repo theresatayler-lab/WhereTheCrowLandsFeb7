@@ -198,90 +198,46 @@ export const InvisibleHelpers = () => {
       toast.error('Please complete all required fields');
       return;
     }
-    localStorage.setItem('ih_pending_form', JSON.stringify(formData));
     setStep('email');
   };
 
+  // SIMPLIFIED: Single submit that captures lead AND generates spell
   const handleEmailSubmit = async (e) => {
     e.preventDefault();
     if (!email || !email.includes('@')) {
       toast.error('Please enter a valid email');
       return;
     }
-
-    try {
-      const countRes = await fetch(`${API_URL}/api/invisible-helpers/check-limit?email=${encodeURIComponent(email)}`);
-      const countData = await countRes.json();
-      
-      if (countData.limit_reached) {
-        toast.info('You\'ve reached the guest limit. Join early access to continue.');
-        window.location.href = '/early-access';
-        return;
-      }
-      
-      setGenerationCount(countData.count || 0);
-    } catch (error) {
-      console.error('Count check error:', error);
+    if (!name.trim()) {
+      toast.error('Please enter your name');
+      return;
     }
 
-    localStorage.setItem('ih_pending_email', email);
-    setStep('checkout');
-  };
-
-  const handleCheckout = async (amount = 0) => {
-    setCheckingOut(true);
-    try {
-      const response = await fetch(`${API_URL}/api/invisible-helpers/create-checkout`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email,
-          amount,
-          success_url: `${window.location.origin}/invisible-helpers?success=true&session_id={CHECKOUT_SESSION_ID}`,
-          cancel_url: `${window.location.origin}/invisible-helpers`,
-        }),
-      });
-      
-      const data = await response.json();
-      
-      if (data.url) {
-        window.location.href = data.url;
-      } else if (data.skip_checkout) {
-        handleGenerateAfterCheckout(email, formData);
-      } else {
-        toast.error('Failed to create checkout session');
-        setCheckingOut(false);
-      }
-    } catch (error) {
-      console.error('Checkout error:', error);
-      toast.error('Checkout failed. Please try again.');
-      setCheckingOut(false);
-    }
-  };
-
-  const handleGenerateAfterCheckout = async (userEmail, form) => {
+    // Go directly to generation - no checkout step
     setGenerating(true);
     setStep('result');
     
     try {
-      const response = await fetch(`${API_URL}/api/invisible-helpers/battle-cry/generate`, {
+      // Use new simplified endpoint that captures lead AND generates
+      const response = await fetch(`${API_URL}/api/invisible-helpers/capture-and-generate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          email: userEmail,
-          personal_intention: form.personal_intention || '',
-          beneficiaries: form.beneficiaries,
-          primary_quality: form.primary_quality,
-          practice_style: form.practice_style,
-          time_horizon: form.time_horizon,
-          action_pledge: 'Benevolent outcomes and peace',
+          email,
+          name: name.trim(),
+          personal_intention: formData.personal_intention || '',
+          beneficiaries: formData.beneficiaries,
+          primary_quality: formData.primary_quality,
+          practice_style: formData.practice_style,
+          time_horizon: formData.time_horizon,
+          source: 'invisible_helpers'
         }),
       });
       
       const data = await response.json();
       
       if (data.success && data.working) {
-        // Defensive: normalize guided_working if model returns malformed data
+        // Normalize guided_working if malformed
         const working = { ...data.working };
         if (working.guided_working && Array.isArray(working.guided_working)) {
           working.guided_working = working.guided_working.map((step, idx) => {
@@ -292,20 +248,21 @@ export const InvisibleHelpers = () => {
           });
         }
         setGeneratedWorking(working);
-        setGenerationCount(data.generation_count || generationCount + 1);
-        localStorage.setItem('ih_generation_count', String(data.generation_count || generationCount + 1));
-        toast.success('Your intention has been generated!');
-        localStorage.removeItem('ih_pending_email');
-        localStorage.removeItem('ih_pending_form');
+        setGenerationCount(data.generation_count || 1);
+        setRemainingSpells(data.remaining || 0);
+        toast.success(`Your intention has materialized, ${name.split(' ')[0]}!`);
       } else if (data.limit_reached) {
-        toast.info('You\'ve reached the guest limit.');
-        window.location.href = '/early-access';
+        toast.info('You\'ve reached the free limit (3 spells). Join early access for unlimited!');
+        setStep('form');
+        // Could redirect to early-access here
       } else {
         toast.error(data.error || 'Failed to generate intention');
+        setStep('form');
       }
     } catch (error) {
       console.error('Generation error:', error);
       toast.error('An error occurred. Please try again.');
+      setStep('form');
     } finally {
       setGenerating(false);
     }
