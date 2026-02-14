@@ -895,7 +895,6 @@ export const SpellRequest = () => {
               style={{ filter: 'saturate(0.8) contrast(1.1)' }}
             >
               <source src={getLoadingVideoUrl()} type="video/mp4" />
-              <source src={getLoadingVideoUrl()} type="video/quicktime" />
             </video>
             
             {/* Gradient overlay */}
