@@ -752,7 +752,7 @@ export const InvisibleHelpers = () => {
               </motion.div>
             )}
 
-            {/* EMAIL STEP */}
+            {/* EMAIL STEP - Simplified: Just name + email, then generate */}
             {step === 'email' && (
               <motion.div
                 key="email"
@@ -767,29 +767,42 @@ export const InvisibleHelpers = () => {
                   
                   <div className="text-center mb-8">
                     <BrandIcon name="star" size={44} variant="pink" opacity={0.9} className="mx-auto mb-4" />
-                    <h2 className="phantasmagoria-hero text-2xl text-crimson mb-2">Receive Your Intention & Join the Chaos</h2>
+                    <h2 className="phantasmagoria-hero text-2xl text-crimson mb-2">Almost There...</h2>
                     <p className="text-navy-dark/70 text-sm font-crimson">
-                      Enter your email to receive your intention and a PDF for offline use.
+                      Enter your name and email to receive your personalized intention.
                     </p>
                   </div>
                   
                   <form onSubmit={handleEmailSubmit} className="space-y-4 max-w-md mx-auto">
                     <CrowlandsInput
+                      type="text"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      placeholder="Your name (or magical alias)"
+                      data-testid="name-input"
+                    />
+                    <CrowlandsInput
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="your@email.com"
+                      data-testid="email-input"
                     />
                     <button
                       type="submit"
-                      className="w-full py-3 bg-crimson hover:bg-crimson-bright text-cream font-cinzel text-sm tracking-wider uppercase transition-colors flex items-center justify-center gap-2"
+                      disabled={!email || !name.trim()}
+                      className={`w-full py-4 font-cinzel text-sm tracking-wider uppercase transition-all flex items-center justify-center gap-2 ${
+                        email && name.trim()
+                          ? 'bg-crimson hover:bg-crimson-bright text-cream'
+                          : 'bg-navy-mid/20 text-navy-dark/40 cursor-not-allowed'
+                      }`}
                       data-testid="email-submit-btn"
                     >
-                      Continue
-                      <ChevronRight className="w-4 h-4" />
+                      <Sparkles className="w-4 h-4" />
+                      Unleash My Intention
                     </button>
                     <p className="text-navy-dark/50 text-xs text-center font-montserrat">
-                      You can generate up to 3 intentions as a guest. Join early access for unlimited.
+                      You can generate up to 3 free intentions. Your spell will appear on screen and you can download as PDF.
                     </p>
                   </form>
                 </LightOrnateCard>
