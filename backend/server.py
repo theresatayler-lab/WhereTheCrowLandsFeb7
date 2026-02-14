@@ -1902,7 +1902,7 @@ async def enhance_batch_events(
     """
     # Check admin key
     admin_key = os.environ.get('ADMIN_KEY')
-    if not admin_key or current_user.get('subscription_tier') != 'pro':
+    if not admin_key or current_user.get('subscription_tier') not in ('pro', 'paid'):
         raise HTTPException(status_code=403, detail='Admin access required')
     
     # Get events that haven't been enhanced
