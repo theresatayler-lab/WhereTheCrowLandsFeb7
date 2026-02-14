@@ -420,7 +420,6 @@ export const InvisibleHelpers = () => {
           style={{ filter: 'saturate(0.7) contrast(1.1)' }}
         >
           <source src={SPELL_VIDEO_URL} type="video/mp4" />
-          <source src={SPELL_VIDEO_URL} type="video/quicktime" />
         </video>
         
         {/* Gradient overlays */}
