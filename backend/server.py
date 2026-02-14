@@ -1808,7 +1808,7 @@ async def get_taxonomy():
 @api_router.post('/timeline/v2/events')
 async def create_timeline_event(event: dict, current_user: dict = Depends(get_current_user)):
     """Create a new timeline event (requires auth)"""
-    if current_user.get('subscription_tier') != 'pro':
+    if current_user.get('subscription_tier') not in ('pro', 'paid'):
         raise HTTPException(status_code=403, detail='Pro subscription required')
     result = await add_timeline_event(db, event)
     return {"success": True, "event": result}
@@ -1816,7 +1816,7 @@ async def create_timeline_event(event: dict, current_user: dict = Depends(get_cu
 @api_router.put('/timeline/v2/events/{event_id}')
 async def update_timeline_event_v2(event_id: str, updates: dict, current_user: dict = Depends(get_current_user)):
     """Update a timeline event (requires auth)"""
-    if current_user.get('subscription_tier') != 'pro':
+    if current_user.get('subscription_tier') not in ('pro', 'paid'):
         raise HTTPException(status_code=403, detail='Pro subscription required')
     result = await update_timeline_event(db, event_id, updates)
     if not result:
@@ -1826,7 +1826,7 @@ async def update_timeline_event_v2(event_id: str, updates: dict, current_user: d
 @api_router.delete('/timeline/v2/events/{event_id}')
 async def delete_timeline_event_v2(event_id: str, current_user: dict = Depends(get_current_user)):
     """Delete a timeline event (requires auth)"""
-    if current_user.get('subscription_tier') != 'pro':
+    if current_user.get('subscription_tier') not in ('pro', 'paid'):
         raise HTTPException(status_code=403, detail='Pro subscription required')
     success = await delete_timeline_event(db, event_id)
     if not success:
