@@ -20,7 +20,41 @@ Build "Where The Crowlands," a sophisticated full-stack application for creating
 
 ## What's Been Implemented
 
-### Session: February 2025 - Claude Primary + Timeline Cleanup + UI Toggle ✅
+### Session: February 12, 2025 - Security Fixes + Brenda Persona + Bug Fixes ✅
+
+#### Security Hardening (CRITICAL)
+- **Removed hardcoded JWT_SECRET fallback** - Now requires env var (RuntimeError if missing)
+- **Removed hardcoded ADMIN_KEY fallback** - Proper env var check
+- **Protected admin endpoints** with admin_key requirement:
+  - `/admin/seed-katherine-spells`
+  - `/admin/seed-cathleen-spells`
+  - `/admin/seed-shigg-spells`
+  - `/handcrafted/orders`
+- **Fixed subscription tier mismatch** - Changed all `!= 'pro'` checks to `not in ('pro', 'paid')`
+- **Added password validation** - Minimum 8 characters required
+
+#### New Persona: Brenda "The Family Chronicler" ✅
+- Added full persona config in `persona_config.py`
+- Era: Post-War America through Cold War (1945-1970s)
+- Specialties: Memory keeping, crow communion, letter spells, recipe magic
+- Added to `archetypes.js` with full bio, rituals, and tenets
+- Images saved: `/app/frontend/public/images/personas/brenda.png`, `brenda-family.png`
+- Integrated into Invisible Helpers page as atmospheric background images
+
+#### Bug Fixes
+- **Fixed missing Sparkles import** in Guides.js (was crashing page)
+- **Fixed stray `>` character** in SpellBlockRenderer.jsx line 474
+- **Fixed Timeline era key mismatch** - Changed `'occult_revival'` to `'revival'`
+- **Fixed incomplete FALLBACK_CONFIG** in spell_tiers.py - Added missing token/temp fields
+- **Fixed CSS `transition: all` violations** - Changed to specific properties
+- **Updated FAQ** - Replaced Theresa with Brenda in guide descriptions
+
+#### Timeline Expansion (Background Tasks)
+- **Batch Enhancement**: Enhanced 85/110 events with narrative descriptions
+- **Generated Missing Events**: Created 70 new events from referenced connections
+- **Total Timeline Events**: 180 (up from 110)
+
+### Previous Session: Timeline & Documentation ✅
 - **Switched spell_writer to Claude Sonnet as primary model**
   - Updated `llm_providers.py`: spell_writer now routes to `anthropic/claude-sonnet-4-20250514`
   - Updated `pipeline_blocks.py`: default writer_model is now Claude Sonnet
