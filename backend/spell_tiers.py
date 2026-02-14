@@ -199,7 +199,14 @@ def estimate_cost(tier: SpellTier) -> Dict[str, float]:
 
 FALLBACK_CONFIG = {
     "research_model": "gpt-4o",
+    "research_tokens": 2000,
+    "research_temperature": 0.5,
     "writer_model": "gpt-4o",
+    "writer_tokens": 3000,
+    "writer_temperature": 0.8,
+    "planner_model": "gpt-4o",
+    "planner_tokens": 1500,
+    "planner_temperature": 0.6,
     "note": "Fallback mode - Claude/DeepSeek unavailable"
 }
 
