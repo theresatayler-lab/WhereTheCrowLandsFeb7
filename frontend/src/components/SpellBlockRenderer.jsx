@@ -471,7 +471,7 @@ const LoreVignetteBlock = ({ content, archetypeStyle }) => (
       <h4 className="font-cinzel text-lg text-stone-800">{content.title}</h4>
     )}
     
-    <div className="flex items-center gap-4 text-xs text-stone-500">>
+    <div className="flex items-center gap-4 text-xs text-stone-500">
       {content.era && <span>{content.era}</span>}
       {content.tradition && <span>• {content.tradition}</span>}
     </div>
