@@ -4939,7 +4939,11 @@ async def generate_spell_v3_endpoint(request: SpellRequestV3, user = Depends(get
                     'energized': 'cathleen',
                     'clear': 'katherine',
                     'hidden': 'katherine',
-                    'revealed': 'katherine'
+                    'revealed': 'katherine',
+                    'connected': 'brenda',
+                    'remembered': 'brenda',
+                    'understood': 'theresa',
+                    'liberated': 'theresa'
                 }
                 selected_guide = feeling_routes.get(feeling, 'shigg')
                 routing_reason = f"feeling match: {feeling} → {selected_guide}"
