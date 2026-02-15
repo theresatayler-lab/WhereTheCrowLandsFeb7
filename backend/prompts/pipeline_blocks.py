@@ -122,15 +122,34 @@ class BlocksSpellPipeline:
         }
         
         try:
-            # === STAGE 1: ARCHIVIST ===
-            research_packet = await self._run_archivist(spell_spec, guide_id, active_tier_config)
-            metadata["stages_completed"].append("archivist")
-            metadata["timing"]["archivist_ms"] = self.timing_log.get("archivist_ms", 0)
-            
-            # === STAGE 2: PLANNER (BLOCKS) ===
-            plan = await self._run_planner_blocks(spell_spec, guide_config, research_packet, belief_mode)
-            metadata["stages_completed"].append("planner")
-            metadata["timing"]["planner_ms"] = self.timing_log.get("planner_ms", 0)
+            is_quick_tier = tier_name == "quick"
+
+            if is_quick_tier:
+                # === QUICK TIER: Parallel Archivist + Deterministic Plan ===
+                # Skip the LLM planner entirely — use the working type's
+                # block sequence directly. Saves 5-12s.
+                plan_start = time.time()
+                deterministic_plan = self._get_deterministic_plan(spell_spec, guide_config, belief_mode)
+                self.timing_log["planner_ms"] = int((time.time() - plan_start) * 1000)
+
+                # Run archivist while plan was instant
+                research_packet = await self._run_archivist(spell_spec, guide_id, active_tier_config)
+                metadata["stages_completed"].append("archivist")
+                metadata["timing"]["archivist_ms"] = self.timing_log.get("archivist_ms", 0)
+
+                plan = deterministic_plan
+                metadata["stages_completed"].append("planner")
+                metadata["timing"]["planner_ms"] = self.timing_log.get("planner_ms", 0)
+                metadata["planner_mode"] = "deterministic"
+            else:
+                # === STANDARD/DEEP: Sequential Archivist → LLM Planner ===
+                research_packet = await self._run_archivist(spell_spec, guide_id, active_tier_config)
+                metadata["stages_completed"].append("archivist")
+                metadata["timing"]["archivist_ms"] = self.timing_log.get("archivist_ms", 0)
+
+                plan = await self._run_planner_blocks(spell_spec, guide_config, research_packet, belief_mode, active_tier_config)
+                metadata["stages_completed"].append("planner")
+                metadata["timing"]["planner_ms"] = self.timing_log.get("planner_ms", 0)
             
             # === STAGE 3: WRITER (BLOCKS) ===
             spell_output = await self._run_writer_blocks(spell_spec, guide_config, research_packet, plan, belief_mode, active_tier_config)
@@ -228,26 +247,38 @@ class BlocksSpellPipeline:
         spell_spec: dict,
         guide_config: dict,
         research_packet: dict,
-        belief_mode: str
+        belief_mode: str,
+        tier_config: dict = None
     ) -> dict:
-        """Stage 2: Run Planner (Blocks version)"""
+        """Stage 2: Run Planner (Blocks version)
+
+        Uses gpt-4o-mini for STANDARD tier (faster structured JSON),
+        gpt-4o for DEEP tier (better planning quality).
+        """
         start = time.time()
-        
+
+        config = tier_config or self.tier_config
+        tier_name = config.get("tier_name", "standard")
+        # DEEP gets full gpt-4o for better planning; STANDARD uses gpt-4o-mini (3-5x faster)
+        planner_model = "gpt-4o" if tier_name == "deep" else "gpt-4o-mini"
+        planner_tokens = 3000 if tier_name == "deep" else 2000
+
         prompt = build_planner_prompt_blocks(spell_spec, guide_config, research_packet, belief_mode)
-        
+
         try:
             response = await self._llm_call_with_timeout(
                 self.openai_client.chat.completions.create(
-                    model="gpt-4o",
+                    model=planner_model,
                     messages=[
                         {"role": "system", "content": "You are a spell planner. Plan blocks-based spells. Return ONLY valid JSON."},
                         {"role": "user", "content": prompt}
                     ],
                     temperature=0.8,
-                    max_tokens=3000
+                    max_tokens=planner_tokens
                 ),
                 "planner"
             )
+            logger.info(f"[PLANNER_BLOCKS] Using model: {planner_model} (tier: {tier_name})")
             
             result_text = response.choices[0].message.content
             result_text = self._clean_json(result_text)
@@ -608,6 +639,79 @@ Return ONLY valid JSON:"""
             "unverified_claims": []
         }
     
+    def _get_deterministic_plan(self, spell_spec: dict, guide_config: dict, belief_mode: str) -> dict:
+        """Build a plan deterministically from WORKING_TYPES — no LLM call needed.
+
+        Used by QUICK tier to skip the Planner stage entirely (saves 5-12s).
+        The working type's block_sequence already defines what blocks are needed,
+        so we just format it into the plan structure the Writer expects.
+        """
+        import random as _random
+        guide_id = spell_spec.get("persona_id", "shigg")
+
+        from .planner_blocks import (
+            select_working_type, CANON_ANCHORS, VARIATION_KNOBS,
+            TEXT_VARIATION_TOKENS, get_block_template, select_tarot_composition
+        )
+
+        working_type_id, working_type_config = select_working_type(guide_id, spell_spec)
+
+        # Use working type block sequence or fall back to default template
+        if working_type_config:
+            template_id = f"{guide_id}_{working_type_id}"
+            block_defs = working_type_config["block_sequence"]
+        else:
+            tmpl = get_block_template(guide_id)
+            template_id = tmpl["template_id"]
+            block_defs = tmpl["required_blocks"]
+
+        # Convert block defs to the plan format the Writer expects
+        block_sequence = []
+        for i, bdef in enumerate(block_defs):
+            block_sequence.append({
+                "block_type": bdef["type"],
+                "block_id": f"{bdef['type']}_{i+1}",
+                "brief": f"{bdef['type'].replace('_', ' ').title()} section"
+            })
+
+        # Pick a random canon anchor for this guide
+        canon_anchors = CANON_ANCHORS.get(guide_id, CANON_ANCHORS.get("shigg", []))
+        canon_anchor = _random.choice(canon_anchors) if canon_anchors else {
+            "id": "folk_traditions", "type": "practice",
+            "title": "Folk Traditions", "relevance": "Practical folk wisdom"
+        }
+
+        # Variation tokens
+        variation_tokens = {k: _random.choice(v) for k, v in VARIATION_KNOBS.items()}
+        text_tokens = {k: _random.choice(v) for k, v in TEXT_VARIATION_TOKENS.items()}
+
+        # Tarot composition
+        session_id = spell_spec.get("session_id", "default")
+        tarot_comp = select_tarot_composition(session_id, guide_id)
+
+        return {
+            "spell_title": spell_spec.get("intention", "A Personal Working"),
+            "spell_subtitle": f"A {working_type_id.replace('_', ' ')} with {guide_config.get('name', 'Guide')}",
+            "guide_id": guide_id,
+            "belief_mode": belief_mode,
+            "template_id": template_id,
+            "canon_anchor": canon_anchor,
+            "block_sequence": block_sequence,
+            "persona_lock": {
+                "props": guide_config.get("props", ["candle"]),
+                "sensory_cue": text_tokens.get("sensory_detail", "warmth"),
+                "signature_move": variation_tokens.get("gesture_type", "breath work")
+            },
+            "selected_facts": [],
+            "selected_sources": [],
+            "variation_tokens": variation_tokens,
+            "text_tokens": text_tokens,
+            "tarot_composition": tarot_comp,
+            "tradition_tags": [],
+            "safety_notes": [],
+            "_deterministic": True
+        }
+
     def _get_fallback_plan_blocks(self, spell_spec: dict, guide_config: dict) -> dict:
         """Fallback plan when Planner fails"""
         guide_id = spell_spec.get("persona_id", "shigg")
