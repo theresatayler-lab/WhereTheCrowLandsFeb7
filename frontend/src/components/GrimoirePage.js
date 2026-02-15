@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  ChevronDown, ChevronUp, Clock, Moon, Sun, Calendar, 
+import { motion } from 'framer-motion';
+import {
+  Clock, Moon, Sun, Calendar,
   BookOpen, Feather, Copy, Download, CheckCircle2, Circle,
   Flame, Droplets, Wind, Sparkles, Star, Eye, Heart,
   AlertTriangle, Quote, History, Users, Save, Lock, Key,
@@ -92,6 +92,18 @@ const ARCHETYPE_STYLES = {
     decorativeBorder: 'border-indigo-500/30',
     headerGradient: 'from-indigo-900/30 via-slate-800/20 to-transparent',
     cardGradient: 'from-slate-900/90 via-indigo-950/80 to-slate-900/90',
+    textMuted: 'text-stone-600',
+    textOnVellum: 'text-stone-800',
+  },
+  // Brenda - Warm rose/copper (chronicler, memory keeper, crow communer)
+  brenda: {
+    borderColor: 'border-rose-600',
+    accentColor: 'text-rose-700',
+    accentColorLight: 'text-rose-400',
+    bgAccent: 'bg-[#F3EFE8]', // Solid vellum - CONTRAST LOCKED
+    decorativeBorder: 'border-rose-600/30',
+    headerGradient: 'from-rose-900/30 via-rose-800/20 to-transparent',
+    cardGradient: 'from-slate-900/90 via-rose-950/80 to-slate-900/90',
     textMuted: 'text-stone-600',
     textOnVellum: 'text-stone-800',
   },
@@ -693,7 +705,7 @@ const SaveWardButton = ({ ward, spellTitle }) => {
 };
 
 export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSpell, isLoadingImages = false }) => {
-  const [showHistoricalContext, setShowHistoricalContext] = useState(false);
+  // showHistoricalContext state removed - sections now always visible
   const [checklistMode, setChecklistMode] = useState(false);
   const [completedSteps, setCompletedSteps] = useState(new Set());
   const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
@@ -701,7 +713,6 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
   const [subscriptionTier, setSubscriptionTier] = useState('free'); // Default to free
   const [viewMode, setViewMode] = useState('card'); // 'card' or 'full' - start with card view
   // Research & Origins state
-  const [showResearch, setShowResearch] = useState(false);
   const [isLoadingResearch, setIsLoadingResearch] = useState(false);
   const [researchData, setResearchData] = useState(null);
   const grimoireRef = useRef(null);
@@ -900,32 +911,25 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
 
   // Fetch research & origins from dual-model API
   const fetchResearchOrigins = async () => {
-    if (researchData) {
-      // Already loaded, just toggle visibility
-      setShowResearch(!showResearch);
-      return;
-    }
-    
+    if (researchData) return; // Already loaded
+
     setIsLoadingResearch(true);
-    setShowResearch(true);
-    
+
     try {
-      // Build context from spell data
       const spellContext = `Spell: "${spell.title}". Intention: ${spell.introduction || spell.scenario || 'self-improvement'}`;
       const personaId = archetype?.id || 'shigg';
-      
+
       const result = await researchAPI.combined(
         spell.title || 'magical practice',
         personaId,
         'gentle',
         spellContext
       );
-      
+
       setResearchData(result);
     } catch (error) {
       console.error('Research fetch error:', error);
       toast.error('Unable to fetch research data');
-      setShowResearch(false);
     } finally {
       setIsLoadingResearch(false);
     }
@@ -1063,7 +1067,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
         {/* BLOCKS-BASED SPELL RENDERING (V3) */}
         {spell.blocks && spell.blocks.length > 0 ? (
           <div className="blocks-spell-container">
-            <SpellBlockRenderer 
+            <SpellBlockRenderer
               spell={spell}
               archetypeStyle={{
                 borderColor: style.borderColor,
@@ -1074,6 +1078,48 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
               onLogUpdate={(log) => console.log('Spell log updated:', log)}
               initialLog={{}}
             />
+
+            {/* V3 Sources - Always visible for blocks-based spells */}
+            {spell.sources && spell.sources.length > 0 && (
+              <div className="mt-8 border border-amber-800/30 rounded-sm overflow-hidden">
+                <div className="p-4 bg-amber-900/10">
+                  <h3 className="font-cinzel text-base text-amber-900 flex items-center gap-2 mb-4">
+                    <BookOpen className="w-5 h-5" />
+                    Research Sources
+                  </h3>
+                  <div className="space-y-3">
+                    {spell.sources.map((source, idx) => (
+                      <div key={idx} className="p-3 bg-[#F3EFE8] border border-amber-600/30 rounded-sm">
+                        <p className="font-montserrat text-sm text-stone-800">
+                          <strong>{source.author}</strong>
+                          {source.work && <>, <em>{source.work}</em></>}
+                        </p>
+                        {source.relevance && (
+                          <p className="font-montserrat text-xs text-stone-600 mt-1">{source.relevance}</p>
+                        )}
+                        {source.learn_more_url && (
+                          <a
+                            href={source.learn_more_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1 mt-1 text-xs font-montserrat text-amber-800 hover:text-amber-900"
+                          >
+                            Learn more <ExternalLink className="w-3 h-3" />
+                          </a>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Ethics Statement */}
+            {spell.ethics_statement && (
+              <div className="mt-4 p-3 bg-stone-100/60 border border-stone-300/30 rounded-sm">
+                <p className="font-montserrat text-xs text-stone-600 italic text-center">{spell.ethics_statement}</p>
+              </div>
+            )}
           </div>
         ) : (
           <>
@@ -1362,86 +1408,71 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
           </section>
         )}
 
-        {/* Historical Context (Collapsible) */}
+        {/* Historical Context - Always visible, no dropdown */}
         {spell.historical_context && (
           <section className="border border-amber-800/30 rounded-sm overflow-hidden">
-            <button
-              onClick={() => setShowHistoricalContext(!showHistoricalContext)}
-              className="w-full p-4 flex items-center justify-between bg-amber-900/10 hover:bg-amber-900/20 transition-all"
-            >
-              <span className="font-cinzel text-base text-amber-900 flex items-center gap-2">
+            <div className="p-4 bg-amber-900/10">
+              <h3 className="font-cinzel text-base text-amber-900 flex items-center gap-2 mb-4">
                 <History className="w-5 h-5" />
                 Historical Context & Sources
-              </span>
-              {showHistoricalContext ? <ChevronUp className="w-5 h-5 text-stone-700" /> : <ChevronDown className="w-5 h-5 text-stone-700" />}
-            </button>
-            
-            <AnimatePresence>
-              {showHistoricalContext && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: 'auto', opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  className="overflow-hidden"
-                >
-                  <div className="p-4 space-y-4 border-t border-amber-800/30">
-                    {spell.historical_context.tradition && (
-                      <div>
-                        <p className="font-montserrat text-xs text-stone-600 uppercase tracking-wider">Tradition</p>
-                        <p className="font-montserrat text-sm text-stone-800">{spell.historical_context.tradition}</p>
-                      </div>
-                    )}
-                    
-                    {spell.historical_context.time_period && (
-                      <div>
-                        <p className="font-montserrat text-xs text-stone-600 uppercase tracking-wider">Time Period</p>
-                        <p className="font-montserrat text-sm text-stone-800">{spell.historical_context.time_period}</p>
-                      </div>
-                    )}
-                    
-                    {spell.historical_context.practitioners && spell.historical_context.practitioners.length > 0 && (
-                      <div>
-                        <p className="font-montserrat text-xs text-stone-600 uppercase tracking-wider flex items-center gap-1">
-                          <Users className="w-3 h-3" /> Historical Practitioners
-                        </p>
-                        <div className="flex flex-wrap gap-2 mt-1">
-                          {spell.historical_context.practitioners.map((name, idx) => (
-                            <span key={idx} className="px-2 py-1 bg-amber-900/15 text-stone-800 rounded-sm text-xs font-montserrat">
-                              {name}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                    
-                    {spell.historical_context.sources && spell.historical_context.sources.length > 0 && (
-                      <div>
-                        <p className="font-montserrat text-xs text-stone-600 uppercase tracking-wider mb-2">Sources & References</p>
-                        <div className="space-y-2">
-                          {spell.historical_context.sources.map((source, idx) => (
-                            <div key={idx} className="p-3 bg-amber-900/10 rounded-sm">
-                              <p className="font-montserrat text-sm text-stone-800">
-                                <strong>{source.author}</strong>, <em>{source.work}</em> ({source.year})
-                              </p>
-                              {source.relevance && (
-                                <p className="font-montserrat text-xs text-stone-600 mt-1">{source.relevance}</p>
-                              )}
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                    
-                    {spell.historical_context.cultural_notes && (
-                      <div className="p-3 bg-amber-800/10 border-l-2 border-amber-800 rounded-r-sm">
-                        <p className="font-montserrat text-xs text-stone-600 uppercase tracking-wider mb-1">Cultural Notes</p>
-                        <p className="font-crimson text-sm text-stone-800 italic">{spell.historical_context.cultural_notes}</p>
-                      </div>
-                    )}
+              </h3>
+
+              <div className="space-y-4">
+                {spell.historical_context.tradition && (
+                  <div>
+                    <p className="font-montserrat text-xs text-stone-600 uppercase tracking-wider">Tradition</p>
+                    <p className="font-montserrat text-sm text-stone-800">{spell.historical_context.tradition}</p>
                   </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
+                )}
+
+                {spell.historical_context.time_period && (
+                  <div>
+                    <p className="font-montserrat text-xs text-stone-600 uppercase tracking-wider">Time Period</p>
+                    <p className="font-montserrat text-sm text-stone-800">{spell.historical_context.time_period}</p>
+                  </div>
+                )}
+
+                {spell.historical_context.practitioners && spell.historical_context.practitioners.length > 0 && (
+                  <div>
+                    <p className="font-montserrat text-xs text-stone-600 uppercase tracking-wider flex items-center gap-1">
+                      <Users className="w-3 h-3" /> Historical Practitioners
+                    </p>
+                    <div className="flex flex-wrap gap-2 mt-1">
+                      {spell.historical_context.practitioners.map((name, idx) => (
+                        <span key={idx} className="px-2 py-1 bg-amber-900/15 text-stone-800 rounded-sm text-xs font-montserrat">
+                          {name}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {spell.historical_context.sources && spell.historical_context.sources.length > 0 && (
+                  <div>
+                    <p className="font-montserrat text-xs text-stone-600 uppercase tracking-wider mb-2">Sources & References</p>
+                    <div className="space-y-2">
+                      {spell.historical_context.sources.map((source, idx) => (
+                        <div key={idx} className="p-3 bg-amber-900/10 rounded-sm">
+                          <p className="font-montserrat text-sm text-stone-800">
+                            <strong>{source.author}</strong>, <em>{source.work}</em> ({source.year})
+                          </p>
+                          {source.relevance && (
+                            <p className="font-montserrat text-xs text-stone-600 mt-1">{source.relevance}</p>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {spell.historical_context.cultural_notes && (
+                  <div className="p-3 bg-amber-800/10 border-l-2 border-amber-800 rounded-r-sm">
+                    <p className="font-montserrat text-xs text-stone-600 uppercase tracking-wider mb-1">Cultural Notes</p>
+                    <p className="font-crimson text-sm text-stone-800 italic">{spell.historical_context.cultural_notes}</p>
+                  </div>
+                )}
+              </div>
+            </div>
           </section>
         )}
 
@@ -1466,147 +1497,110 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
           </section>
         )}
         
-        {/* References & Where This Comes From - Collectible Design */}
-        {spell.inspired_by && spell.inspired_by.length > 0 ? (
+        {/* References & Where This Comes From - Always visible, flowing layout */}
+        {spell.inspired_by && spell.inspired_by.length > 0 && (
           <section className="border border-amber-800/30 rounded-sm overflow-hidden">
-            <button
-              onClick={() => setShowHistoricalContext(!showHistoricalContext)}
-              className="w-full p-4 flex items-center justify-between bg-amber-900/10 hover:bg-amber-900/20 transition-all"
-            >
-              <span className="font-cinzel text-base text-amber-900 flex items-center gap-2">
+            <div className="p-4 bg-amber-900/10">
+              <h3 className="font-cinzel text-base text-amber-900 flex items-center gap-2 mb-4">
                 <BookOpen className="w-5 h-5" />
                 References &amp; Where This Comes From
-              </span>
-              {showHistoricalContext ? <ChevronUp className="w-5 h-5 text-stone-700" /> : <ChevronDown className="w-5 h-5 text-stone-700" />}
-            </button>
-            
-            <AnimatePresence>
-              {showHistoricalContext && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: 'auto', opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  className="overflow-hidden"
-                >
-                  <div className="p-4 space-y-3 border-t border-amber-800/30">
-                    {spell.inspired_by.map((source, idx) => (
-                      <details key={idx} className="group bg-amber-900/5 rounded-sm border border-amber-800/20">
-                        <summary className="p-3 cursor-pointer flex items-center gap-3 hover:bg-amber-900/10 transition-colors list-none">
-                          <span className="text-lg">
-                            {source.source_type === 'book' ? '📖' : 
-                             source.source_type === 'tradition' ? '🏛️' : 
-                             source.source_type === 'practice' ? '✨' : 
-                             source.source_type === 'author' ? '✍️' : '📜'}
-                          </span>
-                          <div className="flex-1 min-w-0">
-                            <p className="font-cinzel text-sm font-medium text-amber-900 truncate">
-                              {source.name}
-                              {source.author && <span className="text-stone-600 font-montserrat text-xs ml-1">— {source.author}</span>}
-                            </p>
-                          </div>
-                          <ChevronDown className="w-4 h-4 text-stone-500 group-open:rotate-180 transition-transform" />
-                        </summary>
-                        
-                        <div className="px-3 pb-3 pt-1 space-y-3 border-t border-amber-800/10">
-                          {/* Why This Matters Here */}
-                          {(source.connection_to_spell || source.connection) && (
-                            <div className="bg-white/60 p-3 rounded border-l-2 border-amber-700">
-                              <p className="font-montserrat text-xs text-amber-800 uppercase tracking-wider mb-1">Why this matters here</p>
-                              <p className="font-crimson text-sm text-stone-700 leading-relaxed">
-                                {source.connection_to_spell || source.connection}
-                              </p>
-                            </div>
-                          )}
-                          
-                          {/* Key Concept Used */}
-                          {source.key_concept_used && (
-                            <div className="flex items-start gap-2">
-                              <span className="text-amber-700 text-sm">🔑</span>
-                              <div>
-                                <p className="font-montserrat text-xs text-amber-800 uppercase tracking-wider">Concept used</p>
-                                <p className="font-montserrat text-sm text-stone-700">{source.key_concept_used}</p>
-                              </div>
-                            </div>
-                          )}
-                          
-                          {/* Beginner Takeaway */}
-                          {source.beginner_takeaway && (
-                            <div className="bg-amber-100/50 p-2 rounded">
-                              <p className="font-crimson text-sm text-amber-900 italic">
-                                💡 {source.beginner_takeaway}
-                              </p>
-                            </div>
-                          )}
-                          
-                          {/* Learn More Links */}
-                          {source.learn_more && source.learn_more.length > 0 && (
-                            <div>
-                              <p className="font-montserrat text-xs text-amber-800 uppercase tracking-wider mb-2">Learn more</p>
-                              <div className="flex flex-wrap gap-2">
-                                {source.learn_more.map((resource, resIdx) => (
-                                  <a 
-                                    key={resIdx}
-                                    href={resource.url} 
-                                    target="_blank" 
-                                    rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-1 px-2 py-1 bg-white/70 hover:bg-white rounded text-xs font-montserrat text-amber-900 border border-amber-800/20 transition-colors"
-                                  >
-                                    {resource.access === 'free' ? '🆓' : resource.access === 'overview' ? '📋' : '📚'}
-                                    <span className="truncate max-w-32">{resource.title}</span>
-                                    <ExternalLink className="w-3 h-3 flex-shrink-0" />
-                                  </a>
-                                ))}
-                              </div>
-                            </div>
-                          )}
+              </h3>
+
+              <div className="space-y-4">
+                {spell.inspired_by.map((source, idx) => (
+                  <div key={idx} className="bg-amber-900/5 rounded-sm border border-amber-800/20 p-4 space-y-3">
+                    <div className="flex items-start gap-3">
+                      <span className="text-lg flex-shrink-0">
+                        {source.source_type === 'book' ? '📖' :
+                         source.source_type === 'tradition' ? '📜' :
+                         source.source_type === 'practice' ? '✦' :
+                         source.source_type === 'author' ? '✍' : '📜'}
+                      </span>
+                      <div className="flex-1 min-w-0">
+                        <p className="font-cinzel text-sm font-medium text-amber-900">
+                          {source.name}
+                          {source.author && <span className="text-stone-600 font-montserrat text-xs ml-1">&mdash; {source.author}</span>}
+                        </p>
+                      </div>
+                    </div>
+
+                    {(source.connection_to_spell || source.connection) && (
+                      <div className="bg-white/60 p-3 rounded border-l-2 border-amber-700">
+                        <p className="font-montserrat text-xs text-amber-800 uppercase tracking-wider mb-1">Why this matters here</p>
+                        <p className="font-crimson text-sm text-stone-700 leading-relaxed">
+                          {source.connection_to_spell || source.connection}
+                        </p>
+                      </div>
+                    )}
+
+                    {source.key_concept_used && (
+                      <div className="flex items-start gap-2">
+                        <Key className="w-4 h-4 text-amber-700 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <p className="font-montserrat text-xs text-amber-800 uppercase tracking-wider">Concept used</p>
+                          <p className="font-montserrat text-sm text-stone-700">{source.key_concept_used}</p>
                         </div>
-                      </details>
-                    ))}
-                    
-                    {/* Historical Context - Compact */}
-                    {spell.historical_context && (
-                      <div className="p-3 bg-stone-100/80 rounded-sm border border-stone-300/50 mt-3">
-                        <div className="flex items-center gap-2 mb-2">
-                          <History className="w-4 h-4 text-stone-600" />
-                          <span className="font-montserrat text-xs text-stone-600 uppercase tracking-wider">Historical Context</span>
-                        </div>
-                        <div className="space-y-1 text-sm">
-                          {spell.historical_context.tradition && (
-                            <p className="font-montserrat text-stone-700">
-                              <span className="font-medium">Tradition:</span> {spell.historical_context.tradition}
-                            </p>
-                          )}
-                          {spell.historical_context.cultural_note && (
-                            <p className="font-crimson text-stone-600 italic text-sm">
-                              {spell.historical_context.cultural_note}
-                            </p>
-                          )}
-                          {spell.historical_context.modern_adaptation && (
-                            <p className="font-montserrat text-xs text-stone-500 mt-1">
-                              <span className="font-medium">Today:</span> {spell.historical_context.modern_adaptation}
-                            </p>
-                          )}
+                      </div>
+                    )}
+
+                    {source.beginner_takeaway && (
+                      <div className="bg-amber-100/50 p-2 rounded">
+                        <p className="font-crimson text-sm text-amber-900 italic">
+                          {source.beginner_takeaway}
+                        </p>
+                      </div>
+                    )}
+
+                    {source.learn_more && source.learn_more.length > 0 && (
+                      <div>
+                        <p className="font-montserrat text-xs text-amber-800 uppercase tracking-wider mb-2">Learn more</p>
+                        <div className="flex flex-wrap gap-2">
+                          {source.learn_more.map((resource, resIdx) => (
+                            <a
+                              key={resIdx}
+                              href={resource.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1 px-2 py-1 bg-white/70 hover:bg-white rounded text-xs font-montserrat text-amber-900 border border-amber-800/20 transition-colors"
+                            >
+                              <span className="truncate max-w-32">{resource.title}</span>
+                              <ExternalLink className="w-3 h-3 flex-shrink-0" />
+                            </a>
+                          ))}
                         </div>
                       </div>
                     )}
                   </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </section>
-        ) : (
-          /* Back-compat: Older spells without references */
-          <section className="p-4 bg-stone-100/50 rounded-sm border border-stone-300/30 text-center">
-            <p className="font-montserrat text-sm text-stone-500 mb-2">
-              This spell predates our reference system.
-            </p>
-            <button 
-              onClick={() => {/* TODO: Call lightweight endpoint to add references */}}
-              className="font-montserrat text-xs text-amber-700 hover:text-amber-900 underline"
-              disabled
-            >
-              Add references to this spell (coming soon)
-            </button>
+                ))}
+
+                {/* Historical Context - Compact */}
+                {spell.historical_context && (
+                  <div className="p-3 bg-stone-100/80 rounded-sm border border-stone-300/50 mt-3">
+                    <div className="flex items-center gap-2 mb-2">
+                      <History className="w-4 h-4 text-stone-600" />
+                      <span className="font-montserrat text-xs text-stone-600 uppercase tracking-wider">Historical Context</span>
+                    </div>
+                    <div className="space-y-1 text-sm">
+                      {spell.historical_context.tradition && (
+                        <p className="font-montserrat text-stone-700">
+                          <span className="font-medium">Tradition:</span> {spell.historical_context.tradition}
+                        </p>
+                      )}
+                      {spell.historical_context.cultural_note && (
+                        <p className="font-crimson text-stone-600 italic text-sm">
+                          {spell.historical_context.cultural_note}
+                        </p>
+                      )}
+                      {spell.historical_context.modern_adaptation && (
+                        <p className="font-montserrat text-xs text-stone-500 mt-1">
+                          <span className="font-medium">Today:</span> {spell.historical_context.modern_adaptation}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
           </section>
         )}
 
@@ -1727,97 +1721,94 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
           />
         </div>
 
-        {/* Research & Origins Button */}
+        {/* Research & Origins - Load button that expands inline (no collapse) */}
         <section className="border border-indigo-800/30 rounded-sm overflow-hidden">
-          <button
-            onClick={fetchResearchOrigins}
-            disabled={isLoadingResearch}
-            className="w-full p-4 flex items-center justify-between bg-indigo-900/10 hover:bg-indigo-900/20 transition-all disabled:opacity-70"
-            data-testid="show-research-origins-btn"
-          >
-            <span className="font-cinzel text-base text-indigo-900 flex items-center gap-2">
+          {!researchData && (
+            <button
+              onClick={fetchResearchOrigins}
+              disabled={isLoadingResearch}
+              className="w-full p-4 flex items-center justify-center gap-2 bg-indigo-900/10 hover:bg-indigo-900/20 transition-all disabled:opacity-70"
+              data-testid="show-research-origins-btn"
+            >
               {isLoadingResearch ? (
-                <Loader2 className="w-5 h-5 animate-spin" />
+                <Loader2 className="w-5 h-5 animate-spin text-indigo-900" />
               ) : (
-                <Search className="w-5 h-5" />
+                <Search className="w-5 h-5 text-indigo-900" />
               )}
-              {isLoadingResearch ? 'Researching...' : 'Show Research & Origins'}
-            </span>
-            {showResearch ? <ChevronUp className="w-5 h-5 text-stone-700" /> : <ChevronDown className="w-5 h-5 text-stone-700" />}
-          </button>
-          
-          <AnimatePresence>
-            {showResearch && researchData && (
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: 'auto', opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                className="overflow-hidden"
-              >
-                <div className="p-4 space-y-4 border-t border-indigo-800/30 bg-indigo-50/30">
-                  {/* Spellbook Response (OpenAI Persona Voice) */}
-                  <div className="bg-amber-50/80 p-4 rounded-sm border border-amber-800/30">
-                    <div className="flex items-center gap-2 mb-3">
-                      <BookOpen className="w-4 h-4 text-amber-800" />
-                      <span className="font-cinzel text-sm text-amber-900 uppercase tracking-wider">
-                        {researchData.persona_used}&apos;s Wisdom
-                      </span>
-                    </div>
-                    <p className="font-crimson text-base text-stone-700 leading-relaxed whitespace-pre-wrap">
-                      {researchData.spellbook_response}
-                    </p>
-                  </div>
-                  
-                  {/* Research Origins (DeepSeek) */}
-                  <div className="bg-white/60 p-4 rounded-sm border border-indigo-800/20">
-                    <div className="flex items-center gap-2 mb-3">
-                      <Search className="w-4 h-4 text-indigo-800" />
-                      <span className="font-cinzel text-sm text-indigo-900 uppercase tracking-wider">
-                        Research & Origins
-                      </span>
-                    </div>
-                    
-                    {/* Main Answer */}
-                    <p className="font-montserrat text-sm text-stone-700 leading-relaxed mb-4">
-                      {researchData.research_origins?.answer}
-                    </p>
-                    
-                    {/* Key Points */}
-                    {researchData.research_origins?.bullets?.length > 0 && (
-                      <div className="mb-4">
-                        <p className="font-montserrat text-xs text-indigo-800 uppercase tracking-wider mb-2">Key Points</p>
-                        <ul className="space-y-1">
-                          {researchData.research_origins.bullets.map((bullet, idx) => (
-                            <li key={idx} className="font-montserrat text-sm text-stone-700 flex items-start gap-2">
-                              <span className="text-indigo-600 mt-1">•</span>
-                              {bullet}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                    
-                    {/* Sources */}
-                    {researchData.research_origins?.sources?.length > 0 && (
-                      <div>
-                        <p className="font-montserrat text-xs text-indigo-800 uppercase tracking-wider mb-2">Suggested Further Reading</p>
-                        <div className="flex flex-wrap gap-2">
-                          {researchData.research_origins.sources.map((source, idx) => (
-                            <span 
-                              key={idx}
-                              className="inline-block px-2 py-1 bg-indigo-100/50 text-xs font-montserrat text-indigo-800 rounded border border-indigo-200"
-                            >
-                              📚 {source}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
+              <span className="font-cinzel text-base text-indigo-900">
+                {isLoadingResearch ? 'Researching...' : 'Show Research & Origins'}
+              </span>
+            </button>
+          )}
+
+          {researchData && (
+            <div className="p-4 space-y-4 bg-indigo-50/30">
+              <div className="flex items-center gap-2 mb-2">
+                <Search className="w-5 h-5 text-indigo-900" />
+                <h3 className="font-cinzel text-base text-indigo-900">Research & Origins</h3>
+              </div>
+
+              {/* Spellbook Response (Persona Voice) */}
+              <div className="bg-amber-50/80 p-4 rounded-sm border border-amber-800/30">
+                <div className="flex items-center gap-2 mb-3">
+                  <BookOpen className="w-4 h-4 text-amber-800" />
+                  <span className="font-cinzel text-sm text-amber-900 uppercase tracking-wider">
+                    {researchData.persona_used}&apos;s Wisdom
+                  </span>
                 </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+                <p className="font-crimson text-base text-stone-700 leading-relaxed whitespace-pre-wrap">
+                  {researchData.spellbook_response}
+                </p>
+              </div>
+
+              {/* Research Origins (DeepSeek) */}
+              <div className="bg-white/60 p-4 rounded-sm border border-indigo-800/20">
+                <div className="flex items-center gap-2 mb-3">
+                  <Search className="w-4 h-4 text-indigo-800" />
+                  <span className="font-cinzel text-sm text-indigo-900 uppercase tracking-wider">
+                    Research & Origins
+                  </span>
+                </div>
+
+                {/* Main Answer */}
+                <p className="font-montserrat text-sm text-stone-700 leading-relaxed mb-4">
+                  {researchData.research_origins?.answer}
+                </p>
+
+                {/* Key Points */}
+                {researchData.research_origins?.bullets?.length > 0 && (
+                  <div className="mb-4">
+                    <p className="font-montserrat text-xs text-indigo-800 uppercase tracking-wider mb-2">Key Points</p>
+                    <ul className="space-y-1">
+                      {researchData.research_origins.bullets.map((bullet, idx) => (
+                        <li key={idx} className="font-montserrat text-sm text-stone-700 flex items-start gap-2">
+                          <span className="text-indigo-600 mt-1">&bull;</span>
+                          {bullet}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {/* Sources */}
+                {researchData.research_origins?.sources?.length > 0 && (
+                  <div>
+                    <p className="font-montserrat text-xs text-indigo-800 uppercase tracking-wider mb-2">Suggested Further Reading</p>
+                    <div className="flex flex-wrap gap-2">
+                      {researchData.research_origins.sources.map((source, idx) => (
+                        <span
+                          key={idx}
+                          className="inline-block px-2 py-1 bg-indigo-100/50 text-xs font-montserrat text-indigo-800 rounded border border-indigo-200"
+                        >
+                          {source}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
         </section>
 
         {/* Action Buttons */}
