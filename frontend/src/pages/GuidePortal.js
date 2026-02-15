@@ -249,7 +249,9 @@ export const GuidePortal = () => {
         if (data.progress) setProgress(data.progress);
 
         if (data.status === 'complete' && data.result) {
-          setSpellResult(data.result);
+          // Extract the spell from the result wrapper
+          const spell = data.result.spell || data.result;
+          setSpellResult(spell);
           setPhase('result');
           setLoading(false);
         } else if (data.status === 'failed') {
