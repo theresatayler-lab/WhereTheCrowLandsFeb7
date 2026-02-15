@@ -1,10 +1,10 @@
-// SpellBlockRenderer - Renders blocks-based spell experience
-// Handles all block types with interactive stepper and logging
+// SpellBlockRenderer - Renders blocks-based spell as flowing grimoire page
+// All sections visible, no accordion dropdowns - reads like a spell page
 
 import React, { useState, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import {
-  ChevronDown, ChevronUp, Check, Circle, Play, Pause,
+  Check, Circle, Play,
   BookOpen, Feather, Flame, Moon, Star, Bird, Music,
   Shield, Eye, FileText, Clock, AlertTriangle, Quote,
   Sparkles, Heart, ArrowRight, Edit3, Binoculars, Library
@@ -51,14 +51,26 @@ const BLOCK_LABELS = {
   further_reading: 'Further Reading'
 };
 
-// Main Block Renderer Component
-export const SpellBlockRenderer = ({ 
-  spell, 
+// Decorative divider between spell sections
+const SectionDivider = ({ archetypeStyle }) => (
+  <div className="flex items-center justify-center gap-3 py-2">
+    <div className={cn("h-px flex-1 max-w-[80px]", "bg-gradient-to-r from-transparent",
+      archetypeStyle.accentColor?.replace('text-', 'to-') || "to-amber-600/40"
+    )} />
+    <Sparkles className={cn("w-3 h-3 opacity-30", archetypeStyle.accentColor || "text-amber-600")} />
+    <div className={cn("h-px flex-1 max-w-[80px]", "bg-gradient-to-l from-transparent",
+      archetypeStyle.accentColor?.replace('text-', 'to-') || "to-amber-600/40"
+    )} />
+  </div>
+);
+
+// Main Block Renderer Component - Flowing page layout, no accordions
+export const SpellBlockRenderer = ({
+  spell,
   archetypeStyle = {},
   onLogUpdate = () => {},
   initialLog = {}
 }) => {
-  const [expandedBlocks, setExpandedBlocks] = useState(new Set(['cold_open_1']));
   const [stepperProgress, setStepperProgress] = useState({});
   const [selectedChoices, setSelectedChoices] = useState({});
   const [journalEntries, setJournalEntries] = useState(initialLog);
@@ -66,18 +78,6 @@ export const SpellBlockRenderer = ({
   const blocks = spell?.blocks || [];
   const personaLock = spell?.persona_lock || {};
   const canonAnchor = spell?.canon_anchor || {};
-
-  const toggleBlock = useCallback((blockId) => {
-    setExpandedBlocks(prev => {
-      const next = new Set(prev);
-      if (next.has(blockId)) {
-        next.delete(blockId);
-      } else {
-        next.add(blockId);
-      }
-      return next;
-    });
-  }, []);
 
   const handleStepComplete = useCallback((blockId, stepIndex) => {
     setStepperProgress(prev => {
@@ -111,56 +111,59 @@ export const SpellBlockRenderer = ({
   }, [onLogUpdate]);
 
   return (
-    <div className="space-y-4" data-testid="spell-block-renderer">
+    <div className="space-y-8" data-testid="spell-block-renderer">
       {/* Persona Lock Header */}
       {personaLock.props && (
         <div className={cn(
-          "flex items-center gap-2 text-xs mb-2",
+          "flex items-center justify-center gap-2 text-xs",
           archetypeStyle.textMuted || "text-muted-foreground"
         )}>
           <Sparkles className={cn("w-3 h-3", archetypeStyle.accentColor || "text-primary")} />
-          <span>{personaLock.props.join(' • ')} • {personaLock.sensory_cue}</span>
+          <span className="italic">{personaLock.props.join(' · ')} · {personaLock.sensory_cue}</span>
         </div>
       )}
 
       {/* Canon Anchor Badge */}
       {canonAnchor.title && (
-        <div className={cn(
-          "inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs mb-4 border",
-          archetypeStyle.bgAccent || "bg-primary/10",
-          archetypeStyle.borderColor || "border-primary/30"
-        )}>
-          <BookOpen className={cn("w-3 h-3", archetypeStyle.accentColor || "text-primary")} />
-          <span>{canonAnchor.title}</span>
-          {canonAnchor.year && <span className="text-muted-foreground">({canonAnchor.year})</span>}
+        <div className="flex justify-center">
+          <div className={cn(
+            "inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs border",
+            archetypeStyle.bgAccent || "bg-primary/10",
+            archetypeStyle.borderColor || "border-primary/30"
+          )}>
+            <BookOpen className={cn("w-3 h-3", archetypeStyle.accentColor || "text-primary")} />
+            <span>{canonAnchor.title}</span>
+            {canonAnchor.year && <span className="text-muted-foreground">({canonAnchor.year})</span>}
+          </div>
         </div>
       )}
 
-      {/* Render Blocks */}
+      {/* Render Blocks - All visible, flowing page layout */}
       {blocks.map((block, index) => (
-        <BlockWrapper
-          key={block.block_id || index}
-          block={block}
-          isExpanded={expandedBlocks.has(block.block_id)}
-          onToggle={() => toggleBlock(block.block_id)}
-          archetypeStyle={archetypeStyle}
-          stepperProgress={stepperProgress[block.block_id]}
-          selectedChoice={selectedChoices[block.block_id]}
-          journalEntries={journalEntries}
-          onStepComplete={(stepIndex) => handleStepComplete(block.block_id, stepIndex)}
-          onChoiceSelect={(optionId) => handleChoiceSelect(block.block_id, optionId)}
-          onJournalEntry={handleJournalEntry}
-        />
+        <React.Fragment key={block.block_id || index}>
+          {/* Decorative divider between sections (not before first block) */}
+          {index > 0 && block.block_type !== 'safety_note' && (
+            <SectionDivider archetypeStyle={archetypeStyle} />
+          )}
+          <BlockWrapper
+            block={block}
+            archetypeStyle={archetypeStyle}
+            stepperProgress={stepperProgress[block.block_id]}
+            selectedChoice={selectedChoices[block.block_id]}
+            journalEntries={journalEntries}
+            onStepComplete={(stepIndex) => handleStepComplete(block.block_id, stepIndex)}
+            onChoiceSelect={(optionId) => handleChoiceSelect(block.block_id, optionId)}
+            onJournalEntry={handleJournalEntry}
+          />
+        </React.Fragment>
       ))}
     </div>
   );
 };
 
-// Block Wrapper - handles expand/collapse and common styling
+// Block Wrapper - flowing section with decorative header, always visible
 const BlockWrapper = ({
   block,
-  isExpanded,
-  onToggle,
   archetypeStyle,
   stepperProgress,
   selectedChoice,
@@ -171,84 +174,70 @@ const BlockWrapper = ({
 }) => {
   const Icon = BLOCK_ICONS[block.block_type] || Sparkles;
   const label = BLOCK_LABELS[block.block_type] || block.block_type;
-  
-  // Cold open is always expanded and has no header
+
+  // Cold open has no section header, just content
   if (block.block_type === 'cold_open') {
     return (
-      <ColdOpenBlock 
-        content={block.content} 
+      <ColdOpenBlock
+        content={block.content}
         archetypeStyle={archetypeStyle}
       />
     );
   }
 
+  // Safety notes get a distinct warning appearance
+  if (block.block_type === 'safety_note') {
+    return (
+      <div data-testid={`block-${block.block_type}`}>
+        <BlockContent
+          block={block}
+          archetypeStyle={archetypeStyle}
+          stepperProgress={stepperProgress}
+          selectedChoice={selectedChoice}
+          journalEntries={journalEntries}
+          onStepComplete={onStepComplete}
+          onChoiceSelect={onChoiceSelect}
+          onJournalEntry={onJournalEntry}
+        />
+      </div>
+    );
+  }
+
   return (
-    <div 
-      className={cn(
-        "border rounded-lg overflow-hidden transition-all shadow-sm",
-        archetypeStyle.borderColor || "border-border",
-        "bg-[#F3EFE8]" // CONTRAST LOCKED: Solid vellum background
-      )}
+    <motion.div
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
       data-testid={`block-${block.block_type}`}
     >
-      {/* Block Header */}
-      <button
-        onClick={onToggle}
-        className={cn(
-          "w-full flex items-center justify-between p-4 text-left transition-colors",
-          "hover:bg-stone-200/50",
-          "bg-[#EDE8DF]" // Slightly darker vellum for header distinction
+      {/* Decorative Section Header */}
+      <div className="flex items-center gap-3 mb-4">
+        <Icon className={cn("w-5 h-5", archetypeStyle.accentColor || "text-amber-700")} />
+        <h3 className="font-cinzel text-lg tracking-wide text-stone-800">{label}</h3>
+        <div className={cn(
+          "h-px flex-1",
+          "bg-gradient-to-r from-stone-300 to-transparent"
+        )} />
+        {/* Progress indicator for stepper */}
+        {block.block_type === 'stepper' && stepperProgress && (
+          <span className="text-xs text-stone-500 font-montserrat">
+            {stepperProgress.size || 0}/{block.content?.steps?.length || 0} complete
+          </span>
         )}
-      >
-        <div className="flex items-center gap-3">
-          <Icon className={cn("w-5 h-5", archetypeStyle.accentColor || "text-amber-700")} />
-          <span className={cn("font-medium font-cinzel text-stone-800")}>{label}</span>
-          
-          {/* Progress indicator for stepper */}
-          {block.block_type === 'stepper' && stepperProgress && (
-            <span className="text-xs text-stone-600">
-              ({stepperProgress.size || 0}/{block.content?.steps?.length || 0})
-            </span>
-          )}
-          
-          {/* Choice indicator */}
-          {block.block_type === 'choice' && selectedChoice && (
-            <Check className={cn("w-4 h-4", archetypeStyle.accentColor || "text-green-600")} />
-          )}
-        </div>
-        
-        {isExpanded ? (
-          <ChevronUp className="w-5 h-5 text-stone-500" />
-        ) : (
-          <ChevronDown className="w-5 h-5 text-stone-500" />
-        )}
-      </button>
+      </div>
 
-      {/* Block Content */}
-      <AnimatePresence>
-        {isExpanded && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.2 }}
-          >
-            <div className="p-4 pt-0">
-              <BlockContent
-                block={block}
-                archetypeStyle={archetypeStyle}
-                stepperProgress={stepperProgress}
-                selectedChoice={selectedChoice}
-                journalEntries={journalEntries}
-                onStepComplete={onStepComplete}
-                onChoiceSelect={onChoiceSelect}
-                onJournalEntry={onJournalEntry}
-              />
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
+      {/* Block Content - always visible */}
+      <BlockContent
+        block={block}
+        archetypeStyle={archetypeStyle}
+        stepperProgress={stepperProgress}
+        selectedChoice={selectedChoice}
+        journalEntries={journalEntries}
+        onStepComplete={onStepComplete}
+        onChoiceSelect={onChoiceSelect}
+        onJournalEntry={onJournalEntry}
+      />
+    </motion.div>
   );
 };
 
