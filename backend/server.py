@@ -5389,7 +5389,11 @@ async def get_spell_job_status(job_id: str):
         # Estimate progress based on elapsed time
         created = job.get('created_at')
         if created:
-            elapsed = (datetime.now(timezone.utc) - created).total_seconds()
+            # Handle both timezone-aware and naive datetimes from MongoDB
+            now = datetime.now(timezone.utc)
+            if created.tzinfo is None:
+                created = created.replace(tzinfo=timezone.utc)
+            elapsed = (now - created).total_seconds()
             estimated_total = 120  # 2 minutes expected
             progress = min(int((elapsed / estimated_total) * 100), 95)
             response['progress'] = progress
