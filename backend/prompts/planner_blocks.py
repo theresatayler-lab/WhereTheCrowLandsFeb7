@@ -439,16 +439,78 @@ WORKING_TYPES = {
             "block_sequence": [
                 {"type": "cold_open", "required": True},
                 {"type": "evidence_card", "required": True},
-                {"type": "materials", "required": True},
                 {"type": "choice", "required": True},
                 {"type": "lore_vignette", "required": True},
                 {"type": "stepper", "required": True},
-                {"type": "bird_oracle", "required": True},
                 {"type": "journal_prompt", "required": True},
                 {"type": "closing", "required": True}
             ],
-            "specialty_blocks": ["evidence_card", "bird_oracle", "journal_prompt"],
-            "content_instruction": "Evidence card comes second - classify what you know before you begin. Bird_oracle is systematic observation, not mystical reading. Theresa treats the seeker as a fellow investigator. 'Here's what the evidence shows...'"
+            "specialty_blocks": ["evidence_card", "journal_prompt"],
+            "content_instruction": "Evidence card comes second - classify what you know before you begin. Theresa treats the seeker as a fellow investigator. Steps follow a structured inquiry: name the suspicion, sort evidence, follow the strongest thread, document findings. 'Here's what the evidence shows...'"
+        },
+        "veil_breaking": {
+            "description": "Breaking family silence, denial, or secrets that have been hidden across generations",
+            "trigger_keywords": ["secret", "silence", "veil", "denial", "lie", "cover", "unsaid", "taboo", "shame", "hide"],
+            "trigger_feelings": ["brave", "clear"],
+            "block_sequence": [
+                {"type": "cold_open", "required": True},
+                {"type": "evidence_card", "required": True},
+                {"type": "lore_vignette", "required": True},
+                {"type": "choice", "required": True},
+                {"type": "stepper", "required": True},
+                {"type": "journal_prompt", "required": True},
+                {"type": "closing", "required": True}
+            ],
+            "specialty_blocks": ["evidence_card", "journal_prompt"],
+            "content_instruction": "This is about the family veil spell - the silence that protects and imprisons. The evidence_card classifies what is Known (documented facts), Likely (patterns that suggest), and Lore (family stories that encode truth). Steps involve naming the silence, writing what was never said, and one act of breaking the veil (speaking aloud, writing a letter, recording a testimony). Theresa broke her own family's veil spell. She knows the cost and the freedom. 'The pattern breaks here.'"
+        },
+        "genealogical_mapping": {
+            "description": "Mapping family connections, tracing lineage, and finding magical significance in ancestry",
+            "trigger_keywords": ["genealogy", "family tree", "ancestry", "lineage", "heritage", "roots", "origin", "where from", "bloodline", "history"],
+            "trigger_feelings": ["clear", "calm"],
+            "block_sequence": [
+                {"type": "cold_open", "required": True},
+                {"type": "materials", "required": True},
+                {"type": "lore_vignette", "required": True},
+                {"type": "stepper", "required": True},
+                {"type": "choice", "required": True},
+                {"type": "journal_prompt", "required": True},
+                {"type": "closing", "required": True}
+            ],
+            "specialty_blocks": ["journal_prompt"],
+            "content_instruction": "Materials are investigative tools: notebook, pen, photographs, documents, a map. The stepper guides a structured genealogical research ritual: gather what you have, arrange it chronologically, identify gaps and silences (what's MISSING is as telling as what's present), draw connections with red thread (literal or metaphorical). The journal_prompt asks the seeker to record their findings in evidence format. Theresa approaches ancestry as investigation, not nostalgia."
+        },
+        "red_thread_working": {
+            "description": "Mapping connections between events, people, or patterns using Theresa's signature red thread method",
+            "trigger_keywords": ["connect", "connection", "relationship", "thread", "link", "between", "tie", "web", "map", "diagram"],
+            "trigger_feelings": ["clear", "energized"],
+            "block_sequence": [
+                {"type": "cold_open", "required": True},
+                {"type": "materials", "required": True},
+                {"type": "evidence_card", "required": True},
+                {"type": "lore_vignette", "required": True},
+                {"type": "stepper", "required": True},
+                {"type": "choice", "required": True},
+                {"type": "closing", "required": True}
+            ],
+            "specialty_blocks": ["evidence_card"],
+            "content_instruction": "Materials are physical: red thread or string, pins or tape, paper cards, a wall or board. The evidence_card maps Known/Likely/Lore connections. The stepper teaches Theresa's investigation board method: write each element on a card, pin them up, connect related items with red thread, step back and look for the pattern you couldn't see up close. The choice asks what to do with the pattern once seen. This is Theresa's signature method - the investigation board as magical tool."
+        },
+        "bird_field_log": {
+            "description": "Systematic bird observation as evidence-gathering and omen-reading practice",
+            "trigger_keywords": ["bird", "omen", "sign", "watch", "observe", "nature", "outside", "message", "guidance", "crow"],
+            "trigger_feelings": ["clear", "calm"],
+            "block_sequence": [
+                {"type": "cold_open", "required": True},
+                {"type": "lore_vignette", "required": True},
+                {"type": "bird_oracle", "required": True},
+                {"type": "stepper", "required": True},
+                {"type": "choice", "required": True},
+                {"type": "journal_prompt", "required": True},
+                {"type": "closing", "required": True}
+            ],
+            "specialty_blocks": ["bird_oracle", "journal_prompt"],
+            "content_instruction": "Theresa's bird log is SYSTEMATIC, not mystical. The bird_oracle names a specific bird and what its behavior patterns indicate. The stepper teaches field observation: go to a specific location, sit for a timed period, record species, direction, behavior, time. The journal_prompt is a structured field log entry. Theresa treats bird augury as data collection - 'What are they doing? When? How often? The patterns tell you everything.' This is ornithology as divination."
         }
     },
 
@@ -581,19 +643,17 @@ BLOCK_TEMPLATES = {
 
     "theresa": {
         "template_id": "theresa_investigation_blocks",
-        "description": "Theresa's truth: cold_open -> evidence_card -> choice -> lore_vignette -> stepper -> bird_oracle -> journal_prompt -> closing",
+        "description": "Theresa's truth: cold_open -> evidence_card -> lore_vignette -> stepper -> choice -> journal_prompt -> closing",
         "required_blocks": [
             {"type": "cold_open", "required": True},
             {"type": "evidence_card", "required": True},
-            {"type": "materials", "required": True},
-            {"type": "choice", "required": True},
             {"type": "lore_vignette", "required": True},
             {"type": "stepper", "required": True},
-            {"type": "bird_oracle", "required": True},
+            {"type": "choice", "required": True},
             {"type": "journal_prompt", "required": True},
             {"type": "closing", "required": True}
         ],
-        "specialty_blocks": ["evidence_card", "bird_oracle", "journal_prompt"]
+        "specialty_blocks": ["evidence_card", "journal_prompt"]
     },
 
     "brenda": {

@@ -30,7 +30,7 @@ TIER_CONFIGS = {
         "research_tokens": 1200,
         "research_temperature": 0.6,
         "writer_model": "claude-sonnet-4-20250514",
-        "writer_tokens": 2500,
+        "writer_tokens": 3200,
         "writer_temperature": 0.8,
         "storyteller_model": "claude-sonnet-4-20250514",
         "storyteller_tokens": 1000,

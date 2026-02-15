@@ -54,7 +54,7 @@ class BlocksSpellPipeline:
             "research_tokens": 1200,
             "research_temperature": 0.6,
             "writer_model": "claude-sonnet-4-20250514",
-            "writer_tokens": 2500,
+            "writer_tokens": 3200,
             "writer_temperature": 0.8,
             "tier_name": "standard"
         }
@@ -447,9 +447,10 @@ Ensure all fixes are applied while maintaining your authentic voice."""
         # Repair pass: ask model to fix the JSON
         repair_prompt = f"""The following text should be valid JSON but has errors.
 Fix it and return ONLY the corrected JSON, nothing else.
+IMPORTANT: Preserve ALL content including ALL blocks in the blocks array. Do not remove or truncate any blocks.
 
 BROKEN JSON:
-{cleaned[:3000]}
+{cleaned[:8000]}
 
 {f"Expected schema hint: {schema_hint}" if schema_hint else ""}
 

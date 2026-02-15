@@ -414,12 +414,13 @@ Materials have documented correspondences. Results must be documented.
 Katherine's voice: measured and exact, like threading a needle in dim light.""",
 
         "theresa": """THERESA SPECIALTY BLOCKS:
-- 'evidence_card' block: Categorize insights:
+- 'evidence_card' block (when included in block sequence): Categorize insights:
   * known = "What the Records Show" (verified facts)
   * likely = "What the Patterns Suggest" (probable connections)
   * lore = "What the Stories Tell" (unverified traditions)
-- 'bird_oracle' block: Systematic observation prompt
-- 'journal_prompt' block: Pattern-tracking fields
+- 'journal_prompt' block: Pattern-tracking fields, structured investigation notes
+- 'bird_oracle' block (ONLY when working type includes it): Systematic field observation, not mystical reading
+IMPORTANT: Only include blocks that are in the block sequence from the planner. Do not add extra blocks.
 Theresa's voice: clear prose with sudden poetic turns, like a journalist who sees patterns.""",
 
         "brenda": """BRENDA SPECIALTY BLOCKS:
@@ -595,14 +596,49 @@ def _get_working_type_direction(plan: dict) -> str:
         ),
         "truth_seeking": (
             "Evidence card comes SECOND after cold_open - classify what you know before you begin. "
-            "Materials include notebook, pen, candle (optional). "
-            "The bird_oracle is SYSTEMATIC observation, not mystical reading - Theresa tracks patterns in bird behavior "
-            "like a field researcher, recording date, time, species, direction. "
             "Steps follow a structured inquiry: name the suspicion, sort evidence into Known/Likely/Lore, "
             "apply the three tests, follow the strongest thread, document findings. "
             "Journal_prompt focuses on pattern-tracking: 'What keeps appearing? What are you avoiding looking at?' "
             "Theresa treats the seeker as a fellow investigator, not a supplicant. "
             "'Here's what the evidence shows...'"
+        ),
+        "veil_breaking": (
+            "This is about the family veil spell - the conspiracy of silence that both protects and imprisons. "
+            "The evidence_card classifies what is Known (documented), Likely (patterns suggest), and Lore (stories encode). "
+            "Steps involve naming the silence specifically, writing what was never said aloud, "
+            "and one decisive act of breaking the veil: speaking a truth, writing an unsent letter, "
+            "or recording testimony that the family refused to give. "
+            "Theresa broke her own family's veil spell and knows the cost. "
+            "The choice asks: break the silence publicly, or break it privately? Both are valid. "
+            "'The pattern breaks here.'"
+        ),
+        "genealogical_mapping": (
+            "Materials are investigative: notebook, pen, photographs, documents, a map or large paper. "
+            "The stepper guides structured genealogical research: gather what you have, "
+            "arrange chronologically, identify gaps and silences (what's MISSING is as telling as what's present), "
+            "draw connections. The journal_prompt is a structured research log. "
+            "Theresa approaches ancestry as investigation, not nostalgia - 'Who were they really? "
+            "Not the stories they told, but the evidence they left.'"
+        ),
+        "red_thread_working": (
+            "Materials are physical investigation tools: red thread or string, pins or tape, "
+            "paper cards or sticky notes, a wall or board surface. "
+            "The evidence_card maps Known/Likely/Lore connections between the elements being investigated. "
+            "The stepper teaches Theresa's investigation board method: write each element on a card, "
+            "pin them up, connect related items with red thread, step back and look for the pattern "
+            "you couldn't see up close. This is Theresa's signature tool - the investigation board as magical act. "
+            "The choice asks what to do with the pattern once revealed. "
+            "'Follow the thread. It always leads somewhere.'"
+        ),
+        "bird_field_log": (
+            "Theresa's bird observation is SYSTEMATIC, not mystical. This is ornithology as divination. "
+            "The bird_oracle names a specific real bird and what its behavior patterns indicate - "
+            "not magical meanings but observed correlations Theresa has documented over years. "
+            "The stepper teaches field observation: go to a specific location, sit for a timed period (15-30 min), "
+            "record species, direction of flight, behavior, time of day. "
+            "The journal_prompt is a structured field log entry with date, location, species, behavior, weather. "
+            "Theresa treats bird augury as data collection: 'What are they doing? When? How often? "
+            "The patterns tell you everything if you bother to write them down.'"
         ),
 
         # BRENDA working types
@@ -729,11 +765,14 @@ def validate_writer_blocks_output(output: dict, guide_id: str) -> tuple[bool, li
         if "reflection" not in block_types:
             errors.append("KATHERINE_MISSING_REFLECTION")
     elif guide_id == "theresa":
-        # Theresa always needs evidence_card and journal_prompt
-        if "evidence_card" not in block_types:
-            errors.append("THERESA_MISSING_EVIDENCE_CARD")
-        if "journal_prompt" not in block_types:
-            errors.append("THERESA_MISSING_JOURNAL_PROMPT")
+        # Theresa needs evidence_card for most types, but not bird_field_log or genealogical_mapping
+        if "bird_field_log" not in working_type and "genealogical_mapping" not in working_type:
+            if "evidence_card" not in block_types:
+                errors.append("THERESA_MISSING_EVIDENCE_CARD")
+        # Theresa needs journal_prompt for most types, but not red_thread_working
+        if "red_thread_working" not in working_type:
+            if "journal_prompt" not in block_types:
+                errors.append("THERESA_MISSING_JOURNAL_PROMPT")
     elif guide_id == "brenda":
         # Brenda always needs journal_prompt (her writing exercises)
         if "journal_prompt" not in block_types:
