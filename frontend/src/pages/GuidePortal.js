@@ -249,7 +249,12 @@ export const GuidePortal = () => {
         if (data.progress) setProgress(data.progress);
 
         if (data.status === 'complete' && data.result) {
-          setSpellResult(data.result);
+          // Backend wraps spell in result.spell — extract it, with fallback
+          const spell = data.result.spell || data.result;
+          // Attach metadata/archetype if available for display
+          if (data.result.archetype) spell._archetype = data.result.archetype;
+          if (data.result.metadata) spell._metadata = data.result.metadata;
+          setSpellResult(spell);
           setPhase('result');
           setLoading(false);
         } else if (data.status === 'failed') {
@@ -434,6 +439,45 @@ export const GuidePortal = () => {
               ) : (
                 <div className="font-crimson-text text-navy-dark whitespace-pre-wrap leading-relaxed">
                   {spellResult.content || spellResult.spell_text || JSON.stringify(spellResult, null, 2)}
+                </div>
+              )}
+
+              {/* Ethics Statement */}
+              {spellResult.ethics_statement && (
+                <div className="mt-8 pt-6 border-t border-stone-300">
+                  <p className="font-crimson-text text-stone-600 text-sm italic leading-relaxed">
+                    {spellResult.ethics_statement}
+                  </p>
+                </div>
+              )}
+
+              {/* Research Sources */}
+              {spellResult.sources && spellResult.sources.length > 0 && (
+                <div className="mt-8 pt-6 border-t border-stone-300">
+                  <h3 className="font-cinzel text-lg text-navy-dark font-semibold mb-4">Sources & Further Reading</h3>
+                  <div className="space-y-3">
+                    {spellResult.sources.map((source, i) => (
+                      <div key={i} className="bg-stone-100 rounded p-3">
+                        <p className="font-crimson-text text-stone-800 font-semibold text-sm">
+                          {source.author && `${source.author} — `}
+                          <span className="italic">{source.work || source.title}</span>
+                          {source.year && ` (${source.year})`}
+                        </p>
+                        {source.relevance && (
+                          <p className="font-crimson-text text-stone-600 text-sm mt-1">{source.relevance}</p>
+                        )}
+                        {source.further_reading_note && (
+                          <p className="font-crimson-text text-stone-500 text-xs mt-1 italic">{source.further_reading_note}</p>
+                        )}
+                        {source.learn_more_url && (
+                          <a href={source.learn_more_url} target="_blank" rel="noopener noreferrer"
+                            className="font-montserrat text-xs text-amber-700 hover:text-amber-900 mt-1 inline-block">
+                            Learn more
+                          </a>
+                        )}
+                      </div>
+                    ))}
+                  </div>
                 </div>
               )}
             </LightSection>
