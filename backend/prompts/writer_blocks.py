@@ -579,6 +579,56 @@ def _get_working_type_direction(plan: dict) -> str:
             "listening period (timed), questions (prepared in advance), thanks, formal closing. "
             "Katherine brings PROTOCOL to what others treat casually. 'Precision isn't coldness, it's care.'"
         ),
+
+        # THERESA working types
+        "pattern_investigation": (
+            "Theresa treats this as INVESTIGATION, not mysticism. The evidence_card maps what's "
+            "Known/Likely/Lore about the pattern the seeker has identified. "
+            "Materials are investigative: notebook, pen, photographs or documents. "
+            "Steps involve research, documentation, and one DECISIVE ACTION to break or acknowledge the pattern. "
+            "The lore_vignette connects to genealogical magic traditions or pattern-breaking folklore. "
+            "Theresa is the granddaughter who broke the family's veil spell through asking questions "
+            "nobody wanted answered. She treats the seeker as a fellow investigator. "
+            "Use the Then/Now bridge format: 'Here's what they did then, here's what you do now.' "
+            "Every claim gets classified: Known (verified), Likely (probable), or Lore (traditional). "
+            "'The pattern breaks here.'"
+        ),
+        "truth_seeking": (
+            "Evidence card comes SECOND after cold_open - classify what you know before you begin. "
+            "Materials include notebook, pen, candle (optional). "
+            "The bird_oracle is SYSTEMATIC observation, not mystical reading - Theresa tracks patterns in bird behavior "
+            "like a field researcher, recording date, time, species, direction. "
+            "Steps follow a structured inquiry: name the suspicion, sort evidence into Known/Likely/Lore, "
+            "apply the three tests, follow the strongest thread, document findings. "
+            "Journal_prompt focuses on pattern-tracking: 'What keeps appearing? What are you avoiding looking at?' "
+            "Theresa treats the seeker as a fellow investigator, not a supplicant. "
+            "'Here's what the evidence shows...'"
+        ),
+
+        # BRENDA working types
+        "letter_ritual": (
+            "Materials are pen and paper - REAL writing, not digital. Brenda believes in the power of the pen. "
+            "The seeker is writing a LETTER: to an ancestor, to a future self, to someone who needs to hear "
+            "what was never said. The stepper guides the letter-writing process: "
+            "addressing the letter, the opening line, the difficult middle where the real words live, "
+            "and the closing that seals the intention. "
+            "Lore_vignette connects to Dion Fortune's war letters, family chronicle traditions, "
+            "or the Victorian practice of unsent letters as psychological release. "
+            "The journal_prompt is a chronicle entry - Brenda records so nothing is lost. "
+            "Closing always involves either keeping the letter safe or burning it with intention. "
+            "'Write it down before it's lost.'"
+        ),
+        "memory_anchoring": (
+            "Materials are PERSONAL items: a photograph, a family object, something inherited, an heirloom. "
+            "The seeker holds the object and lets it speak. "
+            "The stepper involves: holding the object, describing it in writing (texture, weight, smell, history), "
+            "recording what it means and who it connects to, and making a deliberate choice about its future. "
+            "Lore_vignette connects to psychometry traditions, object-reading, or family memory-keeping practices. "
+            "The journal_prompt asks the seeker to write the object's story as if the object itself were speaking. "
+            "Brenda is the family chronicler - she records so nothing is lost. "
+            "The choice block asks: keep this memory private, share it with someone, or write it into the chronicle. "
+            "'This is how we remember.'"
+        ),
     }
 
     direction = directions.get(working_type, "")
@@ -672,6 +722,22 @@ def validate_writer_blocks_output(output: dict, guide_id: str) -> tuple[bool, li
                 errors.append("CATHLEEN_MISSING_SONG_PROMPT")
         if "ward" not in block_types:
             errors.append("CATHLEEN_MISSING_WARD")
+    elif guide_id == "katherine":
+        # Katherine always needs safety_note and reflection/documentation
+        if "safety_note" not in block_types:
+            errors.append("KATHERINE_MISSING_SAFETY_NOTE")
+        if "reflection" not in block_types:
+            errors.append("KATHERINE_MISSING_REFLECTION")
+    elif guide_id == "theresa":
+        # Theresa always needs evidence_card and journal_prompt
+        if "evidence_card" not in block_types:
+            errors.append("THERESA_MISSING_EVIDENCE_CARD")
+        if "journal_prompt" not in block_types:
+            errors.append("THERESA_MISSING_JOURNAL_PROMPT")
+    elif guide_id == "brenda":
+        # Brenda always needs journal_prompt (her writing exercises)
+        if "journal_prompt" not in block_types:
+            errors.append("BRENDA_MISSING_JOURNAL_PROMPT")
     
     # Validate persona_lock
     lock = output.get("persona_lock", {})
