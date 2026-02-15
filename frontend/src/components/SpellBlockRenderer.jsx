@@ -609,16 +609,17 @@ const BirdOracleBlock = ({ content, entries, onEntry, archetypeStyle }) => (
 );
 
 // Ward Block - CONTRAST LOCKED
+// Backend sends: ward_name, creation_steps, activation_phrase, protects_against
 const WardBlock = ({ content, archetypeStyle }) => (
   <div className="space-y-4" data-testid="ward-block">
     <div className="flex items-center gap-3">
       <Shield className="w-6 h-6 text-teal-600" />
       <div>
         <div className="font-cinzel text-lg text-stone-800">{content.ward_name}</div>
-        <div className="text-sm text-stone-500">{content.purpose}</div>
+        <div className="text-sm text-stone-500">{content.protects_against || content.purpose}</div>
       </div>
     </div>
-    
+
     {content.creation_steps && Array.isArray(content.creation_steps) && content.creation_steps.length > 0 && (
       <ol className="space-y-2 list-decimal list-inside text-stone-700">
         {content.creation_steps.map((step, i) => (
@@ -626,14 +627,14 @@ const WardBlock = ({ content, archetypeStyle }) => (
         ))}
       </ol>
     )}
-    
+
     {content.activation_phrase && (
       <div className="p-4 bg-[#F3EFE8] border border-teal-300 rounded-lg text-center">
         <p className="text-sm text-stone-500 mb-1">Activation Phrase:</p>
         <p className="font-cinzel italic text-stone-800">&ldquo;{content.activation_phrase}&rdquo;</p>
       </div>
     )}
-    
+
     {content.talisman_option && (
       <p className="text-sm text-stone-600">
         <span className="font-medium">Optional talisman:</span> {content.talisman_option}
@@ -643,28 +644,35 @@ const WardBlock = ({ content, archetypeStyle }) => (
 );
 
 // Song Prompt Block - CONTRAST LOCKED
+// Backend sends: instruction, pitch, phrase, duration, why_this_sound
 const SongPromptBlock = ({ content, archetypeStyle }) => (
   <div className="space-y-4" data-testid="song-prompt-block">
     <div className="flex items-start gap-3">
-      <Music className="w-6 h-6 text-amber-600" />
+      <Music className="w-6 h-6 text-teal-600" />
       <div>
         <p className="font-medium text-stone-800">{content.instruction}</p>
-        {content.suggested_melody && (
+        {(content.pitch || content.suggested_melody) && (
           <p className="text-sm text-stone-500 mt-1">
-            Suggested melody: {content.suggested_melody}
+            {content.pitch ? `Pitch: ${content.pitch}` : `Suggested melody: ${content.suggested_melody}`}
           </p>
         )}
       </div>
     </div>
-    
-    {content.words_optional && (
-      <div className="p-3 bg-[#F3EFE8] border border-amber-300 rounded-lg italic text-sm text-stone-700">
-        Optional words: &ldquo;{content.words_optional}&rdquo;
+
+    {(content.phrase || content.words_optional) && (
+      <div className="p-3 bg-[#F3EFE8] border border-teal-300 rounded-lg italic text-sm text-stone-700">
+        &ldquo;{content.phrase || content.words_optional}&rdquo;
       </div>
     )}
-    
-    {content.purpose && (
-      <p className="text-sm text-stone-600">{content.purpose}</p>
+
+    {content.duration && (
+      <p className="text-sm text-stone-600 flex items-center gap-1">
+        <Clock className="w-3 h-3" /> {content.duration}
+      </p>
+    )}
+
+    {(content.why_this_sound || content.purpose) && (
+      <p className="text-sm text-stone-600">{content.why_this_sound || content.purpose}</p>
     )}
   </div>
 );
@@ -723,42 +731,79 @@ const EvidenceCardBlock = ({ content, archetypeStyle }) => (
 );
 
 // Journal Prompt Block - CONTRAST LOCKED
-const JournalPromptBlock = ({ content, entries, onEntry, archetypeStyle }) => (
-  <div className="space-y-4" data-testid="journal-prompt-block">
-    {content.prompts?.map((prompt, i) => (
-      <div key={i} className="p-3 bg-[#F3EFE8] border border-stone-300 rounded-lg">
-        <p className="text-sm text-stone-700">{prompt}</p>
-      </div>
-    ))}
-    
-    {content.fields?.map((field) => (
-      <div key={field.id} className="space-y-2">
-        <label className="text-sm font-medium text-stone-700">{field.label}</label>
-        <textarea
-          value={entries[field.id] || ''}
-          onChange={(e) => onEntry(field.id, e.target.value)}
-          className="w-full p-2 bg-white border border-stone-300 rounded-lg text-sm text-stone-800"
-          rows={3}
-          placeholder={field.placeholder}
-        />
-      </div>
-    ))}
-  </div>
-);
+// Backend sends: prompts, guide_note, log_fields (with field_id, label, type)
+const JournalPromptBlock = ({ content, entries, onEntry, archetypeStyle }) => {
+  // Support both backend field names (log_fields/field_id) and legacy (fields/id)
+  const fields = content.log_fields || content.fields || [];
+
+  return (
+    <div className="space-y-4" data-testid="journal-prompt-block">
+      {content.guide_note && (
+        <p className="italic text-stone-600">&ldquo;{content.guide_note}&rdquo;</p>
+      )}
+
+      {content.prompts?.map((prompt, i) => (
+        <div key={i} className="p-3 bg-[#F3EFE8] border border-stone-300 rounded-lg">
+          <p className="text-sm text-stone-700">{prompt}</p>
+        </div>
+      ))}
+
+      {fields.map((field) => {
+        const fieldKey = field.field_id || field.id;
+        return (
+          <div key={fieldKey} className="space-y-2">
+            <label className="text-sm font-medium text-stone-700">{field.label}</label>
+            {field.type === 'scale' ? (
+              <input
+                type="range"
+                min="1"
+                max="10"
+                value={entries[fieldKey] || 5}
+                onChange={(e) => onEntry(fieldKey, e.target.value)}
+                className="w-full"
+              />
+            ) : (
+              <textarea
+                value={entries[fieldKey] || ''}
+                onChange={(e) => onEntry(fieldKey, e.target.value)}
+                className="w-full p-2 bg-white border border-stone-300 rounded-lg text-sm text-stone-800"
+                rows={3}
+                placeholder={field.placeholder}
+              />
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+};
 
 // Safety Note Block - CONTRAST LOCKED (Critical readability)
+// Backend sends: warning, when_to_stop, consent_check, alternatives
 const SafetyNoteBlock = ({ content, archetypeStyle }) => (
   <div className="p-4 bg-[#F3EFE8] border-2 border-amber-500 rounded-lg" data-testid="safety-note-block">
     <div className="flex items-start gap-3">
       <AlertTriangle className="w-5 h-5 text-amber-600 flex-shrink-0" />
-      <div>
-        <p className="text-sm text-stone-800 font-medium">{content.note}</p>
-        {content.alternatives?.length > 0 && (
-          <ul className="mt-2 space-y-1 text-sm text-stone-600">
-            {content.alternatives.map((alt, i) => (
-              <li key={i}>• {alt}</li>
-            ))}
-          </ul>
+      <div className="space-y-2">
+        <p className="text-sm text-stone-800 font-medium">{content.warning || content.note}</p>
+        {content.when_to_stop && (
+          <p className="text-sm text-stone-700">
+            <span className="font-medium">When to stop:</span> {content.when_to_stop}
+          </p>
+        )}
+        {content.consent_check && (
+          <p className="text-sm text-stone-600 italic">{content.consent_check}</p>
+        )}
+        {content.alternatives && (
+          typeof content.alternatives === 'string' ? (
+            <p className="text-sm text-stone-600">{content.alternatives}</p>
+          ) : content.alternatives.length > 0 && (
+            <ul className="space-y-1 text-sm text-stone-600">
+              {content.alternatives.map((alt, i) => (
+                <li key={i}>&bull; {alt}</li>
+              ))}
+            </ul>
+          )
         )}
       </div>
     </div>
