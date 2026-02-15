@@ -4917,7 +4917,9 @@ async def generate_spell_v3_endpoint(request: SpellRequestV3, user = Depends(get
             keyword_routes = {
                 'shigg': ['tea', 'kettle', 'bird', 'morning', 'domestic', 'kitchen', 'gentle', 'cozy', 'grief', 'loss'],
                 'cathleen': ['protect', 'voice', 'song', 'courage', 'brave', 'shield', 'guard', 'strength', 'power'],
-                'katherine': ['hidden', 'shadow', 'truth', 'reveal', 'pattern', 'thread', 'bind', 'sigil', 'precision', 'secret']
+                'katherine': ['hidden', 'shadow', 'truth', 'reveal', 'pattern', 'thread', 'bind', 'sigil', 'precision', 'secret'],
+                'theresa': ['family', 'secret', 'pattern', 'break', 'investigate', 'genealog', 'ancestor'],
+                'brenda': ['memory', 'remember', 'letter', 'ancestor', 'chronicle', 'family', 'heirloom']
             }
             
             selected_guide = None
