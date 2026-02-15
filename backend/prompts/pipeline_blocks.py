@@ -160,6 +160,25 @@ class BlocksSpellPipeline:
             metadata["qa_passed"] = qa_passed
             metadata["timing"]["total_ms"] = int((time.time() - total_start) * 1000)
             
+            # Ensure sources from research are included in final spell
+            # Even if Writer didn't include them properly
+            research_sources = research_packet.get("sources", [])
+            spell_sources = spell_output.get("sources", [])
+            
+            if not spell_sources and research_sources:
+                # Writer didn't include any sources, use research sources
+                spell_output["sources"] = research_sources
+                logger.info(f"[BLOCKS] Merged {len(research_sources)} sources from research into spell")
+            elif len(spell_sources) < len(research_sources):
+                # Writer included fewer sources, merge in missing ones
+                existing_ids = {s.get("source_id") or s.get("author", "").lower() for s in spell_sources}
+                for src in research_sources:
+                    src_key = src.get("source_id") or src.get("author", "").lower()
+                    if src_key not in existing_ids:
+                        spell_sources.append(src)
+                spell_output["sources"] = spell_sources
+                logger.info(f"[BLOCKS] Merged additional sources from research, total: {len(spell_sources)}")
+            
             # Enrich sources with URLs from SOURCE_ENCYCLOPEDIA
             if spell_output.get("sources"):
                 spell_output["sources"] = enrich_spell_sources_with_urls(spell_output["sources"])
