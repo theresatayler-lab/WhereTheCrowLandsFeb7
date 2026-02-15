@@ -14,6 +14,7 @@ from .qa_blocks import run_qa_blocks_validation
 from .canon import get_canon_context, get_tradition_tags
 from .belief_modes import BELIEF_MODES
 from .writer import WRITER_CONTRACTS
+from persona_config import enrich_spell_sources_with_urls
 
 logger = logging.getLogger(__name__)
 
