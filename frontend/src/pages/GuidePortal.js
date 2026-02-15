@@ -438,6 +438,22 @@ export const GuidePortal = () => {
                   {spellResult.content || spellResult.spell_text || JSON.stringify(spellResult, null, 2)}
                 </div>
               )}
+              
+              {/* Sources / Research Section */}
+              {spellResult.sources && spellResult.sources.length > 0 && (
+                <div className="mt-8 pt-6 border-t border-navy-dark/10">
+                  <h3 className="font-cinzel text-sm text-navy-dark/70 mb-3 flex items-center gap-2">
+                    <BookOpen className="w-4 h-4" /> Research Sources
+                  </h3>
+                  <div className="space-y-2">
+                    {spellResult.sources.map((source, i) => (
+                      <p key={i} className="text-sm text-navy-dark/60 font-crimson-text">
+                        {typeof source === 'string' ? source : `${source.title || source.work} by ${source.author || 'Unknown'}`}
+                      </p>
+                    ))}
+                  </div>
+                </div>
+              )}
             </LightSection>
 
             <div className="text-center mt-8 space-x-4">
