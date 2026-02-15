@@ -160,6 +160,10 @@ class BlocksSpellPipeline:
             metadata["qa_passed"] = qa_passed
             metadata["timing"]["total_ms"] = int((time.time() - total_start) * 1000)
             
+            # Enrich sources with URLs from SOURCE_ENCYCLOPEDIA
+            if spell_output.get("sources"):
+                spell_output["sources"] = enrich_spell_sources_with_urls(spell_output["sources"])
+            
             return spell_output, metadata
             
         except Exception as e:
