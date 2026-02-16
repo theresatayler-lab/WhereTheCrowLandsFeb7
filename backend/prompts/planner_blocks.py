@@ -479,6 +479,77 @@ def get_default_block_count(guide_id: str) -> int:
     return 7
 
 
+# Alias for backward compatibility
+select_working_type = get_working_type
+
+
+# Canon anchors - timeline/lore connection points
+CANON_ANCHORS = {
+    "shigg": ["parliament_of_birds", "kettle_wisdom", "domestic_magic"],
+    "cathleen": ["voice_magic", "morrigan_tradition", "threshold_work"],
+    "katherine": ["golden_dawn", "victorian_occult", "precision_craft"],
+    "theresa": ["veil_breaking", "pattern_investigation", "truth_seeking"],
+    "brenda": ["family_chronicle", "ancestor_memory", "letter_magic"]
+}
+
+
+def get_canon_anchors(guide_id: str) -> list:
+    """Get canon anchors for a guide."""
+    return CANON_ANCHORS.get(guide_id, ["folk_magic"])
+
+
+def build_planner_prompt_blocks(
+    spell_spec: dict,
+    guide_config: dict,
+    research_packet: dict,
+    belief_mode: str = "SPIRITUAL"
+) -> str:
+    """
+    Build a blocks-based planner prompt.
+    Alias for compatibility with __init__.py exports.
+    """
+    import json
+    
+    guide_id = spell_spec.get("persona_id", "shigg")
+    intention = spell_spec.get("user_query", "")
+    working_type = get_working_type(guide_id, intention)
+    required_blocks = working_type.get("required_blocks", [])
+    
+    blocks_description = "\n".join([
+        f"- {block}: {get_block_template(block).get('description', 'Content block')}"
+        for block in required_blocks
+    ])
+    
+    prompt = f"""Plan a spell for guide {guide_id}.
+
+WORKING TYPE: {working_type['name']}
+REQUIRED BLOCKS:
+{blocks_description}
+
+SEEKER'S INTENTION: {intention}
+
+Return JSON with spell structure plan including:
+- spell_title, spell_subtitle, working_type, section_order
+- materials_plan, step_outline, persona_lock
+"""
+    return prompt
+
+
+def validate_planner_blocks_output(output: dict) -> tuple:
+    """
+    Validate planner blocks output.
+    Returns (is_valid, errors_list)
+    """
+    errors = []
+    
+    required = ["spell_title", "working_type", "section_order"]
+    for field in required:
+        if field not in output:
+            errors.append(f"MISSING_FIELD: {field}")
+    
+    return len(errors) == 0, errors
+
+
 def build_deterministic_plan(guide_id: str, intention: str, research_packet: dict) -> dict:
     """
     Build a deterministic plan without calling LLM.
