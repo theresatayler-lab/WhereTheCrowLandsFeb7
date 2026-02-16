@@ -644,7 +644,7 @@ const SaveWardButton = ({ ward, spellTitle }) => {
         },
         body: JSON.stringify({
           name: ward.name,
-          symbol: ward.symbol || '🪶',
+          symbol: ward.symbol || '',
           meaning: ward.meaning,
           how_to_find: ward.how_to_find,
           activation: ward.activation,
