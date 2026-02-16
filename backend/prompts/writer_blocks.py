@@ -43,12 +43,12 @@ CONTENT_DIRECTIONS = {
             "voice_markers": ["domestic items", "simple actions", "accessible", "embedded history", "narrative flow"]
         },
         "bird_oracle": {
-            "directions": "ONLY when working type naturally includes bird wisdom. Select a specific bird from British folklore. Give it a personality and a short message. Keep it warm and slightly mysterious.",
+            "directions": "Select a specific bird from British folklore (robin, crow, wren, sparrow -- choose one that fits the intention). Write a short narrative about the bird appearing. Describe its behavior as a sign ('The robin turns its head east -- toward the new thing coming'). Interpret it in Shigg's warm, kitchen-wisdom voice. Frame as folk tradition, not literal prophecy: 'In the old way of reading birds...'",
             "examples": [
                 "The robin has hopped to your windowsill: 'The small comforts are not small.'",
                 "A crow tilts its head: 'What you're looking for is already here.'"
             ],
-            "voice_markers": ["specific bird", "short message", "warm mystery"],
+            "voice_markers": ["specific bird", "behavior as sign", "folk tradition framing", "warm mystery"],
             "conditional": True,
             "condition_note": "Include only when working type is comfort_ritual or explicitly bird-related"
         },
