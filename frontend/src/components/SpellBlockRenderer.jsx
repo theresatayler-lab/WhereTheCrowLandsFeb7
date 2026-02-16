@@ -437,30 +437,31 @@ const StepperBlock = ({ content, progress = new Set(), onComplete, archetypeStyl
 
 // Lore Vignette Block - Historical/folkloric story - CONTRAST LOCKED
 const LoreVignetteBlock = ({ content, archetypeStyle }) => (
-  <div className="space-y-4" data-testid="lore-vignette-block">
-    {content.title && (
-      <h4 className="font-cinzel text-lg text-stone-800">{content.title}</h4>
+  <div className="my-6 py-4 border-t border-b border-stone-300/50" data-testid="lore-vignette-block">
+    {/* Era and tradition header */}
+    {(content.title || content.era || content.tradition) && (
+      <h4 className="font-cinzel text-sm text-stone-500 uppercase tracking-wider mb-2">
+        {content.era && `${content.era} — `}{content.tradition || content.title || 'From the Archives'}
+      </h4>
     )}
     
-    <div className="flex items-center gap-4 text-xs text-stone-500">
-      {content.era && <span>{content.era}</span>}
-      {content.tradition && <span>• {content.tradition}</span>}
-    </div>
+    {/* Narrative as embedded story */}
+    <p className="font-crimson-text text-stone-700 leading-relaxed italic">
+      {content.narrative}
+    </p>
     
-    <div className="prose prose-sm prose-invert max-w-none">
-      <p className="text-stone-700 leading-relaxed">{content.narrative}</p>
-    </div>
-    
+    {/* Relevance connection */}
     {content.relevance_to_working && (
-      <div className="p-3 rounded-lg text-sm border bg-[#F3EFE8] border-stone-300">
-        <span className="font-medium text-stone-800">Connection:</span> <span className="text-stone-700">{content.relevance_to_working}</span>
-      </div>
+      <p className="font-crimson-text text-stone-600 mt-3 text-sm">
+        {content.relevance_to_working}
+      </p>
     )}
     
+    {/* Source reference */}
     {content.source_connection && (
-      <div className="text-xs italic text-stone-500">
+      <p className="text-xs text-stone-500 mt-2 italic">
         Source: {content.source_connection}
-      </div>
+      </p>
     )}
   </div>
 );
