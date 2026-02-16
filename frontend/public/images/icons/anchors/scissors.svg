@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Left finger loop -->
+  <circle cx="6" cy="18" r="3"/>
+  <!-- Right finger loop -->
+  <circle cx="18" cy="18" r="3"/>
+  <!-- Left blade -->
+  <path d="M8 16L13 5"/>
+  <!-- Right blade -->
+  <path d="M16 16L11 5"/>
+  <!-- Pivot point -->
+  <circle cx="12" cy="10.5" r="1" fill="currentColor" stroke="none"/>
+  <!-- Blade tips converge -->
+  <path d="M13 5l-1-2"/>
+  <path d="M11 5l1-2"/>
+</svg>

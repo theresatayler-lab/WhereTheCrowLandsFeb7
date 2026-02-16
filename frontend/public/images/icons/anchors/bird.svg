@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Bird body -->
+  <path d="M18 8c-1.5-1.5-4-2-6-1.5C10 7 8.5 8.5 8 10c-.5 1.5 0 3 1 4"/>
+  <!-- Head -->
+  <circle cx="17" cy="7" r="2"/>
+  <!-- Eye -->
+  <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
+  <!-- Beak -->
+  <path d="M19 7l2-.5-2 1"/>
+  <!-- Wing -->
+  <path d="M12 8.5c-1 .5-2.5 2-3 3.5"/>
+  <path d="M10 9c-1.5.5-3 2-3.5 3.5"/>
+  <!-- Tail feathers -->
+  <path d="M8 10l-4 1.5"/>
+  <path d="M8 11l-3.5 2.5"/>
+  <!-- Branch -->
+  <path d="M6 16h14" stroke-width="2"/>
+  <!-- Legs -->
+  <path d="M13 14v2M15 14v2"/>
+  <!-- Leaves on branch -->
+  <path d="M8 15c-1-.5-1.5-1.5-1-2.5" opacity="0.5"/>
+  <path d="M19 15c.5-1 .2-2-.5-2.5" opacity="0.5"/>
+</svg>
