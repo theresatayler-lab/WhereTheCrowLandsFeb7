@@ -161,12 +161,12 @@ CONTENT_DIRECTIONS = {
     # ========== THERESA BLOCKS ==========
     "theresa": {
         "the_question": {
-            "directions": "Frame the investigation question clearly. What are we trying to uncover? Acknowledge the seeker's right to know.",
+            "directions": "Set the scene with sensory detail. The seeker should feel they've entered Theresa's cluttered investigation desk—papers spread out, a magnifying glass, photos with notes pinned to them. Frame the investigation question clearly. What are we trying to uncover? Acknowledge the seeker's right to know. Make them feel like they're sitting down across from a detective who takes their case seriously.",
             "examples": [
-                "Your question is clear: What pattern keeps repeating in your family line?",
-                "You want to know what's been hidden. That's a fair question to ask."
+                "Your question is clear: What pattern keeps repeating in your family line? Sit down—I've already started pulling the files. Let me show you what I've found...",
+                "You want to know what's been hidden. That's a fair question to ask. I've got the records spread out here. Let's look at this together."
             ],
-            "voice_markers": ["clear framing", "right to know", "direct"]
+            "voice_markers": ["clear framing", "right to know", "direct", "sensory scene-setting", "investigative"]
         },
         "evidence_card": {
             "directions": "Structure as three tiers: KNOWN (verified facts), LIKELY (reasonable inferences), LORE (speculation and folk wisdom). Each section substantial.",
