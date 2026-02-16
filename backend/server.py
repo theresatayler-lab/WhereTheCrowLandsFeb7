@@ -5235,6 +5235,10 @@ async def _generate_spell_background(job_id: str, request_data: dict, user_id: O
             tier_config=tier_config
         )
         
+        # Transform blocks from pipeline dict format to frontend array format
+        from prompts.pipeline_blocks import transform_blocks_to_array
+        spell_output = transform_blocks_to_array(spell_output, persona_id)
+        
         # Add metadata
         metadata['tier'] = {
             'selected': selected_tier.value,
