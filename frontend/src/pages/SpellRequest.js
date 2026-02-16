@@ -1091,7 +1091,11 @@ export const SpellRequest = () => {
               >
                 {/* Guide avatar */}
                 <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-3 rounded-full overflow-hidden border-2 border-gold/30 group-hover:border-gold transition-colors flex items-center justify-center bg-navy-dark/50">
-                  <span className="text-3xl">{persona.emoji}</span>
+                  {persona.icon ? (
+                    <img src={persona.icon} alt={persona.name} className="w-10 h-10 sm:w-12 sm:h-12" />
+                  ) : (
+                    <Sparkles className="w-8 h-8 text-gold" />
+                  )}
                 </div>
                 <h3 className="font-cinzel text-sm text-cream group-hover:text-gold transition-colors">
                   {persona.name}
