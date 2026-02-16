@@ -398,7 +398,8 @@ export const SpellRequest = () => {
   const [spellSpec, setSpellSpec] = useState({
     persona_id: getCurrentArchetype() || 'choose_for_me',
     user_query: '',
-    desired_feeling: 'calm',
+    desired_feeling: 'protection', // Keep field name for backend compat, but use alchemize values
+    alchemize_category: 'protection', // New field
     time: '10_min',
     tone: 'practical',
     belief_boundary: 'spiritual_grounded',
