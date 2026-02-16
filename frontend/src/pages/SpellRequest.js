@@ -200,7 +200,6 @@ const Step1 = ({ spellSpec, updateSpec }) => (
           f.forPersonas.includes(spellSpec.persona_id) ||
           spellSpec.persona_id === 'choose_for_me'
         ).map((f) => {
-          const Icon = f.icon;
           return (
             <OptionCard
               key={f.id}
@@ -210,7 +209,7 @@ const Step1 = ({ spellSpec, updateSpec }) => (
               light={true}
             >
               <div className="flex flex-col items-center gap-2 text-center">
-                <Icon className={`w-6 h-6 ${spellSpec.alchemize_category === f.id ? 'text-crimson' : 'text-navy-dark'}`} />
+                <img src={f.iconSrc} alt={f.label} className="w-8 h-8" />
                 <span className="font-montserrat text-sm text-navy-dark font-medium">{f.label}</span>
                 <span className="font-crimson-text text-xs text-navy-dark/60">{f.description}</span>
               </div>
