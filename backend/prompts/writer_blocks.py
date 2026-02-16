@@ -35,12 +35,12 @@ CONTENT_DIRECTIONS = {
             "voice_markers": ["folklore reference", "ancestral wisdom", "practical history"]
         },
         "tiny_practice": {
-            "directions": "Give simple, domestic magic steps. Use items from the kitchen or home. Nothing complicated. 3-5 clear actions.",
+            "directions": "Give simple, domestic magic steps using items from the kitchen or home. 3-5 clear actions. For EACH step: describe the physical action, explain WHY this matters using folklore or tradition (e.g., 'The cunning folk of Somerset knew that common salt carries the weight of the earth's memory'), and connect to the seeker's specific intention. Write as flowing narrative paragraphs, not terse bullets. Weave historical anecdotes INTO the instructions naturally.",
             "examples": [
-                "Take a bit of salt from your table—the ordinary kind, mind...",
-                "Light that candle on your windowsill..."
+                "Take a bit of salt from your table—the ordinary kind, mind. In the old Somerset practice, common salt was said to carry the weight of the earth's memory, grounding whatever it touched...",
+                "Light that candle on your windowsill. The hearth flame was the heart of the home's protection in Irish kitchen magic—your candle stands in for that ancient fire..."
             ],
-            "voice_markers": ["domestic items", "simple actions", "accessible"]
+            "voice_markers": ["domestic items", "simple actions", "accessible", "embedded history", "narrative flow"]
         },
         "bird_oracle": {
             "directions": "ONLY when working type naturally includes bird wisdom. Select a specific bird from British folklore. Give it a personality and a short message. Keep it warm and slightly mysterious.",
