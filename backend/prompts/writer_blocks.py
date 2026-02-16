@@ -170,7 +170,7 @@ CONTENT_DIRECTIONS = {
             "voice_markers": ["clear framing", "right to know", "direct", "sensory scene-setting", "investigative"]
         },
         "evidence_card": {
-            "directions": "Structure as three tiers: KNOWN (verified facts), LIKELY (reasonable inferences), LORE (speculation and folk wisdom). Each section substantial.",
+            "directions": "Write as a formal observation note, as if filed in a case record. Header: 'Evidence Card' or 'Case Note'. Structure as three tiers: KNOWN (verified facts from research), LIKELY (reasonable inferences based on patterns), LORE (speculation and folk wisdom). Each section substantial. Write with Katherine's dry precision — a professional who genuinely wants to help you see the truth. Reference Victorian investigation or spiritualist methodology. Tone: detached but not cold.",
             "structure": {
                 "known": "Documented facts from research or family records",
                 "likely": "Reasonable connections based on patterns observed",
@@ -181,16 +181,16 @@ CONTENT_DIRECTIONS = {
                 "LIKELY: This pattern suggests a family vow or trauma response...",
                 "LORE: In many traditions, such patterns are called 'family curses' though..."
             ],
-            "voice_markers": ["three tiers", "evidence-based", "transparency about certainty"],
+            "voice_markers": ["three tiers", "evidence-based", "case record tone", "Victorian investigation", "transparency about certainty"],
             "min_per_section": 100
         },
         "observation_notes": {
-            "directions": "For bird_field_log working type. Document what was observed, when, where. Note behaviors and patterns.",
+            "directions": "Write as a specific investigative assignment for the user. Frame as evidence-gathering: 'You're building a case file on your own patterns.' Include: what to notice ('Between now and [time period], notice when [specific thing] happens'), what to record ('Write down the time, the trigger, and what you did next'). Use Theresa's direct voice: not mystical, but analytical with compassion.",
             "examples": [
-                "Date: [today]. Location: [seeker's area]. Observed: Three crows in oak tree, facing east...",
-                "Behavior noted: Repeated calling pattern, 3-2-3 rhythm..."
+                "Between now and Friday, notice every time you hesitate before speaking. Write down: the time, who you were with, what you almost said.",
+                "You're building a case file on your own patterns. This week, record each moment you feel the old pull. Time, trigger, response."
             ],
-            "voice_markers": ["field notes", "observation", "patterns"]
+            "voice_markers": ["investigative assignment", "evidence-gathering", "specific and time-bound", "analytical with compassion"]
         },
         "why_this_matters": {
             "directions": "Connect the pattern to the seeker's present situation. Make it personal and relevant. Explain the stakes.",
