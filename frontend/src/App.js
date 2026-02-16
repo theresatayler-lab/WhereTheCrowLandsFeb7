@@ -168,6 +168,7 @@ function App() {
           <Route path="/guides" element={<Guides />} />
           <Route path="/guides/:guideId" element={<GuidePortal />} />
           <Route path="/ward-finder" element={<WardFinder />} />
+          <Route path="/admin" element={<Admin />} />
           <Route path="/corrie-tarot" element={<CorrieTarot />} />
           <Route path="/early-access" element={<EarlyAccessPage />} />
           <Route path="/library" element={<Library />} />
