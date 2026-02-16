@@ -133,12 +133,12 @@ CONTENT_DIRECTIONS = {
             "voice_markers": ["three tests", "discernment", "ethical framework"]
         },
         "working_steps": {
-            "directions": "Detailed, numbered steps. Each step has a physical action and a purpose. Include timing and precise instructions.",
+            "directions": "Guide through precise, measured ritual steps. Victorian diagnostic precision. For each action, reference the tradition (e.g., 'Victorian spiritualist circles used black thread to mark what needed cutting — a practice borrowed from Spitalfields silk workers who knew that every thread has a tension point'). Write as measured, evidence-based prose with historical footnotes woven in. Each step has a physical action, a purpose, and timing.",
             "examples": [
-                "Step 1: Place the bowl at center. This creates your focus point.",
-                "Step 3: Speak the words exactly as written. Variation dilutes precision."
+                "Step 1: Place the bowl at center. This creates your focus point. Victorian diagnostic circles always began with a vessel at center—the Spitalfields spiritualists called it 'the well of knowing.'",
+                "Step 3: Speak the words exactly as written. Variation dilutes precision. In the Golden Dawn tradition, exact repetition was considered essential—words were thought to have weight that accumulated with each precise utterance."
             ],
-            "voice_markers": ["numbered", "precise", "purpose stated"]
+            "voice_markers": ["numbered", "precise", "purpose stated", "Victorian tradition", "embedded history"]
         },
         "record_prompts": {
             "directions": "Give specific documentation prompts. What to observe, what to write down, when to review.",
