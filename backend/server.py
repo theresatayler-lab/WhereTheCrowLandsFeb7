@@ -1640,6 +1640,52 @@ async def capture_lead_and_generate(request: LeadCaptureRequest):
         }
 
 
+
+@api_router.get('/admin/stats')
+async def get_admin_stats(user = Depends(get_current_user)):
+    """Basic admin stats dashboard data."""
+    admin_emails = ['sub_test@test.com']
+    user_data = await db.users.find_one({'id': user['id']}, {'_id': 0, 'email': 1})
+    if not user_data or user_data.get('email') not in admin_emails:
+        raise HTTPException(status_code=403, detail='Admin access required')
+
+    from datetime import timedelta
+    now = datetime.now(timezone.utc)
+    last_24h = now - timedelta(hours=24)
+    last_7d = now - timedelta(days=7)
+
+    total_users = await db.users.count_documents({})
+    total_spells = await db.spell_jobs.count_documents({'status': 'complete'})
+    spells_24h = await db.spell_jobs.count_documents({'status': 'complete', 'completed_at': {'$gte': last_24h}})
+    spells_7d = await db.spell_jobs.count_documents({'status': 'complete', 'completed_at': {'$gte': last_7d}})
+    failed_24h = await db.spell_jobs.count_documents({'status': 'failed', 'updated_at': {'$gte': last_24h}})
+
+    guide_pipeline = [
+        {'$match': {'status': 'complete', 'completed_at': {'$gte': last_7d}}},
+        {'$group': {'_id': '$persona_id', 'count': {'$sum': 1}}},
+        {'$sort': {'count': -1}}
+    ]
+    guide_stats = await db.spell_jobs.aggregate(guide_pipeline).to_list(length=10)
+
+    time_pipeline = [
+        {'$match': {'status': 'complete', 'completed_at': {'$gte': last_24h}, 'generation_time_ms': {'$exists': True}}},
+        {'$group': {'_id': None, 'avg_ms': {'$avg': '$generation_time_ms'}, 'max_ms': {'$max': '$generation_time_ms'}, 'min_ms': {'$min': '$generation_time_ms'}}}
+    ]
+    time_stats = await db.spell_jobs.aggregate(time_pipeline).to_list(length=1)
+    avg_time = time_stats[0] if time_stats else {'avg_ms': 0, 'max_ms': 0, 'min_ms': 0}
+
+    return {
+        'users': {'total': total_users},
+        'spells': {'total': total_spells, 'last_24h': spells_24h, 'last_7d': spells_7d, 'failed_24h': failed_24h},
+        'guides': {g['_id']: g['count'] for g in guide_stats if g['_id']},
+        'performance': {
+            'avg_generation_ms': int(avg_time.get('avg_ms', 0)),
+            'max_generation_ms': int(avg_time.get('max_ms', 0)),
+            'min_generation_ms': int(avg_time.get('min_ms', 0))
+        }
+    }
+
+
 @api_router.get('/admin/leads')
 async def get_leads(
     source: str = None,
