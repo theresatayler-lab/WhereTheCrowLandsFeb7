@@ -68,7 +68,7 @@ export const SacredSites = () => {
                 >
                   <div className="absolute inset-0 bg-gradient-to-t from-navy-mid via-navy-mid/60 to-transparent rounded-t-lg" />
                 </div>
-                <h3 className="font-cinzel text-xl sm:text-2xl text-gold mb-2" style={{ textShadow: '0 2px 10px rgba(212, 168, 75, 0.3)' }}>
+                <h3 className="font-cinzel text-xl sm:text-2xl text-gold mb-2" style={{ textShadow: '0 2px 10px rgba(200, 164, 77, 0.3)' }}>
                   {site.name}
                 </h3>
                 <p className="font-montserrat text-xs uppercase tracking-widest text-crimson-bright mb-3 flex items-center gap-1">

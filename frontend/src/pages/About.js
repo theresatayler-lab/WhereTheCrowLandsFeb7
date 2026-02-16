@@ -96,7 +96,7 @@ export const About = () => {
               </h2>
               <div className="space-y-6">
                 <div className="border-l-2 border-gold/40 pl-4">
-                  <h3 className="font-cinzel text-lg text-crimson-bright mb-2">🐦 Shigg</h3>
+                  <h3 className="font-cinzel text-lg text-crimson-bright mb-2 flex items-center gap-2"><img src="/icons/guides/guide-shigg.png" alt="Shigg" className="w-6 h-6 rounded-full" /> Shigg</h3>
                   <p className="font-montserrat text-sm text-cream/80 leading-relaxed">
                     The Birds of Parliament Poet Laureate. Born in London&apos;s West End, Shigg survived the 
                     Blitz in Dagenham with her sisters and parents, finding strength in poetry and family. 
@@ -106,7 +106,7 @@ export const About = () => {
                 </div>
 
                 <div className="border-l-2 border-gold/40 pl-4">
-                  <h3 className="font-cinzel text-lg text-crimson-bright mb-2">🪶 Cathleen</h3>
+                  <h3 className="font-cinzel text-lg text-crimson-bright mb-2 flex items-center gap-2"><img src="/icons/guides/guide-cathleen.png" alt="Cathleen" className="w-6 h-6 rounded-full" /> Cathleen</h3>
                   <p className="font-montserrat text-sm text-cream/80 leading-relaxed">
                     The Singer of Strength. A trained tailor and couturier from London&apos;s West End, Cathleen&apos;s 
                     voice is her greatest talisman—a powerful soprano that became spellwork. Rooted in British 
@@ -115,7 +115,7 @@ export const About = () => {
                 </div>
 
                 <div className="border-l-2 border-gold/40 pl-4">
-                  <h3 className="font-cinzel text-lg text-crimson-bright mb-2">🐦 Katherine</h3>
+                  <h3 className="font-cinzel text-lg text-crimson-bright mb-2 flex items-center gap-2"><img src="/icons/guides/guide-katherine.png" alt="Katherine" className="w-6 h-6 rounded-full" /> Katherine</h3>
                   <p className="font-montserrat text-sm text-cream/80 leading-relaxed">
                     The Weaver of Hidden Knowledge. Born in Victorian Spitalfields into a Huguenot community, 
                     Katherine was a master tailor, weaver, and court dressmaker. Her rituals blend craft, 
@@ -124,7 +124,7 @@ export const About = () => {
                 </div>
 
                 <div className="border-l-2 border-gold/40 pl-4">
-                  <h3 className="font-cinzel text-lg text-crimson-bright mb-2">🪽 Theresa</h3>
+                  <h3 className="font-cinzel text-lg text-crimson-bright mb-2 flex items-center gap-2"><img src="/icons/guides/guide-theresa.png" alt="Theresa" className="w-6 h-6 rounded-full" /> Theresa</h3>
                   <p className="font-montserrat text-sm text-cream/80 leading-relaxed">
                     The Seer & Storyteller. Journalist, historian, and truth-seeker, Theresa uncovered hidden 
                     paternity, mapped generational trauma, and broke the &ldquo;veil spell&rdquo; through research and ritual. 
@@ -210,7 +210,7 @@ export const About = () => {
             <div className="flex items-center justify-center gap-4 text-gold/50">
               <span>☽</span>
               <span className="text-crimson/60">❦</span>
-              <span>🐦</span>
+              <img src="/icons/ui/gold/icon-sparkles.png" alt="" className="w-4 h-4" />
               <span className="text-crimson/60">❦</span>
               <span>☾</span>
             </div>

@@ -8,8 +8,8 @@ const API_URL = process.env.REACT_APP_BACKEND_URL;
 // Simple corner ornament
 const Corner = ({ className }) => (
   <svg viewBox="0 0 60 60" className={className} fill="none">
-    <path d="M0,30 Q0,0 30,0" stroke="#d4a84b" strokeWidth="1.5" opacity="0.7" />
-    <path d="M0,20 Q0,0 20,0" stroke="#d4a84b" strokeWidth="1" opacity="0.4" />
+    <path d="M0,30 Q0,0 30,0" stroke="#C8A44D" strokeWidth="1.5" opacity="0.7" />
+    <path d="M0,20 Q0,0 20,0" stroke="#C8A44D" strokeWidth="1" opacity="0.4" />
     <polygon points="8,8 11,4 14,8 11,12" fill="#b82330" opacity="0.8" />
   </svg>
 );
@@ -65,7 +65,7 @@ const EarlyAccessPage = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4 sm:p-6 relative overflow-hidden"
-      style={{ background: 'linear-gradient(135deg, #0e1629 0%, #121d33 50%, #0e1629 100%)' }}>
+      style={{ background: 'linear-gradient(135deg, #0E2A2F 0%, #121d33 50%, #0E2A2F 100%)' }}>
       
       {/* Subtle background */}
       <div className="absolute inset-0 opacity-5" style={{
@@ -175,7 +175,7 @@ const EarlyAccessPage = () => {
             ) : (
               <motion.div className="py-3" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
                 <Check className="w-10 h-10 text-gold mx-auto mb-2" />
-                <p className="font-cinzel text-base text-gold">Welcome to the Murder 🐦‍⬛</p>
+                <p className="font-cinzel text-base text-gold">Welcome to the Murder</p>
                 <p className="font-montserrat text-sm text-silver-mist/70 mt-1">You're part of the flock now.</p>
               </motion.div>
             )}

@@ -14,6 +14,7 @@ const ARCHETYPE_STYLES = {
     title: 'Birds of Parliament',
     description: 'Edmund J. Sullivan pen-and-ink style, Rubáiyát illustrations, black & white engravings with birds, roses, and celestial symbols',
     emoji: '🐦',
+    iconPath: '/icons/guides/guide-shigg.png',
     color: 'from-amber-800 to-amber-900',
     borderColor: 'border-amber-500/50',
     keywords: ['black and white', 'cross-hatching', 'Art Nouveau', 'birds', 'roses']
@@ -24,6 +25,7 @@ const ARCHETYPE_STYLES = {
     title: 'Singer of Strength',
     description: 'Celtic goddess aesthetic with the Morrigan, candlelit séances, Pre-Raphaelite oil painting quality',
     emoji: '🪶',
+    iconPath: '/icons/guides/guide-cathleen.png',
     color: 'from-slate-800 to-slate-900',
     borderColor: 'border-blue-400/50',
     keywords: ['Morrigan', 'crows', 'séance', 'Celtic', 'moonlight']
@@ -34,6 +36,7 @@ const ARCHETYPE_STYLES = {
     title: 'Weaver of Hidden Knowledge',
     description: 'Victorian spiritualist photography, spirit photography with ethereal double exposures, shadow work',
     emoji: '🧵',
+    iconPath: '/icons/guides/guide-katherine.png',
     color: 'from-stone-800 to-stone-900',
     borderColor: 'border-purple-400/50',
     keywords: ['Victorian', 'séance', 'spirit photography', 'textiles', 'shadow']
@@ -44,6 +47,7 @@ const ARCHETYPE_STYLES = {
     title: 'Seer & Storyteller',
     description: 'Modern collage with vintage elements, genealogy imagery, documentary style meets magical realism',
     emoji: '🪞',
+    iconPath: '/icons/guides/guide-theresa.png',
     color: 'from-violet-800 to-violet-900',
     borderColor: 'border-violet-400/50',
     keywords: ['collage', 'photographs', 'ancestry', 'documentary', 'truth-seeking']
@@ -142,7 +146,7 @@ const FlippableImageCard = ({ imageBase64, prompt, onDownload }) => {
               {/* Click to flip hint */}
               <div className="absolute bottom-6 left-0 right-0 text-center z-20">
                 <p className="font-montserrat text-xs text-gold/80 bg-navy-dark/60 inline-block px-3 py-1 rounded-full backdrop-blur-sm">
-                  ✨ Click to see full image ✨
+                  Click to see full image
                 </p>
               </div>
             </div>

@@ -472,8 +472,409 @@ async def run_block_writer(
         logger.error(f"[WRITER_BLOCKS] JSON parse error: {e}")
         raise ValueError(f"Failed to parse spell output: {e}")
     
+    # Transform blocks dict to array format for frontend compatibility
+    spell_output = transform_blocks_to_array(spell_output, guide_id)
+    
     metadata["writer_ms"] = int((time.time() - start) * 1000)
     return spell_output, metadata
+
+
+# ============================================================================
+# BLOCKS FORMAT TRANSFORMATION
+# ============================================================================
+
+# Mapping from pipeline block names to frontend block_type values
+BLOCK_NAME_TO_TYPE = {
+    # Shigg mappings
+    "warm_greeting": "cold_open",
+    "comfort_acknowledgment": "lore_vignette",
+    "situation_acknowledgment": "lore_vignette",
+    "blessing_context": "lore_vignette",
+    "historical_stitch": "lore_vignette",
+    "tiny_practice": "stepper",
+    "protection_working": "stepper",
+    "blessing_working": "stepper",
+    "spoken_words": "closing",
+    "journaling_prompt": "reflection",
+    "bird_oracle": "bird_oracle",
+    "closing_warmth": "closing",
+
+    # Cathleen mappings
+    "threshold_opening": "cold_open",
+    "voice_activation": "song_prompt",
+    "the_working": "stepper",
+    "threat_acknowledgment": "lore_vignette",
+    "cleansing_assessment": "lore_vignette",
+    "ward_creation": "ward",
+    "cleansing_working": "stepper",
+    "closing_song": "closing",
+    "talisman_suggestion": "materials",
+
+    # Katherine mappings
+    "title_block": "cold_open",
+    "intent_statement": "cold_open",
+    "setting_requirements": "materials",
+    "materials_list": "materials",
+    "safety_ethics": "safety_note",
+    "opening_boundary": "lore_vignette",
+    "rule_of_three": "choice",
+    "ethical_framework": "safety_note",
+    "invocation": "lore_vignette",
+    "working_steps": "stepper",
+    "binding_steps": "stepper",
+    "closing_ceremony": "closing",
+    "record_prompts": "reflection",
+    "empowerment_line": "closing",
+
+    # Theresa mappings
+    "the_question": "cold_open",
+    "evidence_card": "evidence_card",
+    "observation_notes": "observation_task",
+    "why_this_matters": "lore_vignette",
+    "twenty_four_hour_action": "closing",
+    "sources_block": "further_reading",
+
+    # Brenda mappings
+    "memory_anchor": "cold_open",
+    "family_story": "lore_vignette",
+    "letter_working": "stepper",
+    "memory_working": "stepper",
+    "grief_acknowledgment": "lore_vignette",
+    "grief_working": "stepper",
+    "chronicle_prompt": "reflection",
+    "writing_exercise": "journal_prompt",
+
+    # Shared
+    "ethics_note": "safety_note",
+    "ethics_statement": "safety_note",
+}
+
+
+def transform_blocks_to_array(spell_output: dict, guide_id: str = "shigg") -> dict:
+    """
+    Transform blocks from pipeline dict format to frontend array format.
+
+    Pipeline returns: {"blocks": {"warm_greeting": {"content": "...", "type": "..."}, ...}}
+    Frontend expects: {"blocks": [{"block_type": "cold_open", "block_id": "...", "content": {...}}, ...]}
+
+    This function bridges the two formats.
+    """
+    blocks = spell_output.get("blocks", {})
+
+    # If blocks is already an array, return as-is (already transformed)
+    if isinstance(blocks, list):
+        return spell_output
+
+    # If blocks is not a dict either, return empty
+    if not isinstance(blocks, dict):
+        spell_output["blocks"] = []
+        return spell_output
+
+    transformed = []
+    type_counters = {}
+
+    for block_name, block_data in blocks.items():
+        # Determine the frontend block_type
+        block_type = BLOCK_NAME_TO_TYPE.get(block_name, "lore_vignette")
+
+        # Generate unique block_id
+        type_counters[block_type] = type_counters.get(block_type, 0) + 1
+        block_id = f"{block_type}_{type_counters[block_type]}"
+
+        # Extract content - pipeline blocks have {"content": "string"|dict, "type": "..."}
+        # Frontend blocks need {"content": {structured_object}}
+        if isinstance(block_data, dict):
+            raw_content = block_data.get("content", "")
+        else:
+            raw_content = str(block_data)
+
+        # If the AI already returned structured dict content, use it directly
+        if isinstance(raw_content, dict):
+            content = raw_content
+        else:
+            # Build the structured content object the frontend component expects
+            content = _build_structured_content(block_type, block_name, str(raw_content), spell_output)
+
+        transformed.append({
+            "block_type": block_type,
+            "block_id": block_id,
+            "content": content
+        })
+
+    # Ensure required blocks exist: choice and stepper at minimum
+    existing_types = {b["block_type"] for b in transformed}
+
+    if "choice" not in existing_types:
+        # Add a default choice block
+        transformed.insert(2, {
+            "block_type": "choice",
+            "block_id": "choice_1",
+            "content": {
+                "prompt": "How would you like to approach this working?",
+                "options": [
+                    {"id": "intuitive", "label": "Follow my intuition", "description": "Let the working guide you naturally"},
+                    {"id": "structured", "label": "Follow the steps precisely", "description": "Complete each step as written"}
+                ],
+                "consequence_hint": "Both paths lead to the same destination."
+            }
+        })
+
+    spell_output["blocks"] = transformed
+
+    # Build tarot_card data from the blocks if not already present
+    if "tarot_card" not in spell_output:
+        spell_output["tarot_card"] = _build_tarot_card(spell_output, transformed, guide_id)
+
+    return spell_output
+
+
+def _build_tarot_card(spell_output: dict, blocks: list, guide_id: str) -> dict:
+    """Build tarot card preview data from spell blocks."""
+    GUIDE_SYMBOLS = {
+        "shigg": "🪶", "cathleen": "🛡", "katherine": "🔮",
+        "theresa": "🔍", "brenda": "📜"
+    }
+
+    title = spell_output.get("title", "A Working") or "A Working"
+    essence = ""
+    key_action = ""
+    incantation = ""
+    timing = "When you are ready"
+    warning = None
+
+    for b in blocks:
+        bt = b.get("block_type")
+        c = b.get("content")
+        if not isinstance(c, dict):
+            continue
+        if bt == "cold_open" and not essence:
+            val = c.get("greeting") or c.get("hook") or ""
+            essence = str(val)[:160]
+        elif bt == "stepper" and not key_action:
+            steps = c.get("steps") or []
+            if steps and isinstance(steps, list) and isinstance(steps[0], dict):
+                val = steps[0].get("action") or steps[0].get("instruction") or ""
+                key_action = str(val)[:120]
+        elif bt == "closing" and not incantation:
+            val = c.get("empowerment_line") or c.get("license_to_depart") or ""
+            incantation = str(val)[:120]
+        elif bt == "ward" and not incantation:
+            val = c.get("activation_phrase") or ""
+            if val:
+                incantation = str(val)[:120]
+        elif bt == "safety_note" and not warning:
+            val = c.get("warning") or c.get("note") or ""
+            if val:
+                warning = str(val)[:100]
+
+    return {
+        "symbol": GUIDE_SYMBOLS.get(guide_id, "✧"),
+        "title": title,
+        "essence": essence or "A spell crafted just for you.",
+        "key_action": key_action or "Follow the steps within.",
+        "incantation": incantation or "So it is done.",
+        "timing": timing,
+        "warning": warning,
+    }
+
+
+def _build_structured_content(block_type: str, block_name: str, raw_content: str, spell_output: dict) -> dict:
+    """
+    Convert raw string content into the structured object each frontend block component expects.
+    """
+    import re
+    
+    if block_type == "cold_open":
+        return {
+            "greeting": raw_content[:200] if len(raw_content) > 200 else raw_content,
+            "scene_setting": "",
+            "hook": raw_content[200:] if len(raw_content) > 200 else ""
+        }
+
+    elif block_type == "materials":
+        # Try to parse materials from the plan, or create from content
+        materials = spell_output.get("materials", [])
+        if materials and isinstance(materials, list):
+            return {
+                "items": [
+                    {
+                        "name": m.get("name", "item"),
+                        "purpose": m.get("purpose", ""),
+                        "substitution": m.get("substitution", ""),
+                        "optional": False
+                    }
+                    for m in materials
+                ],
+                "gathering_note": raw_content if len(raw_content) < 200 else ""
+            }
+        return {
+            "items": [{"name": "As described", "purpose": raw_content, "substitution": "", "optional": False}],
+            "gathering_note": ""
+        }
+
+    elif block_type == "stepper":
+        # Split content into steps
+        lines = [l.strip() for l in raw_content.split('\n') if l.strip()]
+        steps = []
+        for i, line in enumerate(lines):
+            # Remove leading numbering like "1." or "Step 1:"
+            clean = re.sub(r'^(step\s+)?\d+[.:)\s]*', '', line, flags=re.IGNORECASE).strip()
+            if clean:
+                steps.append({
+                    "step_number": i + 1,
+                    "action": clean,
+                    "spoken_words": None,
+                    "why": None,
+                    "duration_hint": None
+                })
+        if not steps:
+            steps = [{"step_number": 1, "action": raw_content, "spoken_words": None, "why": None, "duration_hint": None}]
+        return {
+            "steps": steps,
+            "completion_message": "The working is done. Breathe."
+        }
+
+    elif block_type == "lore_vignette":
+        return {
+            "title": block_name.replace("_", " ").title(),
+            "narrative": raw_content,
+            "era": None,
+            "tradition": None,
+            "relevance_to_working": None,
+            "source_connection": None
+        }
+
+    elif block_type == "reflection":
+        lines = [l.strip() for l in raw_content.split('\n') if l.strip()]
+        return {
+            "guide_note": lines[0] if lines else raw_content,
+            "prompts": lines[1:] if len(lines) > 1 else [raw_content],
+            "log_fields": [
+                {"field_id": "reflection_notes", "label": "Your reflections", "type": "textarea", "placeholder": "Write what comes to mind..."}
+            ]
+        }
+
+    elif block_type == "closing":
+        return {
+            "license_to_depart": raw_content,
+            "grounding_action": None,
+            "empowerment_line": None,
+            "next_steps_hint": None
+        }
+
+    elif block_type == "bird_oracle":
+        return {
+            "bird": "Crow",
+            "message": raw_content,
+            "observation_prompt": None,
+            "log_field": False
+        }
+
+    elif block_type == "ward":
+        return {
+            "ward_name": "Protection Ward",
+            "creation_steps": [raw_content],
+            "activation_phrase": None,
+            "protects_against": None,
+            "talisman_option": None
+        }
+
+    elif block_type == "song_prompt":
+        return {
+            "instruction": raw_content,
+            "pitch": None,
+            "phrase": None,
+            "duration": None,
+            "why_this_sound": None
+        }
+
+    elif block_type == "evidence_card":
+        # Theresa's evidence card - try to parse KNOWN/LIKELY/LORE sections
+        known, likely, lore = [], [], []
+        current = known
+        for line in raw_content.split('\n'):
+            line_upper = line.strip().upper()
+            if line_upper.startswith('KNOWN') or line_upper.startswith('VERIFIED'):
+                current = known
+                continue
+            elif line_upper.startswith('LIKELY') or line_upper.startswith('REASONABLE'):
+                current = likely
+                continue
+            elif line_upper.startswith('LORE') or line_upper.startswith('SPECULATION') or line_upper.startswith('FOLK'):
+                current = lore
+                continue
+            if line.strip():
+                current.append(line.strip().lstrip('- '))
+
+        # If parsing didn't work, put everything in known
+        if not known and not likely and not lore:
+            known = [raw_content]
+
+        return {
+            "known": known,
+            "likely": likely,
+            "lore": lore,
+            "pattern_note": None
+        }
+
+    elif block_type == "safety_note":
+        return {
+            "warning": raw_content,
+            "when_to_stop": None,
+            "consent_check": None,
+            "alternatives": None
+        }
+
+    elif block_type == "journal_prompt":
+        return {
+            "guide_note": raw_content,
+            "prompts": [raw_content],
+            "log_fields": [
+                {"field_id": f"journal_{block_name}", "label": "Your response", "type": "textarea", "placeholder": "Write freely..."}
+            ]
+        }
+
+    elif block_type == "observation_task":
+        return {
+            "task_description": raw_content,
+            "location_suggestion": None,
+            "duration": None,
+            "what_to_notice": None,
+            "recording_prompt": None
+        }
+
+    elif block_type == "further_reading":
+        sources = spell_output.get("sources", [])
+        if sources and isinstance(sources, list):
+            return {
+                "recommendations": [
+                    {
+                        "title": s.get("work", s.get("title", "Reference")),
+                        "author": s.get("author", ""),
+                        "guide_note": s.get("relevance", ""),
+                        "specific_passage": None
+                    }
+                    for s in sources
+                ],
+                "reading_ritual": None
+            }
+        return {
+            "recommendations": [{"title": "Further reading", "author": "", "guide_note": raw_content, "specific_passage": None}],
+            "reading_ritual": None
+        }
+
+    elif block_type == "choice":
+        return {
+            "prompt": "How would you like to approach this working?",
+            "options": [
+                {"id": "intuitive", "label": "Follow my intuition", "description": "Let the working guide you naturally"},
+                {"id": "structured", "label": "Follow the steps precisely", "description": "Complete each step as written"}
+            ],
+            "consequence_hint": "Both paths lead to the same destination."
+        }
+
+    # Default fallback
+    return {"text": raw_content}
 
 
 # ============================================================================
@@ -575,7 +976,8 @@ class BlocksSpellPipeline:
         guide_config: dict,
         belief_mode: str = "SPIRITUAL",
         tier: str = None,
-        tier_config: dict = None
+        tier_config: dict = None,
+        on_stage_change: callable = None
     ):
         """
         Generate a spell using the blocks-based pipeline.
@@ -600,12 +1002,16 @@ class BlocksSpellPipeline:
         }
         
         try:
-            # Stage 1: Archivist (research) - create minimal packet for now
+            # Stage 1: Archivist (research)
+            if on_stage_change:
+                await on_stage_change("archivist")
             research_packet = await self._run_archivist(spell_spec, guide_id)
             metadata["stages_completed"].append("archivist")
             metadata["timing"]["archivist_ms"] = self.timing_log.get("archivist_ms", 0)
             
             # Stage 2: Planner
+            if on_stage_change:
+                await on_stage_change("planner")
             plan, planner_meta = await run_block_planner(
                 spell_spec, guide_config, research_packet,
                 self.openai_client, tier
@@ -615,6 +1021,8 @@ class BlocksSpellPipeline:
             metadata["stages_completed"].append("planner")
             
             # Stage 3: Writer
+            if on_stage_change:
+                await on_stage_change("writer")
             spell_output, writer_meta = await run_block_writer(
                 spell_spec, guide_config, research_packet, plan,
                 belief_mode, self.openai_client, self.anthropic_client, tier
@@ -624,6 +1032,8 @@ class BlocksSpellPipeline:
             metadata["stages_completed"].append("writer")
             
             # Stage 4: QA validation
+            if on_stage_change:
+                await on_stage_change("qa")
             working_type = plan.get("working_type", "")
             qa_passed, qa_errors = validate_spell_blocks(spell_output, guide_id, working_type)
             metadata["qa_passed"] = qa_passed
@@ -641,59 +1051,106 @@ class BlocksSpellPipeline:
             raise
     
     async def _run_archivist(self, spell_spec: dict, guide_id: str) -> dict:
-        """Stage 1: Run Archivist research - returns research packet"""
+        """Stage 1: Run Archivist research via DeepSeek - returns research packet"""
         import time
         start = time.time()
-        
-        # For now, return a basic research packet
-        # Full Archivist integration would use deepseek_client
-        research_packet = {
-            "query_understood": spell_spec.get("user_query", ""),
-            "research_mode": "spell_origins",
-            "facts": [
-                {
-                    "claim": "Family patterns often repeat across generations until consciously addressed",
-                    "claim_type": "academic",
-                    "confidence": "high",
-                    "source_refs": ["family_systems_theory"],
-                    "why_it_works": "Family systems theory shows intergenerational patterns",
-                    "hedging_required": False
-                },
-                {
-                    "claim": "Breaking patterns requires both awareness and ritual action",
+
+        intention = spell_spec.get("user_query", spell_spec.get("intention", ""))
+        anchor = spell_spec.get("anchor_object")
+        context = spell_spec.get("desired_feeling", "")
+
+        try:
+            from research_service import research_query_v2
+            v2 = await research_query_v2(
+                query=intention,
+                persona_id=guide_id,
+                anchor_object=anchor,
+                context=context,
+                max_retries=1
+            )
+
+            # Convert V2 response to the pipeline's research packet format
+            facts = []
+            for t in (v2.key_takeaways or []):
+                if isinstance(t, dict):
+                    facts.append({
+                        "claim": t.get("text", ""),
+                        "claim_type": t.get("claim_flag", "folklore"),
+                        "confidence": t.get("confidence", "medium"),
+                        "source_refs": t.get("source_refs", []),
+                        "why_it_works": "",
+                        "hedging_required": t.get("confidence") == "low"
+                    })
+            for f in (v2.why_this_works_facts or []):
+                if isinstance(f, dict):
+                    facts.append({
+                        "claim": f.get("claim", ""),
+                        "claim_type": f.get("claim_flag", "folklore"),
+                        "confidence": f.get("confidence", "medium"),
+                        "source_refs": f.get("source_refs", []),
+                        "why_it_works": f.get("claim", ""),
+                        "hedging_required": f.get("confidence") == "low"
+                    })
+
+            sources = []
+            for s in (v2.sources or []):
+                if isinstance(s, dict):
+                    sources.append({
+                        "source_id": s.get("id", s.get("title", "unknown")),
+                        "author": s.get("author", ""),
+                        "work": s.get("title", ""),
+                        "year": s.get("year"),
+                        "quality_tier": s.get("quality_tier", "folk_archive"),
+                        "relevance": s.get("notes", "")
+                    })
+
+            pc = v2.practice_context if isinstance(v2.practice_context, dict) else {}
+            research_packet = {
+                "query_understood": intention,
+                "research_mode": v2.research_mode or "spell_origins",
+                "summary": v2.summary or "",
+                "facts": facts or [{
+                    "claim": v2.summary or "Traditional practice",
                     "claim_type": "folklore",
                     "confidence": "medium",
-                    "source_refs": ["folk_traditions"],
-                    "why_it_works": "Ritual creates psychological container for change",
+                    "source_refs": [],
+                    "why_it_works": "",
                     "hedging_required": False
+                }],
+                "sources": sources,
+                "tradition_context": {
+                    "primary_tradition": (pc.get("tradition_tags") or ["folk_magic"])[0] if pc.get("tradition_tags") else "folk_magic",
+                    "related_traditions": pc.get("tradition_tags", []),
+                    "geographic_origin": pc.get("region", "British Isles"),
+                    "time_period": pc.get("time_period", "Traditional")
                 }
-            ],
-            "sources": [
-                {
-                    "source_id": "family_systems_theory",
-                    "author": "Murray Bowen",
-                    "work": "Family Therapy in Clinical Practice",
-                    "year": 1978,
-                    "quality_tier": "academic_primary",
-                    "relevance": "Foundational work on family patterns"
-                },
-                {
-                    "source_id": "folk_traditions",
-                    "author": "British Folk Traditions",
-                    "work": "Traditional practices for breaking cycles",
-                    "year": None,
-                    "quality_tier": "community_tradition",
-                    "relevance": "Practical folk approaches to pattern-breaking"
-                }
-            ],
-            "tradition_context": {
-                "primary_tradition": "family_magic",
-                "related_traditions": ["ancestral_work", "pattern_breaking"],
-                "geographic_origin": "British Isles",
-                "time_period": "Traditional to Modern"
             }
-        }
-        
+
+            logger.info(f"[ARCHIVIST] DeepSeek research returned {len(facts)} facts, {len(sources)} sources")
+
+        except Exception as e:
+            logger.warning(f"[ARCHIVIST] DeepSeek research failed, using fallback: {e}")
+            research_packet = {
+                "query_understood": intention,
+                "research_mode": "spell_origins",
+                "summary": "",
+                "facts": [{
+                    "claim": "Traditional folk practices address this through ritual and intention",
+                    "claim_type": "folklore",
+                    "confidence": "medium",
+                    "source_refs": [],
+                    "why_it_works": "Ritual creates a psychological container for change",
+                    "hedging_required": False
+                }],
+                "sources": [],
+                "tradition_context": {
+                    "primary_tradition": "folk_magic",
+                    "related_traditions": [],
+                    "geographic_origin": "British Isles",
+                    "time_period": "Traditional"
+                }
+            }
+
         self.timing_log["archivist_ms"] = int((time.time() - start) * 1000)
         return research_packet
 

@@ -24,7 +24,7 @@ from .planner_blocks import (
 )
 from .writer_blocks import build_writer_prompt_blocks, validate_writer_blocks_output
 from .qa_blocks import run_qa_blocks_validation
-from .pipeline_blocks import BlocksSpellPipeline, generate_spell_blocks
+from .pipeline_blocks import BlocksSpellPipeline, generate_spell_blocks, transform_blocks_to_array
 
 __all__ = [
     # Archivist (Stage 1)
@@ -82,5 +82,6 @@ __all__ = [
     
     # Pipeline - Blocks
     'BlocksSpellPipeline',
-    'generate_spell_blocks'
+    'generate_spell_blocks',
+    'transform_blocks_to_array'
 ]

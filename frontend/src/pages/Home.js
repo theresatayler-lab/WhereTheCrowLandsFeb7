@@ -305,22 +305,7 @@ export const Home = () => {
                   <BrandIcon name="star" size={18} variant="pink" opacity={0.9} /> We&apos;ve Got a Spell for That
                 </span>
               </Link>
-              <Link 
-                to="/guides" 
-                data-testid="hero-meet-guides-btn"
-                className="group relative px-8 py-3.5 transition-all duration-300 hover:bg-white/5"
-                style={{
-                  backgroundColor: 'transparent',
-                  border: `2px solid ${NOUVEAU_COLORS.antiqueGold}80`,
-                }}
-              >
-                <span 
-                  className="flex items-center gap-3 font-cinzel tracking-[0.15em] uppercase text-sm"
-                  style={{ color: NOUVEAU_COLORS.antiqueGold }}
-                >
-                  <Users className="w-4 h-4" /> Meet Your Guides
-                </span>
-              </Link>
+{/* "Meet Your Guides" button removed - now in Explore dropdown */}
             </div>
           </motion.div>
         </div>

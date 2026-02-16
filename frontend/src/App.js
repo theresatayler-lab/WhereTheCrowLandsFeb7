@@ -28,6 +28,7 @@ import { InvisibleHelpers } from './pages/InvisibleHelpers';
 import DesignPreview from './pages/DesignPreview';
 import HandcraftedSuccess from './pages/HandcraftedSuccess';
 import { GuidePortal } from './pages/GuidePortal';
+import Admin from './pages/Admin';
 import { Footer } from './components/Footer';
 import { OnboardingModal } from './components/OnboardingModal';
 import './App.css';
@@ -167,6 +168,7 @@ function App() {
           <Route path="/guides" element={<Guides />} />
           <Route path="/guides/:guideId" element={<GuidePortal />} />
           <Route path="/ward-finder" element={<WardFinder />} />
+          <Route path="/admin" element={<Admin />} />
           <Route path="/corrie-tarot" element={<CorrieTarot />} />
           <Route path="/early-access" element={<EarlyAccessPage />} />
           <Route path="/library" element={<Library />} />

@@ -71,7 +71,7 @@ export const GrimoireDownloader = ({ spells, userName }) => {
       pdf.rect(0, 0, pageWidth, pageHeight, 'F');
       
       // Title
-      pdf.setTextColor(212, 168, 75); // Gold
+      pdf.setTextColor(200, 164, 77); // Gold
       pdf.setFontSize(32);
       pdf.setFont('helvetica', 'bold');
       pdf.text('My Grimoire', pageWidth / 2, 100, { align: 'center' });
@@ -81,7 +81,7 @@ export const GrimoireDownloader = ({ spells, userName }) => {
       pdf.text('✧', pageWidth / 2, 70, { align: 'center' });
       
       // Divider line
-      pdf.setDrawColor(212, 168, 75);
+      pdf.setDrawColor(200, 164, 77);
       pdf.setLineWidth(0.5);
       pdf.line(60, 115, pageWidth - 60, 115);
       

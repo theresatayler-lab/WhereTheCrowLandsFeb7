@@ -371,27 +371,10 @@ class CombinedResponse(BaseModel):
     persona_used: str
 
 # ============================================================================
-# DeepSeek Client
+# LLM Clients - Import from central provider
 # ============================================================================
 
-def get_deepseek_client() -> Optional[AsyncOpenAI]:
-    """Initialize DeepSeek client using OpenAI-compatible API"""
-    api_key = os.environ.get('DEEPSEEK_API_KEY')
-    if not api_key:
-        logger.warning("DEEPSEEK_API_KEY not found in environment variables")
-        return None
-    return AsyncOpenAI(
-        api_key=api_key,
-        base_url=DEEPSEEK_BASE_URL
-    )
-
-def get_openai_client() -> Optional[AsyncOpenAI]:
-    """Get OpenAI client for persona voice"""
-    api_key = os.environ.get('OPENAI_API_KEY')
-    if not api_key:
-        logger.warning("OPENAI_API_KEY not found in environment variables")
-        return None
-    return AsyncOpenAI(api_key=api_key)
+from llm_providers import get_deepseek_client, get_openai_client
 
 # ============================================================================
 # Research Mode Selection (V3 Enhanced)
@@ -893,7 +876,6 @@ Write in-character, as if speaking directly to the seeker. Include:
 
     try:
         # Use direct OpenAI for persona voice (your key)
-        from llm_providers import get_openai_client
         client = get_openai_client()
         
         if not client:

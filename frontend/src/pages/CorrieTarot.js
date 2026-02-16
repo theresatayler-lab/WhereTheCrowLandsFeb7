@@ -286,7 +286,7 @@ const CorrieTarot = () => {
             {/* Shigg avatar with TV badge */}
             <div className="flex justify-center mb-6">
               <div className="relative">
-                <div className="absolute inset-0 blur-xl opacity-40" style={{ background: 'radial-gradient(circle, rgba(212, 168, 75, 0.4) 0%, transparent 70%)' }} />
+                <div className="absolute inset-0 blur-xl opacity-40" style={{ background: 'radial-gradient(circle, rgba(200, 164, 77, 0.4) 0%, transparent 70%)' }} />
                 <div className="relative w-24 h-24 rounded-full overflow-hidden border-3 border-gold/60 shadow-lg">
                   <img src={SHIGG_IMAGE} alt="Shigg" className="w-full h-full object-cover" />
                 </div>
@@ -299,7 +299,7 @@ const CorrieTarot = () => {
             {/* Title */}
             <div className="text-center">
               <h1 className="font-italiana text-3xl sm:text-4xl md:text-5xl text-gold-light mb-2"
-                style={{ textShadow: '0 2px 30px rgba(212, 168, 75, 0.5)' }}>
+                style={{ textShadow: '0 2px 30px rgba(200, 164, 77, 0.5)' }}>
                 The Cobbles Oracle
               </h1>
               <p className="font-cinzel text-base sm:text-lg text-crimson-bright mb-2">
@@ -349,7 +349,7 @@ const CorrieTarot = () => {
                 <div className="absolute inset-1.5 border border-crimson/30 rounded-sm" />
                 <div className="absolute inset-0 bg-navy-mid/80 rounded-sm backdrop-blur-sm" />
                 <div className="relative z-10 p-6 text-center">
-                  <span className="text-2xl mb-2 block">🔮</span>
+                  <img src="/icons/ui/icon-crystal-ball.png" alt="" className="w-8 h-8 mx-auto mb-2" />
                   <h3 className="font-cinzel text-lg text-gold mb-3">Shigg's Reading</h3>
                   <p className="font-crimson text-base text-cream/90 italic leading-relaxed">
                     "{result.overall_message}"
@@ -539,7 +539,7 @@ const CorrieTarot = () => {
               <div className="absolute inset-0 bg-white/90 rounded-sm" />
               <div className="relative z-10 p-8">
                 <div className="animate-pulse mb-4">
-                  <span className="text-4xl">🔮</span>
+                  <img src="/icons/ui/gold/icon-crystal-ball.png" alt="" className="w-12 h-12" />
                 </div>
                 <Loader2 className="w-8 h-8 text-crimson animate-spin mx-auto mb-4" />
                 <p className="font-cinzel text-lg text-crimson mb-2">Shigg is consulting the cards...</p>

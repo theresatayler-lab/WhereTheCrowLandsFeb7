@@ -7,7 +7,7 @@ import requests
 import json
 
 def quick_spell_test():
-    base_url = "https://theresa-spell-gen.preview.emergentagent.com"
+    base_url = "https://spell-debug-fix.preview.emergentagent.com"
     
     print("🧙‍♀️ Quick Spell Generation Test")
     print("=" * 40)

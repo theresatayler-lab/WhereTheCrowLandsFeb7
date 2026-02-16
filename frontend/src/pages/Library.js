@@ -7,8 +7,8 @@ import { X, ExternalLink, BookOpen, Copy, Check } from 'lucide-react';
 // Art Deco corner ornament
 const ArtDecoCorner = ({ className, variant = 'gold' }) => {
   const colors = variant === 'gold' 
-    ? { primary: '#d4a84b', secondary: '#b82330', tertiary: '#8B7355' }
-    : { primary: '#b82330', secondary: '#d4a84b', tertiary: '#722F37' };
+    ? { primary: '#C8A44D', secondary: '#b82330', tertiary: '#8B7355' }
+    : { primary: '#b82330', secondary: '#C8A44D', tertiary: '#722F37' };
   
   return (
     <svg viewBox="0 0 100 100" className={className} fill="none">
@@ -45,10 +45,10 @@ const VictorianBorder = ({ light = false }) => (
           {/* Repeating Victorian scroll pattern */}
           <path d="M0,8 Q5,2 10,8 T20,8 T30,8 T40,8" 
                 fill="none" 
-                stroke={light ? '#722F37' : '#d4a84b'} 
+                stroke={light ? '#722F37' : '#C8A44D'} 
                 strokeWidth="1" 
                 opacity="0.6" />
-          <circle cx="20" cy="8" r="2" fill={light ? '#b82330' : '#d4a84b'} opacity="0.4" />
+          <circle cx="20" cy="8" r="2" fill={light ? '#b82330' : '#C8A44D'} opacity="0.4" />
         </pattern>
       </defs>
       <rect width="400" height="16" fill="url(#victorianPattern)" />
@@ -67,7 +67,7 @@ const ArtDecoDivider = ({ variant = 'default', light = false }) => {
       <div className="flex items-center gap-1">
         <span className={`text-xs ${symbolColor} opacity-60`}>◇</span>
         <span className={`text-lg ${symbolColor}`}>
-          {variant === 'book' ? '📖' : variant === 'moon' ? '☽' : '❧'}
+          {variant === 'book' ? <img src="/icons/ui/gold/icon-library-books.png" alt="" className="w-5 h-5 inline" /> : variant === 'moon' ? '☽' : '❧'}
         </span>
         <span className={`text-xs ${symbolColor} opacity-60`}>◇</span>
       </div>
@@ -84,7 +84,7 @@ const LIBRARY_BOOKS = {
       author: "Philip Carr-Gomm & Richard Heygate",
       color: "#8B4513",
       spine: "#654321",
-      accent: "#d4a84b",
+      accent: "#C8A44D",
       description: "A comprehensive guide to the magical traditions of England, from ancient Druids to modern practitioners.",
       relevantTo: ["All"],
       link: "https://www.amazon.com/Book-English-Magic-Philip-Carr-Gomm/dp/1590204514"
@@ -418,7 +418,7 @@ const VictorianBook = ({ book, onSelect }) => {
           <span 
             className="text-xs font-cinzel tracking-wide truncate px-1 text-center"
             style={{ 
-              color: book.textColor || '#f5f0e6',
+              color: book.textColor || '#F3EFE8',
               textShadow: '0 1px 3px rgba(0,0,0,0.8)',
               maxHeight: '140px',
               overflow: 'hidden',
@@ -449,7 +449,7 @@ const VictorianBook = ({ book, onSelect }) => {
       <div 
         className="absolute right-0 top-2 bottom-2 w-2 rounded-r-sm"
         style={{ 
-          background: 'linear-gradient(90deg, #b8a88a 0%, #f5f0e6 30%, #e8e0d0 70%, #c4b89a 100%)',
+          background: 'linear-gradient(90deg, #b8a88a 0%, #F3EFE8 30%, #e8e0d0 70%, #c4b89a 100%)',
           boxShadow: 'inset -2px 0 4px rgba(0,0,0,0.15)'
         }}
       >
@@ -463,7 +463,7 @@ const VictorianBook = ({ book, onSelect }) => {
 
 // Victorian Bookshelf section - LIGHT parchment version
 const VictorianShelfLight = ({ category, books, onSelectBook }) => (
-  <div className="relative py-12 sm:py-16" style={{ background: 'linear-gradient(180deg, #f5f0e6 0%, #e8dfd0 50%, #f5f0e6 100%)' }}>
+  <div className="relative py-12 sm:py-16" style={{ background: 'linear-gradient(180deg, #F3EFE8 0%, #e8dfd0 50%, #F3EFE8 100%)' }}>
     {/* Wallpaper pattern overlay */}
     <div className="absolute inset-0 opacity-[0.04]" style={{
       backgroundImage: `url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40 0 L50 20 L40 40 L30 20 Z' fill='%23722F37'/%3E%3Ccircle cx='40' cy='60' r='8' fill='none' stroke='%23722F37' stroke-width='1'/%3E%3C/svg%3E")`,
@@ -540,7 +540,7 @@ const VictorianShelfLight = ({ category, books, onSelectBook }) => (
           </div>
           {/* Wood grain lines */}
           <div className="absolute inset-0 opacity-10" style={{
-            backgroundImage: 'repeating-linear-gradient(90deg, transparent 0px, transparent 30px, rgba(212,168,75,0.2) 30px, rgba(212,168,75,0.2) 31px)'
+            backgroundImage: 'repeating-linear-gradient(90deg, transparent 0px, transparent 30px, rgba(200,164,77,0.2) 30px, rgba(200,164,77,0.2) 31px)'
           }} />
         </div>
       </div>
@@ -581,7 +581,7 @@ const VictorianShelfDark = ({ category, books, onSelectBook }) => (
         <div className="inline-block relative">
           <span className="absolute -left-6 top-1/2 -translate-y-1/2 text-gold opacity-60">❦</span>
           <h2 className="font-italiana text-2xl sm:text-3xl text-gold-light px-8" 
-              style={{ textShadow: '0 2px 20px rgba(212, 168, 75, 0.5)' }}>
+              style={{ textShadow: '0 2px 20px rgba(200, 164, 77, 0.5)' }}>
             {category}
           </h2>
           <span className="absolute -right-6 top-1/2 -translate-y-1/2 text-gold opacity-60">❦</span>
@@ -600,7 +600,7 @@ const VictorianShelfDark = ({ category, books, onSelectBook }) => (
           className="absolute inset-0 rounded-lg"
           style={{ 
             background: 'linear-gradient(180deg, #1a0f0a 0%, #0f0805 50%, #050302 100%)',
-            boxShadow: 'inset 0 -20px 40px rgba(0,0,0,0.8), inset 0 10px 20px rgba(212, 168, 75, 0.03)'
+            boxShadow: 'inset 0 -20px 40px rgba(0,0,0,0.8), inset 0 10px 20px rgba(200, 164, 77, 0.03)'
           }}
         />
         
@@ -622,7 +622,7 @@ const VictorianShelfDark = ({ category, books, onSelectBook }) => (
         <div className="relative h-6 rounded-b-lg overflow-hidden"
           style={{ 
             background: 'linear-gradient(180deg, #2a1810 0%, #1a0f0a 50%, #0f0805 100%)',
-            boxShadow: '0 8px 16px rgba(0,0,0,0.7), 0 0 30px rgba(212, 168, 75, 0.05)'
+            boxShadow: '0 8px 16px rgba(0,0,0,0.7), 0 0 30px rgba(200, 164, 77, 0.05)'
           }}
         >
           {/* Gold inlay pattern */}
@@ -654,9 +654,9 @@ const VictorianBookModal = ({ book, onClose }) => {
       'Shigg': '#228B22',
       'Cathleen': '#4169E1', 
       'Katherine': '#800020',
-      'All': '#d4a84b'
+      'All': '#C8A44D'
     };
-    return colors[name] || '#d4a84b';
+    return colors[name] || '#C8A44D';
   };
   
   const copyLink = () => {
@@ -729,13 +729,13 @@ const VictorianBookModal = ({ book, onClose }) => {
               transition={{ delay: 0.2 }}
             >
               <div className="absolute inset-1 border opacity-50" style={{ borderColor: book.accent }} />
-              <BookOpen className="w-12 h-12" style={{ color: book.textColor || '#f5f0e6' }} />
+              <BookOpen className="w-12 h-12" style={{ color: book.textColor || '#F3EFE8' }} />
             </motion.div>
             
             {/* Title */}
             <h2 
               className="font-italiana text-xl sm:text-2xl text-center mb-2"
-              style={{ color: book.textColor || '#f5f0e6', textShadow: '0 2px 10px rgba(0,0,0,0.7)' }}
+              style={{ color: book.textColor || '#F3EFE8', textShadow: '0 2px 10px rgba(0,0,0,0.7)' }}
             >
               {book.title}
             </h2>
@@ -743,7 +743,7 @@ const VictorianBookModal = ({ book, onClose }) => {
             {/* Author */}
             <p 
               className="font-crimson text-center italic"
-              style={{ color: book.textColor || '#f5f0e6', opacity: 0.9 }}
+              style={{ color: book.textColor || '#F3EFE8', opacity: 0.9 }}
             >
               by {book.author}
             </p>
@@ -840,7 +840,7 @@ const Library = () => {
           background: 'radial-gradient(ellipse at 50% 30%, rgba(184, 35, 48, 0.15) 0%, transparent 50%)'
         }} />
         <div className="absolute inset-0" style={{
-          background: 'radial-gradient(ellipse at 50% 70%, rgba(212, 168, 75, 0.1) 0%, transparent 40%)'
+          background: 'radial-gradient(ellipse at 50% 70%, rgba(200, 164, 77, 0.1) 0%, transparent 40%)'
         }} />
         
         {/* Corner ornaments */}
@@ -856,7 +856,7 @@ const Library = () => {
           >
             <div className="flex items-center justify-center gap-4">
               <span className="text-gold/60 text-2xl">❦</span>
-              <span className="text-5xl sm:text-6xl">📚</span>
+              <img src="/icons/ui/gold/icon-library-books.png" alt="Library" className="w-16 h-16 sm:w-20 sm:h-20 mx-auto" />
               <span className="text-gold/60 text-2xl">❦</span>
             </div>
           </motion.div>
@@ -864,7 +864,7 @@ const Library = () => {
           {/* Title with Art Deco styling */}
           <motion.h1 
             className="font-italiana text-4xl sm:text-5xl md:text-6xl text-gold-light mb-4"
-            style={{ textShadow: '0 4px 30px rgba(212, 168, 75, 0.5)' }}
+            style={{ textShadow: '0 4px 30px rgba(200, 164, 77, 0.5)' }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
@@ -953,7 +953,7 @@ const Library = () => {
           <div className="flex items-center justify-center gap-4 text-gold/50">
             <span>☽</span>
             <span className="text-crimson/60">❦</span>
-            <span>📖</span>
+            <img src="/icons/ui/gold/icon-library-books.png" alt="" className="w-4 h-4" />
             <span className="text-crimson/60">❦</span>
             <span>☾</span>
           </div>

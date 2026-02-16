@@ -157,21 +157,51 @@ export const MyGrimoire = () => {
             animate={{ opacity: 1, y: 0 }}
           >
             <PageHeader 
-              icon={BookOpen}
+              iconSrc="/icons/ui/gold/icon-grimoire.png"
               title="My Grimoire"
               subtitle="Your personal collection of spells, rituals, and wards"
             />
           </motion.div>
           
-          {/* Download Grimoire Button - Only show if user has spells */}
+          {/* Download Grimoire Buttons */}
           {spells.length > 0 && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.1 }}
-              className="flex justify-center mb-6"
+              className="flex justify-center gap-3 mb-6 flex-wrap"
             >
               <GrimoireDownloader spells={spells} userName={null} />
+              <button
+                onClick={async () => {
+                  try {
+                    const token = localStorage.getItem('token');
+                    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/grimoire/export/pdf`, {
+                      headers: { 'Authorization': `Bearer ${token}` }
+                    });
+                    if (!response.ok) throw new Error('Export failed');
+                    const blob = await response.blob();
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'my-grimoire.pdf';
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                  } catch (err) {
+                    console.error('PDF export error:', err);
+                    toast.error('Could not export grimoire as PDF.');
+                  }
+                }}
+                className="flex items-center gap-2 px-4 py-2 rounded-lg border border-gold/30 text-gold hover:bg-gold/10 transition-colors font-montserrat text-sm"
+                data-testid="export-pdf-btn"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="7 10 12 15 17 10" />
+                  <line x1="12" y1="15" x2="12" y2="3" />
+                </svg>
+                Export as PDF
+              </button>
             </motion.div>
           )}
           
@@ -374,7 +404,7 @@ export const MyGrimoire = () => {
                   >
                     <LightOrnateCard hover={false} className="max-w-md mx-auto">
                       <div className="mb-4">
-                        <BestiaryGlyph animal="triquetra" size="lg" color="#d4a84b" />
+                        <BestiaryGlyph animal="triquetra" size="lg" color="#C8A44D" />
                       </div>
                       <h2 className="font-cinzel text-xl text-gold-dark mb-3">No wards saved yet</h2>
                       <p className="font-montserrat text-sm text-navy-dark/60 mb-6">
@@ -403,7 +433,7 @@ export const MyGrimoire = () => {
                         <div className="p-5 bg-gold/10 border-b border-gold/20">
                           <div className="flex items-center gap-4">
                             <div className="p-3 bg-gold/20 rounded-full">
-                              <span className="text-3xl">{ward.symbol || ward.ward_data?.symbol || '🪶'}</span>
+                              <img src="/icons/anchors/gold/anchor-feather.png" alt="" className="w-8 h-8" />
                             </div>
                             <div>
                               <h3 className="font-cinzel text-xl text-crimson">
@@ -487,7 +517,7 @@ export const MyGrimoire = () => {
           <div className="flex items-center justify-center gap-4 text-gold/50">
             <span>☽</span>
             <span className="text-crimson/60">❦</span>
-            <span>📖</span>
+            <img src="/icons/ui/gold/icon-grimoire.png" alt="" className="w-4 h-4 inline" />
             <span className="text-crimson/60">❦</span>
             <span>☾</span>
           </div>

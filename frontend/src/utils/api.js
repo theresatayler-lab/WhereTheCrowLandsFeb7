@@ -182,14 +182,14 @@ export const researchAPI = {
     });
     return response.data;
   },
-  // Combined: Both engines together
+  // Combined: Both engines together (can take 30-60s for dual AI calls)
   combined: async (userRequest, persona = 'shigg', tone = 'gentle', context = null) => {
     const response = await axios.post(`${API}/combined`, {
       user_request: userRequest,
       persona,
       tone,
       context,
-    });
+    }, { timeout: 120000 }); // 2 min timeout for dual-model research
     return response.data;
   },
 };

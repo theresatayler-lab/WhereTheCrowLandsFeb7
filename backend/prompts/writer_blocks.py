@@ -11,12 +11,12 @@ CONTENT_DIRECTIONS = {
     # ========== SHIGG BLOCKS ==========
     "shigg": {
         "warm_greeting": {
-            "directions": "Open with a cozy, grandmother-like welcome. Use pet names (love, dear, duck). Reference the time of day or setting. Make the seeker feel seen and welcome.",
+            "directions": "Set the scene with sensory detail. The seeker should feel they've walked into Shigg's warm kitchen with the kettle on. Open with a cozy, grandmother-like welcome. Use pet names (love, dear, duck). Reference the time of day, the smell of tea, the creak of a chair. Make the seeker feel seen and welcome in a specific, tangible place.",
             "examples": [
-                "Alright then, {name}, come sit by the kettle with me...",
-                "There you are, love. I've been waiting for you..."
+                "Alright then, {name}, come sit by the kettle with me. The tea's just brewed and the afternoon light is coming in soft through the window...",
+                "There you are, love. I've been waiting for you. Pull up that chair—the one with the worn cushion, that's the comfortable one..."
             ],
-            "voice_markers": ["pet names", "domestic imagery", "warmth"]
+            "voice_markers": ["pet names", "domestic imagery", "warmth", "sensory scene-setting"]
         },
         "comfort_acknowledgment": {
             "directions": "Validate feelings without toxic positivity. Acknowledge the difficulty. Don't fix, just witness. Use sensory language.",
@@ -35,20 +35,20 @@ CONTENT_DIRECTIONS = {
             "voice_markers": ["folklore reference", "ancestral wisdom", "practical history"]
         },
         "tiny_practice": {
-            "directions": "Give simple, domestic magic steps. Use items from the kitchen or home. Nothing complicated. 3-5 clear actions.",
+            "directions": "Give simple, domestic magic steps using items from the kitchen or home. 3-5 clear actions. For EACH step: describe the physical action, explain WHY this matters using folklore or tradition (e.g., 'The cunning folk of Somerset knew that common salt carries the weight of the earth's memory'), and connect to the seeker's specific intention. Write as flowing narrative paragraphs, not terse bullets. Weave historical anecdotes INTO the instructions naturally.",
             "examples": [
-                "Take a bit of salt from your table—the ordinary kind, mind...",
-                "Light that candle on your windowsill..."
+                "Take a bit of salt from your table—the ordinary kind, mind. In the old Somerset practice, common salt was said to carry the weight of the earth's memory, grounding whatever it touched...",
+                "Light that candle on your windowsill. The hearth flame was the heart of the home's protection in Irish kitchen magic—your candle stands in for that ancient fire..."
             ],
-            "voice_markers": ["domestic items", "simple actions", "accessible"]
+            "voice_markers": ["domestic items", "simple actions", "accessible", "embedded history", "narrative flow"]
         },
         "bird_oracle": {
-            "directions": "ONLY when working type naturally includes bird wisdom. Select a specific bird from British folklore. Give it a personality and a short message. Keep it warm and slightly mysterious.",
+            "directions": "Select a specific bird from British folklore (robin, crow, wren, sparrow -- choose one that fits the intention). Write a short narrative about the bird appearing. Describe its behavior as a sign ('The robin turns its head east -- toward the new thing coming'). Interpret it in Shigg's warm, kitchen-wisdom voice. Frame as folk tradition, not literal prophecy: 'In the old way of reading birds...'",
             "examples": [
                 "The robin has hopped to your windowsill: 'The small comforts are not small.'",
                 "A crow tilts its head: 'What you're looking for is already here.'"
             ],
-            "voice_markers": ["specific bird", "short message", "warm mystery"],
+            "voice_markers": ["specific bird", "behavior as sign", "folk tradition framing", "warm mystery"],
             "conditional": True,
             "condition_note": "Include only when working type is comfort_ritual or explicitly bird-related"
         },
@@ -65,28 +65,29 @@ CONTENT_DIRECTIONS = {
     # ========== CATHLEEN BLOCKS ==========
     "cathleen": {
         "threshold_opening": {
-            "directions": "Create a sense of crossing into sacred space. Use 'hush' or threshold imagery. Lower the energy, make space for what comes.",
+            "directions": "Set the scene with sensory detail. The seeker should feel they've stepped into Cathleen's threshold between worlds—the hush of a doorway at dusk, the particular quality of light at the edge of things. Create a sense of crossing into sacred space. Use 'hush' or threshold imagery. Lower the energy, make space for what comes. Let them feel the liminal place.",
             "examples": [
-                "Hush now, and step across the threshold with me...",
-                "There is a place between the worlds. Come."
+                "Hush now, and step across the threshold with me. Feel that shift—the air is different here, at the edge of things. The light comes slant...",
+                "There is a place between the worlds. You're standing in it now. The doorframe hums. Come."
             ],
-            "voice_markers": ["hush", "threshold", "liminal space"]
+            "voice_markers": ["hush", "threshold", "liminal space", "sensory scene-setting"]
         },
         "voice_activation": {
-            "directions": "Guide the seeker to use their voice: humming, singing, speaking. Explain why voice carries power. Reference the song-magic tradition.",
+            "directions": "Guide the seeker to use their voice: humming, singing, speaking. Give a specific instruction to hum, chant, or sing a short phrase. Include the phrase itself (2-4 lines, with rhythm -- could be a couplet). Set the emotional key: 'Sing this low, from the belly, the way you'd warn someone you love.' Reference Irish/Celtic vocal tradition: keening, lullabies, work songs, or chanting. Frame as empowerment: the voice itself IS the ward/spell/binding.",
             "examples": [
                 "Your voice is your first instrument. Hum low, feel it in your chest...",
-                "The old songs knew—vibration moves through walls."
+                "The old songs knew—vibration moves through walls.",
+                "Sing this low, from the belly: 'I am the door that does not open / I am the wall that does not fall.'"
             ],
-            "voice_markers": ["voice as tool", "humming/singing", "vibration"]
+            "voice_markers": ["voice as tool", "humming/singing", "vibration", "specific phrase", "Celtic vocal tradition"]
         },
         "ward_creation": {
-            "directions": "Teach how to create a protective ward using voice and intention. Make it feel solid but not fearful. Maternal fierce energy.",
+            "directions": "Teach how to create a protective ward using voice and intention. Make it feel solid but not fearful. Maternal fierce energy. For each step, explain the Irish or Celtic tradition behind it (e.g., 'In the old Irish practice, the threshold song was sung three times — once for the seen, once for the unseen, once for what lies between'). Write as decisive prose paragraphs with embedded history, not sparse instructions.",
             "examples": [
-                "Sing a line at each corner of your room. The ward rises with your breath.",
-                "Hum until you feel the edges of your space grow firm."
+                "Sing a line at each corner of your room. In the old Irish practice, the threshold song was sung three times—once for the seen, once for the unseen, once for what lies between. The ward rises with your breath.",
+                "Hum until you feel the edges of your space grow firm. Celtic women knew that sound was the first wall—before stone, before door, there was the voice marking 'mine'."
             ],
-            "voice_markers": ["protection", "voice-based", "fierce but warm"]
+            "voice_markers": ["protection", "voice-based", "fierce but warm", "Celtic tradition", "narrative flow"]
         },
         "talisman_suggestion": {
             "directions": "Suggest a small object to carry the working's energy. Something the seeker likely has. Explain how to charge it.",
@@ -133,12 +134,12 @@ CONTENT_DIRECTIONS = {
             "voice_markers": ["three tests", "discernment", "ethical framework"]
         },
         "working_steps": {
-            "directions": "Detailed, numbered steps. Each step has a physical action and a purpose. Include timing and precise instructions.",
+            "directions": "Guide through precise, measured ritual steps. Victorian diagnostic precision. For each action, reference the tradition (e.g., 'Victorian spiritualist circles used black thread to mark what needed cutting — a practice borrowed from Spitalfields silk workers who knew that every thread has a tension point'). Write as measured, evidence-based prose with historical footnotes woven in. Each step has a physical action, a purpose, and timing.",
             "examples": [
-                "Step 1: Place the bowl at center. This creates your focus point.",
-                "Step 3: Speak the words exactly as written. Variation dilutes precision."
+                "Step 1: Place the bowl at center. This creates your focus point. Victorian diagnostic circles always began with a vessel at center—the Spitalfields spiritualists called it 'the well of knowing.'",
+                "Step 3: Speak the words exactly as written. Variation dilutes precision. In the Golden Dawn tradition, exact repetition was considered essential—words were thought to have weight that accumulated with each precise utterance."
             ],
-            "voice_markers": ["numbered", "precise", "purpose stated"]
+            "voice_markers": ["numbered", "precise", "purpose stated", "Victorian tradition", "embedded history"]
         },
         "record_prompts": {
             "directions": "Give specific documentation prompts. What to observe, what to write down, when to review.",
@@ -161,15 +162,15 @@ CONTENT_DIRECTIONS = {
     # ========== THERESA BLOCKS ==========
     "theresa": {
         "the_question": {
-            "directions": "Frame the investigation question clearly. What are we trying to uncover? Acknowledge the seeker's right to know.",
+            "directions": "Set the scene with sensory detail. The seeker should feel they've entered Theresa's cluttered investigation desk—papers spread out, a magnifying glass, photos with notes pinned to them. Frame the investigation question clearly. What are we trying to uncover? Acknowledge the seeker's right to know. Make them feel like they're sitting down across from a detective who takes their case seriously.",
             "examples": [
-                "Your question is clear: What pattern keeps repeating in your family line?",
-                "You want to know what's been hidden. That's a fair question to ask."
+                "Your question is clear: What pattern keeps repeating in your family line? Sit down—I've already started pulling the files. Let me show you what I've found...",
+                "You want to know what's been hidden. That's a fair question to ask. I've got the records spread out here. Let's look at this together."
             ],
-            "voice_markers": ["clear framing", "right to know", "direct"]
+            "voice_markers": ["clear framing", "right to know", "direct", "sensory scene-setting", "investigative"]
         },
         "evidence_card": {
-            "directions": "Structure as three tiers: KNOWN (verified facts), LIKELY (reasonable inferences), LORE (speculation and folk wisdom). Each section substantial.",
+            "directions": "Write as a formal observation note, as if filed in a case record. Header: 'Evidence Card' or 'Case Note'. Structure as three tiers: KNOWN (verified facts from research), LIKELY (reasonable inferences based on patterns), LORE (speculation and folk wisdom). Each section substantial. Write with Katherine's dry precision — a professional who genuinely wants to help you see the truth. Reference Victorian investigation or spiritualist methodology. Tone: detached but not cold.",
             "structure": {
                 "known": "Documented facts from research or family records",
                 "likely": "Reasonable connections based on patterns observed",
@@ -180,16 +181,16 @@ CONTENT_DIRECTIONS = {
                 "LIKELY: This pattern suggests a family vow or trauma response...",
                 "LORE: In many traditions, such patterns are called 'family curses' though..."
             ],
-            "voice_markers": ["three tiers", "evidence-based", "transparency about certainty"],
+            "voice_markers": ["three tiers", "evidence-based", "case record tone", "Victorian investigation", "transparency about certainty"],
             "min_per_section": 100
         },
         "observation_notes": {
-            "directions": "For bird_field_log working type. Document what was observed, when, where. Note behaviors and patterns.",
+            "directions": "Write as a specific investigative assignment for the user. Frame as evidence-gathering: 'You're building a case file on your own patterns.' Include: what to notice ('Between now and [time period], notice when [specific thing] happens'), what to record ('Write down the time, the trigger, and what you did next'). Use Theresa's direct voice: not mystical, but analytical with compassion.",
             "examples": [
-                "Date: [today]. Location: [seeker's area]. Observed: Three crows in oak tree, facing east...",
-                "Behavior noted: Repeated calling pattern, 3-2-3 rhythm..."
+                "Between now and Friday, notice every time you hesitate before speaking. Write down: the time, who you were with, what you almost said.",
+                "You're building a case file on your own patterns. This week, record each moment you feel the old pull. Time, trigger, response."
             ],
-            "voice_markers": ["field notes", "observation", "patterns"]
+            "voice_markers": ["investigative assignment", "evidence-gathering", "specific and time-bound", "analytical with compassion"]
         },
         "why_this_matters": {
             "directions": "Connect the pattern to the seeker's present situation. Make it personal and relevant. Explain the stakes.",
@@ -200,24 +201,24 @@ CONTENT_DIRECTIONS = {
             "voice_markers": ["personal relevance", "stakes", "choice point"]
         },
         "twenty_four_hour_action": {
-            "directions": "One concrete, doable action for the next 24 hours. Specific enough to be actionable. Not overwhelming.",
+            "directions": "Walk through evidence-gathering steps that bridge historical practice to modern application. Use Then/Now framing: explain the historical precedent, then the modern adaptation. Write as investigative narrative — 'The records show that practitioners in 1890s London kept notebooks of recurring symbols. Your notebook serves the same purpose: documenting what the patterns reveal.' One concrete, doable action for the next 24 hours. Specific enough to be actionable. Not overwhelming.",
             "examples": [
-                "In the next 24 hours: Write one question you'd ask your grandmother if she were here.",
-                "Before tomorrow: Find one photo from before you were born. Look at the hands."
+                "In the next 24 hours: Write one question you'd ask your grandmother if she were here. The records show that Victorian spirit-seekers kept 'question journals'—your question is the first thread in the investigation.",
+                "Before tomorrow: Find one photo from before you were born. Look at the hands. Pattern investigators of the 1890s called this 'reading the archive'—what the hands held, how they were positioned, what they reveal about who these people were."
             ],
-            "voice_markers": ["specific", "time-bound", "achievable"]
+            "voice_markers": ["specific", "time-bound", "achievable", "Then/Now framing", "investigative narrative"]
         }
     },
     
     # ========== BRENDA BLOCKS ==========
     "brenda": {
         "memory_anchor": {
-            "directions": "Ground the working in a specific memory or object. Something sensory and personal. Create emotional resonance.",
+            "directions": "Begin as if starting a letter: 'My dear one,' or 'I've been thinking about what you told me...' The seeker should feel they've opened a handwritten letter from a beloved aunt or grandmother. Set the scene at Brenda's writing table with letters spread out—the smell of old paper, a pen waiting. Reference: recipe cards, kitchen tables, family photo albums, handwritten notes in margins of cookbooks. Ground the working in a specific memory or object.",
             "examples": [
-                "Think of your grandmother's hands. What were they doing in your clearest memory?",
-                "Find the oldest photograph you have of family. Hold it."
+                "My dear one, I've been thinking about what you told me. I'm here at my writing table, letters spread before me. Pull up a chair—there's paper waiting for you too.",
+                "I received your letter. Find the oldest photograph you have of family. Hold it. Feel the weight of it. I've got mine here beside me as I write this to you."
             ],
-            "voice_markers": ["specific memory", "sensory", "personal"]
+            "voice_markers": ["letter opening", "specific memory", "sensory", "personal", "epistolary scene-setting"]
         },
         "family_story": {
             "directions": "Weave in a family lore element or ancestor connection. Could be fictional archetype if no specific story known. Make it feel real and relevant.",
@@ -228,12 +229,12 @@ CONTENT_DIRECTIONS = {
             "voice_markers": ["family lore", "ancestor", "story"]
         },
         "letter_working": {
-            "directions": "Guide the letter-writing ritual. Who to write to, what to include, how to end. The letter is the magic.",
+            "directions": "Write instructions as intimate letter advice — 'What I'd suggest, dear friend, is this...' Each step should feel like counsel from a wise aunt. Weave in family tradition references (e.g., 'Your grandmother's generation knew this instinctively — the recipe card wasn't just about ingredients, it was about the hands that held it'). Maintain epistolary voice throughout. Guide the letter-writing ritual. Who to write to, what to include, how to end. The letter is the magic.",
             "examples": [
-                "Begin: 'Dear [name],' even if they can't read it. Especially if they can't.",
-                "Write everything you never said. Then write what you wish they'd said to you."
+                "What I'd suggest, dear friend, is this: Begin 'Dear [name],' even if they can't read it. Especially if they can't. Your grandmother's generation knew this instinctively—the letter wasn't just words, it was the hands that wrote them.",
+                "Write everything you never said. Your great-aunts kept letters in shoeboxes, unsent but not unwritten. The writing was the working. Then write what you wish they'd said to you."
             ],
-            "voice_markers": ["letter format", "emotional honesty", "completion"]
+            "voice_markers": ["letter format", "emotional honesty", "completion", "epistolary voice", "family tradition"]
         },
         "chronicle_prompt": {
             "directions": "Prompt to record in the family chronicle. What should be preserved? What would future generations need to know?",
@@ -244,12 +245,12 @@ CONTENT_DIRECTIONS = {
             "voice_markers": ["preservation", "future generations", "specific detail"]
         },
         "writing_exercise": {
-            "directions": "A specific writing exercise to complete. Could be list-making, free-writing, or structured prompt. The act of writing is ritual.",
+            "directions": "A specific writing exercise to complete. Could be list-making, free-writing, or structured prompt. The act of writing is ritual. End the entire spell as a letter would: 'With all my love,' or 'I'll be thinking of you. Write back and tell me how it went.' Use 'you' directly throughout, mention family, use memory and nostalgia as emotional anchors.",
             "examples": [
                 "List three things you inherited that aren't objects.",
                 "Write for 10 minutes without stopping: 'The thing no one talks about is...'"
             ],
-            "voice_markers": ["specific exercise", "writing as ritual", "time-bound"]
+            "voice_markers": ["specific exercise", "writing as ritual", "time-bound", "letter closing"]
         }
     }
 }
