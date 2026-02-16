@@ -620,7 +620,55 @@ def transform_blocks_to_array(spell_output: dict, guide_id: str = "shigg") -> di
         })
 
     spell_output["blocks"] = transformed
+
+    # Build tarot_card data from the blocks if not already present
+    if "tarot_card" not in spell_output:
+        spell_output["tarot_card"] = _build_tarot_card(spell_output, transformed, guide_id)
+
     return spell_output
+
+
+def _build_tarot_card(spell_output: dict, blocks: list, guide_id: str) -> dict:
+    """Build tarot card preview data from spell blocks."""
+    GUIDE_SYMBOLS = {
+        "shigg": "🪶", "cathleen": "🛡", "katherine": "🔮",
+        "theresa": "🔍", "brenda": "📜"
+    }
+
+    title = spell_output.get("title", "A Working")
+    essence = ""
+    key_action = ""
+    incantation = ""
+    timing = "When you are ready"
+    warning = None
+
+    for b in blocks:
+        bt = b.get("block_type")
+        c = b.get("content", {})
+        if not isinstance(c, dict):
+            continue
+        if bt == "cold_open" and not essence:
+            essence = c.get("greeting", c.get("hook", ""))[:160]
+        elif bt == "stepper" and not key_action:
+            steps = c.get("steps", [])
+            if steps and isinstance(steps[0], dict):
+                key_action = steps[0].get("action", steps[0].get("instruction", ""))[:120]
+        elif bt == "closing" and not incantation:
+            incantation = c.get("empowerment_line", c.get("license_to_depart", ""))[:120]
+        elif bt == "ward" and not incantation:
+            incantation = c.get("activation_phrase", "")[:120] or incantation
+        elif bt == "safety_note":
+            warning = c.get("warning", c.get("note", ""))[:100]
+
+    return {
+        "symbol": GUIDE_SYMBOLS.get(guide_id, "✧"),
+        "title": title,
+        "essence": essence or "A spell crafted just for you.",
+        "key_action": key_action or "Follow the steps within.",
+        "incantation": incantation or "So it is done.",
+        "timing": timing,
+        "warning": warning,
+    }
 
 
 def _build_structured_content(block_type: str, block_name: str, raw_content: str, spell_output: dict) -> dict:
