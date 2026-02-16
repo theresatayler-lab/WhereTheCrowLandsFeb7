@@ -200,12 +200,12 @@ CONTENT_DIRECTIONS = {
             "voice_markers": ["personal relevance", "stakes", "choice point"]
         },
         "twenty_four_hour_action": {
-            "directions": "One concrete, doable action for the next 24 hours. Specific enough to be actionable. Not overwhelming.",
+            "directions": "Walk through evidence-gathering steps that bridge historical practice to modern application. Use Then/Now framing: explain the historical precedent, then the modern adaptation. Write as investigative narrative — 'The records show that practitioners in 1890s London kept notebooks of recurring symbols. Your notebook serves the same purpose: documenting what the patterns reveal.' One concrete, doable action for the next 24 hours. Specific enough to be actionable. Not overwhelming.",
             "examples": [
-                "In the next 24 hours: Write one question you'd ask your grandmother if she were here.",
-                "Before tomorrow: Find one photo from before you were born. Look at the hands."
+                "In the next 24 hours: Write one question you'd ask your grandmother if she were here. The records show that Victorian spirit-seekers kept 'question journals'—your question is the first thread in the investigation.",
+                "Before tomorrow: Find one photo from before you were born. Look at the hands. Pattern investigators of the 1890s called this 'reading the archive'—what the hands held, how they were positioned, what they reveal about who these people were."
             ],
-            "voice_markers": ["specific", "time-bound", "achievable"]
+            "voice_markers": ["specific", "time-bound", "achievable", "Then/Now framing", "investigative narrative"]
         }
     },
     
