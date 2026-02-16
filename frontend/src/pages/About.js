@@ -106,7 +106,7 @@ export const About = () => {
                 </div>
 
                 <div className="border-l-2 border-gold/40 pl-4">
-                  <h3 className="font-cinzel text-lg text-crimson-bright mb-2">🪶 Cathleen</h3>
+                  <h3 className="font-cinzel text-lg text-crimson-bright mb-2 flex items-center gap-2"><img src="/icons/guides/guide-cathleen.png" alt="Cathleen" className="w-6 h-6 rounded-full" /> Cathleen</h3>
                   <p className="font-montserrat text-sm text-cream/80 leading-relaxed">
                     The Singer of Strength. A trained tailor and couturier from London&apos;s West End, Cathleen&apos;s 
                     voice is her greatest talisman—a powerful soprano that became spellwork. Rooted in British 
