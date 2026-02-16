@@ -504,7 +504,7 @@ const TarotCardView = ({ spell, archetype, style, imageBase64, onViewFull, onCop
                   {spell.suggested_ward && (
                     <div className="bg-slate-800/60 backdrop-blur-sm border border-slate-500/40 rounded-sm p-2 mt-2">
                       <div className="flex items-center justify-center gap-2">
-                        <span className="text-lg">{spell.suggested_ward.symbol || '🪶'}</span>
+                        <img src="/icons/anchors/gold/anchor-feather.png" alt="" className="w-5 h-5" />
                         <div className="text-center">
                           <p className="font-montserrat text-[10px] text-slate-400 uppercase tracking-wider">Your Ward</p>
                           <p className="font-crimson text-sm text-slate-200">{spell.suggested_ward.name}</p>
