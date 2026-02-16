@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { GrimoirePage } from '../components/GrimoirePage';
 import { aiAPI, subscriptionAPI } from '../utils/api';
 import { ARCHETYPES, getArchetypeById } from '../data/archetypes';
@@ -48,6 +48,18 @@ const PERSONAS = [
   { id: 'choose_for_me', name: 'Choose for me', emoji: '✨', title: 'Let the guides decide', description: 'Based on your needs, the right guide will emerge' }
 ];
 
+const ALCHEMIZE_OPTIONS = [
+  { id: 'protection', label: 'Protection', icon: Shield, color: 'text-teal-400', description: 'Wards, shields, boundaries', forPersonas: ['cathleen', 'katherine', 'shigg'] },
+  { id: 'baneful_justice', label: 'Baneful Justice', icon: Flame, color: 'text-red-400', description: 'Binding, truth-revealing, accountability', forPersonas: ['katherine', 'cathleen', 'theresa'] },
+  { id: 'comfort_healing', label: 'Comfort & Healing', icon: Heart, color: 'text-amber-400', description: 'Grief, loss, emotional support', forPersonas: ['shigg', 'brenda', 'cathleen'] },
+  { id: 'clarity_truth', label: 'Clarity & Truth', icon: Eye, color: 'text-violet-400', description: 'Discernment, seeing clearly, revelation', forPersonas: ['theresa', 'katherine', 'shigg'] },
+  { id: 'releasing', label: 'Releasing & Letting Go', icon: Cloud, color: 'text-blue-400', description: 'Breaking patterns, cord-cutting, freedom', forPersonas: ['theresa', 'katherine', 'brenda'] },
+  { id: 'ancestral_work', label: 'Ancestral Work', icon: User, color: 'text-rose-400', description: 'Family patterns, lineage healing, memory', forPersonas: ['theresa', 'brenda', 'shigg'] },
+  { id: 'domestic_magic', label: 'Domestic Magic', icon: Home, color: 'text-yellow-400', description: 'Home blessing, kitchen magic, hearth craft', forPersonas: ['shigg', 'cathleen'] },
+  { id: 'courage_strength', label: 'Courage & Strength', icon: Zap, color: 'text-green-400', description: 'Empowerment, voice, standing ground', forPersonas: ['cathleen', 'theresa'] }
+];
+
+// Keep FEELINGS for backward compatibility with existing grimoire entries
 const FEELINGS = [
   { id: 'calm', label: 'Calm', icon: Cloud, color: 'text-blue-400', forPersonas: ['shigg', 'brenda', 'katherine'] },
   { id: 'brave', label: 'Brave', icon: Shield, color: 'text-amber-400', forPersonas: ['cathleen', 'theresa', 'katherine'] },
@@ -164,32 +176,11 @@ const OptionCard = ({ selected, onClick, children, className = '', light = false
   </motion.button>
 );
 
-// Step 1: Persona & Query - NOW WITH PROPER CONTRAST
+// Step 1: Query & Alchemize - NOW WITH PROPER CONTRAST
 const Step1 = ({ spellSpec, updateSpec }) => (
   <div className="space-y-6">
-    <div>
-      <h3 className="font-cinzel text-xl text-crimson mb-4 font-semibold">Who will guide your working?</h3>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        {PERSONAS.map((p) => (
-          <OptionCard
-            key={p.id}
-            selected={spellSpec.persona_id === p.id}
-            onClick={() => updateSpec({ persona_id: p.id })}
-            light={true}
-          >
-            <div className="flex items-center gap-3">
-              <span className="text-2xl">{p.emoji}</span>
-              <div>
-                <p className="font-cinzel text-navy-dark font-bold">{p.name}</p>
-                <p className="font-montserrat text-xs text-crimson font-medium">{p.title}</p>
-              </div>
-            </div>
-            <p className="font-montserrat text-sm text-navy-dark/80 mt-2">{p.description}</p>
-          </OptionCard>
-        ))}
-      </div>
-    </div>
-
+    {/* Guide selection removed - AI will auto-select based on alchemize_category */}
+    
     <div>
       <h3 className="font-cinzel text-xl text-crimson mb-2 font-semibold">What do you need?</h3>
       <p className="font-montserrat text-sm text-navy-dark/80 mb-3">Tell me in your own words what you&apos;re facing or seeking.</p>
@@ -202,9 +193,9 @@ const Step1 = ({ spellSpec, updateSpec }) => (
     </div>
 
     <div>
-      <h3 className="font-cinzel text-xl text-crimson mb-3 font-semibold">How do you want to feel after?</h3>
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-        {FEELINGS.filter(f =>
+      <h3 className="font-cinzel text-xl text-crimson mb-3 font-semibold">Alchemize This Into...</h3>
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        {ALCHEMIZE_OPTIONS.filter(f =>
           !f.forPersonas ||
           f.forPersonas.includes(spellSpec.persona_id) ||
           spellSpec.persona_id === 'choose_for_me'
@@ -213,14 +204,15 @@ const Step1 = ({ spellSpec, updateSpec }) => (
           return (
             <OptionCard
               key={f.id}
-              selected={spellSpec.desired_feeling === f.id}
-              onClick={() => updateSpec({ desired_feeling: f.id })}
-              className="py-3"
+              selected={spellSpec.alchemize_category === f.id}
+              onClick={() => updateSpec({ alchemize_category: f.id, desired_feeling: f.id })}
+              className="py-4"
               light={true}
             >
-              <div className="flex items-center justify-center gap-2">
-                <Icon className={`w-5 h-5 ${spellSpec.desired_feeling === f.id ? 'text-crimson' : 'text-navy-dark'}`} />
+              <div className="flex flex-col items-center gap-2 text-center">
+                <Icon className={`w-6 h-6 ${spellSpec.alchemize_category === f.id ? 'text-crimson' : 'text-navy-dark'}`} />
                 <span className="font-montserrat text-sm text-navy-dark font-medium">{f.label}</span>
+                <span className="font-crimson-text text-xs text-navy-dark/60">{f.description}</span>
               </div>
             </OptionCard>
           );
@@ -386,7 +378,8 @@ export const SpellRequest = () => {
   const [spellSpec, setSpellSpec] = useState({
     persona_id: getCurrentArchetype() || 'choose_for_me',
     user_query: '',
-    desired_feeling: 'calm',
+    desired_feeling: 'protection', // Keep field name for backend compat, but use alchemize values
+    alchemize_category: 'protection', // New field
     time: '10_min',
     tone: 'practical',
     belief_boundary: 'spiritual_grounded',
@@ -399,6 +392,7 @@ export const SpellRequest = () => {
   const [loadingImages, setLoadingImages] = useState(false);
   const [spellResult, setSpellResult] = useState(null);
   const [subscriptionStatus, setSubscriptionStatus] = useState(null);
+  const [selectedGuide, setSelectedGuide] = useState(null); // Guide selected during generation
   
   // Track last selected persona for video fallback (for choose_for_me)
   const lastSelectedPersonaRef = useRef('shigg');
@@ -457,7 +451,7 @@ export const SpellRequest = () => {
 
   const canProceed = () => {
     if (step === 0) {
-      return spellSpec.persona_id && spellSpec.user_query?.trim().length > 10 && spellSpec.desired_feeling;
+      return spellSpec.persona_id && spellSpec.user_query?.trim().length > 10 && spellSpec.alchemize_category;
     }
     if (step === 1) {
       return spellSpec.time && spellSpec.tone && spellSpec.belief_boundary;
@@ -641,6 +635,17 @@ export const SpellRequest = () => {
             const statusResponse = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/ai/spell-job/${jobId}`);
             const statusData = await statusResponse.json();
             
+            // Extract selected guide from partial result or persona_lock
+            if (!selectedGuide && statusData.result) {
+              const guideId = statusData.result.persona_lock?.id || statusData.result.persona_id || statusData.result.spell?.persona_id;
+              if (guideId) {
+                const guide = PERSONAS.find(p => p.id === guideId);
+                if (guide) {
+                  setSelectedGuide(guide);
+                }
+              }
+            }
+            
             if (statusData.status === 'complete') {
               // Success! Return the result
               return statusData.result;
@@ -667,6 +672,18 @@ export const SpellRequest = () => {
       };
       
       const data = await pollJob();
+      
+      // Extract final selected guide if not already set
+      if (!selectedGuide && data) {
+        const guideId = data.persona_lock?.id || data.persona_id || data.spell?.persona_id;
+        if (guideId) {
+          const guide = PERSONAS.find(p => p.id === guideId);
+          if (guide) {
+            setSelectedGuide(guide);
+          }
+        }
+      }
+      
       setSpellResult(data);
       setLoading(false);
       
@@ -706,6 +723,7 @@ export const SpellRequest = () => {
   const handleNewSpell = () => {
     setSpellResult(null);
     setLoadingImages(false);
+    setSelectedGuide(null); // Reset selected guide for new spell
     setStep(0);
     setSpellSpec(prev => ({
       ...prev,
@@ -909,33 +927,65 @@ export const SpellRequest = () => {
             
             {/* Content */}
             <div className="relative z-10 text-center px-6 max-w-lg">
-              <motion.div
-                animate={{ 
-                  scale: [1, 1.05, 1],
-                  opacity: [0.8, 1, 0.8]
-                }}
-                transition={{ 
-                  repeat: Infinity, 
-                  duration: 2, 
-                  ease: 'easeInOut' 
-                }}
-                className="w-24 h-24 mx-auto mb-8 relative"
-              >
-                <div className="absolute inset-0 rounded-full border-2 border-gold/40 animate-pulse" />
-                <div className="absolute inset-2 rounded-full border border-crimson/30" />
-                <Sparkles className="w-full h-full text-gold p-4" style={{ filter: 'drop-shadow(0 0 20px rgba(212, 168, 75, 0.5))' }} />
-              </motion.div>
-              
-              <h2 className="font-cinzel text-2xl sm:text-3xl text-gold mb-3" style={{ textShadow: '0 0 30px rgba(185, 78, 106, 0.5), 0 0 60px rgba(185, 78, 106, 0.3)' }}>
-                Weaving Your Spell
-              </h2>
-              
-              <p className="font-crimson text-lg text-cream/80 mb-2">
-                {spellSpec.persona_id !== 'choose_for_me' 
-                  ? `${PERSONAS.find(p => p.id === spellSpec.persona_id)?.name} is crafting something special for you`
-                  : 'Finding the perfect guide for your intention'
-                }
-              </p>
+              {selectedGuide ? (
+                /* Guide has been selected - show their info */
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8 }}
+                >
+                  {/* Guide avatar */}
+                  <div className="w-24 h-24 mx-auto mb-6 rounded-full overflow-hidden border-2 border-gold/50 flex items-center justify-center bg-navy-dark/50">
+                    <span className="text-5xl">{selectedGuide.emoji}</span>
+                  </div>
+                  
+                  <h2 className="font-cinzel text-2xl sm:text-3xl text-gold mb-2">
+                    {selectedGuide.name}
+                  </h2>
+                  <p className="font-italiana text-lg text-cream/80 mb-6">
+                    {selectedGuide.title}
+                  </p>
+                  
+                  {/* Why this guide */}
+                  <div className="bg-black/30 backdrop-blur-sm rounded-lg p-5 mb-6 border border-gold/20">
+                    <p className="font-crimson-text text-cream/80 text-base italic leading-relaxed">
+                      {selectedGuide.name === 'Shigg' && "Shigg was chosen because your intention speaks to the quiet magic of everyday moments. She knows the kitchen-table wisdom that mends what words cannot."}
+                      {selectedGuide.name === 'Cathleen' && "Cathleen steps forward because your need calls for fierce protection. She carries the old songs that build walls nothing unwanted can cross."}
+                      {selectedGuide.name === 'Katherine' && "Katherine has taken your case. Your intention requires precision and the willingness to look at what others avoid."}
+                      {selectedGuide.name === 'Theresa' && "Theresa recognizes the patterns in your intention. She's already pulling the files, connecting the evidence."}
+                      {selectedGuide.name === 'Brenda' && "Brenda has received your letter. Your intention carries the weight of family and memory. She's composing her reply with care."}
+                    </p>
+                  </div>
+                </motion.div>
+              ) : (
+                /* Guide not yet selected - show finding guide state */
+                <>
+                  <motion.div
+                    animate={{ 
+                      scale: [1, 1.05, 1],
+                      opacity: [0.8, 1, 0.8]
+                    }}
+                    transition={{ 
+                      repeat: Infinity, 
+                      duration: 2, 
+                      ease: 'easeInOut' 
+                    }}
+                    className="w-24 h-24 mx-auto mb-8 relative"
+                  >
+                    <div className="absolute inset-0 rounded-full border-2 border-gold/40 animate-pulse" />
+                    <div className="absolute inset-2 rounded-full border border-crimson/30" />
+                    <Sparkles className="w-full h-full text-gold p-4" style={{ filter: 'drop-shadow(0 0 20px rgba(212, 168, 75, 0.5))' }} />
+                  </motion.div>
+                  
+                  <h2 className="font-cinzel text-2xl sm:text-3xl text-gold mb-3" style={{ textShadow: '0 0 30px rgba(185, 78, 106, 0.5), 0 0 60px rgba(185, 78, 106, 0.3)' }}>
+                    Finding Your Guide
+                  </h2>
+                  
+                  <p className="font-crimson text-lg text-cream/80 mb-2">
+                    The right guide is emerging for your intention...
+                  </p>
+                </>
+              )}
               
               <p className="font-montserrat text-xs text-gold/50 tracking-widest uppercase mt-6">
                 This may take a moment...
@@ -972,6 +1022,39 @@ export const SpellRequest = () => {
             <span>✨</span>
             <span className="text-crimson/60">❦</span>
             <span>☾</span>
+          </div>
+        </div>
+      </DarkSection>
+
+      {/* Meet Your Guides Section - Bottom of Page */}
+      <DarkSection className="py-12 px-4 sm:px-6" variant="warm">
+        <div className="max-w-5xl mx-auto">
+          <h2 className="font-cinzel text-2xl text-center mb-2" style={{ color: '#C8A44D' }}>
+            Meet Your Guides
+          </h2>
+          <p className="text-center text-cream/60 font-crimson-text mb-10">
+            Each guide brings unique wisdom. Click to learn more or work with them directly.
+          </p>
+
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+            {PERSONAS.filter(p => p.id !== 'choose_for_me').map(persona => (
+              <Link
+                key={persona.id}
+                to={`/guides/${persona.id}`}
+                className="group text-center p-4 rounded-lg border border-gold/20 hover:border-gold/50 transition-all bg-navy-mid/30 hover:bg-navy-mid/50"
+              >
+                {/* Guide avatar */}
+                <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-3 rounded-full overflow-hidden border-2 border-gold/30 group-hover:border-gold transition-colors flex items-center justify-center bg-navy-dark/50">
+                  <span className="text-3xl">{persona.emoji}</span>
+                </div>
+                <h3 className="font-cinzel text-sm text-cream group-hover:text-gold transition-colors">
+                  {persona.name}
+                </h3>
+                <p className="text-xs text-cream/50 font-crimson-text mt-1">
+                  {persona.title}
+                </p>
+              </Link>
+            ))}
           </div>
         </div>
       </DarkSection>
