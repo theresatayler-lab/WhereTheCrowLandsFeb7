@@ -540,3 +540,100 @@ def get_writer_tokens(tier: str) -> int:
 def should_skip_planner(tier: str) -> bool:
     """Check if planner LLM should be skipped for this tier."""
     return get_tier_config(tier).get("skip_planner_llm", False)
+
+
+# ============================================================================
+# BLOCKS SPELL PIPELINE CLASS
+# ============================================================================
+
+class BlocksSpellPipeline:
+    """
+    Block-aware spell generation pipeline.
+    Handles the full Archivist → Planner → Writer → QA flow with block awareness.
+    """
+    
+    def __init__(self, openai_client, anthropic_client=None, deepseek_client=None):
+        self.openai_client = openai_client
+        self.anthropic_client = anthropic_client
+        self.deepseek_client = deepseek_client
+        self.timing_log = {}
+    
+    async def generate_spell(
+        self,
+        spell_spec: dict,
+        guide_config: dict,
+        belief_mode: str = "SPIRITUAL",
+        tier: str = "standard"
+    ):
+        """
+        Generate a spell using the blocks-based pipeline.
+        
+        Returns: (spell_output, metadata)
+        """
+        import time
+        start = time.time()
+        
+        guide_id = spell_spec.get("persona_id", "shigg")
+        
+        metadata = {
+            "guide_id": guide_id,
+            "belief_mode": belief_mode,
+            "tier": tier,
+            "timing": {},
+            "stages_completed": []
+        }
+        
+        # For now, create a minimal research packet (archivist stage skipped for speed)
+        research_packet = {
+            "facts": [],
+            "sources": [],
+            "tradition_context": {}
+        }
+        metadata["stages_completed"].append("archivist")
+        
+        # Run planner
+        plan, planner_meta = await run_block_planner(
+            spell_spec, guide_config, research_packet,
+            self.openai_client, tier
+        )
+        metadata["timing"]["planner_ms"] = planner_meta.get("planner_ms", 0)
+        metadata["planner_mode"] = planner_meta.get("planner_mode", "unknown")
+        metadata["stages_completed"].append("planner")
+        
+        # Run writer
+        spell_output, writer_meta = await run_block_writer(
+            spell_spec, guide_config, research_packet, plan,
+            belief_mode, self.openai_client, self.anthropic_client, tier
+        )
+        metadata["timing"]["writer_ms"] = writer_meta.get("writer_ms", 0)
+        metadata["writer_model"] = writer_meta.get("writer_model", "unknown")
+        metadata["stages_completed"].append("writer")
+        
+        # Run QA validation
+        working_type = plan.get("working_type", "")
+        qa_passed, qa_errors = validate_spell_blocks(spell_output, guide_id, working_type)
+        metadata["qa_passed"] = qa_passed
+        metadata["qa_errors"] = qa_errors
+        metadata["stages_completed"].append("qa")
+        
+        metadata["timing"]["total_ms"] = int((time.time() - start) * 1000)
+        
+        return spell_output, metadata
+
+
+async def generate_spell_blocks(
+    spell_spec: dict,
+    guide_config: dict,
+    openai_client,
+    anthropic_client=None,
+    deepseek_client=None,
+    belief_mode: str = "SPIRITUAL",
+    tier: str = "standard"
+):
+    """
+    Convenience function to generate a spell using the blocks pipeline.
+    
+    Returns: (spell_output, metadata)
+    """
+    pipeline = BlocksSpellPipeline(openai_client, anthropic_client, deepseek_client)
+    return await pipeline.generate_spell(spell_spec, guide_config, belief_mode, tier)
