@@ -1,215 +1,276 @@
-# Spell Tier System - Adaptive Quality Routing
-# Routes spells to appropriate AI model chains based on context
+# Spell Tiers - Token budgets and configuration for spell generation tiers
+# Defines the resource allocation for QUICK, STANDARD, and PREMIUM spells
 
-from typing import Dict, Any, Optional, Tuple
-from enum import Enum
+from typing import Dict, Any
 
-class SpellTier(Enum):
-    QUICK = "quick"      # 15-25 seconds - DeepSeek → Sonnet
-    STANDARD = "standard" # 30-45 seconds - DeepSeek → Sonnet (enhanced)
-    DEEP = "deep"        # 60-90 seconds - DeepSeek + Opus → Sonnet
+# ============================================================================
+# TIER DEFINITIONS
+# ============================================================================
 
-# =============================================================================
-# MODEL CONFIGURATIONS PER TIER
-# =============================================================================
-
-TIER_CONFIGS = {
-    SpellTier.QUICK: {
-        "research_model": "deepseek-chat",
-        "research_tokens": 800,
-        "research_temperature": 0.5,
-        "writer_model": "claude-sonnet-4-20250514",
-        "writer_tokens": 1500,
-        "writer_temperature": 0.7,
-        "storyteller_model": None,  # Skip storytelling stage
-        "expected_time_seconds": 20,
-        "description": "Fast spells for daily practice"
+SPELL_TIERS = {
+    "quick": {
+        "name": "Quick Spell",
+        "description": "Fast, focused spell for simple intentions",
+        "max_generation_time_seconds": 30,
+        "stages": {
+            "archivist": {
+                "enabled": True,
+                "model": "deepseek-chat",
+                "max_tokens": 1500,
+                "timeout_seconds": 10
+            },
+            "planner": {
+                "enabled": False,  # Uses deterministic plan
+                "model": None,
+                "max_tokens": 0,
+                "timeout_seconds": 0
+            },
+            "writer": {
+                "enabled": True,
+                "model": "gpt-4o",
+                "max_tokens": 2500,
+                "timeout_seconds": 30
+            },
+            "qa": {
+                "enabled": True,
+                "programmatic_only": True
+            }
+        },
+        "block_limits": {
+            "max_blocks": 5,
+            "max_materials": 3,
+            "max_steps": 4
+        },
+        "user_tiers_allowed": ["free", "standard", "premium", "founding"]
     },
-    SpellTier.STANDARD: {
-        "research_model": "deepseek-chat",
-        "research_tokens": 1200,
-        "research_temperature": 0.6,
-        "writer_model": "claude-sonnet-4-20250514",
-        "writer_tokens": 2500,
-        "writer_temperature": 0.8,
-        "storyteller_model": "claude-sonnet-4-20250514",
-        "storyteller_tokens": 1000,
-        "expected_time_seconds": 40,
-        "description": "Rich spells with good depth"
+    
+    "standard": {
+        "name": "Standard Spell",
+        "description": "Full spell with all pipeline stages",
+        "max_generation_time_seconds": 90,
+        "stages": {
+            "archivist": {
+                "enabled": True,
+                "model": "deepseek-chat",
+                "max_tokens": 2500,
+                "timeout_seconds": 15
+            },
+            "planner": {
+                "enabled": True,
+                "model": "gpt-4o-mini",  # Faster than gpt-4o for standard
+                "max_tokens": 1500,
+                "timeout_seconds": 15
+            },
+            "writer": {
+                "enabled": True,
+                "model": "claude-sonnet-4-20250514",
+                "fallback_model": "gpt-4o",
+                "max_tokens": 3200,  # Increased from 2500 for Theresa's evidence_cards
+                "timeout_seconds": 45
+            },
+            "qa": {
+                "enabled": True,
+                "programmatic_only": False,
+                "llm_rewrite_on_fail": True
+            }
+        },
+        "block_limits": {
+            "max_blocks": 8,
+            "max_materials": 5,
+            "max_steps": 6
+        },
+        "user_tiers_allowed": ["free", "standard", "premium", "founding"]
     },
-    SpellTier.DEEP: {
-        "research_model": "deepseek-chat",
-        "research_tokens": 2000,
-        "research_temperature": 0.7,
-        "reasoning_model": "claude-opus-4-20250514",  # Extra reasoning stage
-        "reasoning_tokens": 1500,
-        "writer_model": "claude-sonnet-4-20250514",
-        "writer_tokens": 3500,
-        "writer_temperature": 0.85,
-        "storyteller_model": "claude-sonnet-4-20250514",
-        "storyteller_tokens": 1500,
-        "expected_time_seconds": 75,
-        "description": "Maximum depth, research, and beauty"
+    
+    "premium": {
+        "name": "Premium Spell",
+        "description": "Extended spell with maximum detail and research",
+        "max_generation_time_seconds": 180,
+        "stages": {
+            "archivist": {
+                "enabled": True,
+                "model": "deepseek-chat",
+                "max_tokens": 3500,
+                "timeout_seconds": 20
+            },
+            "planner": {
+                "enabled": True,
+                "model": "gpt-4o",  # Full model for premium
+                "max_tokens": 2500,
+                "timeout_seconds": 20
+            },
+            "writer": {
+                "enabled": True,
+                "model": "claude-sonnet-4-20250514",
+                "fallback_model": "gpt-4o",
+                "max_tokens": 4000,
+                "timeout_seconds": 60
+            },
+            "qa": {
+                "enabled": True,
+                "programmatic_only": False,
+                "llm_rewrite_on_fail": True,
+                "max_rewrites": 2
+            }
+        },
+        "block_limits": {
+            "max_blocks": 12,
+            "max_materials": 7,
+            "max_steps": 8
+        },
+        "user_tiers_allowed": ["premium", "founding"]
     }
 }
 
-# =============================================================================
-# PERSONA-BASED DEFAULT TIERS
-# =============================================================================
 
-PERSONA_DEFAULT_TIERS = {
-    "shigg": SpellTier.STANDARD,      # Cozy, domestic - doesn't need deep research
-    "cathleen": SpellTier.STANDARD,   # Voice-focused, needs good prose
-    "katherine": SpellTier.DEEP,      # Academic spiritualist - needs sources!
-    "theresa": SpellTier.STANDARD,    # Family lore, can go deep for ancestral
-    "brenda": SpellTier.STANDARD,     # Family chronicler, warm and nostalgic
-}
+# ============================================================================
+# TIER DETECTION
+# ============================================================================
 
-# =============================================================================
-# INTENTION-BASED TIER UPGRADES
-# =============================================================================
+def get_tier_for_intention(intention: str, user_tier: str = "free") -> str:
+    """
+    Determine the appropriate spell tier based on intention and user subscription.
+    
+    Returns: "quick", "standard", or "premium"
+    """
+    intention_lower = intention.lower()
+    word_count = len(intention.split())
+    
+    # Quick tier indicators
+    quick_words = ["quick", "simple", "calm", "peace", "relax", "breath", "moment", "easy"]
+    is_quick = any(word in intention_lower for word in quick_words) and word_count < 15
+    
+    # Premium tier indicators
+    premium_words = ["ceremony", "ritual", "ancestral", "binding", "complex", "deep", "formal"]
+    is_premium = any(word in intention_lower for word in premium_words)
+    
+    # Check user tier permissions
+    if is_quick:
+        return "quick"
+    
+    if is_premium and user_tier in ["premium", "founding"]:
+        return "premium"
+    
+    return "standard"
 
-# Keywords that trigger DEEP tier regardless of other factors
-DEEP_TRIGGER_KEYWORDS = [
-    "ancestor", "ancestral", "spirit", "death", "deceased", "departed",
-    "protection", "ward", "shield", "boundary", "banish",
-    "binding", "curse", "hex", "revenge",  # Needs ethical depth
-    "séance", "medium", "channeling", "communication",
-    "initiation", "dedication", "oath",
-    "complex", "deep", "thorough", "research", "full ritual"
-]
-
-# Keywords that allow QUICK tier
-QUICK_ELIGIBLE_KEYWORDS = [
-    "calm", "peace", "relax", "focus", "energy", "morning",
-    "simple", "quick", "fast", "daily", "routine",
-    "tea", "candle", "breath", "ground", "center"
-]
-
-# =============================================================================
-# TIER SELECTION LOGIC
-# =============================================================================
 
 def select_spell_tier(
-    persona_id: str,
-    intention: str,
-    user_tier: str = "free",  # "free", "pro", "paid"
+    persona_id: str = None,
+    intention: str = "",
+    user_tier: str = "free",
     is_first_spell: bool = False,
-    explicit_choice: Optional[str] = None  # User can override
-) -> Tuple[SpellTier, str]:
+    explicit_choice: str = None
+) -> tuple:
     """
-    Select the appropriate spell tier based on context.
+    Select the appropriate spell tier based on multiple factors.
     
-    Returns: (SpellTier, reason_string)
+    Returns: (SpellTier enum, reason string)
     """
-    intention_lower = intention.lower() if intention else ""
-    
-    # 1. Explicit user choice takes priority
+    # If user explicitly chose a tier
     if explicit_choice:
         if explicit_choice == "quick":
-            return SpellTier.QUICK, "User requested quick spell"
-        elif explicit_choice == "deep":
-            if user_tier in ("pro", "paid"):
-                return SpellTier.DEEP, "User requested deep spell (Pro feature)"
-            else:
-                return SpellTier.STANDARD, "Deep requested but user is free tier"
+            return SpellTier.QUICK, "User requested quick tier"
+        elif explicit_choice == "premium" and user_tier in ["premium", "founding"]:
+            return SpellTier.PREMIUM, "User requested premium tier"
         elif explicit_choice == "standard":
-            return SpellTier.STANDARD, "User requested standard spell"
+            return SpellTier.STANDARD, "User requested standard tier"
     
-    # 2. First spell ever gets the full treatment (make a great impression)
+    # First spell gets standard treatment for good first impression
     if is_first_spell:
-        return SpellTier.DEEP, "First spell - making a great first impression"
+        return SpellTier.STANDARD, "First spell - full experience"
     
-    # 3. Pro users get DEEP by default for complex intentions
-    if user_tier in ("pro", "paid"):
-        if any(kw in intention_lower for kw in DEEP_TRIGGER_KEYWORDS):
-            return SpellTier.DEEP, f"Pro user + deep intention detected"
+    # Detect tier from intention
+    tier_str = get_tier_for_intention(intention, user_tier)
     
-    # 4. Check for DEEP trigger keywords (ancestral, protection, etc.)
-    for keyword in DEEP_TRIGGER_KEYWORDS:
-        if keyword in intention_lower:
-            # Free users get STANDARD for deep topics, Pro gets DEEP
-            if user_tier in ("pro", "paid"):
-                return SpellTier.DEEP, f"Deep keyword '{keyword}' + Pro user"
-            else:
-                return SpellTier.STANDARD, f"Deep keyword '{keyword}' (upgrade to Pro for full depth)"
-    
-    # 5. Katherine always gets at least STANDARD, often DEEP
-    if persona_id == "katherine":
-        if user_tier in ("pro", "paid"):
-            return SpellTier.DEEP, "Katherine requires thorough research (Pro)"
-        return SpellTier.STANDARD, "Katherine requires good research"
-    
-    # 6. Check for QUICK eligible keywords
-    if any(kw in intention_lower for kw in QUICK_ELIGIBLE_KEYWORDS):
-        return SpellTier.QUICK, f"Simple intention suitable for quick spell"
-    
-    # 7. Default to persona's default tier
-    default = PERSONA_DEFAULT_TIERS.get(persona_id, SpellTier.STANDARD)
-    return default, f"Default tier for {persona_id}"
+    if tier_str == "quick":
+        return SpellTier.QUICK, "Simple intention suitable for quick spell"
+    elif tier_str == "premium":
+        return SpellTier.PREMIUM, "Complex intention with premium features"
+    else:
+        return SpellTier.STANDARD, "Standard spell generation"
 
 
-def get_tier_config(tier: SpellTier) -> Dict[str, Any]:
-    """Get the full configuration for a tier"""
-    return TIER_CONFIGS[tier]
+def get_tier_config(tier: str) -> Dict[str, Any]:
+    """Get the full configuration for a spell tier."""
+    return SPELL_TIERS.get(tier, SPELL_TIERS["standard"])
 
 
-def estimate_cost(tier: SpellTier) -> Dict[str, float]:
-    """
-    Estimate cost per spell for a tier (approximate, in USD)
-    Based on current API pricing as of 2025
-    """
-    # Approximate costs per 1M tokens (input/output averaged)
-    COSTS_PER_1M = {
-        "deepseek-chat": 0.50,      # Very cheap
-        "claude-sonnet-4-20250514": 15.00,  # Mid-range
-        "claude-opus-4-20250514": 75.00,    # Premium
-        "gpt-4o": 25.00,            # Backup only
-    }
-    
-    config = TIER_CONFIGS[tier]
-    
-    # Calculate based on token usage
-    research_cost = (config["research_tokens"] / 1_000_000) * COSTS_PER_1M["deepseek-chat"]
-    writer_cost = (config["writer_tokens"] / 1_000_000) * COSTS_PER_1M[config["writer_model"]]
-    
-    storyteller_cost = 0
-    if config.get("storyteller_model"):
-        storyteller_cost = (config["storyteller_tokens"] / 1_000_000) * COSTS_PER_1M[config["storyteller_model"]]
-    
-    reasoning_cost = 0
-    if config.get("reasoning_model"):
-        reasoning_cost = (config.get("reasoning_tokens", 0) / 1_000_000) * COSTS_PER_1M[config["reasoning_model"]]
-    
-    total = research_cost + writer_cost + storyteller_cost + reasoning_cost
-    
-    return {
-        "research": round(research_cost, 6),
-        "reasoning": round(reasoning_cost, 6),
-        "storyteller": round(storyteller_cost, 6),
-        "writer": round(writer_cost, 6),
-        "total_per_spell": round(total, 5),
-        "spells_per_dollar": round(1 / total, 1) if total > 0 else 0
-    }
+def get_writer_tokens(tier: str) -> int:
+    """Get the writer token budget for a tier."""
+    config = get_tier_config(tier)
+    return config.get("stages", {}).get("writer", {}).get("max_tokens", 3200)
 
 
-# =============================================================================
-# FALLBACK CONFIGURATION (GPT-4o as backup)
-# =============================================================================
+def get_planner_model(tier: str) -> str:
+    """Get the planner model for a tier."""
+    config = get_tier_config(tier)
+    return config.get("stages", {}).get("planner", {}).get("model", "gpt-4o-mini")
 
-FALLBACK_CONFIG = {
-    "research_model": "gpt-4o",
-    "research_tokens": 2000,
-    "research_temperature": 0.5,
-    "writer_model": "gpt-4o",
-    "writer_tokens": 3000,
-    "writer_temperature": 0.8,
-    "planner_model": "gpt-4o",
-    "planner_tokens": 1500,
-    "planner_temperature": 0.6,
-    "note": "Fallback mode - Claude/DeepSeek unavailable"
-}
 
-def get_fallback_config() -> Dict[str, Any]:
-    """Return GPT-4o fallback configuration"""
-    return FALLBACK_CONFIG
+def is_planner_enabled(tier: str) -> bool:
+    """Check if the planner stage is enabled for a tier."""
+    config = get_tier_config(tier)
+    return config.get("stages", {}).get("planner", {}).get("enabled", True)
+
+
+def get_block_limits(tier: str) -> Dict[str, int]:
+    """Get the block limits for a tier."""
+    config = get_tier_config(tier)
+    return config.get("block_limits", {
+        "max_blocks": 7,
+        "max_materials": 5,
+        "max_steps": 6
+    })
+
+
+def user_can_access_tier(user_tier: str, spell_tier: str) -> bool:
+    """Check if a user tier can access a spell tier."""
+    config = get_tier_config(spell_tier)
+    allowed = config.get("user_tiers_allowed", ["free", "standard", "premium", "founding"])
+    return user_tier in allowed
+
+
+# ============================================================================
+# TIMING HELPERS
+# ============================================================================
+
+def get_stage_timeout(tier: str, stage: str) -> int:
+    """Get the timeout in seconds for a specific stage."""
+    config = get_tier_config(tier)
+    stage_config = config.get("stages", {}).get(stage, {})
+    return stage_config.get("timeout_seconds", 30)
+
+
+def get_max_generation_time(tier: str) -> int:
+    """Get the maximum total generation time for a tier."""
+    config = get_tier_config(tier)
+    return config.get("max_generation_time_seconds", 90)
+
+
+# ============================================================================
+# EXPORTS
+# ============================================================================
+
+from enum import Enum
+
+# Enum class for tier constants
+class SpellTier(Enum):
+    QUICK = "quick"
+    STANDARD = "standard"
+    PREMIUM = "premium"
+
+
+__all__ = [
+    "SPELL_TIERS",
+    "SpellTier",
+    "get_tier_for_intention",
+    "select_spell_tier",
+    "get_tier_config",
+    "get_writer_tokens",
+    "get_planner_model",
+    "is_planner_enabled",
+    "get_block_limits",
+    "user_can_access_tier",
+    "get_stage_timeout",
+    "get_max_generation_time"
+]

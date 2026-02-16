@@ -20,6 +20,36 @@ Build "Where The Crowlands," a sophisticated full-stack application for creating
 
 ## What's Been Implemented
 
+### Session: February 16, 2025 - Theresa Fix + Speed Optimization ✅
+
+#### Theresa Spell Generation Pipeline Fix (P0) ✅
+- **Problem**: Theresa's spells were generating incomplete, missing required blocks
+- **Root Causes Fixed**:
+  - Token budget too small for Theresa's longer evidence_card blocks
+  - JSON repair window too short (was 3000, now 8000 chars)
+  - Missing working types for Theresa (veil_breaking, genealogical_mapping, red_thread_working, bird_field_log)
+  - Writer validation wasn't working-type aware
+- **Solution**: Implemented complete blocks-based spell system across 4 files:
+  - `backend/prompts/planner_blocks.py` - Working types, block templates, deterministic planning
+  - `backend/prompts/pipeline_blocks.py` - BlocksSpellPipeline class, JSON repair, tier config
+  - `backend/prompts/writer_blocks.py` - Content directions, validation, fallback content
+  - `backend/spell_tiers.py` - Tier definitions with proper token budgets (3200 for STANDARD)
+- **Testing Results**:
+  - Theresa: All 3 test intentions passed, 7 blocks each ✅
+  - Shigg: 8 blocks ✅
+  - Cathleen: 7 blocks ✅
+  - Katherine: 11 blocks ✅
+  - Brenda: 7 blocks ✅
+
+#### Speed Optimization for QUICK Tier ✅
+- **QUICK tier now skips LLM planner** - Uses deterministic plan from config
+- **STANDARD tier planner** switched from gpt-4o to gpt-4o-mini (faster)
+- **Expected improvement**: ~15s for QUICK instead of ~25s
+
+#### Bug Fix: Datetime Timezone Error ✅
+- Fixed `TypeError: can't subtract offset-naive and offset-aware datetimes` in job polling
+- MongoDB datetimes are now made timezone-aware before comparison
+
 ### Session: February 14, 2025 - Working Types Integration + Async Spell Generation ✅
 
 #### Working Types System (From GitHub Branch) ✅

@@ -1,198 +1,177 @@
 <analysis>**original_problem_statement:**
-The user's initial request was to finalize the Timeline feature. This quickly expanded into a series of user-driven requests for deep documentation and clarification on the application's complex AI systems.
+The initial goal was to resolve pending tasks and bug fixes. The scope expanded significantly to include deploying new features from the user's GitHub branch, most notably a foundational Guide Portals system for the five AI personas. The session then became a focused effort to debug and stabilize this new system, addressing a user-provided audit. Key fixes included:
 
-The key tasks addressed were:
-1.  **Finalizing Timeline Network View:** A bug in the graph API endpoint was fixed. The component was verified to be functional.
-2.  **Integrating Tiered AI System:** The Quick, Standard, and Deep spell generation tiers were integrated into the main spell endpoint, making the adaptive AI system live.
-3.  **Switching to Claude as Primary AI:** The spell generation pipeline was re-wired to use Claude Sonnet as the primary writer, with GPT-4o as a fallback. This involved fixing several sync/async bugs in the process.
-4.  **Creating Comprehensive Documentation:** Upon user request, the agent generated multiple in-depth briefing documents and downloadable CSV files explaining:
-    *   The entire project architecture (, Complete Project Briefing).
-    *   The Invisible Helpers feature and its backend prompts.
-    *   The Timeline & Network graph data structure and logic.
-    *   The Persona & Spell system, including how to add new personas.
-5.  **Data Integrity and Expansion:** The agent initially removed broken timeline connections but, upon user correction, restored them. It then used DeepSeek to research and create the 16 missing historical events, expanding the timeline from 94 to 110 events.
-6.  **UI Enhancement for Data Clarity:** A color-coding system was implemented on the timeline to distinguish between Linked connections (to existing events) and Referenced connections (to events not yet created), addressing a user request for better data representation.
-7.  **AI Cost Analysis:** The agent analyzed the cost of the current AI model setup and proposed cost-saving optimizations in response to user concerns.
+1.  **Critical Bug Fixes:** Resolved issues with asynchronous job polling (datetime errors), incorrect spell block rendering in the UI, and missing routing for two guides in a legacy endpoint.
+2.  **Research Pipeline Enhancement:** Addressed a bug where spell research sources were static (Owen Davies). The fix involved enriching sources with proper URLs from an internal encyclopedia and creating guide-specific fallback sources for when the primary research AI (DeepSeek) fails.
+3.  **Theresa's Spell Generation:** The user identified that one of the five guides, Theresa, consistently fails to generate complete spells. The user has provided a detailed analysis and a set of four files with specific code changes to fix this complex AI pipeline issue. The current task is to implement and test this fix.
 
 **User's preferred language**: English
 
 **what currently exists?**
-The application is stable and significantly more feature-rich and well-documented.
--   **Expanded Timeline:** The timeline now contains 110 events.
--   **Enhanced Connections UI:** Timeline event cards now display connections with color-coding:  for clickable links to existing events, and  for non-clickable references to events that have not yet been created. This provides clarity on data completeness. The Network View also reflects these connections.
--   **Live Tiered AI System:** The spell generation endpoint () is now fully integrated with the tiered system. It correctly routes requests to DeepSeek (for research) and Claude Sonnet (for writing), with GPT-4o as a fallback.
--   **Claude as Primary Writer:** The system is configured and verified to use the user's Anthropic API key for Claude Sonnet as the main creative writer.
--   **Extensive Documentation:** A new  file exists at the root for AI assistant onboarding. Multiple comprehensive briefing documents and downloadable CSV files detailing the Timeline, Network, Spell, and Persona systems are available in .
--   **Partial Enhancement:** 46 of the 110 timeline events have AI-enhanced narrative descriptions.
+The application is a spell-generation platform featuring five distinct AI personas (guides).
+-   **Guide Portals:** A conversational UI exists for each guide at . The UI shell, routing, and backend configuration are in place.
+-   **Asynchronous Spell Generation:** A robust system using  and polling  is used to prevent API timeouts during long AI generation tasks.
+-   **AI Pipeline:** A multi-stage pipeline (Archivist -> Planner -> Writer -> QA) generates spells. This pipeline has known reliability issues, particularly with the Archivist (DeepSeek) stage, and now requires a specific fix for the Theresa guide.
+-   **Source Enrichment:** The backend now automatically enriches spell sources with URLs from an internal  and uses guide-specific fallbacks when the research AI fails.
+-   **Existing Systems:** The codebase contains complete but currently non-functional/blocked features for user authentication, a Grimoire (saved spells), and Stripe-based subscriptions.
 
 **Last working item**:
--   Last item agent was working: Addressing the user's concern about the high cost of Claude models. The agent analyzed the current model usage ( for writing,  for DEEP tier reasoning) and explained that Claude 4.6 with variable thinking does not exist. The agent proposed a cost-saving optimization.
--   Status: USER VERIFICATION PENDING
--   Agent Testing Done: Y (Agent verified the current model configuration by inspecting the code.)
--   Which testing method agent to use? NA (Waiting for user decision).
+-   Last item agent was working: The user provided a detailed breakdown of why Theresa's spell generation is failing and supplied the exact code changes needed across four files to fix it. The agent's last action was to acknowledge these instructions. The next step is to implement them.
+-   Status: NOT STARTED
+-   Agent Testing Done: N
+-   Which testing method agent to use? both
 -   User Testing Done: N
 
 **All Pending/In progress Issue list**:
--   Issue 1: User decision pending on AI cost optimization. (P0)
--   Issue 2: Batch enhancement of timeline events is pending. (P1)
--   Issue 3: The timeline contains 73 new referenced connections pointing to events that do not yet exist. (P2)
--   Issue 4: Stripe Integration for the paid flow is still broken/blocked. (P3)
--   Issue 5: API performance and timeouts, a known recurring issue, have not been addressed. (P3)
+-   Issue 1: Theresa's spell generation pipeline is broken (P0)
+-   Issue 2: Stripe-based subscriptions are blocked (P1)
+-   Issue 3: Dual spell counter systems need a merge decision (P2)
+-   Issue 4: AI research pipeline relies heavily on fallbacks instead of being fully dynamic (P2)
+-   Issue 5: Low-priority security issues from the audit remain unaddressed (P3)
 
 **Issues Detail**:
--   **Issue 1: User decision pending on AI cost optimization.**
-    -   **Attempted fixes**: The agent analyzed the current costs and proposed switching the QUICK spell tier to a cheaper model like Claude Haiku or GPT-4o-mini to significantly reduce costs for simple spells.
-    -   **Next debug checklist**: Await user confirmation to proceed with implementing one of the proposed cost-saving options in .
-    -   **Why fix this issue and what will be achieved with the fix?**: This will directly address the user's concern about high operational costs, making the application more sustainable to use.
-    -   **Status**: BLOCKED (on user response)
-    -   **Is recurring issue?**: N
-    -   **Should Test frontend/backend/both after fix?**: Backend (by testing the spell generation endpoint and checking logs for correct model routing).
-    -   **Blocked on other issue**: None.
-
--   **Issue 2: Batch enhancement of timeline events**
-    -   **Attempted fixes**: None in this session. The previous session's job did not complete. Now that the event list has grown to 110, the task is larger.
+-   **Issue 1: Theresa's spell generation pipeline is broken**
+    -   **Attempted fixes**: The user has diagnosed the root cause, which involves token limits, incorrect prompt logic, and insufficient JSON repair length. They have provided the complete fix.
     -   **Next debug checklist**:
-        -   Confirm with the user if they want to proceed with enhancing the remaining 64 events.
-        -   If yes, launch the batch enhancement script () as a background process.
-        -   Monitor the script's progress via logs.
-    -   **Why fix this issue and what will be achieved with the fix?**: This will make the Factual/Narrative toggle functional across all 110 events, providing a consistent, high-quality user experience.
+        1.  Apply the user-provided changes to the following four files: , , , and .
+        2.  Restart the backend service.
+        3.  Execute the user's detailed testing plan:
+            -   Test Theresa with three distinct intentions (break a family pattern, family secret, trace my ancestry).
+            -   For each test, verify that all 7 required spell blocks render correctly, sources and ethics statements are present, and the correct accent color (rose) is used.
+            -   Perform regression tests on the other four guides (Shigg, Cathleen, Katherine, Brenda) to ensure their functionality has not been affected.
+            -   Monitor  for any errors during generation.
+    -   **Why fix this issue and what will be achieved with the fix?**: This will make one of the five core guides functional, completing the core spell-generation capability for all personas.
     -   **Status**: NOT STARTED
+    -   **Is recurring issue?**: Y
+    -   **Should Test frontend/backend/both after fix?**: Both
+    -   **Blocked on other issue**: None
+
+-   **Issue 2: Stripe-based subscriptions are fully coded but blocked**
+    -   **Attempted fixes**: The agent previously identified the relevant code in .
+    -   **Next debug checklist**: Obtain  and  from the user and set them in the  file.
+    -   **Why fix this issue and what will be achieved with the fix?**: This is the sole blocker to enabling monetization for the application.
+    -   **Status**: BLOCKED
+    -   **Is recurring issue?**: Y
+    -   **Should Test frontend/backend/both after fix?**: Both
+    -   **Blocked on other issue**: Awaiting user credentials.
+
+-   **Issue 3: Dual spell counter systems need a merge decision**
+    -   **Attempted fixes**: The agent identified the two separate systems (one for anonymous leads, one for registered users).
+    -   **Next debug checklist**: Await a decision from the user on whether to merge these two counters into a single, unified system.
+    -   **Why fix this issue and what will be achieved with the fix?**: Unifies the free user experience and prevents users from circumventing the intended 3-spell limit.
+    -   **Status**: BLOCKED
     -   **Is recurring issue?**: N
-    -   **Should Test frontend/backend/both after fix?**: Frontend (to verify the toggle works on newly enhanced events).
+    -   **Should Test frontend/backend/both after fix?**: Backend
+    -   **Blocked on other issue**: Awaiting user decision.
+
+-   **Issue 4: AI research pipeline relies heavily on fallbacks instead of being fully dynamic**
+    -   **Attempted fixes**: The agent implemented guide-specific fallback sources as a mitigation strategy.
+    -   **Next debug checklist**: Investigate the root cause of the DeepSeek Archivist stage failures (timeouts, malformed JSON). Consider implementing a retry mechanism or exploring more robust prompting strategies.
+    -   **Why fix this issue and what will be achieved with the fix?**: Fulfills the user's vision of having truly unique, dynamically researched sources for every spell, rather than a rotating set of fallbacks.
+    -   **Status**: IN PROGRESS
+    -   **Is recurring issue?**: Y
+    -   **Should Test frontend/backend/both after fix?**: Backend
     -   **Blocked on other issue**: None.
 
--   **Issue 3: The timeline contains 73 new referenced connections.**
-    -   **Attempted fixes**: The UI now gracefully handles these by displaying them as non-clickable, amber-colored references.
-    -   **Next debug checklist**: This is not a bug but an opportunity. The next step would be to get user approval to use DeepSeek to research and create these 73 missing events, further enriching the timeline.
-    -   **Why fix this issue and what will be achieved with the fix?**: Expanding the timeline with these events would turn the referenced links into live links, making the Network View more interconnected and the timeline more comprehensive.
+-   **Issue 5: Low-priority security issues from the audit remain unaddressed**
+    -   **Attempted fixes**: None. These were deferred.
+    -   **Next debug checklist**: Plan and implement fixes for Prompt Injection, JWT expiry/revocation, and Rate Limiting.
+    -   **Why fix this issue and what will be achieved with the fix?**: Hardens the application against common security vulnerabilities.
     -   **Status**: NOT STARTED
     -   **Is recurring issue?**: N
-    -   **Should Test frontend/backend/both after fix?**: Both.
+    -   **Should Test frontend/backend/both after fix?**: Backend
     -   **Blocked on other issue**: None.
 
 **In progress Task List**:
--   None. The agent completed all active tasks and is now awaiting user direction.
+-   **Task 1: Complete the Guide Portals feature**
+    -   **Where to resume**: Start by implementing the user-provided fix for Theresa's spell generation pipeline (Issue 1). Once all five guides are generating spells correctly, the next step is to implement the unique interaction models (e.g., Brenda's letter-writing UI, Cathleen's kitchen item parser) to replace the current generic chat interface.
+    -   **What will be achieved with this?**: A set of five distinct, immersive, and fully functional conversational spell-generation experiences.
+    -   **Status**: IN PROGRESS
+    -   **Should Test frontend/backend/both after fix?**: Both
+    -   **Blocked on something**: Issue 1 (Theresa's pipeline fix).
 
 **Upcoming and Future Tasks**
 -   **Upcoming Tasks**:
-    -   (P0) Implement the approved AI cost-saving optimization in .
-    -   (P1) Run the batch job to enhance the remaining 64 timeline events with narrative descriptions.
-    -   (P2) Use DeepSeek to generate the 73 missing events identified from the new referenced connections.
+    -   (P0) Implement the unique interaction models for each Guide Portal (Bird Oracle, Kitchen Magic NLP, Letter UI, etc.) after fixing Theresa's pipeline.
+    -   (P1) Obtain and integrate a valid Stripe API key to enable subscriptions.
+    -   (P2) Resolve the spell counter merge question with the user.
 -   **Future Tasks**:
-    -   Implement PDF generation for main spell workings (not just Invisible Helpers).
-    -   Re-enable the Early Access Gate in .
+    -   Re-enable the Early Access Gate.
     -   Generate images for older spells.
     -   Implement a premium PDF spell book compiler.
-    *   Activate live Stripe payments by fixing the integration.
     -   Build an Admin Interface.
+    -   Address deferred security issues (Prompt Injection, JWT, Rate Limiting).
+    -   Refactor the dual ID system (/).
 
 **Completed work in this session**
--   **Timeline Data Integrity Fixed**: Restored 19 valid historical connection references that were previously removed and created the 16 missing events using DeepSeek, expanding the timeline from 94 to 110 events.
--   **Timeline Connections UI Enhanced**: Implemented a color-coding system in  to distinguish between clickable Linked events (teal) and non-clickable Referenced events (amber).
--   **Tiered AI System Integrated**: Successfully integrated the logic from  into the  in .
--   **Primary AI Switched to Claude**: Reworked the AI pipeline in  and  to use Claude Sonnet as the primary writer, fixing sync/async bugs and ensuring the  client is always available.
--   **Graph API Bug Fixed**: Corrected a  in  that occurred when handling enhanced  data.
--   **Extensive Documentation Created**:
-    -   Generated  for AI assistant onboarding.
-    -   Created comprehensive briefing documents on the Invisible Helpers, Timeline/Network, and Persona/Spell systems.
-    -   Produced multiple downloadable CSV files with detailed data on events, connections, network nodes/edges, and personas, available in .
-
-**Earlier issues found/mentioned but not fixed**
--   **API Performance and Timeouts**: This was mentioned in the previous handoff as a recurring issue and was not addressed in this session. The complexity of the AI pipeline could exacerbate this.
-
-**Known issue recurrence from previous fork**
--   **Issue recurrence in previous fork**: API Performance and Timeouts & TOO_FEW_SOURCES Warning.
--   **Recurrence count**: 5 (for API performance)
--   **Status**: NOT STARTED
+-   **Critical Bug Fixes from User Audit:**
+    -   Fixed  so it passes the correct  object to the , allowing spell content to display correctly.
+    -   Updated  to include  and  in the routing logic for the synchronous spell endpoint.
+    -   Added a comprehensive set of  styles to  to enable proper printing of spells.
+-   **Dynamic Source URLs:** Fixed a bug where research sources were static. Implemented a function in  to enrich sources with  by matching them against an encyclopedia.
+-   **Guide-Specific Fallback Sources:** Implemented guide-specific fallback sources in  to provide more relevant research when the primary research AI fails.
+-   **Datetime Bug Fix:** Resolved a  in  related to timezone-naive vs. timezone-aware datetimes that was breaking the polling for async spell jobs.
+-   **Code Synchronization:** Pulled updated files directly from the user's GitHub branch to align the local environment with the user's latest code.
 
 **Code Architecture**
 
 
 **Key Technical Concepts**
--   **AI-Driven Data Expansion**: Using an LLM (DeepSeek) to programmatically research and generate new, structured data points (timeline events) based on missing references in the existing dataset.
--   **Dynamic UI for Data Completeness**: Rendering UI elements differently (e.g., color-coded, clickable vs. non-clickable links) based on whether the referenced data exists in the backend, providing users with transparent data integrity signals.
--   **Asynchronous Client Management**: Correctly initializing and using an  client () across different modules to prevent blocking the event loop in a FastAPI application.
--   **Generative Documentation**: Creating comprehensive documentation, briefings, and data exports (CSVs) on the fly in response to user requests for clarity and understanding of a complex system.
+-   **Asynchronous Task Processing**: Using FastAPI  to offload long-running AI spell generation and a polling mechanism on the frontend.
+-   **Configuration-Driven Architecture**: The application's logic, prompts, and content are heavily defined by large Python configuration objects in .
+-   **Multi-stage AI Pipeline**: The spell generation process follows an Archivist (research) -> Planner (structure) -> Writer (content) -> QA (validation) flow. This pipeline is complex and has known reliability issues that have been partially addressed.
 
 **key DB schema**
--   No changes to the schema. The  collection now accommodates 110 events upon seeding.
-
-**changes in tech stack**
--   No new technologies were added. The usage of the Anthropic (Claude) API was corrected and deepened, moving from a secondary/buggy implementation to the primary, working writer.
+-   : Stores user accounts, , and .
+-   : Stores spells saved to a user's Grimoire.
+-   : Tracks the status of asynchronous spell generation jobs, with a TTL.
+-   : Stores leads captured from the Invisible Helpers page.
 
 **All files of reference**
--   : The new source-of-truth for developers and AI assistants.
--   : Contains all generated CSVs and documentation.
--   : Contains the new UI logic for color-coded connections.
--   : Contains the updated spell generation endpoint and Claude client initialization.
--   : Contains the corrected async Claude call logic.
--   : Contains the 16 newly generated events.
--   : The source for persona data.
--   : The file to be modified for the proposed cost optimization.
-
-**Areas that need refactoring**:
--    is extremely large (noted as over 4000 lines) and should be broken down into modules by feature (e.g., , ).
--    is still very large (over 1500 lines) and could be broken into smaller components.
-
-**key api endpoints**
--   : Significantly updated to use the tiered system with Claude as the primary writer.
--   : Now returns 110 events instead of 94.
--   : Analyzed and documented.
+-   : Main application file containing async endpoints, bug fixes, and source enrichment logic.
+-   : Central configuration for all guide personas, prompts, and the source encyclopedia.
+-   : The React component for the conversational guide portals, which has received several critical bug fixes.
+-   : Defines AI spell structure; **will be modified** for the Theresa fix.
+-   : Defines AI pipeline logic; **will be modified** for the Theresa fix.
+-   : Defines token limits; **will be modified** for the Theresa fix.
+-   : Defines AI writing contracts; **will be modified** for the Theresa fix.
 
 **Critical Info for New Agent**
--   **Prioritize user confirmation for the AI cost optimization.** This is the immediate next step and a direct response to a user concern.
--   **The user values data integrity and expansion.** Do not remove data, even if it seems like a broken link. The correct approach is to propose filling the gap with AI-driven research, as was done successfully in this session.
--   **Trust the new documentation.** This session produced a large amount of high-quality documentation (, briefings, CSVs). Refer to these materials as the source of truth before inspecting the code.
--   **Theresa is not implemented.** The  file only contains Shigg, Cathleen, and Katherine. Theresa exists only in design documents. Do not treat her as a functional persona.
+-   Your immediate and highest priority is to implement the user-provided fix for **Theresa's spell generation pipeline**. The user has supplied detailed instructions and the exact file changes needed. You must follow the user's comprehensive testing plan after applying the changes to ensure the fix works and does not cause regressions.
+-   The AI pipeline is known to be fragile, especially the Archivist (DeepSeek) stage. The system currently relies on guide-specific fallbacks for research sources. Be aware that logs may show JSON parsing warnings or QA failures, as this seems to be part of the pipeline's self-correction mechanism.
+-   A dual ID system for guides exists ( vs. ). The user has explicitly said **not to refactor this now**. The  translations in  handle this for now.
+-   Monetization via Stripe is ready on the code side but is **blocked** waiting for the user to provide API keys. Do not attempt to re-implement it.
 
 **documents and test reports created in this job**
--   
--   
--   
--   
--   
--   
--   
--   
--   
--   
--   
--   
--   
--   
+-   The user provided instructions via chat that originated from a local file named . This document contained a detailed audit and the bug fixes that were implemented in this session.
 
 **Last 10 User Messages and any pending HUMAN messages**
--   **10. User asked why we can't use Claude 4.6.** The agent explained the model doesn't exist and clarified the current setup. (Status: COMPLETED, pending decision on optimization)
--   **9. User expressed concern about Claude's high cost.** (Status: ADDRESSED, pending decision on optimization)
--   **8. User requested a full briefing/download on the Persona & Spell system.** The agent provided comprehensive docs and CSVs. (Status: COMPLETED)
--   **7. User requested a full briefing/download on the Timeline & Network system.** The agent provided comprehensive docs and CSVs. (Status: COMPLETED)
--   **6. User requested a full briefing on the Invisible Helpers feature and its prompts.** The agent provided a detailed breakdown. (Status: COMPLETED)
--   **5. User requested a UI to distinguish between linked and unlinked connections on the timeline.** The agent implemented the color-coding system. (Status: COMPLETED)
--   **4. User corrected the agent's removal of broken timeline connections, stating they were factual placeholders.** The agent apologized, restored the data, and generated the missing events. (Status: COMPLETED)
--   **3. User asked for clarification on what data was removed from the timeline.** (Status: COMPLETED)
--   **2. User approved the agent's plan to implement the requested fixes and documentation.** (Status: COMPLETED)
--   **1. User provided a lengthy transcript from another AI session and asked for analysis and implementation of the correct changes.** (Status: COMPLETED)
+1.  **User**: Asks agent to test all fixes (spell rendering, sync routing, print styles).
+2.  **Agent**: Tests all 5 guides.
+3.  **Agent**: Reports that 4/5 guides work, but Theresa's spells are incomplete.
+4.  **User**: Reports a broken link for a research source.
+5.  **Agent**: Investigates and finds the AI isn't generating dynamic URLs.
+6.  **Agent**: Implements a fix to enrich sources with URLs and adds guide-specific fallback sources.
+7.  **User**: Notes that sources are better but the root issue is the research pipeline isn't truly dynamic.
+8.  **Agent**: Acknowledges the root cause is the unreliable DeepSeek Archivist stage and explains the fallback solution.
+9.  **User**: Provides a final, highly detailed set of instructions and file changes to fix the underlying issue with Theresa's spell generation pipeline.
+10. **Agent**: Acknowledges the instructions for the Theresa fix, setting up the next task.
 
 **Project Health Check:**
--   **Broken**: Stripe payment integration.
--   **Mocked**: None. The handling of referenced (non-existent) events is now an intentional, visually distinct feature.
+-   **Broken**:
+    -   Theresa's spell generation pipeline (fix is pending implementation).
+    -   Stripe integration (non-functional due to missing API keys).
+-   **Mocked**:
+    -   The dynamic research feature is partially mocked. It uses guide-specific fallbacks when the primary research AI (DeepSeek) fails, which happens frequently.
 
 **3rd Party Integrations**
--   **OpenAI GPT-4o**: Integrated and uses User API Key (now as fallback/planner).
--   **DeepSeek**: Integrated and uses User API Key (primary for research).
--   **Anthropic Claude Sonnet 4 / Opus 4**: Integrated and uses User API Key (now as primary writer).
--   **react-force-graph-2d**: Integrated and functional.
+-   **OpenAI GPT-4o**: Planner and fallback model.
+-   **DeepSeek**: Research (Archivist) stage. Known to be unreliable.
+-   **Anthropic Claude Sonnet**: Primary writing model.
+-   **Stripe**: Implemented for yearly subscriptions but requires user-provided API keys to function.
 
 **Testing status**
--   **Testing agent used after significant changes**: NO
--   **Troubleshoot agent used after agent stuck in loop**: NO
--   **Test files created**: None.
--   **Known regressions**: The timeline search was observed to not filter results correctly in one screenshot, though the agent did not investigate this.
-
-**Credentials to test flow:**
--   LLM API keys for OpenAI, DeepSeek, and Anthropic are configured in .
--   No user credentials are required to test the main features.
-
-**What agent forgot to execute**
--   The agent did not address the recurring API performance/timeout issue.
--   A potential bug where the timeline search input did not filter the results shown in a screenshot () was observed but not investigated or fixed.</analysis>
+-   Testing agent used after significant changes: NO
+-   Troubleshoot agent used after agent stuck in loop: NO
+-   Test files created: []
+-   Known regressions: None. However, the upcoming fix for Theresa's pipeline requires thorough regression testing on the other four guides, as per the user's instructions.</analysis>
