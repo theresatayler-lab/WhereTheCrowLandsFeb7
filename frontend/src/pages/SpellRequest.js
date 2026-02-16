@@ -969,6 +969,39 @@ export const SpellRequest = () => {
         </div>
       </DarkSection>
 
+      {/* Meet Your Guides Section - Bottom of Page */}
+      <DarkSection className="py-12 px-4 sm:px-6" variant="warm">
+        <div className="max-w-5xl mx-auto">
+          <h2 className="font-cinzel text-2xl text-center mb-2" style={{ color: '#C8A44D' }}>
+            Meet Your Guides
+          </h2>
+          <p className="text-center text-cream/60 font-crimson-text mb-10">
+            Each guide brings unique wisdom. Click to learn more or work with them directly.
+          </p>
+
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+            {PERSONAS.filter(p => p.id !== 'choose_for_me').map(persona => (
+              <Link
+                key={persona.id}
+                to={`/guides/${persona.id}`}
+                className="group text-center p-4 rounded-lg border border-gold/20 hover:border-gold/50 transition-all bg-navy-mid/30 hover:bg-navy-mid/50"
+              >
+                {/* Guide avatar */}
+                <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-3 rounded-full overflow-hidden border-2 border-gold/30 group-hover:border-gold transition-colors flex items-center justify-center bg-navy-dark/50">
+                  <span className="text-3xl">{persona.emoji}</span>
+                </div>
+                <h3 className="font-cinzel text-sm text-cream group-hover:text-gold transition-colors">
+                  {persona.name}
+                </h3>
+                <p className="text-xs text-cream/50 font-crimson-text mt-1">
+                  {persona.title}
+                </p>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </DarkSection>
+
       {/* Handcrafted Magic Modal */}
       <HandcraftedMagicModal 
         isOpen={showHandcraftedModal} 
