@@ -723,6 +723,7 @@ export const SpellRequest = () => {
   const handleNewSpell = () => {
     setSpellResult(null);
     setLoadingImages(false);
+    setSelectedGuide(null); // Reset selected guide for new spell
     setStep(0);
     setSpellSpec(prev => ({
       ...prev,
