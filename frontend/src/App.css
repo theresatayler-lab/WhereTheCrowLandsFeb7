@@ -20,11 +20,11 @@
 
 /* Accent glow for gold */
 .glow-accent {
-  box-shadow: 0 0 20px rgba(212, 168, 75, 0.3);
+  box-shadow: 0 0 20px rgba(200, 164, 77, 0.3);
 }
 
 .glow-accent:hover {
-  box-shadow: 0 0 30px rgba(212, 168, 75, 0.5);
+  box-shadow: 0 0 30px rgba(200, 164, 77, 0.5);
 }
 
 /* Remove white backgrounds from logos */
@@ -43,7 +43,7 @@
 /* Large ornate border frame */
 .ornate-frame {
   position: relative;
-  border: 3px solid #d4a84b;
+  border: 3px solid #C8A44D;
   background: linear-gradient(135deg, rgba(18, 29, 51, 0.9) 0%, rgba(14, 22, 41, 0.95) 100%);
 }
 
@@ -59,7 +59,7 @@
   content: '';
   position: absolute;
   inset: 8px;
-  border: 1px solid rgba(212, 168, 75, 0.3);
+  border: 1px solid rgba(200, 164, 77, 0.3);
   pointer-events: none;
 }
 
@@ -103,12 +103,12 @@
   flex: 1;
   height: 2px;
   max-width: 200px;
-  background: linear-gradient(90deg, transparent, #d4a84b 30%, #d4a84b 70%, transparent);
+  background: linear-gradient(90deg, transparent, #C8A44D 30%, #C8A44D 70%, transparent);
 }
 
 /* Ornate gold line borders */
 .gold-border-top {
-  border-top: 2px solid #d4a84b;
+  border-top: 2px solid #C8A44D;
   position: relative;
 }
 
@@ -132,8 +132,8 @@
 
 /* Gold ornate text */
 .gold-ornate {
-  color: #d4a84b;
-  text-shadow: 0 2px 10px rgba(212, 168, 75, 0.4);
+  color: #C8A44D;
+  text-shadow: 0 2px 10px rgba(200, 164, 77, 0.4);
 }
 
 /* Art Deco style border */
@@ -149,7 +149,7 @@
   left: 10%;
   right: 10%;
   height: 3px;
-  background: linear-gradient(90deg, transparent, #d4a84b 20%, #b82330 50%, #d4a84b 80%, transparent);
+  background: linear-gradient(90deg, transparent, #C8A44D 20%, #b82330 50%, #C8A44D 80%, transparent);
 }
 
 .art-deco-border::after {
@@ -159,7 +159,7 @@
   left: 10%;
   right: 10%;
   height: 3px;
-  background: linear-gradient(90deg, transparent, #d4a84b 20%, #b82330 50%, #d4a84b 80%, transparent);
+  background: linear-gradient(90deg, transparent, #C8A44D 20%, #b82330 50%, #C8A44D 80%, transparent);
 }
 
 /* Victorian ornate corners */
@@ -171,7 +171,7 @@
 .victorian-corners::after {
   content: '❧';
   position: absolute;
-  color: #d4a84b;
+  color: #C8A44D;
   opacity: 0.7;
   font-size: 2rem;
 }
@@ -200,7 +200,7 @@
 .mystical-divider::after {
   content: '';
   flex: 1;
-  border-bottom: 2px solid #d4a84b;
+  border-bottom: 2px solid #C8A44D;
   opacity: 0.5;
 }
 
@@ -214,18 +214,18 @@
 
 /* Moon phase decorative element */
 .moon-phases {
-  background: radial-gradient(circle, rgba(212, 168, 75, 0.15) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(200, 164, 77, 0.15) 0%, transparent 70%);
 }
 
 /* Tarot card style frame - enhanced */
 .tarot-frame {
-  border: 3px solid #d4a84b;
+  border: 3px solid #C8A44D;
   border-radius: 0.25rem;
   box-shadow: 
     0 0 0 2px #0e1629,
     0 0 0 4px #b82330,
     0 0 0 6px #0e1629,
-    0 0 0 8px rgba(212, 168, 75, 0.3),
+    0 0 0 8px rgba(200, 164, 77, 0.3),
     0 8px 24px rgba(14, 22, 41, 0.6);
 }
 
@@ -233,7 +233,7 @@
 .drop-cap::first-letter {
   font-size: 4rem;
   font-family: 'Cinzel Decorative', serif;
-  color: #d4a84b;
+  color: #C8A44D;
   float: left;
   line-height: 0.75;
   margin: 0.1rem 0.75rem 0 0;
@@ -247,7 +247,7 @@
 
 /* Glowing gold accent */
 .glow-gold {
-  text-shadow: 0 0 10px rgba(212, 168, 75, 0.6), 0 0 20px rgba(212, 168, 75, 0.3);
+  text-shadow: 0 0 10px rgba(200, 164, 77, 0.6), 0 0 20px rgba(200, 164, 77, 0.3);
 }
 
 /* Ornate section wrapper */
@@ -273,5 +273,5 @@
 /* Mystical glow background */
 .mystical-glow {
   background: radial-gradient(ellipse at center, rgba(184, 35, 48, 0.1) 0%, transparent 50%),
-              radial-gradient(ellipse at center, rgba(212, 168, 75, 0.05) 0%, transparent 70%);
+              radial-gradient(ellipse at center, rgba(200, 164, 77, 0.05) 0%, transparent 70%);
 }

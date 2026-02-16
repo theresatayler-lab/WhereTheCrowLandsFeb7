@@ -10,7 +10,7 @@ import React from 'react';
 // COLOR TOKENS (from Art Bible)
 // ============================================================================
 export const COLORS = {
-  gold: '#d4a84b',
+  gold: '#C8A44D',
   goldLight: '#e6c068',
   goldDark: '#b8923d',
   crimson: '#b82330',

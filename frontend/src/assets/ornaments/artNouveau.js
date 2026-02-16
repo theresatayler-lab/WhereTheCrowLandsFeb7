@@ -17,7 +17,7 @@ export const NOUVEAU_COLORS = {
   cream: '#EDE8DF',              // Muted cream for contrast
   
   // Gold accents - distinct from pink
-  antiqueGold: '#D4A84B',        // Brighter, cleaner gold
+  antiqueGold: '#C8A44D',        // Brighter, cleaner gold
   mutedBrass: '#A68A3C',         // Deeper brass for contrast
   
   // Pink/Rose accents - cleaner separation

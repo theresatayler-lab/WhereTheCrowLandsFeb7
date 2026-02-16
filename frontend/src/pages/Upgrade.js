@@ -52,7 +52,7 @@ export const Upgrade = () => {
             </div>
             
             <h1 className="font-italiana text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-gold-light mb-3"
-              style={{ textShadow: '0 2px 30px rgba(212, 168, 75, 0.5)' }}>
+              style={{ textShadow: '0 2px 30px rgba(200, 164, 77, 0.5)' }}>
               Unlock the Full Grimoire
             </h1>
             <p className="font-montserrat text-sm sm:text-base text-silver-mist/80 max-w-2xl mx-auto">

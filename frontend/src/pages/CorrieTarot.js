@@ -286,7 +286,7 @@ const CorrieTarot = () => {
             {/* Shigg avatar with TV badge */}
             <div className="flex justify-center mb-6">
               <div className="relative">
-                <div className="absolute inset-0 blur-xl opacity-40" style={{ background: 'radial-gradient(circle, rgba(212, 168, 75, 0.4) 0%, transparent 70%)' }} />
+                <div className="absolute inset-0 blur-xl opacity-40" style={{ background: 'radial-gradient(circle, rgba(200, 164, 77, 0.4) 0%, transparent 70%)' }} />
                 <div className="relative w-24 h-24 rounded-full overflow-hidden border-3 border-gold/60 shadow-lg">
                   <img src={SHIGG_IMAGE} alt="Shigg" className="w-full h-full object-cover" />
                 </div>
@@ -299,7 +299,7 @@ const CorrieTarot = () => {
             {/* Title */}
             <div className="text-center">
               <h1 className="font-italiana text-3xl sm:text-4xl md:text-5xl text-gold-light mb-2"
-                style={{ textShadow: '0 2px 30px rgba(212, 168, 75, 0.5)' }}>
+                style={{ textShadow: '0 2px 30px rgba(200, 164, 77, 0.5)' }}>
                 The Cobbles Oracle
               </h1>
               <p className="font-cinzel text-base sm:text-lg text-crimson-bright mb-2">

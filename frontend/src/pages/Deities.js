@@ -69,7 +69,7 @@ export const Deities = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-navy-mid via-navy-mid/60 to-transparent rounded-t-lg" />
                 </div>
                 {/* Title with better contrast - gold on dark */}
-                <h3 className="font-cinzel text-xl sm:text-2xl text-gold mb-2" style={{ textShadow: '0 2px 10px rgba(212, 168, 75, 0.3)' }}>
+                <h3 className="font-cinzel text-xl sm:text-2xl text-gold mb-2" style={{ textShadow: '0 2px 10px rgba(200, 164, 77, 0.3)' }}>
                   {deity.name}
                 </h3>
                 {/* Subtitle in crimson-bright for visibility */}

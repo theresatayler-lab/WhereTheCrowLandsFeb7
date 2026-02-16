@@ -303,7 +303,7 @@ body::before {
 
 /* Glow effects for mystical elements */
 .glow-gold {
-    filter: drop-shadow(0 0 8px rgba(212, 168, 75, 0.6));
+    filter: drop-shadow(0 0 8px rgba(200, 164, 77, 0.6));
 }
 
 .glow-crimson {

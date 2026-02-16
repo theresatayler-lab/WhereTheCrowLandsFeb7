@@ -91,7 +91,7 @@ export const Rituals = () => {
               <OrnateCard hover={false} testId={`ritual-card-${ritual.id}`}>
                 <div className="flex items-start justify-between mb-4">
                   {/* Title in gold for visibility */}
-                  <h3 className="font-cinzel text-lg sm:text-xl text-gold flex-1" style={{ textShadow: '0 2px 10px rgba(212, 168, 75, 0.3)' }}>
+                  <h3 className="font-cinzel text-lg sm:text-xl text-gold flex-1" style={{ textShadow: '0 2px 10px rgba(200, 164, 77, 0.3)' }}>
                     {ritual.name}
                   </h3>
                   {/* Category badge */}

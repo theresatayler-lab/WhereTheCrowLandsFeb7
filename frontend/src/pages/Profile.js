@@ -119,7 +119,7 @@ export const Profile = ({ user }) => {
             </div>
             
             <h1 className="font-italiana text-3xl sm:text-4xl md:text-5xl text-gold-light mb-2"
-              style={{ textShadow: '0 2px 30px rgba(212, 168, 75, 0.5)' }}>
+              style={{ textShadow: '0 2px 30px rgba(200, 164, 77, 0.5)' }}>
               {user.name}
             </h1>
             <p className="font-montserrat text-sm text-silver-mist/70">{user.email}</p>

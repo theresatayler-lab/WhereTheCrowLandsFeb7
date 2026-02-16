@@ -404,7 +404,7 @@ export const MyGrimoire = () => {
                   >
                     <LightOrnateCard hover={false} className="max-w-md mx-auto">
                       <div className="mb-4">
-                        <BestiaryGlyph animal="triquetra" size="lg" color="#d4a84b" />
+                        <BestiaryGlyph animal="triquetra" size="lg" color="#C8A44D" />
                       </div>
                       <h2 className="font-cinzel text-xl text-gold-dark mb-3">No wards saved yet</h2>
                       <p className="font-montserrat text-sm text-navy-dark/60 mb-6">

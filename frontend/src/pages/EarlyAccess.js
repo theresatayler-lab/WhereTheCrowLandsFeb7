@@ -8,8 +8,8 @@ const API_URL = process.env.REACT_APP_BACKEND_URL;
 // Simple corner ornament
 const Corner = ({ className }) => (
   <svg viewBox="0 0 60 60" className={className} fill="none">
-    <path d="M0,30 Q0,0 30,0" stroke="#d4a84b" strokeWidth="1.5" opacity="0.7" />
-    <path d="M0,20 Q0,0 20,0" stroke="#d4a84b" strokeWidth="1" opacity="0.4" />
+    <path d="M0,30 Q0,0 30,0" stroke="#C8A44D" strokeWidth="1.5" opacity="0.7" />
+    <path d="M0,20 Q0,0 20,0" stroke="#C8A44D" strokeWidth="1" opacity="0.4" />
     <polygon points="8,8 11,4 14,8 11,12" fill="#b82330" opacity="0.8" />
   </svg>
 );
