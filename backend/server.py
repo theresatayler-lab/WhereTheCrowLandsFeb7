@@ -4770,6 +4770,10 @@ async def generate_spell_v2_endpoint(request: SpellRequestV2, user = Depends(get
             belief_mode=belief_mode
         )
         
+        # Transform blocks from pipeline dict format to frontend array format
+        from prompts.pipeline_blocks import transform_blocks_to_array
+        spell_output = transform_blocks_to_array(spell_output, persona_id)
+        
         # Validate against hard limits one more time
         is_valid, violations = validate_hard_limits(spell_output)
         if not is_valid:
@@ -5014,6 +5018,10 @@ async def generate_spell_v3_endpoint(request: SpellRequestV3, user = Depends(get
             tier_config=tier_config
         )
         
+        # Transform blocks from pipeline dict format to frontend array format
+        from prompts.pipeline_blocks import transform_blocks_to_array
+        spell_output = transform_blocks_to_array(spell_output, persona_id)
+        
         # Add tier info to metadata
         metadata['tier'] = {
             'selected': selected_tier.value,
@@ -5226,6 +5234,10 @@ async def _generate_spell_background(job_id: str, request_data: dict, user_id: O
             belief_mode=belief_mode,
             tier_config=tier_config
         )
+        
+        # Transform blocks from pipeline dict format to frontend array format
+        from prompts.pipeline_blocks import transform_blocks_to_array
+        spell_output = transform_blocks_to_array(spell_output, persona_id)
         
         # Add metadata
         metadata['tier'] = {
