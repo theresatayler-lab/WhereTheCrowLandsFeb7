@@ -419,3 +419,48 @@ body::before {
   @page { margin: 0.75in; }
 }
 }
+/* ============================================================
+   CONDITIONAL ICON RENDERING
+   Icons are gold by default (for dark backgrounds).
+   On light surfaces, apply charcoal filter.
+   ============================================================ */
+[data-surface="light"] .crowlands-icon {
+  filter: brightness(0.15) saturate(0);
+}
+
+[data-surface="dark"] .crowlands-icon {
+  filter: none;
+}
+
+/* ============================================================
+   SHADOW & GLOW UTILITIES (Phase 5 from governance plan)
+   ============================================================ */
+@layer utilities {
+  .text-glow-gold {
+    text-shadow: 0 0 10px rgba(200, 164, 77, 0.6), 0 0 20px rgba(200, 164, 77, 0.3);
+  }
+  .text-glow-gold-soft {
+    text-shadow: 0 2px 10px rgba(200, 164, 77, 0.3);
+  }
+  .text-glow-pink {
+    text-shadow: 0 0 10px rgba(185, 78, 106, 0.6), 0 0 20px rgba(185, 78, 106, 0.3);
+  }
+  .text-glow-pink-soft {
+    text-shadow: 0 2px 10px rgba(185, 78, 106, 0.3);
+  }
+  .text-shadow-ink {
+    text-shadow: 0 1px 3px rgba(14, 42, 47, 0.8);
+  }
+  .box-glow-gold {
+    box-shadow: 0 0 20px rgba(200, 164, 77, 0.3);
+  }
+  .box-glow-pink {
+    box-shadow: 0 0 20px rgba(185, 78, 106, 0.3);
+  }
+  .drop-glow-gold-soft {
+    filter: drop-shadow(0 0 8px rgba(200, 164, 77, 0.6));
+  }
+  .drop-shadow-ink {
+    filter: drop-shadow(0 1px 2px rgba(14, 42, 47, 0.8));
+  }
+}
