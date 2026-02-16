@@ -1,74 +1,48 @@
 # Where The Crowlands - Product Requirements Document
 
 ## Original Problem Statement
-Build "Where The Crowlands," a spell-generation platform with AI archetypes. Dual-AI: DeepSeek (research) + Claude (writing).
+Spell-generation platform with AI archetypes. Dual-AI: DeepSeek (research) + Claude (writing).
 
 ## Architecture
-- Frontend: React + Tailwind + Shadcn/UI | Backend: FastAPI + Python | DB: MongoDB + GridFS
-- AI: DeepSeek research (~40s), GPT-4o-mini planner (~10s), Claude Sonnet writer (~22s)
+Frontend: React + Tailwind | Backend: FastAPI | DB: MongoDB | AI: DeepSeek + Claude + GPT-4o
 
 ---
 
-## Implemented (Feb 16, 2026 - Fork 2)
+## Latest: Custom Woodcut Icon System (Feb 16, 2026)
 
-### Bug Fix 1: Stage Progress Indicator
-- Backend writes `current_stage` + `stage_message` to MongoDB between each pipeline stage
-- `on_stage_change` callback passed from server.py to pipeline's `generate_spell()`
-- Polling returns `current_stage`/`stage_message` during processing
-- Frontend shows 4 connected dots (Research → Plan → Write → Polish) with active one pulsing gold
+### Icons Implemented (73 total files)
+- **25 anchor object icons** — dark charcoal + gold variants, transparent PNG, 48px
+- **5 setting icons** — cottage, tree, briefcase, train, sun eclipse
+- **8 alchemize category icons** — shield, scales, rose, eye, hands, tree, hearth, torch (AI-generated)
+- **5 guide portraits** — circular crops from sketch images
+- **5 UI icons** — sparkles, crystal ball, grimoire, library books (AI-generated, 3 color variants each)
+- **All emojis replaced** on: SpellRequest.js, About.js, CorrieTarot.js, Library.js, MyGrimoire.js, GrimoirePage.js
+- **Icon Style Guide** at `/frontend/public/icons/ICON_STYLE_GUIDE.md`
+- **PageHeader** component updated with `iconSrc` prop for custom images
 
-### Bug Fix 2: Reset Loading State
-- Clears selectedGuide/currentStage/stageMessage on new spell generation
+### Color Variants
+- `/icons/[category]/` — dark charcoal (#2A2A2A) for light backgrounds
+- `/icons/[category]/gold/` — gold (#C8A44D) for dark backgrounds
+- `/icons/ui/cream/` — cream (#F3EFE8) for very dark backgrounds
 
-### Bug Fix 3: Loading Screen Guide Reveal
-- Backend stores persona_id/name/title early, polling returns during processing
-
-### Bug Fix 4: Narrative Spell Display
-- SpellBlockRenderer.jsx rewritten: no headers, no icons, no inputs, flowing prose
-
-### Bug Fix 5: Research Button Timeout
-- 120s timeout, V2 format rendering, ID normalization
-
-### Feature: Archivist Now LIVE
-- `_run_archivist` calls `research_query_v2()` for real DeepSeek research
-
-### Feature: Phase 7 Tarot Card Preview
-- `_build_tarot_card()` from spell blocks, TarotCardView activates automatically
-
-### Feature: Unique Guide Interaction Models
-- Shigg: Enhanced bird oracle directions (folk tradition framing)
-- Cathleen: Enhanced song prompt (specific phrases, Celtic vocal tradition, empowerment)
-- Katherine: Enhanced evidence card (case record tone, Victorian investigation)
-- Theresa: Enhanced observation task (investigative assignment, evidence-gathering)
-- Brenda: Letter framing (cold_open as letter opening, closing as letter sign-off)
-
-### Feature: Grimoire PDF Export
-- GET /api/grimoire/export/pdf — reportlab-based PDF of saved spells
-- Export button in MyGrimoire page
-
-### Feature: Admin Stats Dashboard
-- GET /api/admin/stats — users, spell counts, guide popularity, pipeline performance
-- /admin page with stat cards and performance metrics
-- Restricted to admin_emails list
-
-### UX Overhaul (Phases 0-6) — Previous sessions
-- Alchemize This 8 categories, guide profiles, loading experience, narrative layout
+### Previous Features (This Session)
+- Stage progress indicator (Research → Plan → Write → Polish)
+- Live DeepSeek archivist research
+- Narrative spell display (no boxes/headers)
+- Loading screen guide reveal
+- Tarot card preview
+- Admin dashboard, PDF export
+- Unique guide interaction prompts
 
 ---
 
-## Prioritized Backlog
-### P1: Stripe Integration (awaiting API keys)
-### P2: Spell counter merge, unique guide interaction models (deeper)
-### P3: Early Access Gate, security hardening
-
----
+## Backlog
+### P1: Stripe Integration (awaiting keys)
+### P2: Book cover woodcut designs for Library page
+### P3: Security, spell counter merge
 
 ## Key Files
-- `frontend/src/components/SpellBlockRenderer.jsx` — Narrative prose renderer
-- `frontend/src/pages/SpellRequest.js` — Stage progress + guide loading
-- `frontend/src/pages/Admin.js` — Admin dashboard
-- `frontend/src/pages/MyGrimoire.js` — PDF export button
-- `backend/server.py` — All API routes including admin, PDF export, stage updates
-- `backend/prompts/pipeline_blocks.py` — Pipeline with on_stage_change + live archivist
-- `backend/prompts/writer_blocks.py` — Guide-specific narrative prompts
-- `backend/research_service.py` — DeepSeek + OpenAI research service
+- `/frontend/public/icons/` — all icon assets
+- `/frontend/public/icons/ICON_STYLE_GUIDE.md` — generation prompts + rules
+- `SpellRequest.js` — ANCHORS, SETTINGS, ALCHEMIZE_OPTIONS, PERSONAS with icon paths
+- `OrnateElements.js` — PageHeader with iconSrc prop
