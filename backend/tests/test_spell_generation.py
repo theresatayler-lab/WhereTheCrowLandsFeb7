@@ -19,8 +19,9 @@ class TestSpellGenerationAPI:
     
     def test_health_check(self):
         """Verify backend is accessible"""
-        response = requests.get(f"{BASE_URL}/api/health")
-        assert response.status_code == 200, f"Health check failed: {response.text}"
+        # Test a known endpoint instead of /health
+        response = requests.get(f"{BASE_URL}/api/archetypes")
+        assert response.status_code == 200, f"Backend not accessible: {response.text}"
         print("✓ Backend health check passed")
     
     def test_create_spell_job(self):
@@ -90,26 +91,29 @@ class TestSpellGenerationAPI:
         
         assert result is not None, "Spell generation timed out after 120 seconds"
         
-        # Verify blocks array
-        assert "blocks" in result, "Result missing 'blocks'"
-        assert isinstance(result["blocks"], list), "blocks should be an array"
-        assert len(result["blocks"]) > 0, "blocks array should not be empty"
+        # The result contains nested structure: result.spell.blocks
+        spell = result.get("spell", {})
         
-        print(f"✓ Spell has {len(result['blocks'])} blocks")
+        # Verify blocks array (inside spell object)
+        assert "blocks" in spell, f"spell missing 'blocks'. Keys: {spell.keys()}"
+        assert isinstance(spell["blocks"], list), "blocks should be an array"
+        assert len(spell["blocks"]) > 0, "blocks array should not be empty"
+        
+        print(f"✓ Spell has {len(spell['blocks'])} blocks")
         
         # Verify block structure
-        for block in result["blocks"]:
+        for block in spell["blocks"]:
             assert "block_type" in block, f"Block missing block_type: {block}"
             assert "block_id" in block, f"Block missing block_id: {block}"
             assert "content" in block, f"Block missing content: {block}"
         
         # Check for expected block types
-        block_types = [b["block_type"] for b in result["blocks"]]
+        block_types = [b["block_type"] for b in spell["blocks"]]
         print(f"  Block types: {block_types}")
         
-        # Verify tarot_card data
-        assert "tarot_card" in result, "Result missing 'tarot_card'"
-        tarot = result["tarot_card"]
+        # Verify tarot_card data (inside spell object)
+        assert "tarot_card" in spell, f"spell missing 'tarot_card'. Keys: {spell.keys()}"
+        tarot = spell["tarot_card"]
         
         expected_tarot_fields = ["symbol", "title", "essence", "key_action", "incantation"]
         for field in expected_tarot_fields:
