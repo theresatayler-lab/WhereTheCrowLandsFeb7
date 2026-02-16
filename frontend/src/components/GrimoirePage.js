@@ -1050,7 +1050,11 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
         {/* Archetype Attribution */}
         {archetype && (
           <div className="flex items-center gap-3 pb-4 border-b border-amber-800/30">
-            <span className="text-2xl">{archetype.id === 'shiggy' ? '🪶' : archetype.id === 'kathleen' ? '🦉' : archetype.id === 'catherine' ? '🐦' : '🪽'}</span>
+            <img 
+              src={`/icons/anchors/anchor-${archetype.id === 'shiggy' ? 'bird' : archetype.id === 'kathleen' ? 'feather' : archetype.id === 'catherine' ? 'thread' : archetype.id === 'theresa' ? 'magnifying-glass' : 'crow-feather'}.png`}
+              alt={archetype.name}
+              className="w-8 h-8"
+            />
             <div>
               <p className="font-cinzel text-sm text-amber-900">Crafted by {archetype.name}</p>
               <p className="font-montserrat text-xs text-stone-600">{archetype.title}</p>
