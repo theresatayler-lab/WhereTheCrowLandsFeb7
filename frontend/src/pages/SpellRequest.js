@@ -635,9 +635,10 @@ export const SpellRequest = () => {
             const statusResponse = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/ai/spell-job/${jobId}`);
             const statusData = await statusResponse.json();
             
-            // Extract selected guide from partial result or persona_lock
-            if (!selectedGuide && statusData.result) {
-              const guideId = statusData.result.persona_lock?.id || statusData.result.persona_id || statusData.result.spell?.persona_id;
+            // Extract selected guide from processing status or completed result
+            if (!selectedGuide) {
+              // During processing, persona_id comes at top level
+              const guideId = statusData.persona_id || statusData.result?.persona_lock?.id || statusData.result?.persona_id || statusData.result?.spell?.persona_id;
               if (guideId) {
                 const guide = PERSONAS.find(p => p.id === guideId);
                 if (guide) {
