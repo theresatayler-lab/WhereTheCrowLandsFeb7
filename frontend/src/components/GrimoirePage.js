@@ -517,7 +517,7 @@ const TarotCardView = ({ spell, archetype, style, imageBase64, onViewFull, onCop
                   {imageBase64 && (
                     <div className="text-center pt-1">
                       <p className="font-montserrat text-[10px] text-amber-400/60 animate-pulse">
-                        ✨ Click card to see full artwork ✨
+                        Click card to see full artwork
                       </p>
                     </div>
                   )}
