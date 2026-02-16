@@ -108,8 +108,8 @@ const ANCHORS = [
   { id: 'scissors', label: 'Scissors', icon: '/icons/anchors/anchor-scissors.png', forPersonas: ['katherine'] },
   { id: 'sealed_letter', label: 'Sealed Letter', icon: '/icons/anchors/anchor-sealed-letter.png', forPersonas: ['katherine'] },
   // Theresa - investigation, evidence, patterns
-  { id: 'notebook', label: 'Notebook & Pen', icon: '/icons/anchors/anchor-magnifying-glass.png', forPersonas: ['theresa'] },
-  { id: 'photograph', label: 'Photograph', icon: '/icons/anchors/anchor-magnifying-glass.png', forPersonas: ['theresa'] },
+  { id: 'notebook', label: 'Notebook & Pen', icon: '/icons/anchors/anchor-notebook.png', forPersonas: ['theresa'] },
+  { id: 'photograph', label: 'Photograph', icon: '/icons/anchors/anchor-photograph.png', forPersonas: ['theresa'] },
   { id: 'map', label: 'Map / Family Tree', icon: '/icons/anchors/anchor-map.png', forPersonas: ['theresa'] },
   { id: 'red_thread', label: 'Red Thread', icon: '/icons/anchors/anchor-red-thread.png', forPersonas: ['theresa'] },
   { id: 'magnifying_glass', label: 'Magnifying Glass', icon: '/icons/anchors/anchor-magnifying-glass.png', forPersonas: ['theresa'] },
