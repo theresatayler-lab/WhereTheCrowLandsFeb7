@@ -115,7 +115,7 @@ export const About = () => {
                 </div>
 
                 <div className="border-l-2 border-gold/40 pl-4">
-                  <h3 className="font-cinzel text-lg text-crimson-bright mb-2">🐦 Katherine</h3>
+                  <h3 className="font-cinzel text-lg text-crimson-bright mb-2 flex items-center gap-2"><img src="/icons/guides/guide-katherine.png" alt="Katherine" className="w-6 h-6 rounded-full" /> Katherine</h3>
                   <p className="font-montserrat text-sm text-cream/80 leading-relaxed">
                     The Weaver of Hidden Knowledge. Born in Victorian Spitalfields into a Huguenot community, 
                     Katherine was a master tailor, weaver, and court dressmaker. Her rituals blend craft, 
