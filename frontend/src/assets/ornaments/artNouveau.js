@@ -21,7 +21,7 @@ export const NOUVEAU_COLORS = {
   mutedBrass: '#9E8438',         // Deeper brass for contrast
   
   // Pink/Rose accents - cleaner separation
-  roseClay: '#C46B5C',           // Warmer terracotta
+  roseClay: '#C26A5A',           // Warmer terracotta
   emberPink: '#B94E6A',          // Cleaner pink, less muddy
 };
 
