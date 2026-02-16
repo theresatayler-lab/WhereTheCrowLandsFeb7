@@ -581,15 +581,19 @@ def transform_blocks_to_array(spell_output: dict, guide_id: str = "shigg") -> di
         type_counters[block_type] = type_counters.get(block_type, 0) + 1
         block_id = f"{block_type}_{type_counters[block_type]}"
 
-        # Extract content - pipeline blocks have {"content": "string", "type": "..."}
+        # Extract content - pipeline blocks have {"content": "string"|dict, "type": "..."}
         # Frontend blocks need {"content": {structured_object}}
         if isinstance(block_data, dict):
             raw_content = block_data.get("content", "")
         else:
             raw_content = str(block_data)
 
-        # Build the structured content object the frontend component expects
-        content = _build_structured_content(block_type, block_name, raw_content, spell_output)
+        # If the AI already returned structured dict content, use it directly
+        if isinstance(raw_content, dict):
+            content = raw_content
+        else:
+            # Build the structured content object the frontend component expects
+            content = _build_structured_content(block_type, block_name, str(raw_content), spell_output)
 
         transformed.append({
             "block_type": block_type,
