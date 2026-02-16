@@ -214,9 +214,9 @@ const Step1 = ({ spellSpec, updateSpec }) => (
     </div>
 
     <div>
-      <h3 className="font-cinzel text-xl text-crimson mb-3 font-semibold">How do you want to feel after?</h3>
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-        {FEELINGS.filter(f =>
+      <h3 className="font-cinzel text-xl text-crimson mb-3 font-semibold">Alchemize This Into...</h3>
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        {ALCHEMIZE_OPTIONS.filter(f =>
           !f.forPersonas ||
           f.forPersonas.includes(spellSpec.persona_id) ||
           spellSpec.persona_id === 'choose_for_me'
@@ -225,14 +225,15 @@ const Step1 = ({ spellSpec, updateSpec }) => (
           return (
             <OptionCard
               key={f.id}
-              selected={spellSpec.desired_feeling === f.id}
-              onClick={() => updateSpec({ desired_feeling: f.id })}
-              className="py-3"
+              selected={spellSpec.alchemize_category === f.id}
+              onClick={() => updateSpec({ alchemize_category: f.id, desired_feeling: f.id })}
+              className="py-4"
               light={true}
             >
-              <div className="flex items-center justify-center gap-2">
-                <Icon className={`w-5 h-5 ${spellSpec.desired_feeling === f.id ? 'text-crimson' : 'text-navy-dark'}`} />
+              <div className="flex flex-col items-center gap-2 text-center">
+                <Icon className={`w-6 h-6 ${spellSpec.alchemize_category === f.id ? 'text-crimson' : 'text-navy-dark'}`} />
                 <span className="font-montserrat text-sm text-navy-dark font-medium">{f.label}</span>
+                <span className="font-crimson-text text-xs text-navy-dark/60">{f.description}</span>
               </div>
             </OptionCard>
           );
