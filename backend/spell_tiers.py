@@ -154,6 +154,42 @@ def get_tier_for_intention(intention: str, user_tier: str = "free") -> str:
     return "standard"
 
 
+def select_spell_tier(
+    persona_id: str = None,
+    intention: str = "",
+    user_tier: str = "free",
+    is_first_spell: bool = False,
+    explicit_choice: str = None
+) -> tuple:
+    """
+    Select the appropriate spell tier based on multiple factors.
+    
+    Returns: (SpellTier enum, reason string)
+    """
+    # If user explicitly chose a tier
+    if explicit_choice:
+        if explicit_choice == "quick":
+            return SpellTier.QUICK, "User requested quick tier"
+        elif explicit_choice == "premium" and user_tier in ["premium", "founding"]:
+            return SpellTier.PREMIUM, "User requested premium tier"
+        elif explicit_choice == "standard":
+            return SpellTier.STANDARD, "User requested standard tier"
+    
+    # First spell gets standard treatment for good first impression
+    if is_first_spell:
+        return SpellTier.STANDARD, "First spell - full experience"
+    
+    # Detect tier from intention
+    tier_str = get_tier_for_intention(intention, user_tier)
+    
+    if tier_str == "quick":
+        return SpellTier.QUICK, "Simple intention suitable for quick spell"
+    elif tier_str == "premium":
+        return SpellTier.PREMIUM, "Complex intention with premium features"
+    else:
+        return SpellTier.STANDARD, "Standard spell generation"
+
+
 def get_tier_config(tier: str) -> Dict[str, Any]:
     """Get the full configuration for a spell tier."""
     return SPELL_TIERS.get(tier, SPELL_TIERS["standard"])
