@@ -124,7 +124,7 @@ export const About = () => {
                 </div>
 
                 <div className="border-l-2 border-gold/40 pl-4">
-                  <h3 className="font-cinzel text-lg text-crimson-bright mb-2">🪽 Theresa</h3>
+                  <h3 className="font-cinzel text-lg text-crimson-bright mb-2 flex items-center gap-2"><img src="/icons/guides/guide-theresa.png" alt="Theresa" className="w-6 h-6 rounded-full" /> Theresa</h3>
                   <p className="font-montserrat text-sm text-cream/80 leading-relaxed">
                     The Seer & Storyteller. Journalist, historian, and truth-seeker, Theresa uncovered hidden 
                     paternity, mapped generational trauma, and broke the &ldquo;veil spell&rdquo; through research and ritual. 
