@@ -82,5 +82,6 @@ __all__ = [
     
     # Pipeline - Blocks
     'BlocksSpellPipeline',
-    'generate_spell_blocks'
+    'generate_spell_blocks',
+    'transform_blocks_to_array'
 ]
