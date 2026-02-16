@@ -1064,7 +1064,7 @@ export const SpellRequest = () => {
           <div className="flex items-center justify-center gap-4 text-gold/50 mt-3">
             <span>☽</span>
             <span className="text-crimson/60">❦</span>
-            <span>✨</span>
+            <img src="/icons/ui/gold/icon-sparkles.png" alt="" className="w-4 h-4" />
             <span className="text-crimson/60">❦</span>
             <span>☾</span>
           </div>
