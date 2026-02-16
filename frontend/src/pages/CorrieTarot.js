@@ -349,7 +349,7 @@ const CorrieTarot = () => {
                 <div className="absolute inset-1.5 border border-crimson/30 rounded-sm" />
                 <div className="absolute inset-0 bg-navy-mid/80 rounded-sm backdrop-blur-sm" />
                 <div className="relative z-10 p-6 text-center">
-                  <span className="text-2xl mb-2 block">🔮</span>
+                  <img src="/icons/ui/icon-crystal-ball.png" alt="" className="w-8 h-8 mx-auto mb-2" />
                   <h3 className="font-cinzel text-lg text-gold mb-3">Shigg's Reading</h3>
                   <p className="font-crimson text-base text-cream/90 italic leading-relaxed">
                     "{result.overall_message}"
