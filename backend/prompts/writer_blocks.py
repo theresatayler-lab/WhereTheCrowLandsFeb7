@@ -73,12 +73,13 @@ CONTENT_DIRECTIONS = {
             "voice_markers": ["hush", "threshold", "liminal space", "sensory scene-setting"]
         },
         "voice_activation": {
-            "directions": "Guide the seeker to use their voice: humming, singing, speaking. Explain why voice carries power. Reference the song-magic tradition.",
+            "directions": "Guide the seeker to use their voice: humming, singing, speaking. Give a specific instruction to hum, chant, or sing a short phrase. Include the phrase itself (2-4 lines, with rhythm -- could be a couplet). Set the emotional key: 'Sing this low, from the belly, the way you'd warn someone you love.' Reference Irish/Celtic vocal tradition: keening, lullabies, work songs, or chanting. Frame as empowerment: the voice itself IS the ward/spell/binding.",
             "examples": [
                 "Your voice is your first instrument. Hum low, feel it in your chest...",
-                "The old songs knew—vibration moves through walls."
+                "The old songs knew—vibration moves through walls.",
+                "Sing this low, from the belly: 'I am the door that does not open / I am the wall that does not fall.'"
             ],
-            "voice_markers": ["voice as tool", "humming/singing", "vibration"]
+            "voice_markers": ["voice as tool", "humming/singing", "vibration", "specific phrase", "Celtic vocal tradition"]
         },
         "ward_creation": {
             "directions": "Teach how to create a protective ward using voice and intention. Make it feel solid but not fearful. Maternal fierce energy. For each step, explain the Irish or Celtic tradition behind it (e.g., 'In the old Irish practice, the threshold song was sung three times — once for the seen, once for the unseen, once for what lies between'). Write as decisive prose paragraphs with embedded history, not sparse instructions.",
