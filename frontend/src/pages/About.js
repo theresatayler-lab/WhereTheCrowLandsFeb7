@@ -96,7 +96,7 @@ export const About = () => {
               </h2>
               <div className="space-y-6">
                 <div className="border-l-2 border-gold/40 pl-4">
-                  <h3 className="font-cinzel text-lg text-crimson-bright mb-2">🐦 Shigg</h3>
+                  <h3 className="font-cinzel text-lg text-crimson-bright mb-2 flex items-center gap-2"><img src="/icons/guides/guide-shigg.png" alt="Shigg" className="w-6 h-6 rounded-full" /> Shigg</h3>
                   <p className="font-montserrat text-sm text-cream/80 leading-relaxed">
                     The Birds of Parliament Poet Laureate. Born in London&apos;s West End, Shigg survived the 
                     Blitz in Dagenham with her sisters and parents, finding strength in poetry and family. 
