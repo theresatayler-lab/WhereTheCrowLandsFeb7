@@ -941,7 +941,11 @@ export const SpellRequest = () => {
                 >
                   {/* Guide avatar */}
                   <div className="w-24 h-24 mx-auto mb-6 rounded-full overflow-hidden border-2 border-gold/50 flex items-center justify-center bg-navy-dark/50">
-                    <span className="text-5xl">{selectedGuide.emoji}</span>
+                    {selectedGuide.icon ? (
+                      <img src={selectedGuide.icon} alt={selectedGuide.name} className="w-14 h-14" />
+                    ) : (
+                      <Sparkles className="w-10 h-10 text-gold" />
+                    )}
                   </div>
                   
                   <h2 className="font-cinzel text-2xl sm:text-3xl text-gold mb-2">
