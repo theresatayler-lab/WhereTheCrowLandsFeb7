@@ -5734,6 +5734,91 @@ async def delete_saved_ward(ward_id: str, user = Depends(get_current_user)):
     
     return {'success': True, 'message': 'Ward deleted from grimoire'}
 
+
+@api_router.get('/grimoire/export/pdf')
+async def export_grimoire_pdf(user = Depends(get_current_user)):
+    """Export user's saved grimoire spells as a PDF."""
+    from io import BytesIO
+    from fastapi.responses import StreamingResponse
+
+    try:
+        from reportlab.lib.pagesizes import letter
+        from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+        from reportlab.lib.colors import HexColor
+        from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, PageBreak
+        from reportlab.lib.units import inch
+    except ImportError:
+        raise HTTPException(status_code=500, detail='PDF generation not available. Install reportlab.')
+
+    # Fetch user's saved spells from user_spells collection
+    saved_spells = await db.user_spells.find(
+        {'user_id': user['id']},
+        {'_id': 0}
+    ).sort('saved_at', -1).to_list(length=100)
+
+    if not saved_spells:
+        raise HTTPException(status_code=404, detail='No saved spells found')
+
+    buffer = BytesIO()
+    doc = SimpleDocTemplate(buffer, pagesize=letter, topMargin=1*inch, bottomMargin=1*inch, leftMargin=1.2*inch, rightMargin=1.2*inch)
+
+    styles = getSampleStyleSheet()
+    title_style = ParagraphStyle('GrimoireTitle', parent=styles['Title'], fontName='Times-Bold', fontSize=28, spaceAfter=30, textColor=HexColor('#0a1628'), alignment=1)
+    spell_title_style = ParagraphStyle('SpellTitle', parent=styles['Heading1'], fontName='Times-Bold', fontSize=18, spaceBefore=20, spaceAfter=12, textColor=HexColor('#8b2232'))
+    guide_style = ParagraphStyle('GuideName', parent=styles['Normal'], fontName='Times-Italic', fontSize=11, spaceAfter=16, textColor=HexColor('#C8A44D'))
+    body_style = ParagraphStyle('SpellBody', parent=styles['Normal'], fontName='Times-Roman', fontSize=11, leading=16, spaceAfter=8, textColor=HexColor('#1a1a1a'))
+    divider_style = ParagraphStyle('Divider', parent=styles['Normal'], fontName='Times-Roman', fontSize=11, alignment=1, spaceBefore=20, spaceAfter=20, textColor=HexColor('#C8A44D'))
+
+    story = []
+    story.append(Spacer(1, 2*inch))
+    story.append(Paragraph("My Grimoire", title_style))
+    story.append(Spacer(1, 0.5*inch))
+    story.append(Paragraph("Where The Crowlands", ParagraphStyle('Subtitle', parent=styles['Normal'], fontName='Times-Italic', fontSize=14, alignment=1, textColor=HexColor('#C8A44D'))))
+    story.append(PageBreak())
+
+    for i, spell_entry in enumerate(saved_spells):
+        spell_content = spell_entry.get('spell_data', spell_entry)
+        title = spell_content.get('title', f'Working {i+1}')
+        story.append(Paragraph(title.replace('&', '&amp;').replace('<', '&lt;'), spell_title_style))
+
+        guide_name = spell_entry.get('archetype', {}).get('name', '')
+        if guide_name:
+            story.append(Paragraph(f"Guided by {guide_name}", guide_style))
+
+        blocks = spell_content.get('blocks', [])
+        if isinstance(blocks, list):
+            for block in blocks:
+                if not isinstance(block, dict):
+                    continue
+                content = block.get('content', '')
+                if isinstance(content, dict):
+                    text_parts = []
+                    for key, val in content.items():
+                        if isinstance(val, str) and val.strip():
+                            text_parts.append(val)
+                        elif isinstance(val, list):
+                            for item in val:
+                                if isinstance(item, str):
+                                    text_parts.append(f"  - {item}")
+                                elif isinstance(item, dict):
+                                    step_text = item.get('action', item.get('instruction', item.get('text', item.get('name', ''))))
+                                    if step_text:
+                                        text_parts.append(f"  - {step_text}")
+                    content = '\n'.join(text_parts)
+                if content and isinstance(content, str):
+                    clean = content.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
+                    for paragraph in clean.split('\n'):
+                        if paragraph.strip():
+                            story.append(Paragraph(paragraph.strip(), body_style))
+
+        if i < len(saved_spells) - 1:
+            story.append(Paragraph("~ ~ ~", divider_style))
+            story.append(PageBreak())
+
+    doc.build(story)
+    buffer.seek(0)
+    return StreamingResponse(buffer, media_type='application/pdf', headers={'Content-Disposition': 'attachment; filename="my-grimoire.pdf"'})
+
 # Subscription endpoints
 @api_router.get('/subscription/status')
 async def get_subscription_status(user = Depends(get_current_user)):
