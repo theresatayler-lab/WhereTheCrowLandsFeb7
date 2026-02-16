@@ -976,7 +976,8 @@ class BlocksSpellPipeline:
         guide_config: dict,
         belief_mode: str = "SPIRITUAL",
         tier: str = None,
-        tier_config: dict = None
+        tier_config: dict = None,
+        on_stage_change: callable = None
     ):
         """
         Generate a spell using the blocks-based pipeline.
@@ -1001,12 +1002,16 @@ class BlocksSpellPipeline:
         }
         
         try:
-            # Stage 1: Archivist (research) - create minimal packet for now
+            # Stage 1: Archivist (research)
+            if on_stage_change:
+                await on_stage_change("archivist")
             research_packet = await self._run_archivist(spell_spec, guide_id)
             metadata["stages_completed"].append("archivist")
             metadata["timing"]["archivist_ms"] = self.timing_log.get("archivist_ms", 0)
             
             # Stage 2: Planner
+            if on_stage_change:
+                await on_stage_change("planner")
             plan, planner_meta = await run_block_planner(
                 spell_spec, guide_config, research_packet,
                 self.openai_client, tier
@@ -1016,6 +1021,8 @@ class BlocksSpellPipeline:
             metadata["stages_completed"].append("planner")
             
             # Stage 3: Writer
+            if on_stage_change:
+                await on_stage_change("writer")
             spell_output, writer_meta = await run_block_writer(
                 spell_spec, guide_config, research_packet, plan,
                 belief_mode, self.openai_client, self.anthropic_client, tier
@@ -1025,6 +1032,8 @@ class BlocksSpellPipeline:
             metadata["stages_completed"].append("writer")
             
             # Stage 4: QA validation
+            if on_stage_change:
+                await on_stage_change("qa")
             working_type = plan.get("working_type", "")
             qa_passed, qa_errors = validate_spell_blocks(spell_output, guide_id, working_type)
             metadata["qa_passed"] = qa_passed
