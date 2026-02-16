@@ -47,6 +47,7 @@ const ARCHETYPE_STYLES = {
     title: 'Seer & Storyteller',
     description: 'Modern collage with vintage elements, genealogy imagery, documentary style meets magical realism',
     emoji: '🪞',
+    iconPath: '/icons/guides/guide-theresa.png',
     color: 'from-violet-800 to-violet-900',
     borderColor: 'border-violet-400/50',
     keywords: ['collage', 'photographs', 'ancestry', 'documentary', 'truth-seeking']
