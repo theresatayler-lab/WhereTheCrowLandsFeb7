@@ -4770,6 +4770,10 @@ async def generate_spell_v2_endpoint(request: SpellRequestV2, user = Depends(get
             belief_mode=belief_mode
         )
         
+        # Transform blocks from pipeline dict format to frontend array format
+        from prompts.pipeline_blocks import transform_blocks_to_array
+        spell_output = transform_blocks_to_array(spell_output, persona_id)
+        
         # Validate against hard limits one more time
         is_valid, violations = validate_hard_limits(spell_output)
         if not is_valid:
