@@ -14,6 +14,7 @@ const ARCHETYPE_STYLES = {
     title: 'Birds of Parliament',
     description: 'Edmund J. Sullivan pen-and-ink style, Rubáiyát illustrations, black & white engravings with birds, roses, and celestial symbols',
     emoji: '🐦',
+    iconPath: '/icons/guides/guide-shigg.png',
     color: 'from-amber-800 to-amber-900',
     borderColor: 'border-amber-500/50',
     keywords: ['black and white', 'cross-hatching', 'Art Nouveau', 'birds', 'roses']
