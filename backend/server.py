@@ -5255,12 +5255,30 @@ async def _generate_spell_background(job_id: str, request_data: dict, user_id: O
             tier_config=tier_config
         )
         
-        # Generate spell
+        # Generate spell — with stage progress updates to MongoDB
+        async def update_stage(stage_name: str):
+            """Update the job document so polling can show stage progress."""
+            stage_messages = {
+                'archivist': 'Researching traditions and folklore...',
+                'planner': 'Planning your working...',
+                'writer': f'Writing in {guide_config.get("name", "your guide")}\'s voice...',
+                'qa': 'Final review...'
+            }
+            await db.spell_jobs.update_one(
+                {'job_id': job_id},
+                {'$set': {
+                    'current_stage': stage_name,
+                    'stage_message': stage_messages.get(stage_name, 'Working...'),
+                    'updated_at': datetime.now(timezone.utc)
+                }}
+            )
+
         spell_output, metadata = await pipeline.generate_spell(
             spell_spec=spell_spec,
             guide_config=guide_config,
             belief_mode=belief_mode,
-            tier_config=tier_config
+            tier_config=tier_config,
+            on_stage_change=update_stage
         )
         
         # Transform blocks from pipeline dict format to frontend array format
