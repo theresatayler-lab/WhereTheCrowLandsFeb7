@@ -5202,6 +5202,18 @@ async def _generate_spell_background(job_id: str, request_data: dict, user_id: O
         spell_spec['persona_id'] = persona_id
         guide_config = get_persona_config(persona_id) or get_persona_config('shigg')
         
+        # Store selected guide early so polling can show it during loading
+        await db.spell_jobs.update_one(
+            {'job_id': job_id},
+            {'$set': {
+                'persona_id': persona_id,
+                'persona_name': guide_config.get('name', ''),
+                'persona_title': guide_config.get('title', ''),
+                'routing_reason': routing_reason,
+                'updated_at': datetime.now(timezone.utc)
+            }}
+        )
+        
         # Tier selection
         user_subscription_tier = 'free'
         is_first_spell = False
@@ -5430,6 +5442,12 @@ async def get_spell_job_status(job_id: str):
             estimated_total = 120  # 2 minutes expected
             progress = min(int((elapsed / estimated_total) * 100), 95)
             response['progress'] = progress
+        # Include persona info so frontend can show guide during loading
+        if job.get('persona_id'):
+            response['persona_id'] = job['persona_id']
+            response['persona_name'] = job.get('persona_name', '')
+            response['persona_title'] = job.get('persona_title', '')
+            response['routing_reason'] = job.get('routing_reason', '')
     
     return response
 
