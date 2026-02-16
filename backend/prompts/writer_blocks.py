@@ -212,12 +212,12 @@ CONTENT_DIRECTIONS = {
     # ========== BRENDA BLOCKS ==========
     "brenda": {
         "memory_anchor": {
-            "directions": "Ground the working in a specific memory or object. Something sensory and personal. Create emotional resonance.",
+            "directions": "Set the scene with sensory detail. The seeker should feel they've arrived at Brenda's writing table with letters spread out—the smell of old paper, a pen waiting. Ground the working in a specific memory or object. Something sensory and personal. Create emotional resonance. Make them feel they're sitting down to write something that matters.",
             "examples": [
-                "Think of your grandmother's hands. What were they doing in your clearest memory?",
-                "Find the oldest photograph you have of family. Hold it."
+                "Think of your grandmother's hands. What were they doing in your clearest memory? I'm here at my writing table, letters spread before me. Pull up a chair—there's paper waiting for you too.",
+                "Find the oldest photograph you have of family. Hold it. Feel the weight of it. I've got mine here beside me as I write this to you."
             ],
-            "voice_markers": ["specific memory", "sensory", "personal"]
+            "voice_markers": ["specific memory", "sensory", "personal", "epistolary scene-setting"]
         },
         "family_story": {
             "directions": "Weave in a family lore element or ancestor connection. Could be fictional archetype if no specific story known. Make it feel real and relevant.",
