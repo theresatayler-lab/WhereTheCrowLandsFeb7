@@ -25,6 +25,7 @@ const ARCHETYPE_STYLES = {
     title: 'Singer of Strength',
     description: 'Celtic goddess aesthetic with the Morrigan, candlelit séances, Pre-Raphaelite oil painting quality',
     emoji: '🪶',
+    iconPath: '/icons/guides/guide-cathleen.png',
     color: 'from-slate-800 to-slate-900',
     borderColor: 'border-blue-400/50',
     keywords: ['Morrigan', 'crows', 'séance', 'Celtic', 'moonlight']
