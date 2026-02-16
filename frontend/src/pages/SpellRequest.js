@@ -927,33 +927,65 @@ export const SpellRequest = () => {
             
             {/* Content */}
             <div className="relative z-10 text-center px-6 max-w-lg">
-              <motion.div
-                animate={{ 
-                  scale: [1, 1.05, 1],
-                  opacity: [0.8, 1, 0.8]
-                }}
-                transition={{ 
-                  repeat: Infinity, 
-                  duration: 2, 
-                  ease: 'easeInOut' 
-                }}
-                className="w-24 h-24 mx-auto mb-8 relative"
-              >
-                <div className="absolute inset-0 rounded-full border-2 border-gold/40 animate-pulse" />
-                <div className="absolute inset-2 rounded-full border border-crimson/30" />
-                <Sparkles className="w-full h-full text-gold p-4" style={{ filter: 'drop-shadow(0 0 20px rgba(212, 168, 75, 0.5))' }} />
-              </motion.div>
-              
-              <h2 className="font-cinzel text-2xl sm:text-3xl text-gold mb-3" style={{ textShadow: '0 0 30px rgba(185, 78, 106, 0.5), 0 0 60px rgba(185, 78, 106, 0.3)' }}>
-                Weaving Your Spell
-              </h2>
-              
-              <p className="font-crimson text-lg text-cream/80 mb-2">
-                {spellSpec.persona_id !== 'choose_for_me' 
-                  ? `${PERSONAS.find(p => p.id === spellSpec.persona_id)?.name} is crafting something special for you`
-                  : 'Finding the perfect guide for your intention'
-                }
-              </p>
+              {selectedGuide ? (
+                /* Guide has been selected - show their info */
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8 }}
+                >
+                  {/* Guide avatar */}
+                  <div className="w-24 h-24 mx-auto mb-6 rounded-full overflow-hidden border-2 border-gold/50 flex items-center justify-center bg-navy-dark/50">
+                    <span className="text-5xl">{selectedGuide.emoji}</span>
+                  </div>
+                  
+                  <h2 className="font-cinzel text-2xl sm:text-3xl text-gold mb-2">
+                    {selectedGuide.name}
+                  </h2>
+                  <p className="font-italiana text-lg text-cream/80 mb-6">
+                    {selectedGuide.title}
+                  </p>
+                  
+                  {/* Why this guide */}
+                  <div className="bg-black/30 backdrop-blur-sm rounded-lg p-5 mb-6 border border-gold/20">
+                    <p className="font-crimson-text text-cream/80 text-base italic leading-relaxed">
+                      {selectedGuide.name === 'Shigg' && "Shigg was chosen because your intention speaks to the quiet magic of everyday moments. She knows the kitchen-table wisdom that mends what words cannot."}
+                      {selectedGuide.name === 'Cathleen' && "Cathleen steps forward because your need calls for fierce protection. She carries the old songs that build walls nothing unwanted can cross."}
+                      {selectedGuide.name === 'Katherine' && "Katherine has taken your case. Your intention requires precision and the willingness to look at what others avoid."}
+                      {selectedGuide.name === 'Theresa' && "Theresa recognizes the patterns in your intention. She's already pulling the files, connecting the evidence."}
+                      {selectedGuide.name === 'Brenda' && "Brenda has received your letter. Your intention carries the weight of family and memory. She's composing her reply with care."}
+                    </p>
+                  </div>
+                </motion.div>
+              ) : (
+                /* Guide not yet selected - show finding guide state */
+                <>
+                  <motion.div
+                    animate={{ 
+                      scale: [1, 1.05, 1],
+                      opacity: [0.8, 1, 0.8]
+                    }}
+                    transition={{ 
+                      repeat: Infinity, 
+                      duration: 2, 
+                      ease: 'easeInOut' 
+                    }}
+                    className="w-24 h-24 mx-auto mb-8 relative"
+                  >
+                    <div className="absolute inset-0 rounded-full border-2 border-gold/40 animate-pulse" />
+                    <div className="absolute inset-2 rounded-full border border-crimson/30" />
+                    <Sparkles className="w-full h-full text-gold p-4" style={{ filter: 'drop-shadow(0 0 20px rgba(212, 168, 75, 0.5))' }} />
+                  </motion.div>
+                  
+                  <h2 className="font-cinzel text-2xl sm:text-3xl text-gold mb-3" style={{ textShadow: '0 0 30px rgba(185, 78, 106, 0.5), 0 0 60px rgba(185, 78, 106, 0.3)' }}>
+                    Finding Your Guide
+                  </h2>
+                  
+                  <p className="font-crimson text-lg text-cream/80 mb-2">
+                    The right guide is emerging for your intention...
+                  </p>
+                </>
+              )}
               
               <p className="font-montserrat text-xs text-gold/50 tracking-widest uppercase mt-6">
                 This may take a moment...
