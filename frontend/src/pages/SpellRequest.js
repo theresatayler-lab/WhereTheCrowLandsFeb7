@@ -799,7 +799,7 @@ export const SpellRequest = () => {
             animate={{ opacity: 1, y: 0 }}
           >
             <PageHeader 
-              icon={Sparkles}
+              iconSrc="/icons/ui/gold/icon-sparkles.png"
               title="Craft Your Working"
               subtitle="Answer a few questions and receive a personalized ritual crafted just for you"
             />
