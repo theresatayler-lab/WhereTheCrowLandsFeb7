@@ -1149,7 +1149,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
               <div className="flex items-center justify-between gap-3 mb-4">
                 <div className="flex items-center gap-3">
                   <div className="p-3 bg-teal-100 border border-teal-300 rounded-full">
-                    <span className="text-3xl">{spell.suggested_ward.symbol || '🪶'}</span>
+                    <img src="/icons/anchors/gold/anchor-feather.png" alt="" className="w-8 h-8" />
                   </div>
                   <div>
                     <p className="font-cinzel text-xs text-teal-700 uppercase tracking-wider">Cathleen&apos;s Gift</p>
