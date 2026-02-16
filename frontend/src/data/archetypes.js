@@ -262,6 +262,7 @@ She gave her great-granddaughter a silver rabbit teething ring that is treasured
     era: 'Late Victorian through WWII (1880s-1945)',
     birdSymbol: 'Crows & Magpies',
     birdEmoji: '🐦',
+    iconPath: '/icons/guides/guide-katherine.png',
     colorScheme: {
       primary: '#4B5A3E',
       secondary: '#D8CBB3',
