@@ -1042,59 +1042,106 @@ class BlocksSpellPipeline:
             raise
     
     async def _run_archivist(self, spell_spec: dict, guide_id: str) -> dict:
-        """Stage 1: Run Archivist research - returns research packet"""
+        """Stage 1: Run Archivist research via DeepSeek - returns research packet"""
         import time
         start = time.time()
-        
-        # For now, return a basic research packet
-        # Full Archivist integration would use deepseek_client
-        research_packet = {
-            "query_understood": spell_spec.get("user_query", ""),
-            "research_mode": "spell_origins",
-            "facts": [
-                {
-                    "claim": "Family patterns often repeat across generations until consciously addressed",
-                    "claim_type": "academic",
-                    "confidence": "high",
-                    "source_refs": ["family_systems_theory"],
-                    "why_it_works": "Family systems theory shows intergenerational patterns",
-                    "hedging_required": False
-                },
-                {
-                    "claim": "Breaking patterns requires both awareness and ritual action",
+
+        intention = spell_spec.get("user_query", spell_spec.get("intention", ""))
+        anchor = spell_spec.get("anchor_object")
+        context = spell_spec.get("desired_feeling", "")
+
+        try:
+            from research_service import research_query_v2
+            v2 = await research_query_v2(
+                query=intention,
+                persona_id=guide_id,
+                anchor_object=anchor,
+                context=context,
+                max_retries=1
+            )
+
+            # Convert V2 response to the pipeline's research packet format
+            facts = []
+            for t in (v2.key_takeaways or []):
+                if isinstance(t, dict):
+                    facts.append({
+                        "claim": t.get("text", ""),
+                        "claim_type": t.get("claim_flag", "folklore"),
+                        "confidence": t.get("confidence", "medium"),
+                        "source_refs": t.get("source_refs", []),
+                        "why_it_works": "",
+                        "hedging_required": t.get("confidence") == "low"
+                    })
+            for f in (v2.why_this_works_facts or []):
+                if isinstance(f, dict):
+                    facts.append({
+                        "claim": f.get("claim", ""),
+                        "claim_type": f.get("claim_flag", "folklore"),
+                        "confidence": f.get("confidence", "medium"),
+                        "source_refs": f.get("source_refs", []),
+                        "why_it_works": f.get("claim", ""),
+                        "hedging_required": f.get("confidence") == "low"
+                    })
+
+            sources = []
+            for s in (v2.sources or []):
+                if isinstance(s, dict):
+                    sources.append({
+                        "source_id": s.get("id", s.get("title", "unknown")),
+                        "author": s.get("author", ""),
+                        "work": s.get("title", ""),
+                        "year": s.get("year"),
+                        "quality_tier": s.get("quality_tier", "folk_archive"),
+                        "relevance": s.get("notes", "")
+                    })
+
+            pc = v2.practice_context if isinstance(v2.practice_context, dict) else {}
+            research_packet = {
+                "query_understood": intention,
+                "research_mode": v2.research_mode or "spell_origins",
+                "summary": v2.summary or "",
+                "facts": facts or [{
+                    "claim": v2.summary or "Traditional practice",
                     "claim_type": "folklore",
                     "confidence": "medium",
-                    "source_refs": ["folk_traditions"],
-                    "why_it_works": "Ritual creates psychological container for change",
+                    "source_refs": [],
+                    "why_it_works": "",
                     "hedging_required": False
+                }],
+                "sources": sources,
+                "tradition_context": {
+                    "primary_tradition": (pc.get("tradition_tags") or ["folk_magic"])[0] if pc.get("tradition_tags") else "folk_magic",
+                    "related_traditions": pc.get("tradition_tags", []),
+                    "geographic_origin": pc.get("region", "British Isles"),
+                    "time_period": pc.get("time_period", "Traditional")
                 }
-            ],
-            "sources": [
-                {
-                    "source_id": "family_systems_theory",
-                    "author": "Murray Bowen",
-                    "work": "Family Therapy in Clinical Practice",
-                    "year": 1978,
-                    "quality_tier": "academic_primary",
-                    "relevance": "Foundational work on family patterns"
-                },
-                {
-                    "source_id": "folk_traditions",
-                    "author": "British Folk Traditions",
-                    "work": "Traditional practices for breaking cycles",
-                    "year": None,
-                    "quality_tier": "community_tradition",
-                    "relevance": "Practical folk approaches to pattern-breaking"
-                }
-            ],
-            "tradition_context": {
-                "primary_tradition": "family_magic",
-                "related_traditions": ["ancestral_work", "pattern_breaking"],
-                "geographic_origin": "British Isles",
-                "time_period": "Traditional to Modern"
             }
-        }
-        
+
+            logger.info(f"[ARCHIVIST] DeepSeek research returned {len(facts)} facts, {len(sources)} sources")
+
+        except Exception as e:
+            logger.warning(f"[ARCHIVIST] DeepSeek research failed, using fallback: {e}")
+            research_packet = {
+                "query_understood": intention,
+                "research_mode": "spell_origins",
+                "summary": "",
+                "facts": [{
+                    "claim": "Traditional folk practices address this through ritual and intention",
+                    "claim_type": "folklore",
+                    "confidence": "medium",
+                    "source_refs": [],
+                    "why_it_works": "Ritual creates a psychological container for change",
+                    "hedging_required": False
+                }],
+                "sources": [],
+                "tradition_context": {
+                    "primary_tradition": "folk_magic",
+                    "related_traditions": [],
+                    "geographic_origin": "British Isles",
+                    "time_period": "Traditional"
+                }
+            }
+
         self.timing_log["archivist_ms"] = int((time.time() - start) * 1000)
         return research_packet
 
