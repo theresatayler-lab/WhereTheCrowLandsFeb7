@@ -539,7 +539,7 @@ const CorrieTarot = () => {
               <div className="absolute inset-0 bg-white/90 rounded-sm" />
               <div className="relative z-10 p-8">
                 <div className="animate-pulse mb-4">
-                  <span className="text-4xl">🔮</span>
+                  <img src="/icons/ui/gold/icon-crystal-ball.png" alt="" className="w-12 h-12" />
                 </div>
                 <Loader2 className="w-8 h-8 text-crimson animate-spin mx-auto mb-4" />
                 <p className="font-cinzel text-lg text-crimson mb-2">Shigg is consulting the cards...</p>
