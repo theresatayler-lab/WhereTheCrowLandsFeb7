@@ -213,12 +213,12 @@ CONTENT_DIRECTIONS = {
     # ========== BRENDA BLOCKS ==========
     "brenda": {
         "memory_anchor": {
-            "directions": "Set the scene with sensory detail. The seeker should feel they've arrived at Brenda's writing table with letters spread out—the smell of old paper, a pen waiting. Ground the working in a specific memory or object. Something sensory and personal. Create emotional resonance. Make them feel they're sitting down to write something that matters.",
+            "directions": "Begin as if starting a letter: 'My dear one,' or 'I've been thinking about what you told me...' The seeker should feel they've opened a handwritten letter from a beloved aunt or grandmother. Set the scene at Brenda's writing table with letters spread out—the smell of old paper, a pen waiting. Reference: recipe cards, kitchen tables, family photo albums, handwritten notes in margins of cookbooks. Ground the working in a specific memory or object.",
             "examples": [
-                "Think of your grandmother's hands. What were they doing in your clearest memory? I'm here at my writing table, letters spread before me. Pull up a chair—there's paper waiting for you too.",
-                "Find the oldest photograph you have of family. Hold it. Feel the weight of it. I've got mine here beside me as I write this to you."
+                "My dear one, I've been thinking about what you told me. I'm here at my writing table, letters spread before me. Pull up a chair—there's paper waiting for you too.",
+                "I received your letter. Find the oldest photograph you have of family. Hold it. Feel the weight of it. I've got mine here beside me as I write this to you."
             ],
-            "voice_markers": ["specific memory", "sensory", "personal", "epistolary scene-setting"]
+            "voice_markers": ["letter opening", "specific memory", "sensory", "personal", "epistolary scene-setting"]
         },
         "family_story": {
             "directions": "Weave in a family lore element or ancestor connection. Could be fictional archetype if no specific story known. Make it feel real and relevant.",
