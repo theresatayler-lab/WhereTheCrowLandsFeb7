@@ -146,7 +146,7 @@ const FlippableImageCard = ({ imageBase64, prompt, onDownload }) => {
               {/* Click to flip hint */}
               <div className="absolute bottom-6 left-0 right-0 text-center z-20">
                 <p className="font-montserrat text-xs text-gold/80 bg-navy-dark/60 inline-block px-3 py-1 rounded-full backdrop-blur-sm">
-                  ✨ Click to see full image ✨
+                  Click to see full image
                 </p>
               </div>
             </div>
