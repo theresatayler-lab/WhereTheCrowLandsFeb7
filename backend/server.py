@@ -5466,6 +5466,10 @@ async def get_spell_job_status(job_id: str):
             response['persona_name'] = job.get('persona_name', '')
             response['persona_title'] = job.get('persona_title', '')
             response['routing_reason'] = job.get('routing_reason', '')
+        # Include current pipeline stage for progress indicator
+        if job.get('current_stage'):
+            response['current_stage'] = job['current_stage']
+            response['stage_message'] = job.get('stage_message', 'Working...')
     
     return response
 
