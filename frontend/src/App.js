@@ -28,6 +28,7 @@ import { InvisibleHelpers } from './pages/InvisibleHelpers';
 import DesignPreview from './pages/DesignPreview';
 import HandcraftedSuccess from './pages/HandcraftedSuccess';
 import { GuidePortal } from './pages/GuidePortal';
+import Admin from './pages/Admin';
 import { Footer } from './components/Footer';
 import { OnboardingModal } from './components/OnboardingModal';
 import './App.css';
