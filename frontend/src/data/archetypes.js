@@ -135,6 +135,7 @@ She was her granddaughter's greatest ally and friend, staying up all night telli
     era: 'WWII Homefront - Land Army, WRENS & Celtic-Irish Resistance (1940s)',
     birdSymbol: 'Crows & Ravens',
     birdEmoji: '🪶',
+    iconPath: '/icons/guides/guide-cathleen.png',
     colorScheme: {
       primary: '#06133c',
       secondary: '#D8CBB3',
