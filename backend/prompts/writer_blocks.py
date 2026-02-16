@@ -65,12 +65,12 @@ CONTENT_DIRECTIONS = {
     # ========== CATHLEEN BLOCKS ==========
     "cathleen": {
         "threshold_opening": {
-            "directions": "Create a sense of crossing into sacred space. Use 'hush' or threshold imagery. Lower the energy, make space for what comes.",
+            "directions": "Set the scene with sensory detail. The seeker should feel they've stepped into Cathleen's threshold between worlds—the hush of a doorway at dusk, the particular quality of light at the edge of things. Create a sense of crossing into sacred space. Use 'hush' or threshold imagery. Lower the energy, make space for what comes. Let them feel the liminal place.",
             "examples": [
-                "Hush now, and step across the threshold with me...",
-                "There is a place between the worlds. Come."
+                "Hush now, and step across the threshold with me. Feel that shift—the air is different here, at the edge of things. The light comes slant...",
+                "There is a place between the worlds. You're standing in it now. The doorframe hums. Come."
             ],
-            "voice_markers": ["hush", "threshold", "liminal space"]
+            "voice_markers": ["hush", "threshold", "liminal space", "sensory scene-setting"]
         },
         "voice_activation": {
             "directions": "Guide the seeker to use their voice: humming, singing, speaking. Explain why voice carries power. Reference the song-magic tradition.",
