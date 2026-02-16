@@ -392,6 +392,7 @@ export const SpellRequest = () => {
   const [loadingImages, setLoadingImages] = useState(false);
   const [spellResult, setSpellResult] = useState(null);
   const [subscriptionStatus, setSubscriptionStatus] = useState(null);
+  const [selectedGuide, setSelectedGuide] = useState(null); // Guide selected during generation
   
   // Track last selected persona for video fallback (for choose_for_me)
   const lastSelectedPersonaRef = useRef('shigg');
