@@ -314,28 +314,24 @@ const ColdOpenBlock = ({ content, archetypeStyle }) => (
 const MaterialsBlock = ({ content, archetypeStyle }) => (
   <div className="space-y-3" data-testid="materials-block">
     {content.items?.map((item, i) => (
-      <div key={i} className={cn(
-        "flex items-start gap-3 p-3 rounded-lg border bg-[#F3EFE8]",
-        archetypeStyle.borderColor ? archetypeStyle.borderColor.replace('border-', 'border-') + '/30' : "border-amber-600/30"
-      )}>
+      <div key={i} className="flex gap-3 items-start py-2">
         <Feather className={cn("w-4 h-4 mt-1 flex-shrink-0", archetypeStyle.accentColor || "text-amber-700")} />
-        <div className="flex-1">
-          <div className="font-medium text-stone-800">{item.name}</div>
-          <div className="text-sm text-stone-600">{item.purpose}</div>
+        <div>
+          <span className="font-crimson-text text-stone-800 font-semibold">{item.name}</span>
+          {item.purpose && (
+            <span className="font-crimson-text text-stone-600"> — {item.purpose}</span>
+          )}
           {item.substitution && (
-            <div className="text-xs mt-1 text-stone-500">
-              <span className="font-medium">Alternative:</span> {item.substitution}
-            </div>
+            <span className="font-crimson-text text-stone-500 text-sm block mt-1">
+              (Or substitute: {item.substitution})
+            </span>
           )}
         </div>
-        {item.optional && (
-          <span className="text-xs px-2 py-0.5 bg-stone-200 text-stone-600 rounded">optional</span>
-        )}
       </div>
     ))}
     {content.gathering_note && (
-      <p className="text-sm italic mt-4 text-stone-600">
-        &ldquo;{content.gathering_note}&rdquo;
+      <p className="text-sm italic mt-4 text-stone-600 font-crimson-text">
+        {content.gathering_note}
       </p>
     )}
   </div>
