@@ -49,14 +49,14 @@ const PERSONAS = [
 ];
 
 const ALCHEMIZE_OPTIONS = [
-  { id: 'protection', label: 'Protection', icon: Shield, color: 'text-teal-400', description: 'Wards, shields, boundaries', forPersonas: ['cathleen', 'katherine', 'shigg'] },
-  { id: 'baneful_justice', label: 'Baneful Justice', icon: Flame, color: 'text-red-400', description: 'Binding, truth-revealing, accountability', forPersonas: ['katherine', 'cathleen', 'theresa'] },
-  { id: 'comfort_healing', label: 'Comfort & Healing', icon: Heart, color: 'text-amber-400', description: 'Grief, loss, emotional support', forPersonas: ['shigg', 'brenda', 'cathleen'] },
-  { id: 'clarity_truth', label: 'Clarity & Truth', icon: Eye, color: 'text-violet-400', description: 'Discernment, seeing clearly, revelation', forPersonas: ['theresa', 'katherine', 'shigg'] },
-  { id: 'releasing', label: 'Releasing & Letting Go', icon: Cloud, color: 'text-blue-400', description: 'Breaking patterns, cord-cutting, freedom', forPersonas: ['theresa', 'katherine', 'brenda'] },
-  { id: 'ancestral_work', label: 'Ancestral Work', icon: User, color: 'text-rose-400', description: 'Family patterns, lineage healing, memory', forPersonas: ['theresa', 'brenda', 'shigg'] },
-  { id: 'domestic_magic', label: 'Domestic Magic', icon: Home, color: 'text-yellow-400', description: 'Home blessing, kitchen magic, hearth craft', forPersonas: ['shigg', 'cathleen'] },
-  { id: 'courage_strength', label: 'Courage & Strength', icon: Zap, color: 'text-green-400', description: 'Empowerment, voice, standing ground', forPersonas: ['cathleen', 'theresa'] }
+  { id: 'protection', label: 'Protection', iconSrc: '/icons/alchemize/alchemize-protection.png', color: 'text-teal-400', description: 'Wards, shields, boundaries', forPersonas: ['cathleen', 'katherine', 'shigg'] },
+  { id: 'baneful_justice', label: 'Baneful Justice', iconSrc: '/icons/alchemize/alchemize-baneful-justice.png', color: 'text-red-400', description: 'Binding, truth-revealing, accountability', forPersonas: ['katherine', 'cathleen', 'theresa'] },
+  { id: 'comfort_healing', label: 'Comfort & Healing', iconSrc: '/icons/alchemize/alchemize-comfort-healing.png', color: 'text-amber-400', description: 'Grief, loss, emotional support', forPersonas: ['shigg', 'brenda', 'cathleen'] },
+  { id: 'clarity_truth', label: 'Clarity & Truth', iconSrc: '/icons/alchemize/alchemize-clarity-truth.png', color: 'text-violet-400', description: 'Discernment, seeing clearly, revelation', forPersonas: ['theresa', 'katherine', 'shigg'] },
+  { id: 'releasing', label: 'Releasing & Letting Go', iconSrc: '/icons/alchemize/alchemize-releasing.png', color: 'text-blue-400', description: 'Breaking patterns, cord-cutting, freedom', forPersonas: ['theresa', 'katherine', 'brenda'] },
+  { id: 'ancestral_work', label: 'Ancestral Work', iconSrc: '/icons/alchemize/alchemize-ancestral-work.png', color: 'text-rose-400', description: 'Family patterns, lineage healing, memory', forPersonas: ['theresa', 'brenda', 'shigg'] },
+  { id: 'domestic_magic', label: 'Domestic Magic', iconSrc: '/icons/alchemize/alchemize-domestic-magic.png', color: 'text-yellow-400', description: 'Home blessing, kitchen magic, hearth craft', forPersonas: ['shigg', 'cathleen'] },
+  { id: 'courage_strength', label: 'Courage & Strength', iconSrc: '/icons/alchemize/alchemize-courage-strength.png', color: 'text-green-400', description: 'Empowerment, voice, standing ground', forPersonas: ['cathleen', 'theresa'] }
 ];
 
 // Keep FEELINGS for backward compatibility with existing grimoire entries
