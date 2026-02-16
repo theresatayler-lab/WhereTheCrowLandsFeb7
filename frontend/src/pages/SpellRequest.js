@@ -393,6 +393,8 @@ export const SpellRequest = () => {
   const [spellResult, setSpellResult] = useState(null);
   const [subscriptionStatus, setSubscriptionStatus] = useState(null);
   const [selectedGuide, setSelectedGuide] = useState(null); // Guide selected during generation
+  const [currentStage, setCurrentStage] = useState(null);
+  const [stageMessage, setStageMessage] = useState('');
   
   // Track last selected persona for video fallback (for choose_for_me)
   const lastSelectedPersonaRef = useRef('shigg');
