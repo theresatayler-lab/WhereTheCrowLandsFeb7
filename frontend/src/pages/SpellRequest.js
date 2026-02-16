@@ -97,7 +97,7 @@ const ANCHORS = [
   { id: 'poetry', label: 'A Poem', icon: '/icons/anchors/anchor-poetry.png', forPersonas: ['shigg'] },
   // Cathleen - voice, protection, Irish mysticism
   { id: 'song', label: 'Song/Voice', icon: '/icons/anchors/anchor-song.png', forPersonas: ['cathleen'] },
-  { id: 'bell', label: 'Bell', icon: '/icons/anchors/anchor-candle.png', forPersonas: ['cathleen'] },
+  { id: 'bell', label: 'Bell', icon: '/icons/anchors/anchor-bell.png', forPersonas: ['cathleen'] },
   { id: 'feather', label: 'Feather', icon: '/icons/anchors/anchor-feather.png', forPersonas: ['cathleen'] },
   { id: 'salt', label: 'Salt', icon: '/icons/anchors/anchor-salt.png', forPersonas: ['cathleen'] },
   { id: 'candle', label: 'Candle', icon: '/icons/anchors/anchor-candle.png', forPersonas: ['cathleen'] },
