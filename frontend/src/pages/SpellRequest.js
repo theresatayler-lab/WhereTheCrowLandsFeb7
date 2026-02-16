@@ -318,7 +318,6 @@ const Step3 = ({ spellSpec, updateSpec }) => {
         <h3 className="font-cinzel text-xl text-crimson mb-3 font-semibold">Where will you perform this?</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
           {SETTINGS.map((s) => {
-            const Icon = s.icon;
             return (
               <OptionCard
                 key={s.id}
@@ -328,7 +327,7 @@ const Step3 = ({ spellSpec, updateSpec }) => {
                 light={true}
               >
                 <div className="flex items-start gap-3">
-                  <Icon className={`w-6 h-6 flex-shrink-0 mt-0.5 ${spellSpec.setting === s.id ? 'text-crimson' : 'text-navy-dark'}`} />
+                  <img src={s.icon} alt={s.label} className="w-8 h-8 flex-shrink-0 mt-0.5" />
                   <div>
                     <p className="font-montserrat text-sm text-navy-dark font-semibold leading-tight">{s.label}</p>
                     <p className="font-montserrat text-xs text-navy-dark/70 mt-1">{s.description}</p>
