@@ -470,7 +470,7 @@ export const SpellRequest = () => {
 
   const canProceed = () => {
     if (step === 0) {
-      return spellSpec.persona_id && spellSpec.user_query?.trim().length > 10 && spellSpec.desired_feeling;
+      return spellSpec.persona_id && spellSpec.user_query?.trim().length > 10 && spellSpec.alchemize_category;
     }
     if (step === 1) {
       return spellSpec.time && spellSpec.tone && spellSpec.belief_boundary;
