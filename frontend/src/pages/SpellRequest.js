@@ -656,10 +656,10 @@ export const SpellRequest = () => {
               throw new Error(statusData.error || 'Spell generation failed');
             }
             
-            // Show progress if available
-            if (statusData.progress && statusData.progress > 0) {
-              // Could update a progress bar here
-              console.log(`Spell generation progress: ${statusData.progress}%`);
+            // Update stage progress for loading indicator
+            if (statusData.current_stage) {
+              setCurrentStage(statusData.current_stage);
+              setStageMessage(statusData.stage_message || 'Working...');
             }
             
           } catch (pollError) {
