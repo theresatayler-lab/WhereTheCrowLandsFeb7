@@ -18,7 +18,7 @@ export const NOUVEAU_COLORS = {
   
   // Gold accents - distinct from pink
   antiqueGold: '#C8A44D',        // Brighter, cleaner gold
-  mutedBrass: '#A68A3C',         // Deeper brass for contrast
+  mutedBrass: '#9E8438',         // Deeper brass for contrast
   
   // Pink/Rose accents - cleaner separation
   roseClay: '#C46B5C',           // Warmer terracotta
