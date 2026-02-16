@@ -5442,6 +5442,12 @@ async def get_spell_job_status(job_id: str):
             estimated_total = 120  # 2 minutes expected
             progress = min(int((elapsed / estimated_total) * 100), 95)
             response['progress'] = progress
+        # Include persona info so frontend can show guide during loading
+        if job.get('persona_id'):
+            response['persona_id'] = job['persona_id']
+            response['persona_name'] = job.get('persona_name', '')
+            response['persona_title'] = job.get('persona_title', '')
+            response['routing_reason'] = job.get('routing_reason', '')
     
     return response
 
