@@ -433,7 +433,7 @@ export const MyGrimoire = () => {
                         <div className="p-5 bg-gold/10 border-b border-gold/20">
                           <div className="flex items-center gap-4">
                             <div className="p-3 bg-gold/20 rounded-full">
-                              <span className="text-3xl">{ward.symbol || ward.ward_data?.symbol || '🪶'}</span>
+                              <img src="/icons/anchors/gold/anchor-feather.png" alt="" className="w-8 h-8" />
                             </div>
                             <div>
                               <h3 className="font-cinzel text-xl text-crimson">
