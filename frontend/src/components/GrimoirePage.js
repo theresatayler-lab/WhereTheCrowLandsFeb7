@@ -917,7 +917,10 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
 
     try {
       const spellContext = `Spell: "${spell.title}". Intention: ${spell.introduction || spell.scenario || 'self-improvement'}`;
-      const personaId = archetype?.id || 'shigg';
+      // Normalize archetype ID for research API (backend uses shigg, not shiggy)
+      const rawId = archetype?.id || spell?.guide_id || 'shigg';
+      const idMap = { 'shiggy': 'shigg', 'kathleen': 'cathleen', 'catherine': 'katherine' };
+      const personaId = idMap[rawId] || rawId;
 
       const result = await researchAPI.combined(
         spell.title || 'magical practice',
