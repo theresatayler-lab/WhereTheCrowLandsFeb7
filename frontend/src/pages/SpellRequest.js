@@ -306,7 +306,7 @@ const Step3 = ({ spellSpec, updateSpec }) => {
               light={true}
             >
               <div className="flex items-center gap-2">
-                <span className="text-xl">{a.emoji}</span>
+                <img src={a.icon} alt={a.label} className="w-6 h-6 flex-shrink-0" />
                 <span className="font-montserrat text-sm text-navy-dark font-medium">{a.label}</span>
               </div>
             </OptionCard>
