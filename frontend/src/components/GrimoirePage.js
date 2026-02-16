@@ -1517,12 +1517,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                 {spell.inspired_by.map((source, idx) => (
                   <div key={idx} className="bg-amber-900/5 rounded-sm border border-amber-800/20 p-4 space-y-3">
                     <div className="flex items-start gap-3">
-                      <span className="text-lg flex-shrink-0">
-                        {source.source_type === 'book' ? '📖' :
-                         source.source_type === 'tradition' ? '📜' :
-                         source.source_type === 'practice' ? '✦' :
-                         source.source_type === 'author' ? '✍' : '📜'}
-                      </span>
+                      <img src="/icons/ui/icon-library-books.png" alt="" className="w-5 h-5 flex-shrink-0" />
                       <div className="flex-1 min-w-0">
                         <p className="font-cinzel text-sm font-medium text-amber-900">
                           {source.name}
