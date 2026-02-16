@@ -81,12 +81,12 @@ CONTENT_DIRECTIONS = {
             "voice_markers": ["voice as tool", "humming/singing", "vibration"]
         },
         "ward_creation": {
-            "directions": "Teach how to create a protective ward using voice and intention. Make it feel solid but not fearful. Maternal fierce energy.",
+            "directions": "Teach how to create a protective ward using voice and intention. Make it feel solid but not fearful. Maternal fierce energy. For each step, explain the Irish or Celtic tradition behind it (e.g., 'In the old Irish practice, the threshold song was sung three times — once for the seen, once for the unseen, once for what lies between'). Write as decisive prose paragraphs with embedded history, not sparse instructions.",
             "examples": [
-                "Sing a line at each corner of your room. The ward rises with your breath.",
-                "Hum until you feel the edges of your space grow firm."
+                "Sing a line at each corner of your room. In the old Irish practice, the threshold song was sung three times—once for the seen, once for the unseen, once for what lies between. The ward rises with your breath.",
+                "Hum until you feel the edges of your space grow firm. Celtic women knew that sound was the first wall—before stone, before door, there was the voice marking 'mine'."
             ],
-            "voice_markers": ["protection", "voice-based", "fierce but warm"]
+            "voice_markers": ["protection", "voice-based", "fierce but warm", "Celtic tradition", "narrative flow"]
         },
         "talisman_suggestion": {
             "directions": "Suggest a small object to carry the working's energy. Something the seeker likely has. Explain how to charge it.",
