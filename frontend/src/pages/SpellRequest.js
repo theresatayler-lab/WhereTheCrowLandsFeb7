@@ -40,12 +40,12 @@ const ALL_ARCHETYPE_VIDEOS = ARCHETYPES.filter(a => a.video).map(a => a.video);
 // ===== WIZARD CONFIGURATION =====
 
 const PERSONAS = [
-  { id: 'shigg', name: 'Shigg', emoji: '🐦', title: 'Birds of Parliament', description: 'Gentle domestic magic, bird omens, tea rituals, poetry' },
-  { id: 'cathleen', name: 'Cathleen', emoji: '🪶', title: 'Singer of Strength', description: 'Voice magic, protection, Celtic mysticism, the Morrigan' },
-  { id: 'katherine', name: 'Katherine', emoji: '🪡', title: 'Weaver of Hidden Knowledge', description: 'Shadow work, mirrors, Victorian spiritualism, protocols' },
-  { id: 'theresa', name: 'Theresa', emoji: '🔍', title: 'The Seer-Archivist', description: 'Pattern breaking, family secrets, evidence-based investigation' },
-  { id: 'brenda', name: 'Brenda', emoji: '🐦‍⬛', title: 'The Family Chronicler', description: 'Memory keeping, letter spells, crow communion, family stories' },
-  { id: 'choose_for_me', name: 'Choose for me', emoji: '✨', title: 'Let the guides decide', description: 'Based on your needs, the right guide will emerge' }
+  { id: 'shigg', name: 'Shigg', icon: '/icons/anchors/anchor-bird.png', title: 'Birds of Parliament', description: 'Gentle domestic magic, bird omens, tea rituals, poetry' },
+  { id: 'cathleen', name: 'Cathleen', icon: '/icons/anchors/anchor-feather.png', title: 'Singer of Strength', description: 'Voice magic, protection, Celtic mysticism, the Morrigan' },
+  { id: 'katherine', name: 'Katherine', icon: '/icons/anchors/anchor-thread.png', title: 'Weaver of Hidden Knowledge', description: 'Shadow work, mirrors, Victorian spiritualism, protocols' },
+  { id: 'theresa', name: 'Theresa', icon: '/icons/anchors/anchor-magnifying-glass.png', title: 'The Seer-Archivist', description: 'Pattern breaking, family secrets, evidence-based investigation' },
+  { id: 'brenda', name: 'Brenda', icon: '/icons/anchors/anchor-crow-feather.png', title: 'The Family Chronicler', description: 'Memory keeping, letter spells, crow communion, family stories' },
+  { id: 'choose_for_me', name: 'Choose for me', icon: null, title: 'Let the guides decide', description: 'Based on your needs, the right guide will emerge' }
 ];
 
 const ALCHEMIZE_OPTIONS = [
