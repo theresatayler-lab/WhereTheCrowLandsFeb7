@@ -593,6 +593,53 @@ def get_source_for_persona(persona_id: str) -> list:
         })
     return enriched
 
+def enrich_spell_sources_with_urls(sources: list) -> list:
+    """
+    Enrich spell sources with proper URLs by matching author names to SOURCE_ENCYCLOPEDIA.
+    The AI often returns sources with source_id: 'from research' but we can match by author name.
+    """
+    if not sources:
+        return sources
+    
+    # Build author name -> encyclopedia key mapping
+    author_to_key = {}
+    for key, entry in SOURCE_ENCYCLOPEDIA.items():
+        name = entry.get('name', '')
+        if name:
+            author_to_key[name.lower()] = key
+            # Also match full name
+            full_name = entry.get('full_name', '')
+            if full_name:
+                author_to_key[full_name.lower()] = key
+    
+    enriched = []
+    for source in sources:
+        enriched_source = dict(source)
+        
+        # If already has learn_more_url, keep it
+        if enriched_source.get('learn_more_url'):
+            enriched.append(enriched_source)
+            continue
+        
+        # Try to match by author name
+        author = source.get('author', '').lower()
+        if author in author_to_key:
+            enc_key = author_to_key[author]
+            enc_entry = SOURCE_ENCYCLOPEDIA.get(enc_key, {})
+            online_resources = enc_entry.get('online_resources', [])
+            
+            # Get first valid resource URL
+            for resource in online_resources:
+                url = resource.get('url', '')
+                if url and validate_url_domain(url):
+                    enriched_source['learn_more_url'] = url
+                    enriched_source['learn_more_title'] = resource.get('title', 'Learn more')
+                    break
+        
+        enriched.append(enriched_source)
+    
+    return enriched
+
 # ============================================================================
 # ASSET ROLE LOCKS - Prevents repetition and "same-y" images
 # ============================================================================

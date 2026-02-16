@@ -433,9 +433,15 @@ export const GuidePortal = () => {
                 <p className="font-crimson-text text-navy-dark/70 italic mb-6">{spellResult.subtitle}</p>
               )}
               {spellResult.blocks ? (
-                spellResult.blocks.map((block, i) => (
-                  <SpellBlockRenderer key={i} block={block} guideId={guideId} />
-                ))
+                <SpellBlockRenderer
+                  spell={spellResult}
+                  archetypeStyle={{
+                    borderColor: `border-${guide.colors.border}`,
+                    accentColor: `text-${guide.colors.accent}`,
+                    bgAccent: 'bg-[#F3EFE8]',
+                    textMuted: 'text-stone-600'
+                  }}
+                />
               ) : (
                 <div className="font-crimson-text text-navy-dark whitespace-pre-wrap leading-relaxed">
                   {spellResult.content || spellResult.spell_text || JSON.stringify(spellResult, null, 2)}
