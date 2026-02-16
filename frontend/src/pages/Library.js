@@ -67,7 +67,7 @@ const ArtDecoDivider = ({ variant = 'default', light = false }) => {
       <div className="flex items-center gap-1">
         <span className={`text-xs ${symbolColor} opacity-60`}>◇</span>
         <span className={`text-lg ${symbolColor}`}>
-          {variant === 'book' ? '' : variant === 'moon' ? '☽' : '❧'}
+          {variant === 'book' ? <img src="/icons/ui/gold/icon-library-books.png" alt="" className="w-5 h-5 inline" /> : variant === 'moon' ? '☽' : '❧'}
         </span>
         <span className={`text-xs ${symbolColor} opacity-60`}>◇</span>
       </div>
