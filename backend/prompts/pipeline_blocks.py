@@ -635,7 +635,7 @@ def _build_tarot_card(spell_output: dict, blocks: list, guide_id: str) -> dict:
         "theresa": "🔍", "brenda": "📜"
     }
 
-    title = spell_output.get("title", "A Working")
+    title = spell_output.get("title", "A Working") or "A Working"
     essence = ""
     key_action = ""
     incantation = ""
@@ -644,21 +644,28 @@ def _build_tarot_card(spell_output: dict, blocks: list, guide_id: str) -> dict:
 
     for b in blocks:
         bt = b.get("block_type")
-        c = b.get("content", {})
+        c = b.get("content")
         if not isinstance(c, dict):
             continue
         if bt == "cold_open" and not essence:
-            essence = c.get("greeting", c.get("hook", ""))[:160]
+            val = c.get("greeting") or c.get("hook") or ""
+            essence = str(val)[:160]
         elif bt == "stepper" and not key_action:
-            steps = c.get("steps", [])
-            if steps and isinstance(steps[0], dict):
-                key_action = steps[0].get("action", steps[0].get("instruction", ""))[:120]
+            steps = c.get("steps") or []
+            if steps and isinstance(steps, list) and isinstance(steps[0], dict):
+                val = steps[0].get("action") or steps[0].get("instruction") or ""
+                key_action = str(val)[:120]
         elif bt == "closing" and not incantation:
-            incantation = c.get("empowerment_line", c.get("license_to_depart", ""))[:120]
+            val = c.get("empowerment_line") or c.get("license_to_depart") or ""
+            incantation = str(val)[:120]
         elif bt == "ward" and not incantation:
-            incantation = c.get("activation_phrase", "")[:120] or incantation
-        elif bt == "safety_note":
-            warning = c.get("warning", c.get("note", ""))[:100]
+            val = c.get("activation_phrase") or ""
+            if val:
+                incantation = str(val)[:120]
+        elif bt == "safety_note" and not warning:
+            val = c.get("warning") or c.get("note") or ""
+            if val:
+                warning = str(val)[:100]
 
     return {
         "symbol": GUIDE_SYMBOLS.get(guide_id, "✧"),
