@@ -635,6 +635,17 @@ export const SpellRequest = () => {
             const statusResponse = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/ai/spell-job/${jobId}`);
             const statusData = await statusResponse.json();
             
+            // Extract selected guide from partial result or persona_lock
+            if (!selectedGuide && statusData.result) {
+              const guideId = statusData.result.persona_lock?.id || statusData.result.persona_id || statusData.result.spell?.persona_id;
+              if (guideId) {
+                const guide = PERSONAS.find(p => p.id === guideId);
+                if (guide) {
+                  setSelectedGuide(guide);
+                }
+              }
+            }
+            
             if (statusData.status === 'complete') {
               // Success! Return the result
               return statusData.result;
@@ -661,6 +672,18 @@ export const SpellRequest = () => {
       };
       
       const data = await pollJob();
+      
+      // Extract final selected guide if not already set
+      if (!selectedGuide && data) {
+        const guideId = data.persona_lock?.id || data.persona_id || data.spell?.persona_id;
+        if (guideId) {
+          const guide = PERSONAS.find(p => p.id === guideId);
+          if (guide) {
+            setSelectedGuide(guide);
+          }
+        }
+      }
+      
       setSpellResult(data);
       setLoading(false);
       
