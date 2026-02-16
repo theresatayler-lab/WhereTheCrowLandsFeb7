@@ -157,7 +157,7 @@ export const MyGrimoire = () => {
             animate={{ opacity: 1, y: 0 }}
           >
             <PageHeader 
-              icon={BookOpen}
+              iconSrc="/icons/ui/gold/icon-grimoire.png"
               title="My Grimoire"
               subtitle="Your personal collection of spells, rituals, and wards"
             />
