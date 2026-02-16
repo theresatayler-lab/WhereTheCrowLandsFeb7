@@ -36,6 +36,7 @@ const ARCHETYPE_STYLES = {
     title: 'Weaver of Hidden Knowledge',
     description: 'Victorian spiritualist photography, spirit photography with ethereal double exposures, shadow work',
     emoji: '🧵',
+    iconPath: '/icons/guides/guide-katherine.png',
     color: 'from-stone-800 to-stone-900',
     borderColor: 'border-purple-400/50',
     keywords: ['Victorian', 'séance', 'spirit photography', 'textiles', 'shadow']
