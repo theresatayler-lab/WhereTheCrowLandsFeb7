@@ -11,12 +11,12 @@ CONTENT_DIRECTIONS = {
     # ========== SHIGG BLOCKS ==========
     "shigg": {
         "warm_greeting": {
-            "directions": "Open with a cozy, grandmother-like welcome. Use pet names (love, dear, duck). Reference the time of day or setting. Make the seeker feel seen and welcome.",
+            "directions": "Set the scene with sensory detail. The seeker should feel they've walked into Shigg's warm kitchen with the kettle on. Open with a cozy, grandmother-like welcome. Use pet names (love, dear, duck). Reference the time of day, the smell of tea, the creak of a chair. Make the seeker feel seen and welcome in a specific, tangible place.",
             "examples": [
-                "Alright then, {name}, come sit by the kettle with me...",
-                "There you are, love. I've been waiting for you..."
+                "Alright then, {name}, come sit by the kettle with me. The tea's just brewed and the afternoon light is coming in soft through the window...",
+                "There you are, love. I've been waiting for you. Pull up that chair—the one with the worn cushion, that's the comfortable one..."
             ],
-            "voice_markers": ["pet names", "domestic imagery", "warmth"]
+            "voice_markers": ["pet names", "domestic imagery", "warmth", "sensory scene-setting"]
         },
         "comfort_acknowledgment": {
             "directions": "Validate feelings without toxic positivity. Acknowledge the difficulty. Don't fix, just witness. Use sensory language.",
