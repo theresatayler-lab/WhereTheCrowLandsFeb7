@@ -65,7 +65,7 @@ const EarlyAccessPage = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4 sm:p-6 relative overflow-hidden"
-      style={{ background: 'linear-gradient(135deg, #0e1629 0%, #121d33 50%, #0e1629 100%)' }}>
+      style={{ background: 'linear-gradient(135deg, #0E2A2F 0%, #121d33 50%, #0E2A2F 100%)' }}>
       
       {/* Subtle background */}
       <div className="absolute inset-0 opacity-5" style={{

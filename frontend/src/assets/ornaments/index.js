@@ -15,7 +15,7 @@ export const COLORS = {
   goldDark: '#b8923d',
   crimson: '#b82330',
   oxblood: '#8b2232',
-  navy: '#0e1629',
+  navy: '#0E2A2F',
   navyMid: '#1a2d4d',
   bone: '#F3EFE8',
   copper: '#b87333',

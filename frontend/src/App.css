@@ -120,7 +120,7 @@
   transform: translateX(-50%);
   color: #b82330;
   font-size: 1rem;
-  background: #0e1629;
+  background: #0E2A2F;
   padding: 0 0.5rem;
 }
 
@@ -222,9 +222,9 @@
   border: 3px solid #C8A44D;
   border-radius: 0.25rem;
   box-shadow: 
-    0 0 0 2px #0e1629,
+    0 0 0 2px #0E2A2F,
     0 0 0 4px #b82330,
-    0 0 0 6px #0e1629,
+    0 0 0 6px #0E2A2F,
     0 0 0 8px rgba(200, 164, 77, 0.3),
     0 8px 24px rgba(14, 22, 41, 0.6);
 }
@@ -265,7 +265,7 @@
   transform: translateX(-50%) translateY(-50%);
   color: #b82330;
   font-size: 1.5rem;
-  background: #0e1629;
+  background: #0E2A2F;
   padding: 0 1rem;
   text-shadow: 0 0 10px rgba(184, 35, 48, 0.5);
 }
