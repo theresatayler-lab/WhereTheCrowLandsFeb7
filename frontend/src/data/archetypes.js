@@ -423,6 +423,7 @@ Her magic lies in craft: every stitch is intention, every pattern holds knowledg
     era: 'Post-War America through Cold War (1945-1970s)',
     birdSymbol: 'Crows & Ravens',
     birdEmoji: '🐦‍⬛',
+    iconPath: '/icons/guides/guide-brenda.png',
     colorScheme: {
       primary: '#3D2B1F',
       secondary: '#F5E6D3',
