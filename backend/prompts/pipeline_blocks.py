@@ -479,100 +479,343 @@ async def run_block_writer(
     return spell_output, metadata
 
 
-def transform_blocks_to_array(spell_output: dict, guide_id: str) -> dict:
+# ============================================================================
+# BLOCKS FORMAT TRANSFORMATION
+# ============================================================================
+
+# Mapping from pipeline block names to frontend block_type values
+BLOCK_NAME_TO_TYPE = {
+    # Shigg mappings
+    "warm_greeting": "cold_open",
+    "comfort_acknowledgment": "lore_vignette",
+    "situation_acknowledgment": "lore_vignette",
+    "blessing_context": "lore_vignette",
+    "historical_stitch": "lore_vignette",
+    "tiny_practice": "stepper",
+    "protection_working": "stepper",
+    "blessing_working": "stepper",
+    "spoken_words": "closing",
+    "journaling_prompt": "reflection",
+    "bird_oracle": "bird_oracle",
+    "closing_warmth": "closing",
+
+    # Cathleen mappings
+    "threshold_opening": "cold_open",
+    "voice_activation": "song_prompt",
+    "the_working": "stepper",
+    "threat_acknowledgment": "lore_vignette",
+    "cleansing_assessment": "lore_vignette",
+    "ward_creation": "ward",
+    "cleansing_working": "stepper",
+    "closing_song": "closing",
+    "talisman_suggestion": "materials",
+
+    # Katherine mappings
+    "title_block": "cold_open",
+    "intent_statement": "cold_open",
+    "setting_requirements": "materials",
+    "materials_list": "materials",
+    "safety_ethics": "safety_note",
+    "opening_boundary": "lore_vignette",
+    "rule_of_three": "choice",
+    "ethical_framework": "safety_note",
+    "invocation": "lore_vignette",
+    "working_steps": "stepper",
+    "binding_steps": "stepper",
+    "closing_ceremony": "closing",
+    "record_prompts": "reflection",
+    "empowerment_line": "closing",
+
+    # Theresa mappings
+    "the_question": "cold_open",
+    "evidence_card": "evidence_card",
+    "observation_notes": "observation_task",
+    "why_this_matters": "lore_vignette",
+    "twenty_four_hour_action": "closing",
+    "sources_block": "further_reading",
+
+    # Brenda mappings
+    "memory_anchor": "cold_open",
+    "family_story": "lore_vignette",
+    "letter_working": "stepper",
+    "memory_working": "stepper",
+    "grief_acknowledgment": "lore_vignette",
+    "grief_working": "stepper",
+    "chronicle_prompt": "reflection",
+    "writing_exercise": "journal_prompt",
+
+    # Shared
+    "ethics_note": "safety_note",
+    "ethics_statement": "safety_note",
+}
+
+
+def transform_blocks_to_array(spell_output: dict, guide_id: str = "shigg") -> dict:
     """
-    Transform blocks from dict format to array format for frontend.
-    Frontend expects: blocks = [{ block_id, block_type, content, ... }]
+    Transform blocks from pipeline dict format to frontend array format.
+
+    Pipeline returns: {"blocks": {"warm_greeting": {"content": "...", "type": "..."}, ...}}
+    Frontend expects: {"blocks": [{"block_type": "cold_open", "block_id": "...", "content": {...}}, ...]}
+
+    This function bridges the two formats.
     """
-    blocks_dict = spell_output.get("blocks", {})
-    
-    # If already an array, return as-is
-    if isinstance(blocks_dict, list):
+    blocks = spell_output.get("blocks", {})
+
+    # If blocks is already an array, return as-is (already transformed)
+    if isinstance(blocks, list):
         return spell_output
-    
-    # Convert dict to array
-    blocks_array = []
-    for block_name, block_content in blocks_dict.items():
-        block_entry = {
-            "block_id": block_name,
-            "block_type": _map_block_type(block_name, guide_id),
-        }
-        
-        # Handle both dict and string content
-        if isinstance(block_content, dict):
-            block_entry["content"] = block_content.get("content", "")
-            # Merge any other fields
-            for k, v in block_content.items():
-                if k != "content":
-                    block_entry[k] = v
+
+    # If blocks is not a dict either, return empty
+    if not isinstance(blocks, dict):
+        spell_output["blocks"] = []
+        return spell_output
+
+    transformed = []
+    type_counters = {}
+
+    for block_name, block_data in blocks.items():
+        # Determine the frontend block_type
+        block_type = BLOCK_NAME_TO_TYPE.get(block_name, "lore_vignette")
+
+        # Generate unique block_id
+        type_counters[block_type] = type_counters.get(block_type, 0) + 1
+        block_id = f"{block_type}_{type_counters[block_type]}"
+
+        # Extract content - pipeline blocks have {"content": "string", "type": "..."}
+        # Frontend blocks need {"content": {structured_object}}
+        if isinstance(block_data, dict):
+            raw_content = block_data.get("content", "")
         else:
-            block_entry["content"] = str(block_content)
-        
-        blocks_array.append(block_entry)
-    
-    spell_output["blocks"] = blocks_array
+            raw_content = str(block_data)
+
+        # Build the structured content object the frontend component expects
+        content = _build_structured_content(block_type, block_name, raw_content, spell_output)
+
+        transformed.append({
+            "block_type": block_type,
+            "block_id": block_id,
+            "content": content
+        })
+
+    # Ensure required blocks exist: choice and stepper at minimum
+    existing_types = {b["block_type"] for b in transformed}
+
+    if "choice" not in existing_types:
+        # Add a default choice block
+        transformed.insert(2, {
+            "block_type": "choice",
+            "block_id": "choice_1",
+            "content": {
+                "prompt": "How would you like to approach this working?",
+                "options": [
+                    {"id": "intuitive", "label": "Follow my intuition", "description": "Let the working guide you naturally"},
+                    {"id": "structured", "label": "Follow the steps precisely", "description": "Complete each step as written"}
+                ],
+                "consequence_hint": "Both paths lead to the same destination."
+            }
+        })
+
+    spell_output["blocks"] = transformed
     return spell_output
 
 
-def _map_block_type(block_name: str, guide_id: str) -> str:
+def _build_structured_content(block_type: str, block_name: str, raw_content: str, spell_output: dict) -> dict:
     """
-    Map internal block names to frontend block types.
+    Convert raw string content into the structured object each frontend block component expects.
     """
-    # Direct mappings to frontend block types
-    type_mappings = {
-        "warm_greeting": "cold_open",
-        "comfort_acknowledgment": "cold_open",
-        "threshold_opening": "cold_open",
-        "memory_anchor": "cold_open",
-        "the_question": "cold_open",
-        
-        "historical_stitch": "lore_vignette",
-        "family_story": "lore_vignette",
-        "evidence_card": "evidence_card",
-        "observation_notes": "observation_task",
-        
-        "tiny_practice": "stepper",
-        "the_working": "stepper",
-        "working_steps": "stepper",
-        "letter_working": "stepper",
-        "twenty_four_hour_action": "stepper",
-        
-        "spoken_words": "stepper",
-        "voice_activation": "song_prompt",
-        "closing_song": "song_prompt",
-        
-        "ward_creation": "ward",
-        "safety_ethics": "safety_note",
-        
-        "journaling_prompt": "journal_prompt",
-        "record_prompts": "journal_prompt",
-        "chronicle_prompt": "journal_prompt",
-        "writing_exercise": "reflection",
-        
-        "bird_oracle": "bird_oracle",
-        "bird_log_entry": "bird_oracle",
-        
-        "closing_warmth": "closing",
-        "closing_ceremony": "closing",
-        "empowerment_line": "closing",
-        "talisman_suggestion": "closing",
-        
-        "why_this_matters": "reflection",
-        "sources_block": "further_reading",
-        "ethics_statement": "safety_note",
-        "ethics_note": "safety_note",
-        
-        # Katherine specific
-        "title_block": "cold_open",
-        "intent_statement": "cold_open",
-        "setting_requirements": "lore_vignette",
-        "materials_list": "materials",
-        "opening_boundary": "stepper",
-        "rule_of_three": "reflection",
-        "invocation": "stepper"
-    }
+    import re
     
-    return type_mappings.get(block_name, "reflection")
+    if block_type == "cold_open":
+        return {
+            "greeting": raw_content[:200] if len(raw_content) > 200 else raw_content,
+            "scene_setting": "",
+            "hook": raw_content[200:] if len(raw_content) > 200 else ""
+        }
+
+    elif block_type == "materials":
+        # Try to parse materials from the plan, or create from content
+        materials = spell_output.get("materials", [])
+        if materials and isinstance(materials, list):
+            return {
+                "items": [
+                    {
+                        "name": m.get("name", "item"),
+                        "purpose": m.get("purpose", ""),
+                        "substitution": m.get("substitution", ""),
+                        "optional": False
+                    }
+                    for m in materials
+                ],
+                "gathering_note": raw_content if len(raw_content) < 200 else ""
+            }
+        return {
+            "items": [{"name": "As described", "purpose": raw_content, "substitution": "", "optional": False}],
+            "gathering_note": ""
+        }
+
+    elif block_type == "stepper":
+        # Split content into steps
+        lines = [l.strip() for l in raw_content.split('\n') if l.strip()]
+        steps = []
+        for i, line in enumerate(lines):
+            # Remove leading numbering like "1." or "Step 1:"
+            clean = re.sub(r'^(step\s+)?\d+[.:)\s]*', '', line, flags=re.IGNORECASE).strip()
+            if clean:
+                steps.append({
+                    "step_number": i + 1,
+                    "action": clean,
+                    "spoken_words": None,
+                    "why": None,
+                    "duration_hint": None
+                })
+        if not steps:
+            steps = [{"step_number": 1, "action": raw_content, "spoken_words": None, "why": None, "duration_hint": None}]
+        return {
+            "steps": steps,
+            "completion_message": "The working is done. Breathe."
+        }
+
+    elif block_type == "lore_vignette":
+        return {
+            "title": block_name.replace("_", " ").title(),
+            "narrative": raw_content,
+            "era": None,
+            "tradition": None,
+            "relevance_to_working": None,
+            "source_connection": None
+        }
+
+    elif block_type == "reflection":
+        lines = [l.strip() for l in raw_content.split('\n') if l.strip()]
+        return {
+            "guide_note": lines[0] if lines else raw_content,
+            "prompts": lines[1:] if len(lines) > 1 else [raw_content],
+            "log_fields": [
+                {"field_id": "reflection_notes", "label": "Your reflections", "type": "textarea", "placeholder": "Write what comes to mind..."}
+            ]
+        }
+
+    elif block_type == "closing":
+        return {
+            "license_to_depart": raw_content,
+            "grounding_action": None,
+            "empowerment_line": None,
+            "next_steps_hint": None
+        }
+
+    elif block_type == "bird_oracle":
+        return {
+            "bird": "Crow",
+            "message": raw_content,
+            "observation_prompt": None,
+            "log_field": False
+        }
+
+    elif block_type == "ward":
+        return {
+            "ward_name": "Protection Ward",
+            "creation_steps": [raw_content],
+            "activation_phrase": None,
+            "protects_against": None,
+            "talisman_option": None
+        }
+
+    elif block_type == "song_prompt":
+        return {
+            "instruction": raw_content,
+            "pitch": None,
+            "phrase": None,
+            "duration": None,
+            "why_this_sound": None
+        }
+
+    elif block_type == "evidence_card":
+        # Theresa's evidence card - try to parse KNOWN/LIKELY/LORE sections
+        known, likely, lore = [], [], []
+        current = known
+        for line in raw_content.split('\n'):
+            line_upper = line.strip().upper()
+            if line_upper.startswith('KNOWN') or line_upper.startswith('VERIFIED'):
+                current = known
+                continue
+            elif line_upper.startswith('LIKELY') or line_upper.startswith('REASONABLE'):
+                current = likely
+                continue
+            elif line_upper.startswith('LORE') or line_upper.startswith('SPECULATION') or line_upper.startswith('FOLK'):
+                current = lore
+                continue
+            if line.strip():
+                current.append(line.strip().lstrip('- '))
+
+        # If parsing didn't work, put everything in known
+        if not known and not likely and not lore:
+            known = [raw_content]
+
+        return {
+            "known": known,
+            "likely": likely,
+            "lore": lore,
+            "pattern_note": None
+        }
+
+    elif block_type == "safety_note":
+        return {
+            "warning": raw_content,
+            "when_to_stop": None,
+            "consent_check": None,
+            "alternatives": None
+        }
+
+    elif block_type == "journal_prompt":
+        return {
+            "guide_note": raw_content,
+            "prompts": [raw_content],
+            "log_fields": [
+                {"field_id": f"journal_{block_name}", "label": "Your response", "type": "textarea", "placeholder": "Write freely..."}
+            ]
+        }
+
+    elif block_type == "observation_task":
+        return {
+            "task_description": raw_content,
+            "location_suggestion": None,
+            "duration": None,
+            "what_to_notice": None,
+            "recording_prompt": None
+        }
+
+    elif block_type == "further_reading":
+        sources = spell_output.get("sources", [])
+        if sources and isinstance(sources, list):
+            return {
+                "recommendations": [
+                    {
+                        "title": s.get("work", s.get("title", "Reference")),
+                        "author": s.get("author", ""),
+                        "guide_note": s.get("relevance", ""),
+                        "specific_passage": None
+                    }
+                    for s in sources
+                ],
+                "reading_ritual": None
+            }
+        return {
+            "recommendations": [{"title": "Further reading", "author": "", "guide_note": raw_content, "specific_passage": None}],
+            "reading_ritual": None
+        }
+
+    elif block_type == "choice":
+        return {
+            "prompt": "How would you like to approach this working?",
+            "options": [
+                {"id": "intuitive", "label": "Follow my intuition", "description": "Let the working guide you naturally"},
+                {"id": "structured", "label": "Follow the steps precisely", "description": "Complete each step as written"}
+            ],
+            "consequence_hint": "Both paths lead to the same destination."
+        }
+
+    # Default fallback
+    return {"text": raw_content}
 
 
 # ============================================================================
