@@ -48,6 +48,18 @@ const PERSONAS = [
   { id: 'choose_for_me', name: 'Choose for me', emoji: '✨', title: 'Let the guides decide', description: 'Based on your needs, the right guide will emerge' }
 ];
 
+const ALCHEMIZE_OPTIONS = [
+  { id: 'protection', label: 'Protection', icon: Shield, color: 'text-teal-400', description: 'Wards, shields, boundaries', forPersonas: ['cathleen', 'katherine', 'shigg'] },
+  { id: 'baneful_justice', label: 'Baneful Justice', icon: Flame, color: 'text-red-400', description: 'Binding, truth-revealing, accountability', forPersonas: ['katherine', 'cathleen', 'theresa'] },
+  { id: 'comfort_healing', label: 'Comfort & Healing', icon: Heart, color: 'text-amber-400', description: 'Grief, loss, emotional support', forPersonas: ['shigg', 'brenda', 'cathleen'] },
+  { id: 'clarity_truth', label: 'Clarity & Truth', icon: Eye, color: 'text-violet-400', description: 'Discernment, seeing clearly, revelation', forPersonas: ['theresa', 'katherine', 'shigg'] },
+  { id: 'releasing', label: 'Releasing & Letting Go', icon: Cloud, color: 'text-blue-400', description: 'Breaking patterns, cord-cutting, freedom', forPersonas: ['theresa', 'katherine', 'brenda'] },
+  { id: 'ancestral_work', label: 'Ancestral Work', icon: User, color: 'text-rose-400', description: 'Family patterns, lineage healing, memory', forPersonas: ['theresa', 'brenda', 'shigg'] },
+  { id: 'domestic_magic', label: 'Domestic Magic', icon: Home, color: 'text-yellow-400', description: 'Home blessing, kitchen magic, hearth craft', forPersonas: ['shigg', 'cathleen'] },
+  { id: 'courage_strength', label: 'Courage & Strength', icon: Zap, color: 'text-green-400', description: 'Empowerment, voice, standing ground', forPersonas: ['cathleen', 'theresa'] }
+];
+
+// Keep FEELINGS for backward compatibility with existing grimoire entries
 const FEELINGS = [
   { id: 'calm', label: 'Calm', icon: Cloud, color: 'text-blue-400', forPersonas: ['shigg', 'brenda', 'katherine'] },
   { id: 'brave', label: 'Brave', icon: Shield, color: 'text-amber-400', forPersonas: ['cathleen', 'theresa', 'katherine'] },
