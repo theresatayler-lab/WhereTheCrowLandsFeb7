@@ -13,8 +13,8 @@ export const NOUVEAU_COLORS = {
   celestialBlue: '#143D42',      // Slightly more saturated teal
   
   // Light tones
-  vellum: '#F5F1EA',             // Warmer, creamier
-  cream: '#EDE8DF',              // Muted cream for contrast
+  vellum: '#F3EFE8',             // Warmer, creamier
+  cream: '#F3EFE8',              // Muted cream for contrast
   
   // Gold accents - distinct from pink
   antiqueGold: '#C8A44D',        // Brighter, cleaner gold

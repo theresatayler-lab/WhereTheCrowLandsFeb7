@@ -418,7 +418,7 @@ const VictorianBook = ({ book, onSelect }) => {
           <span 
             className="text-xs font-cinzel tracking-wide truncate px-1 text-center"
             style={{ 
-              color: book.textColor || '#f5f0e6',
+              color: book.textColor || '#F3EFE8',
               textShadow: '0 1px 3px rgba(0,0,0,0.8)',
               maxHeight: '140px',
               overflow: 'hidden',
@@ -449,7 +449,7 @@ const VictorianBook = ({ book, onSelect }) => {
       <div 
         className="absolute right-0 top-2 bottom-2 w-2 rounded-r-sm"
         style={{ 
-          background: 'linear-gradient(90deg, #b8a88a 0%, #f5f0e6 30%, #e8e0d0 70%, #c4b89a 100%)',
+          background: 'linear-gradient(90deg, #b8a88a 0%, #F3EFE8 30%, #e8e0d0 70%, #c4b89a 100%)',
           boxShadow: 'inset -2px 0 4px rgba(0,0,0,0.15)'
         }}
       >
@@ -463,7 +463,7 @@ const VictorianBook = ({ book, onSelect }) => {
 
 // Victorian Bookshelf section - LIGHT parchment version
 const VictorianShelfLight = ({ category, books, onSelectBook }) => (
-  <div className="relative py-12 sm:py-16" style={{ background: 'linear-gradient(180deg, #f5f0e6 0%, #e8dfd0 50%, #f5f0e6 100%)' }}>
+  <div className="relative py-12 sm:py-16" style={{ background: 'linear-gradient(180deg, #F3EFE8 0%, #e8dfd0 50%, #F3EFE8 100%)' }}>
     {/* Wallpaper pattern overlay */}
     <div className="absolute inset-0 opacity-[0.04]" style={{
       backgroundImage: `url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40 0 L50 20 L40 40 L30 20 Z' fill='%23722F37'/%3E%3Ccircle cx='40' cy='60' r='8' fill='none' stroke='%23722F37' stroke-width='1'/%3E%3C/svg%3E")`,
@@ -729,13 +729,13 @@ const VictorianBookModal = ({ book, onClose }) => {
               transition={{ delay: 0.2 }}
             >
               <div className="absolute inset-1 border opacity-50" style={{ borderColor: book.accent }} />
-              <BookOpen className="w-12 h-12" style={{ color: book.textColor || '#f5f0e6' }} />
+              <BookOpen className="w-12 h-12" style={{ color: book.textColor || '#F3EFE8' }} />
             </motion.div>
             
             {/* Title */}
             <h2 
               className="font-italiana text-xl sm:text-2xl text-center mb-2"
-              style={{ color: book.textColor || '#f5f0e6', textShadow: '0 2px 10px rgba(0,0,0,0.7)' }}
+              style={{ color: book.textColor || '#F3EFE8', textShadow: '0 2px 10px rgba(0,0,0,0.7)' }}
             >
               {book.title}
             </h2>
@@ -743,7 +743,7 @@ const VictorianBookModal = ({ book, onClose }) => {
             {/* Author */}
             <p 
               className="font-crimson text-center italic"
-              style={{ color: book.textColor || '#f5f0e6', opacity: 0.9 }}
+              style={{ color: book.textColor || '#F3EFE8', opacity: 0.9 }}
             >
               by {book.author}
             </p>
