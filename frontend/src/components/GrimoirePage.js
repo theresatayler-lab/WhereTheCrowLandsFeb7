@@ -997,7 +997,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                 : 'bg-transparent text-stone-700 hover:text-amber-900'
             }`}
           >
-            📖 Full Grimoire
+            Full Grimoire
           </button>
         </div>
       )}
