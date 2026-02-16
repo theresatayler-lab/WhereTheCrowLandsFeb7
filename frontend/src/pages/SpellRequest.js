@@ -104,7 +104,7 @@ const ANCHORS = [
   // Katherine - thread, mirrors, precision, Victorian
   { id: 'thread', label: 'Thread & Needle', icon: '/icons/anchors/anchor-thread.png', forPersonas: ['katherine'] },
   { id: 'mirror', label: 'Mirror', icon: '/icons/anchors/anchor-mirror.png', forPersonas: ['katherine'] },
-  { id: 'compass', label: 'Compass', icon: '/icons/anchors/anchor-scissors.png', forPersonas: ['katherine'] },
+  { id: 'compass', label: 'Compass', icon: '/icons/anchors/anchor-compass.png', forPersonas: ['katherine'] },
   { id: 'scissors', label: 'Scissors', icon: '/icons/anchors/anchor-scissors.png', forPersonas: ['katherine'] },
   { id: 'sealed_letter', label: 'Sealed Letter', icon: '/icons/anchors/anchor-sealed-letter.png', forPersonas: ['katherine'] },
   // Theresa - investigation, evidence, patterns
