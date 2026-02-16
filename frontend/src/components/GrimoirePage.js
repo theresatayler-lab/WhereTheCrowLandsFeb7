@@ -504,7 +504,7 @@ const TarotCardView = ({ spell, archetype, style, imageBase64, onViewFull, onCop
                   {spell.suggested_ward && (
                     <div className="bg-slate-800/60 backdrop-blur-sm border border-slate-500/40 rounded-sm p-2 mt-2">
                       <div className="flex items-center justify-center gap-2">
-                        <span className="text-lg">{spell.suggested_ward.symbol || '🪶'}</span>
+                        <img src="/icons/anchors/gold/anchor-feather.png" alt="" className="w-5 h-5" />
                         <div className="text-center">
                           <p className="font-montserrat text-[10px] text-slate-400 uppercase tracking-wider">Your Ward</p>
                           <p className="font-crimson text-sm text-slate-200">{spell.suggested_ward.name}</p>
@@ -517,7 +517,7 @@ const TarotCardView = ({ spell, archetype, style, imageBase64, onViewFull, onCop
                   {imageBase64 && (
                     <div className="text-center pt-1">
                       <p className="font-montserrat text-[10px] text-amber-400/60 animate-pulse">
-                        ✨ Click card to see full artwork ✨
+                        Click card to see full artwork
                       </p>
                     </div>
                   )}
@@ -644,7 +644,7 @@ const SaveWardButton = ({ ward, spellTitle }) => {
         },
         body: JSON.stringify({
           name: ward.name,
-          symbol: ward.symbol || '🪶',
+          symbol: ward.symbol || 'feather',
           meaning: ward.meaning,
           how_to_find: ward.how_to_find,
           activation: ward.activation,
@@ -997,7 +997,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                 : 'bg-transparent text-stone-700 hover:text-amber-900'
             }`}
           >
-            📖 Full Grimoire
+            Full Grimoire
           </button>
         </div>
       )}
@@ -1050,7 +1050,11 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
         {/* Archetype Attribution */}
         {archetype && (
           <div className="flex items-center gap-3 pb-4 border-b border-amber-800/30">
-            <span className="text-2xl">{archetype.id === 'shiggy' ? '🪶' : archetype.id === 'kathleen' ? '🦉' : archetype.id === 'catherine' ? '🐦' : '🪽'}</span>
+            <img 
+              src={`/icons/anchors/anchor-${archetype.id === 'shiggy' ? 'bird' : archetype.id === 'kathleen' ? 'feather' : archetype.id === 'catherine' ? 'thread' : archetype.id === 'theresa' ? 'magnifying-glass' : 'crow-feather'}.png`}
+              alt={archetype.name}
+              className="w-8 h-8"
+            />
             <div>
               <p className="font-cinzel text-sm text-amber-900">Crafted by {archetype.name}</p>
               <p className="font-montserrat text-xs text-stone-600">{archetype.title}</p>
@@ -1145,7 +1149,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
               <div className="flex items-center justify-between gap-3 mb-4">
                 <div className="flex items-center gap-3">
                   <div className="p-3 bg-teal-100 border border-teal-300 rounded-full">
-                    <span className="text-3xl">{spell.suggested_ward.symbol || '🪶'}</span>
+                    <img src="/icons/anchors/gold/anchor-feather.png" alt="" className="w-8 h-8" />
                   </div>
                   <div>
                     <p className="font-cinzel text-xs text-teal-700 uppercase tracking-wider">Cathleen&apos;s Gift</p>
@@ -1513,12 +1517,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                 {spell.inspired_by.map((source, idx) => (
                   <div key={idx} className="bg-amber-900/5 rounded-sm border border-amber-800/20 p-4 space-y-3">
                     <div className="flex items-start gap-3">
-                      <span className="text-lg flex-shrink-0">
-                        {source.source_type === 'book' ? '📖' :
-                         source.source_type === 'tradition' ? '📜' :
-                         source.source_type === 'practice' ? '✦' :
-                         source.source_type === 'author' ? '✍' : '📜'}
-                      </span>
+                      <img src="/icons/ui/icon-library-books.png" alt="" className="w-5 h-5 flex-shrink-0" />
                       <div className="flex-1 min-w-0">
                         <p className="font-cinzel text-sm font-medium text-amber-900">
                           {source.name}

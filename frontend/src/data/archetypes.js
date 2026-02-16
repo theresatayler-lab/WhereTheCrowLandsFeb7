@@ -9,6 +9,7 @@ export const ARCHETYPES = [
     era: 'Esoteric Silent Generation born in the \'20s into the Blitz',
     birdSymbol: 'Parliament of Birds',
     birdEmoji: '🐦',
+    iconPath: '/icons/guides/guide-shigg.png',
     colorScheme: {
       primary: '#750609',
       secondary: '#D8CBB3',
@@ -134,6 +135,7 @@ She was her granddaughter's greatest ally and friend, staying up all night telli
     era: 'WWII Homefront - Land Army, WRENS & Celtic-Irish Resistance (1940s)',
     birdSymbol: 'Crows & Ravens',
     birdEmoji: '🪶',
+    iconPath: '/icons/guides/guide-cathleen.png',
     colorScheme: {
       primary: '#06133c',
       secondary: '#D8CBB3',
@@ -260,6 +262,7 @@ She gave her great-granddaughter a silver rabbit teething ring that is treasured
     era: 'Late Victorian through WWII (1880s-1945)',
     birdSymbol: 'Crows & Magpies',
     birdEmoji: '🐦',
+    iconPath: '/icons/guides/guide-katherine.png',
     colorScheme: {
       primary: '#4B5A3E',
       secondary: '#D8CBB3',
@@ -356,6 +359,7 @@ Her magic lies in craft: every stitch is intention, every pattern holds knowledg
     era: 'Contemporary',
     birdSymbol: 'Crows & Magpies',
     birdEmoji: '🪽',
+    iconPath: '/icons/guides/guide-theresa.png',
     colorScheme: {
       primary: '#750609',
       secondary: '#06133c',
@@ -419,6 +423,7 @@ Her magic lies in craft: every stitch is intention, every pattern holds knowledg
     era: 'Post-War America through Cold War (1945-1970s)',
     birdSymbol: 'Crows & Ravens',
     birdEmoji: '🐦‍⬛',
+    iconPath: '/icons/guides/guide-brenda.png',
     colorScheme: {
       primary: '#3D2B1F',
       secondary: '#F5E6D3',

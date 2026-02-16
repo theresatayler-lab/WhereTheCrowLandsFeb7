@@ -40,23 +40,23 @@ const ALL_ARCHETYPE_VIDEOS = ARCHETYPES.filter(a => a.video).map(a => a.video);
 // ===== WIZARD CONFIGURATION =====
 
 const PERSONAS = [
-  { id: 'shigg', name: 'Shigg', emoji: '🐦', title: 'Birds of Parliament', description: 'Gentle domestic magic, bird omens, tea rituals, poetry' },
-  { id: 'cathleen', name: 'Cathleen', emoji: '🪶', title: 'Singer of Strength', description: 'Voice magic, protection, Celtic mysticism, the Morrigan' },
-  { id: 'katherine', name: 'Katherine', emoji: '🪡', title: 'Weaver of Hidden Knowledge', description: 'Shadow work, mirrors, Victorian spiritualism, protocols' },
-  { id: 'theresa', name: 'Theresa', emoji: '🔍', title: 'The Seer-Archivist', description: 'Pattern breaking, family secrets, evidence-based investigation' },
-  { id: 'brenda', name: 'Brenda', emoji: '🐦‍⬛', title: 'The Family Chronicler', description: 'Memory keeping, letter spells, crow communion, family stories' },
-  { id: 'choose_for_me', name: 'Choose for me', emoji: '✨', title: 'Let the guides decide', description: 'Based on your needs, the right guide will emerge' }
+  { id: 'shigg', name: 'Shigg', icon: '/icons/guides/guide-shigg.png', title: 'Birds of Parliament', description: 'Gentle domestic magic, bird omens, tea rituals, poetry' },
+  { id: 'cathleen', name: 'Cathleen', icon: '/icons/guides/guide-cathleen.png', title: 'Singer of Strength', description: 'Voice magic, protection, Celtic mysticism, the Morrigan' },
+  { id: 'katherine', name: 'Katherine', icon: '/icons/guides/guide-katherine.png', title: 'Weaver of Hidden Knowledge', description: 'Shadow work, mirrors, Victorian spiritualism, protocols' },
+  { id: 'theresa', name: 'Theresa', icon: '/icons/guides/guide-theresa.png', title: 'The Seer-Archivist', description: 'Pattern breaking, family secrets, evidence-based investigation' },
+  { id: 'brenda', name: 'Brenda', icon: '/icons/guides/guide-brenda.png', title: 'The Family Chronicler', description: 'Memory keeping, letter spells, crow communion, family stories' },
+  { id: 'choose_for_me', name: 'Choose for me', icon: null, title: 'Let the guides decide', description: 'Based on your needs, the right guide will emerge' }
 ];
 
 const ALCHEMIZE_OPTIONS = [
-  { id: 'protection', label: 'Protection', icon: Shield, color: 'text-teal-400', description: 'Wards, shields, boundaries', forPersonas: ['cathleen', 'katherine', 'shigg'] },
-  { id: 'baneful_justice', label: 'Baneful Justice', icon: Flame, color: 'text-red-400', description: 'Binding, truth-revealing, accountability', forPersonas: ['katherine', 'cathleen', 'theresa'] },
-  { id: 'comfort_healing', label: 'Comfort & Healing', icon: Heart, color: 'text-amber-400', description: 'Grief, loss, emotional support', forPersonas: ['shigg', 'brenda', 'cathleen'] },
-  { id: 'clarity_truth', label: 'Clarity & Truth', icon: Eye, color: 'text-violet-400', description: 'Discernment, seeing clearly, revelation', forPersonas: ['theresa', 'katherine', 'shigg'] },
-  { id: 'releasing', label: 'Releasing & Letting Go', icon: Cloud, color: 'text-blue-400', description: 'Breaking patterns, cord-cutting, freedom', forPersonas: ['theresa', 'katherine', 'brenda'] },
-  { id: 'ancestral_work', label: 'Ancestral Work', icon: User, color: 'text-rose-400', description: 'Family patterns, lineage healing, memory', forPersonas: ['theresa', 'brenda', 'shigg'] },
-  { id: 'domestic_magic', label: 'Domestic Magic', icon: Home, color: 'text-yellow-400', description: 'Home blessing, kitchen magic, hearth craft', forPersonas: ['shigg', 'cathleen'] },
-  { id: 'courage_strength', label: 'Courage & Strength', icon: Zap, color: 'text-green-400', description: 'Empowerment, voice, standing ground', forPersonas: ['cathleen', 'theresa'] }
+  { id: 'protection', label: 'Protection', iconSrc: '/icons/alchemize/alchemize-protection.png', color: 'text-teal-400', description: 'Wards, shields, boundaries', forPersonas: ['cathleen', 'katherine', 'shigg'] },
+  { id: 'baneful_justice', label: 'Baneful Justice', iconSrc: '/icons/alchemize/alchemize-baneful-justice.png', color: 'text-red-400', description: 'Binding, truth-revealing, accountability', forPersonas: ['katherine', 'cathleen', 'theresa'] },
+  { id: 'comfort_healing', label: 'Comfort & Healing', iconSrc: '/icons/alchemize/alchemize-comfort-healing.png', color: 'text-amber-400', description: 'Grief, loss, emotional support', forPersonas: ['shigg', 'brenda', 'cathleen'] },
+  { id: 'clarity_truth', label: 'Clarity & Truth', iconSrc: '/icons/alchemize/alchemize-clarity-truth.png', color: 'text-violet-400', description: 'Discernment, seeing clearly, revelation', forPersonas: ['theresa', 'katherine', 'shigg'] },
+  { id: 'releasing', label: 'Releasing & Letting Go', iconSrc: '/icons/alchemize/alchemize-releasing.png', color: 'text-blue-400', description: 'Breaking patterns, cord-cutting, freedom', forPersonas: ['theresa', 'katherine', 'brenda'] },
+  { id: 'ancestral_work', label: 'Ancestral Work', iconSrc: '/icons/alchemize/alchemize-ancestral-work.png', color: 'text-rose-400', description: 'Family patterns, lineage healing, memory', forPersonas: ['theresa', 'brenda', 'shigg'] },
+  { id: 'domestic_magic', label: 'Domestic Magic', iconSrc: '/icons/alchemize/alchemize-domestic-magic.png', color: 'text-yellow-400', description: 'Home blessing, kitchen magic, hearth craft', forPersonas: ['shigg', 'cathleen'] },
+  { id: 'courage_strength', label: 'Courage & Strength', iconSrc: '/icons/alchemize/alchemize-courage-strength.png', color: 'text-green-400', description: 'Empowerment, voice, standing ground', forPersonas: ['cathleen', 'theresa'] }
 ];
 
 // Keep FEELINGS for backward compatibility with existing grimoire entries
@@ -90,43 +90,43 @@ const BELIEF_BOUNDARIES = [
 
 const ANCHORS = [
   // Shigg - domestic, birds, tea, kitchen
-  { id: 'tea', label: 'Tea', emoji: '☕', forPersonas: ['shigg'] },
-  { id: 'bird', label: 'Bird', emoji: '🐦', forPersonas: ['shigg'] },
-  { id: 'bread', label: 'Bread', emoji: '🍞', forPersonas: ['shigg'] },
-  { id: 'herb', label: 'Herb/Sprig', emoji: '🌿', forPersonas: ['shigg'] },
-  { id: 'poetry', label: 'A Poem', emoji: '📜', forPersonas: ['shigg'] },
+  { id: 'tea', label: 'Tea', icon: '/icons/anchors/anchor-tea.png', forPersonas: ['shigg'] },
+  { id: 'bird', label: 'Bird', icon: '/icons/anchors/anchor-bird.png', forPersonas: ['shigg'] },
+  { id: 'bread', label: 'Bread', icon: '/icons/anchors/anchor-bread.png', forPersonas: ['shigg'] },
+  { id: 'herb', label: 'Herb/Sprig', icon: '/icons/anchors/anchor-herb.png', forPersonas: ['shigg'] },
+  { id: 'poetry', label: 'A Poem', icon: '/icons/anchors/anchor-poetry.png', forPersonas: ['shigg'] },
   // Cathleen - voice, protection, Irish mysticism
-  { id: 'song', label: 'Song/Voice', emoji: '🎵', forPersonas: ['cathleen'] },
-  { id: 'bell', label: 'Bell', emoji: '🔔', forPersonas: ['cathleen'] },
-  { id: 'feather', label: 'Feather', emoji: '🪶', forPersonas: ['cathleen'] },
-  { id: 'salt', label: 'Salt', emoji: '🧂', forPersonas: ['cathleen'] },
-  { id: 'candle', label: 'Candle', emoji: '🕯️', forPersonas: ['cathleen'] },
+  { id: 'song', label: 'Song/Voice', icon: '/icons/anchors/anchor-song.png', forPersonas: ['cathleen'] },
+  { id: 'bell', label: 'Bell', icon: '/icons/anchors/anchor-bell.png', forPersonas: ['cathleen'] },
+  { id: 'feather', label: 'Feather', icon: '/icons/anchors/anchor-feather.png', forPersonas: ['cathleen'] },
+  { id: 'salt', label: 'Salt', icon: '/icons/anchors/anchor-salt.png', forPersonas: ['cathleen'] },
+  { id: 'candle', label: 'Candle', icon: '/icons/anchors/anchor-candle.png', forPersonas: ['cathleen'] },
   // Katherine - thread, mirrors, precision, Victorian
-  { id: 'thread', label: 'Thread & Needle', emoji: '🧵', forPersonas: ['katherine'] },
-  { id: 'mirror', label: 'Mirror', emoji: '🪞', forPersonas: ['katherine'] },
-  { id: 'compass', label: 'Compass', emoji: '🧭', forPersonas: ['katherine'] },
-  { id: 'scissors', label: 'Scissors', emoji: '✂️', forPersonas: ['katherine'] },
-  { id: 'sealed_letter', label: 'Sealed Letter', emoji: '🔏', forPersonas: ['katherine'] },
+  { id: 'thread', label: 'Thread & Needle', icon: '/icons/anchors/anchor-thread.png', forPersonas: ['katherine'] },
+  { id: 'mirror', label: 'Mirror', icon: '/icons/anchors/anchor-mirror.png', forPersonas: ['katherine'] },
+  { id: 'compass', label: 'Compass', icon: '/icons/anchors/anchor-compass.png', forPersonas: ['katherine'] },
+  { id: 'scissors', label: 'Scissors', icon: '/icons/anchors/anchor-scissors.png', forPersonas: ['katherine'] },
+  { id: 'sealed_letter', label: 'Sealed Letter', icon: '/icons/anchors/anchor-sealed-letter.png', forPersonas: ['katherine'] },
   // Theresa - investigation, evidence, patterns
-  { id: 'notebook', label: 'Notebook & Pen', emoji: '📓', forPersonas: ['theresa'] },
-  { id: 'photograph', label: 'Photograph', emoji: '📷', forPersonas: ['theresa'] },
-  { id: 'map', label: 'Map / Family Tree', emoji: '🗺️', forPersonas: ['theresa'] },
-  { id: 'red_thread', label: 'Red Thread', emoji: '🧵', forPersonas: ['theresa'] },
-  { id: 'magnifying_glass', label: 'Magnifying Glass', emoji: '🔍', forPersonas: ['theresa'] },
+  { id: 'notebook', label: 'Notebook & Pen', icon: '/icons/anchors/anchor-notebook.png', forPersonas: ['theresa'] },
+  { id: 'photograph', label: 'Photograph', icon: '/icons/anchors/anchor-photograph.png', forPersonas: ['theresa'] },
+  { id: 'map', label: 'Map / Family Tree', icon: '/icons/anchors/anchor-map.png', forPersonas: ['theresa'] },
+  { id: 'red_thread', label: 'Red Thread', icon: '/icons/anchors/anchor-red-thread.png', forPersonas: ['theresa'] },
+  { id: 'magnifying_glass', label: 'Magnifying Glass', icon: '/icons/anchors/anchor-magnifying-glass.png', forPersonas: ['theresa'] },
   // Brenda - memory, family, chronicles
-  { id: 'letter', label: 'Letter / Envelope', emoji: '✉️', forPersonas: ['brenda'] },
-  { id: 'family_photo', label: 'Family Photo', emoji: '🖼️', forPersonas: ['brenda'] },
-  { id: 'heirloom', label: 'Heirloom / Keepsake', emoji: '📿', forPersonas: ['brenda'] },
-  { id: 'recipe_card', label: 'Recipe Card', emoji: '📝', forPersonas: ['brenda'] },
-  { id: 'crow_feather', label: 'Crow Feather', emoji: '🐦‍⬛', forPersonas: ['brenda'] }
+  { id: 'letter', label: 'Letter / Envelope', icon: '/icons/anchors/anchor-letter.png', forPersonas: ['brenda'] },
+  { id: 'family_photo', label: 'Family Photo', icon: '/icons/anchors/anchor-family-photo.png', forPersonas: ['brenda'] },
+  { id: 'heirloom', label: 'Heirloom / Keepsake', icon: '/icons/anchors/anchor-heirloom.png', forPersonas: ['brenda'] },
+  { id: 'recipe_card', label: 'Recipe Card', icon: '/icons/anchors/anchor-recipe-card.png', forPersonas: ['brenda'] },
+  { id: 'crow_feather', label: 'Crow Feather', icon: '/icons/anchors/anchor-crow-feather.png', forPersonas: ['brenda'] }
 ];
 
 const SETTINGS = [
-  { id: 'home_quiet', label: 'In the quiet of my home', icon: Home, description: 'Private space, uninterrupted' },
-  { id: 'nature', label: 'Outside in nature', icon: TreeDeciduous, description: 'Garden, park, woods, water' },
-  { id: 'work_daily', label: 'During my daily routine', icon: Coffee, description: 'Work, errands, regular tasks' },
-  { id: 'transit', label: 'On the move', icon: Briefcase, description: 'Commute, travel, waiting' },
-  { id: 'public', label: 'In public or semi-public', icon: Sun, description: 'Café, library, shared space' }
+  { id: 'home_quiet', label: 'In the quiet of my home', icon: '/icons/settings/setting-home-quiet.png', description: 'Private space, uninterrupted' },
+  { id: 'nature', label: 'Outside in nature', icon: '/icons/settings/setting-nature.png', description: 'Garden, park, woods, water' },
+  { id: 'work_daily', label: 'During my daily routine', icon: '/icons/settings/setting-work-daily.png', description: 'Work, errands, regular tasks' },
+  { id: 'transit', label: 'On the move', icon: '/icons/settings/setting-transit.png', description: 'Commute, travel, waiting' },
+  { id: 'public', label: 'In public or semi-public', icon: '/icons/settings/setting-public.png', description: 'Cafe, library, shared space' }
 ];
 
 // ===== WIZARD STEP COMPONENTS =====
@@ -200,7 +200,6 @@ const Step1 = ({ spellSpec, updateSpec }) => (
           f.forPersonas.includes(spellSpec.persona_id) ||
           spellSpec.persona_id === 'choose_for_me'
         ).map((f) => {
-          const Icon = f.icon;
           return (
             <OptionCard
               key={f.id}
@@ -210,7 +209,7 @@ const Step1 = ({ spellSpec, updateSpec }) => (
               light={true}
             >
               <div className="flex flex-col items-center gap-2 text-center">
-                <Icon className={`w-6 h-6 ${spellSpec.alchemize_category === f.id ? 'text-crimson' : 'text-navy-dark'}`} />
+                <img src={f.iconSrc} alt={f.label} className="w-8 h-8" />
                 <span className="font-montserrat text-sm text-navy-dark font-medium">{f.label}</span>
                 <span className="font-crimson-text text-xs text-navy-dark/60">{f.description}</span>
               </div>
@@ -306,7 +305,7 @@ const Step3 = ({ spellSpec, updateSpec }) => {
               light={true}
             >
               <div className="flex items-center gap-2">
-                <span className="text-xl">{a.emoji}</span>
+                <img src={a.icon} alt={a.label} className="w-6 h-6 flex-shrink-0" />
                 <span className="font-montserrat text-sm text-navy-dark font-medium">{a.label}</span>
               </div>
             </OptionCard>
@@ -318,7 +317,6 @@ const Step3 = ({ spellSpec, updateSpec }) => {
         <h3 className="font-cinzel text-xl text-crimson mb-3 font-semibold">Where will you perform this?</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
           {SETTINGS.map((s) => {
-            const Icon = s.icon;
             return (
               <OptionCard
                 key={s.id}
@@ -328,7 +326,7 @@ const Step3 = ({ spellSpec, updateSpec }) => {
                 light={true}
               >
                 <div className="flex items-start gap-3">
-                  <Icon className={`w-6 h-6 flex-shrink-0 mt-0.5 ${spellSpec.setting === s.id ? 'text-crimson' : 'text-navy-dark'}`} />
+                  <img src={s.icon} alt={s.label} className="w-8 h-8 flex-shrink-0 mt-0.5" />
                   <div>
                     <p className="font-montserrat text-sm text-navy-dark font-semibold leading-tight">{s.label}</p>
                     <p className="font-montserrat text-xs text-navy-dark/70 mt-1">{s.description}</p>
@@ -801,7 +799,7 @@ export const SpellRequest = () => {
             animate={{ opacity: 1, y: 0 }}
           >
             <PageHeader 
-              icon={Sparkles}
+              iconSrc="/icons/ui/gold/icon-sparkles.png"
               title="Craft Your Working"
               subtitle="Answer a few questions and receive a personalized ritual crafted just for you"
             />
@@ -942,7 +940,11 @@ export const SpellRequest = () => {
                 >
                   {/* Guide avatar */}
                   <div className="w-24 h-24 mx-auto mb-6 rounded-full overflow-hidden border-2 border-gold/50 flex items-center justify-center bg-navy-dark/50">
-                    <span className="text-5xl">{selectedGuide.emoji}</span>
+                    {selectedGuide.icon ? (
+                      <img src={selectedGuide.icon} alt={selectedGuide.name} className="w-14 h-14" />
+                    ) : (
+                      <Sparkles className="w-10 h-10 text-gold" />
+                    )}
                   </div>
                   
                   <h2 className="font-cinzel text-2xl sm:text-3xl text-gold mb-2">
@@ -1062,7 +1064,7 @@ export const SpellRequest = () => {
           <div className="flex items-center justify-center gap-4 text-gold/50 mt-3">
             <span>☽</span>
             <span className="text-crimson/60">❦</span>
-            <span>✨</span>
+            <img src="/icons/ui/gold/icon-sparkles.png" alt="" className="w-4 h-4" />
             <span className="text-crimson/60">❦</span>
             <span>☾</span>
           </div>
@@ -1088,7 +1090,11 @@ export const SpellRequest = () => {
               >
                 {/* Guide avatar */}
                 <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-3 rounded-full overflow-hidden border-2 border-gold/30 group-hover:border-gold transition-colors flex items-center justify-center bg-navy-dark/50">
-                  <span className="text-3xl">{persona.emoji}</span>
+                  {persona.icon ? (
+                    <img src={persona.icon} alt={persona.name} className="w-10 h-10 sm:w-12 sm:h-12" />
+                  ) : (
+                    <Sparkles className="w-8 h-8 text-gold" />
+                  )}
                 </div>
                 <h3 className="font-cinzel text-sm text-cream group-hover:text-gold transition-colors">
                   {persona.name}

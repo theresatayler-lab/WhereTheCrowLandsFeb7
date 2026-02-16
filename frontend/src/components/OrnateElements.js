@@ -479,7 +479,7 @@ export const SectionLabel = ({ title, context }) => (
 // ============================================================================
 
 // Page Header component - supports both Lucide icons and brand icons
-export const PageHeader = ({ title, subtitle, icon: Icon, brandIcon, className = '' }) => (
+export const PageHeader = ({ title, subtitle, icon: Icon, iconSrc, brandIcon, className = '' }) => (
   <div className={`text-center ${className}`}>
     {brandIcon ? (
       <div className="flex justify-center mb-4">
@@ -489,6 +489,10 @@ export const PageHeader = ({ title, subtitle, icon: Icon, brandIcon, className =
           variant="pink"
           opacity={0.9}
         />
+      </div>
+    ) : iconSrc ? (
+      <div className="flex justify-center mb-4">
+        <img src={iconSrc} alt="" className="w-10 h-10 sm:w-12 sm:h-12" />
       </div>
     ) : Icon ? (
       <Icon 
