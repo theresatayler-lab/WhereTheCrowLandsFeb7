@@ -385,3 +385,73 @@ def get_guide_voice_markers(guide_id: str) -> list:
     for block_config in guide_directions.values():
         markers.update(block_config.get("voice_markers", []))
     return list(markers)
+
+
+def build_writer_prompt_blocks(
+    spell_spec: dict,
+    guide_config: dict,
+    research_packet: dict,
+    plan: dict,
+    belief_mode: str = "SPIRITUAL"
+) -> str:
+    """
+    Build a blocks-based writer prompt.
+    Alias for compatibility with __init__.py exports.
+    """
+    import json
+    
+    guide_id = spell_spec.get("persona_id", "shigg")
+    working_type_id = plan.get("working_type", "")
+    
+    # Import here to avoid circular imports
+    from .planner_blocks import get_required_blocks, get_block_template
+    
+    required_blocks = plan.get("section_order", get_required_blocks(guide_id, working_type_id))
+    
+    blocks_specs = []
+    for block in required_blocks:
+        template = get_block_template(block)
+        directions = get_content_directions(guide_id, block)
+        blocks_specs.append(f"""
+"{block}": {{
+    "content": "Your content ({template['min_chars']}-{template['max_chars']} chars)",
+    "directions": "{directions.get('directions', 'Write content')}"
+}}""")
+    
+    voice = guide_config.get("voice", {})
+    
+    prompt = f"""## SPELL WRITER - BLOCKS
+
+You ARE {guide_config.get('name', 'Guide')}.
+
+VOICE: {voice.get('role', 'wise guide')}
+SEEKER: {spell_spec.get('user_name', 'Seeker')}
+INTENTION: {spell_spec.get('user_query', '')}
+
+Generate content for each block:
+{','.join(blocks_specs)}
+
+Return JSON with title, subtitle, blocks object, materials, sources, ethics_statement.
+"""
+    return prompt
+
+
+def validate_writer_blocks_output(output: dict, guide_id: str = "shigg") -> tuple:
+    """
+    Validate writer blocks output.
+    Returns (is_valid, errors_list)
+    """
+    errors = []
+    
+    # Check required top-level fields
+    required = ["title", "blocks", "ethics_statement"]
+    for field in required:
+        if not output.get(field):
+            errors.append(f"MISSING_FIELD: {field}")
+    
+    # Check blocks exist
+    blocks = output.get("blocks", {})
+    if not blocks:
+        errors.append("EMPTY_BLOCKS")
+    
+    return len(errors) == 0, errors
