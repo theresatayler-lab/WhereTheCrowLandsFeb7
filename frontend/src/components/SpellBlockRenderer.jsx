@@ -292,20 +292,24 @@ const BlockContent = ({
 
 // Cold Open - Guide's opening narrative - CONTRAST LOCKED
 const ColdOpenBlock = ({ content, archetypeStyle }) => (
-  <div className={cn(
-    "p-6 rounded-lg border bg-[#F3EFE8] shadow-sm",
-    archetypeStyle.borderColor || "border-amber-600/30"
-  )} data-testid="cold-open-block">
+  <div className="mb-8" data-testid="cold-open-block">
+    {/* Greeting as immersive blockquote */}
     {content.greeting && (
-      <p className="text-lg font-cinzel mb-4 italic text-amber-800">
-        &ldquo;{content.greeting}&rdquo;
+      <blockquote className="font-crimson-text text-lg text-stone-800 italic leading-relaxed border-l-3 pl-5 mb-4" style={{ borderLeftColor: archetypeStyle.accentColor || '#B5651D' }}>
+        {content.greeting}
+      </blockquote>
+    )}
+    {/* Scene setting */}
+    {content.scene_setting && (
+      <p className="font-crimson-text text-stone-600 leading-relaxed mb-3">
+        {content.scene_setting}
       </p>
     )}
-    {content.scene_setting && (
-      <p className="mb-3 text-stone-600">{content.scene_setting}</p>
-    )}
+    {/* Hook */}
     {content.hook && (
-      <p className="text-stone-800">{content.hook}</p>
+      <p className="font-crimson-text text-stone-800 leading-relaxed">
+        {content.hook}
+      </p>
     )}
   </div>
 );
@@ -314,28 +318,24 @@ const ColdOpenBlock = ({ content, archetypeStyle }) => (
 const MaterialsBlock = ({ content, archetypeStyle }) => (
   <div className="space-y-3" data-testid="materials-block">
     {content.items?.map((item, i) => (
-      <div key={i} className={cn(
-        "flex items-start gap-3 p-3 rounded-lg border bg-[#F3EFE8]",
-        archetypeStyle.borderColor ? archetypeStyle.borderColor.replace('border-', 'border-') + '/30' : "border-amber-600/30"
-      )}>
+      <div key={i} className="flex gap-3 items-start py-2">
         <Feather className={cn("w-4 h-4 mt-1 flex-shrink-0", archetypeStyle.accentColor || "text-amber-700")} />
-        <div className="flex-1">
-          <div className="font-medium text-stone-800">{item.name}</div>
-          <div className="text-sm text-stone-600">{item.purpose}</div>
+        <div>
+          <span className="font-crimson-text text-stone-800 font-semibold">{item.name}</span>
+          {item.purpose && (
+            <span className="font-crimson-text text-stone-600"> — {item.purpose}</span>
+          )}
           {item.substitution && (
-            <div className="text-xs mt-1 text-stone-500">
-              <span className="font-medium">Alternative:</span> {item.substitution}
-            </div>
+            <span className="font-crimson-text text-stone-500 text-sm block mt-1">
+              (Or substitute: {item.substitution})
+            </span>
           )}
         </div>
-        {item.optional && (
-          <span className="text-xs px-2 py-0.5 bg-stone-200 text-stone-600 rounded">optional</span>
-        )}
       </div>
     ))}
     {content.gathering_note && (
-      <p className="text-sm italic mt-4 text-stone-600">
-        &ldquo;{content.gathering_note}&rdquo;
+      <p className="text-sm italic mt-4 text-stone-600 font-crimson-text">
+        {content.gathering_note}
       </p>
     )}
   </div>
@@ -388,109 +388,80 @@ const ChoiceBlock = ({ content, selectedChoice, onSelect, archetypeStyle }) => (
 
 // Stepper Block - Interactive step-by-step with checkboxes - CONTRAST LOCKED
 const StepperBlock = ({ content, progress = new Set(), onComplete, archetypeStyle }) => (
-  <div className="space-y-4" data-testid="stepper-block">
-    {content.steps?.map((step, index) => {
-      const isComplete = progress.has(index);
-      
-      return (
-        <div 
-          key={index}
-          className={cn(
-            "p-4 rounded-lg border transition-all bg-[#F3EFE8]",
-            isComplete 
-              ? cn(archetypeStyle.borderColor || "border-amber-600", "bg-[#EDE8DF]")
-              : "border-stone-300"
-          )}
-        >
-          <div className="flex items-start gap-3">
-            <button
-              onClick={() => onComplete(index)}
-              className={cn(
-                "mt-1 w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all flex-shrink-0",
-                isComplete 
-                  ? "bg-amber-600 border-amber-600 text-white"
-                  : "border-stone-400 hover:border-stone-500 bg-white"
-              )}
-              data-testid={`step-checkbox-${index}`}
-            >
-              {isComplete && <Check className="w-4 h-4" />}
-            </button>
-            
-            <div className="flex-1">
-              <div className="flex items-center gap-2 mb-2">
-                <span className={cn(
-                  "text-xs font-medium px-2 py-0.5 rounded font-cinzel bg-stone-200 text-stone-700"
-                )}>
-                  Step {step.step_number}
-                </span>
-                {step.duration_hint && (
-                  <span className="text-xs flex items-center gap-1 text-stone-500">
-                    <Clock className="w-3 h-3" /> {step.duration_hint}
-                  </span>
-                )}
-              </div>
-              
-              <p className={cn("mb-2 text-stone-800", isComplete && "line-through opacity-60")}>
-                {step.action}
-              </p>
-              
-              {step.spoken_words && (
-                <div className="p-3 rounded-lg mb-2 italic text-sm border bg-white border-amber-200">
-                  <Quote className="w-4 h-4 inline mr-2 opacity-50 text-amber-600" />
-                  <span className="text-stone-700">&ldquo;{step.spoken_words}&rdquo;</span>
-                </div>
-              )}
-              
-              {step.why && (
-                <div className="text-sm text-stone-600">
-                  <span className="font-medium">Why:</span> {step.why}
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      );
-    })}
-    
-    {content.completion_message && progress.size === content.steps?.length && (
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="p-4 rounded-lg text-center border bg-[#EDE8DF] border-amber-500"
+  <div className="space-y-6" data-testid="stepper-block">
+    {content.steps?.map((step, index) => (
+      <div 
+        key={index}
+        className="mb-6"
       >
+        {/* Step heading */}
+        <h4 className="font-cinzel text-base mb-2" style={{ color: archetypeStyle.accentColor ? undefined : '#B5651D' }}>
+          Step {step.step_number}{step.title ? `: ${step.title}` : ''}
+        </h4>
+        
+        {/* Step content as flowing prose */}
+        <div className="font-crimson-text text-stone-800 text-base leading-relaxed">
+          <p>{step.action || step.instruction || step.text}</p>
+          
+          {/* Spoken words as blockquote */}
+          {step.spoken_words && (
+            <blockquote className="my-3 pl-4 border-l-2 border-amber-400 italic text-stone-700">
+              "{step.spoken_words}"
+            </blockquote>
+          )}
+          
+          {/* Why explanation */}
+          {step.why && (
+            <p className="mt-2 text-stone-600 italic text-sm">{step.why}</p>
+          )}
+          
+          {/* Duration hint */}
+          {step.duration_hint && (
+            <p className="mt-1 text-stone-500 text-xs font-montserrat flex items-center gap-1">
+              <Clock className="w-3 h-3" /> {step.duration_hint}
+            </p>
+          )}
+        </div>
+      </div>
+    ))}
+    
+    {/* Completion message */}
+    {content.completion_message && (
+      <div className="p-4 rounded-lg text-center border bg-[#EDE8DF] border-amber-400">
         <Check className="w-6 h-6 mx-auto mb-2 text-amber-600" />
         <p className="font-cinzel text-stone-800">{content.completion_message}</p>
-      </motion.div>
+      </div>
     )}
   </div>
 );
 
 // Lore Vignette Block - Historical/folkloric story - CONTRAST LOCKED
 const LoreVignetteBlock = ({ content, archetypeStyle }) => (
-  <div className="space-y-4" data-testid="lore-vignette-block">
-    {content.title && (
-      <h4 className="font-cinzel text-lg text-stone-800">{content.title}</h4>
+  <div className="my-6 py-4 border-t border-b border-stone-300/50" data-testid="lore-vignette-block">
+    {/* Era and tradition header */}
+    {(content.title || content.era || content.tradition) && (
+      <h4 className="font-cinzel text-sm text-stone-500 uppercase tracking-wider mb-2">
+        {content.era && `${content.era} — `}{content.tradition || content.title || 'From the Archives'}
+      </h4>
     )}
     
-    <div className="flex items-center gap-4 text-xs text-stone-500">
-      {content.era && <span>{content.era}</span>}
-      {content.tradition && <span>• {content.tradition}</span>}
-    </div>
+    {/* Narrative as embedded story */}
+    <p className="font-crimson-text text-stone-700 leading-relaxed italic">
+      {content.narrative}
+    </p>
     
-    <div className="prose prose-sm prose-invert max-w-none">
-      <p className="text-stone-700 leading-relaxed">{content.narrative}</p>
-    </div>
-    
+    {/* Relevance connection */}
     {content.relevance_to_working && (
-      <div className="p-3 rounded-lg text-sm border bg-[#F3EFE8] border-stone-300">
-        <span className="font-medium text-stone-800">Connection:</span> <span className="text-stone-700">{content.relevance_to_working}</span>
-      </div>
+      <p className="font-crimson-text text-stone-600 mt-3 text-sm">
+        {content.relevance_to_working}
+      </p>
     )}
     
+    {/* Source reference */}
     {content.source_connection && (
-      <div className="text-xs italic text-stone-500">
+      <p className="text-xs text-stone-500 mt-2 italic">
         Source: {content.source_connection}
-      </div>
+      </p>
     )}
   </div>
 );
@@ -898,24 +869,32 @@ const ObservationTaskBlock = ({ content, archetypeStyle }) => (
 const FurtherReadingBlock = ({ content, archetypeStyle }) => (
   <div className="space-y-4" data-testid="further-reading-block">
     {content.recommendations?.map((rec, i) => (
-      <div key={i} className={cn(
-        "p-4 rounded-lg border bg-[#F3EFE8]",
-        archetypeStyle.borderColor ? archetypeStyle.borderColor.replace('border-', 'border-') + '/30' : "border-amber-600/30"
-      )}>
+      <div key={i} className="py-3 border-b border-stone-200 last:border-0">
         <div className="flex items-start gap-3">
           <Library className={cn("w-5 h-5 mt-0.5 flex-shrink-0", archetypeStyle.accentColor || "text-amber-700")} />
-          <div>
-            <div className="font-medium text-stone-800">{rec.title}</div>
+          <div className="flex-1">
+            <div className="font-medium text-stone-800 font-crimson-text">{rec.title}</div>
             {rec.author && (
-              <div className="text-sm text-stone-600">by {rec.author}</div>
+              <div className="text-sm text-stone-600 font-crimson-text">by {rec.author}</div>
             )}
             {rec.guide_note && (
-              <p className="text-sm italic mt-2 text-stone-700">&ldquo;{rec.guide_note}&rdquo;</p>
+              <p className="text-sm italic mt-2 text-stone-700 font-crimson-text">{rec.guide_note}</p>
             )}
             {rec.specific_passage && (
               <p className="text-xs mt-1 text-stone-500">
                 <span className="font-medium">Start with:</span> {rec.specific_passage}
               </p>
+            )}
+            {/* Learn more link */}
+            {rec.learn_more_url && (
+              <a
+                href={rec.learn_more_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-amber-700 hover:text-amber-600 text-sm underline mt-2 inline-block"
+              >
+                Learn more →
+              </a>
             )}
           </div>
         </div>
@@ -924,7 +903,7 @@ const FurtherReadingBlock = ({ content, archetypeStyle }) => (
 
     {content.reading_ritual && (
       <div className="p-3 rounded-lg border bg-[#EDE8DF] border-stone-300">
-        <p className="text-sm text-stone-700">
+        <p className="text-sm text-stone-700 font-crimson-text">
           <span className="font-medium">How to approach it:</span> {content.reading_ritual}
         </p>
       </div>

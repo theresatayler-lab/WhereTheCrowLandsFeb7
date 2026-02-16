@@ -123,8 +123,8 @@ export const Navigation = ({ user, onLogout }) => {
       label: 'Explore',
       brandIcon: 'book',
       items: [
+        { to: '/guides', label: 'Meet Your Guides', brandIcon: 'bird' },
         { to: '/library', label: 'Library', brandIcon: 'book' },
-        { to: '/guides', label: 'Guides', brandIcon: 'bird' },
         { to: '/corrie-tarot', label: 'Corrie Tarot', brandIcon: 'moon' },
         { to: '/invisible-helpers', label: 'Invisible Helpers', brandIcon: 'sunMoon' },
       ]
