@@ -215,9 +215,22 @@ def get_max_generation_time(tier: str) -> int:
 # EXPORTS
 # ============================================================================
 
+# Enum-like class for tier constants
+class SpellTier:
+    QUICK = "quick"
+    STANDARD = "standard"
+    PREMIUM = "premium"
+
+
+# Alias for backward compatibility
+select_spell_tier = get_tier_for_intention
+
+
 __all__ = [
     "SPELL_TIERS",
+    "SpellTier",
     "get_tier_for_intention",
+    "select_spell_tier",
     "get_tier_config",
     "get_writer_tokens",
     "get_planner_model",
