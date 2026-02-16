@@ -574,6 +574,9 @@ export const SpellRequest = () => {
     }
 
     setLoading(true);
+    setSelectedGuide(null);
+    setCurrentStage(null);
+    setStageMessage('');
     
     try {
       // Map belief boundary to V3 belief mode
