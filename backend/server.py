@@ -4917,7 +4917,9 @@ async def generate_spell_v3_endpoint(request: SpellRequestV3, user = Depends(get
             keyword_routes = {
                 'shigg': ['tea', 'kettle', 'bird', 'morning', 'domestic', 'kitchen', 'gentle', 'cozy', 'grief', 'loss'],
                 'cathleen': ['protect', 'voice', 'song', 'courage', 'brave', 'shield', 'guard', 'strength', 'power'],
-                'katherine': ['hidden', 'shadow', 'truth', 'reveal', 'pattern', 'thread', 'bind', 'sigil', 'precision', 'secret']
+                'katherine': ['hidden', 'shadow', 'truth', 'reveal', 'pattern', 'thread', 'bind', 'sigil', 'precision', 'secret'],
+                'theresa': ['family', 'secret', 'pattern', 'break', 'investigate', 'genealog', 'ancestor'],
+                'brenda': ['memory', 'remember', 'letter', 'ancestor', 'chronicle', 'family', 'heirloom']
             }
             
             selected_guide = None
@@ -4937,7 +4939,11 @@ async def generate_spell_v3_endpoint(request: SpellRequestV3, user = Depends(get
                     'energized': 'cathleen',
                     'clear': 'katherine',
                     'hidden': 'katherine',
-                    'revealed': 'katherine'
+                    'revealed': 'katherine',
+                    'connected': 'brenda',
+                    'remembered': 'brenda',
+                    'understood': 'theresa',
+                    'liberated': 'theresa'
                 }
                 selected_guide = feeling_routes.get(feeling, 'shigg')
                 routing_reason = f"feeling match: {feeling} → {selected_guide}"
@@ -5389,6 +5395,9 @@ async def get_spell_job_status(job_id: str):
         # Estimate progress based on elapsed time
         created = job.get('created_at')
         if created:
+            # Handle timezone-naive datetimes from MongoDB
+            if created.tzinfo is None:
+                created = created.replace(tzinfo=timezone.utc)
             elapsed = (datetime.now(timezone.utc) - created).total_seconds()
             estimated_total = 120  # 2 minutes expected
             progress = min(int((elapsed / estimated_total) * 100), 95)
