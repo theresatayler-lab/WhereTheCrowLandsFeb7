@@ -856,7 +856,7 @@ const Library = () => {
           >
             <div className="flex items-center justify-center gap-4">
               <span className="text-gold/60 text-2xl">❦</span>
-              <span className="text-5xl sm:text-6xl">📚</span>
+              <img src="/icons/ui/gold/icon-library-books.png" alt="Library" className="w-16 h-16 sm:w-20 sm:h-20 mx-auto" />
               <span className="text-gold/60 text-2xl">❦</span>
             </div>
           </motion.div>
