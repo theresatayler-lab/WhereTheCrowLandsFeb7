@@ -10,7 +10,7 @@ import React from 'react';
 export const NOUVEAU_COLORS = {
   // Backgrounds
   midnightTeal: '#0E2A2F',
-  celestialBlue: '#143D42',      // Slightly more saturated teal
+  celestialBlue: '#123A3F',      // Slightly more saturated teal
   
   // Light tones
   vellum: '#F3EFE8',             // Warmer, creamier
