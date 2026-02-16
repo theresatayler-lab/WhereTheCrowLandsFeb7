@@ -9,6 +9,7 @@ export const ARCHETYPES = [
     era: 'Esoteric Silent Generation born in the \'20s into the Blitz',
     birdSymbol: 'Parliament of Birds',
     birdEmoji: '🐦',
+    iconPath: '/icons/guides/guide-shigg.png',
     colorScheme: {
       primary: '#750609',
       secondary: '#D8CBB3',
