@@ -5183,9 +5183,15 @@ async def _generate_spell_background(job_id: str, request_data: dict, user_id: O
             
             if not selected_guide:
                 feeling_routes = {
+                    # Legacy feelings
                     'calm': 'shigg', 'softened': 'shigg', 'connected': 'brenda',
                     'protected': 'cathleen', 'brave': 'cathleen', 'energized': 'cathleen',
-                    'clear': 'katherine', 'hidden': 'katherine', 'revealed': 'theresa'
+                    'clear': 'katherine', 'hidden': 'katherine', 'revealed': 'theresa',
+                    # New alchemize categories
+                    'protection': 'cathleen', 'baneful_justice': 'katherine',
+                    'comfort_healing': 'shigg', 'clarity_truth': 'theresa',
+                    'releasing': 'theresa', 'ancestral_work': 'brenda',
+                    'domestic_magic': 'shigg', 'courage_strength': 'cathleen',
                 }
                 selected_guide = feeling_routes.get(feeling, 'shigg')
                 routing_reason = f"feeling match: {feeling}"
