@@ -869,24 +869,32 @@ const ObservationTaskBlock = ({ content, archetypeStyle }) => (
 const FurtherReadingBlock = ({ content, archetypeStyle }) => (
   <div className="space-y-4" data-testid="further-reading-block">
     {content.recommendations?.map((rec, i) => (
-      <div key={i} className={cn(
-        "p-4 rounded-lg border bg-[#F3EFE8]",
-        archetypeStyle.borderColor ? archetypeStyle.borderColor.replace('border-', 'border-') + '/30' : "border-amber-600/30"
-      )}>
+      <div key={i} className="py-3 border-b border-stone-200 last:border-0">
         <div className="flex items-start gap-3">
           <Library className={cn("w-5 h-5 mt-0.5 flex-shrink-0", archetypeStyle.accentColor || "text-amber-700")} />
-          <div>
-            <div className="font-medium text-stone-800">{rec.title}</div>
+          <div className="flex-1">
+            <div className="font-medium text-stone-800 font-crimson-text">{rec.title}</div>
             {rec.author && (
-              <div className="text-sm text-stone-600">by {rec.author}</div>
+              <div className="text-sm text-stone-600 font-crimson-text">by {rec.author}</div>
             )}
             {rec.guide_note && (
-              <p className="text-sm italic mt-2 text-stone-700">&ldquo;{rec.guide_note}&rdquo;</p>
+              <p className="text-sm italic mt-2 text-stone-700 font-crimson-text">{rec.guide_note}</p>
             )}
             {rec.specific_passage && (
               <p className="text-xs mt-1 text-stone-500">
                 <span className="font-medium">Start with:</span> {rec.specific_passage}
               </p>
+            )}
+            {/* Learn more link */}
+            {rec.learn_more_url && (
+              <a
+                href={rec.learn_more_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-amber-700 hover:text-amber-600 text-sm underline mt-2 inline-block"
+              >
+                Learn more →
+              </a>
             )}
           </div>
         </div>
@@ -895,7 +903,7 @@ const FurtherReadingBlock = ({ content, archetypeStyle }) => (
 
     {content.reading_ritual && (
       <div className="p-3 rounded-lg border bg-[#EDE8DF] border-stone-300">
-        <p className="text-sm text-stone-700">
+        <p className="text-sm text-stone-700 font-crimson-text">
           <span className="font-medium">How to approach it:</span> {content.reading_ritual}
         </p>
       </div>
