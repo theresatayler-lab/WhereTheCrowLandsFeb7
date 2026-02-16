@@ -388,76 +388,45 @@ const ChoiceBlock = ({ content, selectedChoice, onSelect, archetypeStyle }) => (
 
 // Stepper Block - Interactive step-by-step with checkboxes - CONTRAST LOCKED
 const StepperBlock = ({ content, progress = new Set(), onComplete, archetypeStyle }) => (
-  <div className="space-y-4" data-testid="stepper-block">
-    {content.steps?.map((step, index) => {
-      const isComplete = progress.has(index);
-      
-      return (
-        <div 
-          key={index}
-          className={cn(
-            "p-4 rounded-lg border transition-all bg-[#F3EFE8]",
-            isComplete 
-              ? cn(archetypeStyle.borderColor || "border-amber-600", "bg-[#EDE8DF]")
-              : "border-stone-300"
-          )}
-        >
-          <div className="flex items-start gap-3">
-            <button
-              onClick={() => onComplete(index)}
-              className={cn(
-                "mt-1 w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all flex-shrink-0",
-                isComplete 
-                  ? "bg-amber-600 border-amber-600 text-white"
-                  : "border-stone-400 hover:border-stone-500 bg-white"
-              )}
-              data-testid={`step-checkbox-${index}`}
-            >
-              {isComplete && <Check className="w-4 h-4" />}
-            </button>
-            
-            <div className="flex-1">
-              <div className="flex items-center gap-2 mb-2">
-                <span className={cn(
-                  "text-xs font-medium px-2 py-0.5 rounded font-cinzel bg-stone-200 text-stone-700"
-                )}>
-                  Step {step.step_number}
-                </span>
-                {step.duration_hint && (
-                  <span className="text-xs flex items-center gap-1 text-stone-500">
-                    <Clock className="w-3 h-3" /> {step.duration_hint}
-                  </span>
-                )}
-              </div>
-              
-              <p className={cn("mb-2 text-stone-800", isComplete && "line-through opacity-60")}>
-                {step.action}
-              </p>
-              
-              {step.spoken_words && (
-                <div className="p-3 rounded-lg mb-2 italic text-sm border bg-white border-amber-200">
-                  <Quote className="w-4 h-4 inline mr-2 opacity-50 text-amber-600" />
-                  <span className="text-stone-700">&ldquo;{step.spoken_words}&rdquo;</span>
-                </div>
-              )}
-              
-              {step.why && (
-                <div className="text-sm text-stone-600">
-                  <span className="font-medium">Why:</span> {step.why}
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      );
-    })}
-    
-    {content.completion_message && progress.size === content.steps?.length && (
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="p-4 rounded-lg text-center border bg-[#EDE8DF] border-amber-500"
+  <div className="space-y-6" data-testid="stepper-block">
+    {content.steps?.map((step, index) => (
+      <div 
+        key={index}
+        className="mb-6"
       >
+        {/* Step heading */}
+        <h4 className="font-cinzel text-base mb-2" style={{ color: archetypeStyle.accentColor ? undefined : '#B5651D' }}>
+          Step {step.step_number}{step.title ? `: ${step.title}` : ''}
+        </h4>
+        
+        {/* Step content as flowing prose */}
+        <div className="font-crimson-text text-stone-800 text-base leading-relaxed">
+          <p>{step.action || step.instruction || step.text}</p>
+          
+          {/* Spoken words as blockquote */}
+          {step.spoken_words && (
+            <blockquote className="my-3 pl-4 border-l-2 border-amber-400 italic text-stone-700">
+              "{step.spoken_words}"
+            </blockquote>
+          )}
+          
+          {/* Why explanation */}
+          {step.why && (
+            <p className="mt-2 text-stone-600 italic text-sm">{step.why}</p>
+          )}
+          
+          {/* Duration hint */}
+          {step.duration_hint && (
+            <p className="mt-1 text-stone-500 text-xs font-montserrat flex items-center gap-1">
+              <Clock className="w-3 h-3" /> {step.duration_hint}
+            </p>
+          )}
+        </div>
+      </div>
+    ))}
+    
+    {/* Completion message */}
+    {content.completion_message && (
         <Check className="w-6 h-6 mx-auto mb-2 text-amber-600" />
         <p className="font-cinzel text-stone-800">{content.completion_message}</p>
       </motion.div>
