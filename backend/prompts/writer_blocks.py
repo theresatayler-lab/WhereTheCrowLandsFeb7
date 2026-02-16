@@ -228,12 +228,12 @@ CONTENT_DIRECTIONS = {
             "voice_markers": ["family lore", "ancestor", "story"]
         },
         "letter_working": {
-            "directions": "Guide the letter-writing ritual. Who to write to, what to include, how to end. The letter is the magic.",
+            "directions": "Write instructions as intimate letter advice — 'What I'd suggest, dear friend, is this...' Each step should feel like counsel from a wise aunt. Weave in family tradition references (e.g., 'Your grandmother's generation knew this instinctively — the recipe card wasn't just about ingredients, it was about the hands that held it'). Maintain epistolary voice throughout. Guide the letter-writing ritual. Who to write to, what to include, how to end. The letter is the magic.",
             "examples": [
-                "Begin: 'Dear [name],' even if they can't read it. Especially if they can't.",
-                "Write everything you never said. Then write what you wish they'd said to you."
+                "What I'd suggest, dear friend, is this: Begin 'Dear [name],' even if they can't read it. Especially if they can't. Your grandmother's generation knew this instinctively—the letter wasn't just words, it was the hands that wrote them.",
+                "Write everything you never said. Your great-aunts kept letters in shoeboxes, unsent but not unwritten. The writing was the working. Then write what you wish they'd said to you."
             ],
-            "voice_markers": ["letter format", "emotional honesty", "completion"]
+            "voice_markers": ["letter format", "emotional honesty", "completion", "epistolary voice", "family tradition"]
         },
         "chronicle_prompt": {
             "directions": "Prompt to record in the family chronicle. What should be preserved? What would future generations need to know?",
