@@ -893,8 +893,8 @@ Write in-character, as if speaking directly to the seeker. Include:
 
     try:
         # Use direct OpenAI for persona voice (your key)
-        from llm_providers import get_openai_client
-        client = get_openai_client()
+        import llm_providers
+        client = llm_providers.get_openai_client()
         
         if not client:
             raise ValueError("OpenAI not configured")
