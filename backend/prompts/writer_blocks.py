@@ -245,12 +245,12 @@ CONTENT_DIRECTIONS = {
             "voice_markers": ["preservation", "future generations", "specific detail"]
         },
         "writing_exercise": {
-            "directions": "A specific writing exercise to complete. Could be list-making, free-writing, or structured prompt. The act of writing is ritual.",
+            "directions": "A specific writing exercise to complete. Could be list-making, free-writing, or structured prompt. The act of writing is ritual. End the entire spell as a letter would: 'With all my love,' or 'I'll be thinking of you. Write back and tell me how it went.' Use 'you' directly throughout, mention family, use memory and nostalgia as emotional anchors.",
             "examples": [
                 "List three things you inherited that aren't objects.",
                 "Write for 10 minutes without stopping: 'The thing no one talks about is...'"
             ],
-            "voice_markers": ["specific exercise", "writing as ritual", "time-bound"]
+            "voice_markers": ["specific exercise", "writing as ritual", "time-bound", "letter closing"]
         }
     }
 }
