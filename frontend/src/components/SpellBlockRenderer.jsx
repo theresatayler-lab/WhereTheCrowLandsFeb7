@@ -292,20 +292,24 @@ const BlockContent = ({
 
 // Cold Open - Guide's opening narrative - CONTRAST LOCKED
 const ColdOpenBlock = ({ content, archetypeStyle }) => (
-  <div className={cn(
-    "p-6 rounded-lg border bg-[#F3EFE8] shadow-sm",
-    archetypeStyle.borderColor || "border-amber-600/30"
-  )} data-testid="cold-open-block">
+  <div className="mb-8" data-testid="cold-open-block">
+    {/* Greeting as immersive blockquote */}
     {content.greeting && (
-      <p className="text-lg font-cinzel mb-4 italic text-amber-800">
-        &ldquo;{content.greeting}&rdquo;
+      <blockquote className="font-crimson-text text-lg text-stone-800 italic leading-relaxed border-l-3 pl-5 mb-4" style={{ borderLeftColor: archetypeStyle.accentColor || '#B5651D' }}>
+        {content.greeting}
+      </blockquote>
+    )}
+    {/* Scene setting */}
+    {content.scene_setting && (
+      <p className="font-crimson-text text-stone-600 leading-relaxed mb-3">
+        {content.scene_setting}
       </p>
     )}
-    {content.scene_setting && (
-      <p className="mb-3 text-stone-600">{content.scene_setting}</p>
-    )}
+    {/* Hook */}
     {content.hook && (
-      <p className="text-stone-800">{content.hook}</p>
+      <p className="font-crimson-text text-stone-800 leading-relaxed">
+        {content.hook}
+      </p>
     )}
   </div>
 );
