@@ -4936,6 +4936,7 @@ async def generate_spell_v3_endpoint(request: SpellRequestV3, user = Depends(get
             # Feeling-based fallback
             if not selected_guide:
                 feeling_routes = {
+                    # Legacy feelings (keep for backward compat with saved grimoire entries)
                     'calm': 'shigg',
                     'softened': 'shigg',
                     'protected': 'cathleen',
@@ -4947,7 +4948,16 @@ async def generate_spell_v3_endpoint(request: SpellRequestV3, user = Depends(get
                     'connected': 'brenda',
                     'remembered': 'brenda',
                     'understood': 'theresa',
-                    'liberated': 'theresa'
+                    'liberated': 'theresa',
+                    # New alchemize categories
+                    'protection': 'cathleen',
+                    'baneful_justice': 'katherine',
+                    'comfort_healing': 'shigg',
+                    'clarity_truth': 'theresa',
+                    'releasing': 'theresa',
+                    'ancestral_work': 'brenda',
+                    'domestic_magic': 'shigg',
+                    'courage_strength': 'cathleen',
                 }
                 selected_guide = feeling_routes.get(feeling, 'shigg')
                 routing_reason = f"feeling match: {feeling} → {selected_guide}"
