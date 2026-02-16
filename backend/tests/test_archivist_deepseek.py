@@ -55,8 +55,7 @@ class TestArchivistDeepSeekIntegration:
         payload = {
             "spell_spec": spell_spec,
             "belief_mode": "SPIRITUAL",
-            "generate_images": False,
-            "tier_preference": None
+            "generate_images": False
         }
         
         print(f"\n📜 Creating spell job for: {spell_spec['intention'][:50]}...")
@@ -225,9 +224,9 @@ class TestArchivistDeepSeekIntegration:
         
         # Check cold_open content
         if cold_open:
-            content = cold_open.get('content', '') or cold_open.get('text', '')
+            content = cold_open.get('content', '') or cold_open.get('text', '') or ''
             print(f"\n📖 cold_open content ({len(content)} chars):")
-            print(f"  '{content[:300]}...'")
+            print(f"  '{str(content)[:300]}...'")
             
             # Check it's not generic boilerplate
             generic_patterns = [
@@ -250,9 +249,9 @@ class TestArchivistDeepSeekIntegration:
         
         # Check lore_vignette content
         if lore_vignette:
-            content = lore_vignette.get('content', '') or lore_vignette.get('text', '')
+            content = lore_vignette.get('content', '') or lore_vignette.get('text', '') or ''
             print(f"\n📖 lore_vignette content ({len(content)} chars):")
-            print(f"  '{content[:300]}...'")
+            print(f"  '{str(content)[:300]}...'")
             
             assert len(content) > 50, "lore_vignette content too short"
             print("✓ lore_vignette has substantial content")
