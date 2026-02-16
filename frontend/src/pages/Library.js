@@ -67,7 +67,7 @@ const ArtDecoDivider = ({ variant = 'default', light = false }) => {
       <div className="flex items-center gap-1">
         <span className={`text-xs ${symbolColor} opacity-60`}>◇</span>
         <span className={`text-lg ${symbolColor}`}>
-          {variant === 'book' ? '📖' : variant === 'moon' ? '☽' : '❧'}
+          {variant === 'book' ? '' : variant === 'moon' ? '☽' : '❧'}
         </span>
         <span className={`text-xs ${symbolColor} opacity-60`}>◇</span>
       </div>
@@ -856,7 +856,7 @@ const Library = () => {
           >
             <div className="flex items-center justify-center gap-4">
               <span className="text-gold/60 text-2xl">❦</span>
-              <span className="text-5xl sm:text-6xl">📚</span>
+              <img src="/icons/ui/gold/icon-library-books.png" alt="Library" className="w-16 h-16 sm:w-20 sm:h-20 mx-auto" />
               <span className="text-gold/60 text-2xl">❦</span>
             </div>
           </motion.div>
@@ -953,7 +953,7 @@ const Library = () => {
           <div className="flex items-center justify-center gap-4 text-gold/50">
             <span>☽</span>
             <span className="text-crimson/60">❦</span>
-            <span>📖</span>
+            <span></span>
             <span className="text-crimson/60">❦</span>
             <span>☾</span>
           </div>

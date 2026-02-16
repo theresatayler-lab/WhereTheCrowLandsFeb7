@@ -175,7 +175,7 @@ const EarlyAccessPage = () => {
             ) : (
               <motion.div className="py-3" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
                 <Check className="w-10 h-10 text-gold mx-auto mb-2" />
-                <p className="font-cinzel text-base text-gold">Welcome to the Murder 🐦‍⬛</p>
+                <p className="font-cinzel text-base text-gold">Welcome to the Murder</p>
                 <p className="font-montserrat text-sm text-silver-mist/70 mt-1">You're part of the flock now.</p>
               </motion.div>
             )}
