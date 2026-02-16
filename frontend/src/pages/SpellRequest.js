@@ -115,7 +115,7 @@ const ANCHORS = [
   { id: 'magnifying_glass', label: 'Magnifying Glass', icon: '/icons/anchors/anchor-magnifying-glass.png', forPersonas: ['theresa'] },
   // Brenda - memory, family, chronicles
   { id: 'letter', label: 'Letter / Envelope', icon: '/icons/anchors/anchor-letter.png', forPersonas: ['brenda'] },
-  { id: 'family_photo', label: 'Family Photo', icon: '/icons/anchors/anchor-letter.png', forPersonas: ['brenda'] },
+  { id: 'family_photo', label: 'Family Photo', icon: '/icons/anchors/anchor-family-photo.png', forPersonas: ['brenda'] },
   { id: 'heirloom', label: 'Heirloom / Keepsake', icon: '/icons/anchors/anchor-heirloom.png', forPersonas: ['brenda'] },
   { id: 'recipe_card', label: 'Recipe Card', icon: '/icons/anchors/anchor-recipe-card.png', forPersonas: ['brenda'] },
   { id: 'crow_feather', label: 'Crow Feather', icon: '/icons/anchors/anchor-crow-feather.png', forPersonas: ['brenda'] }
