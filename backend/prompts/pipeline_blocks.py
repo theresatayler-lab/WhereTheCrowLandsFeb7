@@ -472,8 +472,107 @@ async def run_block_writer(
         logger.error(f"[WRITER_BLOCKS] JSON parse error: {e}")
         raise ValueError(f"Failed to parse spell output: {e}")
     
+    # Transform blocks dict to array format for frontend compatibility
+    spell_output = transform_blocks_to_array(spell_output, guide_id)
+    
     metadata["writer_ms"] = int((time.time() - start) * 1000)
     return spell_output, metadata
+
+
+def transform_blocks_to_array(spell_output: dict, guide_id: str) -> dict:
+    """
+    Transform blocks from dict format to array format for frontend.
+    Frontend expects: blocks = [{ block_id, block_type, content, ... }]
+    """
+    blocks_dict = spell_output.get("blocks", {})
+    
+    # If already an array, return as-is
+    if isinstance(blocks_dict, list):
+        return spell_output
+    
+    # Convert dict to array
+    blocks_array = []
+    for block_name, block_content in blocks_dict.items():
+        block_entry = {
+            "block_id": block_name,
+            "block_type": _map_block_type(block_name, guide_id),
+        }
+        
+        # Handle both dict and string content
+        if isinstance(block_content, dict):
+            block_entry["content"] = block_content.get("content", "")
+            # Merge any other fields
+            for k, v in block_content.items():
+                if k != "content":
+                    block_entry[k] = v
+        else:
+            block_entry["content"] = str(block_content)
+        
+        blocks_array.append(block_entry)
+    
+    spell_output["blocks"] = blocks_array
+    return spell_output
+
+
+def _map_block_type(block_name: str, guide_id: str) -> str:
+    """
+    Map internal block names to frontend block types.
+    """
+    # Direct mappings to frontend block types
+    type_mappings = {
+        "warm_greeting": "cold_open",
+        "comfort_acknowledgment": "cold_open",
+        "threshold_opening": "cold_open",
+        "memory_anchor": "cold_open",
+        "the_question": "cold_open",
+        
+        "historical_stitch": "lore_vignette",
+        "family_story": "lore_vignette",
+        "evidence_card": "evidence_card",
+        "observation_notes": "observation_task",
+        
+        "tiny_practice": "stepper",
+        "the_working": "stepper",
+        "working_steps": "stepper",
+        "letter_working": "stepper",
+        "twenty_four_hour_action": "stepper",
+        
+        "spoken_words": "stepper",
+        "voice_activation": "song_prompt",
+        "closing_song": "song_prompt",
+        
+        "ward_creation": "ward",
+        "safety_ethics": "safety_note",
+        
+        "journaling_prompt": "journal_prompt",
+        "record_prompts": "journal_prompt",
+        "chronicle_prompt": "journal_prompt",
+        "writing_exercise": "reflection",
+        
+        "bird_oracle": "bird_oracle",
+        "bird_log_entry": "bird_oracle",
+        
+        "closing_warmth": "closing",
+        "closing_ceremony": "closing",
+        "empowerment_line": "closing",
+        "talisman_suggestion": "closing",
+        
+        "why_this_matters": "reflection",
+        "sources_block": "further_reading",
+        "ethics_statement": "safety_note",
+        "ethics_note": "safety_note",
+        
+        # Katherine specific
+        "title_block": "cold_open",
+        "intent_statement": "cold_open",
+        "setting_requirements": "lore_vignette",
+        "materials_list": "materials",
+        "opening_boundary": "stepper",
+        "rule_of_three": "reflection",
+        "invocation": "stepper"
+    }
+    
+    return type_mappings.get(block_name, "reflection")
 
 
 # ============================================================================
