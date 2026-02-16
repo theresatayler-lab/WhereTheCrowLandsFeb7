@@ -359,6 +359,7 @@ Her magic lies in craft: every stitch is intention, every pattern holds knowledg
     era: 'Contemporary',
     birdSymbol: 'Crows & Magpies',
     birdEmoji: '🪽',
+    iconPath: '/icons/guides/guide-theresa.png',
     colorScheme: {
       primary: '#750609',
       secondary: '#06133c',
