@@ -1,0 +1,110 @@
+============================= test session starts ==============================
+platform linux -- Python 3.11.14, pytest-9.0.2, pluggy-1.6.0 -- /root/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /app
+plugins: anyio-4.12.0
+collecting ... collected 5 items
+
+backend/tests/test_spell_bug_fixes.py::TestHealthCheck::test_health_providers ✓ Backend health check passed: OpenAI=True, DeepSeek=True
+PASSED
+backend/tests/test_spell_bug_fixes.py::TestSpellJobPersonaInfo::test_create_spell_job_and_poll_for_persona_info ✓ Spell job created: 37e0f623-17e9-46b2-bfb5-0201f24b9c1e
+  Poll 1: status=processing
+✓ Found persona_id during processing: cathleen
+  persona_name: Cathleen
+  persona_title: The Singer of Strength
+  routing_reason: feeling match: protection
+  Poll 2: status=processing
+✓ Found persona_id during processing: cathleen
+  persona_name: Cathleen
+  persona_title: The Singer of Strength
+  routing_reason: feeling match: protection
+  Poll 3: status=processing
+✓ Found persona_id during processing: cathleen
+  persona_name: Cathleen
+  persona_title: The Singer of Strength
+  routing_reason: feeling match: protection
+  Poll 4: status=processing
+✓ Found persona_id during processing: cathleen
+  persona_name: Cathleen
+  persona_title: The Singer of Strength
+  routing_reason: feeling match: protection
+  Poll 5: status=processing
+✓ Found persona_id during processing: cathleen
+  persona_name: Cathleen
+  persona_title: The Singer of Strength
+  routing_reason: feeling match: protection
+  Poll 6: status=processing
+✓ Found persona_id during processing: cathleen
+  persona_name: Cathleen
+  persona_title: The Singer of Strength
+  routing_reason: feeling match: protection
+  Poll 7: status=processing
+✓ Found persona_id during processing: cathleen
+  persona_name: Cathleen
+  persona_title: The Singer of Strength
+  routing_reason: feeling match: protection
+  Poll 8: status=processing
+✓ Found persona_id during processing: cathleen
+  persona_name: Cathleen
+  persona_title: The Singer of Strength
+  routing_reason: feeling match: protection
+  Poll 9: status=complete
+✓ Job completed successfully
+  Spell title: Guardian's Embrace
+  Final archetype: Cathleen (cathleen)
+✓ BUG FIX VERIFIED: Persona info IS returned during processing status
+PASSED
+backend/tests/test_spell_bug_fixes.py::TestSpellBlocksFormat::test_completed_spell_has_blocks_array Created spell job: 9639140a-edd3-4f9d-8a4c-3872035855d8
+  Waiting... 5s elapsed, status=processing
+  Waiting... 10s elapsed, status=processing
+  Waiting... 15s elapsed, status=processing
+  Waiting... 20s elapsed, status=processing
+✓ Spell has 9 blocks
+  Block 0: type=cold_open
+  Block 1: type=lore_vignette
+  Block 2: type=choice
+  Block 3: type=lore_vignette
+  Block 4: type=stepper
+  Block 5: type=closing
+  Block 6: type=reflection
+  Block 7: type=bird_oracle
+  Block 8: type=closing
+✓ Block types: ['cold_open', 'lore_vignette', 'choice', 'lore_vignette', 'stepper', 'closing', 'reflection', 'bird_oracle', 'closing']
+✓ Tarot card data present:
+  symbol: 🪶
+  title: A Comfort Ritual
+  essence: Come sit, Seeker. The tea's still warm and the bir...
+PASSED
+backend/tests/test_spell_bug_fixes.py::TestResearchAPI::test_combined_research_api Calling POST /api/combined (may take 30-60s)...
+✓ Research API returned successfully
+✓ spellbook_response present (length: 1489)
+✓ persona_used: Shigg
+✓ research_origins.summary present (V2 format)
+  Summary: British folk magic traditions for home protection developed from practical domestic practices, cunni...
+✓ research_origins.key_takeaways present: 5 items (V2 format)
+✓ research_origins.sources present: 4 sources
+  Sources are objects (V2 format)
+  First source: Steve Roud - The Penguin Guide to the Superstitions of Britain and Ireland
+✓ BUG FIX VERIFIED: Research API works with appropriate timeout
+PASSED
+backend/tests/test_spell_bug_fixes.py::TestFullSpellGenerationFlow::test_end_to_end_spell_generation ✓ Created spell job: 215a7c39-fe7f-4b6f-9ddf-263a9b27b638
+  Poll at 5s: status=processing
+  Poll at 10s: status=processing
+  Poll at 15s: status=processing
+  Poll at 20s: status=processing
+  Poll at 25s: status=processing
+  Poll at 30s: status=complete
+✓ Spell title: Echoes of Truth
+✓ Spell has 8 blocks
+✓ Tarot card present:
+  - symbol: 🛡
+  - title: Echoes of Truth
+  - essence: Seeker, we gather at the place where silence meets courage. Light your candle no...
+  - key_action: Now we do the real work. Write your truth on paper - the words that need speaking. Read them aloud three times, each tim
+  - incantation: Ring your bell once more. The circle is complete, but the courage remains. Blow ...
+✓ Archetype: Cathleen (cathleen)
+
+✓ FULL SPELL GENERATION FLOW VERIFIED
+PASSED
+
+======================== 5 passed in 138.11s (0:02:18) =========================
