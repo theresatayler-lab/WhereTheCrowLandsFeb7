@@ -1761,7 +1761,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                 </p>
               </div>
 
-              {/* Research Origins (DeepSeek) */}
+              {/* Research Origins (DeepSeek V2) */}
               <div className="bg-white/60 p-4 rounded-sm border border-indigo-800/20">
                 <div className="flex items-center gap-2 mb-3">
                   <Search className="w-4 h-4 text-indigo-800" />
@@ -1770,20 +1770,37 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                   </span>
                 </div>
 
-                {/* Main Answer */}
-                <p className="font-montserrat text-sm text-stone-700 leading-relaxed mb-4">
-                  {researchData.research_origins?.answer}
-                </p>
+                {/* Summary */}
+                {researchData.research_origins?.summary && (
+                  <p className="font-montserrat text-sm text-stone-700 leading-relaxed mb-4">
+                    {researchData.research_origins.summary}
+                  </p>
+                )}
 
-                {/* Key Points */}
-                {researchData.research_origins?.bullets?.length > 0 && (
+                {/* Key Takeaways */}
+                {researchData.research_origins?.key_takeaways?.length > 0 && (
                   <div className="mb-4">
                     <p className="font-montserrat text-xs text-indigo-800 uppercase tracking-wider mb-2">Key Points</p>
-                    <ul className="space-y-1">
-                      {researchData.research_origins.bullets.map((bullet, idx) => (
+                    <ul className="space-y-2">
+                      {researchData.research_origins.key_takeaways.map((takeaway, idx) => (
                         <li key={idx} className="font-montserrat text-sm text-stone-700 flex items-start gap-2">
-                          <span className="text-indigo-600 mt-1">&bull;</span>
-                          {bullet}
+                          <span className="text-indigo-600 mt-1 flex-shrink-0">&bull;</span>
+                          <span>{typeof takeaway === 'string' ? takeaway : takeaway.text || JSON.stringify(takeaway)}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {/* Why This Works */}
+                {researchData.research_origins?.why_this_works_facts?.length > 0 && (
+                  <div className="mb-4">
+                    <p className="font-montserrat text-xs text-indigo-800 uppercase tracking-wider mb-2">Why This Works</p>
+                    <ul className="space-y-2">
+                      {researchData.research_origins.why_this_works_facts.map((fact, idx) => (
+                        <li key={idx} className="font-montserrat text-sm text-stone-600 italic flex items-start gap-2">
+                          <span className="text-amber-700 mt-1 flex-shrink-0">&#9670;</span>
+                          <span>{typeof fact === 'string' ? fact : fact.claim || JSON.stringify(fact)}</span>
                         </li>
                       ))}
                     </ul>
@@ -1794,14 +1811,25 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                 {researchData.research_origins?.sources?.length > 0 && (
                   <div>
                     <p className="font-montserrat text-xs text-indigo-800 uppercase tracking-wider mb-2">Suggested Further Reading</p>
-                    <div className="flex flex-wrap gap-2">
+                    <div className="space-y-2">
                       {researchData.research_origins.sources.map((source, idx) => (
-                        <span
-                          key={idx}
-                          className="inline-block px-2 py-1 bg-indigo-100/50 text-xs font-montserrat text-indigo-800 rounded border border-indigo-200"
-                        >
-                          {source}
-                        </span>
+                        <div key={idx} className="p-2 bg-indigo-50/50 rounded border border-indigo-200">
+                          {typeof source === 'string' ? (
+                            <span className="font-montserrat text-xs text-indigo-800">{source}</span>
+                          ) : (
+                            <div>
+                              <span className="font-montserrat text-xs font-medium text-indigo-900">
+                                {source.author && `${source.author} — `}{source.title || 'Unknown'}
+                              </span>
+                              {source.year && <span className="font-montserrat text-xs text-indigo-600"> ({source.year})</span>}
+                              {source.url && (
+                                <a href={source.url} target="_blank" rel="noopener noreferrer" className="block text-xs text-amber-700 hover:text-amber-600 mt-1 underline">
+                                  View source
+                                </a>
+                              )}
+                            </div>
+                          )}
+                        </div>
                       ))}
                     </div>
                   </div>

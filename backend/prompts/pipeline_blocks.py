@@ -581,15 +581,19 @@ def transform_blocks_to_array(spell_output: dict, guide_id: str = "shigg") -> di
         type_counters[block_type] = type_counters.get(block_type, 0) + 1
         block_id = f"{block_type}_{type_counters[block_type]}"
 
-        # Extract content - pipeline blocks have {"content": "string", "type": "..."}
+        # Extract content - pipeline blocks have {"content": "string"|dict, "type": "..."}
         # Frontend blocks need {"content": {structured_object}}
         if isinstance(block_data, dict):
             raw_content = block_data.get("content", "")
         else:
             raw_content = str(block_data)
 
-        # Build the structured content object the frontend component expects
-        content = _build_structured_content(block_type, block_name, raw_content, spell_output)
+        # If the AI already returned structured dict content, use it directly
+        if isinstance(raw_content, dict):
+            content = raw_content
+        else:
+            # Build the structured content object the frontend component expects
+            content = _build_structured_content(block_type, block_name, str(raw_content), spell_output)
 
         transformed.append({
             "block_type": block_type,
@@ -616,7 +620,62 @@ def transform_blocks_to_array(spell_output: dict, guide_id: str = "shigg") -> di
         })
 
     spell_output["blocks"] = transformed
+
+    # Build tarot_card data from the blocks if not already present
+    if "tarot_card" not in spell_output:
+        spell_output["tarot_card"] = _build_tarot_card(spell_output, transformed, guide_id)
+
     return spell_output
+
+
+def _build_tarot_card(spell_output: dict, blocks: list, guide_id: str) -> dict:
+    """Build tarot card preview data from spell blocks."""
+    GUIDE_SYMBOLS = {
+        "shigg": "🪶", "cathleen": "🛡", "katherine": "🔮",
+        "theresa": "🔍", "brenda": "📜"
+    }
+
+    title = spell_output.get("title", "A Working") or "A Working"
+    essence = ""
+    key_action = ""
+    incantation = ""
+    timing = "When you are ready"
+    warning = None
+
+    for b in blocks:
+        bt = b.get("block_type")
+        c = b.get("content")
+        if not isinstance(c, dict):
+            continue
+        if bt == "cold_open" and not essence:
+            val = c.get("greeting") or c.get("hook") or ""
+            essence = str(val)[:160]
+        elif bt == "stepper" and not key_action:
+            steps = c.get("steps") or []
+            if steps and isinstance(steps, list) and isinstance(steps[0], dict):
+                val = steps[0].get("action") or steps[0].get("instruction") or ""
+                key_action = str(val)[:120]
+        elif bt == "closing" and not incantation:
+            val = c.get("empowerment_line") or c.get("license_to_depart") or ""
+            incantation = str(val)[:120]
+        elif bt == "ward" and not incantation:
+            val = c.get("activation_phrase") or ""
+            if val:
+                incantation = str(val)[:120]
+        elif bt == "safety_note" and not warning:
+            val = c.get("warning") or c.get("note") or ""
+            if val:
+                warning = str(val)[:100]
+
+    return {
+        "symbol": GUIDE_SYMBOLS.get(guide_id, "✧"),
+        "title": title,
+        "essence": essence or "A spell crafted just for you.",
+        "key_action": key_action or "Follow the steps within.",
+        "incantation": incantation or "So it is done.",
+        "timing": timing,
+        "warning": warning,
+    }
 
 
 def _build_structured_content(block_type: str, block_name: str, raw_content: str, spell_output: dict) -> dict:
