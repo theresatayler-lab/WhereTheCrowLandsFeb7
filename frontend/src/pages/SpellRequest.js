@@ -176,32 +176,11 @@ const OptionCard = ({ selected, onClick, children, className = '', light = false
   </motion.button>
 );
 
-// Step 1: Persona & Query - NOW WITH PROPER CONTRAST
+// Step 1: Query & Alchemize - NOW WITH PROPER CONTRAST
 const Step1 = ({ spellSpec, updateSpec }) => (
   <div className="space-y-6">
-    <div>
-      <h3 className="font-cinzel text-xl text-crimson mb-4 font-semibold">Who will guide your working?</h3>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        {PERSONAS.map((p) => (
-          <OptionCard
-            key={p.id}
-            selected={spellSpec.persona_id === p.id}
-            onClick={() => updateSpec({ persona_id: p.id })}
-            light={true}
-          >
-            <div className="flex items-center gap-3">
-              <span className="text-2xl">{p.emoji}</span>
-              <div>
-                <p className="font-cinzel text-navy-dark font-bold">{p.name}</p>
-                <p className="font-montserrat text-xs text-crimson font-medium">{p.title}</p>
-              </div>
-            </div>
-            <p className="font-montserrat text-sm text-navy-dark/80 mt-2">{p.description}</p>
-          </OptionCard>
-        ))}
-      </div>
-    </div>
-
+    {/* Guide selection removed - AI will auto-select based on alchemize_category */}
+    
     <div>
       <h3 className="font-cinzel text-xl text-crimson mb-2 font-semibold">What do you need?</h3>
       <p className="font-montserrat text-sm text-navy-dark/80 mb-3">Tell me in your own words what you&apos;re facing or seeking.</p>
