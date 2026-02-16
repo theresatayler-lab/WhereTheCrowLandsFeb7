@@ -22,7 +22,7 @@ export const NOUVEAU_COLORS = {
   
   // Pink/Rose accents - cleaner separation
   roseClay: '#C46B5C',           // Warmer terracotta
-  emberPink: '#C45574',          // Cleaner pink, less muddy
+  emberPink: '#B94E6A',          // Cleaner pink, less muddy
 };
 
 // ============================================================================
