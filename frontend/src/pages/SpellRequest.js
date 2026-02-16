@@ -993,9 +993,46 @@ export const SpellRequest = () => {
                 </>
               )}
               
-              <p className="font-montserrat text-xs text-gold/50 tracking-widest uppercase mt-6">
-                This may take a moment...
-              </p>
+              {/* Stage progress indicator */}
+              {currentStage ? (
+                <div className="mt-6">
+                  <p className="font-crimson-text text-base text-cream/90 mb-3">
+                    {stageMessage}
+                  </p>
+                  <div className="flex items-center justify-center gap-3">
+                    {['archivist', 'planner', 'writer', 'qa'].map((stage, idx) => {
+                      const stages = ['archivist', 'planner', 'writer', 'qa'];
+                      const currentIdx = stages.indexOf(currentStage);
+                      const isComplete = idx < currentIdx;
+                      const isActive = idx === currentIdx;
+                      return (
+                        <div key={stage} className="flex items-center gap-2">
+                          <div className={`w-2.5 h-2.5 rounded-full transition-all duration-500 ${
+                            isComplete ? 'bg-gold' :
+                            isActive ? 'bg-gold animate-pulse shadow-[0_0_8px_rgba(200,164,77,0.6)]' :
+                            'bg-cream/20'
+                          }`} />
+                          {idx < 3 && (
+                            <div className={`w-6 h-px transition-all duration-500 ${
+                              isComplete ? 'bg-gold/60' : 'bg-cream/10'
+                            }`} />
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <div className="flex justify-between text-[10px] text-cream/40 font-montserrat uppercase tracking-wider mt-1.5 max-w-[220px] mx-auto">
+                    <span>Research</span>
+                    <span>Plan</span>
+                    <span>Write</span>
+                    <span>Polish</span>
+                  </div>
+                </div>
+              ) : (
+                <p className="font-montserrat text-xs text-gold/50 tracking-widest uppercase mt-6">
+                  This may take a moment...
+                </p>
+              )}
               
               {/* Animated loading dots */}
               <div className="flex items-center justify-center gap-2 mt-4">
