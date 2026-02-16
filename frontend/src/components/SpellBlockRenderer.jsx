@@ -427,9 +427,10 @@ const StepperBlock = ({ content, progress = new Set(), onComplete, archetypeStyl
     
     {/* Completion message */}
     {content.completion_message && (
+      <div className="p-4 rounded-lg text-center border bg-[#EDE8DF] border-amber-400">
         <Check className="w-6 h-6 mx-auto mb-2 text-amber-600" />
         <p className="font-cinzel text-stone-800">{content.completion_message}</p>
-      </motion.div>
+      </div>
     )}
   </div>
 );
