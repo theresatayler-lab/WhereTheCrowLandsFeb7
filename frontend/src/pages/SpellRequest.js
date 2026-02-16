@@ -90,43 +90,43 @@ const BELIEF_BOUNDARIES = [
 
 const ANCHORS = [
   // Shigg - domestic, birds, tea, kitchen
-  { id: 'tea', label: 'Tea', emoji: '☕', forPersonas: ['shigg'] },
-  { id: 'bird', label: 'Bird', emoji: '🐦', forPersonas: ['shigg'] },
-  { id: 'bread', label: 'Bread', emoji: '🍞', forPersonas: ['shigg'] },
-  { id: 'herb', label: 'Herb/Sprig', emoji: '🌿', forPersonas: ['shigg'] },
-  { id: 'poetry', label: 'A Poem', emoji: '📜', forPersonas: ['shigg'] },
+  { id: 'tea', label: 'Tea', icon: '/icons/anchors/anchor-tea.png', forPersonas: ['shigg'] },
+  { id: 'bird', label: 'Bird', icon: '/icons/anchors/anchor-bird.png', forPersonas: ['shigg'] },
+  { id: 'bread', label: 'Bread', icon: '/icons/anchors/anchor-bread.png', forPersonas: ['shigg'] },
+  { id: 'herb', label: 'Herb/Sprig', icon: '/icons/anchors/anchor-herb.png', forPersonas: ['shigg'] },
+  { id: 'poetry', label: 'A Poem', icon: '/icons/anchors/anchor-bird.png', forPersonas: ['shigg'] },
   // Cathleen - voice, protection, Irish mysticism
-  { id: 'song', label: 'Song/Voice', emoji: '🎵', forPersonas: ['cathleen'] },
-  { id: 'bell', label: 'Bell', emoji: '🔔', forPersonas: ['cathleen'] },
-  { id: 'feather', label: 'Feather', emoji: '🪶', forPersonas: ['cathleen'] },
-  { id: 'salt', label: 'Salt', emoji: '🧂', forPersonas: ['cathleen'] },
-  { id: 'candle', label: 'Candle', emoji: '🕯️', forPersonas: ['cathleen'] },
+  { id: 'song', label: 'Song/Voice', icon: '/icons/anchors/anchor-song.png', forPersonas: ['cathleen'] },
+  { id: 'bell', label: 'Bell', icon: '/icons/anchors/anchor-candle.png', forPersonas: ['cathleen'] },
+  { id: 'feather', label: 'Feather', icon: '/icons/anchors/anchor-feather.png', forPersonas: ['cathleen'] },
+  { id: 'salt', label: 'Salt', icon: '/icons/anchors/anchor-salt.png', forPersonas: ['cathleen'] },
+  { id: 'candle', label: 'Candle', icon: '/icons/anchors/anchor-candle.png', forPersonas: ['cathleen'] },
   // Katherine - thread, mirrors, precision, Victorian
-  { id: 'thread', label: 'Thread & Needle', emoji: '🧵', forPersonas: ['katherine'] },
-  { id: 'mirror', label: 'Mirror', emoji: '🪞', forPersonas: ['katherine'] },
-  { id: 'compass', label: 'Compass', emoji: '🧭', forPersonas: ['katherine'] },
-  { id: 'scissors', label: 'Scissors', emoji: '✂️', forPersonas: ['katherine'] },
-  { id: 'sealed_letter', label: 'Sealed Letter', emoji: '🔏', forPersonas: ['katherine'] },
+  { id: 'thread', label: 'Thread & Needle', icon: '/icons/anchors/anchor-thread.png', forPersonas: ['katherine'] },
+  { id: 'mirror', label: 'Mirror', icon: '/icons/anchors/anchor-mirror.png', forPersonas: ['katherine'] },
+  { id: 'compass', label: 'Compass', icon: '/icons/anchors/anchor-scissors.png', forPersonas: ['katherine'] },
+  { id: 'scissors', label: 'Scissors', icon: '/icons/anchors/anchor-scissors.png', forPersonas: ['katherine'] },
+  { id: 'sealed_letter', label: 'Sealed Letter', icon: '/icons/anchors/anchor-sealed-letter.png', forPersonas: ['katherine'] },
   // Theresa - investigation, evidence, patterns
-  { id: 'notebook', label: 'Notebook & Pen', emoji: '📓', forPersonas: ['theresa'] },
-  { id: 'photograph', label: 'Photograph', emoji: '📷', forPersonas: ['theresa'] },
-  { id: 'map', label: 'Map / Family Tree', emoji: '🗺️', forPersonas: ['theresa'] },
-  { id: 'red_thread', label: 'Red Thread', emoji: '🧵', forPersonas: ['theresa'] },
-  { id: 'magnifying_glass', label: 'Magnifying Glass', emoji: '🔍', forPersonas: ['theresa'] },
+  { id: 'notebook', label: 'Notebook & Pen', icon: '/icons/anchors/anchor-magnifying-glass.png', forPersonas: ['theresa'] },
+  { id: 'photograph', label: 'Photograph', icon: '/icons/anchors/anchor-magnifying-glass.png', forPersonas: ['theresa'] },
+  { id: 'map', label: 'Map / Family Tree', icon: '/icons/anchors/anchor-map.png', forPersonas: ['theresa'] },
+  { id: 'red_thread', label: 'Red Thread', icon: '/icons/anchors/anchor-red-thread.png', forPersonas: ['theresa'] },
+  { id: 'magnifying_glass', label: 'Magnifying Glass', icon: '/icons/anchors/anchor-magnifying-glass.png', forPersonas: ['theresa'] },
   // Brenda - memory, family, chronicles
-  { id: 'letter', label: 'Letter / Envelope', emoji: '✉️', forPersonas: ['brenda'] },
-  { id: 'family_photo', label: 'Family Photo', emoji: '🖼️', forPersonas: ['brenda'] },
-  { id: 'heirloom', label: 'Heirloom / Keepsake', emoji: '📿', forPersonas: ['brenda'] },
-  { id: 'recipe_card', label: 'Recipe Card', emoji: '📝', forPersonas: ['brenda'] },
-  { id: 'crow_feather', label: 'Crow Feather', emoji: '🐦‍⬛', forPersonas: ['brenda'] }
+  { id: 'letter', label: 'Letter / Envelope', icon: '/icons/anchors/anchor-letter.png', forPersonas: ['brenda'] },
+  { id: 'family_photo', label: 'Family Photo', icon: '/icons/anchors/anchor-letter.png', forPersonas: ['brenda'] },
+  { id: 'heirloom', label: 'Heirloom / Keepsake', icon: '/icons/anchors/anchor-heirloom.png', forPersonas: ['brenda'] },
+  { id: 'recipe_card', label: 'Recipe Card', icon: '/icons/anchors/anchor-recipe-card.png', forPersonas: ['brenda'] },
+  { id: 'crow_feather', label: 'Crow Feather', icon: '/icons/anchors/anchor-crow-feather.png', forPersonas: ['brenda'] }
 ];
 
 const SETTINGS = [
-  { id: 'home_quiet', label: 'In the quiet of my home', icon: Home, description: 'Private space, uninterrupted' },
-  { id: 'nature', label: 'Outside in nature', icon: TreeDeciduous, description: 'Garden, park, woods, water' },
-  { id: 'work_daily', label: 'During my daily routine', icon: Coffee, description: 'Work, errands, regular tasks' },
-  { id: 'transit', label: 'On the move', icon: Briefcase, description: 'Commute, travel, waiting' },
-  { id: 'public', label: 'In public or semi-public', icon: Sun, description: 'Café, library, shared space' }
+  { id: 'home_quiet', label: 'In the quiet of my home', icon: '/icons/settings/setting-home-quiet.png', description: 'Private space, uninterrupted' },
+  { id: 'nature', label: 'Outside in nature', icon: '/icons/settings/setting-nature.png', description: 'Garden, park, woods, water' },
+  { id: 'work_daily', label: 'During my daily routine', icon: '/icons/settings/setting-work-daily.png', description: 'Work, errands, regular tasks' },
+  { id: 'transit', label: 'On the move', icon: '/icons/settings/setting-transit.png', description: 'Commute, travel, waiting' },
+  { id: 'public', label: 'In public or semi-public', icon: '/icons/settings/setting-public.png', description: 'Cafe, library, shared space' }
 ];
 
 // ===== WIZARD STEP COMPONENTS =====
