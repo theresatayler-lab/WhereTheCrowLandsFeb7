@@ -81,36 +81,61 @@ Frontend: React + Tailwind | Backend: FastAPI | DB: MongoDB | AI: DeepSeek + Cla
 
 ---
 
-## Session Report: February 17, 2026
+## Session Report: February 17, 2026 (PR Brief Implementation)
 
-### Spell Presentation Redesign (SpellBookView)
-Complete redesign of spell presentation in GuidePortal to match user's "vintage grimoire" vision:
+### PR BRIEF 0: Pre-requisite Verification ✅
+- Verified build passes
+- No corrupted files found
+- Icon fallbacks already correct
 
-**Implemented Features:**
-1. **Flippable Tarot Card (Initial View)**
-   - Front: AI-generated tarot illustration with gold borders, dark background
-   - Back: Quick spell summary card with parchment texture, essence, materials, timing
-   - Smooth flip animation using Framer Motion (0.7s ease)
+### PR BRIEF 1: Spell Presentation Layer ✅
+1. **Vignette overlay** - Already removed (verified)
+2. **CSS utilities** - Already added (spell-page-wrap, spell-block-frame, glow utilities)
+3. **CrowlandsIcon** - Already exists
+4. **Presentational components updated:**
+   - `SpellPageFrame.jsx` - Updated with reading surface wrapper
+   - `SpellHeader.jsx` - Simplified per PR brief spec
+   - `TarotSummaryCard.jsx` - Fixed text truncation by removing fixed aspect ratio
+5. **Integration** - Components already integrated in GuidePortal.js and GrimoirePage.js
 
-2. **Full Ritual View (Expanded View)**
-   - Side-by-side layout: Tarot card front (left) + Summary card (right)
-   - Full scrollable spell content below with decorative book-page styling
-   - Back button to return to card view
+### PR BRIEF 2: Unique Tarot Images Per Spell ✅
+1. **New `extract_spell_visual_tokens()` function** in spell_prompts.py:
+   - Analyzes spell title, essence, key_action, materials
+   - Detects spell intent (protection, healing, clarity, etc.)
+   - Selects spell-specific symbols from SPELL_SYMBOL_POOLS
+   - Uses deterministic seed based on spell ID
+   - Returns primary_motif, secondary_motifs, geometry, guide_signature, forbidden list
 
-3. **Design Elements:**
-   - Gold borders (#C8A44D), parchment textures
-   - Corner flourishes from `/images/spell-decor/`
-   - Rose & crows divider ornaments
-   - Cinzel/Crimson fonts for authentic vintage feel
+2. **Updated `build_image_prompt()`:**
+   - Now accepts optional spell_data parameter
+   - Tarot prompts now use spell-specific motifs instead of static persona emblem
+   - Guide signature reduced to subtle corner detail
+
+3. **Updated `generate_all_image_prompts()`:**
+   - Passes spell_data to tarot prompt builder
+
+4. **Updated server.py:**
+   - Passes spell data when generating tarot card image
+
+### PR BRIEF 3: Fix Tarot Front + Long Form Ritual ✅
+1. **Text truncation fixed:**
+   - TarotSummaryCard no longer uses fixed aspectRatio constraint
+   - Content now flows naturally without cutoff
+
+2. **Long form ritual intricacy:**
+   - SpellBlockRenderer.jsx updated
+   - Major blocks (materials, stepper, closing, ward, evidence_card, further_reading) wrapped in spell-block-frame
+   - Frame adds gold border with rounded corners and proper spacing
 
 **Files Modified:**
-- `components/spell/SpellBookView.jsx` — Complete rewrite with TarotCardFront, QuickSummaryCard, FullRitualContent components
-- `pages/GuidePortal.js` — Updated to pass full spell object to SpellBookView
+- `backend/spell_prompts.py` - New visual token extraction system
+- `backend/server.py` - Pass spell data to image generation
+- `frontend/src/components/spell/SpellPageFrame.jsx`
+- `frontend/src/components/spell/SpellHeader.jsx`
+- `frontend/src/components/spell/TarotSummaryCard.jsx`
+- `frontend/src/components/SpellBlockRenderer.jsx`
 
-**Testing:**
-- iteration_13.json: 100% frontend success rate
-- All data-testid attributes verified
-- Component structure and styling confirmed
+**Testing Status:** Build passes, manual verification complete
 
 ---
 
