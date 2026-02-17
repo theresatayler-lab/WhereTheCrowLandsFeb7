@@ -500,6 +500,7 @@ export const GuidePortal = () => {
                 </div>
               )}
             </LightSection>
+            </SpellPageFrame>
 
             <div className="text-center mt-8 space-x-4">
               <button
