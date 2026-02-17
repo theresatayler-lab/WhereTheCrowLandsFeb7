@@ -220,11 +220,6 @@ export const Home = () => {
           </motion.div>
 
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.3 }}>
-            {/* Moon glyph - pink variant to match logo */}
-            <div className="flex justify-center mb-5">
-              <BrandIcon name="moon" size={64} variant="pink" opacity={0.85} />
-            </div>
-            
             {/* Title - balanced, not oversized */}
             <h1 
               className="phantasmagoria-hero text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-wide mb-3 leading-tight"
@@ -251,7 +246,7 @@ export const Home = () => {
             
             {/* Handwritten accent */}
             <p 
-              className="phantasmagoria-accent italic text-lg sm:text-xl mb-6"
+              className="phantasmagoria-accent italic text-lg sm:text-xl mb-4"
               style={{ 
                 color: `${NOUVEAU_COLORS.antiqueGold}bb`, 
                 textShadow: `0 0 25px ${NOUVEAU_COLORS.emberPink}50, 0 0 50px ${NOUVEAU_COLORS.emberPink}30`,
@@ -259,6 +254,11 @@ export const Home = () => {
             >
               … the bird is on the wing
             </p>
+            
+            {/* Moon glyph - positioned under "the bird is on the wing" */}
+            <div className="flex justify-center mb-6">
+              <BrandIcon name="moon" size={64} variant="pink" opacity={0.85} />
+            </div>
             
             <SimpleSectionDivider />
             
