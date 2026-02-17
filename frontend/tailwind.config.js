@@ -75,7 +75,7 @@ module.exports = {
         'midnight-blue': '#0a1628',
         'deep-blue': '#123A3F',
         'parchment': '#F3EFE8',
-        'ink-black': '#0E2A2F',
+        'ink-black': '#0a1628',
         'crimson': '#8b2232',
         'crimson-bright': '#B94E6A',
         'crimson-deep': '#6b1a28',
