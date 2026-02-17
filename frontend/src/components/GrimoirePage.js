@@ -735,22 +735,17 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
   const generatedAssets = assetPlan?.generated_assets || {};
   const microIcons = assetPlan?.micro_icons || [];
   
-  // Helper to get micro-icon for a section
-  const getMicroIconForSection = (sectionName) => {
-    // Map section names to micro-icon types
+  // Helper to get woodcut icon path for a section (replaces emoji micro-icons)
+  const getSectionIconPath = (sectionName) => {
     const sectionIconMap = {
-      'materials': 0,
-      'preparation': 1,
-      'the_working': 2,
-      'spoken_words': 3,
-      'closing': 4,
-      'aftercare': 5
+      'materials': '/icons/anchors/gold/anchor-herb.png',
+      'preparation': '/icons/anchors/gold/anchor-candle.png',
+      'the_working': '/icons/ui/gold/icon-grimoire.png',
+      'spoken_words': '/icons/anchors/gold/anchor-poetry.png',
+      'closing': '/icons/anchors/gold/anchor-feather.png',
+      'aftercare': '/icons/anchors/gold/anchor-tea.png'
     };
-    const idx = sectionIconMap[sectionName];
-    if (idx !== undefined && microIcons[idx]) {
-      return microIcons[idx].emoji;
-    }
-    return null;
+    return sectionIconMap[sectionName] || null;
   };
   
   // Check subscription status
