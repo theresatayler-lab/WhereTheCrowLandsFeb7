@@ -375,58 +375,85 @@ function QuickSummaryCard({ title, essence, keyAction, timing, materials, guideN
 }
 
 /**
- * SpellContentPage - The spell content with ornate border overlay
+ * FullRitualContent - The scrollable spell content with elegant book-page styling
  */
-function SpellContentPage({ children, title, spellNumber }) {
+function FullRitualContent({ children, title, spellNumber }) {
   return (
     <div 
       className="relative"
       style={{ 
-        minHeight: '600px',
+        minHeight: '400px',
       }}
+      data-testid="full-ritual-content"
     >
-      {/* Ornate border frame as overlay */}
-      <img 
-        src="/images/spell-decor/spell-content-border.png"
-        alt=""
-        className="absolute inset-0 w-full h-full object-contain pointer-events-none z-10"
-        style={{ opacity: 0.9 }}
-      />
-      
       {/* Parchment background */}
       <div 
-        className="absolute inset-0 rounded"
+        className="absolute inset-0 rounded-lg"
         style={{
           backgroundColor: '#F5F0E6',
           backgroundImage: "url('/images/textures/parchment-texture.png')",
           backgroundSize: "cover",
+          border: '1px solid rgba(200,164,77,0.3)',
         }}
       />
       
-      {/* Content area - positioned inside the border */}
+      {/* Subtle border glow */}
       <div 
-        className="relative z-5 px-10 py-16 sm:px-14 sm:py-20"
-        style={{ minHeight: '600px' }}
+        className="absolute inset-0 rounded-lg pointer-events-none"
+        style={{
+          boxShadow: 'inset 0 0 40px rgba(139,90,43,0.1), 0 4px 20px rgba(0,0,0,0.2)'
+        }}
+      />
+
+      {/* Decorative corner accents */}
+      <div className="absolute top-3 left-3 w-8 h-8 border-l-2 border-t-2 border-amber-700/30 rounded-tl" />
+      <div className="absolute top-3 right-3 w-8 h-8 border-r-2 border-t-2 border-amber-700/30 rounded-tr" />
+      <div className="absolute bottom-3 left-3 w-8 h-8 border-l-2 border-b-2 border-amber-700/30 rounded-bl" />
+      <div className="absolute bottom-3 right-3 w-8 h-8 border-r-2 border-b-2 border-amber-700/30 rounded-br" />
+      
+      {/* Content area */}
+      <div 
+        className="relative z-5 px-6 py-10 sm:px-10 sm:py-12 md:px-14"
       >
-        {/* Roman numeral at top */}
+        {/* Roman numeral chapter marker */}
         {spellNumber && (
           <div className="text-center mb-6">
-            <span className="font-cinzel text-3xl sm:text-4xl text-amber-800/50 tracking-widest">
+            <span className="font-cinzel text-2xl sm:text-3xl text-amber-800/40 tracking-widest">
               {spellNumber}
             </span>
           </div>
         )}
 
+        {/* Decorative header */}
+        <div className="flex items-center justify-center mb-8">
+          <div className="h-px flex-1 bg-gradient-to-r from-transparent to-amber-700/30" />
+          <div className="px-4">
+            <span className="font-cinzel text-xs text-amber-800/60 tracking-[0.2em] uppercase">
+              The Full Ritual
+            </span>
+          </div>
+          <div className="h-px flex-1 bg-gradient-to-l from-transparent to-amber-700/30" />
+        </div>
+
         {/* Title */}
         {title && (
-          <h1 className="font-cinzel text-xl sm:text-2xl text-amber-950 text-center mb-6">
+          <h1 className="font-cinzel text-xl sm:text-2xl text-amber-950 text-center mb-8">
             {title}
           </h1>
         )}
 
-        {/* Spell content */}
+        {/* Spell content - flowing narrative */}
         <div className="spell-content-area font-crimson text-stone-800 leading-relaxed">
           {children}
+        </div>
+
+        {/* Footer decoration */}
+        <div className="mt-12 flex items-center justify-center">
+          <img 
+            src="/images/ornaments/divider-rose-crows.png" 
+            alt="" 
+            className="h-6 w-auto opacity-50"
+          />
         </div>
       </div>
     </div>
@@ -434,4 +461,4 @@ function SpellContentPage({ children, title, spellNumber }) {
 }
 
 // Export sub-components for flexible use
-export { TarotCardPage, SpellContentPage };
+export { TarotCardFront, QuickSummaryCard, FullRitualContent };
