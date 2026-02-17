@@ -6,14 +6,14 @@ import { motion } from 'framer-motion';
 import { Clock } from 'lucide-react';
 import { cn } from '../lib/utils';
 
-// Ornate section divider - uses the generated decorative image
+// Ornate section divider - Crowlands style with rose and crows
 const OrnateSectionDivider = () => (
-  <div className="flex items-center justify-center py-6 my-2">
+  <div className="flex items-center justify-center py-6 my-4">
     <img 
-      src="/images/ornaments/divider-ornate-horizontal.png" 
+      src="/images/ornaments/divider-rose-crows.png" 
       alt="" 
-      className="h-4 w-auto opacity-60"
-      style={{ maxWidth: '200px' }}
+      className="h-6 w-auto opacity-70"
+      style={{ maxWidth: '180px' }}
     />
   </div>
 );
