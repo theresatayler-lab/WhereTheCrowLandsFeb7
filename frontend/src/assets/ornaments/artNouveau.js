@@ -9,7 +9,7 @@ import React from 'react';
 // Color tokens from new palette - REFINED for clarity
 export const NOUVEAU_COLORS = {
   // Backgrounds
-  midnightTeal: '#0E2A2F',
+  midnightTeal: '#0a1628',       // Deep Navy (matches Library)
   celestialBlue: '#123A3F',      // Slightly more saturated teal
   
   // Light tones
