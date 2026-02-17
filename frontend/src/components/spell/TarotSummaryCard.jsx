@@ -28,14 +28,6 @@ export default function TarotSummaryCard({
             className="relative w-full overflow-hidden rounded-2xl"
             style={{ aspectRatio: "2.75 / 4.75" }}
           >
-            {/* Decorative frame overlay */}
-            <img 
-              src="/images/textures/frame-ornate-gold.png" 
-              alt="" 
-              className="absolute inset-0 w-full h-full object-contain pointer-events-none opacity-30"
-              style={{ mixBlendMode: 'multiply' }}
-            />
-            
             <div
               aria-hidden="true"
               className="absolute inset-0"
