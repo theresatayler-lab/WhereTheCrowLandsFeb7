@@ -433,7 +433,7 @@ const TarotCardView = ({ spell, archetype, style, imageBase64, onViewFull, onCop
               <div className="relative h-full flex flex-col p-6 text-white">
                 {/* Top Section - Symbol & Title */}
                 <div className="text-center mb-2">
-                  <span className="text-4xl drop-shadow-lg">{tarot.symbol || '✧'}</span>
+                  <img src="/icons/ui/cream/icon-sparkles.png" alt="" className="w-10 h-10 mx-auto drop-shadow-lg" />
                 </div>
                 
                 <h2 
