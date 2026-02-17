@@ -13,7 +13,7 @@ import requests
 import time
 import os
 
-BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', 'https://entry-point-58.preview.emergentagent.com').rstrip('/')
+BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', 'https://grimoire-redesign.preview.emergentagent.com').rstrip('/')
 
 class TestAdminAuth:
     """Test admin login and get auth token"""
