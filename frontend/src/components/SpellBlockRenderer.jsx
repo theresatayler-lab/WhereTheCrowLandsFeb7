@@ -108,27 +108,33 @@ const NarrativeBlock = ({ block, archetypeStyle }) => {
 
 // === NARRATIVE BLOCK COMPONENTS ===
 
-// Cold Open - the guide's opening, presented as immersive quote
+// Cold Open - the guide's opening, presented as immersive quote with decorative styling
 const ColdOpen = ({ c, style }) => (
   <motion.div
     initial={{ opacity: 0, y: 10 }}
     animate={{ opacity: 1, y: 0 }}
-    className="mb-4"
+    className="mb-6 py-4"
     data-testid="cold-open-block"
   >
     {c.greeting && (
-      <blockquote
-        className="font-crimson-text text-lg text-stone-800 italic leading-relaxed pl-5 mb-3"
-        style={{ borderLeft: `3px solid ${style.accentColor ? undefined : '#B5651D'}` }}
-      >
-        {c.greeting}
+      <blockquote className="relative px-6 py-4 mb-4">
+        {/* Decorative quote mark */}
+        <span className="absolute -top-2 -left-1 text-5xl text-amber-700/20 font-serif">"</span>
+        <p className="font-crimson text-xl text-stone-800 italic leading-relaxed">
+          {c.greeting}
+        </p>
+        <span className="absolute -bottom-4 right-4 text-5xl text-amber-700/20 font-serif rotate-180">"</span>
       </blockquote>
     )}
     {c.scene_setting && (
-      <p className="font-crimson-text text-stone-600 leading-relaxed mb-2">{c.scene_setting}</p>
+      <p className="font-crimson text-stone-600 leading-relaxed mb-3 text-center italic">
+        {c.scene_setting}
+      </p>
     )}
     {c.hook && (
-      <p className="font-crimson-text text-stone-800 leading-relaxed">{c.hook}</p>
+      <p className="font-crimson text-stone-800 leading-relaxed text-lg">
+        {c.hook}
+      </p>
     )}
   </motion.div>
 );
