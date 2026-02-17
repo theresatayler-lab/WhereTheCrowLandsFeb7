@@ -195,11 +195,7 @@ const Step1 = ({ spellSpec, updateSpec }) => (
     <div>
       <h3 className="font-cinzel text-xl text-crimson mb-3 font-semibold">Alchemize This Into...</h3>
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        {ALCHEMIZE_OPTIONS.filter(f =>
-          !f.forPersonas ||
-          f.forPersonas.includes(spellSpec.persona_id) ||
-          spellSpec.persona_id === 'choose_for_me'
-        ).map((f) => {
+        {ALCHEMIZE_OPTIONS.map((f) => {
           return (
             <OptionCard
               key={f.id}
