@@ -15,6 +15,9 @@ import { useNavigate } from 'react-router-dom';
 import { SpellBorderFrame, SectionBorderFrame, TarotCardFrame, PERSONA_BORDER_URLS } from './OrnateElements';
 import { SpellBlockRenderer } from './SpellBlockRenderer';
 import { BRAND_ASSETS, getSpellWatermarkStyle } from '../assets/brandAssets';
+import SpellPageFrame from "./spell/SpellPageFrame";
+import SpellHeader from "./spell/SpellHeader";
+import TarotSummaryCard from "./spell/TarotSummaryCard";
 
 // Ornate seal logo for spell pages
 const SEAL_LOGO_URL = "/images/brand/logo.png";
