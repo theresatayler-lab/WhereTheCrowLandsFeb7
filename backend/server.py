@@ -6125,6 +6125,14 @@ async def startup_ensure_indexes():
     """Create TTL index on spell_jobs so completed jobs auto-delete after 30 days."""
     await db.spell_jobs.create_index('created_at', expireAfterSeconds=86400 * 30)
     logger.info("[STARTUP] TTL index ensured on spell_jobs (30 day expiry)")
+    
+    # Ensure Theresa Tayler always has PRO access
+    try:
+        from ensure_pro_access_startup import ensure_pro_access
+        ensure_pro_access()
+    except Exception as e:
+        logger.warning(f"[STARTUP] Could not ensure PRO access: {e}")
+
 
 @app.on_event('shutdown')
 async def shutdown_db_client():
