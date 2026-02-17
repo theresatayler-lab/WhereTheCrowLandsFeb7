@@ -312,7 +312,7 @@ export const InvisibleHelpers = () => {
     try {
       const canvas = await html2canvas(workingRef.current, {
         scale: 2,
-        backgroundColor: '#f5f0e6',
+        backgroundColor: '#F3EFE8',
         logging: false,
       });
       

@@ -17,7 +17,7 @@ export const COLORS = {
   oxblood: '#8b2232',
   navy: '#0E2A2F',
   navyMid: '#1a2d4d',
-  bone: '#f5f0e6',
+  bone: '#F3EFE8',
   copper: '#b87333',
   silver: '#a8a8a8'
 };
