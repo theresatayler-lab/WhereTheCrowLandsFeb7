@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ExternalLink, BookOpen, Copy, Check } from 'lucide-react';
+import { X, ExternalLink, Copy, Check } from 'lucide-react';
 
 // ===== ART DECO / VICTORIAN ORNATE DESIGN COMPONENTS =====
 
@@ -729,7 +729,7 @@ const VictorianBookModal = ({ book, onClose }) => {
               transition={{ delay: 0.2 }}
             >
               <div className="absolute inset-1 border opacity-50" style={{ borderColor: book.accent }} />
-              <BookOpen className="w-12 h-12" style={{ color: book.textColor || '#F3EFE8' }} />
+              <img src="/icons/ui/gold/icon-library-books.png" alt="" className="w-12 h-12 inline" />
             </motion.div>
             
             {/* Title */}
