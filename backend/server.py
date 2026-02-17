@@ -4627,9 +4627,9 @@ async def generate_personalized_spell(request: PersonalizedSpellRequest, user = 
                     generated_assets['header_image'] = image_base64
                     asset_plan['header_image_generated'] = True
                 
-                # 2. Generate tarot card image (with constraints for distinct composition)
-                tarot_prompt = build_image_prompt("tarot_card_image", asset_plan, persona_config, spell.get('title', 'Spell'))
-                logging.info("Generating tarot card image...")
+                # 2. Generate tarot card image (V2.0: now uses spell-specific visual tokens)
+                tarot_prompt = build_image_prompt("tarot_card_image", asset_plan, persona_config, spell.get('title', 'Spell'), spell)
+                logging.info("Generating tarot card image with spell-specific motifs...")
                 
                 tarot_response = await openai_client.images.generate(
                     model="dall-e-3",
