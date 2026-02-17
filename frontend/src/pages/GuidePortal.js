@@ -430,12 +430,13 @@ export const GuidePortal = () => {
             className="max-w-4xl mx-auto px-4 pb-20"
           >
             <SpellPageFrame>
-              {/* New SpellBookView - Flippable card/content design */}
+              {/* SpellBookView - Flippable card + Full ritual design */}
               <SpellBookView
                 tarotImageUrl={spellResult?.asset_plan?.generated_assets?.tarot_card_image || spellResult?.tarot_card_image || null}
                 title={spellResult?.tarot_card?.title || spellResult?.title || "Your Spell"}
                 guideName={spellResult?.archetype_name || guide.name}
                 spellNumber={spellResult?.spell_number || "I"}
+                spell={spellResult}
               >
                 {/* Spell Content */}
                 {spellResult.blocks ? (
