@@ -527,7 +527,7 @@ const TarotCardView = ({ spell, archetype, style, imageBase64, onViewFull, onCop
                   
                   {/* Bottom symbol */}
                   <div className="text-center pt-1">
-                    <span className="text-2xl text-amber-500/40">{tarot.symbol || '✧'}</span>
+                    <img src="/icons/ui/gold/icon-sparkles.png" alt="" className="w-6 h-6 mx-auto opacity-40" />
                   </div>
                 </div>
               </div>
