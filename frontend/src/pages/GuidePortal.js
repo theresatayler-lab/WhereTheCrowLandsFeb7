@@ -9,6 +9,7 @@ import { toast } from 'sonner';
 import SpellPageFrame from "../components/spell/SpellPageFrame";
 import SpellHeader from "../components/spell/SpellHeader";
 import TarotSummaryCard from "../components/spell/TarotSummaryCard";
+import SpellBookView from "../components/spell/SpellBookView";
 
 // ===== GUIDE CONFIGURATIONS =====
 const GUIDE_CONFIGS = {
