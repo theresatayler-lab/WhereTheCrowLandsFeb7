@@ -587,7 +587,7 @@ const TarotCardView = ({ spell, archetype, style, imageBase64, onViewFull, onCop
           className="w-full px-6 py-3 bg-gradient-to-r from-amber-700 via-amber-600 to-amber-700 text-amber-50 rounded-sm font-montserrat tracking-widest uppercase text-sm hover:from-amber-600 hover:via-amber-500 hover:to-amber-600 transition-all flex items-center justify-center gap-2 shadow-lg"
           style={{ boxShadow: '0 4px 15px rgba(139, 90, 43, 0.4)' }}
         >
-          <BookOpen className="w-4 h-4" />
+          <img src="/icons/ui/cream/icon-grimoire.png" alt="" className="w-5 h-5" />
           View Full Ritual
         </button>
         
@@ -595,25 +595,25 @@ const TarotCardView = ({ spell, archetype, style, imageBase64, onViewFull, onCop
         <div className="flex justify-center gap-3">
           <button
             onClick={onCopy}
-            className="p-3 bg-card/80 text-primary border border-primary/30 rounded-sm hover:bg-primary/10 transition-all shadow-md"
+            className="p-3 bg-card/80 border border-primary/30 rounded-sm hover:bg-primary/10 transition-all shadow-md"
             title="Copy to clipboard"
           >
-            <Copy className="w-4 h-4" />
+            <img src="/icons/ui/gold/icon-copy.png" alt="Copy" className="w-5 h-5" />
           </button>
           <button
             onClick={onSave}
             disabled={isSaving}
-            className="p-3 bg-accent text-accent-foreground rounded-sm hover:bg-accent/90 transition-all disabled:opacity-50 shadow-md"
+            className="p-3 bg-accent rounded-sm hover:bg-accent/90 transition-all disabled:opacity-50 shadow-md"
             title="Save to Grimoire"
           >
-            <Save className={`w-4 h-4 ${isSaving ? 'animate-pulse' : ''}`} />
+            <img src="/icons/ui/gold/icon-save-book.png" alt="Save" className={`w-5 h-5 ${isSaving ? 'animate-pulse' : ''}`} />
           </button>
           <button
             onClick={onNewSpell}
-            className="p-3 bg-card/80 text-primary border border-primary/30 rounded-sm hover:bg-primary/10 transition-all shadow-md"
+            className="p-3 bg-card/80 border border-primary/30 rounded-sm hover:bg-primary/10 transition-all shadow-md"
             title="New Spell"
           >
-            <Sparkles className="w-4 h-4" />
+            <img src="/icons/ui/gold/icon-sparkles.png" alt="New Spell" className="w-5 h-5" />
           </button>
         </div>
       </div>
