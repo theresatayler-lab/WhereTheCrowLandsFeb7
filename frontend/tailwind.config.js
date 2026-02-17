@@ -12,7 +12,7 @@ module.exports = {
         // ============================================================================
         
         // Primary backgrounds
-        background: '#0E2A2F',  // Midnight Teal (primary dark)
+        background: '#0a1628',  // Deep Navy (primary dark - matches Library)
         foreground: '#F3EFE8',  // Vellum (primary text on dark)
         
         // Card system
