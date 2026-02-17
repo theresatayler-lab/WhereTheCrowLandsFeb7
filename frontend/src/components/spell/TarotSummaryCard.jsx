@@ -21,13 +21,11 @@ export default function TarotSummaryCard({
             border: "1px solid rgba(200,164,77,0.40)",
           }}
         >
-          <div
-            className="relative w-full overflow-hidden rounded-2xl"
-            style={{ aspectRatio: "2.75 / 4.75" }}
-          >
+          {/* Flexible layout - no fixed aspect ratio */}
+          <div className="relative w-full rounded-2xl">
             <div
               aria-hidden="true"
-              className="absolute inset-0"
+              className="absolute inset-0 rounded-2xl"
               style={{
                 opacity: 0.08,
                 backgroundImage:
@@ -35,19 +33,19 @@ export default function TarotSummaryCard({
               }}
             />
 
-            <div className="relative flex h-full flex-col">
+            <div className="relative flex flex-col">
               {/* Top divider */}
               <div className="px-4 pt-4">
                 <div className="spell-divider-line" />
               </div>
 
-              {/* Content (scroll-safe) */}
-              <div className="flex-1 px-6 py-4 text-center overflow-auto">
+              {/* Content - flexible height */}
+              <div className="px-6 py-4 text-center">
                 {tarotImageUrl ? (
                   <img
                     src={tarotImageUrl}
                     alt={title || "Tarot card"}
-                    className="mx-auto mb-4 max-h-[48%] w-auto rounded-xl drop-shadow-2xl"
+                    className="mx-auto mb-4 max-h-64 w-auto rounded-xl drop-shadow-2xl"
                     draggable={false}
                     loading="lazy"
                     decoding="async"
@@ -65,7 +63,7 @@ export default function TarotSummaryCard({
                 ) : null}
 
                 {essence ? (
-                  <p className="mt-2 font-crimson text-sm sm:text-base italic text-[#141414]/85">
+                  <p className="mt-3 font-crimson text-sm sm:text-base italic text-[#141414]/85 leading-relaxed">
                     {essence}
                   </p>
                 ) : null}
