@@ -912,11 +912,13 @@ Each entry MUST include:
 # IMAGE PROMPT BUILDERS (unchanged from previous version)
 # ============================================================================
 
-def build_image_prompt(asset_type: str, asset_plan: dict, persona_config: dict, spell_title: str) -> str:
+def build_image_prompt(asset_type: str, asset_plan: dict, persona_config: dict, spell_title: str, spell_data: dict = None) -> str:
     """
     Build DALL-E prompt for each asset type
     CRITICAL: CROWLANDS_ART_BIBLE is the PREFIX - it dominates the prompt
     Rules: "No text", print-friendly linework, hard art style rules
+    
+    V2.0: For tarot_card_image, uses spell-specific visual tokens for uniqueness
     """
     
     base_style = persona_config['visual_dna']['constants']['art_style']
@@ -944,10 +946,45 @@ AVOID: {', '.join(avoid_list)}"""
 
     elif asset_type == "tarot_card_image":
         asset_info = asset_plan.get("tarot_card_image", {})
-        tarot_emblem = persona_config['visual_dna'].get('tarot_emblem', '')
-        focal = asset_info.get('must_include_focal', 'mystical emblem')
-        framing = asset_info.get('must_use_framing', 'circular border')
-        symbols = asset_info.get('must_include_symbols', ['star'])
+        
+        # V2.0: Use spell-specific visual tokens for uniqueness
+        if spell_data:
+            visual_tokens = extract_spell_visual_tokens(spell_data, persona_config)
+            primary_motif = visual_tokens["primary_motif"]
+            secondary_motifs = visual_tokens["secondary_motifs"]
+            geometry = visual_tokens["geometry"]
+            guide_signature = visual_tokens["guide_signature"]
+            forbidden = visual_tokens["forbidden"]
+            
+            prompt = f"""{art_bible_prefix},
+STYLE: engraved Victorian woodcut / etching, high detail linework, symmetrical medallion, antique vellum background.
+COMPOSITION: {geometry} emblem design (NOT a scene, NOT a figure).
+FOCAL EMBLEM: {primary_motif}.
+SECONDARY SYMBOLS: {', '.join(secondary_motifs)}.
+GEOMETRY: {geometry} with thin art nouveau corners (no heavy fills).
+GUIDE SIGNATURE (subtle, small): {guide_signature}.
+COLOR: midnight teal background + antique gold linework + bone ivory accents; no neon; no gradients that flatten contrast.
+CONSTRAINTS: no text, no letters, no numbers, no banners with writing, no photorealism, no 3D render.
+{dall_e_rules},
+AVOID: {', '.join(avoid_list + forbidden)}"""
+        else:
+            # Fallback to old behavior if no spell_data provided
+            tarot_emblem = persona_config['visual_dna'].get('tarot_emblem', '')
+            focal = asset_info.get('must_include_focal', 'mystical emblem')
+            framing = asset_info.get('must_use_framing', 'circular border')
+            symbols = asset_info.get('must_include_symbols', ['star'])
+            
+            prompt = f"""{art_bible_prefix},
+{base_style}, SYMBOLIC EMBLEM (NOT a scene),
+{tarot_emblem if tarot_emblem else f'FOCAL ELEMENT: {focal}'},
+FRAMING: {framing},
+SUPPORTING SYMBOLS: {', '.join(symbols)},
+centered composition, suitable for tarot/oracle card,
+medallion or seal style, symmetrical,
+{role_suffix},
+{dall_e_rules},
+MUST be visually DISTINCT from header image,
+AVOID: {', '.join(avoid_list)}"""
         
         prompt = f"""{art_bible_prefix},
 {base_style}, SYMBOLIC EMBLEM (NOT a scene),
