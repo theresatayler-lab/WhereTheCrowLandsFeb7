@@ -1,113 +1,98 @@
 import React from "react";
-import CrowlandsIcon from "../CrowlandsIcon";
 
+/**
+ * TarotSummaryCard - Displays the Crowlands tarot card with spell summary
+ * Uses the beautiful crow/chalice/roses tarot card design
+ */
 export default function TarotSummaryCard({
   tarotImageUrl,
-  symbolIconPath,
   title,
   essence,
   keyAction,
   timing,
   guideBadge,
-  sealIconPath,
 }) {
   return (
-    <section className="my-6">
-      <div className="mx-auto w-full max-w-sm sm:max-w-md">
-        <div
-          className="box-glow-gold rounded-3xl p-4 sm:p-5"
-          style={{
-            background: "var(--vellum)",
-            backgroundImage: "url('/images/textures/parchment-texture.png')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            border: "1px solid rgba(200,164,77,0.40)",
-          }}
-        >
-          <div
-            className="relative w-full overflow-hidden rounded-2xl"
-            style={{ aspectRatio: "2.75 / 4.75" }}
-          >
-            <div
-              aria-hidden="true"
-              className="absolute inset-0"
-              style={{
-                opacity: 0.08,
-                backgroundImage:
-                  "radial-gradient(circle at 50% 30%, rgba(200,164,77,0.18), transparent 55%)",
-              }}
-            />
-
-            <div className="absolute left-0 right-0 top-0 px-4 pt-4">
-              <div className="spell-divider-line" />
-            </div>
-
-            <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
-              {tarotImageUrl ? (
-                <img
-                  src={tarotImageUrl}
-                  alt={title || "Tarot card"}
-                  className="mb-4 max-h-[48%] w-auto rounded-xl drop-shadow-2xl"
-                  draggable={false}
-                  loading="lazy"
-                  decoding="async"
+    <section className="my-8">
+      <div className="flex flex-col md:flex-row gap-6 items-center md:items-start">
+        {/* Tarot Card Image */}
+        <div className="w-48 sm:w-56 flex-shrink-0">
+          <div className="relative">
+            {/* If we have a generated tarot image, show it */}
+            {tarotImageUrl ? (
+              <img 
+                src={tarotImageUrl} 
+                alt={title || "Spell Tarot Card"}
+                className="w-full h-auto rounded-lg shadow-xl"
+                style={{ 
+                  boxShadow: '0 8px 32px rgba(0,0,0,0.3), 0 0 0 1px rgba(200,164,77,0.3)'
+                }}
+              />
+            ) : (
+              /* Fallback: Use the beautiful Crowlands tarot card template */
+              <div className="relative">
+                <img 
+                  src="/images/frames/crowlands-tarot-card.png" 
+                  alt=""
+                  className="w-full h-auto rounded-lg shadow-xl"
+                  style={{ 
+                    boxShadow: '0 8px 32px rgba(0,0,0,0.3), 0 0 0 1px rgba(200,164,77,0.3)'
+                  }}
                 />
-              ) : symbolIconPath ? (
-                <div className="mb-4 drop-glow-gold-soft">
-                  <CrowlandsIcon iconPath={symbolIconPath} alt="Symbol" size={86} />
-                </div>
-              ) : null}
-
-              {title ? (
-                <h2 className="font-cinzel text-xl sm:text-2xl text-[#0b0b0b] leading-snug">
-                  {title}
-                </h2>
-              ) : null}
-
-              {essence ? (
-                <p className="mt-2 font-crimson text-sm sm:text-base italic text-[#141414]/85">
-                  {essence}
-                </p>
-              ) : null}
-            </div>
-
-            <div className="absolute bottom-0 left-0 right-0 px-4 pb-4">
-              <div className="spell-divider-line mb-3" />
-              <div className="flex flex-wrap items-center justify-center gap-2">
-                {keyAction ? (
-                  <span
-                    className="font-montserrat text-[11px] uppercase tracking-wide px-2 py-1 rounded-full"
-                    style={{ border: "1px solid rgba(200,164,77,0.35)" }}
-                  >
-                    {keyAction}
-                  </span>
-                ) : null}
-
-                {timing ? (
-                  <span
-                    className="font-montserrat text-[11px] uppercase tracking-wide px-2 py-1 rounded-full"
-                    style={{ border: "1px solid rgba(200,164,77,0.35)" }}
-                  >
-                    {timing}
-                  </span>
-                ) : null}
-
-                {guideBadge ? (
-                  <span
-                    className="font-montserrat text-[11px] uppercase tracking-wide px-2 py-1 rounded-full"
-                    style={{ border: "1px solid rgba(200,164,77,0.35)" }}
-                  >
-                    {guideBadge}
-                  </span>
-                ) : null}
-
-                {sealIconPath ? (
-                  <span className="ml-1 drop-glow-gold-soft">
-                    <CrowlandsIcon iconPath={sealIconPath} alt="Seal" size={18} />
-                  </span>
-                ) : null}
+                {/* Overlay title on the card if no image */}
+                {title && (
+                  <div className="absolute bottom-8 left-0 right-0 text-center px-4">
+                    <p className="font-cinzel text-sm text-amber-900 bg-amber-50/90 rounded px-2 py-1 inline-block">
+                      {title}
+                    </p>
+                  </div>
+                )}
               </div>
+            )}
+          </div>
+        </div>
+
+        {/* Spell Summary Info */}
+        <div className="flex-1 text-center md:text-left">
+          {/* Guide badge */}
+          {guideBadge && (
+            <div className="font-montserrat uppercase tracking-[0.15em] text-xs text-amber-700/70 mb-2">
+              Crafted by {guideBadge}
             </div>
+          )}
+
+          {/* Title */}
+          {title && (
+            <h3 className="font-cinzel text-xl sm:text-2xl text-amber-950 mb-3">
+              {title}
+            </h3>
+          )}
+
+          {/* Essence/Tagline */}
+          {essence && (
+            <blockquote className="font-crimson text-stone-700 italic text-base leading-relaxed mb-4">
+              "{essence}"
+            </blockquote>
+          )}
+
+          {/* Key Action & Timing */}
+          <div className="flex flex-wrap gap-4 justify-center md:justify-start">
+            {keyAction && (
+              <div className="text-sm">
+                <span className="font-montserrat uppercase tracking-wider text-xs text-amber-800/60 block mb-1">
+                  Key Action
+                </span>
+                <span className="font-crimson text-stone-800">{keyAction}</span>
+              </div>
+            )}
+            {timing && (
+              <div className="text-sm">
+                <span className="font-montserrat uppercase tracking-wider text-xs text-amber-800/60 block mb-1">
+                  Best Timing
+                </span>
+                <span className="font-crimson text-stone-800">{timing}</span>
+              </div>
+            )}
           </div>
         </div>
       </div>
