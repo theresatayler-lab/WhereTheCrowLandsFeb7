@@ -133,24 +133,72 @@ const ColdOpen = ({ c, style }) => (
   </motion.div>
 );
 
-// Materials - simple inline list, no box
-const Materials = ({ c, style }) => (
-  <div data-testid="materials-block">
-    <p className="font-crimson-text text-stone-700 text-sm italic mb-2">You will need:</p>
-    {c.items?.map((item, i) => (
-      <p key={i} className="font-crimson-text text-stone-800 leading-relaxed mb-1.5">
-        <span className="font-semibold">{item.name}</span>
-        {item.purpose && <span className="text-stone-600"> — {item.purpose}</span>}
-        {item.substitution && (
-          <span className="text-stone-500 text-sm"> (or: {item.substitution})</span>
-        )}
-      </p>
-    ))}
-    {c.gathering_note && (
-      <p className="font-crimson-text text-stone-500 text-sm italic mt-2">{c.gathering_note}</p>
-    )}
-  </div>
-);
+// Materials - elegant ingredient list with visual icons
+const Materials = ({ c, style }) => {
+  // Map material names to available anchor icons
+  const getIconForMaterial = (name) => {
+    const lower = name.toLowerCase();
+    if (lower.includes('candle')) return '/icons/anchors/gold/anchor-candle.png';
+    if (lower.includes('herb') || lower.includes('rosemary') || lower.includes('sage') || lower.includes('lavender')) return '/icons/anchors/gold/anchor-herb.png';
+    if (lower.includes('thread') || lower.includes('string') || lower.includes('cord')) return '/icons/anchors/gold/anchor-thread.png';
+    if (lower.includes('salt')) return '/icons/anchors/gold/anchor-salt.png';
+    if (lower.includes('feather')) return '/icons/anchors/gold/anchor-feather.png';
+    if (lower.includes('mirror')) return '/icons/anchors/gold/anchor-mirror.png';
+    if (lower.includes('letter') || lower.includes('paper') || lower.includes('note')) return '/icons/anchors/gold/anchor-letter.png';
+    if (lower.includes('photo') || lower.includes('picture') || lower.includes('image')) return '/icons/anchors/gold/anchor-photograph.png';
+    if (lower.includes('heirloom') || lower.includes('jewelry') || lower.includes('ring') || lower.includes('necklace')) return '/icons/anchors/gold/anchor-heirloom.png';
+    if (lower.includes('crystal') || lower.includes('stone') || lower.includes('gem')) return '/icons/ui/gold/icon-crystal-ball.png';
+    if (lower.includes('tea') || lower.includes('cup') || lower.includes('mug')) return '/icons/anchors/gold/anchor-tea.png';
+    if (lower.includes('bell')) return '/icons/anchors/gold/anchor-bell.png';
+    if (lower.includes('bird') || lower.includes('crow') || lower.includes('raven')) return '/icons/anchors/gold/anchor-bird.png';
+    if (lower.includes('bread') || lower.includes('food') || lower.includes('offering')) return '/icons/anchors/gold/anchor-bread.png';
+    if (lower.includes('compass') || lower.includes('direction')) return '/icons/anchors/gold/anchor-compass.png';
+    if (lower.includes('map')) return '/icons/anchors/gold/anchor-map.png';
+    if (lower.includes('notebook') || lower.includes('journal') || lower.includes('diary')) return '/icons/anchors/gold/anchor-notebook.png';
+    if (lower.includes('scissors') || lower.includes('cut')) return '/icons/anchors/gold/anchor-scissors.png';
+    return null;
+  };
+
+  return (
+    <div className="py-4" data-testid="materials-block">
+      <SectionLabel icon="/icons/anchors/gold/anchor-herb.png" label="Gather These Materials" />
+      
+      <div className="grid gap-3 mt-4">
+        {c.items?.map((item, i) => {
+          const iconPath = getIconForMaterial(item.name);
+          return (
+            <div key={i} className="flex items-start gap-3 p-3 rounded-lg bg-amber-900/5 border border-amber-700/10">
+              {iconPath ? (
+                <img src={iconPath} alt="" className="w-8 h-8 opacity-70 flex-shrink-0 mt-0.5" />
+              ) : (
+                <div className="w-8 h-8 rounded-full bg-amber-700/10 flex items-center justify-center flex-shrink-0">
+                  <span className="text-amber-800 text-xs font-cinzel">{i + 1}</span>
+                </div>
+              )}
+              <div className="flex-1">
+                <p className="font-cinzel text-amber-900 font-medium">{item.name}</p>
+                {item.purpose && (
+                  <p className="font-crimson text-stone-600 text-sm mt-0.5">{item.purpose}</p>
+                )}
+                {item.substitution && (
+                  <p className="font-crimson text-stone-500 text-xs italic mt-1">
+                    Alternative: {item.substitution}
+                  </p>
+                )}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      
+      {c.gathering_note && (
+        <p className="font-crimson text-stone-500 text-sm italic mt-4 text-center">
+          {c.gathering_note}
+        </p>
+      )}
+    </div>
+  );
+};
 
 // Stepper - flowing narrative steps, no checkboxes
 const Stepper = ({ c, style }) => (
