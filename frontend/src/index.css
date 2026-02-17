@@ -66,9 +66,6 @@ code {
     }
     body {
         @apply bg-background text-foreground;
-        background-image: 
-            radial-gradient(ellipse at 30% 20%, rgba(18, 58, 63, 0.6) 0%, transparent 50%),
-            radial-gradient(ellipse at 70% 80%, rgba(18, 58, 63, 0.4) 0%, transparent 40%);
     }
 }
 
