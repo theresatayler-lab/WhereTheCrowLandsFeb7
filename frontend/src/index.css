@@ -447,4 +447,78 @@ body::before {
   .drop-shadow-ink {
     filter: drop-shadow(0 1px 2px rgba(14, 42, 47, 0.8));
   }
+
+  /* -------------------- Surface-based icon tinting (CSS-only) -------------------- */
+  [data-surface="light"] .crowlands-icon {
+    filter: brightness(0.15) saturate(0);
+  }
+  [data-surface="dark"] .crowlands-icon {
+    filter: none;
+  }
+
+  /* -------------------- Spell page layout primitives -------------------- */
+  .spell-page-wrap {
+    position: relative;
+    min-height: 100vh;
+  }
+
+  .spell-atmosphere {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.14;
+    mix-blend-mode: soft-light;
+  }
+
+  /* Reading surface must be SOLID (no opacity behind text) */
+  .spell-reading-surface {
+    position: relative;
+    background: var(--vellum);
+  }
+
+  .stroke-gold-soft {
+    border: 1px solid rgba(200, 164, 77, 0.35);
+  }
+
+  .spell-divider-line {
+    height: 1px;
+    background: rgba(200, 164, 77, 0.35);
+  }
+
+  .spell-block-frame {
+    border: 1px solid rgba(200, 164, 77, 0.28);
+    border-radius: 16px;
+    background: var(--vellum);
+  }
+
+  /* -------------------- Shadow + glow utilities (no inline sprawl) -------------------- */
+  .text-glow-gold {
+    text-shadow: 0 0 18px rgba(200, 164, 77, 0.55), 0 0 32px rgba(200, 164, 77, 0.35);
+  }
+  .text-glow-gold-soft {
+    text-shadow: 0 0 12px rgba(200, 164, 77, 0.28);
+  }
+  .text-glow-pink {
+    text-shadow: 0 0 18px rgba(185, 78, 106, 0.55), 0 0 32px rgba(185, 78, 106, 0.35);
+  }
+  .text-glow-pink-soft {
+    text-shadow: 0 0 12px rgba(185, 78, 106, 0.28);
+  }
+  .text-shadow-ink {
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+  }
+
+  .box-glow-gold {
+    box-shadow: 0 0 0 1px rgba(200, 164, 77, 0.35), 0 10px 30px rgba(200, 164, 77, 0.18);
+  }
+  .box-glow-pink {
+    box-shadow: 0 0 0 1px rgba(185, 78, 106, 0.35), 0 10px 30px rgba(185, 78, 106, 0.18);
+  }
+
+  .drop-glow-gold-soft {
+    filter: drop-shadow(0 0 10px rgba(200, 164, 77, 0.35));
+  }
+  .drop-shadow-ink {
+    filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.55));
+  }
 }
