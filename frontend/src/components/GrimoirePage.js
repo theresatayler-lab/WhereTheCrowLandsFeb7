@@ -1659,7 +1659,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
               <ul className="space-y-2 mb-3">
                 {spell.closing.steps.map((step, idx) => (
                   <li key={idx} className="font-montserrat text-sm text-stone-800 flex items-start gap-2">
-                    <span className="text-amber-800">✦</span>
+                    <img src="/icons/anchors/gold/anchor-feather.png" alt="" className="w-4 h-4 opacity-70 mt-0.5" />
                     {step}
                   </li>
                 ))}
