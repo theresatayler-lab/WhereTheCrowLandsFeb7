@@ -295,11 +295,11 @@ const PrintablesBlock = ({ tarotImageBase64, sigilImageBase64, spellTitle, tarot
   );
 };
 
-// Section Header with Micro-Icon
-const SectionHeader = ({ icon: Icon, title, microIcon, accentColor }) => (
+// Section Header with Woodcut Icon
+const SectionHeader = ({ icon: Icon, title, iconPath, accentColor }) => (
   <h2 className={`font-cinzel text-xl text-amber-900 mb-4 flex items-center gap-2`}>
-    {microIcon && <span className="text-xl">{microIcon}</span>}
-    {Icon && !microIcon && <Icon className="w-5 h-5" />}
+    {iconPath && <img src={iconPath} alt="" className="w-5 h-5 opacity-80" />}
+    {Icon && !iconPath && <Icon className="w-5 h-5" />}
     {title}
   </h2>
 );
