@@ -1,17 +1,42 @@
 // SpellBlockRenderer - Renders blocks as flowing narrative grimoire page
-// No section headers, no accordions, no input boxes - reads like a spell walkthrough
+// Vintage book aesthetic with ornate dividers and proper typography
 
 import React, { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { Clock } from 'lucide-react';
 import { cn } from '../lib/utils';
 
-// Subtle section break between narrative sections
-const NarrativeBreak = ({ archetypeStyle }) => (
-  <div className="flex items-center justify-center py-3 opacity-30">
-    <div className={cn("h-px w-12", archetypeStyle.accentColor?.replace('text-', 'bg-') || "bg-amber-600")} />
-    <span className="mx-3 text-xs">&#9670;</span>
-    <div className={cn("h-px w-12", archetypeStyle.accentColor?.replace('text-', 'bg-') || "bg-amber-600")} />
+// Ornate section divider - uses the generated decorative image
+const OrnateSection Divider = () => (
+  <div className="flex items-center justify-center py-6 my-2">
+    <img 
+      src="/images/ornaments/divider-ornate-horizontal.png" 
+      alt="" 
+      className="h-4 w-auto opacity-60"
+      style={{ maxWidth: '200px' }}
+    />
+  </div>
+);
+
+// Simple elegant divider for minor breaks
+const SubtleDivider = () => (
+  <div className="flex items-center justify-center py-4 opacity-40">
+    <div className="h-px w-8 bg-amber-700" />
+    <div className="mx-2 w-1.5 h-1.5 rotate-45 border border-amber-700" />
+    <div className="h-px w-8 bg-amber-700" />
+  </div>
+);
+
+// Section header with small decorative icon
+const SectionLabel = ({ icon, label }) => (
+  <div className="flex items-center gap-2 mb-3">
+    {icon && (
+      <img src={icon} alt="" className="w-5 h-5 opacity-70" />
+    )}
+    <span className="font-cinzel text-xs uppercase tracking-[0.2em] text-amber-800/70">
+      {label}
+    </span>
+    <div className="flex-1 h-px bg-amber-700/20 ml-2" />
   </div>
 );
 
@@ -27,25 +52,33 @@ export const SpellBlockRenderer = ({
   const canonAnchor = spell?.canon_anchor || {};
 
   return (
-    <div className="space-y-2" data-testid="spell-block-renderer">
-      {/* Persona Lock Header - subtle */}
+    <div className="spell-content space-y-1" data-testid="spell-block-renderer">
+      {/* Persona Lock Header - elegant presentation */}
       {personaLock.props && (
-        <div className="text-center text-xs text-stone-500 italic mb-4">
-          <span>{personaLock.props.join(' · ')}{personaLock.sensory_cue ? ` · ${personaLock.sensory_cue}` : ''}</span>
+        <div className="text-center mb-6 pb-4 border-b border-amber-700/20">
+          <p className="font-crimson text-stone-600 italic text-sm">
+            {personaLock.props.join(' · ')}{personaLock.sensory_cue ? ` · ${personaLock.sensory_cue}` : ''}
+          </p>
         </div>
       )}
 
       {/* Render all blocks as flowing narrative */}
       {blocks.map((block, index) => (
         <React.Fragment key={block.block_id || index}>
-          {index > 0 && block.block_type !== 'safety_note' && (
-            <NarrativeBreak archetypeStyle={archetypeStyle} />
+          {index > 0 && block.block_type !== 'safety_note' && shouldShowDivider(blocks[index-1], block) && (
+            <OrnateSectionDivider />
           )}
           <NarrativeBlock block={block} archetypeStyle={archetypeStyle} />
         </React.Fragment>
       ))}
     </div>
   );
+};
+
+// Determine if we should show a major divider between blocks
+const shouldShowDivider = (prevBlock, currentBlock) => {
+  const majorTypes = ['materials', 'stepper', 'closing', 'lore_vignette'];
+  return majorTypes.includes(currentBlock.block_type) || majorTypes.includes(prevBlock?.block_type);
 };
 
 // Single narrative block - no headers, just prose
