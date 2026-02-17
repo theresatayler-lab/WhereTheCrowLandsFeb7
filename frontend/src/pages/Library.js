@@ -122,7 +122,7 @@ const LIBRARY_BOOKS = {
     {
       title: "Symbols of the Occult",
       author: "Eric Chaline",
-      color: "#1a1a2e",
+      color: "#0a1628",
       spine: "#0f0f1a",
       accent: "#4169E1",
       description: "A directory of over 500 signs, symbols, and icons from esoteric traditions.",
