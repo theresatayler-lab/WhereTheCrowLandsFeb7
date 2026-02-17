@@ -1283,7 +1283,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
             <SectionHeader 
               icon={Sparkles} 
               title="Materials Needed" 
-              microIcon={getMicroIconForSection('materials')}
+              iconPath={getSectionIconPath('materials')}
             />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {spell.materials.map((material, idx) => {
@@ -1323,7 +1323,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
               <SectionHeader 
                 icon={BookOpen} 
                 title="The Working" 
-                microIcon={getMicroIconForSection('the_working')}
+                iconPath={getSectionIconPath('the_working')}
               />
               <button
                 onClick={() => setChecklistMode(!checklistMode)}
@@ -1399,7 +1399,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
             <SectionHeader 
               icon={Quote} 
               title="Words of Power" 
-              microIcon={getMicroIconForSection('spoken_words')}
+              iconPath={getSectionIconPath('spoken_words')}
             />
             
             <div className="space-y-4">
@@ -1647,7 +1647,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
             <SectionHeader 
               icon={CheckCircle2} 
               title="Closing" 
-              microIcon={getMicroIconForSection('closing')}
+              iconPath={getSectionIconPath('closing')}
             />
             {spell.closing.description && (
               <p className="font-montserrat text-sm text-stone-800 mb-3">{spell.closing.description}</p>
@@ -1676,7 +1676,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
             <SectionHeader 
               icon={Heart} 
               title="Aftercare" 
-              microIcon={getMicroIconForSection('aftercare')}
+              iconPath={getSectionIconPath('aftercare')}
             />
             {spell.aftercare.immediate && (
               <div className="mb-3">
