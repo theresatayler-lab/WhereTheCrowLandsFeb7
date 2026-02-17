@@ -206,45 +206,73 @@ const Materials = ({ c, style }) => {
   );
 };
 
-// Stepper - flowing narrative steps, no checkboxes
+// Stepper - flowing narrative steps with elegant numbering
 const Stepper = ({ c, style }) => (
-  <div className="space-y-5" data-testid="stepper-block">
-    {c.steps?.map((step, index) => (
-      <div key={index}>
-        {/* Subtle step indicator */}
-        {step.title && (
-          <p className="font-cinzel text-sm text-stone-500 tracking-wide mb-1">
-            {step.title}
-          </p>
-        )}
+  <div className="py-4" data-testid="stepper-block">
+    <SectionLabel icon="/icons/ui/gold/icon-grimoire.png" label="The Working" />
+    
+    <div className="space-y-6 mt-4">
+      {c.steps?.map((step, index) => (
+        <motion.div 
+          key={index}
+          initial={{ opacity: 0, x: -10 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: index * 0.1 }}
+          className="relative pl-12"
+        >
+          {/* Step number in decorative circle */}
+          <div className="absolute left-0 top-0 w-8 h-8 rounded-full border-2 border-amber-700/40 flex items-center justify-center bg-amber-50/50">
+            <span className="font-cinzel text-sm text-amber-800">{index + 1}</span>
+          </div>
+          
+          {/* Connecting line to next step */}
+          {index < (c.steps?.length || 0) - 1 && (
+            <div className="absolute left-[15px] top-10 bottom-0 w-px bg-amber-700/20" style={{ height: 'calc(100% + 1rem)' }} />
+          )}
+          
+          {/* Step content */}
+          <div>
+            {step.title && (
+              <h4 className="font-cinzel text-sm text-amber-900 tracking-wide mb-2">
+                {step.title}
+              </h4>
+            )}
 
-        {/* The instruction as flowing prose */}
-        <p className="font-crimson-text text-stone-800 text-base leading-relaxed">
-          {step.action || step.instruction || step.text}
-        </p>
+            <p className="font-crimson text-stone-800 text-base leading-relaxed">
+              {step.action || step.instruction || step.text}
+            </p>
 
-        {/* Spoken words as elegant blockquote */}
-        {step.spoken_words && (
-          <blockquote className="my-2 pl-4 border-l-2 border-amber-400/60 font-crimson-text italic text-stone-700">
-            "{step.spoken_words}"
-          </blockquote>
-        )}
+            {/* Spoken words as elegant blockquote */}
+            {step.spoken_words && (
+              <blockquote className="my-3 py-2 px-4 bg-amber-900/5 border-l-2 border-amber-600/60 rounded-r-lg">
+                <p className="font-crimson italic text-amber-900">
+                  "{step.spoken_words}"
+                </p>
+              </blockquote>
+            )}
 
-        {/* Why - woven into the narrative */}
-        {step.why && (
-          <p className="font-crimson-text text-stone-600 text-sm italic mt-1">{step.why}</p>
-        )}
+            {/* Why - explanation */}
+            {step.why && (
+              <p className="font-crimson text-stone-600 text-sm italic mt-2 pl-2 border-l border-stone-300">
+                {step.why}
+              </p>
+            )}
 
-        {step.duration_hint && (
-          <p className="text-stone-400 text-xs mt-1 flex items-center gap-1">
-            <Clock className="w-3 h-3" /> {step.duration_hint}
-          </p>
-        )}
-      </div>
-    ))}
+            {step.duration_hint && (
+              <p className="text-stone-400 text-xs mt-2 flex items-center gap-1">
+                <Clock className="w-3 h-3" /> {step.duration_hint}
+              </p>
+            )}
+          </div>
+        </motion.div>
+      ))}
+    </div>
 
     {c.completion_message && (
-      <p className="font-crimson-text text-stone-600 text-center italic mt-4">{c.completion_message}</p>
+      <div className="mt-8 text-center">
+        <SubtleDivider />
+        <p className="font-crimson text-stone-600 italic mt-4">{c.completion_message}</p>
+      </div>
     )}
   </div>
 );
