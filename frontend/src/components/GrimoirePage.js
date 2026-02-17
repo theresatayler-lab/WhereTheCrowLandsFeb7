@@ -973,7 +973,12 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
           animate={{ opacity: 1, y: 0 }}
           ref={grimoireRef}
           className={`bg-card/80 border-2 ${style.borderColor} rounded-sm overflow-hidden shadow-xl`}
-          style={{ backgroundColor: '#D8CBB3' }}
+          style={{ 
+            backgroundColor: '#D8CBB3',
+            backgroundImage: "url('/images/textures/parchment-texture.png')",
+            backgroundSize: "cover",
+            backgroundPosition: "center"
+          }}
         >
         <SpellHeader
           title={spell?.tarot_card?.title || spell?.title || "Saved Spell"}
