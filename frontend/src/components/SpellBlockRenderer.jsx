@@ -277,23 +277,31 @@ const Stepper = ({ c, style }) => (
   </div>
 );
 
-// Lore Vignette - embedded historical narrative, no box
+// Lore Vignette - embedded historical narrative with elegant framing
 const LoreVignette = ({ c, style }) => (
-  <div className="py-2" data-testid="lore-vignette-block">
-    {(c.era || c.tradition || c.title) && (
-      <p className="font-cinzel text-xs text-stone-400 uppercase tracking-widest mb-1">
-        {c.era && `${c.era} — `}{c.tradition || c.title}
+  <div className="py-4 my-2" data-testid="lore-vignette-block">
+    <div className="relative px-6 py-4 bg-stone-100/50 rounded-lg border border-stone-200/50">
+      {/* Decorative corner accents */}
+      <div className="absolute top-2 left-2 w-3 h-3 border-l-2 border-t-2 border-amber-700/30" />
+      <div className="absolute top-2 right-2 w-3 h-3 border-r-2 border-t-2 border-amber-700/30" />
+      <div className="absolute bottom-2 left-2 w-3 h-3 border-l-2 border-b-2 border-amber-700/30" />
+      <div className="absolute bottom-2 right-2 w-3 h-3 border-r-2 border-b-2 border-amber-700/30" />
+      
+      {(c.era || c.tradition || c.title) && (
+        <p className="font-cinzel text-xs text-amber-800/70 uppercase tracking-[0.15em] mb-2 text-center">
+          {c.era && `${c.era} · `}{c.tradition || c.title}
+        </p>
+      )}
+      <p className="font-crimson text-stone-700 leading-relaxed italic text-center">
+        {c.narrative}
       </p>
-    )}
-    <p className="font-crimson-text text-stone-700 leading-relaxed italic">
-      {c.narrative}
-    </p>
-    {c.relevance_to_working && (
-      <p className="font-crimson-text text-stone-600 mt-2 text-sm">{c.relevance_to_working}</p>
-    )}
-    {c.source_connection && (
-      <p className="text-xs text-stone-400 mt-1 italic">— {c.source_connection}</p>
-    )}
+      {c.relevance_to_working && (
+        <p className="font-crimson text-stone-600 mt-3 text-sm text-center">{c.relevance_to_working}</p>
+      )}
+      {c.source_connection && (
+        <p className="text-xs text-stone-400 mt-2 italic text-center">— {c.source_connection}</p>
+      )}
+    </div>
   </div>
 );
 
