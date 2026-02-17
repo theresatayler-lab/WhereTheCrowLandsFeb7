@@ -1032,11 +1032,13 @@ AVOID: {', '.join(avoid_list)}"""
     return prompt.replace("\n", " ").strip()
 
 
-def generate_all_image_prompts(asset_plan: dict, persona_config: dict, spell_title: str) -> dict:
-    """Generate prompts for all required assets"""
+def generate_all_image_prompts(asset_plan: dict, persona_config: dict, spell_title: str, spell_data: dict = None) -> dict:
+    """Generate prompts for all required assets
+    V2.0: Now accepts spell_data for spell-specific tarot image generation
+    """
     prompts = {
         "header_image": build_image_prompt("header_image", asset_plan, persona_config, spell_title),
-        "tarot_card_image": build_image_prompt("tarot_card_image", asset_plan, persona_config, spell_title),
+        "tarot_card_image": build_image_prompt("tarot_card_image", asset_plan, persona_config, spell_title, spell_data),
         "sigil": build_image_prompt("sigil", asset_plan, persona_config, spell_title),
     }
     
