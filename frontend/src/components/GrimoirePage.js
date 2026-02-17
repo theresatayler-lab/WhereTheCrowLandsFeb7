@@ -1001,7 +1001,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                 : 'bg-transparent text-stone-700 hover:text-amber-900'
             }`}
           >
-            ✧ Card View
+            <img src="/icons/ui/gold/icon-sparkles.png" alt="" className="w-3 h-3 inline-block mr-1 opacity-70" /> Card View
           </button>
           <button
             onClick={() => setViewMode('full')}
