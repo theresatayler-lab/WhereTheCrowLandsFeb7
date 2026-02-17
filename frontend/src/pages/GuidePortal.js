@@ -428,28 +428,38 @@ export const GuidePortal = () => {
             animate={{ opacity: 1, y: 0 }}
             className="max-w-4xl mx-auto px-4 pb-20"
           >
-            <LightSection className="rounded-lg p-6 md:p-10">
-              <h2 className="font-cinzel text-2xl text-navy-dark font-bold mb-2">
-                {spellResult.title || spellResult.spell_title || 'Your Working'}
-              </h2>
-              {spellResult.subtitle && (
-                <p className="font-crimson-text text-navy-dark/70 italic mb-6">{spellResult.subtitle}</p>
-              )}
-              {spellResult.blocks ? (
-                <SpellBlockRenderer
-                  spell={spellResult}
-                  archetypeStyle={{
-                    borderColor: `border-${guide.colors.border}`,
-                    accentColor: `text-${guide.colors.accent}`,
-                    bgAccent: 'bg-[#F3EFE8]',
-                    textMuted: 'text-stone-600'
-                  }}
+            <SpellPageFrame>
+              <LightSection className="rounded-lg p-6 md:p-10">
+                <SpellHeader
+                  title={spellResult?.tarot_card?.title || spellResult?.title || "Your Spell"}
+                  guideLine={`${spellResult?.archetype_name || ""}${spellResult?.archetype_title ? " • " + spellResult.archetype_title : ""}`}
+                  summaryLine={spellResult?.tarot_card?.essence || ""}
                 />
-              ) : (
-                <div className="font-crimson-text text-navy-dark whitespace-pre-wrap leading-relaxed">
-                  {spellResult.content || spellResult.spell_text || JSON.stringify(spellResult, null, 2)}
-                </div>
-              )}
+
+                <TarotSummaryCard
+                  tarotImageUrl={spellResult?.asset_plan?.generated_assets?.tarot_card_image || spellResult?.tarot_card_image || null}
+                  title={spellResult?.tarot_card?.title || ""}
+                  essence={spellResult?.tarot_card?.essence || ""}
+                  keyAction={spellResult?.tarot_card?.key_action || ""}
+                  timing={spellResult?.tarot_card?.timing || ""}
+                  guideBadge={spellResult?.archetype_name || ""}
+                />
+
+                {spellResult.blocks ? (
+                  <SpellBlockRenderer
+                    spell={spellResult}
+                    archetypeStyle={{
+                      borderColor: `border-${guide.colors.border}`,
+                      accentColor: `text-${guide.colors.accent}`,
+                      bgAccent: 'bg-[#F3EFE8]',
+                      textMuted: 'text-stone-600'
+                    }}
+                  />
+                ) : (
+                  <div className="font-crimson-text text-navy-dark whitespace-pre-wrap leading-relaxed">
+                    {spellResult.content || spellResult.spell_text || JSON.stringify(spellResult, null, 2)}
+                  </div>
+                )}
 
               {/* Ethics Statement */}
               {spellResult.ethics_statement && (
