@@ -971,16 +971,32 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
   }
 
   return (
-    <SpellBorderFrame persona={archetype?.id || 'site'}>
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        ref={grimoireRef}
-        className={`bg-card/80 border-2 ${style.borderColor} rounded-sm overflow-hidden shadow-xl`}
-        style={{ backgroundColor: '#D8CBB3' }}
-      >
-      {/* View Toggle - Show only if tarot_card exists */}
-      {spell.tarot_card && (
+    <SpellPageFrame>
+      <SpellBorderFrame persona={archetype?.id || 'site'}>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          ref={grimoireRef}
+          className={`bg-card/80 border-2 ${style.borderColor} rounded-sm overflow-hidden shadow-xl`}
+          style={{ backgroundColor: '#D8CBB3' }}
+        >
+        <SpellHeader
+          title={spell?.tarot_card?.title || spell?.title || "Saved Spell"}
+          guideLine={`${spell?.archetype_name || ""}${spell?.archetype_title ? " • " + spell.archetype_title : ""}`}
+          summaryLine={spell?.tarot_card?.essence || ""}
+        />
+
+        <TarotSummaryCard
+          tarotImageUrl={spell?.asset_plan?.generated_assets?.tarot_card_image || spell?.tarot_card_image || null}
+          title={spell?.tarot_card?.title || ""}
+          essence={spell?.tarot_card?.essence || ""}
+          keyAction={spell?.tarot_card?.key_action || ""}
+          timing={spell?.tarot_card?.timing || ""}
+          guideBadge={spell?.archetype_name || ""}
+        />
+
+        {/* View Toggle - Show only if tarot_card exists */}
+        {spell.tarot_card && (
         <div className="flex justify-center gap-2 p-4 bg-amber-900/15 border-b border-amber-800/30">
           <button
             onClick={() => setViewMode('card')}
