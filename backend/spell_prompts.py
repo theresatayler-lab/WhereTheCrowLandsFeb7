@@ -202,6 +202,162 @@ def generate_variation_tokens() -> dict:
     }
 
 
+
+# ============================================================================
+# V2.0: SPELL-SPECIFIC VISUAL TOKEN EXTRACTION
+# Extracts unique motifs from spell content for tarot image generation
+# ============================================================================
+
+# Symbol pools by category - draw from these based on spell content
+SPELL_SYMBOL_POOLS = {
+    "protection": ["ward circle", "shield motif", "sealed door", "mirror reflection", "thorns", "iron nail", "salt ring"],
+    "healing": ["cauldron", "herb bundle", "pouring water", "wrapped wound", "sunrise", "mending hands", "root system"],
+    "clarity": ["mirror", "lens", "clear water", "open eye", "parted clouds", "compass needle", "straight path"],
+    "love": ["intertwined threads", "two cups", "shared hearth", "rose and thorn", "knotwork hearts", "clasped hands"],
+    "prosperity": ["overflowing vessel", "grain sheaf", "growing vine", "coins in earth", "honeycomb", "open window"],
+    "release": ["burning paper", "open cage", "flowing water", "scattered seeds", "smoke rising", "unraveling thread"],
+    "binding": ["knotted cord", "sealed envelope", "locked box", "braided pattern", "wax seal", "intertwined roots"],
+    "transformation": ["chrysalis", "snake shedding", "melting wax", "crossing threshold", "dawn breaking", "spinning wheel"],
+    "divination": ["scrying bowl", "spread cards", "pendulum", "flame reading", "tea leaves", "casting bones"],
+    "ancestors": ["old photograph", "heirloom key", "family tree", "candlelit altar", "written names", "passed-down object"],
+}
+
+GEOMETRY_PATTERNS = ["circular medallion", "octagonal seal", "mandala pattern", "square sigil plate", "hexagonal ward", "spiral design"]
+
+def extract_spell_visual_tokens(spell_data: dict, persona_config: dict) -> dict:
+    """
+    Extract spell-specific visual tokens for unique tarot images.
+    Rules:
+    - Pull 2-4 tokens from spell content without adding new schema
+    - Max 1 animal token unless guide is Shigg
+    - Always include: 1 guide motif (thin) + 2-3 spell motifs (dominant)
+    """
+    import hashlib
+    
+    persona_id = persona_config.get("archetype_id", "shigg")
+    
+    # Extract text to analyze
+    title = spell_data.get("title", "") or spell_data.get("tarot_card", {}).get("title", "")
+    essence = spell_data.get("tarot_card", {}).get("essence", "") or spell_data.get("essence", "")
+    key_action = spell_data.get("tarot_card", {}).get("key_action", "")
+    
+    # Extract materials from blocks
+    materials = []
+    blocks = spell_data.get("blocks", [])
+    for block in blocks:
+        if block.get("block_type") == "materials":
+            items = block.get("content", {}).get("items", [])
+            for item in items[:4]:
+                if isinstance(item, dict):
+                    materials.append(item.get("name", ""))
+                elif isinstance(item, str):
+                    materials.append(item)
+    
+    # Combine text for analysis
+    full_text = f"{title} {essence} {key_action} {' '.join(materials)}".lower()
+    
+    # Detect spell intent/category
+    detected_intent = None
+    intent_keywords = {
+        "protection": ["protect", "ward", "shield", "safe", "defend", "guard", "boundary", "barrier"],
+        "healing": ["heal", "soothe", "mend", "restore", "comfort", "ease", "recover", "renew"],
+        "clarity": ["clear", "clarity", "see", "understand", "reveal", "truth", "insight", "vision"],
+        "love": ["love", "heart", "attract", "connect", "relationship", "bond", "affection"],
+        "prosperity": ["prosper", "abundance", "wealth", "success", "growth", "flourish", "attract money"],
+        "release": ["release", "let go", "banish", "remove", "free", "shed", "cleanse", "purge"],
+        "binding": ["bind", "hold", "secure", "keep", "contain", "lock", "seal"],
+        "transformation": ["transform", "change", "shift", "become", "evolve", "transition", "metamorphosis"],
+        "divination": ["divine", "scry", "reveal", "foresee", "oracle", "read", "predict"],
+        "ancestors": ["ancestor", "family", "heritage", "lineage", "memory", "tradition", "honor the dead"],
+    }
+    
+    for intent, keywords in intent_keywords.items():
+        if any(kw in full_text for kw in keywords):
+            detected_intent = intent
+            break
+    
+    if not detected_intent:
+        detected_intent = "protection"  # Default
+    
+    # Get spell-specific symbols (2-3)
+    spell_symbols = SPELL_SYMBOL_POOLS.get(detected_intent, SPELL_SYMBOL_POOLS["protection"])
+    
+    # Use spell ID or title hash for deterministic selection
+    spell_id = spell_data.get("spell_id") or spell_data.get("id") or title
+    seed = int(hashlib.md5(str(spell_id).encode()).hexdigest()[:8], 16)
+    random.seed(seed)
+    
+    selected_symbols = random.sample(spell_symbols, min(3, len(spell_symbols)))
+    
+    # Add materials-based symbols (convert materials to visual tokens)
+    material_visual_map = {
+        "candle": "candleflame", "mirror": "reflective surface", "thread": "woven cord",
+        "salt": "crystalline circle", "water": "still pool", "herb": "botanical bundle",
+        "stone": "standing stone", "feather": "single feather", "paper": "written page",
+        "ink": "dark well", "ribbon": "flowing ribbon", "needle": "pointed needle",
+        "coin": "metal disc", "key": "iron key", "bell": "hanging bell"
+    }
+    
+    material_symbols = []
+    for mat in materials[:2]:
+        mat_lower = mat.lower()
+        for key, visual in material_visual_map.items():
+            if key in mat_lower:
+                material_symbols.append(visual)
+                break
+    
+    # Combine symbols (spell + materials)
+    secondary_motifs = list(set(selected_symbols + material_symbols))[:3]
+    
+    # Select geometry based on spell hash
+    geometry = GEOMETRY_PATTERNS[seed % len(GEOMETRY_PATTERNS)]
+    
+    # Get guide signature motif (thin presence)
+    guide_signatures = {
+        "shigg": "tiny bird silhouette in corner",
+        "cathleen": "subtle crescent moon edge detail",
+        "katherine": "thin compass needle accent",
+        "theresa": "faint thread pattern border",
+        "brenda": "small letter seal corner detail"
+    }
+    guide_motif = guide_signatures.get(persona_id, "subtle crow feather detail")
+    
+    # Forbidden list - avoid overshadowing spell motifs
+    forbidden = []
+    if persona_id != "shigg":
+        forbidden.append("prominent bird imagery")
+    forbidden.append("photorealistic elements")
+    forbidden.append("modern objects")
+    forbidden.append("text or letters")
+    
+    # Reset random seed
+    random.seed()
+    
+    # Primary motif from detected intent
+    intent_primary_map = {
+        "protection": "protective ward emblem",
+        "healing": "restorative vessel motif",
+        "clarity": "revealing eye symbol",
+        "love": "connected hearts design",
+        "prosperity": "overflowing abundance symbol",
+        "release": "rising smoke pattern",
+        "binding": "knotted seal design",
+        "transformation": "metamorphosis spiral",
+        "divination": "oracle mirror frame",
+        "ancestors": "ancestral memorial emblem"
+    }
+    
+    return {
+        "primary_motif": intent_primary_map.get(detected_intent, "mystical emblem"),
+        "secondary_motifs": secondary_motifs,
+        "geometry": geometry,
+        "guide_signature": guide_motif,
+        "forbidden": forbidden,
+        "detected_intent": detected_intent,
+        "spell_hash": str(seed)
+    }
+
+
 # ============================================================================
 # STAGE 1: PLANNER PROMPT (V1.1 - with text_variation_tokens)
 # ============================================================================
