@@ -9,51 +9,63 @@ export default function SpellHeader({
   actions = null,
 }) {
   return (
-    <header className="mb-8 text-center">
-      {/* Decorative header with ornamental divider */}
-      <div className="flex flex-col items-center gap-4">
+    <header className="mb-8">
+      {/* Banner ribbon with title */}
+      <div className="relative flex flex-col items-center">
+        {/* Banner image as background */}
+        <div className="relative w-full max-w-md mx-auto mb-4">
+          <img 
+            src="/images/ornaments/banner-ribbon.png" 
+            alt="" 
+            className="w-full h-auto"
+            style={{ minHeight: '60px' }}
+          />
+          {/* Title overlaid on banner */}
+          <div className="absolute inset-0 flex items-center justify-center px-8">
+            <h1 
+              className="font-cinzel text-lg sm:text-xl md:text-2xl text-amber-950 text-center leading-tight"
+              style={{ textShadow: '0 1px 2px rgba(255,255,255,0.5)' }}
+            >
+              {title}
+            </h1>
+          </div>
+        </div>
+
         {/* Guide attribution line */}
-        {guideLine ? (
-          <div className="font-montserrat uppercase tracking-[0.2em] text-xs text-amber-800/60">
+        {guideLine && (
+          <div className="font-montserrat uppercase tracking-[0.2em] text-xs text-amber-800/70 mb-2">
             {guideLine}
           </div>
-        ) : null}
-
-        {/* Main title */}
-        <h1 className="font-cinzel text-3xl sm:text-4xl leading-tight text-amber-950">
-          {title}
-        </h1>
+        )}
 
         {/* Summary/essence line */}
-        {summaryLine ? (
-          <p className="font-crimson text-base sm:text-lg italic text-stone-600 max-w-xl">
+        {summaryLine && (
+          <p className="font-crimson text-base italic text-stone-600 max-w-lg text-center mb-4">
             "{summaryLine}"
           </p>
-        ) : null}
+        )}
 
         {/* Icon row */}
-        {iconRow?.length ? (
-          <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+        {iconRow?.length > 0 && (
+          <div className="flex flex-wrap items-center justify-center gap-3 mb-4">
             {iconRow.slice(0, 5).map((ic, idx) => (
               <span key={idx} className="drop-glow-gold-soft">
                 <CrowlandsIcon iconPath={ic.iconPath} alt={ic.alt} size={24} />
               </span>
             ))}
           </div>
-        ) : null}
+        )}
 
         {/* Actions if provided */}
-        {actions ? <div className="pt-2">{actions}</div> : null}
+        {actions && <div className="mb-4">{actions}</div>}
 
-        {/* Ornate divider */}
-        <div className="flex items-center justify-center pt-4 w-full">
-          <img 
-            src="/images/ornaments/divider-ornate-horizontal.png" 
-            alt="" 
-            className="h-5 w-auto opacity-50"
-            style={{ maxWidth: '180px' }}
-          />
-        </div>
+        {/* Ornate divider with rose and crows */}
+        <img 
+          src="/images/ornaments/divider-rose-crows.png" 
+          alt="" 
+          className="h-8 w-auto opacity-70 mt-2"
+          style={{ maxWidth: '200px' }}
+        />
       </div>
     </header>
   );
