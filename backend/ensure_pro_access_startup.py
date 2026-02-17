@@ -9,6 +9,7 @@ sys.path.append('/app/backend')
 from pymongo import MongoClient
 import bcrypt
 import os
+import uuid
 from datetime import datetime, timedelta
 
 def ensure_pro_access():
@@ -30,6 +31,7 @@ def ensure_pro_access():
             existing_user = users_collection.find_one({'email': email})
             
             pro_data = {
+                'password_hash': password_hash,
                 'subscription_tier': 'pro',
                 'subscription_status': 'active',
                 'subscription_start': datetime.utcnow(),
@@ -40,12 +42,16 @@ def ensure_pro_access():
             }
             
             if existing_user:
+                # Ensure id field exists
+                if 'id' not in existing_user:
+                    pro_data['id'] = str(uuid.uuid4())
                 users_collection.update_one({'email': email}, {'$set': pro_data})
                 print(f'✅ PRO access ensured: {email}')
             else:
                 user_doc = {
+                    'id': str(uuid.uuid4()),
                     'email': email,
-                    'password': password_hash,
+                    'password_hash': password_hash,
                     'name': name,
                     'spell_generation_count': 0,
                     'created_at': datetime.utcnow(),
