@@ -122,7 +122,7 @@ const LIBRARY_BOOKS = {
     {
       title: "Symbols of the Occult",
       author: "Eric Chaline",
-      color: "#1a1a2e",
+      color: "#0a1628",
       spine: "#0f0f1a",
       accent: "#4169E1",
       description: "A directory of over 500 signs, symbols, and icons from esoteric traditions.",
@@ -953,7 +953,7 @@ const Library = () => {
           <div className="flex items-center justify-center gap-4 text-gold/50">
             <span>☽</span>
             <span className="text-crimson/60">❦</span>
-            <img src="/icons/ui/gold/icon-library-books.png" alt="" className="w-4 h-4" />
+            <img src="/icons/ui/gold/icon-library-books.png" alt="" className="w-4 h-4 inline" />
             <span className="text-crimson/60">❦</span>
             <span>☾</span>
           </div>

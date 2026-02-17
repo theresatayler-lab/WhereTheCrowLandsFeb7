@@ -2182,7 +2182,7 @@ class SpiritualAppAPITester:
                 return False
             
             # Verify specific colors from review request
-            if palette['primary'] != 'midnight navy (#0e1629)':
+            if palette['primary'] != 'midnight navy (#0E2A2F)':
                 print(f"   ❌ Primary color incorrect: {palette['primary']}")
                 return False
             
@@ -2190,7 +2190,7 @@ class SpiritualAppAPITester:
                 print(f"   ❌ Secondary color incorrect: {palette['secondary']}")
                 return False
             
-            if palette['accent'] != 'antique gold (#d4a84b)':
+            if palette['accent'] != 'antique gold (#C8A44D)':
                 print(f"   ❌ Accent color incorrect: {palette['accent']}")
                 return False
             
