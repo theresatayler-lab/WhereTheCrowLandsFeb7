@@ -67,12 +67,12 @@ module.exports = {
         // LEGACY TOKENS (maintained for backward compatibility)
         // These map to new palette where possible
         // ============================================================================
-        'raven-black': '#0E2A2F',
+        'raven-black': '#0a1628',
         'ash-gray': '#9E8438',
         'weathered-beige': '#F3EFE8',
         'forest-moss': '#123A3F',
         'blood-red': '#B94E6A',
-        'midnight-blue': '#0E2A2F',
+        'midnight-blue': '#0a1628',
         'deep-blue': '#123A3F',
         'parchment': '#F3EFE8',
         'ink-black': '#0E2A2F',
