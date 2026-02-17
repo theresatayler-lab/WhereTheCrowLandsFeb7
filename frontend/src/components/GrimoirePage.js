@@ -256,7 +256,7 @@ const PrintablesBlock = ({ tarotImageBase64, sigilImageBase64, spellTitle, tarot
             </p>
             <div className="w-full max-w-[180px] mx-auto aspect-[2/3] rounded-sm border border-amber-800/30 shadow-md bg-gradient-to-br from-navy-dark via-navy-mid to-navy-dark p-3 flex flex-col justify-between">
               <div className="text-center">
-                <span className="text-2xl text-gold/80">{tarotCard.symbol || '✧'}</span>
+                <img src="/icons/ui/gold/icon-sparkles.png" alt="" className="w-6 h-6 mx-auto opacity-80" />
               </div>
               <div className="text-center flex-1 flex flex-col justify-center">
                 <p className="font-cinzel text-xs text-gold-light mb-2">{tarotCard.title || spellTitle}</p>
