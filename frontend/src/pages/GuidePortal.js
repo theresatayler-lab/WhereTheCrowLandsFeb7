@@ -463,25 +463,24 @@ export const GuidePortal = () => {
                   </div>
                 )}
               </SpellBookView>
-            </SpellPageFrame>
 
-              {/* Research Sources */}
+              {/* Research Sources - Outside the book view */}
               {spellResult.sources && spellResult.sources.length > 0 && (
-                <div className="mt-8 pt-6 border-t border-stone-300">
-                  <h3 className="font-cinzel text-lg text-navy-dark font-semibold mb-4">Sources & Further Reading</h3>
+                <div className="mt-8 p-6 bg-stone-100/50 rounded-lg">
+                  <h3 className="font-cinzel text-lg text-amber-900 font-semibold mb-4">Sources & Further Reading</h3>
                   <div className="space-y-3">
                     {spellResult.sources.map((source, i) => (
-                      <div key={i} className="bg-stone-100 rounded p-3">
-                        <p className="font-crimson-text text-stone-800 font-semibold text-sm">
+                      <div key={i} className="bg-white/50 rounded p-3">
+                        <p className="font-crimson text-stone-800 font-semibold text-sm">
                           {source.author && `${source.author} — `}
                           <span className="italic">{source.work || source.title}</span>
                           {source.year && ` (${source.year})`}
                         </p>
                         {source.relevance && (
-                          <p className="font-crimson-text text-stone-600 text-sm mt-1">{source.relevance}</p>
+                          <p className="font-crimson text-stone-600 text-sm mt-1">{source.relevance}</p>
                         )}
                         {source.further_reading_note && (
-                          <p className="font-crimson-text text-stone-500 text-xs mt-1 italic">{source.further_reading_note}</p>
+                          <p className="font-crimson text-stone-500 text-xs mt-1 italic">{source.further_reading_note}</p>
                         )}
                         {source.learn_more_url && (
                           <a href={source.learn_more_url} target="_blank" rel="noopener noreferrer"
@@ -494,7 +493,6 @@ export const GuidePortal = () => {
                   </div>
                 </div>
               )}
-            </LightSection>
             </SpellPageFrame>
 
             <div className="text-center mt-8 space-x-4">
