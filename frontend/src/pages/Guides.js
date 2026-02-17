@@ -162,7 +162,7 @@ const GuideCard = ({ archetype, index, isCurrentGuide, isExpanded, isBioExpanded
         <BestiaryGlyph animal={GUIDE_GLYPHS[archetype.id]?.main || 'feather'} size="sm" color="#b82330" />
       </span>
       <span className="absolute top-2 right-2 z-10 opacity-70">
-        <BestiaryGlyph animal={GUIDE_GLYPHS[archetype.id]?.secondary || 'crescent'} size="sm" color="#d4a84b" />
+        <BestiaryGlyph animal={GUIDE_GLYPHS[archetype.id]?.secondary || 'crescent'} size="sm" color="#C8A44D" />
       </span>
       
       {/* Image or Placeholder */}

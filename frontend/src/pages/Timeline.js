@@ -44,7 +44,7 @@ const NetworkGraph = ({ events, onEventClick }) => {
     // Create event nodes
     events.forEach(event => {
       const primaryTaxonomy = event.taxonomy_categories?.[0] || 6;
-      const color = TAXONOMY_CATEGORIES[primaryTaxonomy]?.color || '#d4a84b';
+      const color = TAXONOMY_CATEGORIES[primaryTaxonomy]?.color || '#C8A44D';
       
       nodes.push({
         id: event.id,
@@ -87,7 +87,7 @@ const NetworkGraph = ({ events, onEventClick }) => {
                 target: eventIds[j],
                 type: 'tradition',
                 label: tradition,
-                color: 'rgba(212, 168, 75, 0.3)'
+                color: 'rgba(200, 164, 77, 0.3)'
               });
             }
           }
@@ -187,7 +187,7 @@ const NetworkGraph = ({ events, onEventClick }) => {
     
     // Draw border if hovered
     if (hoveredNode === node.id) {
-      ctx.strokeStyle = '#d4a84b';
+      ctx.strokeStyle = '#C8A44D';
       ctx.lineWidth = 2 / globalScale;
       ctx.stroke();
     }
@@ -282,7 +282,7 @@ const NetworkGraph = ({ events, onEventClick }) => {
           ctx.fillStyle = color;
           ctx.fill();
         }}
-        linkColor={link => link.color || 'rgba(212, 168, 75, 0.2)'}
+        linkColor={link => link.color || 'rgba(200, 164, 77, 0.2)'}
         linkWidth={link => link.strength || 1}
         linkDirectionalParticles={0}
         onNodeClick={(node) => {
@@ -313,7 +313,7 @@ const TAXONOMY_CATEGORIES = {
   3: { name: "Romantic Gothic", icon: Moon, color: "#8e6e53", shortName: "Gothic" },
   4: { name: "Spiritualism", icon: Eye, color: "#9d8ca1", shortName: "Spiritualism" },
   5: { name: "Symbolism", icon: Sparkles, color: "#6b5b95", shortName: "Symbolism" },
-  6: { name: "Occult Revival", icon: Star, color: "#d4a84b", shortName: "Revival" },
+  6: { name: "Occult Revival", icon: Star, color: "#C8A44D", shortName: "Revival" },
   7: { name: "Surrealism", icon: Wand2, color: "#4a6fa5", shortName: "Surrealism" },
   8: { name: "Folk Magic", icon: Leaf, color: "#6b8e23", shortName: "Folk" },
   9: { name: "Performance", icon: Flame, color: "#8b2232", shortName: "Performance" },
@@ -329,7 +329,7 @@ const EVENT_CATEGORIES = ['Publication', 'Organization', 'Figure', 'Legal', 'Sit
 const GUIDE_COLORS = {
   shigg: { color: "#4a6fa5", name: "Shigg" },
   cathleen: { color: "#8b2232", name: "Cathleen" },
-  katherine: { color: "#d4a84b", name: "Katherine" },
+  katherine: { color: "#C8A44D", name: "Katherine" },
   theresa: { color: "#6b8e23", name: "Theresa" },
 };
 
@@ -736,7 +736,7 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick, allEvents
             </button>
             
             <div className="flex-1 min-w-0">
-              <h3 className="font-phantasmagoria text-lg sm:text-xl text-gold leading-tight" style={{ textShadow: '0 2px 10px rgba(212, 168, 75, 0.3)' }}>
+              <h3 className="font-phantasmagoria text-lg sm:text-xl text-gold leading-tight" style={{ textShadow: '0 2px 10px rgba(200, 164, 77, 0.3)' }}>
                 {event.title}
               </h3>
               {view === 'grid' && (
@@ -1294,7 +1294,7 @@ const ERA_DEFINITIONS = {
   renaissance: { label: "Renaissance", start: 1500, end: 1700, color: "#8e6e53" },
   enlightenment: { label: "18th Century", start: 1700, end: 1800, color: "#9d8ca1" },
   victorian: { label: "19th Century", start: 1800, end: 1900, color: "#6b5b95" },
-  revival: { label: "Occult Revival", start: 1880, end: 1951, color: "#d4a84b" },
+  revival: { label: "Occult Revival", start: 1880, end: 1951, color: "#C8A44D" },
   postwar: { label: "Post-War", start: 1951, end: 1990, color: "#8b2232" },
   contemporary: { label: "Contemporary", start: 1990, end: 2030, color: "#a29bfe" },
 };

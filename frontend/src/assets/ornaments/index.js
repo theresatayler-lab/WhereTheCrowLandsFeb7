@@ -10,12 +10,12 @@ import React from 'react';
 // COLOR TOKENS (from Art Bible)
 // ============================================================================
 export const COLORS = {
-  gold: '#d4a84b',
+  gold: '#C8A44D',
   goldLight: '#e6c068',
   goldDark: '#b8923d',
   crimson: '#b82330',
   oxblood: '#8b2232',
-  navy: '#0e1629',
+  navy: '#0E2A2F',
   navyMid: '#1a2d4d',
   bone: '#f5f0e6',
   copper: '#b87333',

@@ -22,9 +22,9 @@ CROWLANDS_ART_BIBLE = {
         "antique print finish"
     ],
     "palette": {
-        "primary": "midnight navy (#0e1629)",
+        "primary": "midnight navy (#0E2A2F)",
         "secondary": "oxblood burgundy (#8b2232)",
-        "accent": "antique gold (#d4a84b)",
+        "accent": "antique gold (#C8A44D)",
         "neutral": "bone ivory (#f5f0e6)",
         "highlight": "burnished copper"
     },
