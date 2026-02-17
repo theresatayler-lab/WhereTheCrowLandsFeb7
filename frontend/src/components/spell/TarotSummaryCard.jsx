@@ -18,6 +18,9 @@ export default function TarotSummaryCard({
           className="box-glow-gold rounded-3xl p-4 sm:p-5"
           style={{
             background: "var(--vellum)",
+            backgroundImage: "url('/images/textures/parchment-texture.png')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
             border: "1px solid rgba(200,164,77,0.40)",
           }}
         >
