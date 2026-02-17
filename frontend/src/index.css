@@ -473,8 +473,8 @@ body::before {
   /* Reading surface must be SOLID (no opacity behind text) */
   .spell-reading-surface {
     position: relative;
-    background: var(--vellum);
-    background-image: url('/images/textures/parchment-texture.png');
+    background-color: var(--vellum);
+    background-image: url('../../../public/images/textures/parchment-texture.png');
     background-size: cover;
     background-position: center;
   }
