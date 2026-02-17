@@ -17,7 +17,8 @@ def ensure_pro_access():
     try:
         MONGO_URL = os.environ.get('MONGO_URL', 'mongodb://localhost:27017/')
         client = MongoClient(MONGO_URL, serverSelectionTimeoutMS=5000)
-        db = client['crowlands']
+        db_name = os.environ.get('DB_NAME', 'test_database')
+        db = client[db_name]
         users_collection = db['users']
         
         # Both email variations
