@@ -81,29 +81,46 @@ const shouldShowDivider = (prevBlock, currentBlock) => {
   return majorTypes.includes(currentBlock.block_type) || majorTypes.includes(prevBlock?.block_type);
 };
 
-// Single narrative block - no headers, just prose
+// Single narrative block - wrapped in spell-block-frame for intricacy
 const NarrativeBlock = ({ block, archetypeStyle }) => {
   const bt = block.block_type;
   const c = block.content || {};
 
-  if (bt === 'cold_open') return <ColdOpen c={c} style={archetypeStyle} />;
-  if (bt === 'materials') return <Materials c={c} style={archetypeStyle} />;
-  if (bt === 'stepper') return <Stepper c={c} style={archetypeStyle} />;
-  if (bt === 'lore_vignette') return <LoreVignette c={c} style={archetypeStyle} />;
-  if (bt === 'choice') return <Choice c={c} style={archetypeStyle} />;
-  if (bt === 'closing') return <Closing c={c} style={archetypeStyle} />;
-  if (bt === 'reflection') return <Reflection c={c} />;
-  if (bt === 'journal_prompt') return <Reflection c={c} />;
-  if (bt === 'bird_oracle') return <BirdOracle c={c} style={archetypeStyle} />;
-  if (bt === 'ward') return <Ward c={c} style={archetypeStyle} />;
-  if (bt === 'song_prompt') return <SongPrompt c={c} style={archetypeStyle} />;
-  if (bt === 'evidence_card') return <EvidenceCard c={c} />;
-  if (bt === 'safety_note') return <SafetyNote c={c} />;
-  if (bt === 'poetry_reading') return <PoetryReading c={c} style={archetypeStyle} />;
-  if (bt === 'observation_task') return <ObservationTask c={c} />;
-  if (bt === 'further_reading') return <FurtherReading c={c} style={archetypeStyle} />;
+  // Get the block content based on type
+  let blockContent = null;
+  
+  if (bt === 'cold_open') blockContent = <ColdOpen c={c} style={archetypeStyle} />;
+  else if (bt === 'materials') blockContent = <Materials c={c} style={archetypeStyle} />;
+  else if (bt === 'stepper') blockContent = <Stepper c={c} style={archetypeStyle} />;
+  else if (bt === 'lore_vignette') blockContent = <LoreVignette c={c} style={archetypeStyle} />;
+  else if (bt === 'choice') blockContent = <Choice c={c} style={archetypeStyle} />;
+  else if (bt === 'closing') blockContent = <Closing c={c} style={archetypeStyle} />;
+  else if (bt === 'reflection') blockContent = <Reflection c={c} />;
+  else if (bt === 'journal_prompt') blockContent = <Reflection c={c} />;
+  else if (bt === 'bird_oracle') blockContent = <BirdOracle c={c} style={archetypeStyle} />;
+  else if (bt === 'ward') blockContent = <Ward c={c} style={archetypeStyle} />;
+  else if (bt === 'song_prompt') blockContent = <SongPrompt c={c} style={archetypeStyle} />;
+  else if (bt === 'evidence_card') blockContent = <EvidenceCard c={c} />;
+  else if (bt === 'safety_note') blockContent = <SafetyNote c={c} />;
+  else if (bt === 'poetry_reading') blockContent = <PoetryReading c={c} style={archetypeStyle} />;
+  else if (bt === 'observation_task') blockContent = <ObservationTask c={c} />;
+  else if (bt === 'further_reading') blockContent = <FurtherReading c={c} style={archetypeStyle} />;
 
-  return null;
+  if (!blockContent) return null;
+
+  // Wrap major blocks in spell-block-frame for visual intricacy
+  const majorBlockTypes = ['materials', 'stepper', 'closing', 'ward', 'evidence_card', 'further_reading'];
+  const shouldFrame = majorBlockTypes.includes(bt);
+
+  if (shouldFrame) {
+    return (
+      <section className="spell-block-frame p-4 sm:p-5 my-4">
+        {blockContent}
+      </section>
+    );
+  }
+
+  return blockContent;
 };
 
 // === NARRATIVE BLOCK COMPONENTS ===
