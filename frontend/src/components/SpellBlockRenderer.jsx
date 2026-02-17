@@ -337,47 +337,72 @@ const Choice = ({ c, style }) => {
 
 // Closing - the guide's farewell, elegant
 const Closing = ({ c, style }) => (
-  <div data-testid="closing-block">
-    {c.license_to_depart && (
-      <p className="font-crimson-text text-stone-700 italic leading-relaxed">"{c.license_to_depart}"</p>
-    )}
-    {c.grounding_action && (
-      <p className="font-crimson-text text-stone-800 mt-3">{c.grounding_action}</p>
-    )}
-    {c.empowerment_line && (
-      <p className="font-cinzel text-base text-center text-amber-800 mt-4 py-3">
-        "{c.empowerment_line}"
-      </p>
-    )}
-    {c.next_steps_hint && (
-      <p className="font-crimson-text text-sm text-stone-500 mt-2">
-        In the next 24 hours: {c.next_steps_hint}
-      </p>
-    )}
+  <div className="py-6" data-testid="closing-block">
+    <SectionLabel icon="/icons/anchors/gold/anchor-feather.png" label="Closing the Circle" />
+    
+    <div className="mt-4 text-center">
+      {c.license_to_depart && (
+        <blockquote className="font-crimson text-stone-700 italic leading-relaxed text-lg mb-4">
+          "{c.license_to_depart}"
+        </blockquote>
+      )}
+      {c.grounding_action && (
+        <p className="font-crimson text-stone-800 mt-3">{c.grounding_action}</p>
+      )}
+      {c.empowerment_line && (
+        <div className="my-6 py-4 px-6 bg-amber-900/5 rounded-lg border border-amber-700/20">
+          <p className="font-cinzel text-lg text-amber-900">
+            "{c.empowerment_line}"
+          </p>
+        </div>
+      )}
+      {c.next_steps_hint && (
+        <p className="font-crimson text-sm text-stone-500 mt-4 italic">
+          In the next 24 hours: {c.next_steps_hint}
+        </p>
+      )}
+    </div>
   </div>
 );
 
-// Reflection / Journal - just the prompt text, no input fields
+// Reflection / Journal - elegant prompt presentation
 const Reflection = ({ c }) => (
-  <div data-testid="reflection-block">
+  <div className="py-4" data-testid="reflection-block">
+    <SectionLabel icon="/icons/anchors/gold/anchor-notebook.png" label="Reflect" />
+    
     {c.guide_note && (
-      <p className="font-crimson-text text-stone-700 italic leading-relaxed">"{c.guide_note}"</p>
+      <p className="font-crimson text-stone-700 italic leading-relaxed mt-3">"{c.guide_note}"</p>
     )}
-    {c.prompts?.map((prompt, i) => (
-      <p key={i} className="font-crimson-text text-stone-600 mt-2 leading-relaxed">{prompt}</p>
-    ))}
+    {c.prompts?.length > 0 && (
+      <div className="mt-4 space-y-3">
+        {c.prompts.map((prompt, i) => (
+          <p key={i} className="font-crimson text-stone-600 leading-relaxed pl-4 border-l border-amber-700/30">
+            {prompt}
+          </p>
+        ))}
+      </div>
+    )}
   </div>
 );
 
-// Bird Oracle - mystical inline message
+// Bird Oracle - mystical message with decorative framing
 const BirdOracle = ({ c, style }) => (
-  <div data-testid="bird-oracle-block">
-    <p className="font-cinzel text-sm text-stone-500 tracking-wide mb-1">
-      {c.bird || c.bird_name || 'The Bird Oracle'}
-    </p>
-    <blockquote className="font-crimson-text text-stone-700 italic pl-4 border-l-2 border-amber-500/40">
-      "{c.message || c.oracle_message}"
-    </blockquote>
+  <div className="py-4" data-testid="bird-oracle-block">
+    <div className="relative text-center py-6 px-4">
+      <img 
+        src="/icons/anchors/gold/anchor-bird.png" 
+        alt="" 
+        className="w-12 h-12 mx-auto mb-3 opacity-60"
+      />
+      <p className="font-cinzel text-sm text-amber-800/70 tracking-[0.15em] uppercase mb-2">
+        {c.bird || c.bird_name || 'The Bird Oracle'}
+      </p>
+      <blockquote className="font-crimson text-stone-700 italic text-lg leading-relaxed">
+        "{c.message || c.oracle_message}"
+      </blockquote>
+    </div>
+  </div>
+);
     {c.observation_prompt && (
       <p className="font-crimson-text text-stone-500 text-sm mt-2">{c.observation_prompt}</p>
     )}
