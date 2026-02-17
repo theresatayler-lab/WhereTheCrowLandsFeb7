@@ -400,12 +400,10 @@ const BirdOracle = ({ c, style }) => (
       <blockquote className="font-crimson text-stone-700 italic text-lg leading-relaxed">
         "{c.message || c.oracle_message}"
       </blockquote>
+      {c.observation_prompt && (
+        <p className="font-crimson text-stone-500 text-sm mt-3">{c.observation_prompt}</p>
+      )}
     </div>
-  </div>
-);
-    {c.observation_prompt && (
-      <p className="font-crimson-text text-stone-500 text-sm mt-2">{c.observation_prompt}</p>
-    )}
   </div>
 );
 
