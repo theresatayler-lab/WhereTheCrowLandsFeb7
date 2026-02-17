@@ -23,6 +23,11 @@ export default function SpellPageFrame({ children, backgroundImageUrl }) {
         <section
           className="spell-reading-surface box-glow-gold rounded-3xl px-5 py-6 sm:px-8 sm:py-8"
           data-surface="light"
+          style={{
+            backgroundImage: "url('/images/textures/parchment-texture.png')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
         >
           {children}
         </section>
