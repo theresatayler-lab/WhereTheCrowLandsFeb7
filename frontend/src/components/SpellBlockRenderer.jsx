@@ -3,7 +3,7 @@
 
 import React, { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { Clock, Sparkles } from 'lucide-react';
+import { Clock } from 'lucide-react';
 import { cn } from '../lib/utils';
 
 // Subtle section break between narrative sections
