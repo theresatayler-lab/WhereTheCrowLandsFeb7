@@ -1380,7 +1380,10 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                         </p>
                       )}
                       {step.note && (
-                        <p className="font-crimson text-xs text-amber-800 italic mt-1">✦ {step.note}</p>
+                        <p className="font-crimson text-xs text-amber-800 italic mt-1">
+                          <img src="/icons/anchors/gold/anchor-feather.png" alt="" className="w-3 h-3 inline-block mr-1 opacity-70" />
+                          {step.note}
+                        </p>
                       )}
                     </div>
                   </motion.div>
