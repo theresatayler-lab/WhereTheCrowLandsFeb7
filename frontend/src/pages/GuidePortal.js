@@ -430,22 +430,14 @@ export const GuidePortal = () => {
             className="max-w-4xl mx-auto px-4 pb-20"
           >
             <SpellPageFrame>
-              <LightSection className="rounded-lg p-6 md:p-10">
-                <SpellHeader
-                  title={spellResult?.tarot_card?.title || spellResult?.title || "Your Spell"}
-                  guideLine={`${spellResult?.archetype_name || ""}${spellResult?.archetype_title ? " • " + spellResult.archetype_title : ""}`}
-                  summaryLine={spellResult?.tarot_card?.essence || ""}
-                />
-
-                <TarotSummaryCard
-                  tarotImageUrl={spellResult?.asset_plan?.generated_assets?.tarot_card_image || spellResult?.tarot_card_image || null}
-                  title={spellResult?.tarot_card?.title || ""}
-                  essence={spellResult?.tarot_card?.essence || ""}
-                  keyAction={spellResult?.tarot_card?.key_action || ""}
-                  timing={spellResult?.tarot_card?.timing || ""}
-                  guideBadge={spellResult?.archetype_name || ""}
-                />
-
+              {/* New SpellBookView - Flippable card/content design */}
+              <SpellBookView
+                tarotImageUrl={spellResult?.asset_plan?.generated_assets?.tarot_card_image || spellResult?.tarot_card_image || null}
+                title={spellResult?.tarot_card?.title || spellResult?.title || "Your Spell"}
+                guideName={spellResult?.archetype_name || guide.name}
+                spellNumber={spellResult?.spell_number || "I"}
+              >
+                {/* Spell Content */}
                 {spellResult.blocks ? (
                   <SpellBlockRenderer
                     spell={spellResult}
@@ -457,19 +449,21 @@ export const GuidePortal = () => {
                     }}
                   />
                 ) : (
-                  <div className="font-crimson-text text-navy-dark whitespace-pre-wrap leading-relaxed">
+                  <div className="font-crimson text-stone-800 whitespace-pre-wrap leading-relaxed">
                     {spellResult.content || spellResult.spell_text || JSON.stringify(spellResult, null, 2)}
                   </div>
                 )}
 
-              {/* Ethics Statement */}
-              {spellResult.ethics_statement && (
-                <div className="mt-8 pt-6 border-t border-stone-300">
-                  <p className="font-crimson-text text-stone-600 text-sm italic leading-relaxed">
-                    {spellResult.ethics_statement}
-                  </p>
-                </div>
-              )}
+                {/* Ethics Statement */}
+                {spellResult.ethics_statement && (
+                  <div className="mt-8 pt-6 border-t border-stone-300">
+                    <p className="font-crimson text-stone-600 text-sm italic leading-relaxed">
+                      {spellResult.ethics_statement}
+                    </p>
+                  </div>
+                )}
+              </SpellBookView>
+            </SpellPageFrame>
 
               {/* Research Sources */}
               {spellResult.sources && spellResult.sources.length > 0 && (
