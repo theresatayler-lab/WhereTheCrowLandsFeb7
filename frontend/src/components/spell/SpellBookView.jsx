@@ -2,78 +2,192 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 /**
- * SpellBookView - Two-page spell book layout
- * Page 1: Tarot Card (cover)
- * Page 2: Spell Content with ornate border
+ * SpellBookView - Three-stage spell presentation
  * 
- * Flippable on click, designed for future PDF export as facing pages
+ * Stage 1: Flippable tarot card (front = illustration, back = quick summary)
+ * Stage 2: Full Ritual View - card front + summary side-by-side, spell below
  */
 export default function SpellBookView({ 
-  children, // Spell content
+  children, // Spell content (full ritual)
   tarotImageUrl,
   title,
   guideName,
-  spellNumber = "I", // Roman numeral
+  spellNumber = "I",
+  spell, // Full spell object for extracting summary data
 }) {
-  const [showSpell, setShowSpell] = useState(false);
+  const [isFlipped, setIsFlipped] = useState(false);
+  const [showFullRitual, setShowFullRitual] = useState(false);
+
+  // Extract quick summary data from spell
+  const essence = spell?.tarot_card?.essence || spell?.essence || "A working to transform your intention into reality.";
+  const keyAction = spell?.tarot_card?.key_action || extractKeyAction(spell);
+  const timing = spell?.tarot_card?.timing || spell?.timing || "When you feel ready";
+  const materials = extractMaterials(spell);
 
   return (
-    <div className="spell-book-container mx-auto max-w-2xl">
-      {/* Book wrapper with perspective for flip effect */}
-      <div 
-        className="relative w-full cursor-pointer"
-        style={{ perspective: '2000px' }}
-        onClick={() => setShowSpell(!showSpell)}
-      >
-        <AnimatePresence mode="wait">
-          {!showSpell ? (
-            /* === TAROT CARD VIEW (Front) === */
-            <motion.div
-              key="tarot"
-              initial={{ rotateY: 180, opacity: 0 }}
-              animate={{ rotateY: 0, opacity: 1 }}
-              exit={{ rotateY: -180, opacity: 0 }}
-              transition={{ duration: 0.6 }}
-              className="w-full"
+    <div className="spell-book-container mx-auto max-w-4xl" data-testid="spell-book-view">
+      <AnimatePresence mode="wait">
+        {!showFullRitual ? (
+          /* === STAGE 1: FLIPPABLE CARD VIEW === */
+          <motion.div
+            key="card-view"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.4 }}
+          >
+            {/* Flippable Card Container */}
+            <div 
+              className="relative mx-auto cursor-pointer"
+              style={{ perspective: '1500px', maxWidth: '380px' }}
+              onClick={() => setIsFlipped(!isFlipped)}
+              data-testid="flippable-card"
             >
-              <TarotCardPage 
-                tarotImageUrl={tarotImageUrl}
-                title={title}
-                guideName={guideName}
-              />
-              
-              {/* Flip hint */}
-              <p className="text-center text-amber-700/60 text-sm mt-4 font-crimson italic">
-                Tap to reveal the spell →
-              </p>
-            </motion.div>
-          ) : (
-            /* === SPELL CONTENT VIEW (Back) === */
-            <motion.div
-              key="spell"
-              initial={{ rotateY: -180, opacity: 0 }}
-              animate={{ rotateY: 0, opacity: 1 }}
-              exit={{ rotateY: 180, opacity: 0 }}
-              transition={{ duration: 0.6 }}
-              className="w-full"
-            >
-              <SpellContentPage 
-                title={title}
-                spellNumber={spellNumber}
+              <motion.div
+                className="relative w-full"
+                style={{ transformStyle: 'preserve-3d' }}
+                animate={{ rotateY: isFlipped ? 180 : 0 }}
+                transition={{ duration: 0.7, ease: [0.4, 0, 0.2, 1] }}
               >
-                {children}
-              </SpellContentPage>
+                {/* FRONT - Tarot Card Image */}
+                <div 
+                  className="w-full"
+                  style={{ backfaceVisibility: 'hidden' }}
+                >
+                  <TarotCardFront 
+                    tarotImageUrl={tarotImageUrl}
+                    title={title}
+                    guideName={guideName}
+                  />
+                </div>
+
+                {/* BACK - Quick Spell Summary */}
+                <div 
+                  className="absolute inset-0 w-full"
+                  style={{ 
+                    backfaceVisibility: 'hidden',
+                    transform: 'rotateY(180deg)'
+                  }}
+                >
+                  <QuickSummaryCard
+                    title={title}
+                    essence={essence}
+                    keyAction={keyAction}
+                    timing={timing}
+                    materials={materials}
+                    guideName={guideName}
+                  />
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Flip instruction */}
+            <p className="text-center text-gold/50 text-sm mt-6 font-crimson italic tracking-wide">
+              {isFlipped ? "← Tap to see the card" : "Tap to reveal the spell summary →"}
+            </p>
+
+            {/* View Full Ritual Button */}
+            <div className="text-center mt-8">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowFullRitual(true);
+                }}
+                className="font-cinzel text-sm px-8 py-3 bg-ember/90 hover:bg-ember text-cream rounded-sm transition-all duration-300 border border-gold/30 hover:border-gold/50 shadow-lg hover:shadow-xl tracking-wider uppercase"
+                data-testid="view-full-ritual-btn"
+              >
+                View Full Ritual
+              </button>
+            </div>
+          </motion.div>
+        ) : (
+          /* === STAGE 2: FULL RITUAL VIEW === */
+          <motion.div
+            key="full-ritual"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.4 }}
+          >
+            {/* Back to Card View */}
+            <button
+              onClick={() => setShowFullRitual(false)}
+              className="mb-6 text-gold/60 hover:text-gold text-sm font-crimson flex items-center gap-2 transition-colors"
+              data-testid="back-to-card-btn"
+            >
+              <span>←</span> Back to tarot card
+            </button>
+
+            {/* Side-by-Side Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+              {/* Left: Tarot Card Front */}
+              <div className="flex justify-center md:justify-end">
+                <div style={{ maxWidth: '320px', width: '100%' }}>
+                  <TarotCardFront 
+                    tarotImageUrl={tarotImageUrl}
+                    title={title}
+                    guideName={guideName}
+                    compact
+                  />
+                </div>
+              </div>
               
-              {/* Flip hint */}
-              <p className="text-center text-amber-700/60 text-sm mt-4 font-crimson italic">
-                ← Tap to see the tarot card
-              </p>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
+              {/* Right: Quick Summary */}
+              <div className="flex justify-center md:justify-start">
+                <div style={{ maxWidth: '320px', width: '100%' }}>
+                  <QuickSummaryCard
+                    title={title}
+                    essence={essence}
+                    keyAction={keyAction}
+                    timing={timing}
+                    materials={materials}
+                    guideName={guideName}
+                    compact
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Decorative Divider */}
+            <div className="flex items-center justify-center py-6">
+              <div className="h-px w-16 bg-gold/30" />
+              <img 
+                src="/images/ornaments/divider-rose-crows.png" 
+                alt="" 
+                className="h-8 w-auto mx-4 opacity-60"
+              />
+              <div className="h-px w-16 bg-gold/30" />
+            </div>
+
+            {/* Full Spell Content */}
+            <FullRitualContent title={title} spellNumber={spellNumber}>
+              {children}
+            </FullRitualContent>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
+}
+
+// Helper: Extract key action from spell blocks
+function extractKeyAction(spell) {
+  if (!spell?.blocks) return null;
+  const stepper = spell.blocks.find(b => b.block_type === 'stepper');
+  if (stepper?.content?.steps?.[0]) {
+    return stepper.content.steps[0].title || stepper.content.steps[0].action?.slice(0, 80);
+  }
+  return null;
+}
+
+// Helper: Extract materials list
+function extractMaterials(spell) {
+  if (!spell?.blocks) return [];
+  const materialsBlock = spell.blocks.find(b => b.block_type === 'materials');
+  if (materialsBlock?.content?.items) {
+    return materialsBlock.content.items.slice(0, 4).map(i => i.name);
+  }
+  return [];
 }
 
 /**
