@@ -1,8 +1,8 @@
 import React from "react";
 
 /**
- * TarotSummaryCard - Displays spell summary with tarot card
- * Mobile-friendly layout
+ * TarotSummaryCard - Displays spell tarot card with vintage book layout
+ * Inspired by the spell template with illustration panel + text sections
  */
 export default function TarotSummaryCard({
   tarotImageUrl,
@@ -13,82 +13,112 @@ export default function TarotSummaryCard({
   guideBadge,
 }) {
   return (
-    <section className="my-6">
-      <div className="flex flex-col items-center gap-4">
-        {/* Tarot Card Image */}
-        {tarotImageUrl ? (
-          <div className="w-40 sm:w-48 flex-shrink-0">
-            <img 
-              src={tarotImageUrl} 
-              alt={title || "Spell Tarot Card"}
-              className="w-full h-auto rounded-lg shadow-xl"
-              style={{ 
-                boxShadow: '0 8px 32px rgba(0,0,0,0.3), 0 0 0 1px rgba(200,164,77,0.3)'
-              }}
-            />
-          </div>
-        ) : (
-          /* Fallback: Simple card design without stretched image */
+    <section className="my-8">
+      {/* Two-column layout like vintage spell template */}
+      <div className="flex flex-col sm:flex-row gap-6 items-start">
+        
+        {/* Left: Tarot Card / Illustration Panel */}
+        <div className="w-full sm:w-2/5 flex-shrink-0">
           <div 
-            className="w-40 sm:w-48 rounded-lg p-4 text-center"
+            className="relative rounded border-2 border-amber-800/30 overflow-hidden"
             style={{ 
-              aspectRatio: '2.5/4',
-              backgroundColor: '#1a365d',
-              border: '2px solid rgba(200,164,77,0.5)',
-              boxShadow: '0 8px 32px rgba(0,0,0,0.3)'
+              backgroundColor: '#1a1a1a',
+              aspectRatio: tarotImageUrl ? 'auto' : '3/4'
             }}
           >
-            <div className="h-full flex flex-col items-center justify-center">
+            {tarotImageUrl ? (
               <img 
-                src="/icons/anchors/gold/anchor-bird.png" 
-                alt="" 
-                className="w-12 h-12 mb-3 opacity-80"
+                src={tarotImageUrl} 
+                alt={title || "Spell Tarot Card"}
+                className="w-full h-auto"
               />
-              {title && (
-                <p className="font-cinzel text-sm text-amber-200 leading-tight">
-                  {title}
-                </p>
-              )}
-            </div>
+            ) : (
+              /* Fallback illustration area */
+              <div className="absolute inset-0 flex flex-col items-center justify-center p-4">
+                <img 
+                  src="/images/frames/crowlands-tarot-card.png" 
+                  alt="" 
+                  className="w-full h-full object-contain opacity-90"
+                />
+              </div>
+            )}
+            
+            {/* Frame corners */}
+            <div className="absolute top-1 left-1 w-4 h-4 border-t border-l border-amber-600/50" />
+            <div className="absolute top-1 right-1 w-4 h-4 border-t border-r border-amber-600/50" />
+            <div className="absolute bottom-1 left-1 w-4 h-4 border-b border-l border-amber-600/50" />
+            <div className="absolute bottom-1 right-1 w-4 h-4 border-b border-r border-amber-600/50" />
           </div>
-        )}
-
-        {/* Spell Summary Info */}
-        <div className="text-center w-full">
-          {/* Guide badge */}
+          
+          {/* Caption below image */}
           {guideBadge && (
-            <div className="font-montserrat uppercase tracking-[0.15em] text-xs text-amber-700/70 mb-2">
+            <p className="font-montserrat text-xs text-amber-800/60 text-center mt-2 uppercase tracking-wider">
               Crafted by {guideBadge}
+            </p>
+          )}
+        </div>
+
+        {/* Right: Spell Details */}
+        <div className="flex-1">
+          {/* Title Section */}
+          <div className="mb-6">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="font-cinzel text-xs text-amber-700 tracking-[0.15em] uppercase">
+                Spell Title
+              </span>
+              <div className="flex-1 h-px bg-amber-700/30" />
+            </div>
+            {title && (
+              <h3 className="font-cinzel text-xl sm:text-2xl text-amber-950">
+                {title}
+              </h3>
+            )}
+          </div>
+
+          {/* Essence/Description */}
+          {essence && (
+            <div className="mb-6">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="font-cinzel text-xs text-amber-700 tracking-[0.15em] uppercase">
+                  Essence
+                </span>
+                <div className="flex-1 h-px bg-amber-700/30" />
+              </div>
+              <p className="font-crimson text-stone-700 italic leading-relaxed">
+                "{essence}"
+              </p>
             </div>
           )}
 
-          {/* Title */}
-          {title && (
-            <h3 className="font-cinzel text-xl sm:text-2xl text-amber-950 mb-2">
-              {title}
-            </h3>
-          )}
-
-          {/* Essence/Tagline */}
-          {essence && (
-            <blockquote className="font-crimson text-stone-700 italic text-base leading-relaxed mb-3">
-              "{essence}"
-            </blockquote>
-          )}
-
-          {/* Key Action & Timing */}
-          <div className="flex flex-wrap gap-3 justify-center text-sm">
-            {keyAction && (
-              <span className="px-3 py-1 rounded-full border border-amber-700/30 font-crimson text-stone-700">
+          {/* Key Action */}
+          {keyAction && (
+            <div className="mb-4">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="font-cinzel text-xs text-amber-700 tracking-[0.15em] uppercase">
+                  Key Action
+                </span>
+                <div className="flex-1 h-px bg-amber-700/30" />
+              </div>
+              <p className="font-crimson text-stone-800">
                 {keyAction}
-              </span>
-            )}
-            {timing && (
-              <span className="px-3 py-1 rounded-full border border-amber-700/30 font-crimson text-stone-700">
+              </p>
+            </div>
+          )}
+
+          {/* Timing */}
+          {timing && (
+            <div>
+              <div className="flex items-center gap-2 mb-2">
+                <span className="font-cinzel text-xs text-amber-700 tracking-[0.15em] uppercase">
+                  Best Timing
+                </span>
+                <div className="flex-1 h-px bg-amber-700/30" />
+              </div>
+              <p className="font-crimson text-stone-800">
                 {timing}
-              </span>
-            )}
-          </div>
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </section>
