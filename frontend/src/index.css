@@ -474,9 +474,6 @@ body::before {
   .spell-reading-surface {
     position: relative;
     background-color: var(--vellum);
-    background-image: url('../../../public/images/textures/parchment-texture.png');
-    background-size: cover;
-    background-position: center;
   }
 
   .stroke-gold-soft {
