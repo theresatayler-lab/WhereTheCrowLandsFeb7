@@ -6,6 +6,9 @@ import { SpellBlockRenderer } from '../components/SpellBlockRenderer';
 import { DarkSection, LightSection, PageHeader } from '../components/OrnateElements';
 import { Send, Loader2, ChevronLeft, Bird, Scissors, Flame, BookOpen, Mail } from 'lucide-react';
 import { toast } from 'sonner';
+import SpellPageFrame from "../components/spell/SpellPageFrame";
+import SpellHeader from "../components/spell/SpellHeader";
+import TarotSummaryCard from "../components/spell/TarotSummaryCard";
 
 // ===== GUIDE CONFIGURATIONS =====
 const GUIDE_CONFIGS = {
