@@ -1895,6 +1895,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
       </div>
     </motion.div>
     </SpellBorderFrame>
+    </SpellPageFrame>
   );
 };
 
