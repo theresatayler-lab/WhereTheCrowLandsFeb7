@@ -10,7 +10,7 @@ import sys
 
 def test_shigg_spell_generation_with_sullivan_style():
     """Test Shigg spell generation with Edmund J. Sullivan grimoire image style - REVIEW REQUEST TEST"""
-    base_url = "https://spell-debug-fix.preview.emergentagent.com"
+    base_url = "https://entry-point-58.preview.emergentagent.com"
     
     print("🧙‍♀️ Testing Shigg Spell Generation with Sullivan Image Style...")
     print("=" * 60)
