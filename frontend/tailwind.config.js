@@ -55,7 +55,7 @@ module.exports = {
         // ============================================================================
         // NOUVEAU COLOR TOKENS (semantic naming)
         // ============================================================================
-        'midnight-teal': '#0E2A2F',
+        'midnight-teal': '#0a1628',  // Updated to match deep navy
         'celestial-blue': '#123A3F',
         'vellum': '#F3EFE8',
         'antique-gold': '#C8A44D',
