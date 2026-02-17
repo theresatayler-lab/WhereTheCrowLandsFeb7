@@ -191,91 +191,184 @@ function extractMaterials(spell) {
 }
 
 /**
- * TarotCardPage - The tarot card "cover" page
+ * TarotCardFront - The tarot card illustration side
  */
-function TarotCardPage({ tarotImageUrl, title, guideName }) {
+function TarotCardFront({ tarotImageUrl, title, guideName, compact = false }) {
   return (
     <div 
-      className="relative rounded-lg overflow-hidden"
+      className="relative overflow-hidden rounded-lg"
+      style={{
+        backgroundColor: '#0a0a0a',
+        border: '2px solid #C8A44D',
+        boxShadow: '0 8px 32px rgba(0,0,0,0.5), inset 0 0 60px rgba(200,164,77,0.05)'
+      }}
+      data-testid="tarot-card-front"
+    >
+      {/* Gold corner accents */}
+      <div className="absolute top-2 left-2 w-6 h-6 border-l-2 border-t-2 border-gold/60" />
+      <div className="absolute top-2 right-2 w-6 h-6 border-r-2 border-t-2 border-gold/60" />
+      <div className="absolute bottom-2 left-2 w-6 h-6 border-l-2 border-b-2 border-gold/60" />
+      <div className="absolute bottom-2 right-2 w-6 h-6 border-r-2 border-b-2 border-gold/60" />
+
+      {/* Card content */}
+      <div className={`relative z-5 ${compact ? 'p-4' : 'p-5 sm:p-6'}`}>
+        {/* Tarot Image */}
+        <div className="relative mx-auto">
+          {tarotImageUrl ? (
+            <img 
+              src={tarotImageUrl}
+              alt={title || "Spell Tarot Card"}
+              className="w-full h-auto rounded"
+              style={{
+                border: '1px solid rgba(200,164,77,0.3)',
+              }}
+            />
+          ) : (
+            <div 
+              className="w-full aspect-[2/3] rounded flex items-center justify-center"
+              style={{ backgroundColor: '#1a1a1a' }}
+            >
+              <img 
+                src="/images/frames/crowlands-tarot-card.png"
+                alt=""
+                className="w-full h-full object-contain opacity-80"
+              />
+            </div>
+          )}
+        </div>
+
+        {/* Title beneath card */}
+        <div className={`text-center ${compact ? 'mt-3' : 'mt-5'}`}>
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <div className="h-px w-8 bg-gold/40" />
+            <span className="font-cinzel text-[10px] text-gold/50 tracking-[0.2em] uppercase">
+              {guideName ? `by ${guideName}` : 'Spell'}
+            </span>
+            <div className="h-px w-8 bg-gold/40" />
+          </div>
+          
+          <h3 className={`font-cinzel text-cream ${compact ? 'text-base' : 'text-lg sm:text-xl'}`}>
+            {title || "Untitled Spell"}
+          </h3>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * QuickSummaryCard - The back of the tarot card with spell summary
+ */
+function QuickSummaryCard({ title, essence, keyAction, timing, materials, guideName, compact = false }) {
+  return (
+    <div 
+      className="relative overflow-hidden rounded-lg h-full"
       style={{
         backgroundColor: '#F5F0E6',
         backgroundImage: "url('/images/textures/parchment-texture.png')",
         backgroundSize: "cover",
+        border: '2px solid #C8A44D',
+        boxShadow: '0 8px 32px rgba(0,0,0,0.3)'
       }}
+      data-testid="quick-summary-card"
     >
-      {/* Art Nouveau corner frames */}
+      {/* Decorative corner flourishes */}
       <img 
         src="/images/spell-decor/corner-flourish.png"
         alt=""
-        className="absolute top-0 left-0 w-20 h-20 sm:w-28 sm:h-28 z-10 pointer-events-none opacity-80"
+        className={`absolute top-0 left-0 ${compact ? 'w-12 h-12' : 'w-16 h-16'} z-10 pointer-events-none opacity-60`}
       />
       <img 
         src="/images/spell-decor/corner-flourish.png"
         alt=""
-        className="absolute top-0 right-0 w-20 h-20 sm:w-28 sm:h-28 z-10 pointer-events-none opacity-80"
+        className={`absolute top-0 right-0 ${compact ? 'w-12 h-12' : 'w-16 h-16'} z-10 pointer-events-none opacity-60`}
         style={{ transform: 'scaleX(-1)' }}
       />
       <img 
         src="/images/spell-decor/corner-flourish.png"
         alt=""
-        className="absolute bottom-0 left-0 w-20 h-20 sm:w-28 sm:h-28 z-10 pointer-events-none opacity-80"
+        className={`absolute bottom-0 left-0 ${compact ? 'w-12 h-12' : 'w-16 h-16'} z-10 pointer-events-none opacity-60`}
         style={{ transform: 'scaleY(-1)' }}
       />
       <img 
         src="/images/spell-decor/corner-flourish.png"
         alt=""
-        className="absolute bottom-0 right-0 w-20 h-20 sm:w-28 sm:h-28 z-10 pointer-events-none opacity-80"
+        className={`absolute bottom-0 right-0 ${compact ? 'w-12 h-12' : 'w-16 h-16'} z-10 pointer-events-none opacity-60`}
         style={{ transform: 'scale(-1, -1)' }}
       />
 
-      {/* Card content */}
-      <div className="relative z-5 p-6 sm:p-10">
-        {/* Tarot Card Image */}
-        <div className="relative mx-auto max-w-sm">
-          {tarotImageUrl ? (
-            <img 
-              src={tarotImageUrl}
-              alt={title || "Spell Tarot Card"}
-              className="w-full h-auto rounded-lg shadow-2xl"
-              style={{
-                border: '3px solid #1a1a1a',
-                boxShadow: '0 8px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(200,164,77,0.3)'
-              }}
-            />
-          ) : (
-            /* Fallback with generated Crowlands tarot */
-            <img 
-              src="/images/frames/crowlands-tarot-card.png"
-              alt=""
-              className="w-full h-auto rounded-lg shadow-2xl"
-              style={{
-                border: '3px solid #1a1a1a',
-                boxShadow: '0 8px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(200,164,77,0.3)'
-              }}
-            />
-          )}
+      {/* Content */}
+      <div className={`relative z-5 ${compact ? 'p-4 pt-6' : 'p-6 pt-8'} h-full flex flex-col`}>
+        {/* Header label */}
+        <div className="flex items-center justify-center gap-2 mb-3">
+          <div className="h-px w-6 bg-amber-800/40" />
+          <span className="font-cinzel text-[10px] text-amber-800/60 tracking-[0.2em] uppercase">
+            Spell Summary
+          </span>
+          <div className="h-px w-6 bg-amber-800/40" />
         </div>
 
-        {/* Spell Title Section */}
-        <div className="mt-8 text-center">
-          <div className="flex items-center gap-2 justify-center mb-2">
-            <div className="h-px w-12 bg-amber-800/40" />
-            <span className="font-cinzel text-xs text-amber-800/60 tracking-[0.2em] uppercase">
-              Spell Title
-            </span>
-            <div className="h-px w-12 bg-amber-800/40" />
-          </div>
-          
-          <h2 className="font-cinzel text-2xl sm:text-3xl text-amber-950 mb-4">
-            {title || "Untitled Spell"}
-          </h2>
+        {/* Title */}
+        <h3 className={`font-cinzel text-amber-950 text-center ${compact ? 'text-base mb-3' : 'text-lg mb-4'}`}>
+          {title || "Your Spell"}
+        </h3>
 
-          {guideName && (
-            <p className="font-crimson text-amber-800/70 italic">
-              Crafted by {guideName}
+        {/* Essence */}
+        {essence && (
+          <div className="mb-4">
+            <p className={`font-crimson text-stone-700 italic text-center leading-relaxed ${compact ? 'text-sm' : 'text-base'}`}>
+              "{essence}"
             </p>
+          </div>
+        )}
+
+        {/* Divider */}
+        <div className="flex items-center justify-center py-2">
+          <div className="h-px w-full bg-amber-700/20" />
+        </div>
+
+        {/* Quick info grid */}
+        <div className="flex-1 space-y-3">
+          {keyAction && (
+            <div>
+              <p className="font-cinzel text-[10px] text-amber-800/70 tracking-wider uppercase mb-1">
+                Begin With
+              </p>
+              <p className={`font-crimson text-stone-800 ${compact ? 'text-xs' : 'text-sm'}`}>
+                {keyAction}
+              </p>
+            </div>
+          )}
+
+          {materials?.length > 0 && (
+            <div>
+              <p className="font-cinzel text-[10px] text-amber-800/70 tracking-wider uppercase mb-1">
+                You'll Need
+              </p>
+              <p className={`font-crimson text-stone-700 ${compact ? 'text-xs' : 'text-sm'}`}>
+                {materials.join(' · ')}
+              </p>
+            </div>
+          )}
+
+          {timing && (
+            <div>
+              <p className="font-cinzel text-[10px] text-amber-800/70 tracking-wider uppercase mb-1">
+                Best Time
+              </p>
+              <p className={`font-crimson text-stone-700 ${compact ? 'text-xs' : 'text-sm'}`}>
+                {timing}
+              </p>
+            </div>
           )}
         </div>
+
+        {/* Footer */}
+        {guideName && (
+          <p className={`font-crimson text-amber-800/50 text-center italic mt-4 ${compact ? 'text-xs' : 'text-sm'}`}>
+            Crafted by {guideName}
+          </p>
+        )}
       </div>
     </div>
   );
