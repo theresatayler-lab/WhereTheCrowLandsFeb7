@@ -103,7 +103,7 @@ TAXONOMY_DATA = {
         "why_here": "Formalization + hierarchy + system design; the 'temple logic' of modern ceremonial aesthetics. Orders as living systems.",
         "core_figures": ["MacGregor Mathers", "A.E. Waite", "Pamela Colman Smith", "Aleister Crowley", "Dion Fortune", "Israel Regardie"],
         "expanded_examples": "German Rosicrucian circles • French Martinist orders • British magical societies • American occult orders • Post-war ceremonial magic revival • Contemporary temple magic",
-        "color": "#d4a84b",
+        "color": "#C8A44D",
         "icon": "pentagram"
     },
     "surrealism": {
@@ -286,7 +286,7 @@ class GuideCommentaries(BaseModel):
 class ImageSuggestion(BaseModel):
     """AI image generation prompt data"""
     description: str
-    palette: List[str] = ["#0e1629", "#8b2232", "#d4a84b", "#f5f0e6"]
+    palette: List[str] = ["#0E2A2F", "#8b2232", "#C8A44D", "#f5f0e6"]
     style: str = "ornate occult silk scarf illustration, art nouveau filigree"
     motifs: List[str] = []
 

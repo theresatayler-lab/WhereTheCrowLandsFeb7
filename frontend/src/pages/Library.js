@@ -953,7 +953,7 @@ const Library = () => {
           <div className="flex items-center justify-center gap-4 text-gold/50">
             <span>☽</span>
             <span className="text-crimson/60">❦</span>
-            <img src="/icons/ui/gold/icon-library-books.png" alt="" className="w-4 h-4" />
+            <img src="/icons/ui/gold/icon-library-books.png" alt="" className="w-4 h-4 inline" />
             <span className="text-crimson/60">❦</span>
             <span>☾</span>
           </div>
