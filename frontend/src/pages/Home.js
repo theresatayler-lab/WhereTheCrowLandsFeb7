@@ -48,7 +48,7 @@ const SectionPlate = ({ children, variant = 'dark', className = '' }) => {
         <div 
           className="absolute inset-0 pointer-events-none"
           style={{
-            background: 'radial-gradient(ellipse at center, transparent 40%, rgba(14, 42, 47, 0.3) 100%)',
+            background: 'radial-gradient(ellipse at center, transparent 40%, rgba(10, 22, 40, 0.3) 100%)',
           }}
         />
       )}
