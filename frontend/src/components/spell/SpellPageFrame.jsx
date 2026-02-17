@@ -1,14 +1,13 @@
 import React from "react";
 
 /**
- * SpellPageFrame - Simple wrapper for spell content
- * The decorative elements come from SpellBookView
+ * Pure wrapper. Atmosphere is outside reading surface.
+ * Reading surface is solid vellum and marked data-surface="light".
  */
 export default function SpellPageFrame({ children, backgroundImageUrl }) {
   return (
-    <div className="spell-page-wrap bg-navy-dark min-h-screen" data-surface="dark">
-      {/* Optional atmosphere layer */}
-      {backgroundImageUrl && (
+    <div className="spell-page-wrap bg-navy-dark" data-surface="dark">
+      {backgroundImageUrl ? (
         <div
           className="spell-atmosphere"
           aria-hidden="true"
@@ -18,10 +17,15 @@ export default function SpellPageFrame({ children, backgroundImageUrl }) {
             backgroundPosition: "center",
           }}
         />
-      )}
+      ) : null}
 
-      <main className="relative z-10 mx-auto w-full max-w-3xl px-3 py-6 sm:px-4 sm:py-8">
-        {children}
+      <main className="relative z-10 mx-auto w-full max-w-5xl px-4 py-8 sm:px-6 sm:py-10">
+        <section
+          className="spell-reading-surface box-glow-gold rounded-3xl px-5 py-6 sm:px-8 sm:py-8"
+          data-surface="light"
+        >
+          {children}
+        </section>
       </main>
     </div>
   );
