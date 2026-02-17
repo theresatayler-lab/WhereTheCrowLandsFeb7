@@ -7,7 +7,7 @@ import { Clock } from 'lucide-react';
 import { cn } from '../lib/utils';
 
 // Ornate section divider - uses the generated decorative image
-const OrnateSection Divider = () => (
+const OrnateSectionDivider = () => (
   <div className="flex items-center justify-center py-6 my-2">
     <img 
       src="/images/ornaments/divider-ornate-horizontal.png" 
