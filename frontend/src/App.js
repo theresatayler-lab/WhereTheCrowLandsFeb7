@@ -17,6 +17,8 @@ import { Guides } from './pages/Guides';
 import { MyGrimoire } from './pages/MyGrimoire';
 import { Upgrade } from './pages/Upgrade';
 import { PaymentSuccess } from './pages/PaymentSuccess';
+import ProUpgrade from './pages/ProUpgrade';
+import { PaymentSuccess as ProPaymentSuccess, PaymentCancel } from './pages/PaymentPages';
 import { About } from './pages/About';
 import { FAQ } from './pages/FAQ';
 import { Privacy } from './pages/Privacy';
