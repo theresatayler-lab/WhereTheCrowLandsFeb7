@@ -1523,6 +1523,228 @@ async def get_handcrafted_orders(admin_key: str = None):
 
 
 # ============================================
+# PRO SUBSCRIPTION SYSTEM
+# ============================================
+
+# Fixed price packages (security: never accept amounts from frontend)
+PRO_PACKAGES = {
+    "pro_monthly": {
+        "name": "PRO Monthly",
+        "amount": 999,  # cents
+        "currency": "usd",
+        "type": "subscription",
+        "description": "Unlimited spells, save to grimoire, exclusive guides"
+    },
+    "pro_yearly": {
+        "name": "PRO Yearly", 
+        "amount": 9999,  # cents
+        "currency": "usd",
+        "type": "subscription",
+        "description": "PRO access for a full year (save $20!)"
+    },
+    "single_spell": {
+        "name": "Single Spell",
+        "amount": 499,  # cents
+        "currency": "usd",
+        "type": "one_time",
+        "description": "Generate one custom spell",
+        "credits": 1
+    },
+    "spell_pack_5": {
+        "name": "5 Spell Pack",
+        "amount": 1999,  # cents
+        "currency": "usd", 
+        "type": "one_time",
+        "description": "5 spell generations (save $5!)",
+        "credits": 5
+    },
+    "printed_grimoire": {
+        "name": "Printed Grimoire",
+        "amount": 4999,  # cents
+        "currency": "usd",
+        "type": "physical",
+        "description": "Your saved spells beautifully printed"
+    },
+    "tarot_deck": {
+        "name": "Custom Tarot Deck",
+        "amount": 3999,  # cents
+        "currency": "usd",
+        "type": "physical",
+        "description": "22-card deck of your generated tarot images"
+    }
+}
+
+class ProCheckoutRequest(BaseModel):
+    package_id: str
+    email: EmailStr
+    success_url: str
+    cancel_url: str
+    user_id: Optional[str] = None
+
+@api_router.get('/pro/packages')
+async def get_pro_packages():
+    """Get all available PRO packages"""
+    return {
+        'packages': PRO_PACKAGES,
+        'categories': {
+            'subscriptions': ['pro_monthly', 'pro_yearly'],
+            'spell_credits': ['single_spell', 'spell_pack_5'],
+            'physical': ['printed_grimoire', 'tarot_deck']
+        }
+    }
+
+@api_router.post('/pro/checkout')
+async def create_pro_checkout(request: ProCheckoutRequest):
+    """Create Stripe checkout for PRO subscription or package purchase"""
+    import stripe
+    
+    # Validate package
+    if request.package_id not in PRO_PACKAGES:
+        raise HTTPException(status_code=400, detail=f"Invalid package: {request.package_id}")
+    
+    package = PRO_PACKAGES[request.package_id]
+    
+    stripe_key = os.environ.get('STRIPE_SECRET_KEY') or os.environ.get('STRIPE_API_KEY')
+    if not stripe_key:
+        raise HTTPException(status_code=500, detail='Payment system not configured')
+    
+    stripe.api_key = stripe_key
+    
+    try:
+        session = stripe.checkout.Session.create(
+            payment_method_types=['card'],
+            line_items=[{
+                'price_data': {
+                    'currency': package['currency'],
+                    'product_data': {
+                        'name': package['name'],
+                        'description': package['description'],
+                    },
+                    'unit_amount': package['amount'],
+                },
+                'quantity': 1,
+            }],
+            mode='payment',
+            success_url=request.success_url,
+            cancel_url=request.cancel_url,
+            customer_email=request.email,
+            metadata={
+                'package_id': request.package_id,
+                'package_type': package['type'],
+                'user_email': request.email,
+                'user_id': request.user_id or ''
+            }
+        )
+        
+        # Record transaction
+        await db.payment_transactions.insert_one({
+            'session_id': session.id,
+            'package_id': request.package_id,
+            'package_name': package['name'],
+            'amount': package['amount'],
+            'currency': package['currency'],
+            'type': package['type'],
+            'user_email': request.email,
+            'user_id': request.user_id,
+            'payment_status': 'pending',
+            'status': 'initiated',
+            'created_at': datetime.now(timezone.utc)
+        })
+        
+        logger.info(f"[PRO_CHECKOUT] Created checkout for {request.package_id} - {request.email}")
+        
+        return {
+            'url': session.url,
+            'session_id': session.id,
+            'package': package
+        }
+        
+    except Exception as e:
+        logger.error(f"PRO checkout error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@api_router.get('/pro/status/{session_id}')
+async def get_pro_payment_status(session_id: str):
+    """Check payment status and process if successful"""
+    import stripe
+    
+    stripe_key = os.environ.get('STRIPE_SECRET_KEY') or os.environ.get('STRIPE_API_KEY')
+    if not stripe_key:
+        raise HTTPException(status_code=500, detail='Payment system not configured')
+    
+    stripe.api_key = stripe_key
+    
+    try:
+        session = stripe.checkout.Session.retrieve(session_id)
+        
+        # Get transaction from database
+        transaction = await db.payment_transactions.find_one({'session_id': session_id})
+        
+        if session.payment_status == 'paid' and transaction:
+            # Check if already processed
+            if transaction.get('payment_status') != 'paid':
+                # Process the payment
+                package_id = transaction.get('package_id')
+                package = PRO_PACKAGES.get(package_id, {})
+                user_email = transaction.get('user_email')
+                
+                # Update transaction
+                await db.payment_transactions.update_one(
+                    {'session_id': session_id},
+                    {'$set': {
+                        'payment_status': 'paid',
+                        'status': 'completed',
+                        'completed_at': datetime.now(timezone.utc)
+                    }}
+                )
+                
+                # Handle based on package type
+                if package.get('type') == 'subscription':
+                    # Upgrade to PRO
+                    days = 365 if package_id == 'pro_yearly' else 30
+                    await db.users.update_one(
+                        {'email': {'$regex': f'^{user_email}$', '$options': 'i'}},
+                        {'$set': {
+                            'subscription_tier': 'pro',
+                            'subscription_started': datetime.now(timezone.utc),
+                            'subscription_ends': datetime.now(timezone.utc) + timedelta(days=days),
+                            'subscription_package': package_id
+                        }}
+                    )
+                    logger.info(f"[PRO_UPGRADE] User {user_email} upgraded to PRO ({package_id})")
+                
+                elif package.get('type') == 'one_time' and package.get('credits'):
+                    # Add spell credits
+                    await db.users.update_one(
+                        {'email': {'$regex': f'^{user_email}$', '$options': 'i'}},
+                        {'$inc': {'spell_credits': package['credits']}}
+                    )
+                    logger.info(f"[SPELL_CREDITS] Added {package['credits']} credits to {user_email}")
+                
+                elif package.get('type') == 'physical':
+                    # Create fulfillment order
+                    await db.physical_orders.insert_one({
+                        'session_id': session_id,
+                        'package_id': package_id,
+                        'user_email': user_email,
+                        'status': 'pending_fulfillment',
+                        'created_at': datetime.now(timezone.utc)
+                    })
+                    logger.info(f"[PHYSICAL_ORDER] Created order for {package_id}")
+        
+        return {
+            'status': session.status,
+            'payment_status': session.payment_status,
+            'package_id': transaction.get('package_id') if transaction else None,
+            'package_name': transaction.get('package_name') if transaction else None
+        }
+        
+    except Exception as e:
+        logger.error(f"Payment status check error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+# ============================================
 # INVISIBLE HELPERS - Simplified Lead Gen Flow
 # ============================================
 
