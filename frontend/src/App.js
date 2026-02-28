@@ -178,6 +178,9 @@ function App() {
           <Route path="/handcrafted/success" element={<HandcraftedSuccess />} />
           <Route path="/design-preview" element={<DesignPreview />} />
           <Route path="/upgrade" element={<Upgrade />} />
+          <Route path="/pro" element={<ProUpgrade />} />
+          <Route path="/payment/success" element={<ProPaymentSuccess />} />
+          <Route path="/payment/cancel" element={<PaymentCancel />} />
           <Route path="/payment-success" element={<PaymentSuccess />} />
           <Route path="/about" element={<About />} />
           <Route path="/faq" element={<FAQ />} />
