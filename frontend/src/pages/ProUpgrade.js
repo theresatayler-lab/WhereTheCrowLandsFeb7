@@ -7,32 +7,32 @@ const API_URL = process.env.REACT_APP_BACKEND_URL;
 // Package display configuration
 const PACKAGE_DISPLAY = {
   pro_monthly: {
-    icon: '/icons/anchors/gold/anchor-crown.png',
+    icon: '/icons/anchors/gold/anchor-candle.png',
     highlight: false,
     badge: null
   },
   pro_yearly: {
-    icon: '/icons/anchors/gold/anchor-crown.png',
+    icon: '/icons/anchors/gold/anchor-candle.png',
     highlight: true,
     badge: 'BEST VALUE'
   },
   single_spell: {
-    icon: '/icons/anchors/gold/anchor-crystal.png',
+    icon: '/icons/anchors/gold/anchor-herb.png',
     highlight: false,
     badge: null
   },
   spell_pack_5: {
-    icon: '/icons/anchors/gold/anchor-crystal.png',
+    icon: '/icons/anchors/gold/anchor-herb.png',
     highlight: true,
     badge: 'SAVE $5'
   },
   printed_grimoire: {
-    icon: '/icons/ui/gold/icon-library-books.png',
+    icon: '/icons/anchors/gold/anchor-pen.png',
     highlight: false,
     badge: 'PHYSICAL'
   },
   tarot_deck: {
-    icon: '/icons/anchors/gold/anchor-cards.png',
+    icon: '/icons/anchors/gold/anchor-recipe-card.png',
     highlight: false,
     badge: 'PHYSICAL'
   }
