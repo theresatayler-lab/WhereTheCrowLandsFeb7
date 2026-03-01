@@ -136,6 +136,79 @@ class TestV3SpellGeneration:
             return response.json().get("token")
         pytest.skip(f"Authentication failed: {response.status_code} - {response.text}")
     
+    def test_start_spell_job_shigg(self, auth_token):
+        """POST /api/ai/start-spell-job with shigg guide - async job pattern to avoid proxy timeout"""
+        headers = {"Authorization": f"Bearer {auth_token}", "Content-Type": "application/json"}
+        
+        payload = {
+            "spell_spec": {
+                "persona_id": "shigg",
+                "intention": "I need calm and peace for testing",
+                "user_query": "I need calm and peace",
+                "user_name": "Test Seeker",
+                "desired_feeling": "calm"
+            },
+            "belief_mode": "SPIRITUAL",
+            "generate_images": False,
+            "tier_preference": "quick"
+        }
+        
+        print(f"Starting async spell job for shigg guide...")
+        
+        # Start the job
+        response = requests.post(
+            f"{BASE_URL}/api/ai/start-spell-job",
+            json=payload,
+            headers=headers,
+            timeout=30
+        )
+        
+        assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text[:500]}"
+        
+        data = response.json()
+        assert "job_id" in data, "job_id should be in response"
+        assert data.get("status") == "pending", f"Status should be pending, got {data.get('status')}"
+        
+        job_id = data["job_id"]
+        print(f"✓ Job started: {job_id}")
+        print(f"  - Status: {data.get('status')}")
+        print(f"  - Poll URL: {data.get('poll_url')}")
+        
+        # Poll for completion (with timeout)
+        max_polls = 30  # 30 * 5 = 150 seconds max wait
+        for i in range(max_polls):
+            time.sleep(5)
+            
+            poll_response = requests.get(
+                f"{BASE_URL}/api/ai/spell-job/{job_id}",
+                headers=headers,
+                timeout=30
+            )
+            
+            assert poll_response.status_code == 200, f"Poll failed: {poll_response.status_code}"
+            
+            poll_data = poll_response.json()
+            status = poll_data.get("status")
+            
+            print(f"  Poll {i+1}: status={status}")
+            
+            if status == "complete":
+                # Verify spell result
+                result = poll_data.get("result", {})
+                spell = result.get("spell", {})
+                blocks = spell.get("blocks", [])
+                
+                assert len(blocks) > 0, "Spell should have blocks"
+                
+                print(f"✓ Spell complete with {len(blocks)} blocks")
+                print(f"  - Title: {spell.get('title', spell.get('spell_title', 'N/A'))[:50]}")
+                return  # Success!
+                
+            elif status == "failed":
+                pytest.fail(f"Spell generation failed: {poll_data.get('error')}")
+        
+        pytest.fail(f"Spell generation timed out after {max_polls * 5} seconds")
+    
     def test_generate_spell_v3_quick_shigg(self, auth_token):
         """POST /api/ai/generate-spell-v3 with shigg guide should generate spell using Claude"""
         headers = {"Authorization": f"Bearer {auth_token}", "Content-Type": "application/json"}
