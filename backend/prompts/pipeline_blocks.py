@@ -1139,7 +1139,6 @@ class BlocksSpellPipeline:
 async def generate_spell_blocks(
     spell_spec: dict,
     guide_config: dict,
-    openai_client,
     anthropic_client=None,
     deepseek_client=None,
     belief_mode: str = "SPIRITUAL",
@@ -1147,8 +1146,11 @@ async def generate_spell_blocks(
 ):
     """
     Convenience function to generate a spell using the blocks pipeline.
-    
+
     Returns: (spell_output, metadata)
     """
-    pipeline = BlocksSpellPipeline(openai_client, anthropic_client, deepseek_client)
+    pipeline = BlocksSpellPipeline(
+        deepseek_client=deepseek_client,
+        anthropic_client=anthropic_client
+    )
     return await pipeline.generate_spell(spell_spec, guide_config, belief_mode, tier)
