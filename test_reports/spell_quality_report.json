@@ -1,0 +1,54 @@
+{
+  "timestamp": "2026-03-01 23:36:51",
+  "provider": "anthropic",
+  "model": "claude-sonnet-4-20250514",
+  "benchmarks": {
+    "min_blocks": 6,
+    "max_blocks": 15,
+    "min_total_words": 800,
+    "max_total_words": 3000,
+    "min_words_per_block": 50,
+    "required_block_types": [
+      "cold_open",
+      "materials",
+      "stepper",
+      "closing"
+    ],
+    "min_materials": 3,
+    "min_steps": 4
+  },
+  "results": [
+    {
+      "test": "Shigg - Calming",
+      "error": "Job timed out",
+      "generation_time_s": 154.4633686542511
+    },
+    {
+      "test": "Cathleen - Protection",
+      "error": "Job timed out",
+      "generation_time_s": 153.98470854759216
+    },
+    {
+      "test": "Katherine - Clarity",
+      "error": "Job timed out",
+      "generation_time_s": 154.7556049823761
+    },
+    {
+      "test": "Brenda - Ancestors",
+      "error": "Job timed out",
+      "generation_time_s": 153.94535517692566
+    },
+    {
+      "test": "Theresa - Truth",
+      "error": "Job timed out",
+      "generation_time_s": 153.80500435829163
+    }
+  ],
+  "summary": {
+    "total_tests": 5,
+    "successful": 0,
+    "failed": 5,
+    "avg_quality_score": 0,
+    "avg_generation_time_s": 0
+  }
+}
