@@ -143,7 +143,58 @@ Frontend: React + Tailwind | Backend: FastAPI | DB: MongoDB | AI: DeepSeek + Cla
 ### P0: User verification of spell presentation (post-generation)
 ### P1: Dynamic spell borders based on AI tarot card
 ### P2: Remaining emoji cleanup on secondary pages  
-### P2: Stripe Integration (awaiting keys)
+### P2: Switch Stripe to live mode (test mode working)
 ### P3: Library book cover woodcut designs
 ### P3: Deity modal click handler bug fix
 ### P3: PDF Grimoire export enhancements
+### P3: Print-on-demand integration (Lulu.com, Blurb.com)
+### P4: PWA support (service worker, manifest)
+### P4: Community features (spell sharing, ratings)
+
+---
+
+## Session Report: March 1, 2026 - LLM Migration Complete
+
+### MIGRATION: OpenAI → Anthropic + DeepSeek
+
+**Goal:** Remove all OpenAI/GPT-4o dependency for text generation. Use Anthropic Claude models for all text generation. Keep DeepSeek for research. Image generation uses static library.
+
+**Model Mapping (Completed):**
+| Previous (OpenAI) | Current (Anthropic) | Purpose |
+|-------------------|---------------------|---------|
+| gpt-4o (writer) | claude-sonnet-4-20250514 | Spell writing, persona voice |
+| gpt-4o (planner) | claude-haiku-4-5-20251001 | Spell planning, structure |
+| gpt-4o-mini (planner) | claude-haiku-4-5-20251001 | Fast planning |
+| dall-e-3 (images) | Static library | No Anthropic image API |
+| deepseek-chat | deepseek-chat | Research (unchanged) |
+
+**Files Modified:**
+1. `backend/llm_providers.py` - Complete replacement with Anthropic routing
+2. `backend/spell_tiers.py` - Replaced all gpt-4o model strings
+3. `backend/prompts/pipeline_blocks.py` - Planner + writer use Anthropic
+4. `backend/prompts/pipeline.py` - V2 pipeline migrated to Anthropic
+5. `backend/research_service.py` - Persona voice switched to Anthropic
+6. `backend/server.py` - emergent_chat_completion uses Anthropic, all model refs updated
+7. `backend/.env` - Added ANTHROPIC_API_KEY, set IMAGE_PROVIDER=library
+
+**Endpoint Fix:**
+- `/api/ai/spell-config-v3` - Fixed KeyError by correcting BLOCK_TEMPLATES and CANON_ANCHORS dict comprehensions
+
+**Testing Results (iteration_14.json):**
+- ✅ Anthropic configured: true
+- ✅ DeepSeek configured: true
+- ✅ Image provider: library
+- ✅ OpenAI API calls: 0 (ZERO)
+- ✅ 11 DeepSeek API calls for research
+- ✅ 9 Anthropic API calls for writing
+- ✅ 5 successful spell generations (8-11 blocks each)
+
+**Timing Metrics (Post-Migration):**
+- Archivist (DeepSeek): ~48-50s
+- Writer (Claude Sonnet): ~22s
+- Total spell generation: ~70-75s
+
+**Known Limitation:**
+- Synchronous `/api/ai/generate-spell-v3` times out (60s proxy limit)
+- Use async endpoint `/api/ai/generate-spell-job` for frontend
+
