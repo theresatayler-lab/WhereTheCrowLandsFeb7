@@ -5278,8 +5278,7 @@ async def generate_spell_v3_endpoint(request: SpellRequestV3, user = Depends(get
         # Create blocks pipeline with tier config
         pipeline = BlocksSpellPipeline(
             deepseek_client=deepseek_client,
-            openai_client=openai_client,
-            claude_client=claude_client,
+            anthropic_client=claude_client or anthropic_client,
             max_retries=1,
             tier_config=tier_config
         )
