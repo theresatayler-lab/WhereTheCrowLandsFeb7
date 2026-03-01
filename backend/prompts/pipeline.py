@@ -255,7 +255,7 @@ class SpellGenerationPipeline:
         belief_mode: str,
         fix_instructions: str
     ) -> dict:
-        """Run Writer with specific fix instructions from QA"""
+        """Run Writer with specific fix instructions from QA using Anthropic Claude"""
         guide_id = spell_spec.get("persona_id", "shigg")
         
         # Add fix instructions to the standard prompt
@@ -271,17 +271,14 @@ Ensure all fixes are applied while maintaining your authentic voice."""
         
         contract = WRITER_CONTRACTS.get(guide_id, WRITER_CONTRACTS["shigg"])
         
-        response = await self.openai_client.chat.completions.create(
-            model="gpt-4o",
-            messages=[
-                {"role": "system", "content": f"You are {contract['name']}, {contract['title']}. Fix the QA issues while maintaining your voice. Return ONLY valid JSON."},
-                {"role": "user", "content": fix_prompt}
-            ],
-            temperature=0.75,  # Slightly lower for fixes
-            max_tokens=3500
+        response = await self.anthropic_client.messages.create(
+            model=ANTHROPIC_WRITER_MODEL,
+            max_tokens=3500,
+            system=f"You are {contract['name']}, {contract['title']}. Fix the QA issues while maintaining your voice. Return ONLY valid JSON.",
+            messages=[{"role": "user", "content": fix_prompt}]
         )
         
-        result_text = response.choices[0].message.content
+        result_text = response.content[0].text
         result_text = self._clean_json(result_text)
         return json.loads(result_text)
     
