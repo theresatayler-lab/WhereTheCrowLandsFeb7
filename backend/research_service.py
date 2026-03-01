@@ -23,18 +23,18 @@ logger = logging.getLogger(__name__)
 
 DEEPSEEK_BASE_URL = "https://api.deepseek.com"
 DEEPSEEK_MODEL = "deepseek-chat"
-OPENAI_MODEL = "gpt-4o"
+ANTHROPIC_MODEL = "claude-sonnet-4-20250514"
 
 def get_provider_status() -> Dict[str, Any]:
     """Return configuration status for all providers"""
     status = get_llm_status()
     return {
-        "openai_configured": status.get("openai_configured", False),
+        "anthropic_configured": status.get("anthropic_configured", False),
         "emergent_configured": status.get("emergent_key_configured", False),
         "deepseek_configured": status.get("deepseek_configured", False),
         "deepseek_base_url": DEEPSEEK_BASE_URL,
         "deepseek_model": DEEPSEEK_MODEL,
-        "openai_model": OPENAI_MODEL,
+        "anthropic_model": ANTHROPIC_MODEL,
         "image_provider": os.environ.get('IMAGE_PROVIDER', 'library'),
         "llm_config": status.get("current_config", {})
     }
