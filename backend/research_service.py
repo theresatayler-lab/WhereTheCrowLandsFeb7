@@ -13,7 +13,7 @@ from openai import AsyncOpenAI
 from pydantic import BaseModel, Field
 
 # Import model-agnostic abstraction
-from llm_providers import chat_completion, persona_voice, get_llm_status
+from llm_providers import chat_completion, persona_voice, get_llm_status, get_deepseek_client, get_anthropic_client
 
 logger = logging.getLogger(__name__)
 
