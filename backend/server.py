@@ -2904,7 +2904,7 @@ async def chat_with_ai(message_data: ChatMessage):
                 {"role": "system", "content": system_message},
                 {"role": "user", "content": message_data.message}
             ],
-            model="gpt-4o",
+            model="claude-sonnet-4-20250514",
             temperature=0.8,
             max_tokens=2000
         )
@@ -3188,7 +3188,7 @@ Remember: You are warm, dawn-quiet, British-inflected. Use understatement. Offer
                 {"role": "system", "content": bird_oracle_prompt},
                 {"role": "user", "content": user_message}
             ],
-            model="gpt-4o",
+            model="claude-sonnet-4-20250514",
             temperature=0.9,
             max_tokens=1500
         )
@@ -3315,7 +3315,7 @@ async def get_corrie_tarot_reading(request: CorrieTarotRequest, user = Depends(g
                 {"role": "system", "content": CORRIE_TAROT_PROMPT},
                 {"role": "user", "content": user_message}
             ],
-            model="gpt-4o",
+            model="claude-sonnet-4-20250514",
             temperature=0.9,
             max_tokens=2000
         )
@@ -3515,7 +3515,7 @@ Return JSON:
                 {"role": "system", "content": oracle_prompt},
                 {"role": "user", "content": user_message}
             ],
-            model="gpt-4o",
+            model="claude-sonnet-4-20250514",
             temperature=0.9,
             max_tokens=2500
         )
@@ -3723,7 +3723,7 @@ async def suggest_ward(request: WardRequest):
                 {"role": "system", "content": WARD_FINDER_PROMPT},
                 {"role": "user", "content": user_message}
             ],
-            model="gpt-4o",
+            model="claude-sonnet-4-20250514",
             temperature=0.9,
             max_tokens=2000
         )
@@ -4490,7 +4490,7 @@ Respond ONLY with the JSON object, no other text."""
                 {"role": "system", "content": system_message},
                 {"role": "user", "content": structured_prompt}
             ],
-            model="gpt-4o",
+            model="claude-sonnet-4-20250514",
             temperature=0.8,
             max_tokens=4000
         )
@@ -4713,7 +4713,7 @@ async def generate_personalized_spell(request: PersonalizedSpellRequest, user = 
                 {"role": "system", "content": "You are a spell planner. Return ONLY valid JSON, no markdown, no explanation."},
                 {"role": "user", "content": planner_prompt}
             ],
-            model="gpt-4o",
+            model="claude-sonnet-4-20250514",
             temperature=0.8,
             max_tokens=2500
         )
@@ -4754,7 +4754,7 @@ async def generate_personalized_spell(request: PersonalizedSpellRequest, user = 
                 {"role": "system", "content": f"You are {persona_config['name']}, {persona_config['title']}. Write spells in your unique voice. Return ONLY valid JSON, no markdown."},
                 {"role": "user", "content": writer_prompt}
             ],
-            model="gpt-4o",
+            model="claude-sonnet-4-20250514",
             temperature=0.85,
             max_tokens=3500
         )
