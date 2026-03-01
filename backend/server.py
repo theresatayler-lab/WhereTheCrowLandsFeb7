@@ -5349,16 +5349,19 @@ async def generate_spell_v3_endpoint(request: SpellRequestV3, user = Depends(get
 @api_router.get('/ai/spell-config-v3')
 async def get_spell_config_v3():
     """Get V3 blocks-based spell configuration"""
+    from research_service import get_provider_status
+    provider_status = get_provider_status()
+    
     return {
         'version': 'v3_blocks',
         'belief_modes': list(BELIEF_MODES.keys()),
-        'guides': list(BLOCK_TEMPLATES.keys()),
+        'block_types': list(BLOCK_TEMPLATES.keys()),
         'block_templates': {
             k: {
-                'template_id': v['template_id'],
-                'description': v['description'],
-                'required_blocks': [b['type'] for b in v['required_blocks'] if b['required']],
-                'specialty_blocks': v['specialty_blocks']
+                'type': v.get('type', 'content'),
+                'description': v.get('description', ''),
+                'min_chars': v.get('min_chars', 50),
+                'max_chars': v.get('max_chars', 500)
             }
             for k, v in BLOCK_TEMPLATES.items()
         },
@@ -5366,12 +5369,6 @@ async def get_spell_config_v3():
             k: [{'id': a['id'], 'title': a['title'], 'type': a['type']} for a in v]
             for k, v in CANON_ANCHORS.items()
         },
-        'block_types': [
-            'cold_open', 'materials', 'choice', 'stepper', 'lore_vignette',
-            'reflection', 'closing', 'bird_oracle', 'ward', 'song_prompt',
-            'evidence_card', 'journal_prompt', 'safety_note',
-            'poetry_reading', 'observation_task', 'further_reading'
-        ],
         'working_types': {
             k: {
                 wt_id: {
@@ -5382,7 +5379,8 @@ async def get_spell_config_v3():
                 for wt_id, wt_config in v.items()
             }
             for k, v in WORKING_TYPES.items()
-        }
+        },
+        'provider_status': provider_status
     }
 
 
