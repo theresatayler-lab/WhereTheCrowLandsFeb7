@@ -213,7 +213,7 @@ class SpellGenerationPipeline:
         plan: dict,
         belief_mode: str
     ) -> dict:
-        """Stage 3: Run Writer"""
+        """Stage 3: Run Writer using Anthropic Claude Sonnet"""
         start = time.time()
         guide_id = spell_spec.get("persona_id", "shigg")
         
@@ -221,17 +221,14 @@ class SpellGenerationPipeline:
         contract = WRITER_CONTRACTS.get(guide_id, WRITER_CONTRACTS["shigg"])
         
         try:
-            response = await self.openai_client.chat.completions.create(
-                model="gpt-4o",
-                messages=[
-                    {"role": "system", "content": f"You are {contract['name']}, {contract['title']}. Write spells in your unique voice. Return ONLY valid JSON."},
-                    {"role": "user", "content": prompt}
-                ],
-                temperature=0.85,
-                max_tokens=3500
+            response = await self.anthropic_client.messages.create(
+                model=ANTHROPIC_WRITER_MODEL,
+                max_tokens=3500,
+                system=f"You are {contract['name']}, {contract['title']}. Write spells in your unique voice. Return ONLY valid JSON.",
+                messages=[{"role": "user", "content": prompt}]
             )
             
-            result_text = response.choices[0].message.content
+            result_text = response.content[0].text
             result_text = self._clean_json(result_text)
             spell_output = json.loads(result_text)
             
