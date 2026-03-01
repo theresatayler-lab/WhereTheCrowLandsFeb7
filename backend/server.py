@@ -4584,21 +4584,19 @@ async def generate_image(request: ImageGenerationRequest):
         # Build the full prompt with archetype styling
         full_prompt = f"{archetype_style}, {request.prompt}, mystical ritual scene, highly detailed, no text or words"
         
-        # Use direct OpenAI API for image generation
-        image_response = await openai_client.images.generate(
-            model="dall-e-3",
+        # Use static image library
+        from image_provider import generate_image as gen_img, is_static_url, get_url_from_static
+        image_result = await gen_img(
             prompt=full_prompt,
-            size="1024x1024",
-            quality="standard",
-            n=1,
-            response_format="b64_json"
+            persona_id=getattr(request, 'archetype', 'shigg') or 'shigg',
+            asset_type="header"
         )
-        
-        if image_response.data and len(image_response.data) > 0:
-            image_base64 = image_response.data[0].b64_json
-            return {'image_base64': image_base64}
+        if image_result:
+            if is_static_url(image_result):
+                return {'image_url': get_url_from_static(image_result)}
+            return {'image_base64': image_result}
         else:
-            raise HTTPException(status_code=500, detail='No image was generated')
+            raise HTTPException(status_code=500, detail='No image available')
     except Exception as e:
         logging.error(f'Image generation error: {str(e)}')
         raise HTTPException(status_code=500, detail='Failed to generate image')
