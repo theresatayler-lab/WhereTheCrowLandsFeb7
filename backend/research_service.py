@@ -1,5 +1,5 @@
 # Research Service - Dual-Model Architecture V2
-# DeepSeek for research/factual content, OpenAI for persona voice
+# DeepSeek for research/factual content, Anthropic Claude for persona voice
 # V2: Enhanced research modes, strict validation, persona-specific biases
 
 import os
