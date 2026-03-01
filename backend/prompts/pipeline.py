@@ -1,5 +1,6 @@
 # Spell Generation Pipeline V2
 # Full 4-stage pipeline: Archivist → Planner → Writer → QA
+# MIGRATED: Now uses Anthropic Claude instead of OpenAI GPT-4o
 
 import json
 import logging
@@ -16,6 +17,10 @@ from .belief_modes import BELIEF_MODES
 
 logger = logging.getLogger(__name__)
 
+# Anthropic model constants (migrated from GPT-4o)
+ANTHROPIC_PLANNER_MODEL = "claude-haiku-4-5-20251001"
+ANTHROPIC_WRITER_MODEL = "claude-sonnet-4-20250514"
+
 
 class SpellGenerationPipeline:
     """
@@ -23,14 +28,14 @@ class SpellGenerationPipeline:
     
     Stages:
     1. ARCHIVIST (DeepSeek) - Research facts, sources, tradition context
-    2. PLANNER (GPT-4o) - Structure, materials, step outline
-    3. WRITER (GPT-4o) - Full spell content in guide's voice
+    2. PLANNER (Claude Haiku) - Structure, materials, step outline
+    3. WRITER (Claude Sonnet) - Full spell content in guide's voice
     4. QA (Programmatic + optional LLM) - Validation and rewrite if needed
     """
     
-    def __init__(self, deepseek_client, openai_client, max_retries: int = 1):
+    def __init__(self, deepseek_client, anthropic_client, max_retries: int = 1):
         self.deepseek_client = deepseek_client
-        self.openai_client = openai_client
+        self.anthropic_client = anthropic_client
         self.max_retries = max_retries
         self.timing_log = {}
     
