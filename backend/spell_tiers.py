@@ -57,7 +57,7 @@ SPELL_TIERS = {
             },
             "planner": {
                 "enabled": True,
-                "model": "gpt-4o-mini",  # Faster than gpt-4o for standard
+                "model": "claude-haiku-4-5-20251001",  # Fast, cheap Anthropic planner
                 "max_tokens": 1500,
                 "timeout_seconds": 15
             },
