@@ -4827,56 +4827,52 @@ async def generate_personalized_spell(request: PersonalizedSpellRequest, user = 
         if request.generate_images and asset_plan:
             images_start = time.time()
             try:
-                # 1. Generate header image
+                from image_provider import generate_image as gen_img, is_static_url, get_url_from_static
+                
+                # 1. Header image (static library)
                 header_prompt = build_image_prompt("header_image", asset_plan, persona_config, spell.get('title', 'Spell'))
                 logging.info("Generating header image...")
-                
-                header_response = await openai_client.images.generate(
-                    model="dall-e-3",
+                header_result = await gen_img(
                     prompt=header_prompt,
-                    size="1024x1024",
-                    quality="standard",
-                    n=1,
-                    response_format="b64_json"
+                    persona_id=persona_id,
+                    asset_type="header"
                 )
-                
-                if header_response.data and len(header_response.data) > 0:
-                    image_base64 = header_response.data[0].b64_json
-                    generated_assets['header_image'] = image_base64
+                if header_result:
+                    if is_static_url(header_result):
+                        generated_assets['header_image_url'] = get_url_from_static(header_result)
+                    else:
+                        image_base64 = header_result
+                        generated_assets['header_image'] = header_result
                     asset_plan['header_image_generated'] = True
-                
-                # 2. Generate tarot card image (V2.0: now uses spell-specific visual tokens)
+
+                # 2. Tarot card image (static library)
                 tarot_prompt = build_image_prompt("tarot_card_image", asset_plan, persona_config, spell.get('title', 'Spell'), spell)
                 logging.info("Generating tarot card image with spell-specific motifs...")
-                
-                tarot_response = await openai_client.images.generate(
-                    model="dall-e-3",
+                tarot_result = await gen_img(
                     prompt=tarot_prompt,
-                    size="1024x1024",
-                    quality="standard",
-                    n=1,
-                    response_format="b64_json"
+                    persona_id=persona_id,
+                    asset_type="tarot"
                 )
-                
-                if tarot_response.data and len(tarot_response.data) > 0:
-                    generated_assets['tarot_card_image'] = tarot_response.data[0].b64_json
+                if tarot_result:
+                    if is_static_url(tarot_result):
+                        generated_assets['tarot_card_image_url'] = get_url_from_static(tarot_result)
+                    else:
+                        generated_assets['tarot_card_image'] = tarot_result
                     asset_plan['tarot_card_image_generated'] = True
-                
-                # 3. Generate sigil (black and white only)
+
+                # 3. Sigil (static library)
                 sigil_prompt = build_image_prompt("sigil", asset_plan, persona_config, spell.get('title', 'Spell'))
                 logging.info("Generating sigil...")
-                
-                sigil_response = await openai_client.images.generate(
-                    model="dall-e-3",
+                sigil_result = await gen_img(
                     prompt=sigil_prompt,
-                    size="1024x1024",
-                    quality="standard",
-                    n=1,
-                    response_format="b64_json"
+                    persona_id=persona_id,
+                    asset_type="sigil"
                 )
-                
-                if sigil_response.data and len(sigil_response.data) > 0:
-                    generated_assets['sigil'] = sigil_response.data[0].b64_json
+                if sigil_result:
+                    if is_static_url(sigil_result):
+                        generated_assets['sigil_url'] = get_url_from_static(sigil_result)
+                    else:
+                        generated_assets['sigil'] = sigil_result
                     asset_plan['sigil_generated'] = True
                 
                 # DIVIDERS ARE NOW STATIC - No generation needed
@@ -4893,7 +4889,7 @@ async def generate_personalized_spell(request: PersonalizedSpellRequest, user = 
                     logging.info(f"Using static divider for {persona_id}")
                     
                 timing_log['images_ms'] = int((time.time() - images_start) * 1000)
-                logging.info(f"[TIMING] Images (3 generated + static dividers): {timing_log['images_ms']}ms")
+                logging.info(f"[TIMING] Images (static library): {timing_log['images_ms']}ms")
                     
             except Exception as img_error:
                 logging.error(f"Image generation error: {str(img_error)}")
