@@ -995,7 +995,7 @@ class BlocksSpellPipeline:
                 await on_stage_change("planner")
             plan, planner_meta = await run_block_planner(
                 spell_spec, guide_config, research_packet,
-                self.openai_client, tier
+                self.anthropic_client, tier
             )
             metadata["timing"]["planner_ms"] = planner_meta.get("planner_ms", 0)
             metadata["planner_mode"] = planner_meta.get("planner_mode", "unknown")
@@ -1006,7 +1006,7 @@ class BlocksSpellPipeline:
                 await on_stage_change("writer")
             spell_output, writer_meta = await run_block_writer(
                 spell_spec, guide_config, research_packet, plan,
-                belief_mode, self.openai_client, self.anthropic_client, tier
+                belief_mode, self.anthropic_client, tier
             )
             metadata["timing"]["writer_ms"] = writer_meta.get("writer_ms", 0)
             metadata["writer_model"] = writer_meta.get("writer_model", "unknown")
