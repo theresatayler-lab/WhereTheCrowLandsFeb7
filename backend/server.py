@@ -5023,7 +5023,7 @@ async def generate_spell_v2_endpoint(request: SpellRequestV2, user = Depends(get
         # Create pipeline
         pipeline = SpellGenerationPipeline(
             deepseek_client=deepseek_client,
-            openai_client=openai_client,
+            anthropic_client=anthropic_client,
             max_retries=1
         )
         
