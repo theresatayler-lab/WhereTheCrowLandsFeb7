@@ -5365,10 +5365,7 @@ async def get_spell_config_v3():
             }
             for k, v in BLOCK_TEMPLATES.items()
         },
-        'canon_anchors': {
-            k: [{'id': a['id'], 'title': a['title'], 'type': a['type']} for a in v]
-            for k, v in CANON_ANCHORS.items()
-        },
+        'canon_anchors': CANON_ANCHORS,  # Simple dict: guide_id -> list of anchor strings
         'working_types': {
             k: {
                 wt_id: {
