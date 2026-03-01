@@ -69,11 +69,11 @@ security = HTTPBearer()
 
 JWT_SECRET = os.environ.get('JWT_SECRET', 'your-secret-key-change-in-production')
 JWT_ALGORITHM = 'HS256'
-OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY', '')
+ANTHROPIC_API_KEY = os.environ.get('ANTHROPIC_API_KEY', '')
 STRIPE_API_KEY = os.environ.get('STRIPE_API_KEY', '')
 
-# Initialize OpenAI client (for image generation - kept separate)
-openai_client = AsyncOpenAI(api_key=OPENAI_API_KEY)
+# Initialize Anthropic client (for all text generation)
+anthropic_client = anthropic.AsyncAnthropic(api_key=ANTHROPIC_API_KEY)
 
 # Import model-agnostic LLM abstraction layer
 from llm_providers import (
@@ -81,29 +81,25 @@ from llm_providers import (
     get_llm_status, PROVIDER_CONFIG
 )
 
-# Legacy wrapper for existing code (uses direct OpenAI)
-async def emergent_chat_completion(messages: list, model: str = "gpt-4o", temperature: float = 0.7, max_tokens: int = 4000) -> str:
-    """Legacy wrapper - routes through model-agnostic abstraction (now using your OpenAI key)"""
+# Central wrapper for all text generation (now uses Anthropic Claude)
+async def emergent_chat_completion(messages: list, model: str = "claude-sonnet-4-20250514", temperature: float = 0.7, max_tokens: int = 4000) -> str:
+    """Central text generation wrapper - routes through Anthropic Claude"""
     system_msg = "You are a helpful assistant."
     user_content = ""
-    
+
     for msg in messages:
         if msg.get("role") == "system":
             system_msg = msg.get("content", system_msg)
         elif msg.get("role") == "user":
             user_content = msg.get("content", "")
-    
-    # Use direct OpenAI client
-    response = await openai_client.chat.completions.create(
+
+    response = await anthropic_client.messages.create(
         model=model,
-        messages=[
-            {"role": "system", "content": system_msg},
-            {"role": "user", "content": user_content}
-        ],
-        temperature=temperature,
-        max_tokens=max_tokens
+        max_tokens=max_tokens,
+        system=system_msg,
+        messages=[{"role": "user", "content": user_content}]
     )
-    return response.choices[0].message.content
+    return response.content[0].text
 
 
 def extract_json_from_text(text: str) -> dict:
