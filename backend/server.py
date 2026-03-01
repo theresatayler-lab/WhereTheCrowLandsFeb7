@@ -14,7 +14,7 @@ from datetime import datetime, timezone, timedelta
 import bcrypt
 import jwt
 import asyncio
-from openai import AsyncOpenAI
+import anthropic
 from emergentintegrations.payments.stripe.checkout import StripeCheckout, CheckoutSessionResponse, CheckoutStatusResponse, CheckoutSessionRequest
 import base64
 from katherine_spells import KATHERINE_SAMPLE_SPELLS, seed_katherine_spells
