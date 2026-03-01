@@ -37,13 +37,13 @@ TIER_CONFIG = {
     },
     "standard": {
         "skip_planner_llm": False,
-        "planner_model": "gpt-4o-mini",  # Was gpt-4o - faster for standard tier
+        "planner_model": "claude-haiku-4-5-20251001",  # Anthropic planner
         "writer_tokens": 3200,
         "max_blocks": 8
     },
     "premium": {
         "skip_planner_llm": False,
-        "planner_model": "gpt-4o",
+        "planner_model": "claude-haiku-4-5-20251001",
         "writer_tokens": 4000,
         "max_blocks": 12
     }
