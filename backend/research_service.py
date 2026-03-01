@@ -375,7 +375,7 @@ class CombinedResponse(BaseModel):
 # LLM Clients - Import from central provider
 # ============================================================================
 
-from llm_providers import get_deepseek_client, get_openai_client
+# Removed duplicate import - get_deepseek_client and get_anthropic_client already imported above
 
 # ============================================================================
 # Research Mode Selection (V3 Enhanced)
