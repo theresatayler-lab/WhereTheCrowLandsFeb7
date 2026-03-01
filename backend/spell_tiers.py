@@ -204,7 +204,7 @@ def get_writer_tokens(tier: str) -> int:
 def get_planner_model(tier: str) -> str:
     """Get the planner model for a tier."""
     config = get_tier_config(tier)
-    return config.get("stages", {}).get("planner", {}).get("model", "gpt-4o-mini")
+    return config.get("stages", {}).get("planner", {}).get("model", "claude-haiku-4-5-20251001")
 
 
 def is_planner_enabled(tier: str) -> bool:
