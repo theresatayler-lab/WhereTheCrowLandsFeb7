@@ -95,7 +95,7 @@ SPELL_TIERS = {
             },
             "planner": {
                 "enabled": True,
-                "model": "gpt-4o",  # Full model for premium
+                "model": "claude-haiku-4-5-20251001",  # Anthropic planner
                 "max_tokens": 2500,
                 "timeout_seconds": 20
             },
