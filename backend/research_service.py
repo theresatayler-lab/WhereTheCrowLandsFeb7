@@ -8,6 +8,7 @@ import time
 import re
 import uuid
 from typing import Dict, List, Optional, Any
+# openai import kept only for DeepSeek compatibility (OpenAI-compatible API)
 from openai import AsyncOpenAI
 from pydantic import BaseModel, Field
 
