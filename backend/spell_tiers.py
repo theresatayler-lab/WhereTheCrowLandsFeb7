@@ -102,7 +102,7 @@ SPELL_TIERS = {
             "writer": {
                 "enabled": True,
                 "model": "claude-sonnet-4-20250514",
-                "fallback_model": "gpt-4o",
+                "fallback_model": "claude-sonnet-4-20250514",
                 "max_tokens": 4000,
                 "timeout_seconds": 60
             },
