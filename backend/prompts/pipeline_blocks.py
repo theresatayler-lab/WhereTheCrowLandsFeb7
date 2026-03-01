@@ -406,76 +406,58 @@ async def run_block_writer(
     research_packet: dict,
     plan: dict,
     belief_mode: str,
-    openai_client,
-    anthropic_client=None,
+    anthropic_client,
     tier: str = "standard"
 ) -> Tuple[dict, dict]:
     """
     Run the writer stage with block awareness.
-    
+    Uses Anthropic Claude Sonnet as the sole writer.
+
     Returns: (spell_output, metadata)
     """
     start = time.time()
     guide_id = spell_spec.get("persona_id", "shigg")
     tier_config = TIER_CONFIG.get(tier, TIER_CONFIG["standard"])
     writer_tokens = tier_config.get("writer_tokens", DEFAULT_WRITER_TOKENS)
-    
+
     metadata = {
         "tier": tier,
         "writer_tokens": writer_tokens
     }
-    
+
     prompt = build_block_writer_prompt(
         spell_spec, guide_config, research_packet, plan, belief_mode, tier
     )
-    
-    # Try Anthropic first if available
-    if anthropic_client:
-        try:
-            logger.info(f"[WRITER_BLOCKS] Using Claude for writing (tokens: {writer_tokens})")
-            response = await anthropic_client.messages.create(
-                model="claude-sonnet-4-20250514",
-                max_tokens=writer_tokens,
-                messages=[{"role": "user", "content": prompt}]
-            )
-            result_text = response.content[0].text
-            metadata["writer_model"] = "claude-sonnet"
-        except Exception as e:
-            logger.warning(f"[WRITER_BLOCKS] Claude failed, falling back to OpenAI: {e}")
-            anthropic_client = None
-    
-    # Fallback to OpenAI
+
     if not anthropic_client:
-        try:
-            logger.info(f"[WRITER_BLOCKS] Using GPT-4o for writing (tokens: {writer_tokens})")
-            response = await openai_client.chat.completions.create(
-                model="gpt-4o",
-                messages=[
-                    {"role": "system", "content": f"You are {guide_config.get('name', 'Guide')}. Write spell content in your voice. Return ONLY valid JSON."},
-                    {"role": "user", "content": prompt}
-                ],
-                temperature=0.85,
-                max_tokens=writer_tokens
-            )
-            result_text = response.choices[0].message.content
-            metadata["writer_model"] = "gpt-4o"
-        except Exception as e:
-            logger.error(f"[WRITER_BLOCKS] OpenAI failed: {e}")
-            raise
-    
+        raise ValueError("Anthropic client not configured - check ANTHROPIC_API_KEY")
+
+    try:
+        logger.info(f"[WRITER_BLOCKS] Using Claude Sonnet for writing (tokens: {writer_tokens})")
+        response = await anthropic_client.messages.create(
+            model="claude-sonnet-4-20250514",
+            max_tokens=writer_tokens,
+            messages=[{"role": "user", "content": prompt}]
+        )
+        result_text = response.content[0].text
+        metadata["writer_model"] = "claude-sonnet-4"
+    except Exception as e:
+        logger.error(f"[WRITER_BLOCKS] Claude Sonnet failed: {e}")
+        raise
+
     # Parse and repair JSON
     result_text = clean_json_response(result_text)
     result_text = repair_truncated_json(result_text)
-    
+
     try:
         spell_output = json.loads(result_text)
     except json.JSONDecodeError as e:
         logger.error(f"[WRITER_BLOCKS] JSON parse error: {e}")
         raise ValueError(f"Failed to parse spell output: {e}")
-    
+
     # Transform blocks dict to array format for frontend compatibility
     spell_output = transform_blocks_to_array(spell_output, guide_id)
-    
+
     metadata["writer_ms"] = int((time.time() - start) * 1000)
     return spell_output, metadata
 
