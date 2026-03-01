@@ -64,7 +64,7 @@ SPELL_TIERS = {
             "writer": {
                 "enabled": True,
                 "model": "claude-sonnet-4-20250514",
-                "fallback_model": "gpt-4o",
+                "fallback_model": "claude-sonnet-4-20250514",
                 "max_tokens": 3200,  # Increased from 2500 for Theresa's evidence_cards
                 "timeout_seconds": 45
             },
