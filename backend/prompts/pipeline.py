@@ -394,7 +394,7 @@ async def generate_spell_v2(
     spell_spec: dict,
     guide_config: dict,
     deepseek_client,
-    openai_client,
+    anthropic_client,
     belief_mode: str = "SPIRITUAL"
 ) -> Tuple[dict, dict]:
     """
@@ -404,11 +404,11 @@ async def generate_spell_v2(
         spell_spec: User's spell request
         guide_config: Guide/persona configuration
         deepseek_client: AsyncOpenAI client for DeepSeek
-        openai_client: AsyncOpenAI client for OpenAI
+        anthropic_client: AsyncAnthropic client for Anthropic Claude
         belief_mode: SECULAR, SPIRITUAL, or PRACTITIONER
     
     Returns:
         (spell_output, metadata)
     """
-    pipeline = SpellGenerationPipeline(deepseek_client, openai_client)
+    pipeline = SpellGenerationPipeline(deepseek_client, anthropic_client)
     return await pipeline.generate_spell(spell_spec, guide_config, belief_mode)
