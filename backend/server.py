@@ -4522,18 +4522,20 @@ Respond ONLY with the JSON object, no other text."""
                 style = ARCHETYPE_IMAGE_STYLES.get(archetype_id or 'neutral', ARCHETYPE_IMAGE_STYLES['neutral'])
                 image_prompt = f"{style}, {spell_data['image_prompt']}, mystical ritual scene, no text"
                 
-                # Use direct OpenAI API for image generation
-                image_response = await openai_client.images.generate(
-                    model="dall-e-3",
+                # Use static image library (no OpenAI image generation)
+                from image_provider import generate_image as gen_img, is_static_url, get_url_from_static
+                image_result = await gen_img(
                     prompt=image_prompt,
-                    size="1024x1024",
-                    quality="standard",
-                    n=1,
-                    response_format="b64_json"
+                    persona_id=archetype_id or 'shigg',
+                    asset_type="header"
                 )
-                
-                if image_response.data and len(image_response.data) > 0:
-                    image_base64 = image_response.data[0].b64_json
+                if image_result:
+                    if is_static_url(image_result):
+                        # Store URL reference for frontend
+                        image_base64 = None
+                        spell_data['image_url'] = get_url_from_static(image_result)
+                    else:
+                        image_base64 = image_result
             except Exception as img_error:
                 logging.error(f'Spell image generation error: {str(img_error)}')
         
