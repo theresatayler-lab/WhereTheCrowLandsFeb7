@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="3" skipped="0" tests="8" time="182.829" timestamp="2026-03-01T22:06:40.841982+00:00" hostname="agent-env-7d627839-180d-4106-90d2-e56bffecdff2"><testcase classname="tests.test_anthropic_migration.TestProviderConfiguration" name="test_health_providers_endpoint" time="0.202" /><testcase classname="tests.test_anthropic_migration.TestProviderConfiguration" name="test_spell_config_v3_endpoint" time="0.254" /><testcase classname="tests.test_anthropic_migration.TestProviderConfiguration" name="test_llm_status_endpoint" time="0.136" /><testcase classname="tests.test_anthropic_migration.TestV3SpellGeneration" name="test_generate_spell_v3_quick_shigg" time="60.501"><failure message="AssertionError: Expected 200, got 502: The preview environment is not responding. It may be starting up.&#10;  &#10;assert 502 == 200&#10; +  where 502 = &lt;Response [502]&gt;.status_code">tests/test_anthropic_migration.py:171: in test_generate_spell_v3_quick_shigg
+    assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text[:500]}"
+E   AssertionError: Expected 200, got 502: The preview environment is not responding. It may be starting up.
+E     
+E   assert 502 == 200
+E    +  where 502 = &lt;Response [502]&gt;.status_code</failure></testcase><testcase classname="tests.test_anthropic_migration.TestV3SpellGeneration" name="test_generate_spell_v3_quick_cathleen" time="60.542"><failure message="AssertionError: Expected 200, got 502: The preview environment is not responding. It may be starting up.&#10;  &#10;assert 502 == 200&#10; +  where 502 = &lt;Response [502]&gt;.status_code">tests/test_anthropic_migration.py:232: in test_generate_spell_v3_quick_cathleen
+    assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text[:500]}"
+E   AssertionError: Expected 200, got 502: The preview environment is not responding. It may be starting up.
+E     
+E   assert 502 == 200
+E    +  where 502 = &lt;Response [502]&gt;.status_code</failure></testcase><testcase classname="tests.test_anthropic_migration.TestV3SpellGeneration" name="test_generate_spell_v3_quick_katherine" time="60.507"><failure message="AssertionError: Expected 200, got 502: The preview environment is not responding. It may be starting up.&#10;  &#10;assert 502 == 200&#10; +  where 502 = &lt;Response [502]&gt;.status_code">tests/test_anthropic_migration.py:277: in test_generate_spell_v3_quick_katherine
+    assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text[:500]}"
+E   AssertionError: Expected 200, got 502: The preview environment is not responding. It may be starting up.
+E     
+E   assert 502 == 200
+E    +  where 502 = &lt;Response [502]&gt;.status_code</failure></testcase><testcase classname="tests.test_anthropic_migration.TestResearchService" name="test_research_config_endpoint" time="0.182" /><testcase classname="tests.test_anthropic_migration.TestAuthentication" name="test_login_with_test_credentials" time="0.356" /></testsuite></testsuites>
