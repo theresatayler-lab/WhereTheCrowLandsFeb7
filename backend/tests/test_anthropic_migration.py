@@ -137,7 +137,7 @@ class TestV3SpellGeneration:
         pytest.skip(f"Authentication failed: {response.status_code} - {response.text}")
     
     def test_start_spell_job_shigg(self, auth_token):
-        """POST /api/ai/start-spell-job with shigg guide - async job pattern to avoid proxy timeout"""
+        """POST /api/ai/generate-spell-job with shigg guide - async job pattern to avoid proxy timeout"""
         headers = {"Authorization": f"Bearer {auth_token}", "Content-Type": "application/json"}
         
         payload = {
@@ -157,7 +157,7 @@ class TestV3SpellGeneration:
         
         # Start the job
         response = requests.post(
-            f"{BASE_URL}/api/ai/start-spell-job",
+            f"{BASE_URL}/api/ai/generate-spell-job",
             json=payload,
             headers=headers,
             timeout=30
