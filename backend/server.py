@@ -5512,8 +5512,7 @@ async def _generate_spell_background(job_id: str, request_data: dict, user_id: O
         # Create pipeline
         pipeline = BlocksSpellPipeline(
             deepseek_client=deepseek_client,
-            openai_client=openai_client,
-            claude_client=claude_client,
+            anthropic_client=claude_client or anthropic_client,
             max_retries=1,
             tier_config=tier_config
         )
