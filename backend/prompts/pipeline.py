@@ -174,23 +174,20 @@ class SpellGenerationPipeline:
         research_packet: dict,
         belief_mode: str
     ) -> dict:
-        """Stage 2: Run Planner"""
+        """Stage 2: Run Planner using Anthropic Claude Haiku"""
         start = time.time()
         
         prompt = build_planner_prompt_v2(spell_spec, guide_config, research_packet, belief_mode)
         
         try:
-            response = await self.openai_client.chat.completions.create(
-                model="gpt-4o",
-                messages=[
-                    {"role": "system", "content": "You are a spell planner. Return ONLY valid JSON."},
-                    {"role": "user", "content": prompt}
-                ],
-                temperature=0.8,
-                max_tokens=2500
+            response = await self.anthropic_client.messages.create(
+                model=ANTHROPIC_PLANNER_MODEL,
+                max_tokens=2500,
+                system="You are a spell planner. Return ONLY valid JSON.",
+                messages=[{"role": "user", "content": prompt}]
             )
             
-            result_text = response.choices[0].message.content
+            result_text = response.content[0].text
             result_text = self._clean_json(result_text)
             plan = json.loads(result_text)
             
