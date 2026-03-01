@@ -819,32 +819,32 @@ You help seekers uncover truth and connect with ancestral wisdom."""
 }
 
 async def generate_spellbook_response(user_request: str, persona: str, tone: str, research_facts: List[Dict] = None) -> SpellbookResponse:
-    """Generate persona-voiced spellbook response using OpenAI"""
+    """Generate persona-voiced spellbook response using Anthropic Claude"""
     start_time = time.time()
     endpoint_name = "/api/spellbook"
-    provider = "openai"
-    
+    provider = "anthropic"
+
     logger.info(f"[PROVIDER_CALL] endpoint={endpoint_name} provider={provider} persona={persona} has_research_facts={research_facts is not None}")
-    
-    client = get_openai_client()
-    
+
+    client = get_anthropic_client()
+
     if not client:
         elapsed = time.time() - start_time
         logger.warning(f"[PROVIDER_CALL] endpoint={endpoint_name} provider={provider} status=NOT_CONFIGURED timing={elapsed:.3f}s")
         return SpellbookResponse(
-            response="Persona voice not configured. Please add OPENAI_API_KEY to environment variables.",
+            response="Persona voice not configured. Please add ANTHROPIC_API_KEY to environment variables.",
             persona_name="System",
             tone_used=tone
         )
-    
+
     persona_config = PERSONA_VOICES.get(persona.lower(), PERSONA_VOICES["shigg"])
-    
+
     tone_guidance = {
         "gentle": "Respond with soft, nurturing energy. Be invitational and tender.",
         "practical": "Respond with clear, direct guidance. Be grounded and actionable.",
         "intense": "Respond with powerful, unflinching wisdom. Go deep and don't soften the truth."
     }
-    
+
     # Build research context if provided
     research_context = ""
     if research_facts:
@@ -853,11 +853,11 @@ RESEARCH FACTS TO REFERENCE (do NOT invent beyond these):
 Use these facts to explain WHY each practice works. If confidence is "low", use softening language like "some traditions say" or "it's believed that".
 
 """
-        for fact in research_facts[:5]:  # Limit to 5 facts
+        for fact in research_facts[:5]:
             confidence = fact.get("confidence", "medium")
             soften = " (use hedging language)" if confidence == "low" else ""
             research_context += f"- {fact.get('claim', fact.get('text', ''))}{soften}\n"
-    
+
     system_message = f"""{persona_config['system_prompt']}
 
 TONE FOR THIS RESPONSE: {tone_guidance.get(tone, tone_guidance['gentle'])}
@@ -876,35 +876,26 @@ Write in-character, as if speaking directly to the seeker. Include:
 - An invitation to return"""
 
     try:
-        # Use direct OpenAI for persona voice (your key)
-        client = get_openai_client()
-        
-        if not client:
-            raise ValueError("OpenAI not configured")
-        
-        response = await client.chat.completions.create(
-            model=OPENAI_MODEL,
-            messages=[
-                {"role": "system", "content": system_message},
-                {"role": "user", "content": user_request}
-            ],
-            temperature=0.8,
-            max_tokens=1200
+        response = await client.messages.create(
+            model=ANTHROPIC_MODEL,
+            max_tokens=1200,
+            system=system_message,
+            messages=[{"role": "user", "content": user_request}]
         )
-        response_text = response.choices[0].message.content
-        
+        response_text = response.content[0].text
+
         elapsed = time.time() - start_time
-        logger.info(f"[PROVIDER_CALL] endpoint={endpoint_name} provider=openai_direct status=SUCCESS timing={elapsed:.3f}s")
-        
+        logger.info(f"[PROVIDER_CALL] endpoint={endpoint_name} provider=anthropic_direct status=SUCCESS timing={elapsed:.3f}s")
+
         return SpellbookResponse(
             response=response_text,
             persona_name=persona_config['name'],
             tone_used=tone
         )
-        
+
     except Exception as e:
         elapsed = time.time() - start_time
-        logger.error(f"[PROVIDER_CALL] endpoint={endpoint_name} provider=openai_direct status=ERROR timing={elapsed:.3f}s error={str(e)}")
+        logger.error(f"[PROVIDER_CALL] endpoint={endpoint_name} provider=anthropic_direct status=ERROR timing={elapsed:.3f}s error={str(e)}")
         return SpellbookResponse(
             response=f"Failed to generate response: {str(e)}",
             persona_name=persona_config['name'],
