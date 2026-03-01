@@ -937,16 +937,14 @@ class BlocksSpellPipeline:
     """
     
     def __init__(
-        self, 
+        self,
         deepseek_client=None,
-        openai_client=None, 
-        anthropic_client=None, 
+        anthropic_client=None,
         claude_client=None,
         max_retries: int = 1,
         tier_config: dict = None
     ):
         self.deepseek_client = deepseek_client
-        self.openai_client = openai_client
         # Support both anthropic_client and claude_client names
         self.anthropic_client = anthropic_client or claude_client
         self.max_retries = max_retries
