@@ -196,46 +196,47 @@ async def run_block_planner(
     spell_spec: dict,
     guide_config: dict,
     research_packet: dict,
-    openai_client,
+    anthropic_client,
     tier: str = "standard"
 ) -> Tuple[dict, dict]:
     """
     Run the planner stage with block awareness.
     For QUICK tier, skips LLM and uses deterministic plan.
-    
+    Uses Anthropic Claude Haiku for planning.
+
     Returns: (plan, metadata)
     """
     start = time.time()
     guide_id = spell_spec.get("persona_id", "shigg")
     intention = spell_spec.get("user_query", "")
-    
+
     tier_config = TIER_CONFIG.get(tier, TIER_CONFIG["standard"])
     metadata = {
         "tier": tier,
         "planner_mode": "deterministic" if tier_config["skip_planner_llm"] else "llm"
     }
-    
+
     # QUICK tier: Use deterministic plan (no LLM call)
     if tier_config["skip_planner_llm"]:
         logger.info(f"[PLANNER_BLOCKS] Using deterministic plan for tier: {tier}")
         plan = build_deterministic_plan(guide_id, intention, research_packet)
         metadata["planner_ms"] = int((time.time() - start) * 1000)
         return plan, metadata
-    
-    # STANDARD/PREMIUM: Use LLM planner
+
+    # STANDARD/PREMIUM: Use LLM planner (Anthropic Claude Haiku)
     model = tier_config["planner_model"]
     logger.info(f"[PLANNER_BLOCKS] Using model: {model} (tier: {tier})")
-    
+
     # Get working type and required blocks
     working_type = get_working_type(guide_id, intention)
     required_blocks = working_type.get("required_blocks", [])
-    
+
     # Build block-aware prompt
     blocks_description = "\n".join([
         f"- {block}: {get_block_template(block).get('description', 'Content block')}"
         for block in required_blocks
     ])
-    
+
     prompt = f"""Plan a spell for guide {guide_id}.
 
 WORKING TYPE: {working_type['name']}
@@ -251,41 +252,41 @@ RESEARCH CONTEXT:
 
 Return JSON with:
 - spell_title: Evocative title
-- spell_subtitle: Poetic tagline  
+- spell_subtitle: Poetic tagline
 - working_type: "{working_type['type_id']}"
 - section_order: {json.dumps(required_blocks)}
 - materials_plan: [{{"name": "...", "purpose": "...", "substitution": "..."}}]
 - step_outline: Brief outline for each block
 - persona_lock: {{"props": [...], "sensory_cue": "...", "signature_move": "..."}}
 """
-    
+
     try:
-        response = await openai_client.chat.completions.create(
+        if not anthropic_client:
+            raise ValueError("Anthropic client not available")
+
+        response = await anthropic_client.messages.create(
             model=model,
-            messages=[
-                {"role": "system", "content": "You are a spell planner. Return ONLY valid JSON."},
-                {"role": "user", "content": prompt}
-            ],
-            temperature=0.7,
-            max_tokens=1500
+            max_tokens=1500,
+            system="You are a spell planner. Return ONLY valid JSON.",
+            messages=[{"role": "user", "content": prompt}]
         )
-        
-        result_text = response.choices[0].message.content
+
+        result_text = response.content[0].text
         result_text = clean_json_response(result_text)
         result_text = repair_truncated_json(result_text)
         plan = json.loads(result_text)
-        
+
         # Ensure working_type is set
         plan["working_type"] = working_type["type_id"]
         plan["guide_id"] = guide_id
         plan["planner_mode"] = "llm"
-        
+
     except Exception as e:
         logger.error(f"[PLANNER_BLOCKS] Error: {e}")
         # Fallback to deterministic plan
         plan = build_deterministic_plan(guide_id, intention, research_packet)
         plan["planner_mode"] = "deterministic_fallback"
-    
+
     metadata["planner_ms"] = int((time.time() - start) * 1000)
     return plan, metadata
 
