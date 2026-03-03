@@ -1,42 +1,33 @@
 // SpellBlockRenderer - Renders blocks as flowing narrative grimoire page
-// Vintage book aesthetic with ornate dividers and proper typography
+// Elegant vintage book aesthetic inspired by astrology guides
 
 import React, { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { Clock } from 'lucide-react';
 import { cn } from '../lib/utils';
 
-// Ornate section divider - Crowlands style with rose and crows
+// Ornate section divider - elegant diamond pattern like astrology guides
 const OrnateSectionDivider = () => (
-  <div className="flex items-center justify-center py-6 my-4">
-    <img 
-      src="/images/ornaments/divider-rose-crows.png" 
-      alt="" 
-      className="h-6 w-auto opacity-70"
-      style={{ maxWidth: '180px' }}
-    />
+  <div className="grimoire-divider my-6">
+    <div className="grimoire-divider-symbol" />
   </div>
 );
 
 // Simple elegant divider for minor breaks
 const SubtleDivider = () => (
-  <div className="flex items-center justify-center py-4 opacity-40">
-    <div className="h-px w-8 bg-amber-700" />
-    <div className="mx-2 w-1.5 h-1.5 rotate-45 border border-amber-700" />
-    <div className="h-px w-8 bg-amber-700" />
+  <div className="flex items-center justify-center py-3 opacity-50">
+    <div className="h-px w-12 bg-gradient-to-r from-transparent via-amber-700/40 to-transparent" />
   </div>
 );
 
-// Section header with small decorative icon
+// Section header with elegant uppercase styling
 const SectionLabel = ({ icon, label }) => (
-  <div className="flex items-center gap-2 mb-3">
+  <div className="grimoire-section-header flex items-center gap-2">
     {icon && (
-      <img src={icon} alt="" className="w-5 h-5 opacity-70" />
+      <img src={icon} alt="" className="w-4 h-4 opacity-60" />
     )}
-    <span className="font-cinzel text-xs uppercase tracking-[0.2em] text-amber-800/70">
-      {label}
-    </span>
-    <div className="flex-1 h-px bg-amber-700/20 ml-2" />
+    <span>{label}</span>
+    <div className="flex-1" />
   </div>
 );
 
@@ -125,38 +116,35 @@ const NarrativeBlock = ({ block, archetypeStyle }) => {
 
 // === NARRATIVE BLOCK COMPONENTS ===
 
-// Cold Open - the guide's opening, presented as immersive quote with decorative styling
+// Cold Open - the guide's opening, elegant grimoire-style quote
 const ColdOpen = ({ c, style }) => (
   <motion.div
     initial={{ opacity: 0, y: 10 }}
     animate={{ opacity: 1, y: 0 }}
-    className="mb-6 py-4"
+    className="mb-8 py-4"
     data-testid="cold-open-block"
   >
     {c.greeting && (
-      <blockquote className="relative px-6 py-4 mb-4">
-        {/* Decorative quote mark */}
-        <span className="absolute -top-2 -left-1 text-5xl text-amber-700/20 font-serif">"</span>
-        <p className="font-crimson text-xl text-stone-800 italic leading-relaxed">
+      <div className="grimoire-quote">
+        <p className="grimoire-body">
           {c.greeting}
         </p>
-        <span className="absolute -bottom-4 right-4 text-5xl text-amber-700/20 font-serif rotate-180">"</span>
-      </blockquote>
+      </div>
     )}
     {c.scene_setting && (
-      <p className="font-crimson text-stone-600 leading-relaxed mb-3 text-center italic">
+      <p className="grimoire-body text-center opacity-80 mt-4">
         {c.scene_setting}
       </p>
     )}
     {c.hook && (
-      <p className="font-crimson text-stone-800 leading-relaxed text-lg">
+      <p className="grimoire-body text-center mt-4 text-lg">
         {c.hook}
       </p>
     )}
   </motion.div>
 );
 
-// Materials - elegant ingredient list with visual icons
+// Materials - elegant ingredient list
 const Materials = ({ c, style }) => {
   // Map material names to available anchor icons
   const getIconForMaterial = (name) => {
@@ -183,39 +171,38 @@ const Materials = ({ c, style }) => {
   };
 
   return (
-    <div className="py-4" data-testid="materials-block">
-      <SectionLabel icon="/icons/anchors/gold/anchor-herb.png" label="Gather These Materials" />
+    <div className="py-6" data-testid="materials-block">
+      <SectionLabel icon="/icons/anchors/gold/anchor-herb.png" label="What's Getting Gathered" />
       
-      <div className="grid gap-3 mt-4">
-        {c.items?.map((item, i) => {
-          const iconPath = getIconForMaterial(item.name);
-          return (
-            <div key={i} className="flex items-start gap-3 p-3 rounded-lg bg-amber-900/5 border border-amber-700/10">
-              {iconPath ? (
-                <img src={iconPath} alt="" className="w-8 h-8 opacity-70 flex-shrink-0 mt-0.5" />
+      <ul className="grimoire-list mt-4">
+        {c.items?.map((item, i) => (
+          <li key={i} className="!pl-0 !p-2">
+            <div className="flex items-start gap-3">
+              {getIconForMaterial(item.name) ? (
+                <img src={getIconForMaterial(item.name)} alt="" className="w-5 h-5 opacity-60 flex-shrink-0 mt-0.5" />
               ) : (
-                <div className="w-8 h-8 rounded-full bg-amber-700/10 flex items-center justify-center flex-shrink-0">
-                  <span className="text-amber-800 text-xs font-cinzel">{i + 1}</span>
+                <div className="w-5 h-5 flex-shrink-0 flex items-center justify-center">
+                  <div className="w-2 h-2 rotate-45 border border-amber-700/50" />
                 </div>
               )}
-              <div className="flex-1">
-                <p className="font-cinzel text-amber-900 font-medium">{item.name}</p>
+              <div>
+                <span className="font-cinzel text-sm text-[#2a1f14]">{item.name}</span>
                 {item.purpose && (
-                  <p className="font-crimson text-stone-600 text-sm mt-0.5">{item.purpose}</p>
+                  <span className="text-sm opacity-70"> — {item.purpose}</span>
                 )}
                 {item.substitution && (
-                  <p className="font-crimson text-stone-500 text-xs italic mt-1">
+                  <p className="text-xs italic opacity-60 mt-0.5">
                     Alternative: {item.substitution}
                   </p>
                 )}
               </div>
             </div>
-          );
-        })}
-      </div>
+          </li>
+        ))}
+      </ul>
       
       {c.gathering_note && (
-        <p className="font-crimson text-stone-500 text-sm italic mt-4 text-center">
+        <p className="grimoire-body text-sm text-center opacity-70 mt-4 italic">
           {c.gathering_note}
         </p>
       )}
@@ -223,72 +210,56 @@ const Materials = ({ c, style }) => {
   );
 };
 
-// Stepper - flowing narrative steps with elegant numbering
+// Stepper - elegant numbered action steps
 const Stepper = ({ c, style }) => (
-  <div className="py-4" data-testid="stepper-block">
-    <SectionLabel icon="/icons/ui/gold/icon-grimoire.png" label="The Working" />
+  <div className="py-6" data-testid="stepper-block">
+    <SectionLabel icon="/icons/ui/gold/icon-grimoire.png" label="During This Working" />
     
-    <div className="space-y-6 mt-4">
+    <ol className="grimoire-numbered-list mt-4">
       {c.steps?.map((step, index) => (
-        <motion.div 
+        <motion.li 
           key={index}
           initial={{ opacity: 0, x: -10 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: index * 0.1 }}
-          className="relative pl-12"
         >
-          {/* Step number in decorative circle */}
-          <div className="absolute left-0 top-0 w-8 h-8 rounded-full border-2 border-amber-700/40 flex items-center justify-center bg-amber-50/50">
-            <span className="font-cinzel text-sm text-amber-800">{index + 1}</span>
-          </div>
-          
-          {/* Connecting line to next step */}
-          {index < (c.steps?.length || 0) - 1 && (
-            <div className="absolute left-[15px] top-10 bottom-0 w-px bg-amber-700/20" style={{ height: 'calc(100% + 1rem)' }} />
-          )}
-          
-          {/* Step content */}
           <div>
             {step.title && (
-              <h4 className="font-cinzel text-sm text-amber-900 tracking-wide mb-2">
-                {step.title}
-              </h4>
+              <span className="font-cinzel text-sm text-amber-900/80 mr-2">
+                {step.title}:
+              </span>
             )}
-
-            <p className="font-crimson text-stone-800 text-base leading-relaxed">
+            <span className="grimoire-body">
               {step.action || step.instruction || step.text}
-            </p>
+            </span>
 
-            {/* Spoken words as elegant blockquote */}
+            {/* Spoken words as elegant quote */}
             {step.spoken_words && (
-              <blockquote className="my-3 py-2 px-4 bg-amber-900/5 border-l-2 border-amber-600/60 rounded-r-lg">
-                <p className="font-crimson italic text-amber-900">
-                  "{step.spoken_words}"
-                </p>
+              <blockquote className="grimoire-quote my-3 text-sm">
+                {step.spoken_words}
               </blockquote>
             )}
 
             {/* Why - explanation */}
             {step.why && (
-              <p className="font-crimson text-stone-600 text-sm italic mt-2 pl-2 border-l border-stone-300">
+              <p className="text-sm opacity-70 mt-2 italic pl-4 border-l border-amber-700/20">
                 {step.why}
               </p>
             )}
 
             {step.duration_hint && (
-              <p className="text-stone-400 text-xs mt-2 flex items-center gap-1">
+              <p className="text-xs opacity-50 mt-2 flex items-center gap-1">
                 <Clock className="w-3 h-3" /> {step.duration_hint}
               </p>
             )}
           </div>
-        </motion.div>
+        </motion.li>
       ))}
-    </div>
+    </ol>
 
     {c.completion_message && (
-      <div className="mt-8 text-center">
-        <SubtleDivider />
-        <p className="font-crimson text-stone-600 italic mt-4">{c.completion_message}</p>
+      <div className="grimoire-quote mt-8 text-center">
+        {c.completion_message}
       </div>
     )}
   </div>
@@ -296,27 +267,27 @@ const Stepper = ({ c, style }) => (
 
 // Lore Vignette - embedded historical narrative with elegant framing
 const LoreVignette = ({ c, style }) => (
-  <div className="py-4 my-2" data-testid="lore-vignette-block">
-    <div className="relative px-6 py-4 bg-stone-100/50 rounded-lg border border-stone-200/50">
+  <div className="py-6 my-2" data-testid="lore-vignette-block">
+    <div className="relative px-8 py-6 rounded-2xl" style={{ background: 'rgba(200, 164, 77, 0.04)' }}>
       {/* Decorative corner accents */}
-      <div className="absolute top-2 left-2 w-3 h-3 border-l-2 border-t-2 border-amber-700/30" />
-      <div className="absolute top-2 right-2 w-3 h-3 border-r-2 border-t-2 border-amber-700/30" />
-      <div className="absolute bottom-2 left-2 w-3 h-3 border-l-2 border-b-2 border-amber-700/30" />
-      <div className="absolute bottom-2 right-2 w-3 h-3 border-r-2 border-b-2 border-amber-700/30" />
+      <div className="absolute top-3 left-3 w-4 h-4 border-l border-t border-amber-700/25" />
+      <div className="absolute top-3 right-3 w-4 h-4 border-r border-t border-amber-700/25" />
+      <div className="absolute bottom-3 left-3 w-4 h-4 border-l border-b border-amber-700/25" />
+      <div className="absolute bottom-3 right-3 w-4 h-4 border-r border-b border-amber-700/25" />
       
       {(c.era || c.tradition || c.title) && (
-        <p className="font-cinzel text-xs text-amber-800/70 uppercase tracking-[0.15em] mb-2 text-center">
+        <p className="font-cinzel text-[10px] text-amber-800/60 uppercase tracking-[0.2em] mb-4 text-center">
           {c.era && `${c.era} · `}{c.tradition || c.title}
         </p>
       )}
-      <p className="font-crimson text-stone-700 leading-relaxed italic text-center">
+      <p className="grimoire-body text-center leading-loose">
         {c.narrative}
       </p>
       {c.relevance_to_working && (
-        <p className="font-crimson text-stone-600 mt-3 text-sm text-center">{c.relevance_to_working}</p>
+        <p className="grimoire-body text-sm opacity-80 mt-4 text-center">{c.relevance_to_working}</p>
       )}
       {c.source_connection && (
-        <p className="text-xs text-stone-400 mt-2 italic text-center">— {c.source_connection}</p>
+        <p className="text-xs text-amber-800/50 mt-4 text-center tracking-wide">— {c.source_connection}</p>
       )}
     </div>
   </div>
@@ -352,53 +323,59 @@ const Choice = ({ c, style }) => {
   );
 };
 
-// Closing - the guide's farewell, elegant
+// Closing - the guide's farewell, elegant affirmation styling
 const Closing = ({ c, style }) => (
   <div className="py-6" data-testid="closing-block">
     <SectionLabel icon="/icons/anchors/gold/anchor-feather.png" label="Closing the Circle" />
     
-    <div className="mt-4 text-center">
+    <div className="mt-6 text-center space-y-6">
       {c.license_to_depart && (
-        <blockquote className="font-crimson text-stone-700 italic leading-relaxed text-lg mb-4">
-          "{c.license_to_depart}"
-        </blockquote>
+        <p className="grimoire-body text-center leading-relaxed">
+          {c.license_to_depart}
+        </p>
       )}
       {c.grounding_action && (
-        <p className="font-crimson text-stone-800 mt-3">{c.grounding_action}</p>
+        <p className="grimoire-body text-center opacity-90">{c.grounding_action}</p>
       )}
       {c.empowerment_line && (
-        <div className="my-6 py-4 px-6 bg-amber-900/5 rounded-lg border border-amber-700/20">
-          <p className="font-cinzel text-lg text-amber-900">
-            "{c.empowerment_line}"
+        <div className="grimoire-quote mx-auto max-w-lg">
+          <p className="font-cinzel text-lg tracking-wide text-[#2a1f14]">
+            {c.empowerment_line}
           </p>
         </div>
       )}
       {c.next_steps_hint && (
-        <p className="font-crimson text-sm text-stone-500 mt-4 italic">
-          In the next 24 hours: {c.next_steps_hint}
-        </p>
+        <div className="grimoire-practice-box max-w-md mx-auto">
+          <p className="grimoire-practice-label">In the Next 24 Hours</p>
+          <p className="grimoire-body text-sm">
+            {c.next_steps_hint}
+          </p>
+        </div>
       )}
     </div>
   </div>
 );
 
-// Reflection / Journal - elegant prompt presentation
+// Reflection / Journal - elegant prompt list like shadow work prompts
 const Reflection = ({ c }) => (
-  <div className="py-4" data-testid="reflection-block">
-    <SectionLabel icon="/icons/anchors/gold/anchor-notebook.png" label="Reflect" />
+  <div className="py-6" data-testid="reflection-block">
+    <SectionLabel icon="/icons/anchors/gold/anchor-notebook.png" label="Shadow Work Prompts" />
     
     {c.guide_note && (
-      <p className="font-crimson text-stone-700 italic leading-relaxed mt-3">"{c.guide_note}"</p>
+      <p className="grimoire-body text-center opacity-80 mb-6">"{c.guide_note}"</p>
     )}
     {c.prompts?.length > 0 && (
-      <div className="mt-4 space-y-3">
+      <ul className="grimoire-list">
         {c.prompts.map((prompt, i) => (
-          <p key={i} className="font-crimson text-stone-600 leading-relaxed pl-4 border-l border-amber-700/30">
-            {prompt}
-          </p>
+          <li key={i}>{prompt}</li>
         ))}
-      </div>
+      </ul>
     )}
+    
+    {/* Notes section for journaling */}
+    <div className="grimoire-notes mt-6">
+      <p className="grimoire-notes-label">Notes</p>
+    </div>
   </div>
 );
 

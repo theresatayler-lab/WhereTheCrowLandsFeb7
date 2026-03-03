@@ -9,39 +9,49 @@ export default function SpellHeader({
   actions = null,
 }) {
   return (
-    <header className="mb-6">
-      <div className="flex flex-col gap-4">
-        <div className="flex flex-col gap-2">
-          <h1 className="font-cinzel text-3xl sm:text-4xl leading-tight text-[#0b0b0b]">
-            {title}
-          </h1>
+    <header className="mb-8 text-center">
+      {/* Decorative top element */}
+      <div className="grimoire-divider mb-6">
+        <div className="grimoire-divider-symbol" />
+      </div>
 
-          {guideLine ? (
-            <div className="font-montserrat uppercase tracking-wide text-xs sm:text-sm text-[#1a1a1a]/70">
-              {guideLine}
-            </div>
-          ) : null}
+      <div className="flex flex-col gap-3">
+        {/* Main title - grimoire style */}
+        <h1 className="grimoire-title text-2xl sm:text-3xl md:text-4xl leading-tight">
+          {title}
+        </h1>
 
-          {summaryLine ? (
-            <p className="font-crimson text-base sm:text-lg italic text-[#141414]/85">
-              {summaryLine}
-            </p>
-          ) : null}
-        </div>
+        {/* Guide attribution */}
+        {guideLine ? (
+          <div className="font-cinzel uppercase tracking-[0.2em] text-[10px] sm:text-xs text-amber-800/60">
+            {guideLine}
+          </div>
+        ) : null}
 
+        {/* Subtitle/essence - italic serif */}
+        {summaryLine ? (
+          <p className="grimoire-subtitle text-base sm:text-lg mt-1 max-w-2xl mx-auto">
+            {summaryLine}
+          </p>
+        ) : null}
+
+        {/* Icon row - centered with subtle styling */}
         {iconRow?.length ? (
-          <div className="flex flex-wrap items-center gap-3 pt-1">
+          <div className="flex flex-wrap items-center justify-center gap-4 pt-3 pb-1">
             {iconRow.slice(0, 5).map((ic, idx) => (
-              <span key={idx} className="drop-glow-gold-soft">
-                <CrowlandsIcon iconPath={ic.iconPath} alt={ic.alt} size={22} />
+              <span key={idx} className="opacity-70 hover:opacity-100 transition-opacity">
+                <CrowlandsIcon iconPath={ic.iconPath} alt={ic.alt} size={20} />
               </span>
             ))}
           </div>
         ) : null}
 
-        {actions ? <div className="pt-1">{actions}</div> : null}
+        {actions ? <div className="pt-2">{actions}</div> : null}
+      </div>
 
-        <div className="spell-divider-line mt-2" />
+      {/* Bottom divider */}
+      <div className="grimoire-divider mt-6">
+        <div className="grimoire-divider-symbol" />
       </div>
     </header>
   );
