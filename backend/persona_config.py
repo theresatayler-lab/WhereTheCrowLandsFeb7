@@ -1164,7 +1164,8 @@ PERSONA_CONFIG = {
             "portal_button": "Answer the call",
             "dual_system": {
                 "traditional_vigil": "Circle walking, candle vigils, voice work, protection boundaries",
-                "kitchen_magic": "Quick improvisation with any household items - salt, jars, vinegar, whatever user has"
+                "kitchen_magic": "Quick improvisation with any household items - salt, jars, vinegar, whatever user has",
+                "sovereignty_work": "Prophetic, implacable land and home protection when external threat is present — not kitchen magic but Morrígan-touched sovereignty. The crows know before you do."
             },
             "attribution_style": "Grounded in tradition, service voice: 'This is how the spiritualist circles worked. WWII women did this with salt and vinegar. It held then. It holds now.'",
             "never_says": [
@@ -1266,6 +1267,30 @@ PERSONA_CONFIG = {
                 "steps_template": ["face west at dusk", "speak her names", "state what must change", "accept what comes"],
                 "materials": ["crow feather optional", "courage"],
                 "source_id": "morrigan_book"
+            },
+            {
+                "practice_id": "sovereignty_standing",
+                "name": "Sovereignty Standing",
+                "description": "Planting feet on the ground that is yours and declaring it held",
+                "steps_template": ["stand barefoot on your ground if possible", "press feet down and feel the land press back", "speak the boundary aloud: what is yours, what you hold", "let the crows witness"],
+                "materials": ["your feet on ground", "your voice", "salt for the threshold"],
+                "source_id": "morrigan_book"
+            },
+            {
+                "practice_id": "battle_seeing",
+                "name": "Battle Seeing",
+                "description": "Morrígan-touched clarity practice for seeing what is coming before it arrives",
+                "steps_template": ["sit still and watch", "name what you see without flinching", "follow the pattern three steps ahead", "speak aloud what you now know"],
+                "materials": ["stillness", "a crow feather or dark stone to hold", "courage to name what you see"],
+                "source_id": "morrigan_book"
+            },
+            {
+                "practice_id": "threshold_speaking",
+                "name": "Threshold Speaking",
+                "description": "Naming the truth aloud before crossing into a space where it will be denied",
+                "steps_template": ["pause at the threshold", "name the harm or truth aloud — to yourself, not to them", "step forward carrying what you have named", "do not unsay it"],
+                "materials": ["a doorway or threshold", "your voice", "the truth"],
+                "source_id": "irish_folk"
             }
         ],
         
@@ -1304,6 +1329,27 @@ PERSONA_CONFIG = {
                 "section_order": ["introduction", "materials", "invocation", "talisman_charging", "the_working", "closing_seal"],
                 "tone_range": ["gentle", "practical"],
                 "linked_scenarios": ["token_talisman"]
+            },
+            {
+                "format_id": "sovereignty_ward",
+                "description": "Land and home protection when external threat is present. Prophetic, implacable — not kitchen magic but sovereignty work.",
+                "section_order": ["introduction", "invocation", "morrigan_call", "the_working", "voice_element", "closing_seal"],
+                "tone_range": ["intense"],
+                "linked_scenarios": ["sovereignty_ward_land", "sovereignty_ward_home"]
+            },
+            {
+                "format_id": "battle_clarity",
+                "description": "Prophetic clarity before conflict. Morrígan-touched seeing: know what is coming before it arrives.",
+                "section_order": ["introduction", "invocation", "the_working", "voice_element", "closing_seal", "aftercare"],
+                "tone_range": ["intense"],
+                "linked_scenarios": ["battle_clarity_court", "battle_clarity_confrontation"]
+            },
+            {
+                "format_id": "threshold_naming",
+                "description": "Speaking aloud what must be named before crossing into a space where truth will be denied.",
+                "section_order": ["introduction", "the_working", "voice_element", "closing_seal"],
+                "tone_range": ["intense", "practical"],
+                "linked_scenarios": ["threshold_naming_gaslighting", "threshold_naming_report"]
             }
         ],
         
@@ -1367,6 +1413,78 @@ PERSONA_CONFIG = {
                 "sample_steps": ["Write what you need to say—to yourself, to another, to the universe", "Read it aloud once, letting your voice carry the weight", "Touch corner to flame and let it transform"],
                 "linked_format": "home_blessing",
                 "linked_practices": ["candle_speech"]
+            },
+            {
+                "scenario_id": "sovereignty_ward_land",
+                "name": "The Sovereignty Ward — When They Come for the Land",
+                "best_for": ["protected", "brave", "energized"],
+                "description": "When the bulldozers come for the common land. When the state threatens your right to exist here. Land and home protection through prophetic, implacable sovereignty work.",
+                "required_sections": ["introduction", "invocation", "morrigan_call", "the_working", "voice_element", "closing_seal"],
+                "anchor_objects": ["salt", "stone", "song"],
+                "settings": ["outdoors", "threshold"],
+                "sample_steps": ["Stand on the ground that is threatened. Feel it hold you.", "Speak the boundary: this is held. Name who holds it.", "Walk the perimeter with salt. At each corner, plant your voice like a fence post.", "The crows know before you do. They gather three days before the crisis arrives. Watch them."],
+                "linked_format": "sovereignty_ward",
+                "linked_practices": ["sovereignty_standing", "voice_warding", "morrigan_invocation"]
+            },
+            {
+                "scenario_id": "sovereignty_ward_home",
+                "name": "The Sovereignty Ward — Holding the Threshold",
+                "best_for": ["protected", "brave", "calm"],
+                "description": "When someone or something threatens your right to the space you live in. When the landlord, the ex, the system comes to the door.",
+                "required_sections": ["introduction", "invocation", "morrigan_call", "the_working", "voice_element", "closing_seal"],
+                "anchor_objects": ["salt", "candle", "stone"],
+                "settings": ["kitchen", "threshold"],
+                "sample_steps": ["Salt the threshold. Not a line — a statement.", "Light the candle at the centre of your space. That flame is your sovereignty.", "Speak what you hold: this space, this ground, this life. Name it.", "The threshold holds. Say it until you believe it. Then say it once more."],
+                "linked_format": "sovereignty_ward",
+                "linked_practices": ["sovereignty_standing", "candle_speech", "circle_walking"]
+            },
+            {
+                "scenario_id": "battle_clarity_court",
+                "name": "Battle Clarity — Before the Court Case",
+                "best_for": ["clear", "brave", "energized"],
+                "description": "Prophetic clarity before legal confrontation. The Morrígan doesn't grant visions. She grants attention.",
+                "required_sections": ["introduction", "invocation", "the_working", "voice_element", "closing_seal", "aftercare"],
+                "anchor_objects": ["crow feather", "stone", "mirror"],
+                "settings": ["bedroom", "outdoors"],
+                "sample_steps": ["Sit still. Not meditation — surveillance. Watch your own thoughts like crows watching a field.", "Name what you see coming. Not what you fear — what you see. Pattern recognition older than your anxiety.", "Speak aloud what you now know. The truth before the courtroom. The fact before the argument.", "Carry the seeing with you. You walk in knowing."],
+                "linked_format": "battle_clarity",
+                "linked_practices": ["battle_seeing", "morrigan_invocation"]
+            },
+            {
+                "scenario_id": "battle_clarity_confrontation",
+                "name": "Battle Clarity — Before the Confrontation You Cannot Avoid",
+                "best_for": ["brave", "clear", "energized"],
+                "description": "When the meeting, the conversation, the reckoning is coming and you need to see clearly before you walk in.",
+                "required_sections": ["introduction", "invocation", "the_working", "voice_element", "closing_seal", "aftercare"],
+                "anchor_objects": ["stone", "candle"],
+                "settings": ["bedroom", "bath", "desk"],
+                "sample_steps": ["The crows gather three days before the crisis. You have less time. Use it.", "Hold a dark stone. Feel its weight. That weight is certainty.", "Name what is coming. Name who will be there. Name what they will do. This is not superstition. This is pattern recognition.", "Now name what you will do. Speak it aloud. The Morrígan doesn't grant visions. She grants attention."],
+                "linked_format": "battle_clarity",
+                "linked_practices": ["battle_seeing", "candle_speech"]
+            },
+            {
+                "scenario_id": "threshold_naming_gaslighting",
+                "name": "Threshold Naming — Before the Room Where You'll Be Gaslit",
+                "best_for": ["brave", "clear", "protected"],
+                "description": "Naming the truth before entering a space where that truth will be denied, minimised, or rewritten.",
+                "required_sections": ["introduction", "the_working", "voice_element", "closing_seal"],
+                "anchor_objects": ["stone", "doorway"],
+                "settings": ["threshold", "outdoors", "car"],
+                "sample_steps": ["Pause before you enter. You do not walk in unarmed.", "Name the harm aloud. To yourself — not to them. Say it plainly: what happened, what they did, what is true.", "Hold the naming in your body. Feel it settle. That is your anchor.", "Step forward. You carry the truth named. They cannot unknow what you know."],
+                "linked_format": "threshold_naming",
+                "linked_practices": ["threshold_speaking", "voice_warding"]
+            },
+            {
+                "scenario_id": "threshold_naming_report",
+                "name": "Threshold Naming — Before You File the Report",
+                "best_for": ["brave", "clear", "energized"],
+                "description": "Naming the harm before you put it in writing, before you make it official, before you cross the point of no return.",
+                "required_sections": ["introduction", "the_working", "voice_element", "closing_seal"],
+                "anchor_objects": ["stone", "candle"],
+                "settings": ["desk", "bedroom", "threshold"],
+                "sample_steps": ["Before the document, the truth. Before the form, the fact.", "Speak aloud what you are about to write. Hear your own voice say it. That voice is evidence.", "Light a candle if you have one. The flame witnesses.", "Now write. You have already said it. The hardest part is done."],
+                "linked_format": "threshold_naming",
+                "linked_practices": ["threshold_speaking", "candle_speech"]
             }
         ],
         
