@@ -802,6 +802,36 @@ EXPANDED_TIMELINE_EVENTS = [
         ]
     },
     {
+        "id": "robert_johnson_crossroads",
+        "year": 1936,
+        "title": "Robert Johnson Records at the Crossroads",
+        "primary_category": "Figure",
+        "secondary_category": "Blues / Crossroads Mythology",
+        "taxonomy_categories": [8, 5],
+        "visual_tells": ["crossroads imagery", "moonlit rites", "folk bargain"],
+        "lane_tags": ["folk magic", "earth ritual", "folk shorthand"],
+        "glossary_terms": ["Folk magic (practice-based)", "Pact", "Crossroads (liminal space)"],
+        "description": "Robert Johnson records his first sessions in San Antonio, Texas, producing 29 songs that become the foundation of Delta blues and the most enduring legend of occult influence in American music: that he sold his soul to the devil at a crossroads in exchange for extraordinary musical ability. The story, popularised by fellow bluesman Son House, has been referenced in countless songs, films, and recordings.",
+        "significance": "Johnson's crossroads legend is the most famous example of folk magical belief embedded in popular music. The story draws on African-American hoodoo traditions of crossroads magic (the crossroads as a liminal space where deals can be struck with spirits), transplanted into the Mississippi Delta. Whether Johnson believed the legend himself is unknown — he never publicly claimed a pact — but the story's persistence demonstrates the deep roots of folk magical thinking in American popular culture.",
+        "figures_involved": ["Robert Johnson", "Son House"],
+        "traditions": ["hoodoo", "african_american_folk_magic", "rootwork"],
+        "connections": {"influenced_by": [], "influenced": [], "related_events": ["hurston_mules_and_men"], "part_of_movement": ["folk_magic_documentation"]},
+        "guide_relevance": {"shigg": "high", "cathleen": "high", "katherine": "medium", "theresa": "high"},
+        "sources": [
+            {"title": "Searching for Robert Johnson", "author": "Peter Guralnick", "year": 1989, "type": "book", "quality_tier": "academic_secondary"},
+            {"title": "Robert Johnson sold his soul to the devil in Rosedale, Mississippi", "author": "Rolf Potts", "year": 2018, "type": "article", "quality_tier": "popular_synthesis"}
+        ],
+        "location": {"name": "Clarksdale / Rosedale, Mississippi", "region": "United States"},
+        "confidence": "high",
+        "importance": 1,
+        "is_pivotal_moment": True,
+        "expanded_context": "The exact location of the crossroads is contested: some claim it is in Clarksdale at the intersection of Highways 61 and 49, while others argue for Rosedale at the intersection of Highway 8 and Highway 1. A 'vision' of the event, as told by bluesman Henry Goodman and preserved by the Crossroads Blues Society in Rosedale, describes Johnson encountering a 'tall, barrel-chested, and black' man at midnight under a full October moon, who offered him the ability to 'play that guitar like nobody ever played it before' in exchange for his soul. Johnson was poisoned at age 27 in 1938. The crossroads tradition itself derives from African-American hoodoo and ultimately from West African and Congo spiritual traditions where the crossroads is a place of spiritual power — the same liminal space Hurston documented in her hoodoo fieldwork.",
+        "learn_more_links": [
+            {"title": "Robert Johnson - Wikipedia", "url": "https://en.wikipedia.org/wiki/Robert_Johnson"},
+            {"title": "Rolf Potts: Crossroads in Rosedale", "url": "https://rfrolfpotts.com/articles/robert-johnson-sold-his-soul-to-the-devil-in-rosedale-mississippi/"}
+        ]
+    },
+    {
         "id": "murray_god_of_witches",
         "image_url": "https://images.unsplash.com/photo-1633367151519-a5048db4c2d5?w=800",
         "year": 1939,
@@ -1674,18 +1704,26 @@ HISTORICAL_EVENTS_EXTENDED = [
         "visual_tells": ["priestess/femme mystique", "erotic mysticism", "dream theology"],
         "lane_tags": ["Bridge: Hermetic + Spiritualism"],
         "glossary_terms": ["Spell (symbolic narrative)", "Magic as metaphor", "Mystical union"],
-        "description": "Symbolist art exhibitions with occult themes organized by Joséphin Péladan in Paris.",
-        "significance": "Peak of Symbolist occult art; bridge between ceremonial magic and fine art worlds.",
-        "figures_involved": ["Joséphin Péladan", "Fernand Khnopff", "Jean Delville"],
-        "traditions": [],
-        "connections": {"influenced_by": [], "influenced": [], "related_events": [], "part_of_movement": []},
+        "description": "Symbolist art exhibitions with occult themes organized by Joséphin Péladan in Paris. Erik Satie served as the Order's official composer for two years (1891-1892), creating works including the Sonneries de la Rose+Croix that embodied the group's use of music 'to create a complete art world by combining artistic mediums.'",
+        "significance": "Peak of Symbolist occult art; bridge between ceremonial magic and fine art worlds. Demonstrated that occult practice could generate serious avant-garde art, not just ritual. Satie's involvement shows how fin-de-siècle artists took refuge in 'unorthodox occult religions' as orthodox religious ideals collapsed under technological revolution.",
+        "figures_involved": ["Joséphin Péladan", "Fernand Khnopff", "Jean Delville", "Erik Satie"],
+        "traditions": ["rosicrucianism"],
+        "connections": {"influenced_by": [], "influenced": [], "related_events": [], "part_of_movement": ["symbolism", "rosicrucianism"]},
         "guide_relevance": {"shigg": "low", "cathleen": "medium", "katherine": "high", "theresa": "high"},
-        "sources": [{"title": "Joséphin Péladan and the Salons de la Rose+Croix", "author": "Robert Pincus-Witten", "year": 1968, "type": "article", "quality_tier": "academic_primary"}],
+        "sources": [
+            {"title": "Joséphin Péladan and the Salons de la Rose+Croix", "author": "Robert Pincus-Witten", "year": 1968, "type": "article", "quality_tier": "academic_primary"},
+            {"title": "Shades of Ungodliness: Satie, the Occult, and the Flight from Reason", "author": "Lindsey MacChiarella", "year": 2012, "type": "article", "quality_tier": "academic_primary"}
+        ],
         "location": {"name": "Paris", "region": "France"},
         "confidence": "high",
         "importance": 1,
         "is_pivotal_moment": True,
-        "era": "19th Century"
+        "era": "19th Century",
+        "expanded_context": "Erik Satie's collaboration with Péladan's Rose+Croix Catholique produced some of the earliest music explicitly composed for occult ritual. The Order worshipped 'idealist' art as part of their religious practice and acted as patrons to avant-garde artists. Satie's Rose+Croix period works contain symbolic references to Rosicrucian cosmology, and their atmospheric, impressionistic style continued to shape aspects of his later oeuvre. His involvement illustrates how, faced with a collapse of orthodox religious ideals in the mid-nineteenth century, Western artists turned to unorthodox occult religions for spiritual sustenance.",
+        "learn_more_links": [
+            {"title": "Salon de la Rose+Croix - Wikipedia", "url": "https://en.wikipedia.org/wiki/Salon_de_la_Rose_%2B_Croix"},
+            {"title": "FSU Thesis: Satie and the Occult", "url": "https://diginole.lib.fsu.edu/islandora/object/fsu:183071/datastream/PDF/view"}
+        ]
     },
     {
         "id": "leland_aradia",
@@ -1714,6 +1752,41 @@ HISTORICAL_EVENTS_EXTENDED = [
         "learn_more_links": [
             {"title": "Aradia - Wikipedia", "url": "https://en.wikipedia.org/wiki/Aradia,_or_the_Gospel_of_the_Witches"},
             {"title": "Sacred Texts: Full text of Aradia", "url": "https://www.sacred-texts.com/pag/aradia/index.htm"}
+        ]
+    },
+
+    # ============================================================================
+    # 20th CENTURY - EARLY (Pre-WWII Music & Mysticism)
+    # ============================================================================
+    {
+        "id": "scriabin_mysterium",
+        "year": 1903,
+        "title": "Alexander Scriabin's Mystical Turn and the Mysterium",
+        "primary_category": "Figure",
+        "secondary_category": "Composer-Mystic",
+        "taxonomy_categories": [5, 6],
+        "visual_tells": ["synesthetic visions", "cosmic diagrams", "ritual gesture"],
+        "lane_tags": ["Bridge: Hermetic + Spiritualism", "mysticism", "theosophy"],
+        "glossary_terms": ["Theosophy", "Mystical union", "Ritual (meaning-making)"],
+        "description": "Around 1903, Russian composer Alexander Scriabin's style underwent a dramatic transformation as he became a committed mystic, deeply influenced by Nietzsche and Helena Blavatsky's Theosophical writings. He came to view music as a 'mysterious ritual' and began work on the Mysterium — an unfinished multimedia ritual intended to be performed in the Himalayas over seven days, incorporating orchestra, choir, light, scent, and dance, designed to bring about the literal transformation of human consciousness and the end of the world as we know it.",
+        "significance": "Scriabin represents the most extreme attempt by a major classical composer to collapse the boundary between art and occult ritual. His late works abandoned conventional tonality entirely in favour of his 'mystic chord,' and Theosophical terminology entered his musical vocabulary. The unfinished Mysterium — a cosmic-scale synesthetic ritual — remains the most ambitious unrealised magical working in Western art history.",
+        "figures_involved": ["Alexander Scriabin"],
+        "traditions": ["theosophy"],
+        "connections": {"influenced_by": [], "influenced": [], "related_events": ["salon_rose_croix"], "part_of_movement": ["theosophy", "symbolism"]},
+        "guide_relevance": {"shigg": "low", "cathleen": "medium", "katherine": "high", "theresa": "high"},
+        "sources": [
+            {"title": "Scriabin: Artist and Mystic", "author": "Faubion Bowers", "year": 1996, "type": "book", "quality_tier": "academic_primary"},
+            {"title": "Alexander Scriabin - Wikipedia", "author": "Wikipedia", "year": 2024, "type": "article", "quality_tier": "popular_synthesis", "url": "https://en.wikipedia.org/wiki/Alexander_Scriabin"}
+        ],
+        "location": {"name": "Moscow / Switzerland", "region": "Russia"},
+        "confidence": "high",
+        "importance": 1,
+        "is_pivotal_moment": True,
+        "era": "19th Century",
+        "expanded_context": "Scriabin's notebooks reveal a man who genuinely believed his music could trigger cosmic transformation. He studied Blavatsky, became convinced he was a messianic figure, and planned the Mysterium as a week-long ritual in India that would dissolve the material world through art. Russian Symbolist poets embraced him as a kindred spirit. His 'mystic chord' (C-F#-Bb-E-A-D) became the harmonic basis for his late works, replacing conventional tonality with a system derived from Theosophical principles. He died in 1915 before completing the Mysterium, leaving only preparatory sketches (the Prefatory Action). His synesthesia — he associated specific keys with specific colours — anticipated later experiments in multimedia ritual by decades.",
+        "learn_more_links": [
+            {"title": "Alexander Scriabin - Wikipedia", "url": "https://en.wikipedia.org/wiki/Alexander_Scriabin"},
+            {"title": "Scriabin's Mysterium", "url": "https://en.wikipedia.org/wiki/Mysterium_(Scriabin)"}
         ]
     },
 
@@ -1995,13 +2068,152 @@ HISTORICAL_EVENTS_EXTENDED = [
         "visual_tells": ["DIY grimoire/zine culture", "sticker/icon logic", "sigils/glyph systems"],
         "lane_tags": ["Modern sigil", "chaos", "zine occult"],
         "glossary_terms": ["Sigil", "Intent as primary mechanism", "DIY grimoire/zine culture"],
-        "description": "Industrial music occult group promoting chaos magic and sigil practice through zine culture.",
-        "significance": "Bridge between chaos magic and music subcultures; pioneered networked occult practice.",
-        "figures_involved": ["Genesis P-Orridge"],
-        "traditions": [],
-        "connections": {"influenced_by": ["carroll_liber_null", "spare_book_of_pleasure"], "influenced": [], "related_events": [], "part_of_movement": ["chaos_magic"]},
+        "description": "Genesis P-Orridge, co-founder of Throbbing Gristle (pioneers of industrial music, 1975-1981) and Psychic TV, founds Thee Temple ov Psychick Youth — an industrial music occult network promoting chaos magic and sigil practice through zine culture. TOPY became one of the most influential bridges between underground music and magical practice, with members worldwide performing synchronised sigil workings.",
+        "significance": "Bridge between chaos magic and music subcultures; pioneered networked occult practice. P-Orridge's trajectory — from Throbbing Gristle's sonic assault to TOPY's organised magical network — demonstrated that music could be both a vehicle for and an expression of sustained esoteric practice. Alongside Coil (John Balance and Peter Christopherson, also ex-TG) and Current 93, P-Orridge formed the core of what David Keenan called 'England's Hidden Reverse' — the esoteric underground where music and magic were inseparable.",
+        "figures_involved": ["Genesis P-Orridge", "John Balance", "Peter Christopherson"],
+        "traditions": ["chaos_magic", "thelema"],
+        "connections": {"influenced_by": ["carroll_liber_null", "spare_book_of_pleasure"], "influenced": [], "related_events": [], "part_of_movement": ["chaos_magic", "industrial_music"]},
         "guide_relevance": {"shigg": "low", "cathleen": "medium", "katherine": "medium", "theresa": "high"},
-        "sources": [{"title": "Thee Psychick Bible", "author": "Genesis P-Orridge", "year": 1994, "type": "book", "quality_tier": "practitioner_primary"}],
+        "sources": [
+            {"title": "Thee Psychick Bible", "author": "Genesis P-Orridge", "year": 1994, "type": "book", "quality_tier": "practitioner_primary"},
+            {"title": "England's Hidden Reverse: A Secret History of the Esoteric Underground", "author": "David Keenan", "year": 2003, "type": "book", "quality_tier": "academic_secondary"}
+        ],
+        "location": {"name": "London", "region": "England"},
+        "confidence": "high",
+        "importance": 1,
+        "is_pivotal_moment": True,
+        "era": "20th Century Post-War",
+        "expanded_context": "P-Orridge's magical practice evolved continuously: from Throbbing Gristle's confrontational 'industrial music for industrial people' (1975-1981), through TOPY's systematic chaos magic network, to the later concept of 'pandrogeny' — a magical system of physical transformation through body modification developed with partner Lady Jaye. The entire output was framed as continuous magical operation. TOPY's network of zines, sigil practices, and synchronised workings anticipated internet-age distributed magical communities by decades. David Keenan's England's Hidden Reverse (2003) is the definitive account of this esoteric underground, documenting how Throbbing Gristle, Coil, Current 93, and Nurse With Wound formed an interconnected web of musicians for whom occult practice was not aesthetic but operational.",
+        "learn_more_links": [
+            {"title": "TOPY - Wikipedia", "url": "https://en.wikipedia.org/wiki/Thee_Temple_ov_Psychick_Youth"},
+            {"title": "Genesis P-Orridge - Wikipedia", "url": "https://en.wikipedia.org/wiki/Genesis_P-Orridge"}
+        ]
+    },
+    {
+        "id": "count_ossie_nyabinghi",
+        "year": 1960,
+        "title": "Count Ossie and the Nyabinghi Drumming Tradition",
+        "primary_category": "Figure",
+        "secondary_category": "Sacred Music / Rastafarian Spirituality",
+        "taxonomy_categories": [8, 5],
+        "visual_tells": ["ritual percussion", "sacred space", "collective ritual"],
+        "lane_tags": ["folk magic", "earth ritual", "collective practice"],
+        "glossary_terms": ["Ritual (meaning-making)", "Sacred music", "Collective practice"],
+        "description": "Count Ossie (Oswald Williams), a Jamaican Nyabinghi drummer from the hills of Wareika, established the foundations of reggae and its association with Rastafarianism. Together with his band, the Mystic Revelation of Rastafari, he combined African-influenced drumming with the European hymnal tradition to create a sound that inspired the Skatalites, Bob Marley, and Toots and the Maytals. His earliest inspiration came from rasta elder Brother Job, who introduced him to the philosophies of Rastafarianism.",
+        "significance": "Count Ossie represents the foundational link between sacred drumming, Rastafarian spirituality, and popular music. The Nyabinghi tradition — with its sacramental use of cannabis for meditation and belief in the divinity of Haile Selassie I — is a living spiritual practice channelled directly through music. His work demonstrates that occult/spiritual music traditions are not exclusively European: the African diaspora carried its own powerful lineage of sacred sound into the Caribbean and beyond.",
+        "figures_involved": ["Count Ossie", "Brother Job", "Ras Michael"],
+        "traditions": ["rastafarianism", "nyabinghi"],
+        "connections": {"influenced_by": [], "influenced": [], "related_events": [], "part_of_movement": ["rastafarianism", "reggae"]},
+        "guide_relevance": {"shigg": "high", "cathleen": "medium", "katherine": "low", "theresa": "medium"},
+        "sources": [
+            {"title": "Count Ossie Biography", "author": "SoundHound", "year": 2020, "type": "article", "quality_tier": "popular_synthesis"},
+            {"title": "Grounation", "author": "Count Ossie & The Mystic Revelation of Rastafari", "year": 1973, "type": "book", "quality_tier": "practitioner_primary"}
+        ],
+        "location": {"name": "Wareika Hills, Kingston", "region": "Jamaica"},
+        "confidence": "high",
+        "importance": 2,
+        "is_pivotal_moment": True,
+        "era": "20th Century Post-War",
+        "expanded_context": "Count Ossie began recording in the late 1950s for producers like Prince Buster and Sir Coxsone Dodd. His camp in the Wareika Hills became a gathering place for musicians, Rastafarian elders, and seekers. The triple Nyabinghi drumming pattern — bass, funde, and repeater — is both a musical structure and a spiritual technology, designed to invoke the presence of Jah. The Mystic Revelation of Rastafari's 1973 album Grounation is considered one of the most important recordings in Jamaican music history. Ras Michael, a vocalist who performed with Ossie, later led his own group, the Sons of Negus, continuing the tradition."
+    },
+    {
+        "id": "lustmord_dark_ambient",
+        "year": 1980,
+        "title": "Lustmord and the Creation of Dark Ambient",
+        "primary_category": "Figure",
+        "secondary_category": "Genre Creation / Occult Sound Art",
+        "taxonomy_categories": [12, 5],
+        "visual_tells": ["ritual space", "threshold crossing", "cosmic diagrams"],
+        "lane_tags": ["Modern sigil", "chaos", "ritual sound"],
+        "glossary_terms": ["Ritual (meaning-making)", "Chaos magic", "Altered states"],
+        "description": "Brian Williams, performing as Lustmord, creates the dark ambient genre — music designed to evoke ritual spaces and altered states of consciousness. Lustmord's work has 'strong occultist tendencies, with a particular leaning toward magick, as expounded by Aleister Crowley, and chaos magic, often giving the music a ritualistic flavor.' The genre strips music to its atmospheric essence, creating soundscapes intended to function as aural environments for contemplation or ritual.",
+        "significance": "Dark ambient represents the logical endpoint of the esoteric underground's project: music that is not about magic but is magic — sonic environments designed to alter consciousness. Alongside Zoviet France and Coil, Lustmord established that sound itself could be a magical tool, not merely an accompaniment to ritual but the ritual itself.",
+        "figures_involved": ["Lustmord (Brian Williams)", "Zoviet France"],
+        "traditions": ["chaos_magic", "thelema"],
+        "connections": {"influenced_by": ["topy_founding"], "influenced": [], "related_events": [], "part_of_movement": ["industrial_music", "dark_ambient"]},
+        "guide_relevance": {"shigg": "low", "cathleen": "low", "katherine": "medium", "theresa": "high"},
+        "sources": [
+            {"title": "Dark ambient - Wikipedia", "author": "Wikipedia", "year": 2024, "type": "article", "quality_tier": "popular_synthesis", "url": "https://en.wikipedia.org/wiki/Dark_ambient"}
+        ],
+        "location": {"name": "Birmingham / Los Angeles", "region": "England / United States"},
+        "confidence": "high",
+        "importance": 2,
+        "is_pivotal_moment": True,
+        "era": "20th Century Post-War"
+    },
+    {
+        "id": "death_in_june_neofolk",
+        "year": 1981,
+        "title": "Death In June and the Emergence of Neofolk",
+        "primary_category": "Figure",
+        "secondary_category": "Genre Creation / Pagan Revival Music",
+        "taxonomy_categories": [12, 5, 8],
+        "visual_tells": ["runic alphabets", "ancestral imagery", "folk instrumentation"],
+        "lane_tags": ["earth ritual", "folk magic", "pagan revival"],
+        "glossary_terms": ["Paganism", "Ancestral practice", "Folk revival"],
+        "description": "Douglas Pearce founds Death In June, one of the foundational acts of neofolk (also called apocalyptic folk). The genre emerged from esoteric music circles in 1980s England and is characterised by deep engagement with paganism, occultism, and esoteric traditions. Pearce has stated: 'I see Death In June as part of a European cultural revival. I am pleased that the Old Gods are being resurrected. Old symbols. I feel very pleased that I am a part of that process.'",
+        "significance": "Neofolk created a dedicated musical space for European pagan revival and ancestral spirituality, drawing on runic alphabets, heathen European sites, and archaic cultural references. The genre's engagement with these materials has sometimes led to associations with far-right symbolism, though this is contested by fans and some artists. Alongside Current 93 and Sol Invictus (Tony Wakeford), Death In June established a genre where music and esoteric practice were explicitly unified.",
+        "figures_involved": ["Douglas Pearce", "Tony Wakeford", "David Tibet"],
+        "traditions": ["paganism", "european_folk_revival"],
+        "connections": {"influenced_by": [], "influenced": [], "related_events": ["topy_founding"], "part_of_movement": ["neofolk", "pagan_revival"]},
+        "guide_relevance": {"shigg": "medium", "cathleen": "low", "katherine": "medium", "theresa": "high"},
+        "sources": [
+            {"title": "Interview with Douglas Pearce", "author": "Erin Powell", "year": 2005, "type": "article", "quality_tier": "practitioner_primary"},
+            {"title": "Neofolk - Wikipedia", "author": "Wikipedia", "year": 2024, "type": "article", "quality_tier": "popular_synthesis", "url": "https://en.wikipedia.org/wiki/Neofolk"}
+        ],
+        "location": {"name": "London", "region": "England"},
+        "confidence": "high",
+        "importance": 2,
+        "is_pivotal_moment": True,
+        "era": "20th Century Post-War",
+        "expanded_context": "Neofolk emerged simultaneously with industrial music and post-punk but took a radically different aesthetic direction: acoustic instruments, martial percussion, European folk melodies, and archaic imagery. Sociologist Peter Webb describes Sol Invictus (Tony Wakeford, named after the Roman sun god) as reflecting 'a type of esoteric spirituality where paganism comes to the fore because of its respect for nature, its openness about sexuality, and its rituals and ceremonies guided by the seasons.' David Tibet coined the term 'apocalyptic folk' to describe Current 93, though he initially meant it as 'apocalyptic people' rather than a genre reference. The genre remains controversial: its engagement with European ancestral imagery and symbolism has attracted both genuine pagans and far-right elements, creating ongoing debates about intent and interpretation."
+    },
+    {
+        "id": "coil_formed",
+        "year": 1982,
+        "title": "Coil: Music as Continuous Magical Operation",
+        "primary_category": "Figure",
+        "secondary_category": "Esoteric Music / Occult Art",
+        "taxonomy_categories": [12, 5, 6],
+        "visual_tells": ["sigils/glyph systems", "alchemical imagery", "ritual gesture"],
+        "lane_tags": ["Modern sigil", "chaos", "Hermetic"],
+        "glossary_terms": ["Thelema", "Sex magic", "Sigil", "Ritual (meaning-making)"],
+        "description": "John Balance and Peter Christopherson (formerly of Throbbing Gristle) form Coil, one of the most overtly occult-oriented projects in experimental music. Dedicated students of Crowley's Thelemic system, chaos magic, and sex magic, they framed their entire discography as a series of magical operations committed to tape. Their album Horse Rotorvator was named after a vision Balance had of a helicopter crash — a form of necromantic divination.",
+        "significance": "Coil represents the most sustained attempt to make music and magic genuinely inseparable. Where other artists used occult imagery aesthetically, Balance and Christopherson practiced. Their work — dense with Thelemic references, magical sigils, and alchemical processes — treated recorded sound as a medium for storing and transmitting magical charge. Featured in David Keenan's England's Hidden Reverse alongside Current 93 and Nurse With Wound as the core of the esoteric underground.",
+        "figures_involved": ["John Balance", "Peter Christopherson"],
+        "traditions": ["thelema", "chaos_magic"],
+        "connections": {"influenced_by": ["topy_founding", "spare_book_of_pleasure"], "influenced": [], "related_events": ["topy_founding"], "part_of_movement": ["industrial_music", "esoteric_underground"]},
+        "guide_relevance": {"shigg": "low", "cathleen": "medium", "katherine": "medium", "theresa": "high"},
+        "sources": [
+            {"title": "England's Hidden Reverse: A Secret History of the Esoteric Underground", "author": "David Keenan", "year": 2003, "type": "book", "quality_tier": "academic_secondary"}
+        ],
+        "location": {"name": "London", "region": "England"},
+        "confidence": "high",
+        "importance": 1,
+        "is_pivotal_moment": True,
+        "era": "20th Century Post-War",
+        "expanded_context": "Balance's death in 2004 (falling from a balcony) and Christopherson's death in 2010 (in his sleep, in Bangkok) ended one of the most remarkable creative-magical partnerships in music history. Their catalogue — from Scatology (1984) through Musick to Play in the Dark (1999) — documents a sustained magical practice evolving over two decades. The Ape of Naples (2005), released posthumously, is filled with Thelemic references and can be read as Balance's final magical testament. Their influence on dark ambient, ritual music, and esoteric art remains enormous."
+    },
+    {
+        "id": "current_93_apocalyptic_folk",
+        "year": 1984,
+        "title": "Current 93 and the Apocalyptic Folk Movement",
+        "primary_category": "Figure",
+        "secondary_category": "Genre Creation / Gnostic Music",
+        "taxonomy_categories": [12, 5],
+        "visual_tells": ["apocalyptic imagery", "gnostic symbolism", "handmade grimoires"],
+        "lane_tags": ["Modern sigil", "chaos", "Bridge: Hermetic + Spiritualism"],
+        "glossary_terms": ["Gnosticism", "Apocalyptic mysticism", "Esoteric Christianity"],
+        "description": "David Tibet founds Current 93, coining the term 'apocalyptic folk' to describe a music that draws equally on Gnostic Christianity, apocalyptic mysticism, and esoteric literature. Tibet regards himself as a Christian but believes that truth is always hidden, showing more interest in apocalyptic and apocryphal literature than any Christian canon. During a period of heavy amphetamine and LSD use in the 1980s, he began to revere the children's character Noddy as a Gnostic deity — demonstrating the genre's tendency toward esoteric syncretism.",
+        "significance": "Current 93 created a musical space where Gnostic Christianity, folk tradition, and the esoteric underground could coexist. Tibet's approach — treating children's fiction, apocalyptic scripture, and personal revelation as equally valid sources of gnosis — anticipated later developments in chaos magic and eclectic spirituality. The band's extensive collaborations with Coil, Nurse With Wound, and Death In June created a network that David Keenan documented as 'England's Hidden Reverse.'",
+        "figures_involved": ["David Tibet"],
+        "traditions": ["gnosticism", "esoteric_christianity"],
+        "connections": {"influenced_by": ["topy_founding"], "influenced": [], "related_events": ["topy_founding", "coil_formed", "death_in_june_neofolk"], "part_of_movement": ["neofolk", "esoteric_underground"]},
+        "guide_relevance": {"shigg": "medium", "cathleen": "medium", "katherine": "high", "theresa": "high"},
+        "sources": [
+            {"title": "England's Hidden Reverse: A Secret History of the Esoteric Underground", "author": "David Keenan", "year": 2003, "type": "book", "quality_tier": "academic_secondary"},
+            {"title": "Neofolk - Wikipedia", "author": "Wikipedia", "year": 2024, "type": "article", "quality_tier": "popular_synthesis", "url": "https://en.wikipedia.org/wiki/Neofolk"}
+        ],
         "location": {"name": "London", "region": "England"},
         "confidence": "high",
         "importance": 1,
@@ -2012,6 +2224,37 @@ HISTORICAL_EVENTS_EXTENDED = [
     # ============================================================================
     # CONTEMPORARY ERA (1990s-Present)
     # ============================================================================
+    {
+        "id": "norwegian_black_metal",
+        "year": 1991,
+        "title": "Norwegian Black Metal's Occult Eruption",
+        "primary_category": "Movement",
+        "secondary_category": "Satanism / Anti-Christian Revolt",
+        "taxonomy_categories": [12, 3, 5],
+        "visual_tells": ["corpse paint", "inverted crosses", "burning churches", "northern darkness"],
+        "lane_tags": ["left-hand path", "Satanism", "pagan revival"],
+        "glossary_terms": ["Left-hand path", "Satanism", "Norse paganism", "Ritual (meaning-making)"],
+        "description": "The early Norwegian black metal scene, centred around Euronymous (Mayhem), his record label Deathlike Silence Productions, and the Helvete record shop in Oslo, erupts into international notoriety. The scene's members position black metal as genuine Satanic and anti-Christian expression, leading to a wave of church arsons (over 50 churches burned between 1992-1996), murder (Euronymous killed by Varg Vikernes in 1993), and a cultural phenomenon that blurred the line between musical performance and occult conviction.",
+        "significance": "Norwegian black metal represents the most extreme modern collision between music and occult ideology. Unlike the esoteric underground (Coil, Current 93) where magic was sophisticated and often private, black metal's occultism was public, violent, and deliberately confrontational. The scene split between those practising Satanism (Euronymous, Gaahl of Gorgoroth) and those drawn to Norse paganism (Vikernes, Ihsahn of Emperor). The movement forced a question the timeline repeatedly surfaces: when does symbolic practice become literal action?",
+        "figures_involved": ["Euronymous (Oystein Aarseth)", "Dead (Per Yngve Ohlin)", "Varg Vikernes", "Gaahl", "Ihsahn"],
+        "traditions": ["satanism", "norse_paganism", "left_hand_path"],
+        "connections": {"influenced_by": [], "influenced": [], "related_events": [], "part_of_movement": ["black_metal", "satanism"]},
+        "guide_relevance": {"shigg": "low", "cathleen": "low", "katherine": "medium", "theresa": "high"},
+        "sources": [
+            {"title": "Lords of Chaos: The Bloody Rise of the Satanic Metal Underground", "author": "Michael Moynihan & Didrik Soderlind", "year": 1998, "type": "book", "quality_tier": "academic_secondary"},
+            {"title": "Until the Light Takes Us", "author": "Documentary", "year": 2008, "type": "article", "quality_tier": "popular_synthesis"}
+        ],
+        "location": {"name": "Oslo / Bergen", "region": "Norway"},
+        "confidence": "high",
+        "importance": 1,
+        "is_pivotal_moment": True,
+        "era": "Contemporary",
+        "expanded_context": "Dead (Per Yngve Ohlin) developed an intense personal mythology around death: he buried his stage clothes before performances so they would 'smell of death,' painted his face with corpse paint (a practice he helped pioneer), and kept a dead crow in a jar as a talisman. His suicide in 1991 became a legendary and controversial moment — Euronymous photographed the scene, and fragments of Dead's skull were allegedly made into necklaces. Euronymous's murder by Vikernes in 1993 ended the inner circle but launched the genre internationally. Gaahl (Gorgoroth) later became one of black metal's most articulate spokespersons for its spiritual dimensions, describing his work as an expression of 'Northern darkness' and a continuation of pre-Christian Norse spirituality. The academic study of black metal's occult dimensions has grown substantially, including scholarship on Iranian black metal scenes where musicians face genuine persecution.",
+        "learn_more_links": [
+            {"title": "Early Norwegian Black Metal - Wikipedia", "url": "https://en.wikipedia.org/wiki/Early_Norwegian_black_metal_scene"},
+            {"title": "Lords of Chaos", "url": "https://en.wikipedia.org/wiki/Lords_of_Chaos_(book)"}
+        ]
+    },
     {
         "id": "the_craft_film",
         "image_url": "https://images.unsplash.com/photo-1633367151519-a5048db4c2d5?w=800",

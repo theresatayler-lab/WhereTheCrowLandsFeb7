@@ -115,7 +115,25 @@ Frontend: React + Tailwind | Backend: FastAPI | DB: MongoDB | AI: DeepSeek + Cla
 - **Georgiana Houghton Spirit Drawings** — Enriched significance (justice/equity angle), added expanded_context + learn_more_links
 - **Charles Leland's Aradia** — Enriched description (witch as liberator), added expanded_context + learn_more_links
 
-**Total timeline events: 110 -> 118**
+### MUSICIANS & ARTISTS IN OCCULT TRADITIONS (8 new events, 2 enriched)
+**New entries:**
+9. **Scriabin's Mysterium (1903)** — Russian composer-mystic, Theosophy, unfinished cosmic ritual
+10. **Robert Johnson at the Crossroads (1936)** — Delta blues, hoodoo crossroads mythology
+11. **Count Ossie & Nyabinghi (1960)** — Rastafarian sacred drumming, reggae foundation
+12. **Lustmord & Dark Ambient (1980)** — Genre creation, Crowley/chaos magic influence
+13. **Death In June / Neofolk (1981)** — Pagan revival music (controversy noted)
+14. **Coil (1982)** — Thelema, sex magic, music as magical operation
+15. **Current 93 / Apocalyptic Folk (1984)** — Gnostic Christianity, David Tibet
+16. **Norwegian Black Metal (1991)** — Mayhem, church burnings, Satanism/Norse paganism
+
+**Enriched existing:**
+- **Salon de la Rose+Croix** — Added Satie's 2-year involvement, FSU thesis source, expanded_context + learn_more_links
+- **TOPY** — Added Throbbing Gristle/Coil context, England's Hidden Reverse source, Genesis P-Orridge trajectory
+
+**Skipped (per user's own document notes):**
+- K-Pop (Narsha, SHINee) — "interpretation of symbolism rather than self-identification"
+- Z'ev, Zoviet France, Ras Michael, Sol Invictus — secondary to stronger entries already added
+- Individual BM figures (Ihsahn, Gaahl, Dead) — folded into Norwegian Black Metal scene entry
 
 ---
 
