@@ -185,7 +185,9 @@ POLITICAL_ACTIVISM_EVENTS = [
             {"title": "Sisterhood is Powerful", "author": "Robin Morgan (ed.)", "year": 1970, "type": "book", "quality_tier": "practitioner_primary"},
             {"title": "W.I.T.C.H. Documents", "author": "Various", "year": 1968, "type": "primary_document", "quality_tier": "practitioner_primary"},
             {"title": "The 60s Feminists Who Hexed the Patriarchy", "author": "Vice", "year": 2016, "type": "article", "quality_tier": "popular_synthesis", "url": "https://www.vice.com/en/article/the-60s-feminists-who-hexed-the-patriarchy/"},
-            {"title": "Robin Morgan Official Site: Activism", "author": "Robin Morgan", "year": 2024, "type": "archive", "quality_tier": "practitioner_primary", "url": "https://www.robinmorgan.net/"}
+            {"title": "Robin Morgan Official Site: Activism", "author": "Robin Morgan", "year": 2024, "type": "archive", "quality_tier": "practitioner_primary", "url": "https://www.robinmorgan.net/"},
+            {"title": "W.I.T.C.H.: Radical Feminism's Witch-Inspired Protest", "author": "Dig Podcast", "year": 2020, "type": "article", "quality_tier": "academic_secondary", "url": "https://digpodcast.org/2020/09/27/w-i-t-c-h/"},
+            {"title": "W.I.T.C.H. Academic Analysis", "author": "Western University", "year": 2021, "type": "article", "quality_tier": "academic_primary", "url": "https://ojs.lib.uwo.ca/index.php/westernumirror/article/download/16097/12492/39561"}
         ],
         "location": {"name": "New York City", "region": "United States"},
         "confidence": "high",
@@ -314,7 +316,10 @@ POLITICAL_ACTIVISM_EVENTS = [
         "sources": [
             {"title": "Greenham Common Women's Peace Camp - Wikipedia", "author": "Wikipedia", "year": 2024, "type": "article", "quality_tier": "popular_synthesis", "url": "https://en.wikipedia.org/wiki/Greenham_Common_Women%27s_Peace_Camp"},
             {"title": "Greenham Common Women's Peace Camp", "author": "Official Site", "year": 2020, "type": "archive", "quality_tier": "practitioner_primary", "url": "https://www.greenhamwpc.org.uk/"},
-            {"title": "The Spirituality of and at Greenham Common Peace Camp", "author": "Academic Paper", "year": 2015, "type": "article", "quality_tier": "academic_secondary"}
+            {"title": "The Spirituality of and at Greenham Common Peace Camp", "author": "Academic Paper", "year": 2015, "type": "article", "quality_tier": "academic_secondary", "url": "https://www.researchgate.net/publication/240718535_The_Spirituality_of_and_at_Greenham_Common_Peace_Camp"},
+            {"title": "What We Greenham Common Women Achieved", "author": "Chatham House (Rebecca Johnson)", "year": 2023, "type": "article", "quality_tier": "academic_secondary", "url": "https://www.chathamhouse.org/publications/the-world-today/2023-08/date-history-what-we-greenham-common-women-achieved"},
+            {"title": "Women Form Peace Camp to Protest Housing Cruise Missiles", "author": "Global Nonviolent Action Database", "year": 2020, "type": "article", "quality_tier": "academic_secondary", "url": "https://nvdatabase.swarthmore.edu/content/women-form-peace-camp-protest-housing-cruise-missiles-greenham-common-1981-1993"},
+            {"title": "Politics and Spirituality at Greenham Common Peace Camp", "author": "Sussex University (Observing the 80s)", "year": 2013, "type": "article", "quality_tier": "academic_secondary", "url": "https://blogs.sussex.ac.uk/observingthe80s/2013/11/08/it-did-get-tiring-to-welcome-everyone-to-the-fire-politics-and-spirituality-at-greenham-common-peace-camp/"}
         ],
         "location": {"name": "Greenham Common, Berkshire", "region": "England"},
         "confidence": "high",
@@ -379,7 +384,11 @@ POLITICAL_ACTIVISM_EVENTS = [
             {"title": "Witches Cast 'Binding Spell' on Trump", "author": "Various journalists", "year": 2017, "type": "article", "quality_tier": "popular_synthesis", "url": "https://www.vox.com/2017/2/24/14727444/witches-spell-trump-magic-resistance"},
             {"title": "A Spell to Bind Donald Trump and All Those Who Abet Him", "author": "Michael M. Hughes", "year": 2017, "type": "primary_document", "quality_tier": "practitioner_primary", "url": "https://extranewsfeed.com/a-spell-to-bind-donald-trump-and-all-those-who-abet-him-february-24th-mass-ritual-51f3d94f62f4"},
             {"title": "Magic, Ritual, and Witchcraft in the Trump Era", "author": "Journal of Linguistic Anthropology", "year": 2019, "type": "article", "quality_tier": "academic_primary"},
-            {"title": "Reflections on Four Years of Magic Resistance", "author": "Religion News Service", "year": 2021, "type": "article", "quality_tier": "popular_synthesis"}
+            {"title": "Reflections on Four Years of Magic Resistance", "author": "Religion News Service", "year": 2021, "type": "article", "quality_tier": "popular_synthesis"},
+            {"title": "Author of Trump Binding Spell Releases New Book", "author": "Wild Hunt", "year": 2018, "type": "article", "quality_tier": "practitioner_primary", "url": "https://wildhunt.org/2018/09/author-of-trump-binding-spell-releases-new-book-magic-for-the-resistance.html"},
+            {"title": "Interview with Michael M. Hughes", "author": "The Mary Sue", "year": 2017, "type": "article", "quality_tier": "popular_synthesis", "url": "https://www.themarysue.com/bind-trump-michael-hughes-interview/"},
+            {"title": "Coven Goals: Mass Binding Spell Coverage", "author": "BuzzFeed News", "year": 2017, "type": "article", "quality_tier": "popular_synthesis", "url": "https://www.buzzfeednews.com/article/juliareinstein/coven-goals"},
+            {"title": "Magic for the Resistance: Rituals and Spells for Change", "author": "Michael M. Hughes", "year": 2018, "type": "book", "quality_tier": "practitioner_primary", "url": "https://www.goodreads.com/book/show/39027015-magic-for-the-resistance"}
         ],
         "location": {"name": "Global", "region": "Internet"},
         "confidence": "high",

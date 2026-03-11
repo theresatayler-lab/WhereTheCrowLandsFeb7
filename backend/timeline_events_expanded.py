@@ -733,16 +733,19 @@ EXPANDED_TIMELINE_EVENTS = [
         "sources": [
             {"title": "Mules and Men", "author": "Zora Neale Hurston", "year": 1935, "type": "book", "quality_tier": "practitioner_primary", "url": "https://en.wikipedia.org/wiki/Mules_and_Men"},
             {"title": "Zora Neale Hurston's Black Folk Ecologies", "author": "AAIHS", "year": 2020, "type": "article", "quality_tier": "academic_secondary", "url": "https://www.aaihs.org/zora-neale-hurstons-black-folk-ecologies/"},
-            {"title": "Hurston and Hoodoo", "author": "SpringerLink", "year": 2018, "type": "article", "quality_tier": "academic_secondary", "url": "https://link.springer.com/chapter/10.1007/978-3-319-90008-3_3"}
+            {"title": "Hurston and Hoodoo", "author": "SpringerLink", "year": 2018, "type": "article", "quality_tier": "academic_secondary", "url": "https://link.springer.com/chapter/10.1007/978-3-319-90008-3_3"},
+            {"title": "Zora Neale Hurston - Wikipedia", "author": "Wikipedia", "year": 2024, "type": "article", "quality_tier": "popular_synthesis", "url": "https://en.wikipedia.org/wiki/Zora_Neale_Hurston"},
+            {"title": "Zombies & Hoodoo & Zora Neale Hurston", "author": "Lit Pub Crawl", "year": 2021, "type": "article", "quality_tier": "popular_synthesis", "url": "https://www.litpubcrawl.com/thescrape/zombies-amp-hoodoo-amp-zora-neale-hurston"}
         ],
         "location": {"name": "Florida & New Orleans", "region": "United States"},
         "confidence": "high",
         "importance": 1,
         "is_pivotal_moment": True,
-        "expanded_context": "Hurston's fieldwork was radical: she didn't observe from outside but underwent initiation herself, lying face-down on a couch for 69 hours during one hoodoo ceremony. Her approach anticipated participatory ethnography by decades. The book's rediscovery by Alice Walker in 1975 restored Hurston to the canon and inspired generations of Black women writers and spiritual practitioners.",
+        "expanded_context": "Hurston's fieldwork was radical: she didn't observe from outside but underwent initiation herself, lying face-down on a couch for 69 hours during one hoodoo ceremony. She also fasted naked for three days on a snakeskin as part of another initiation. Her approach anticipated participatory ethnography by decades. She later documented Haitian Vodou in Tell My Horse (1938). The book's rediscovery by Alice Walker in 1975 restored Hurston to the canon and inspired generations of Black women writers and spiritual practitioners. As she wrote, folklore 'reveals that which the soul lives by.'",
         "learn_more_links": [
             {"title": "Mules and Men - Wikipedia", "url": "https://en.wikipedia.org/wiki/Mules_and_Men"},
-            {"title": "AAIHS: Hurston's Black Folk Ecologies", "url": "https://www.aaihs.org/zora-neale-hurstons-black-folk-ecologies/"}
+            {"title": "AAIHS: Hurston's Black Folk Ecologies", "url": "https://www.aaihs.org/zora-neale-hurstons-black-folk-ecologies/"},
+            {"title": "Zora Neale Hurston - Wikipedia", "url": "https://en.wikipedia.org/wiki/Zora_Neale_Hurston"}
         ]
     },
     {
@@ -767,6 +770,36 @@ EXPANDED_TIMELINE_EVENTS = [
         "confidence": "high",
         "importance": 1,
         "is_pivotal_moment": True
+    },
+    {
+        "id": "mass_observation_folk_magic",
+        "year": 1937,
+        "title": "Mass Observation Begins Documenting British Folk Practices",
+        "primary_category": "Research",
+        "secondary_category": "Social Anthropology",
+        "taxonomy_categories": [8, 4],
+        "visual_tells": ["household altars", "craft textures", "handmade grimoires"],
+        "lane_tags": ["folk magic", "earth ritual", "documentation"],
+        "glossary_terms": ["Folk magic (practice-based)", "Charm", "Herbalism", "Land wisdom"],
+        "description": "Mass Observation, a social research project founded by anthropologist Tom Harrisson, poet Charles Madge, and filmmaker Humphrey Jennings, begins systematically documenting everyday British life including superstitions, folk beliefs, and magical practices. Hundreds of volunteer observers across Britain record what ordinary people actually do and believe, creating an unprecedented archive of living folk practice.",
+        "significance": "Anthropological documentation of British folk practices at scale — documentation-as-preservation in action. Mass Observation captured folk magical beliefs that were still alive in working-class communities: lucky charms, threshold protection, divination practices, healing rituals. This archive proves these traditions were not extinct historical curiosities but active, living practices. The project is a direct ancestor of the Crowlands principle that recording living tradition is itself an act of preservation.",
+        "figures_involved": ["Tom Harrisson", "Charles Madge", "Humphrey Jennings"],
+        "traditions": ["british_folk_magic", "cunning_folk"],
+        "connections": {"influenced_by": [], "influenced": [], "related_events": ["gardner_folklore_society"], "part_of_movement": ["folk_magic_documentation"]},
+        "guide_relevance": {"shigg": "high", "cathleen": "high", "katherine": "medium", "theresa": "high"},
+        "sources": [
+            {"title": "Mass Observation Archive", "author": "University of Sussex", "year": 2024, "type": "archive", "quality_tier": "academic_primary", "url": "https://www.massobs.org.uk/"},
+            {"title": "Mass Observation - Wikipedia", "author": "Wikipedia", "year": 2024, "type": "article", "quality_tier": "popular_synthesis", "url": "https://en.wikipedia.org/wiki/Mass-Observation"}
+        ],
+        "location": {"name": "Bolton / Blackheath / Nationwide", "region": "England"},
+        "confidence": "high",
+        "importance": 2,
+        "is_pivotal_moment": False,
+        "expanded_context": "Mass Observation's 'Day Surveys' asked volunteers to record everything they observed on specific dates, including folk practices, superstitions, and quasi-magical behaviours. Their files contain accounts of horseshoe placement, salt-throwing, candle rituals, dream interpretation, and protective gestures — all from the 1930s-40s, the same period as the Crowlands family's own practices. The archive, now held at the University of Sussex, is one of the richest sources for understanding what British folk magic actually looked like in lived practice rather than in scholarly reconstruction.",
+        "learn_more_links": [
+            {"title": "Mass Observation Archive", "url": "https://www.massobs.org.uk/"},
+            {"title": "Mass Observation - Wikipedia", "url": "https://en.wikipedia.org/wiki/Mass-Observation"}
+        ]
     },
     {
         "id": "murray_god_of_witches",
@@ -957,9 +990,14 @@ EXPANDED_TIMELINE_EVENTS = [
         "connections": {"influenced_by": ["spiritualism_boom_1917"], "influenced": ["witchcraft_act_repeal", "gardner_witchcraft_today"], "related_events": ["fortune_magical_battle", "blitz_protective_magic"], "part_of_movement": []},
         "guide_relevance": {"shigg": "high", "cathleen": "high", "katherine": "high", "theresa": "high"},
         "sources": [
-            {"title": "The 'last witch' of Britain", "author": "National Geographic", "year": 2021, "type": "article", "quality_tier": "popular_synthesis", "url": "https://www.nationalgeographic.com/history/article/the-last-witch-of-britain"},
+            {"title": "The 'last witch' of Britain", "author": "National Geographic", "year": 2021, "type": "article", "quality_tier": "popular_synthesis", "url": "https://www.nationalgeographic.com/premium/article/last-witch-britain-helen-duncan-wwii"},
             {"title": "Ectoplasm and the Last British Woman Tried for Witchcraft", "author": "JSTOR Daily", "year": 2020, "type": "article", "quality_tier": "academic_secondary", "url": "https://daily.jstor.org/ectoplasm-and-the-last-british-woman-tried-for-witchcraft/"},
-            {"title": "Helen Duncan - Scotland's last witch?", "author": "Historic UK", "year": 2019, "type": "article", "quality_tier": "popular_synthesis", "url": "https://www.historic-uk.com/HistoryUK/HistoryofScotland/Helen-Duncan-Scotlands-last-witch/"}
+            {"title": "Helen Duncan - Scotland's last witch?", "author": "Historic UK", "year": 2019, "type": "article", "quality_tier": "popular_synthesis", "url": "https://www.historic-uk.com/HistoryUK/HistoryofScotland/Helen-Duncan-Scotlands-last-witch/"},
+            {"title": "Helen Duncan - Wikipedia", "author": "Wikipedia", "year": 2024, "type": "article", "quality_tier": "popular_synthesis", "url": "https://en.wikipedia.org/wiki/Helen_Duncan"},
+            {"title": "Helen Duncan - Sky History", "author": "Sky History", "year": 2020, "type": "article", "quality_tier": "popular_synthesis", "url": "https://www.history.co.uk/articles/helen-duncan-britains-last-witch"},
+            {"title": "Helen Duncan: The Freakish Story of Britain's Last Convicted Witch", "author": "Vice", "year": 2019, "type": "article", "quality_tier": "popular_synthesis", "url": "https://www.vice.com/en/article/helen-duncan-the-strange-freakish-story-of-britains-last-convicted-witch/"},
+            {"title": "Smoke, Spirits and Statute (Legal Analysis)", "author": "ICLR", "year": 2020, "type": "article", "quality_tier": "academic_secondary", "url": "https://www.iclr.co.uk/blog/commentary/smoke-spirits-and-statute/"},
+            {"title": "Helen Duncan - Undiscovered Scotland", "author": "Undiscovered Scotland", "year": 2020, "type": "article", "quality_tier": "popular_synthesis", "url": "https://www.undiscoveredscotland.co.uk/usbiography/d/helenduncan.html"}
         ],
         "location": {"name": "London (Old Bailey)", "region": "England"},
         "confidence": "high",
@@ -967,8 +1005,10 @@ EXPANDED_TIMELINE_EVENTS = [
         "is_pivotal_moment": True,
         "expanded_context": "Duncan's trial at the Old Bailey lasted seven days. The prosecution used the 1735 Witchcraft Act because it was easier to prove than fraud—they only had to show she claimed to communicate with spirits, not that she was deceiving anyone. Churchill wrote an angry memo calling it 'obsolete tomfoolery' and demanded to know why the Act hadn't been repealed. She served nine months in Holloway Prison. The case is often cited as a catalyst for the Fraudulent Mediums Act 1951, which replaced the Witchcraft Act and cleared the legal path for Gardner's public writings.",
         "learn_more_links": [
-            {"title": "National Geographic: Last Witch of Britain", "url": "https://www.nationalgeographic.com/history/article/the-last-witch-of-britain"},
-            {"title": "JSTOR Daily: Duncan Trial", "url": "https://daily.jstor.org/ectoplasm-and-the-last-british-woman-tried-for-witchcraft/"}
+            {"title": "National Geographic: Last Witch of Britain", "url": "https://www.nationalgeographic.com/premium/article/last-witch-britain-helen-duncan-wwii"},
+            {"title": "JSTOR Daily: Duncan Trial", "url": "https://daily.jstor.org/ectoplasm-and-the-last-british-woman-tried-for-witchcraft/"},
+            {"title": "Helen Duncan - Wikipedia", "url": "https://en.wikipedia.org/wiki/Helen_Duncan"},
+            {"title": "ICLR: Legal Analysis of the Prosecution", "url": "https://www.iclr.co.uk/blog/commentary/smoke-spirits-and-statute/"}
         ]
     },
     {
@@ -1044,7 +1084,42 @@ EXPANDED_TIMELINE_EVENTS = [
         "location": {"name": "London", "region": "England"},
         "confidence": "high",
         "importance": 1,
-        "is_pivotal_moment": True
+        "is_pivotal_moment": True,
+        "expanded_context": "The repeal replaced the 1735 Act (which criminalised claiming magical powers) with the Fraudulent Mediums Act, which only prohibited fraudulent claims made for profit. This legal shift — from 'magic is inherently criminal' to 'only fraud is criminal' — was the hinge point that enabled Gardner to publish Witchcraft Today in 1954 without fear of prosecution. Helen Duncan's 1944 conviction under the old Act, which Churchill called 'obsolete tomfoolery,' was a direct catalyst. The repeal also cleared the path for Doreen Valiente's public liturgical work and the eventual founding of the Pagan Federation.",
+        "learn_more_links": [
+            {"title": "Witchcraft Act 1735 - Wikipedia", "url": "https://en.wikipedia.org/wiki/Witchcraft_Act_1735"},
+            {"title": "Fraudulent Mediums Act 1951", "url": "https://en.wikipedia.org/wiki/Fraudulent_Mediums_Act_1951"}
+        ]
+    },
+    {
+        "id": "museum_witchcraft_founded",
+        "year": 1951,
+        "title": "Museum of Witchcraft Founded",
+        "primary_category": "Organization",
+        "secondary_category": "Cultural Preservation",
+        "taxonomy_categories": [8, 3],
+        "visual_tells": ["herbs/charms/bones", "handmade grimoires", "household altars", "craft textures"],
+        "lane_tags": ["Witchcraft", "folk magic", "documentation"],
+        "glossary_terms": ["Witchcraft (practice-based)", "Charm", "Grimoire", "Folk magic (practice-based)"],
+        "description": "Cecil Williamson founds the Museum of Witchcraft, initially on the Isle of Man and later moved to Boscastle, Cornwall. It becomes the world's largest collection of witchcraft-related artefacts and implements, preserving physical evidence of British folk magical practice that would otherwise have been lost.",
+        "significance": "Institutional preservation of folk magical tradition — documentation-as-protection in material form. Founded the same year as the Witchcraft Act repeal, the Museum represents the transition from persecution to preservation. Gerald Gardner briefly managed the Castletown location. The collection includes cunning-folk implements, curse tablets, poppets, witch bottles, and thousands of items documenting the material reality of British folk magic across centuries.",
+        "figures_involved": ["Cecil Williamson", "Gerald Gardner"],
+        "traditions": ["british_folk_magic", "cunning_folk"],
+        "connections": {"influenced_by": ["witchcraft_act_repeal"], "influenced": [], "related_events": ["gardner_witchcraft_today"], "part_of_movement": ["folk_magic_documentation"]},
+        "guide_relevance": {"shigg": "high", "cathleen": "high", "katherine": "medium", "theresa": "high"},
+        "sources": [
+            {"title": "Museum of Witchcraft and Magic - Wikipedia", "author": "Wikipedia", "year": 2024, "type": "article", "quality_tier": "popular_synthesis", "url": "https://en.wikipedia.org/wiki/Museum_of_Witchcraft_and_Magic"},
+            {"title": "Museum of Witchcraft and Magic Official Site", "author": "Museum of Witchcraft and Magic", "year": 2024, "type": "archive", "quality_tier": "practitioner_primary", "url": "https://museumofwitchcraftandmagic.co.uk/"}
+        ],
+        "location": {"name": "Boscastle, Cornwall (current); Isle of Man (original)", "region": "England"},
+        "confidence": "high",
+        "importance": 1,
+        "is_pivotal_moment": True,
+        "expanded_context": "Williamson originally opened the museum at Castletown, Isle of Man in 1951 with Gerald Gardner as resident witch. After a dispute, Gardner left and Williamson moved the collection through several locations before settling at Boscastle, Cornwall in 1960. The museum survived a devastating flood in 2004 that damaged many artefacts but triggered a massive community restoration effort. Now run by the Museum of Witchcraft and Magic Trust, it holds over 3,000 objects and is the most significant material archive of British folk magical practice in existence. It represents the physical counterpart to the documentary preservation work: these are the actual tools, bottles, poppets, and grimoires that people used.",
+        "learn_more_links": [
+            {"title": "Museum of Witchcraft and Magic", "url": "https://museumofwitchcraftandmagic.co.uk/"},
+            {"title": "Museum of Witchcraft - Wikipedia", "url": "https://en.wikipedia.org/wiki/Museum_of_Witchcraft_and_Magic"}
+        ]
     },
 ]
 
@@ -1540,7 +1615,7 @@ HISTORICAL_EVENTS_EXTENDED = [
         "lane_tags": ["Spiritualism", "channeling", "liminal contact"],
         "glossary_terms": ["Automatic writing/drawing", "Mediumship", "Channeling"],
         "description": "Abstract watercolors claimed to be guided by spirits, predating abstract expressionism by decades.",
-        "significance": "Early example of mediumistic abstract art; rediscovered by art historians in 21st century.",
+        "significance": "Early example of mediumistic abstract art; woman's autonomous creative and spiritual practice outside male gatekeeping. Rediscovered by art historians in 21st century, demonstrating how women's spiritual art was systematically excluded from art history.",
         "figures_involved": ["Georgiana Houghton"],
         "traditions": ["victorian_spiritualism"],
         "connections": {"influenced_by": ["fox_sisters_hydesville"], "influenced": ["hilma_af_klint_paintings"], "related_events": [], "part_of_movement": []},
@@ -1550,7 +1625,43 @@ HISTORICAL_EVENTS_EXTENDED = [
         "confidence": "high",
         "importance": 2,
         "is_pivotal_moment": False,
-        "era": "19th Century"
+        "era": "19th Century",
+        "expanded_context": "Houghton exhibited her spirit drawings at the New British Gallery in 1871 — a solo show of abstract art decades before Kandinsky or Mondrian. The exhibition was a commercial failure and reviews were hostile. She spent her inheritance on it. Her work was then forgotten for over a century until the Courtauld Gallery's 2016 exhibition brought it to international attention. Like Hilma af Klint, Houghton's erasure demonstrates how women's autonomous spiritual-creative practice was systematically excluded from art historical canons.",
+        "learn_more_links": [
+            {"title": "Courtauld Gallery: Georgiana Houghton Exhibition", "url": "https://courtauld.ac.uk/gallery/exhibitions/2016/georgiana-houghton-spirit-drawings/"},
+            {"title": "Georgiana Houghton - Wikipedia", "url": "https://en.wikipedia.org/wiki/Georgiana_Houghton"}
+        ]
+    },
+    {
+        "id": "spr_founded",
+        "year": 1882,
+        "title": "Society for Psychical Research Founded",
+        "primary_category": "Organization",
+        "secondary_category": "Scientific Investigation",
+        "taxonomy_categories": [4, 6],
+        "visual_tells": ["séance photo vibe", "spirit diagrams", "scientific apparatus"],
+        "lane_tags": ["Spiritualism", "Bridge: Hermetic + Spiritualism"],
+        "glossary_terms": ["Spiritualism", "Mediumship", "Psychical research"],
+        "description": "The Society for Psychical Research is founded in London by Cambridge scholars including Henry Sidgwick, Frederic W.H. Myers, and Edmund Gurney. The first academic body to systematically investigate paranormal phenomena using scientific methods. Members included William James, Arthur Balfour (future PM), and later Oliver Lodge.",
+        "significance": "Institutional legitimisation of marginalised knowledge. The SPR applied the prestige and methodology of Cambridge to phenomena that had been dismissed as superstition or fraud. This act of documentation-as-validation — taking folk experience seriously enough to study it rigorously — is a direct ancestor of the Crowlands principle that careful documentation is itself a form of respect and preservation.",
+        "figures_involved": ["Henry Sidgwick", "Frederic W.H. Myers", "Edmund Gurney", "William James"],
+        "traditions": ["victorian_spiritualism"],
+        "connections": {"influenced_by": ["fox_sisters_hydesville"], "influenced": ["houghton_spirit_drawings", "fortune_inner_light"], "related_events": [], "part_of_movement": ["spiritualism"]},
+        "guide_relevance": {"shigg": "high", "cathleen": "medium", "katherine": "high", "theresa": "high"},
+        "sources": [
+            {"title": "Society for Psychical Research - Wikipedia", "author": "Wikipedia", "year": 2024, "type": "article", "quality_tier": "popular_synthesis", "url": "https://en.wikipedia.org/wiki/Society_for_Psychical_Research"},
+            {"title": "SPR Official Site", "author": "Society for Psychical Research", "year": 2024, "type": "archive", "quality_tier": "practitioner_primary", "url": "https://www.spr.ac.uk/"}
+        ],
+        "location": {"name": "Cambridge / London", "region": "England"},
+        "confidence": "high",
+        "importance": 1,
+        "is_pivotal_moment": True,
+        "era": "19th Century",
+        "expanded_context": "The SPR was founded in response to the massive popularity of Spiritualism and the lack of rigorous investigation into its claims. Its early investigations debunked some mediums while finding others puzzling. The Society's Proceedings and Journal became the primary academic record of psychical research. Crucially, the SPR gave institutional credibility to the study of consciousness and survival after death — subjects that mainstream science refused to touch. Many early SPR members were also involved in the Theosophical Society and later the Golden Dawn, creating a network of serious investigators who took non-material phenomena seriously.",
+        "learn_more_links": [
+            {"title": "SPR Official Website", "url": "https://www.spr.ac.uk/"},
+            {"title": "SPR - Wikipedia", "url": "https://en.wikipedia.org/wiki/Society_for_Psychical_Research"}
+        ]
     },
     {
         "id": "salon_rose_croix",
@@ -1587,8 +1698,8 @@ HISTORICAL_EVENTS_EXTENDED = [
         "visual_tells": ["moonlit rites", "sabbaths", "herbs/charms/bones"],
         "lane_tags": ["Witchcraft", "folk magic"],
         "glossary_terms": ["Witchcraft (practice-based)", "Coven", "Spell (folk usage)"],
-        "description": "Folk witchcraft text claiming to preserve Italian witch traditions, influencing modern Wicca.",
-        "significance": "Key source text for modern witchcraft; authenticity debated but influence undeniable.",
+        "description": "Folk witchcraft text claiming to preserve Italian witch traditions, positioning the witch as liberator of the oppressed. Influences modern Wicca.",
+        "significance": "Key source text for modern witchcraft; presented witchcraft as a religion of liberation and resistance against feudal oppression. Authenticity debated but influence undeniable — directly inspired Murray's witch-cult thesis and Gardner's Wicca.",
         "figures_involved": ["Charles Leland", "Maddalena"],
         "traditions": ["british_folk_magic", "cunning_folk"],
         "connections": {"influenced_by": [], "influenced": ["murray_witch_cult", "gardner_witchcraft_today"], "related_events": [], "part_of_movement": ["wicca"]},
@@ -1598,7 +1709,12 @@ HISTORICAL_EVENTS_EXTENDED = [
         "confidence": "medium",
         "importance": 1,
         "is_pivotal_moment": True,
-        "era": "19th Century"
+        "era": "19th Century",
+        "expanded_context": "Leland claimed the text was given to him by an Italian woman named Maddalena, who gathered folklore from Tuscan witches. The central narrative presents Aradia as the daughter of Diana, sent to earth to teach witchcraft to enslaved peasants as a tool of liberation against feudal lords. Whether authentic folklore or Leland's construction, the text introduced the radical idea that witchcraft was inherently political — a practice of the oppressed against their oppressors. This framing directly influenced 20th century feminist reclamations of the witch archetype.",
+        "learn_more_links": [
+            {"title": "Aradia - Wikipedia", "url": "https://en.wikipedia.org/wiki/Aradia,_or_the_Gospel_of_the_Witches"},
+            {"title": "Sacred Texts: Full text of Aradia", "url": "https://www.sacred-texts.com/pag/aradia/index.htm"}
+        ]
     },
 
     # ============================================================================
@@ -2686,7 +2802,23 @@ DEEPSEEK_GENERATED_EVENTS = [
                         "year": 2021,
                         "type": "article",
                         "quality_tier": "practitioner_primary",
-                        "url": "https://cunningfolkmagazine.com/doreen-valiente/"
+                        "url": "https://www.cunning-folk.com/read-posts/doreen-valiente-mother-of-modern-witchcraft"
+                },
+                {
+                        "title": "Why Doreen Valiente Is the Mother of Modern Witchcraft",
+                        "author": "AnOther Magazine",
+                        "year": 2018,
+                        "type": "article",
+                        "quality_tier": "popular_synthesis",
+                        "url": "https://www.anothermag.com/design-living/8555/why-doreen-valiente-is-the-mother-of-modern-witchcraft"
+                },
+                {
+                        "title": "Doreen Valiente (Academic Chapter)",
+                        "author": "Springer",
+                        "year": 2021,
+                        "type": "article",
+                        "quality_tier": "academic_secondary",
+                        "url": "https://link.springer.com/chapter/10.1007/978-3-030-76889-8_8"
                 }
         ],
         "location": {
@@ -2762,6 +2894,38 @@ DEEPSEEK_GENERATED_EVENTS = [
                         "year": 1982,
                         "type": "book",
                         "quality_tier": "practitioner_primary"
+                },
+                {
+                        "title": "Starhawk - Wikipedia",
+                        "author": "Wikipedia",
+                        "year": 2024,
+                        "type": "article",
+                        "quality_tier": "popular_synthesis",
+                        "url": "https://en.wikipedia.org/wiki/Starhawk"
+                },
+                {
+                        "title": "Reclaiming the Dark: Starhawk Interview",
+                        "author": "The Sun Magazine",
+                        "year": 2020,
+                        "type": "article",
+                        "quality_tier": "practitioner_primary",
+                        "url": "https://www.thesunmagazine.org/articles/23304-reclaiming-the-dark"
+                },
+                {
+                        "title": "Starhawk Official Website",
+                        "author": "Starhawk",
+                        "year": 2024,
+                        "type": "archive",
+                        "quality_tier": "practitioner_primary",
+                        "url": "https://starhawk.org/"
+                },
+                {
+                        "title": "Reclaiming Witches (WRDS Academic Profile)",
+                        "author": "World Religions and Spirituality Project",
+                        "year": 2021,
+                        "type": "article",
+                        "quality_tier": "academic_secondary",
+                        "url": "https://wrldrels.org/2021/07/02/reclaiming-witches/"
                 }
         ],
         "location": {
@@ -2773,7 +2937,9 @@ DEEPSEEK_GENERATED_EVENTS = [
         "is_pivotal_moment": True,
         "learn_more_links": [
             {"title": "Reclaiming (Neopaganism)", "url": "https://en.wikipedia.org/wiki/Reclaiming_(Neopaganism)"},
-            {"title": "Reclaiming Tradition Official Page", "url": "https://www.reclaiming.org/"}
+            {"title": "Reclaiming Tradition Official Page", "url": "https://www.reclaiming.org/"},
+            {"title": "Starhawk Official Website", "url": "https://starhawk.org/"},
+            {"title": "WRDS: Reclaiming Witches", "url": "https://wrldrels.org/2021/07/02/reclaiming-witches/"}
         ]
 },
 

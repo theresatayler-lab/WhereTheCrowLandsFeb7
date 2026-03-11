@@ -92,20 +92,30 @@ Frontend: React + Tailwind | Backend: FastAPI | DB: MongoDB | AI: DeepSeek + Cla
 ## Session Report: March 11, 2026 - nOcult Timeline Update
 
 ### TIMELINE ENTRIES ADDED (5 new events)
-1. **Helen Duncan Prosecution (1944)** — Last person prosecuted under Britain's Witchcraft Act 1735. Sources: National Geographic, JSTOR Daily, Historic UK.
-2. **Zora Neale Hurston - Mules and Men (1935)** — First major insider documentation of African-American hoodoo. Sources: Wikipedia, AAIHS, SpringerLink.
-3. **Doreen Valiente Rewrites Wiccan Liturgy (1953)** — Transformed Gardner's fragments into coherent Wiccan liturgy. Sources: Doreen Valiente Foundation, Wikipedia, Cunning Folk Magazine.
-4. **Greenham Common Women's Peace Camp (1981)** — 19-year all-female peace camp with ritual-infused resistance. Sources: Wikipedia, Official Greenham WPC Site, Academic Paper.
-5. **Marsha P. Johnson & Sylvia Rivera Found STAR (1970)** — Street Transvestite Action Revolutionaries mutual aid network. Sources: Wikipedia, David Carter book.
+1. **Helen Duncan Prosecution (1944)** — Last person prosecuted under Britain's Witchcraft Act 1735. Sources: National Geographic, JSTOR Daily, Historic UK, Wikipedia, Sky History, Vice, ICLR, Undiscovered Scotland (8 sources).
+2. **Zora Neale Hurston - Mules and Men (1935)** — First major insider documentation of African-American hoodoo. Sources: Wikipedia, AAIHS, SpringerLink, Lit Pub Crawl (5 sources).
+3. **Doreen Valiente Rewrites Wiccan Liturgy (1953)** — Transformed Gardner's fragments into coherent Wiccan liturgy. Sources: Doreen Valiente Foundation, Wikipedia, Cunning Folk Magazine, AnOther Magazine, Springer (5 sources).
+4. **Greenham Common Women's Peace Camp (1981)** — 19-year all-female peace camp with ritual-infused resistance. Sources: Wikipedia, Official Greenham WPC Site, Academic Paper, Chatham House, Swarthmore, Sussex University (6 sources).
+5. **Marsha P. Johnson & Sylvia Rivera Found STAR (1970)** — Street Transvestite Action Revolutionaries mutual aid network. Sources: Wikipedia, David Carter book (2 sources).
 
-### EXISTING ENTRIES ENRICHED (3 updated)
-- **W.I.T.C.H. (witch_1968)** — Added Vice article + Robin Morgan official site
-- **#MagicResistance (magic_resistance)** — Added Hughes' original Medium spell, academic paper, Religion News Service
-- **Reclaiming (reclaiming)** — Added learn_more_links (Wikipedia + official page)
+### TIMELINE ENTRIES ADDED (3 additional from manifesto cross-reference)
+6. **Society for Psychical Research Founded (1882)** — First academic body for systematic paranormal investigation. Sources: Wikipedia, SPR Official Site.
+7. **Mass Observation Begins Documenting British Folk Practices (1937)** — Anthropological documentation of living folk magic. Sources: Mass Observation Archive, Wikipedia.
+8. **Museum of Witchcraft Founded (1951)** — Cecil Williamson's institutional preservation of folk magical artifacts. Sources: Wikipedia, Official Museum Site.
 
-**Total timeline events: 110 -> 115**
-**Files Modified:** `backend/timeline_events_expanded.py`, `backend/political_activism_events.py`
-**Testing Status:** Backend verified via API curl, frontend verified via screenshot search
+### EXISTING ENTRIES ENRICHED (6+ updated)
+- **W.I.T.C.H. (witch_1968)** — Added Vice article, Robin Morgan official site, Dig podcast, Western University academic paper
+- **#MagicResistance (magic_resistance)** — Added Hughes' original Medium spell, academic paper, Religion News Service, Wild Hunt, The Mary Sue, BuzzFeed News, Goodreads book link
+- **Reclaiming (reclaiming)** — Added Starhawk Wikipedia, Sun Magazine interview, Starhawk.org, WRDS academic profile + expanded learn_more_links
+- **Helen Duncan** — Expanded from 3 to 8 sources with Wikipedia, Sky History, Vice, ICLR legal analysis, Undiscovered Scotland
+- **Hurston** — Expanded with Wikipedia bio, Lit Pub Crawl + enriched expanded_context (Tell My Horse, fasting detail)
+- **Valiente** — Expanded with AnOther Magazine, Springer academic chapter
+- **Greenham Common** — Expanded from 3 to 6 sources with Chatham House, Swarthmore, Sussex University
+- **Witchcraft Act Repeal** — Added expanded_context + learn_more_links
+- **Georgiana Houghton Spirit Drawings** — Enriched significance (justice/equity angle), added expanded_context + learn_more_links
+- **Charles Leland's Aradia** — Enriched description (witch as liberator), added expanded_context + learn_more_links
+
+**Total timeline events: 110 -> 118**
 
 ---
 
