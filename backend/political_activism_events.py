@@ -134,6 +134,37 @@ POLITICAL_ACTIVISM_EVENTS = [
         ]
     },
     {
+        "id": "star_founded",
+        "image_url": "https://images.unsplash.com/photo-1564602832342-3f6c84a37e47?w=800",
+        "year": 1970,
+        "title": "Marsha P. Johnson & Sylvia Rivera Found STAR",
+        "primary_category": "Organization",
+        "secondary_category": "Queer Mutual Aid / Activist Network",
+        "taxonomy_categories": [14, 9],
+        "visual_tells": ["protest banners", "street theater", "collective ritual", "mutual aid"],
+        "lane_tags": ["Activism", "LGBTQ+", "mutual aid", "resistance"],
+        "glossary_terms": ["Sacred activism", "Mutual aid", "Reclamation", "Ritual protest"],
+        "description": "Following the Stonewall Uprising (1969), Marsha P. Johnson and Sylvia Rivera co-found the Street Transvestite Action Revolutionaries (STAR). They provide housing, support, and advocacy for homeless queer youth, sex workers, and others abandoned by society. STAR represents the secular, material twin of any 'Invisible Helper' network—a protective, justice-focused community infrastructure built by and for the most marginalized, embodying the principle that inner spiritual work must be accompanied by tangible outer action.",
+        "significance": "STAR created a model for mutual aid that mirrors the structure of protective magical networks: identify the most vulnerable, build infrastructure around them, sustain the work through personal sacrifice. Johnson and Rivera did this without formal resources, powered by will and community. Their work is a direct ancestor of modern mutual aid networks and queer spiritual activism.",
+        "figures_involved": ["Marsha P. Johnson", "Sylvia Rivera"],
+        "traditions": ["queer_liberation", "mutual_aid", "street_activism"],
+        "connections": {"influenced_by": ["gay_liberation"], "influenced": ["lgbtq_paganism", "radical_faeries"], "related_events": [], "part_of_movement": ["lgbtq_rights", "queer_spirituality", "mutual_aid"]},
+        "guide_relevance": {"shigg": "high", "cathleen": "high", "katherine": "low", "theresa": "high"},
+        "sources": [
+            {"title": "Street Transvestite Action Revolutionaries - Wikipedia", "author": "Wikipedia", "year": 2024, "type": "article", "quality_tier": "popular_synthesis", "url": "https://en.wikipedia.org/wiki/Street_Transvestite_Action_Revolutionaries"},
+            {"title": "Stonewall: The Riots That Sparked the Gay Revolution", "author": "David Carter", "year": 2004, "type": "book", "quality_tier": "academic_secondary"}
+        ],
+        "location": {"name": "New York City", "region": "United States"},
+        "confidence": "high",
+        "importance": 1,
+        "is_pivotal_moment": True,
+        "expanded_context": "Johnson and Rivera opened STAR House in a derelict building in Greenwich Village, providing shelter and food to homeless queer youth. Rivera, who was Puerto Rican and Venezuelan, and Johnson, who was Black, built STAR at the intersection of racial, gender, and economic justice. Their work was often undervalued by mainstream gay rights organizations focused on middle-class respectability. Johnson's mysterious death in 1992 remains under investigation. The Marsha P. Johnson Institute continues their legacy.",
+        "learn_more_links": [
+            {"title": "STAR - Wikipedia", "url": "https://en.wikipedia.org/wiki/Street_Transvestite_Action_Revolutionaries"},
+            {"title": "Marsha P. Johnson Institute", "url": "https://marshap.org/"}
+        ]
+    },
+    {
         "id": "witch_1968",
         "image_url": "https://images.unsplash.com/photo-1591848478625-de43268e6fb8?w=800",
         "year": 1968,
@@ -152,7 +183,9 @@ POLITICAL_ACTIVISM_EVENTS = [
         "guide_relevance": {"shigg": "medium", "cathleen": "high", "katherine": "medium", "theresa": "high"},
         "sources": [
             {"title": "Sisterhood is Powerful", "author": "Robin Morgan (ed.)", "year": 1970, "type": "book", "quality_tier": "practitioner_primary"},
-            {"title": "W.I.T.C.H. Documents", "author": "Various", "year": 1968, "type": "primary_document", "quality_tier": "practitioner_primary"}
+            {"title": "W.I.T.C.H. Documents", "author": "Various", "year": 1968, "type": "primary_document", "quality_tier": "practitioner_primary"},
+            {"title": "The 60s Feminists Who Hexed the Patriarchy", "author": "Vice", "year": 2016, "type": "article", "quality_tier": "popular_synthesis", "url": "https://www.vice.com/en/article/the-60s-feminists-who-hexed-the-patriarchy/"},
+            {"title": "Robin Morgan Official Site: Activism", "author": "Robin Morgan", "year": 2024, "type": "archive", "quality_tier": "practitioner_primary", "url": "https://www.robinmorgan.net/"}
         ],
         "location": {"name": "New York City", "region": "United States"},
         "confidence": "high",
@@ -262,6 +295,38 @@ POLITICAL_ACTIVISM_EVENTS = [
     # LATE 20TH CENTURY - PRESENT
     # ============================================================================
     {
+        "id": "greenham_common_peace_camp",
+        "image_url": "https://images.unsplash.com/photo-1728071691976-55fa09cc8ed2?w=800",
+        "year": 1981,
+        "title": "Greenham Common Women's Peace Camp Established",
+        "primary_category": "Protest",
+        "secondary_category": "Eco-Feminist Direct Action",
+        "taxonomy_categories": [14, 9, 8],
+        "visual_tells": ["protest banners", "environmental sacred space", "collective ritual", "body-as-altar", "durational acts"],
+        "lane_tags": ["Activism", "feminism", "environmentalism", "direct action", "earth ritual"],
+        "glossary_terms": ["Sacred activism", "Ritual protest", "Feminist witchcraft", "Direct action", "Body as tool", "Liminal space"],
+        "description": "An all-female peace camp is established at RAF Greenham Common, Berkshire, to protest the siting of US nuclear cruise missiles. Lasting 19 years, the camp became a site of sustained spiritual and ritual practice as part of political resistance. Women used keening (traditional funeral laments), danced on missile silos, and dressed as witches to cover direct actions. Spirituality, eco-feminist theology, and ritual were integral components for many women, directly linking inner practice with outer action. Gorbachev later credited the women with contributing to the 1987 INF Treaty.",
+        "significance": "Greenham Common is the longest-sustained example of ritual-infused political resistance in modern British history. The camp demonstrated that spiritual practice (keening, weaving webs on the fence, seasonal ceremonies) could sustain a 19-year occupation. It connected folk mourning traditions, feminist theology, and anti-nuclear activism into a single practice. The women's actions directly influenced international arms control negotiations.",
+        "figures_involved": ["Ann Pettitt", "Helen John", "Greenham women"],
+        "traditions": ["feminist_witchcraft", "eco_feminism", "british_folk_magic", "peace_activism"],
+        "connections": {"influenced_by": ["spiral_dance", "dianic_wicca"], "influenced": ["climate_activism", "occupy_rituals"], "related_events": [], "part_of_movement": ["anti_nuclear", "eco_feminism", "peace_movement"]},
+        "guide_relevance": {"shigg": "high", "cathleen": "high", "katherine": "medium", "theresa": "high"},
+        "sources": [
+            {"title": "Greenham Common Women's Peace Camp - Wikipedia", "author": "Wikipedia", "year": 2024, "type": "article", "quality_tier": "popular_synthesis", "url": "https://en.wikipedia.org/wiki/Greenham_Common_Women%27s_Peace_Camp"},
+            {"title": "Greenham Common Women's Peace Camp", "author": "Official Site", "year": 2020, "type": "archive", "quality_tier": "practitioner_primary", "url": "https://www.greenhamwpc.org.uk/"},
+            {"title": "The Spirituality of and at Greenham Common Peace Camp", "author": "Academic Paper", "year": 2015, "type": "article", "quality_tier": "academic_secondary"}
+        ],
+        "location": {"name": "Greenham Common, Berkshire", "region": "England"},
+        "confidence": "high",
+        "importance": 1,
+        "is_pivotal_moment": True,
+        "expanded_context": "The camp began with a 120-mile march from Cardiff in September 1981. By December 1982, 30,000 women joined the 'Embrace the Base' action, encircling the 9-mile perimeter. Women wove wool webs on the fence (reclaiming women's domestic craft as protest), sang laments for the dead, and performed seasonal rituals marking solstices and equinoxes. The camp's all-female policy was controversial but created a uniquely powerful space. Many participants described their experience in explicitly spiritual terms. The last missiles left in 1991; the camp wasn't fully disbanded until 2000.",
+        "learn_more_links": [
+            {"title": "Greenham Common Women's Peace Camp", "url": "https://en.wikipedia.org/wiki/Greenham_Common_Women%27s_Peace_Camp"},
+            {"title": "Official Greenham WPC Site", "url": "https://www.greenhamwpc.org.uk/"}
+        ]
+    },
+    {
         "id": "pentacle_headstones",
         "image_url": "https://images.unsplash.com/photo-1604580864964-0462f5d5b1a8?w=800",
         "year": 2007,
@@ -311,7 +376,10 @@ POLITICAL_ACTIVISM_EVENTS = [
         "guide_relevance": {"shigg": "low", "cathleen": "high", "katherine": "medium", "theresa": "high"},
         "sources": [
             {"title": "Magic for the Resistance", "author": "Michael M. Hughes", "year": 2018, "type": "book", "quality_tier": "practitioner_primary"},
-            {"title": "Witches Cast 'Binding Spell' on Trump", "author": "Various journalists", "year": 2017, "type": "article", "quality_tier": "popular_synthesis", "url": "https://www.vox.com/2017/2/24/14727444/witches-spell-trump-magic-resistance"}
+            {"title": "Witches Cast 'Binding Spell' on Trump", "author": "Various journalists", "year": 2017, "type": "article", "quality_tier": "popular_synthesis", "url": "https://www.vox.com/2017/2/24/14727444/witches-spell-trump-magic-resistance"},
+            {"title": "A Spell to Bind Donald Trump and All Those Who Abet Him", "author": "Michael M. Hughes", "year": 2017, "type": "primary_document", "quality_tier": "practitioner_primary", "url": "https://extranewsfeed.com/a-spell-to-bind-donald-trump-and-all-those-who-abet-him-february-24th-mass-ritual-51f3d94f62f4"},
+            {"title": "Magic, Ritual, and Witchcraft in the Trump Era", "author": "Journal of Linguistic Anthropology", "year": 2019, "type": "article", "quality_tier": "academic_primary"},
+            {"title": "Reflections on Four Years of Magic Resistance", "author": "Religion News Service", "year": 2021, "type": "article", "quality_tier": "popular_synthesis"}
         ],
         "location": {"name": "Global", "region": "Internet"},
         "confidence": "high",

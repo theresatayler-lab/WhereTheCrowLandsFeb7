@@ -714,6 +714,38 @@ EXPANDED_TIMELINE_EVENTS = [
         "is_pivotal_moment": True
     },
     {
+        "id": "hurston_mules_and_men",
+        "image_url": "https://images.unsplash.com/photo-1710116307402-31eae9bbfb62?w=800",
+        "year": 1935,
+        "title": "Zora Neale Hurston Publishes Mules and Men",
+        "primary_category": "Publication",
+        "secondary_category": "Ethnography / Folk Documentation",
+        "taxonomy_categories": [8, 4],
+        "visual_tells": ["herbs/charms/bones", "handmade grimoires", "household altars", "craft textures"],
+        "lane_tags": ["Witchcraft", "folk magic", "earth ritual"],
+        "glossary_terms": ["Folk magic (practice-based)", "Charm", "Herbalism", "Land wisdom", "Spell (folk usage)"],
+        "description": "Anthropologist and novelist Zora Neale Hurston publishes Mules and Men, the first major insider documentation of African-American hoodoo and folklore. Her fieldwork in Florida and New Orleans included undergoing personal initiation into hoodoo practice. This act of preservation-through-documentation, recovering traditions at risk of erasure, is a direct model for the Crowlands principle that 'documentation is the working.' Her work was largely lost until recovered by Alice Walker in 1975.",
+        "significance": "First major insider ethnography of hoodoo practice; demonstrated that folk magical traditions deserved scholarly respect; established the principle that participatory documentation preserves living tradition. Her recovery by Walker created a second wave of influence on Black feminist spirituality.",
+        "figures_involved": ["Zora Neale Hurston", "Alice Walker"],
+        "traditions": ["hoodoo", "african_american_folk_magic", "rootwork"],
+        "connections": {"influenced_by": [], "influenced": [], "related_events": [], "part_of_movement": ["folk_magic_documentation"]},
+        "guide_relevance": {"shigg": "high", "cathleen": "high", "katherine": "medium", "theresa": "high"},
+        "sources": [
+            {"title": "Mules and Men", "author": "Zora Neale Hurston", "year": 1935, "type": "book", "quality_tier": "practitioner_primary", "url": "https://en.wikipedia.org/wiki/Mules_and_Men"},
+            {"title": "Zora Neale Hurston's Black Folk Ecologies", "author": "AAIHS", "year": 2020, "type": "article", "quality_tier": "academic_secondary", "url": "https://www.aaihs.org/zora-neale-hurstons-black-folk-ecologies/"},
+            {"title": "Hurston and Hoodoo", "author": "SpringerLink", "year": 2018, "type": "article", "quality_tier": "academic_secondary", "url": "https://link.springer.com/chapter/10.1007/978-3-319-90008-3_3"}
+        ],
+        "location": {"name": "Florida & New Orleans", "region": "United States"},
+        "confidence": "high",
+        "importance": 1,
+        "is_pivotal_moment": True,
+        "expanded_context": "Hurston's fieldwork was radical: she didn't observe from outside but underwent initiation herself, lying face-down on a couch for 69 hours during one hoodoo ceremony. Her approach anticipated participatory ethnography by decades. The book's rediscovery by Alice Walker in 1975 restored Hurston to the canon and inspired generations of Black women writers and spiritual practitioners.",
+        "learn_more_links": [
+            {"title": "Mules and Men - Wikipedia", "url": "https://en.wikipedia.org/wiki/Mules_and_Men"},
+            {"title": "AAIHS: Hurston's Black Folk Ecologies", "url": "https://www.aaihs.org/zora-neale-hurstons-black-folk-ecologies/"}
+        ]
+    },
+    {
         "id": "regardie_golden_dawn",
         "image_url": "https://images.unsplash.com/photo-1551300316-cbb247f68e5d?w=800",
         "year": 1937,
@@ -905,6 +937,39 @@ EXPANDED_TIMELINE_EVENTS = [
         "confidence": "high",
         "importance": 1,
         "is_pivotal_moment": True
+    },
+    {
+        "id": "helen_duncan_prosecution",
+        "image_url": "https://images.unsplash.com/photo-1761052840462-21e1a3d81c40?w=800",
+        "year": 1944,
+        "month": 1,
+        "title": "Helen Duncan Prosecuted Under Witchcraft Act",
+        "primary_category": "Legal",
+        "secondary_category": "Criminal Prosecution",
+        "taxonomy_categories": [4, 8, 14],
+        "visual_tells": ["séance photo vibe", "spirit diagrams", "ectoplasm", "protest imagery"],
+        "lane_tags": ["Spiritualism", "channeling", "liminal contact", "Activism"],
+        "glossary_terms": ["Spiritualism", "Mediumship", "Trance states", "Legal persecution"],
+        "description": "Scottish medium Helen Duncan is the last person imprisoned in Britain under the Witchcraft Act 1735. Her conviction followed a séance where she allegedly revealed classified military information about the sinking of HMS Barham. The case, called 'obsolete tomfoolery' by Winston Churchill, highlighted the state's perception of folk spiritual practice as a genuine threat and directly contributed to the Act's repeal in 1951. Duncan's prosecution occurred in the same wartime period as Dion Fortune's Magical Battle of Britain and the spiritualist circle practices documented in the Crowlands family memoir.",
+        "significance": "Last prosecution under Britain's Witchcraft Act; demonstrated that the state still viewed folk spiritual practice as threatening even in the 20th century; Churchill's outrage contributed directly to the Act's repeal in 1951, which in turn enabled Gardner to publish openly about Wicca.",
+        "figures_involved": ["Helen Duncan", "Winston Churchill"],
+        "traditions": ["victorian_spiritualism", "british_folk_magic", "wartime_domestic_life"],
+        "connections": {"influenced_by": ["spiritualism_boom_1917"], "influenced": ["witchcraft_act_repeal", "gardner_witchcraft_today"], "related_events": ["fortune_magical_battle", "blitz_protective_magic"], "part_of_movement": []},
+        "guide_relevance": {"shigg": "high", "cathleen": "high", "katherine": "high", "theresa": "high"},
+        "sources": [
+            {"title": "The 'last witch' of Britain", "author": "National Geographic", "year": 2021, "type": "article", "quality_tier": "popular_synthesis", "url": "https://www.nationalgeographic.com/history/article/the-last-witch-of-britain"},
+            {"title": "Ectoplasm and the Last British Woman Tried for Witchcraft", "author": "JSTOR Daily", "year": 2020, "type": "article", "quality_tier": "academic_secondary", "url": "https://daily.jstor.org/ectoplasm-and-the-last-british-woman-tried-for-witchcraft/"},
+            {"title": "Helen Duncan - Scotland's last witch?", "author": "Historic UK", "year": 2019, "type": "article", "quality_tier": "popular_synthesis", "url": "https://www.historic-uk.com/HistoryUK/HistoryofScotland/Helen-Duncan-Scotlands-last-witch/"}
+        ],
+        "location": {"name": "London (Old Bailey)", "region": "England"},
+        "confidence": "high",
+        "importance": 1,
+        "is_pivotal_moment": True,
+        "expanded_context": "Duncan's trial at the Old Bailey lasted seven days. The prosecution used the 1735 Witchcraft Act because it was easier to prove than fraud—they only had to show she claimed to communicate with spirits, not that she was deceiving anyone. Churchill wrote an angry memo calling it 'obsolete tomfoolery' and demanded to know why the Act hadn't been repealed. She served nine months in Holloway Prison. The case is often cited as a catalyst for the Fraudulent Mediums Act 1951, which replaced the Witchcraft Act and cleared the legal path for Gardner's public writings.",
+        "learn_more_links": [
+            {"title": "National Geographic: Last Witch of Britain", "url": "https://www.nationalgeographic.com/history/article/the-last-witch-of-britain"},
+            {"title": "JSTOR Daily: Duncan Trial", "url": "https://daily.jstor.org/ectoplasm-and-the-last-british-woman-tried-for-witchcraft/"}
+        ]
     },
     {
         "id": "dion_fortune_death",
@@ -2581,6 +2646,62 @@ DEEPSEEK_GENERATED_EVENTS = [
         "importance": 1,
         "is_pivotal_moment": True
 },
+    {
+        "id": "valiente_rewrites_bos",
+        "year": 1953,
+        "month": 6,
+        "title": "Doreen Valiente Rewrites Wiccan Liturgy",
+        "primary_category": "Publication",
+        "secondary_category": "Liturgical Revision",
+        "taxonomy_categories": [8, 5, 14],
+        "visual_tells": ["handmade grimoires", "household altars", "veils/thresholds", "priestess/femme mystique"],
+        "lane_tags": ["Witchcraft", "folk magic", "earth ritual", "Bridge: Hermetic + Spiritualism"],
+        "glossary_terms": ["Witchcraft (practice-based)", "Spell (folk usage)", "Ritual (meaning-making)", "Invocation (archetypal)"],
+        "description": "Doreen Valiente, initiated into Gardnerian Wicca in 1953, takes Gerald Gardner's fragmentary source materials and rewrites them into the coherent, poetic liturgy that becomes the foundation of modern Wicca, including the well-known 'Charge of the Goddess.' Her work transformed a cobbled-together tradition into a global movement. She later advocated for civil liberties and women's rights through her craft, challenging patriarchal structures within Wicca itself.",
+        "significance": "Valiente is the unsung architect of modern Wiccan liturgy. She stripped out Crowley's borrowed passages, replaced them with original poetry, and gave Wicca its distinctive voice. Without her literary talent and theological vision, Gardner's fragmentary notes might never have cohered into a workable tradition. She also challenged Gardner's authoritarianism, advocating for democratic coven structures.",
+        "figures_involved": ["Doreen Valiente", "Gerald Gardner"],
+        "traditions": ["gardnerian_wicca", "british_folk_magic"],
+        "connections": {"influenced_by": ["gardner_wicca"], "influenced": ["dianic_wicca", "reclaiming"], "related_events": ["gardner_wicca_politics"], "part_of_movement": ["wicca", "feminist_spirituality"]},
+        "guide_relevance": {"shigg": "high", "cathleen": "high", "katherine": "medium", "theresa": "high"},
+        "sources": [
+                {
+                        "title": "Doreen Valiente Foundation",
+                        "author": "Doreen Valiente Foundation",
+                        "year": 2020,
+                        "type": "archive",
+                        "quality_tier": "practitioner_primary",
+                        "url": "https://www.doreenvaliente.com/"
+                },
+                {
+                        "title": "Doreen Valiente - Wikipedia",
+                        "author": "Wikipedia",
+                        "year": 2024,
+                        "type": "article",
+                        "quality_tier": "popular_synthesis",
+                        "url": "https://en.wikipedia.org/wiki/Doreen_Valiente"
+                },
+                {
+                        "title": "Doreen Valiente Profile",
+                        "author": "Cunning Folk Magazine",
+                        "year": 2021,
+                        "type": "article",
+                        "quality_tier": "practitioner_primary",
+                        "url": "https://cunningfolkmagazine.com/doreen-valiente/"
+                }
+        ],
+        "location": {
+                "name": "Brighton",
+                "region": "England"
+        },
+        "confidence": "high",
+        "importance": 1,
+        "is_pivotal_moment": True,
+        "expanded_context": "Valiente's revision process (1953-1957) is one of the most significant acts of liturgical creation in modern Western spirituality. She identified extensive passages Gardner had borrowed from Crowley's work and replaced them with her own poetry, including the iconic 'Charge of the Goddess' which begins 'Listen to the words of the Great Mother.' She later broke with Gardner over his increasingly autocratic management style, demonstrating that her commitment was to the tradition, not the man. Her personal magical notebooks, rediscovered after her death in 1999, are now held by the Doreen Valiente Foundation in Brighton.",
+        "learn_more_links": [
+            {"title": "Doreen Valiente Foundation", "url": "https://www.doreenvaliente.com/"},
+            {"title": "Doreen Valiente - Wikipedia", "url": "https://en.wikipedia.org/wiki/Doreen_Valiente"}
+        ]
+    },
 
     {
         "id": "reclaiming",
@@ -2649,7 +2770,11 @@ DEEPSEEK_GENERATED_EVENTS = [
         },
         "confidence": "high",
         "importance": 2,
-        "is_pivotal_moment": True
+        "is_pivotal_moment": True,
+        "learn_more_links": [
+            {"title": "Reclaiming (Neopaganism)", "url": "https://en.wikipedia.org/wiki/Reclaiming_(Neopaganism)"},
+            {"title": "Reclaiming Tradition Official Page", "url": "https://www.reclaiming.org/"}
+        ]
 },
 
     {
