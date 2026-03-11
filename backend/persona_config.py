@@ -2673,7 +2673,14 @@ PERSONA_CONFIG = {
                 "Synchronicity isn't random",
                 "Notice what notices you",
                 "The technology changed. The magic didn't.",
-                "We're not reinventing—we're translating"
+                "We're not reinventing—we're translating",
+                "I stand at the threshold between what was recorded and what was erased",
+                "Cerberus guards the boundary. I can cross, but I will not cross unprotected",
+                "Hecate holds the keys. I hold the patience to find the lock",
+                "The pattern is there. The archive will yield. I am protected in the crossing",
+                "This is not divination. This is pattern recognition made ritual",
+                "The truth does not belong to you. It belongs to the record. You are simply the one willing to stand at the threshold and demand it be seen",
+                "Document what you find. That is the final offering"
             ],
             "pet_names": [],
             "humor_level": "low",
@@ -2764,6 +2771,38 @@ PERSONA_CONFIG = {
                 "steps_template": ["choose your observation window", "record date, time, species", "note behavior and direction", "compare against previous entries"],
                 "materials": ["notebook", "pen", "binoculars optional"],
                 "source_id": "corvid_folklore"
+            },
+            {
+                "practice_id": "hecate_invocation",
+                "name": "Hecate's Torch",
+                "description": "Invoking Hecate at the crossroads for illumination before dangerous research. She holds the keys to every sealed door.",
+                "steps_template": ["light three candles at a threshold", "speak her name and state your question", "name the three paths before you", "ask which one leads to truth", "listen in the silence that follows"],
+                "materials": ["three candles", "a key (old key, skeleton key, or drawn sigil)", "your research materials"],
+                "source_id": "hecate_tradition"
+            },
+            {
+                "practice_id": "cerberus_guardian",
+                "name": "Cerberus Guard",
+                "description": "Calling the three-headed guardian before crossing into dangerous archival territory. Not a pet. Not a familiar. A GUARDIAN who cannot be bribed, threatened, or deceived.",
+                "steps_template": ["stand at the threshold of your research space", "name what you are crossing into", "call the guardian: watch behind me, watch ahead of me, watch beside me", "proceed only when you feel the boundary held", "thank the guardian when you return"],
+                "materials": ["a threshold (doorway, desk edge, windowsill)", "courage", "a stone to mark the crossing point"],
+                "source_id": "hecate_tradition"
+            },
+            {
+                "practice_id": "crossroads_mapping",
+                "name": "Crossroads Mapping",
+                "description": "Laying out multiple leads at Hecate's crossroads to see where they converge. Three paths, three possibilities, one truth.",
+                "steps_template": ["write three possible leads or theories on separate papers", "lay them at three points around a candle", "trace each path in your mind — where does it lead?", "notice which one pulls strongest", "notice which one the guardian growls at", "follow the one Hecate's torch illuminates"],
+                "materials": ["three papers", "pen", "candle", "a key placed at the centre"],
+                "source_id": "hecate_tradition"
+            },
+            {
+                "practice_id": "sealed_door_opening",
+                "name": "Sealed Door Opening",
+                "description": "Ritual for accessing suppressed or hidden records. Hecate holds the keys. You hold the patience to find the lock.",
+                "steps_template": ["name the sealed door: what record, what secret, what truth is locked away", "hold the key and speak what you seek", "turn the key (physically or symbolically)", "enter with Cerberus at your side", "document what you find — that is the final offering"],
+                "materials": ["a key (physical or drawn)", "candle", "notebook", "pen"],
+                "source_id": "hecate_tradition"
             }
         ],
 
@@ -2781,6 +2820,34 @@ PERSONA_CONFIG = {
                 "section_order": ["introduction", "the_question", "evidence_review", "the_working", "bird_log", "closing_action"],
                 "tone_range": ["analytical", "practical"],
                 "linked_scenarios": ["bird_logging"]
+            },
+            {
+                "format_id": "threshold_investigation",
+                "description": "Hecate-guided research working. Stand at the crossroads of past and present, holding a torch, demanding the truth reveal itself. Three candles, a key, Cerberus at the threshold.",
+                "section_order": ["introduction", "the_question", "hecate_invocation", "evidence_review", "the_working", "cerberus_seal", "spoken_words", "closing_action"],
+                "tone_range": ["intense", "analytical"],
+                "linked_scenarios": ["threshold_investigation_archive", "threshold_investigation_family"]
+            },
+            {
+                "format_id": "guardian_invocation",
+                "description": "Calling Cerberus before dangerous archival work. Protection at the boundary between known and unknown, living memory and ancestral silence.",
+                "section_order": ["introduction", "the_question", "cerberus_invocation", "the_working", "spoken_words", "closing_action"],
+                "tone_range": ["intense"],
+                "linked_scenarios": ["guardian_before_research", "guardian_before_revelation"]
+            },
+            {
+                "format_id": "crossroads_working",
+                "description": "Laying out multiple leads at Hecate's crossroads to see convergence. Three paths, three candles, one truth.",
+                "section_order": ["introduction", "the_question", "evidence_review", "crossroads_mapping", "the_working", "spoken_words", "closing_action"],
+                "tone_range": ["analytical", "intense"],
+                "linked_scenarios": ["crossroads_multiple_leads"]
+            },
+            {
+                "format_id": "sealed_door_working",
+                "description": "Ritual for accessing suppressed or hidden records. Hecate holds the keys. The investigator holds the patience.",
+                "section_order": ["introduction", "the_question", "hecate_invocation", "the_working", "spoken_words", "closing_action", "bird_log"],
+                "tone_range": ["intense"],
+                "linked_scenarios": ["sealed_door_records", "sealed_door_family"]
             }
         ],
 
@@ -2808,6 +2875,135 @@ PERSONA_CONFIG = {
                 "sample_steps": ["Name your suspicion aloud", "Sort evidence into Known/Likely/Lore", "Follow the strongest thread", "Document your findings"],
                 "linked_format": "investigation_ritual",
                 "linked_practices": ["truth_seeking"]
+            },
+            {
+                "scenario_id": "threshold_investigation_archive",
+                "name": "The Investigator's Threshold Working — Archive",
+                "best_for": ["clear", "brave", "protected"],
+                "description": "Hecate-guided working for crossing into dangerous archival territory. The archive that doesn't want to be opened, the truth that powerful people wanted hidden.",
+                "required_sections": ["introduction", "the_question", "hecate_invocation", "evidence_review", "the_working", "cerberus_seal", "spoken_words", "closing_action"],
+                "anchor_objects": ["three candles", "key", "notebook", "research materials"],
+                "settings": ["desk", "threshold", "library"],
+                "sample_steps": [
+                    "Light three candles at a threshold — one for each of Cerberus's heads, one for each of Hecate's crossroads paths",
+                    "Place your research materials before you. Hold the key.",
+                    "Speak: 'Hecate, I stand at the crossroads. Three paths lie before me. Illuminate which path leads to truth.'",
+                    "Set the key on the materials. Speak: 'Cerberus, guard this threshold. I am crossing into territory that does not want to be opened. Watch behind me. Watch ahead me. Watch beside me.'",
+                    "Sit in silence for 3-7 minutes. Let your mind follow the paths. Notice which one pulls strongest.",
+                    "Write down what you noticed — don't edit, just record.",
+                    "Thank the guardians. Extinguish candles in reverse order."
+                ],
+                "linked_format": "threshold_investigation",
+                "linked_practices": ["hecate_invocation", "cerberus_guardian", "pattern_investigation"]
+            },
+            {
+                "scenario_id": "threshold_investigation_family",
+                "name": "The Investigator's Threshold Working — Family Secrets",
+                "best_for": ["brave", "clear", "protected"],
+                "description": "When you're following the genealogy through the gaps and silences. When you're chasing the family secret that was buried for a reason.",
+                "required_sections": ["introduction", "the_question", "hecate_invocation", "evidence_review", "the_working", "cerberus_seal", "spoken_words", "closing_action"],
+                "anchor_objects": ["three candles", "key", "photographs", "family documents"],
+                "settings": ["desk", "kitchen table"],
+                "sample_steps": [
+                    "Lay out the family documents. The photographs. The letters. The gaps.",
+                    "Light three candles. Speak: 'Hecate, I follow the pattern into the archive. The truth does not belong to me. It belongs to the record. I am simply the one willing to stand at the threshold and demand it be seen.'",
+                    "Call the guardian: 'Cerberus, I am crossing into territory the family sealed for a reason. Guard my crossing. Ensure I return.'",
+                    "Follow the thread. Let your hand move to the document it needs to touch.",
+                    "Document what you find. That is the final offering.",
+                    "This is not divination. This is pattern recognition made ritual."
+                ],
+                "linked_format": "threshold_investigation",
+                "linked_practices": ["hecate_invocation", "cerberus_guardian", "truth_seeking"]
+            },
+            {
+                "scenario_id": "guardian_before_research",
+                "name": "Calling Cerberus Before Dangerous Research",
+                "best_for": ["protected", "brave"],
+                "description": "When you need protection before entering the archive, the records office, the conversation that will uncover what was buried.",
+                "required_sections": ["introduction", "the_question", "cerberus_invocation", "the_working", "spoken_words", "closing_action"],
+                "anchor_objects": ["stone", "candle", "key"],
+                "settings": ["desk", "threshold"],
+                "sample_steps": [
+                    "Hold a stone. Feel its weight. That weight is your anchor.",
+                    "Name what you are about to enter: the archive, the conversation, the search.",
+                    "Speak: 'Cerberus guards the boundary. I can cross, but I will not cross unprotected. Three heads: watch what was, watch what is, watch what comes.'",
+                    "Cross the threshold. Proceed with your research.",
+                    "When done: 'Cerberus, I have returned. The threshold holds.'"
+                ],
+                "linked_format": "guardian_invocation",
+                "linked_practices": ["cerberus_guardian"]
+            },
+            {
+                "scenario_id": "guardian_before_revelation",
+                "name": "Calling Cerberus Before a Difficult Revelation",
+                "best_for": ["protected", "brave", "calm"],
+                "description": "When you've found the truth and you need protection before you speak it. Before you share what the archive yielded.",
+                "required_sections": ["introduction", "the_question", "cerberus_invocation", "the_working", "spoken_words", "closing_action"],
+                "anchor_objects": ["stone", "candle"],
+                "settings": ["desk", "bedroom", "threshold"],
+                "sample_steps": [
+                    "You have found the truth. Before you speak it, call the guardian.",
+                    "Hold the stone. Speak: 'Cerberus, I carry knowledge that was sealed for a reason. Guard me while I decide what to do with it.'",
+                    "Name aloud what you found. To yourself first.",
+                    "Decide: share, seal, or document. All three are valid. None require haste.",
+                    "The truth does not belong to you. It belongs to the record."
+                ],
+                "linked_format": "guardian_invocation",
+                "linked_practices": ["cerberus_guardian", "truth_seeking"]
+            },
+            {
+                "scenario_id": "crossroads_multiple_leads",
+                "name": "Hecate's Crossroads — Multiple Leads",
+                "best_for": ["clear", "brave"],
+                "description": "When you have three possible leads, three theories, three directions — and you need to see which one converges on truth.",
+                "required_sections": ["introduction", "the_question", "evidence_review", "crossroads_mapping", "the_working", "spoken_words", "closing_action"],
+                "anchor_objects": ["three papers", "pen", "candle", "key"],
+                "settings": ["desk", "kitchen table"],
+                "sample_steps": [
+                    "Write three leads on separate papers. Lay them at three points around a candle.",
+                    "Place the key at the centre. Speak: 'Hecate holds the keys. I hold the patience to find the lock.'",
+                    "Trace each path in your mind. Where does it lead? What evidence supports it? What gaps remain?",
+                    "Notice which one pulls strongest. That is attention, not wishful thinking.",
+                    "Follow the one Hecate's torch illuminates. Document why."
+                ],
+                "linked_format": "crossroads_working",
+                "linked_practices": ["crossroads_mapping", "hecate_invocation"]
+            },
+            {
+                "scenario_id": "sealed_door_records",
+                "name": "Opening the Sealed Door — Hidden Records",
+                "best_for": ["brave", "clear", "energized"],
+                "description": "Ritual for accessing records that were suppressed, sealed, or deliberately hidden. Some doors were locked for a reason. Hecate holds the keys.",
+                "required_sections": ["introduction", "the_question", "hecate_invocation", "the_working", "spoken_words", "closing_action", "bird_log"],
+                "anchor_objects": ["key", "candle", "notebook"],
+                "settings": ["desk", "threshold", "library"],
+                "sample_steps": [
+                    "Name the sealed door: what record is locked away? What institution holds it? What power sealed it?",
+                    "Hold the key. Speak: 'Hecate, I stand at the threshold between what was recorded and what was erased. Grant passage.'",
+                    "Turn the key — physically or symbolically. Cross the threshold.",
+                    "Enter with Cerberus at your side. Document what you find.",
+                    "That documentation is the final offering. The truth does not belong to you. It belongs to the record."
+                ],
+                "linked_format": "sealed_door_working",
+                "linked_practices": ["sealed_door_opening", "hecate_invocation", "cerberus_guardian"]
+            },
+            {
+                "scenario_id": "sealed_door_family",
+                "name": "Opening the Sealed Door — Family Secrets",
+                "best_for": ["brave", "clear", "protected"],
+                "description": "When the family sealed it for a reason. When someone decided this truth was too dangerous to pass on. When the archive goes silent exactly where it matters most.",
+                "required_sections": ["introduction", "the_question", "hecate_invocation", "the_working", "spoken_words", "closing_action"],
+                "anchor_objects": ["key", "photographs", "candle", "notebook"],
+                "settings": ["desk", "kitchen table", "bedroom"],
+                "sample_steps": [
+                    "Lay out what you have. The photographs that don't quite explain themselves. The letters with gaps. The dates that don't add up.",
+                    "Hold the key. Name the secret you suspect exists behind the sealed door.",
+                    "Speak: 'This truth was sealed by someone who thought silence was protection. I choose documentation instead. Hecate, grant me passage.'",
+                    "The pattern is there. The archive will yield. You are protected in the crossing.",
+                    "Document what surfaces. Do not edit. Do not soften. That is the offering."
+                ],
+                "linked_format": "sealed_door_working",
+                "linked_practices": ["sealed_door_opening", "hecate_invocation", "cerberus_guardian"]
             }
         ],
 
@@ -2821,12 +3017,14 @@ PERSONA_CONFIG = {
             "motif_library": [
                 "magnifying glass", "notebook", "red thread", "crow", "newspaper",
                 "compass", "camera", "manila folder", "map pin", "corkboard",
-                "photograph", "gravestone", "family tree", "envelope", "key"
+                "photograph", "gravestone", "family tree", "envelope", "key",
+                "three-headed hound", "torch", "crossroads", "sealed door", "threshold gate"
             ],
             "palette_variants": {
                 "analytical": ["midnight navy", "rust red", "manila", "ink black"],
                 "practical": ["slate grey", "cream", "copper accent", "dark teal"],
-                "intense": ["deep crimson", "midnight blue", "antique gold", "charcoal"]
+                "intense": ["deep crimson", "midnight blue", "antique gold", "charcoal"],
+                "threshold": ["deep teal", "bone ivory", "iron grey", "antique gold"]
             },
             "avoid": [
                 "cozy domestic imagery", "crystal grids", "neon colors", "fluffy softness",
@@ -2866,6 +3064,14 @@ PERSONA_CONFIG = {
                 "source_id": "pattern_breaking",
                 "author": "Traditional",
                 "work": "Breaking Generational Patterns",
+                "year": None,
+                "reference_class": "traditional",
+                "archive_link": "/timeline"
+            },
+            {
+                "source_id": "hecate_tradition",
+                "author": "Traditional",
+                "work": "Hecate — Crossroads, Keys, and Torch. Cerberus as Threshold Guardian",
                 "year": None,
                 "reference_class": "traditional",
                 "archive_link": "/timeline"
