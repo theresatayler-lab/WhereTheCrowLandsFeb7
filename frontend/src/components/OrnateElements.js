@@ -462,11 +462,11 @@ export const PageHeader = ({ title, subtitle, icon: Icon, iconSrc, brandIcon, cl
       </div>
     ) : iconSrc ? (
       <div className="flex justify-center mb-4">
-        <img src={iconSrc} alt="" className="w-10 h-10 sm:w-12 sm:h-12" />
+        <img src={iconSrc} alt="" className="w-12 h-12 sm:w-16 sm:h-16" />
       </div>
     ) : Icon ? (
       <Icon 
-        className="w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-4" 
+        className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-4" 
         style={{ color: NOUVEAU_COLORS.emberPink, filter: `drop-shadow(0 0 12px ${NOUVEAU_COLORS.emberPink}40)` }} 
       />
     ) : null}

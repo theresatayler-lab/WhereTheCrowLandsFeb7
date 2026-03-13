@@ -280,27 +280,30 @@ export const GuidePortal = () => {
   };
 
   return (
-    <DarkSection className="min-h-screen">
+    <DarkSection>
+      <div className="min-h-[calc(100vh-4rem)] flex flex-col">
       {/* Back navigation */}
-      <div className="max-w-3xl mx-auto px-4 pt-6">
+      <div className="max-w-3xl mx-auto px-4 pt-6 w-full">
         <button
           onClick={() => navigate('/guides')}
           className="flex items-center gap-2 text-gold/70 hover:text-gold transition-colors font-montserrat text-sm"
+          data-testid="guide-back-btn"
         >
           <ChevronLeft className="w-4 h-4" /> All Guides
         </button>
       </div>
 
       {/* Header */}
-      <div className="max-w-3xl mx-auto px-4 pt-4 pb-2 text-center">
-        <div className={`inline-flex items-center justify-center w-16 h-16 rounded-full bg-${guide.colors.bg} border border-${guide.colors.border}/30 mb-4`}>
-          <img src={guideIconSrc} alt={guide.name} className="w-10 h-10 rounded-full object-cover" />
+      <div className="max-w-3xl mx-auto px-4 pt-4 pb-2 text-center w-full">
+        <div className={`inline-flex items-center justify-center w-24 h-24 rounded-full bg-${guide.colors.bg} border-2 border-${guide.colors.border}/40 mb-4 overflow-hidden`}>
+          <img src={guideIconSrc} alt={guide.name} className="w-full h-full rounded-full object-cover" />
         </div>
         <h1 className="font-cinzel text-3xl text-cream font-bold">{guide.title}</h1>
         <p className={`font-montserrat text-sm text-${guide.colors.text} mt-2`}>{guide.subtitle}</p>
       </div>
 
-      {/* Greeting Phase */}
+      {/* Phase content - grows to fill remaining space */}
+      <div className="flex-1 flex flex-col">
       <AnimatePresence mode="wait">
         {phase === 'greeting' && (
           <motion.div
@@ -308,7 +311,7 @@ export const GuidePortal = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="max-w-3xl mx-auto px-4 py-6 text-center"
+            className="max-w-3xl mx-auto px-4 py-6 text-center flex-1 flex flex-col items-center justify-center"
           >
             <div className={`bg-${guide.colors.bg} border border-${guide.colors.border}/20 rounded-lg p-8 mb-8`}>
               <p className="font-crimson-text text-xl text-cream italic leading-relaxed">
@@ -320,7 +323,8 @@ export const GuidePortal = () => {
             </div>
             <button
               onClick={handleStart}
-              className={`font-cinzel text-lg px-8 py-3 bg-crimson hover:bg-crimson/80 text-cream rounded-sm transition-colors border border-gold/20`}
+              className="btn-ritual"
+              data-testid="guide-start-btn"
             >
               {guide.buttonText}
             </button>
@@ -369,7 +373,8 @@ export const GuidePortal = () => {
               >
                 <button
                   onClick={handleGenerate}
-                  className="font-cinzel px-6 py-3 bg-crimson hover:bg-crimson/80 text-cream rounded-sm transition-colors border border-gold/20"
+                  className="btn-ritual"
+                  data-testid="guide-generate-btn"
                 >
                   Create my working
                 </button>
@@ -541,7 +546,7 @@ export const GuidePortal = () => {
                     }
                   }}
                   disabled={saving}
-                  className="font-cinzel px-6 py-2 bg-gold text-navy-dark hover:bg-gold-light rounded-sm transition-colors font-semibold"
+                  className="btn-ritual"
                   data-testid="save-spell-btn"
                 >
                   {saving ? 'Saving...' : 'Save to Grimoire'}
@@ -559,13 +564,15 @@ export const GuidePortal = () => {
                   setSpellResult(null);
                   setSpellSaved(false);
                 }}
-                className="font-cinzel px-6 py-2 border border-gold/30 text-cream hover:bg-gold/10 rounded-sm transition-colors"
+                className="btn-ritual-secondary"
+                data-testid="guide-start-over-btn"
               >
                 Start over
               </button>
               <button
                 onClick={() => navigate('/my-grimoire')}
-                className="font-cinzel px-6 py-2 bg-crimson text-cream hover:bg-crimson/80 rounded-sm transition-colors"
+                className="btn-ritual"
+                data-testid="guide-view-grimoire-btn"
               >
                 View Grimoire
               </button>
@@ -573,6 +580,8 @@ export const GuidePortal = () => {
           </motion.div>
         )}
       </AnimatePresence>
+      </div>
+      </div>
     </DarkSection>
   );
 };

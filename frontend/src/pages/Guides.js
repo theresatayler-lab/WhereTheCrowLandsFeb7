@@ -213,7 +213,7 @@ const GuideCard = ({ archetype, index, isCurrentGuide, isExpanded, isBioExpanded
           <div className="flex items-start gap-4">
             {/* Portrait Image */}
             <div 
-              className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0 border-2 border-gold/40"
+              className="w-20 h-20 rounded-full overflow-hidden flex-shrink-0 border-2 border-gold/40"
               style={{ backgroundColor: '#e8e4dc' }}
             >
               {archetype.image ? (
@@ -370,14 +370,11 @@ const GuideCard = ({ archetype, index, isCurrentGuide, isExpanded, isBioExpanded
         {!isCurrentGuide && (
           <button
             onClick={onSelectAsGuide}
-            className="w-full mt-4 px-4 py-2 relative overflow-hidden rounded-sm font-montserrat tracking-widest uppercase text-xs flex items-center justify-center gap-2"
+            className="w-full mt-4 btn-ritual"
+            data-testid={`select-guide-${archetype.id}-btn`}
           >
-            <span className="absolute inset-0 border border-gold/50 rounded-sm" />
-            <span className="absolute inset-0.5 bg-gradient-to-r from-crimson-deep via-crimson to-crimson-deep rounded-sm" />
-            <span className="relative text-cream flex items-center gap-2">
-              <BrandIcon name="star" size={16} variant="pink" opacity={0.9} />
-              <span>Choose as My Guide</span>
-            </span>
+            <BrandIcon name="star" size={16} variant="pink" opacity={0.9} />
+            <span className="ml-2">Choose as My Guide</span>
           </button>
         )}
         

@@ -120,6 +120,7 @@ code {
 .btn-ritual {
     font-family: 'Cinzel Decorative', serif;
     font-weight: 700;
+    font-size: 0.875rem;
     letter-spacing: 0.15em;
     text-transform: uppercase;
     padding: 0.875rem 2rem;
@@ -129,6 +130,11 @@ code {
     position: relative;
     overflow: hidden;
     transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    cursor: pointer;
 }
 
 .btn-ritual::before {
@@ -168,8 +174,9 @@ code {
 
 /* Secondary Button - Gold Outlined */
 .btn-ritual-secondary {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Cinzel Decorative', serif;
     font-weight: 600;
+    font-size: 0.875rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     padding: 0.75rem 1.5rem;
@@ -177,6 +184,11 @@ code {
     color: #C8A44D;
     border: 1px solid #C8A44D;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    cursor: pointer;
 }
 
 .btn-ritual-secondary:hover {
@@ -193,6 +205,7 @@ code {
 .btn-ritual-ghost {
     font-family: 'Cinzel Decorative', serif;
     font-weight: 400;
+    font-size: 0.8125rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     padding: 0.625rem 1.25rem;
@@ -200,6 +213,11 @@ code {
     color: #C8A44D;
     border: 1px solid rgba(200, 164, 77, 0.4);
     transition: background-color 0.3s ease, border-color 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    cursor: pointer;
 }
 
 .btn-ritual-ghost:hover {
