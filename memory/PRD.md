@@ -15,7 +15,7 @@ Build a spell-generation application, "Where The Crowlands," with a highly speci
 
 ## Architecture
 - **Frontend:** React + TailwindCSS + Framer Motion
-- **Backend:** FastAPI + Python
+- **Backend:** FastAPI + Python + SlowAPI (rate limiting)
 - **Database:** MongoDB Atlas
 - **AI:** DeepSeek (archivist/planner), Claude Sonnet (writer)
 - **Auth:** JWT-based
@@ -34,31 +34,39 @@ Build a spell-generation application, "Where The Crowlands," with a highly speci
 - Pro tier permissions fix, "Save to Grimoire" button
 
 ### Session 2
-- **Complete site-wide icon sweep** (80+ decorative Lucide icons -> custom BrandIcon PNG assets across 25+ files)
-- **Emotional Need Clusters Enhancement** with prefix matching, priority tie-breaking, enriched guide texts
-- **Shigg Bibliomancy (Book Bibliomancy)** full-stack implementation
-- **Theresa Bibliomancy (Shuffle Oracle)** full-stack implementation with ShuffleOracle.js component
-- **Bibliomancy Pipeline Routing** with affinity-based soft routing
-- **20 pytest tests** for all new features (all passing)
+- Complete site-wide icon sweep (80+ Lucide icons -> BrandIcon)
+- Emotional Need Clusters Enhancement
+- Shigg Bibliomancy (Book Bibliomancy) full-stack
+- Theresa Bibliomancy (Shuffle Oracle) full-stack
+- Bibliomancy Pipeline Routing with affinity scoring
+- 20 pytest tests (all passing)
 
-### Session 3 (Current, March 2026)
-- **P0 UI Regression Fixes — COMPLETE:**
-  - **Guide Portal layout:** Eliminated large empty space via flex centering (min-h-[calc(100vh-4rem)] + flex-col + flex-1)
-  - **Guide avatars enlarged site-wide:** GuidePortal w-24 h-24 (was w-10), Guides listing w-20 h-20 (was w-16), About page w-10 h-10 (was w-6), PageHeader w-12/w-16 (was w-10/w-12)
-  - **Button readability standardized:** All CTA buttons migrated to `.btn-ritual` class (Ember Pink bg, Vellum text, 14px, uppercase, 0.15em letter-spacing, inline-flex, cursor:pointer). Secondary buttons use `.btn-ritual-secondary`. Ghost buttons use `.btn-ritual-ghost`.
-  - All 3 button classes updated with explicit `font-size`, `display: inline-flex`, `align-items: center`, `cursor: pointer`
-  - Testing agent validated all 5 guide portals, guides listing, about page — 100% pass rate
+### Session 3 (March 2026)
+- **P0 UI Regression Fixes:** Guide Portal layout, avatar sizing site-wide, button readability standardized
+- **P0 Security: Rate Limiting (SlowAPI):**
+  - All `/api/ai/*` endpoints: 5 req/min per IP
+  - `/api/research`: 5 req/min per IP
+  - `/api/spellbook`: 5 req/min per IP
+  - `/api/combined`: 3 req/min per IP
+  - `/api/invisible-helpers/generate`: 3 req/min per IP
+  - `/api/invisible-helpers/battle-cry/generate`: 3 req/min per IP
+  - `/api/invisible-helpers/capture-and-generate`: 3 req/min per IP
+  - All other endpoints: 30 req/min per IP (default)
+  - 429 response: {"detail": "Too many requests. Please wait before trying again."}
+  - IP extraction via X-Forwarded-For header for proxy/Railway compatibility
 
 ## Prioritized Backlog
 
 ### P0 (Critical)
-- Integrate AI Image Generation (Gemini Nano Banana via Emergent Key, then GPT Image 1, Flux, Ideogram)
+- Remaining user security prompts (auth enforcement, CORS, info disclosure)
+- Integrate AI Image Generation (Gemini Nano Banana via Emergent Key)
 
 ### P1 (High)
 - Finalize Manifesto Integration (awaiting user document)
 
 ### P2 (Medium)
 - Switch Stripe to Live Mode (needs live API keys)
+- Backend refactor: break server.py into route modules
 
 ### P3 (Low/Future)
 - Print-on-demand integration (Lulu.com)
@@ -73,15 +81,8 @@ Build a spell-generation application, "Where The Crowlands," with a highly speci
 - Access Level: PRO
 
 ## Key Files
-- backend/prompts/writer_blocks.py - Emotional clusters, bibliomancy templates
-- backend/prompts/planner_blocks.py - Working types, bibliomancy routing
-- backend/prompts/pipeline_blocks.py - Writer stage with bibliomancy prompt injection
-- backend/persona_config.py - BIBLIOMANCY_TECHNIQUES, THERESA_SHUFFLE_ORACLE
-- backend/tests/test_pipeline_logic.py - 20 regression tests
-- frontend/src/pages/GuidePortal.js - Flex-centered layout, w-24 avatar, btn-ritual buttons
-- frontend/src/pages/Guides.js - w-20 avatar, btn-ritual "Choose as My Guide"
-- frontend/src/pages/About.js - w-10 guide avatars
-- frontend/src/components/OrnateElements.js - PageHeader icon sizes w-12/w-16
-- frontend/src/index.css - btn-ritual/btn-ritual-secondary/btn-ritual-ghost classes
-- frontend/src/components/ShuffleOracle.js - Shuffle Oracle component
-- frontend/src/components/BrandIcon.js - Brand icon system
+- backend/server.py - 6,440 lines, all routes, rate limiting via SlowAPI
+- backend/image_provider.py - Static image library (no real AI provider connected)
+- frontend/src/index.css - Global CSS including btn-ritual classes
+- frontend/src/pages/GuidePortal.js - Flex-centered layout
+- memory/BRAND_STYLE_GUIDE.md - Visual design source of truth

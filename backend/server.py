@@ -1,8 +1,11 @@
 from fastapi import FastAPI, APIRouter, HTTPException, Depends, status, Request, BackgroundTasks
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from fastapi.responses import JSONResponse
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
+from slowapi import Limiter
+from slowapi.errors import RateLimitExceeded
 import os
 import logging
 from pathlib import Path
@@ -61,9 +64,30 @@ db = client[os.environ['DB_NAME']]
 # Initialize GridFS-based image storage (solves DocumentTooLarge error)
 image_storage = ImageStorage(db)
 
+# ============================================================================
+# RATE LIMITING
+# ============================================================================
+def get_real_ip(request: Request) -> str:
+    """Extract real client IP, checking X-Forwarded-For for proxy/Railway compatibility."""
+    forwarded = request.headers.get("x-forwarded-for")
+    if forwarded:
+        return forwarded.split(",")[0].strip()
+    return request.client.host if request.client else "127.0.0.1"
+
+limiter = Limiter(key_func=get_real_ip, default_limits=["30/minute"])
+
 
 # Create the main app
 app = FastAPI()
+app.state.limiter = limiter
+
+@app.exception_handler(RateLimitExceeded)
+async def rate_limit_handler(request: Request, exc: RateLimitExceeded):
+    return JSONResponse(
+        status_code=429,
+        content={"detail": "Too many requests. Please wait before trying again."}
+    )
+
 api_router = APIRouter(prefix="/api")
 security = HTTPBearer()
 
@@ -1064,13 +1088,14 @@ Output valid JSON only."""
         raise ValueError(f"Unknown builder type: {request.builder_type}")
 
 @api_router.post('/invisible-helpers/generate', response_model=WorkingGeneratorResponse)
-async def generate_working(request: WorkingGeneratorRequest):
+@limiter.limit("3/minute")
+async def generate_working(request: Request, body: WorkingGeneratorRequest):
     """Generate a personalized Fortune-aligned working"""
     from research_service import get_deepseek_client
     
     try:
         # Validate builder type
-        if request.builder_type not in ['lawful_return', 'clarity', 'return_to_sender']:
+        if body.builder_type not in ['lawful_return', 'clarity', 'return_to_sender']:
             return WorkingGeneratorResponse(
                 success=False,
                 error="Invalid builder type"
@@ -1078,12 +1103,12 @@ async def generate_working(request: WorkingGeneratorRequest):
         
         # Check for banned terms in all inputs
         all_inputs = ' '.join([
-            ' '.join(request.beneficiaries),
-            request.primary_quality,
-            request.custom_name or '',
-            ' '.join(request.patterns_to_neutralize or []),
-            ' '.join(request.distortion_channels or []),
-            ' '.join(request.return_types or [])
+            ' '.join(body.beneficiaries),
+            body.primary_quality,
+            body.custom_name or '',
+            ' '.join(body.patterns_to_neutralize or []),
+            ' '.join(body.distortion_channels or []),
+            ' '.join(body.return_types or [])
         ])
         
         banned_found = check_banned_terms(all_inputs)
@@ -1102,7 +1127,7 @@ async def generate_working(request: WorkingGeneratorRequest):
             )
         
         # Build user prompt
-        user_prompt = build_working_user_prompt(request)
+        user_prompt = build_working_user_prompt(body)
         
         # Generate working
         response = await deepseek_client.chat.completions.create(
@@ -1760,7 +1785,8 @@ class LeadCaptureRequest(BaseModel):
     source: str = "invisible_helpers"
 
 @api_router.post('/invisible-helpers/capture-and-generate')
-async def capture_lead_and_generate(request: LeadCaptureRequest):
+@limiter.limit("3/minute")
+async def capture_lead_and_generate(request: Request, body: LeadCaptureRequest):
     """
     Simplified lead capture + spell generation in one step.
     No Stripe checkout - just capture email/name and generate spell immediately.
@@ -1770,7 +1796,7 @@ async def capture_lead_and_generate(request: LeadCaptureRequest):
     """
     try:
         # Check generation limit (3 free per email)
-        existing = await db.invisible_helpers_leads.find_one({'email': request.email})
+        existing = await db.invisible_helpers_leads.find_one({'email': body.email})
         generation_count = existing.get('generation_count', 0) if existing else 0
         
         if generation_count >= 3:
@@ -1783,28 +1809,28 @@ async def capture_lead_and_generate(request: LeadCaptureRequest):
         
         # Store/update lead
         lead_data = {
-            'email': request.email,
-            'name': request.name,
-            'personal_intention': request.personal_intention,
-            'beneficiaries': request.beneficiaries,
-            'primary_quality': request.primary_quality,
-            'practice_style': request.practice_style,
-            'time_horizon': request.time_horizon,
-            'source': request.source,
+            'email': body.email,
+            'name': body.name,
+            'personal_intention': body.personal_intention,
+            'beneficiaries': body.beneficiaries,
+            'primary_quality': body.primary_quality,
+            'practice_style': body.practice_style,
+            'time_horizon': body.time_horizon,
+            'source': body.source,
             'updated_at': datetime.now(timezone.utc).isoformat(),
         }
         
         if existing:
             # Update existing lead
             result = await db.invisible_helpers_leads.update_one(
-                {'email': request.email},
+                {'email': body.email},
                 {
                     '$set': lead_data,
                     '$inc': {'generation_count': 1},
                     '$push': {
                         'generations': {
                             'timestamp': datetime.now(timezone.utc).isoformat(),
-                            'intention': request.personal_intention[:200]
+                            'intention': body.personal_intention[:200]
                         }
                     }
                 }
@@ -1817,29 +1843,29 @@ async def capture_lead_and_generate(request: LeadCaptureRequest):
             lead_data['generation_count'] = 1
             lead_data['generations'] = [{
                 'timestamp': datetime.now(timezone.utc).isoformat(),
-                'intention': request.personal_intention[:200]
+                'intention': body.personal_intention[:200]
             }]
             lead_data['email_sent'] = False  # For future email integration
             result = await db.invisible_helpers_leads.insert_one(lead_data)
             generation_count = 1
             logger.info(f"[LEAD_CAPTURE] Inserted new lead: {result.inserted_id}")
         
-        logger.info(f"[LEAD_CAPTURE] Captured lead: {request.email}, generation #{generation_count}")
+        logger.info(f"[LEAD_CAPTURE] Captured lead: {body.email}, generation #{generation_count}")
         
         # Now generate the spell (reuse existing generation logic)
         # Convert to BattleCryRequest format
         battle_cry_request = BattleCryRequest(
-            email=request.email,
-            personal_intention=request.personal_intention,
-            beneficiaries=request.beneficiaries,
-            primary_quality=request.primary_quality,
-            practice_style=request.practice_style,
-            time_horizon=request.time_horizon,
+            email=body.email,
+            personal_intention=body.personal_intention,
+            beneficiaries=body.beneficiaries,
+            primary_quality=body.primary_quality,
+            practice_style=body.practice_style,
+            time_horizon=body.time_horizon,
             action_pledge="I commit to channeling this intention toward benevolent outcomes and peace."
         )
         
-        # Call the existing generation function
-        result = await generate_battle_cry(battle_cry_request)
+        # Call the existing generation function (pass through the request for rate limiter)
+        result = await generate_battle_cry(request, battle_cry_request)
         
         # Add lead info to response
         return {
@@ -1849,8 +1875,8 @@ async def capture_lead_and_generate(request: LeadCaptureRequest):
             'remaining': max(0, 3 - generation_count),
             'limit_reached': result.limit_reached,
             'lead_captured': True,
-            'name': request.name,
-            'email': request.email
+            'name': body.name,
+            'email': body.email
         }
         
     except Exception as e:
@@ -1993,7 +2019,8 @@ async def export_leads_csv(
 
 
 @api_router.post('/invisible-helpers/battle-cry/generate', response_model=BattleCryResponse)
-async def generate_battle_cry(request: BattleCryRequest):
+@limiter.limit("3/minute")
+async def generate_battle_cry(request: Request, body: BattleCryRequest):
     """Generate the Magical Battle Cry Intention working"""
     
     # Safe fallback working that matches UI schema exactly
@@ -2044,7 +2071,7 @@ async def generate_battle_cry(request: BattleCryRequest):
     
     try:
         # Check generation limit
-        record = await db.invisible_helpers.find_one({'email': request.email})
+        record = await db.invisible_helpers.find_one({'email': body.email})
         current_count = record.get('generation_count', 0) if record else 0
         
         if current_count >= 3:
@@ -2057,12 +2084,12 @@ async def generate_battle_cry(request: BattleCryRequest):
         
         # Check for banned terms - scans ALL relevant fields
         all_inputs = ' '.join([
-            request.personal_intention or '',
-            ' '.join(request.beneficiaries),
-            request.primary_quality,
-            request.practice_style,
-            request.time_horizon,
-            request.action_pledge
+            body.personal_intention or '',
+            ' '.join(body.beneficiaries),
+            body.primary_quality,
+            body.practice_style,
+            body.time_horizon,
+            body.action_pledge
         ])
         
         banned_found = check_banned_terms(all_inputs)
@@ -2073,10 +2100,10 @@ async def generate_battle_cry(request: BattleCryRequest):
             )
         
         # Build user prompt with variation seed for distinctness
-        beneficiaries = ', '.join([sanitize_input(b) for b in request.beneficiaries])
-        quality = sanitize_input(request.primary_quality)
-        action = sanitize_input(request.action_pledge)
-        personal = sanitize_input(request.personal_intention) if request.personal_intention else ''
+        beneficiaries = ', '.join([sanitize_input(b) for b in body.beneficiaries])
+        quality = sanitize_input(body.primary_quality)
+        action = sanitize_input(body.action_pledge)
+        personal = sanitize_input(body.personal_intention) if body.personal_intention else ''
         variation_seed = secrets.randbelow(1_000_000)
         
         user_prompt = f"""Generate a "Magical Battle Cry Intention" working with these personalized elements:
@@ -2084,8 +2111,8 @@ async def generate_battle_cry(request: BattleCryRequest):
 Personal intention (user words): {personal}
 Beneficiaries being protected: {beneficiaries}
 Primary quality to strengthen: {quality}
-Practice style: {request.practice_style}
-Time horizon: {request.time_horizon}
+Practice style: {body.practice_style}
+Time horizon: {body.time_horizon}
 Real-world action pledge: {action}
 Variation seed: {variation_seed}
 
@@ -2147,7 +2174,7 @@ Output valid JSON only."""
         # Repair attempt if needed (MAX 1 repair)
         if working_data is None:
             repair_attempted = True
-            logger.info(f"[REPAIR_ATTEMPT] email={request.email} - triggering repair call")
+            logger.info(f"[REPAIR_ATTEMPT] email={body.email} - triggering repair call")
             try:
                 repair_prompt = f"""Return JSON only. No markdown. No extra keys.
 
@@ -2171,7 +2198,7 @@ The previous output was malformed. Return ONLY valid JSON matching this exact sc
   "closing_truth": "Inner work does not replace resistance. It steadies those who resist."
 }}
 
-Personalize for: {beneficiaries}, quality: {quality}, style: {request.practice_style}"""
+Personalize for: {beneficiaries}, quality: {quality}, style: {body.practice_style}"""
 
                 repair_content = await chat_completion(
                     purpose="invisible_helpers_writer",
@@ -2205,18 +2232,18 @@ Personalize for: {beneficiaries}, quality: {quality}, style: {request.practice_s
             working_data = SAFE_FALLBACK_WORKING.copy()
             # Personalize the fallback minimally
             working_data["action_pledge"] = f"Today, I will: {action} — to support justice in the material world."
-            logger.warning(f"[FALLBACK_USED] email={request.email}")
+            logger.warning(f"[FALLBACK_USED] email={body.email}")
         
         # Log generation outcome for monitoring
-        logger.info(f"[GENERATION_COMPLETE] email={request.email} repair_attempted={repair_attempted} used_fallback={working_data.get('title') == SAFE_FALLBACK_WORKING.get('title') and working_data.get('intention') == SAFE_FALLBACK_WORKING.get('intention')}")
+        logger.info(f"[GENERATION_COMPLETE] email={body.email} repair_attempted={repair_attempted} used_fallback={working_data.get('title') == SAFE_FALLBACK_WORKING.get('title') and working_data.get('intention') == SAFE_FALLBACK_WORKING.get('intention')}")
         
         # Update generation count
         new_count = current_count + 1
         await db.invisible_helpers.update_one(
-            {'email': request.email},
+            {'email': body.email},
             {
                 '$set': {
-                    'email': request.email,
+                    'email': body.email,
                     'generation_count': new_count,
                     'last_generated_at': datetime.now(timezone.utc).isoformat(),
                     'source': 'invisible-helpers'
@@ -2891,7 +2918,8 @@ Remember: Every spell is a formula others have used. Users can adapt, break, and
 
 # AI Chat endpoint
 @api_router.post('/ai/chat')
-async def chat_with_ai(message_data: ChatMessage):
+@limiter.limit("5/minute")
+async def chat_with_ai(request: Request, message_data: ChatMessage):
     try:
         session_id = message_data.session_id or str(uuid.uuid4())
         
@@ -2923,13 +2951,14 @@ async def chat_with_ai(message_data: ChatMessage):
 # ============================================================================
 
 @api_router.post('/research', response_model=dict)
-async def research_endpoint(request: ResearchRequest):
+@limiter.limit("5/minute")
+async def research_endpoint(request: Request, body: ResearchRequest):
     """
     Research endpoint using DeepSeek as the research engine.
     Returns factual, scholarly information about magical traditions.
     """
     try:
-        result = await research_query(request.query, request.context)
+        result = await research_query(body.query, body.context)
         return {
             "answer": result.answer,
             "bullets": result.bullets,
@@ -2940,16 +2969,17 @@ async def research_endpoint(request: ResearchRequest):
         raise HTTPException(status_code=500, detail=f'Research query failed: {str(e)}')
 
 @api_router.post('/spellbook', response_model=dict)
-async def spellbook_endpoint(request: SpellbookRequest):
+@limiter.limit("5/minute")
+async def spellbook_endpoint(request: Request, body: SpellbookRequest):
     """
     Spellbook endpoint using OpenAI for persona-voiced responses.
     Returns in-character ritual guidance.
     """
     try:
         result = await generate_spellbook_response(
-            request.user_request,
-            request.persona,
-            request.tone
+            body.user_request,
+            body.persona,
+            body.tone
         )
         return {
             "response": result.response,
@@ -2961,7 +2991,8 @@ async def spellbook_endpoint(request: SpellbookRequest):
         raise HTTPException(status_code=500, detail=f'Spellbook generation failed: {str(e)}')
 
 @api_router.post('/combined', response_model=dict)
-async def combined_endpoint(request: CombinedRequest):
+@limiter.limit("3/minute")
+async def combined_endpoint(request: Request, body: CombinedRequest):
     """
     Combined endpoint that calls BOTH engines:
     - DeepSeek for research/origins
@@ -2970,10 +3001,10 @@ async def combined_endpoint(request: CombinedRequest):
     """
     try:
         result = await generate_combined_response(
-            request.user_request,
-            request.persona,
-            request.tone,
-            request.context
+            body.user_request,
+            body.persona,
+            body.tone,
+            body.context
         )
         return {
             "spellbook_response": result.spellbook_response,
@@ -3136,11 +3167,12 @@ async def get_bird_oracle():
     }
 
 @api_router.post('/ai/bird-oracle-reading')
-async def get_bird_oracle_reading(request: dict):
+@limiter.limit("5/minute")
+async def get_bird_oracle_reading(request: Request, body: dict):
     """Get a personalized bird oracle reading from Shigg"""
     try:
-        situation = request.get('situation', '')
-        question = request.get('question', '')
+        situation = body.get('situation', '')
+        question = body.get('question', '')
         
         # Build the prompt
         bird_oracle_prompt = """You are Shigg, the Birds of Parliament Poet Laureate. A seeker has come to you for a Bird Oracle reading.
@@ -3296,7 +3328,8 @@ Return JSON:
 Remember: This is tender and funny and wise. Corrie characters are not archetypes to be worshipped—they're neighbours to be learned from. Speak as Shigg: warm, witty, British, practical, and always a little bit poetic."""
 
 @api_router.post('/ai/corrie-tarot')
-async def get_corrie_tarot_reading(request: CorrieTarotRequest, user = Depends(get_current_user)):
+@limiter.limit("5/minute")
+async def get_corrie_tarot_reading(request: Request, body: CorrieTarotRequest, user = Depends(get_current_user)):
     """Get a 'What Would Corrie Do' tarot reading from Shigg - PRO ONLY"""
     try:
         # Check if user is Pro
@@ -3310,9 +3343,9 @@ async def get_corrie_tarot_reading(request: CorrieTarotRequest, user = Depends(g
                 }
             )
         
-        user_message = f"Seeker's situation: {sanitize_for_prompt(request.situation)}"
-        if request.question:
-            user_message += f"\nTheir specific question: {sanitize_for_prompt(request.question)}"
+        user_message = f"Seeker's situation: {sanitize_for_prompt(body.situation)}"
+        if body.question:
+            user_message += f"\nTheir specific question: {sanitize_for_prompt(body.question)}"
 
         response_text = await emergent_chat_completion(
             messages=[
@@ -3407,10 +3440,11 @@ async def get_oracle_deck_info():
     }
 
 @api_router.post('/ai/cobbles-oracle/reading')
-async def get_cobbles_oracle_reading(request: CobbleOracleRequest, user = Depends(get_current_user)):
+@limiter.limit("5/minute")
+async def get_cobbles_oracle_reading(request: Request, body: CobbleOracleRequest, user = Depends(get_current_user)):
     """Get a Cobbles Oracle reading - Quick Draw free, advanced spreads Pro-only"""
     try:
-        spread = ORACLE_SPREADS.get(request.spread_type, ORACLE_SPREADS["one_card"])
+        spread = ORACLE_SPREADS.get(body.spread_type, ORACLE_SPREADS["one_card"])
         
         # Check Pro status for advanced spreads
         is_pro = user.get('subscription_tier', 'free') == 'paid'
@@ -3425,7 +3459,7 @@ async def get_cobbles_oracle_reading(request: CobbleOracleRequest, user = Depend
             )
         
         num_cards = len(spread["positions"])
-        situation_lower = request.situation.lower()
+        situation_lower = body.situation.lower()
         
         # Intelligent card selection based on routing rules
         selected_card_ids = []
@@ -3510,9 +3544,9 @@ Return JSON:
     "closing": "Warm Shigg closing (1-2 sentences)"
 }}"""
 
-        user_message = f"Seeker's situation: {sanitize_for_prompt(request.situation)}"
-        if request.question:
-            user_message += f"\nTheir question: {sanitize_for_prompt(request.question)}"
+        user_message = f"Seeker's situation: {sanitize_for_prompt(body.situation)}"
+        if body.question:
+            user_message += f"\nTheir question: {sanitize_for_prompt(body.question)}"
 
         response_text = await emergent_chat_completion(
             messages=[
@@ -3538,7 +3572,7 @@ Return JSON:
                 "name": "Shigg",
                 "title": "The Birds of Parliament Poet Laureate"
             },
-            "spread_type": request.spread_type,
+            "spread_type": body.spread_type,
             "result": reading_data
         }
 
@@ -3704,20 +3738,21 @@ Return a JSON object with 2-3 ward suggestions, each deeply personalized:
 Remember: You are Cathleen. Speak with warmth, wisdom, and the quiet certainty of someone who has kept secrets for duchesses and factory girls alike. These wards are not generic—they are GIFTS you are choosing specifically for this seeker."""
 
 @api_router.post('/ai/suggest-ward')
-async def suggest_ward(request: WardRequest):
+@limiter.limit("5/minute")
+async def suggest_ward(request: Request, body: WardRequest):
     """Cathleen's Ward Finder - suggests personalized wards based on the seeker's situation"""
     try:
         # Build the user message
-        user_message = f"A seeker has come to you with this situation:\n\n\"{request.situation}\""
+        user_message = f"A seeker has come to you with this situation:\n\n\"{body.situation}\""
         
-        if request.personality:
-            user_message += f"\n\nThey describe themselves as: {request.personality}"
+        if body.personality:
+            user_message += f"\n\nThey describe themselves as: {body.personality}"
         
-        if request.preferences:
-            if request.preferences.get('likes'):
-                user_message += f"\n\nThey're drawn to: {request.preferences['likes']}"
-            if request.preferences.get('avoids'):
-                user_message += f"\n\nThey want to avoid: {request.preferences['avoids']}"
+        if body.preferences:
+            if body.preferences.get('likes'):
+                user_message += f"\n\nThey're drawn to: {body.preferences['likes']}"
+            if body.preferences.get('avoids'):
+                user_message += f"\n\nThey want to avoid: {body.preferences['avoids']}"
         
         user_message += "\n\nPlease suggest 2-3 wards that would be perfect for them. Remember to vary your suggestions and make them specific to THIS person."
         
@@ -4107,8 +4142,10 @@ ARCHETYPE_IMAGE_STYLE_DESCRIPTIONS = {
 }
 # Enhanced spell generation endpoint with structured output
 @api_router.post('/ai/generate-spell')
+@limiter.limit("5/minute")
 async def generate_spell(
-    request: SpellRequest,
+    request: Request,
+    body: SpellRequest,
     credentials: Optional[HTTPAuthorizationCredentials] = Depends(HTTPBearer(auto_error=False))
 ):
     """Generate a structured spell with historical context and optional imagery"""
@@ -4139,7 +4176,7 @@ async def generate_spell(
                 )
         
         session_id = str(uuid.uuid4())
-        archetype_id = request.archetype
+        archetype_id = body.archetype
         
         # Get archetype info
         if archetype_id and archetype_id in ARCHETYPE_PERSONAS:
@@ -4152,7 +4189,7 @@ async def generate_spell(
             archetype_title = 'Keeper of Ancestral Wisdom'
         
         # Generate dynamic context from archetype reference data
-        dynamic_archetype_context = generate_dynamic_spell_context(archetype_id, request.intention)
+        dynamic_archetype_context = generate_dynamic_spell_context(archetype_id, body.intention)
         
         # Fetch related content from database for context
         deities = await db.deities.find({}, {'_id': 0, 'name': 1, 'description': 1}).to_list(10)
@@ -4170,8 +4207,8 @@ async def generate_spell(
         
         # Build personalization context from leading questions (if provided)
         personalization_context = ""
-        if request.context:
-            ctx = request.context
+        if body.context:
+            ctx = body.context
             personalization_parts = []
             
             if ctx.get('materials'):
@@ -4369,7 +4406,7 @@ Cathleen believes: "What you hide becomes charged with the energy of protection.
 """
 
         # Build the structured prompt
-        structured_prompt = f"""Create a spell/ritual for this intention: "{request.intention}"
+        structured_prompt = f"""Create a spell/ritual for this intention: "{body.intention}"
 
 You MUST respond with a JSON object in this EXACT format (no markdown, just pure JSON):
 {{
@@ -4521,7 +4558,7 @@ Respond ONLY with the JSON object, no other text."""
         
         # Generate image if requested
         image_base64 = None
-        if request.generate_image and 'image_prompt' in spell_data:
+        if body.generate_image and 'image_prompt' in spell_data:
             try:
                 style = ARCHETYPE_IMAGE_STYLES.get(archetype_id or 'neutral', ARCHETYPE_IMAGE_STYLES['neutral'])
                 image_prompt = f"{style}, {spell_data['image_prompt']}, mystical ritual scene, no text"
@@ -4576,23 +4613,24 @@ Respond ONLY with the JSON object, no other text."""
 
 # AI Image Generation endpoint with archetype style support
 @api_router.post('/ai/generate-image')
-async def generate_image(request: ImageGenerationRequest):
+@limiter.limit("5/minute")
+async def generate_image(request: Request, body: ImageGenerationRequest):
     try:
         # Get archetype style if specified
         archetype_style = ""
-        if hasattr(request, 'archetype') and request.archetype:
-            archetype_style = ARCHETYPE_IMAGE_STYLES.get(request.archetype, ARCHETYPE_IMAGE_STYLES['neutral'])
+        if hasattr(body, 'archetype') and body.archetype:
+            archetype_style = ARCHETYPE_IMAGE_STYLES.get(body.archetype, ARCHETYPE_IMAGE_STYLES['neutral'])
         else:
             archetype_style = ARCHETYPE_IMAGE_STYLES['neutral']
         
         # Build the full prompt with archetype styling
-        full_prompt = f"{archetype_style}, {request.prompt}, mystical ritual scene, highly detailed, no text or words"
+        full_prompt = f"{archetype_style}, {body.prompt}, mystical ritual scene, highly detailed, no text or words"
         
         # Use static image library
         from image_provider import generate_image as gen_img, is_static_url, get_url_from_static
         image_result = await gen_img(
             prompt=full_prompt,
-            persona_id=getattr(request, 'archetype', 'shigg') or 'shigg',
+            persona_id=getattr(body, 'archetype', 'shigg') or 'shigg',
             asset_type="header"
         )
         if image_result:
@@ -4616,7 +4654,8 @@ async def get_image_styles():
 
 # ===== NEW PERSONALIZED SPELL GENERATION ENDPOINT =====
 @api_router.post('/ai/generate-personalized-spell')
-async def generate_personalized_spell(request: PersonalizedSpellRequest, user = Depends(get_optional_user)):
+@limiter.limit("5/minute")
+async def generate_personalized_spell(request: Request, body: PersonalizedSpellRequest, user = Depends(get_optional_user)):
     """
     Generate a highly personalized spell using the 2-stage prompt system:
     1. Planner - selects scenario, format, sources, generates variation_tokens, builds AssetPlan
@@ -4630,7 +4669,7 @@ async def generate_personalized_spell(request: PersonalizedSpellRequest, user = 
     timing_log = {}
     
     try:
-        spell_spec = request.spell_spec
+        spell_spec = body.spell_spec
         
         # Check spell limits for non-pro users
         if user:
@@ -4828,7 +4867,7 @@ async def generate_personalized_spell(request: PersonalizedSpellRequest, user = 
         generated_assets = {}
         timing_log['images_ms'] = 0
         
-        if request.generate_images and asset_plan:
+        if body.generate_images and asset_plan:
             images_start = time.time()
             try:
                 from image_provider import generate_image as gen_img, is_static_url, get_url_from_static
@@ -4950,7 +4989,8 @@ class SpellRequestV2(BaseModel):
     generate_images: bool = False
 
 @api_router.post('/ai/generate-spell-v2')
-async def generate_spell_v2_endpoint(request: SpellRequestV2, user = Depends(get_optional_user)):
+@limiter.limit("5/minute")
+async def generate_spell_v2_endpoint(request: Request, body: SpellRequestV2, user = Depends(get_optional_user)):
     """
     V2 Spell Generation - Production-ready 4-stage pipeline.
     
@@ -4970,8 +5010,8 @@ async def generate_spell_v2_endpoint(request: SpellRequestV2, user = Depends(get
     total_start = time_module.time()
     
     try:
-        spell_spec = request.spell_spec
-        belief_mode = request.belief_mode.upper()
+        spell_spec = body.spell_spec
+        belief_mode = body.belief_mode.upper()
         
         # Validate belief mode
         if belief_mode not in BELIEF_MODES:
@@ -5113,7 +5153,8 @@ class SpellRequestV3(BaseModel):
     tier_preference: str = None  # "quick", "standard", "deep" - optional user override
 
 @api_router.post('/ai/generate-spell-v3')
-async def generate_spell_v3_endpoint(request: SpellRequestV3, user = Depends(get_optional_user)):
+@limiter.limit("5/minute")
+async def generate_spell_v3_endpoint(request: Request, body: SpellRequestV3, user = Depends(get_optional_user)):
     """
     V3 Spell Generation - Blocks-based experience with TIERED AI.
     
@@ -5136,8 +5177,8 @@ async def generate_spell_v3_endpoint(request: SpellRequestV3, user = Depends(get
     total_start = time_module.time()
     
     try:
-        spell_spec = request.spell_spec
-        belief_mode = request.belief_mode.upper()
+        spell_spec = body.spell_spec
+        belief_mode = body.belief_mode.upper()
 
         if belief_mode not in BELIEF_MODES:
             belief_mode = "SPIRITUAL"
@@ -5252,7 +5293,7 @@ async def generate_spell_v3_endpoint(request: SpellRequestV3, user = Depends(get
             intention=intention,
             user_tier=user_subscription_tier,
             is_first_spell=is_first_spell,
-            explicit_choice=request.tier_preference
+            explicit_choice=body.tier_preference
         )
         
         tier_config = get_tier_config(selected_tier)
@@ -5610,7 +5651,8 @@ async def _generate_spell_background(job_id: str, request_data: dict, user_id: O
 
 
 @api_router.post('/ai/generate-spell-job')
-async def create_spell_job(request: SpellRequestV3, background_tasks: BackgroundTasks, user = Depends(get_optional_user)):
+@limiter.limit("5/minute")
+async def create_spell_job(request: Request, body: SpellRequestV3, background_tasks: BackgroundTasks, user = Depends(get_optional_user)):
     """
     Create an async spell generation job.
     Returns immediately with a job_id that can be polled for completion.
@@ -5647,10 +5689,10 @@ async def create_spell_job(request: SpellRequestV3, background_tasks: Background
         'job_id': job_id,
         'status': 'pending',
         'request': {
-            'spell_spec': request.spell_spec,
-            'belief_mode': request.belief_mode,
-            'generate_images': request.generate_images,
-            'tier_preference': request.tier_preference
+            'spell_spec': body.spell_spec,
+            'belief_mode': body.belief_mode,
+            'generate_images': body.generate_images,
+            'tier_preference': body.tier_preference
         },
         'user_id': user_id,
         'created_at': datetime.now(timezone.utc),
