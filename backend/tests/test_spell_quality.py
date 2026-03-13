@@ -10,7 +10,7 @@ import statistics
 from typing import Dict, List, Any
 import httpx
 
-API_URL = "https://crowlands-preview.preview.emergentagent.com"
+API_URL = "https://guide-portal-polish.preview.emergentagent.com"
 
 # Quality benchmarks based on historical GPT-4o performance
 QUALITY_BENCHMARKS = {
