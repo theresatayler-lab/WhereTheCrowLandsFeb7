@@ -76,6 +76,26 @@ def get_real_ip(request: Request) -> str:
 
 limiter = Limiter(key_func=get_real_ip, default_limits=["30/minute"])
 
+# ============================================================================
+# DAILY AI USAGE TRACKING
+# ============================================================================
+DAILY_AI_CALL_LIMIT = 500
+
+async def check_and_increment_daily_usage():
+    """Check daily AI call count. Raises 429 if limit reached, otherwise increments."""
+    today = datetime.now(timezone.utc).strftime('%Y-%m-%d')
+    result = await db.api_usage_tracking.find_one_and_update(
+        {'date': today},
+        {'$inc': {'count': 1}},
+        upsert=True,
+        return_document=True,
+        projection={'_id': 0}
+    )
+    if result['count'] > DAILY_AI_CALL_LIMIT:
+        # Rolled past the limit on this call — undo the increment
+        await db.api_usage_tracking.update_one({'date': today}, {'$inc': {'count': -1}})
+        raise HTTPException(status_code=429, detail="Daily usage limit reached. Service will resume tomorrow.")
+
 
 # Create the main app
 app = FastAPI()
@@ -1106,6 +1126,7 @@ async def generate_working(request: Request, body: WorkingGeneratorRequest):
     from research_service import get_deepseek_client
     
     try:
+        await check_and_increment_daily_usage()
         # Validate builder type
         if body.builder_type not in ['lawful_return', 'clarity', 'return_to_sender']:
             return WorkingGeneratorResponse(
@@ -1807,6 +1828,7 @@ async def capture_lead_and_generate(request: Request, body: LeadCaptureRequest):
     Returns generated spell for immediate display.
     """
     try:
+        await check_and_increment_daily_usage()
         # Check generation limit (3 free per email)
         existing = await db.invisible_helpers_leads.find_one({'email': body.email})
         generation_count = existing.get('generation_count', 0) if existing else 0
@@ -1898,6 +1920,16 @@ async def capture_lead_and_generate(request: Request, body: LeadCaptureRequest):
             'error': str(e),
             'lead_captured': False
         }
+
+
+
+@api_router.get('/admin/usage-today')
+async def get_usage_today(user = Depends(get_admin_user)):
+    """Return today's AI call count and daily limit."""
+    today = datetime.now(timezone.utc).strftime('%Y-%m-%d')
+    record = await db.api_usage_tracking.find_one({'date': today}, {'_id': 0})
+    count = record['count'] if record else 0
+    return {'date': today, 'count': count, 'limit': DAILY_AI_CALL_LIMIT, 'remaining': max(0, DAILY_AI_CALL_LIMIT - count)}
 
 
 
@@ -2078,6 +2110,7 @@ async def generate_battle_cry(request: Request, body: BattleCryRequest):
         return True
     
     try:
+        await check_and_increment_daily_usage()
         # Check generation limit
         record = await db.invisible_helpers.find_one({'email': body.email})
         current_count = record.get('generation_count', 0) if record else 0
@@ -2929,6 +2962,7 @@ Remember: Every spell is a formula others have used. Users can adapt, break, and
 @limiter.limit("5/minute")
 async def chat_with_ai(request: Request, message_data: ChatMessage):
     try:
+        await check_and_increment_daily_usage()
         session_id = message_data.session_id or str(uuid.uuid4())
         
         # Determine system message based on archetype
@@ -2966,6 +3000,7 @@ async def research_endpoint(request: Request, body: ResearchRequest, user = Depe
     Returns factual, scholarly information about magical traditions.
     """
     try:
+        await check_and_increment_daily_usage()
         result = await research_query(body.query, body.context)
         return {
             "answer": result.answer,
@@ -2984,6 +3019,7 @@ async def spellbook_endpoint(request: Request, body: SpellbookRequest, user = De
     Returns in-character ritual guidance.
     """
     try:
+        await check_and_increment_daily_usage()
         result = await generate_spellbook_response(
             body.user_request,
             body.persona,
@@ -3008,6 +3044,7 @@ async def combined_endpoint(request: Request, body: CombinedRequest, user = Depe
     Returns merged response with both sections.
     """
     try:
+        await check_and_increment_daily_usage()
         result = await generate_combined_response(
             body.user_request,
             body.persona,
@@ -3179,8 +3216,8 @@ async def get_bird_oracle():
 async def get_bird_oracle_reading(request: Request, body: dict):
     """Get a personalized bird oracle reading from Shigg"""
     try:
+        await check_and_increment_daily_usage()
         situation = body.get('situation', '')
-        question = body.get('question', '')
         
         # Build the prompt
         bird_oracle_prompt = """You are Shigg, the Birds of Parliament Poet Laureate. A seeker has come to you for a Bird Oracle reading.
@@ -3340,6 +3377,7 @@ Remember: This is tender and funny and wise. Corrie characters are not archetype
 async def get_corrie_tarot_reading(request: Request, body: CorrieTarotRequest, user = Depends(get_current_user)):
     """Get a 'What Would Corrie Do' tarot reading from Shigg - PRO ONLY"""
     try:
+        await check_and_increment_daily_usage()
         # Check if user is Pro
         if user.get('subscription_tier', 'free') != 'paid':
             raise HTTPException(
@@ -3452,6 +3490,7 @@ async def get_oracle_deck_info():
 async def get_cobbles_oracle_reading(request: Request, body: CobbleOracleRequest, user = Depends(get_current_user)):
     """Get a Cobbles Oracle reading - Quick Draw free, advanced spreads Pro-only"""
     try:
+        await check_and_increment_daily_usage()
         spread = ORACLE_SPREADS.get(body.spread_type, ORACLE_SPREADS["one_card"])
         
         # Check Pro status for advanced spreads
@@ -3750,6 +3789,7 @@ Remember: You are Cathleen. Speak with warmth, wisdom, and the quiet certainty o
 async def suggest_ward(request: Request, body: WardRequest):
     """Cathleen's Ward Finder - suggests personalized wards based on the seeker's situation"""
     try:
+        await check_and_increment_daily_usage()
         # Build the user message
         user_message = f"A seeker has come to you with this situation:\n\n\"{body.situation}\""
         
@@ -4158,6 +4198,7 @@ async def generate_spell(
 ):
     """Generate a structured spell with historical context and optional imagery"""
     try:
+        await check_and_increment_daily_usage()
         # Check generation limits
         limit_check = await check_spell_generation_limit(user)
         if not limit_check['can_generate']:
@@ -4612,6 +4653,7 @@ Respond ONLY with the JSON object, no other text."""
 @limiter.limit("5/minute")
 async def generate_image(request: Request, body: ImageGenerationRequest):
     try:
+        await check_and_increment_daily_usage()
         # Get archetype style if specified
         archetype_style = ""
         if hasattr(body, 'archetype') and body.archetype:
@@ -4665,6 +4707,7 @@ async def generate_personalized_spell(request: Request, body: PersonalizedSpellR
     timing_log = {}
     
     try:
+        await check_and_increment_daily_usage()
         spell_spec = body.spell_spec
         
         # Check spell limits for non-pro users
@@ -5006,6 +5049,7 @@ async def generate_spell_v2_endpoint(request: Request, body: SpellRequestV2, use
     total_start = time_module.time()
     
     try:
+        await check_and_increment_daily_usage()
         spell_spec = body.spell_spec
         belief_mode = body.belief_mode.upper()
         
@@ -5173,6 +5217,7 @@ async def generate_spell_v3_endpoint(request: Request, body: SpellRequestV3, use
     total_start = time_module.time()
     
     try:
+        await check_and_increment_daily_usage()
         spell_spec = body.spell_spec
         belief_mode = body.belief_mode.upper()
 
@@ -5662,6 +5707,7 @@ async def create_spell_job(request: Request, body: SpellRequestV3, background_ta
     job_id = str(uuid.uuid4())
     user_id = user['id'] if user else None
     
+    await check_and_increment_daily_usage()
     # Check spell limits for free users
     if user:
         user_data = await db.users.find_one({'id': user['id']}, {'_id': 0})
