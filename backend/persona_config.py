@@ -3471,6 +3471,75 @@ GUIDE_SPECIALIZATIONS = {
 }
 
 # ============================================================================
+# BIBLIOMANCY TECHNIQUE DEFINITIONS — Expanded from simple string entries
+# These are additive data structures, not replacements for GUIDE_SPECIALIZATIONS entries
+# ============================================================================
+
+BIBLIOMANCY_TECHNIQUES = {
+    "bibliomancy_book": {
+        "technique_id": "bibliomancy_book",
+        "technique_name": "Book Bibliomancy",
+        "block_type": "bibliomancy_book",
+        "guide": "shigg",
+        "description": "Divination by random opening of a personal text. The passage found becomes a mirror for the seeker's question.",
+        "when_to_use": [
+            "Seeker needs clarity but not direction",
+            "Seeker has a specific question rather than a general intention",
+            "Seeker is a reader or has books with personal history",
+            "The question has multiple valid paths and the seeker needs a starting point for reflection, not a decision made for them"
+        ],
+        "historical_basis": "Sortes Vergilianae (Roman, 2nd century CE); Sortes Sanctorum (medieval Christian); Fal-e Hafiz (Persian, 14th century CE)",
+        "key_texts": [
+            {"tradition": "Sortes Vergilianae", "period": "Roman, 2nd century CE", "text": "Virgil's Aeneid"},
+            {"tradition": "Sortes Sanctorum", "period": "Medieval European", "text": "Scripture / Psalms"},
+            {"tradition": "Fal-e Hafiz", "period": "Persian, 14th century CE", "text": "Divan-e Hafiz"},
+            {"tradition": "British domestic sortes", "period": "19th-20th century", "text": "Family Bible, household books"}
+        ],
+        "writer_block": "BIBLIOMANCY_BOOK_TEMPLATE"
+    },
+    "bibliomancy_shuffle": {
+        "technique_id": "bibliomancy_shuffle",
+        "technique_name": "Shuffle Oracle",
+        "block_type": "bibliomancy_shuffle",
+        "guide": "theresa",
+        "description": "Music library shuffle as modern bibliomancy. The seeker's music library is their accumulated personal text — the shuffle is the random access mechanism.",
+        "when_to_use": [
+            "Seeker needs perspective on a current situation",
+            "Seeker is musically engaged or has a substantial music library",
+            "The question is about emotional state rather than practical action",
+            "Seeker is looking for a starting point, not a conclusion"
+        ],
+        "tradition_map": [
+            {"tradition": "Roman sortes", "period": "2nd century BCE onwards", "mechanism": "Random opening of Virgil or scripture"},
+            {"tradition": "Fal-e Hafiz", "period": "14th century CE, Persia", "mechanism": "Random opening of the Divan for personal guidance"},
+            {"tradition": "John Cage, aleatoric music", "period": "1951", "mechanism": "Chance operations bypassing rational selection"},
+            {"tradition": "Surrealist automatism", "period": "1924, Andre Breton", "mechanism": "Bypassing the rational mind to access deeper associative material"},
+            {"tradition": "I Ching as parallel", "period": "Documented from c. 1000 BCE", "mechanism": "Random access to a binary system producing interpretable text"}
+        ],
+        "frontend_component": "ShuffleOracle",
+        "writer_block": "BIBLIOMANCY_SHUFFLE_TEMPLATE"
+    }
+}
+
+# Theresa's shuffle_oracle expanded definition (additive to existing persona config)
+THERESA_SHUFFLE_ORACLE = {
+    "technique_id": "bibliomancy_shuffle",
+    "technique_name": "Shuffle Oracle",
+    "block_type": "bibliomancy_shuffle",
+    "description": "Music library shuffle as modern bibliomancy. The seeker's music library is their accumulated personal text — the shuffle is the random access mechanism.",
+    "tradition_map": [
+        {"tradition": "Roman sortes", "period": "2nd century BCE onwards", "mechanism": "Random opening of Virgil or scripture"},
+        {"tradition": "Fal-e Hafiz", "period": "14th century CE, Persia", "mechanism": "Random opening of the Divan for personal guidance"},
+        {"tradition": "John Cage, aleatoric music", "period": "1951", "mechanism": "Chance operations bypassing rational selection"},
+        {"tradition": "Surrealist automatism", "period": "1924, Andre Breton", "mechanism": "Bypassing the rational mind to access deeper associative material"},
+        {"tradition": "I Ching as parallel", "period": "Documented from c. 1000 BCE", "mechanism": "Random access to a binary system producing interpretable text"}
+    ],
+    "frontend_component": "ShuffleOracle",
+    "writer_block": "BIBLIOMANCY_SHUFFLE_TEMPLATE",
+    "guide": "theresa"
+}
+
+# ============================================================================
 # BIRD ORACLE REFERENCE - Shigg's ornithology divination system
 # ============================================================================
 

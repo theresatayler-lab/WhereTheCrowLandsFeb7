@@ -32,6 +32,17 @@ WORKING_TYPES = {
             "required_blocks": ["warm_greeting", "blessing_context", "historical_stitch",
                                "blessing_working", "spoken_words", "journaling_prompt", "bird_oracle", "closing_warmth"],
             "block_count": 8
+        },
+        # Bibliomancy — additive, does not replace any existing Shigg working type
+        "bibliomancy_book": {
+            "name": "Book Bibliomancy",
+            "description": "Traditional text-based bibliomancy working — divination by random opening of a personal book",
+            "trigger_words": ["book oracle", "bibliomancy", "sortes", "open a book", "book divination",
+                              "random passage", "open at random"],
+            "required_blocks": ["historical_grounding", "book_selection_guidance", "the_ritual",
+                               "interpretation_guidance", "reflection_prompt", "attribution_note"],
+            "block_count": 6,
+            "is_bibliomancy": True
         }
     },
     
@@ -134,6 +145,17 @@ WORKING_TYPES = {
             "required_blocks": ["the_question", "observation_notes", "why_this_matters",
                                "the_working", "twenty_four_hour_action", "sources_block", "ethics_statement"],
             "block_count": 7
+        },
+        # Shuffle Oracle — additive, does not replace any existing Theresa working type
+        "bibliomancy_shuffle": {
+            "name": "Shuffle Oracle",
+            "description": "Modern bibliomancy using the music library shuffle — the library as personal casebook, the shuffle as random witness",
+            "trigger_words": ["shuffle", "shuffle oracle", "music oracle", "music divination",
+                              "playlist", "random song", "aleatoric", "bibliomancy"],
+            "required_blocks": ["tradition_bridge", "library_as_text", "the_ritual",
+                               "what_to_look_for", "investigation_prompt", "attribution_and_anchors"],
+            "block_count": 6,
+            "is_bibliomancy": True
         }
     },
     
@@ -440,6 +462,65 @@ def get_working_type(guide_id: str, intention: str) -> Dict[str, Any]:
     # Return the first (default) type for this guide
     default_type_id = list(guide_types.keys())[0]
     return {"type_id": default_type_id, **guide_types[default_type_id]}
+
+
+def get_bibliomancy_affinity(guide_id: str, intention: str) -> float:
+    """
+    Check if a bibliomancy working has soft affinity for this intention.
+    Returns a score 0.0-1.0. Only fires if guide is Shigg or Theresa.
+    This is additive — it does not modify get_working_type's existing logic.
+    A score > 0.5 suggests bibliomancy is a good fit, but does not force it.
+    """
+    from prompts.writer_blocks import BIBLIOMANCY_AFFINITY_KEYWORDS
+    
+    # Only applicable for guides with bibliomancy techniques
+    if guide_id not in ("shigg", "theresa"):
+        return 0.0
+    
+    intention_lower = intention.lower()
+    matches = sum(1 for kw in BIBLIOMANCY_AFFINITY_KEYWORDS if kw in intention_lower)
+    
+    # Normalize: 2+ keyword matches = strong affinity
+    if matches >= 2:
+        return 0.9
+    elif matches == 1:
+        return 0.5
+    return 0.0
+
+
+def get_working_type_with_bibliomancy(guide_id: str, intention: str) -> Dict[str, Any]:
+    """
+    Extended working type selection that includes bibliomancy affinity.
+    This wraps get_working_type — if bibliomancy affinity is high and no
+    explicit trigger word matched a non-bibliomancy type, route to bibliomancy.
+    
+    Slot-in logic: if the existing get_working_type returns a specific match
+    (not the default), that match wins. Bibliomancy only wins as an alternative
+    to the default fallback.
+    """
+    # First: run the existing logic unchanged
+    standard_result = get_working_type(guide_id, intention)
+    
+    # Check if standard result was an explicit trigger match or just the default
+    guide_types = WORKING_TYPES.get(guide_id, {})
+    default_type_id = list(guide_types.keys())[0] if guide_types else None
+    was_explicit_match = standard_result.get("type_id") != default_type_id
+    
+    # If the standard logic found an explicit match, respect it
+    if was_explicit_match:
+        return standard_result
+    
+    # Check bibliomancy affinity
+    affinity = get_bibliomancy_affinity(guide_id, intention)
+    if affinity >= 0.5:
+        # Route to the appropriate bibliomancy type
+        biblio_type_id = "bibliomancy_book" if guide_id == "shigg" else "bibliomancy_shuffle"
+        if biblio_type_id in guide_types:
+            return {"type_id": biblio_type_id, **guide_types[biblio_type_id]}
+    
+    # Default: return the standard result unchanged
+    return standard_result
+
 
 
 def get_required_blocks(guide_id: str, working_type_id: str = None) -> List[str]:

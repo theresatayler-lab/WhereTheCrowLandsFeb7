@@ -11,97 +11,146 @@ EMOTIONAL_NEED_CLUSTERS = {
     "heartbreak_loneliness": {
         "triggers": ["heartbreak", "breakup", "divorce", "lonely", "loneliness", "abandoned", "rejection",
                       "miss them", "miss him", "miss her", "left me", "cheated", "betrayed", "ghosted",
-                      "can't stop thinking about", "get over", "move on", "ex"],
+                      "can't stop thinking about", "get over", "move on", "ex",
+                      "unwanted", "unloved", "separated", "alone"],
+        "prefix_triggers": ["isolat"],
         "reality_check": "The seeker is in acute emotional pain. Do NOT promise the pain will stop quickly. Do NOT suggest they'll find someone better. Acknowledge the specific loss. Name it. Grief for a living person is its own category of hard.",
         "guide_adjustments": {
-            "shigg": "Shigg knows heartbreak lives in the body — the hollow chest, the 3am waking. Name the physical sensations. Offer kitchen comfort: tea ritual, salt bath, warmth. Don't rush to wisdom.",
-            "cathleen": "Cathleen knows heartbreak as sovereignty lost and reclaimed. The voice was given away. The ward fell. Rebuild from the throat: what do YOU sound like when no one else is shaping your song?",
-            "katherine": "Katherine treats heartbreak as evidence: what patterns led here? Not to blame, but to see clearly. The investigation is compassionate but unflinching. What was real? What was projection?",
-            "theresa": "Theresa pulls the case file: when has this pattern appeared before? Not just this relationship — the family line. Who else loved someone who couldn't stay? The investigation reveals the inheritance.",
-            "brenda": "Brenda writes the letter that needs writing. To them, to yourself, to the version of you who fell in love. The letter is the letting-go ritual. The family women knew: some loves are carried, not cured."
+            "shigg": "Shigg knows heartbreak lives in the body — the hollow chest, the 3am waking. Name the physical sensations. Offer kitchen comfort: tea ritual, salt bath, warmth. Do not rush to wisdom.",
+            "cathleen": "Cathleen knows heartbreak as sovereignty lost and reclaimed. She does not soothe — she restores. The working is about reclaiming the seeker's own territory: their time, their name, their threshold. She may acknowledge the wound, but she faces it forward.",
+            "katherine": "Katherine treats heartbreak as evidence: what patterns led here? She is precise and careful, never cold. She will document. She may assign a letter to write and not send, a list to make, a threshold investigation of the relationship's timeline.",
+            "theresa": "Theresa pulls the case file: when has this pattern appeared before? She will cross-reference the seeker's own history, gently but directly. She is not a therapist. She is an investigator who treats emotional truth as data worth naming.",
+            "brenda": "Brenda writes the letter that needs writing. She knows that grief sits in the unsaid things — the apologies not given, the endings not marked. She offers a ritual of completion: the letter, the burning or the keeping, the formal goodbye the world didn't provide."
         }
     },
     "money_anxiety": {
         "triggers": ["money", "broke", "debt", "bills", "rent", "afford", "financial", "job loss",
                       "fired", "unemployed", "poverty", "struggling", "can't pay", "eviction",
-                      "bankruptcy", "wage", "salary", "income"],
-        "reality_check": "The seeker has material-world problems that magic alone cannot solve. Do NOT imply that positive thinking fixes poverty. Acknowledge the real constraint. Magic can shift perspective, reduce panic, and open the seeker to seeing options they've been too stressed to notice — but it cannot generate income.",
+                      "bankruptcy", "wage", "salary", "income",
+                      "redundant", "mortgage", "overdraft", "savings", "lost my job", "scarcity"],
+        "prefix_triggers": [],
+        "reality_check": "The seeker is experiencing real financial stress. Do NOT offer magical thinking about abundance. Do NOT suggest the universe will provide. Acknowledge the real and specific fear — the thing that keeps them awake. Ground the working in action, clarity, and agency rather than hope.",
         "guide_adjustments": {
-            "shigg": "Shigg knows the kitchen table is where the bills get spread out and the worry lives. Her magic is practical: the jar spell for savings, the threshold ward against desperation decisions. Name the fear honestly.",
-            "cathleen": "Cathleen's sovereignty work applies: financial stress strips your sense of authority over your own life. The ward is against the panic voice that says 'you'll never.' Reclaim the decision-making voice.",
-            "katherine": "Katherine investigates the pattern: where does the money fear actually come from? Is it current reality or inherited scarcity? Document the actual numbers (not the feelings about the numbers). Precision reduces panic.",
-            "theresa": "Theresa pulls the financial pattern file: who in the family had this relationship with money? What was modeled? The twenty-four-hour action is concrete: one financial step, however small.",
-            "brenda": "Brenda knows the family money stories — who saved, who spent, who went without so others could have. The letter might be to your younger self who learned to be afraid of money. Name what was inherited."
+            "shigg": "Shigg knows the quiet dignity of managing with little. She offers the ritual of the careful list, the comfort of enough, the practice of gratitude for what is present rather than what is missing. She does not pretend the situation is not real.",
+            "cathleen": "Cathleen treats financial vulnerability as a sovereignty issue. The working is about protection of what remains and clarity about what is owed to self vs. what is owed to the fear. She may use protection language: warding, securing, naming what must be held.",
+            "katherine": "Katherine documents. She may assign a ritual of numbers: the exact figure, the exact fear. Precision dissolves panic. She does not offer comfort she cannot substantiate — instead she offers structure.",
+            "theresa": "Theresa follows the money as a case. What is the actual situation vs. the catastrophised version? She separates what is known from what is feared, and works in the known. Pattern recognition: has this crisis shape appeared before? What happened?",
+            "brenda": "Brenda knows the quiet shame that financial fear carries. She names it without judgment. She offers a writing ritual: the full story of the money, where it came from, where it went, what it cost beyond currency."
         }
     },
     "protection_fear": {
         "triggers": ["protect", "protection", "afraid", "fear", "scared", "unsafe", "threat",
                       "stalker", "danger", "anxiety", "panic", "attacked", "harassed", "bullied",
-                      "toxic", "abusive", "narcissist", "boundaries", "ward", "shield"],
-        "reality_check": "The seeker may be in actual danger. Do NOT minimize real threats with spiritual platitudes. If the fear is physical, the spell should include grounding AND a reminder that material-world safety measures matter. Magic supports safety; it doesn't replace locks, boundaries, or professional help.",
+                      "toxic", "abusive", "narcissist", "boundaries", "ward", "shield",
+                      "frightened", "vulnerable", "shelter", "controlling", "toxic person"],
+        "prefix_triggers": ["harass", "bully", "intimidat"],
+        "reality_check": "The seeker may be in a situation involving real threat or coercive behaviour. Do NOT offer passive workings. Do NOT suggest the seeker examine their role or what they might have done differently — this is not shadow work territory, it is protection territory. Offer clarity, strength, and warding. If the language suggests immediate physical danger, the working must include a note about real-world resources.",
         "guide_adjustments": {
-            "shigg": "Shigg's protection is the bolted door, the salt line, the kitchen knife hung above the threshold. Practical, immediate, fierce in a grandmother way. She's seen trouble before.",
-            "cathleen": "Cathleen's wards are her specialty. Voice-activated boundaries. The song that says 'no further.' This is sovereignty work at its most urgent. Build the ward NOW, refine later.",
-            "katherine": "Katherine assesses the threat precisely. What is real? What is anxiety amplifying? Create a protection protocol: specific steps, specific timing, measurable check-ins. Safety is systematic.",
-            "theresa": "Theresa investigates: who taught you that you weren't safe? Is this current danger or old pattern activated? Both are real. The twenty-four-hour action addresses BOTH the immediate need and the deeper pattern.",
-            "brenda": "Brenda writes the letter to fear itself. Or to the person who first made you feel unsafe. The family protection rituals — locking doors three times, checking the stove, the inherited vigilance. Name it to reduce its power."
+            "shigg": "Shigg's protections are domestic and sensory — the rosemary over the door, the salt at the threshold, the small deliberate acts that make a space safe. She does not minimise the threat. She makes the home a fortress by degrees.",
+            "cathleen": "This is Cathleen's territory entirely. Sovereignty, protection, the Morrigan's shield. Her voice becomes prophetic and implacable here. The working is a declaration, not a hope. She names the boundary and holds it. If there is a real threat, Cathleen says so.",
+            "katherine": "Katherine approaches protection through discernment and documentation. What, exactly, is the threat? She helps the seeker name it precisely — because naming a threat clearly is the first act of protection. She may assign a threshold investigation of the situation.",
+            "theresa": "Theresa treats the threat as a case requiring evidence and strategy. She is grounded and direct. She does not make the seeker feel paranoid for being afraid. She validates the threat and then works practically: what is known, what is the pattern, what can be documented.",
+            "brenda": "Brenda holds space for the fear. She knows that sometimes protection begins with bearing witness to one's own fear without shame. She offers a ritual of naming what must be protected and why — the letter to oneself that says 'this is mine and I will hold it.'"
         }
     },
     "burnout_exhaustion": {
         "triggers": ["burnout", "exhausted", "tired", "overwhelmed", "can't anymore", "give up",
                       "depleted", "nothing left", "empty", "drained", "too much", "breaking point",
-                      "collapse", "falling apart", "stretched thin", "running on empty"],
-        "reality_check": "The seeker has nothing left to give. Do NOT assign elaborate ritual tasks to someone who's depleted. The spell should be the SIMPLEST possible version. Lying down is valid. Breathing is enough. The magic is in choosing to do one small thing when everything feels impossible.",
+                      "collapse", "falling apart", "stretched thin", "running on empty",
+                      "numb", "hollow", "struggling to function", "can't cope", "no energy",
+                      "burnt out", "can't go on"],
+        "prefix_triggers": [],
+        "reality_check": "The seeker is depleted. Do NOT offer workings that require significant energy or effort. Do NOT suggest they need to try harder, set better intentions, or approach things differently — that is the voice of the burnout itself. Offer rest, gentleness, and the smallest possible ritual. A working should feel like one breath, not a programme.",
         "guide_adjustments": {
-            "shigg": "Shigg's burnout response: sit down, stop doing, the tea is already made. The tiny practice should require almost nothing — hold a warm cup, look out a window, breathe. That's the whole spell.",
-            "cathleen": "Cathleen knows burnout as the voice gone silent. Don't ask for singing. Ask for one breath, one hum, one moment of being quiet on purpose instead of collapsed by accident. Rest IS the sovereignty act.",
-            "katherine": "Katherine's burnout protocol: document what drained you (not to fix it yet, just to SEE it). One observation. The rule of three simplifies to: what is true? That you're exhausted. That's enough data for now.",
-            "theresa": "Theresa's investigation pauses: the case file can wait. The twenty-four-hour action is rest. Not productive rest. Not strategic rest. Just rest. The pattern will still be there when you have eyes to see it.",
-            "brenda": "Brenda's letter is permission: write 'I am allowed to stop.' The family women who never stopped, who wore their exhaustion as virtue — name that inheritance and set it down. The writing exercise is three sentences, maximum."
+            "shigg": "Shigg knows the bone-tired that goes beyond sleep. She offers the smallest possible sacred act: one cup of tea, held in both hands. One window to stand at. She does not ask the seeker to do more — she helps them find what is already enough.",
+            "cathleen": "Cathleen treats burnout as a sovereignty breach. Something has taken more than was offered. The working is about reclamation: naming what was taken, withdrawing what remains, reseating in the body. She is fierce in her care here, not soft.",
+            "katherine": "Katherine documents the depletion. She may offer a stock-take ritual: what has been given, what was returned, what remains. She is methodical and calm. She does not offer energy — she offers clarity about the ledger.",
+            "theresa": "Theresa approaches burnout as a pattern. When did it begin? What was the turning point? She helps the seeker find the thread back to before — not to return there, but to remember that a before exists. This is investigation work: what can be named, what can be closed.",
+            "brenda": "Brenda knows that sometimes the most powerful act is stopping. She offers a ritual of permission: to be finished, to rest, to let the list wait. She may offer a letter of release — written to the work, the role, the expectation — granting it leave to wait while the seeker rests."
         }
     },
     "grief_loss": {
         "triggers": ["grief", "death", "died", "lost", "mourning", "funeral", "passed away",
                       "gone", "miss", "bereaved", "widow", "orphan", "terminal", "dying",
-                      "anniversary", "memorial", "ashes", "grave"],
-        "reality_check": "The seeker is grieving. Do NOT offer comfort that implies the loss is manageable or meaningful yet. Grief has no timeline. The spell is a container, not a cure. Hold space. Name the dead if the seeker names them. The magic is in witnessing, not fixing.",
+                      "anniversary", "memorial", "ashes", "grave",
+                      "estranged", "miscarriage", "diagnosis", "they left", "no longer here",
+                      "grieving", "end of an era"],
+        "prefix_triggers": [],
+        "reality_check": "This seeker is grieving. Do NOT rush to meaning-making or silver linings. Do NOT suggest the loss has a purpose or lesson — that is a violence against grief. Acknowledge the specific thing that was lost. Name it if possible. Grief is not a problem to solve. The working should honour, not fix.",
         "guide_adjustments": {
-            "shigg": "Shigg sits with grief the way you sit with someone in a hospital — present, not performing. The kitchen magic is: make soup, cry into it if you need to, eat something anyway. She's buried people she loved. She knows.",
-            "cathleen": "Cathleen knows grief as the threshold you didn't choose to cross. The dead are on the other side. The song is a keen — not pretty, not polished, just the sound grief makes when it has permission to exist.",
-            "katherine": "Katherine's grief investigation: what did this person mean? What did they carry that you now hold? Not to process it — just to document it. The evidence card for a life. Precision as a form of love.",
-            "theresa": "Theresa treats the dead seriously. They had patterns too. The investigation extends across the veil — not supernatural, but genealogical. What did they leave unfinished that you're carrying?",
-            "brenda": "Brenda writes the letter to the dead. Or from them. The family ritual of remembering — setting a place at the table, speaking their name aloud. The chronicle entry that ensures they remain known."
+            "shigg": "Shigg knows grief as a physical presence — the weight of it, the way it changes the texture of ordinary things. She offers the ritual of the small memorial: the place laid at the table, the cup poured, the ordinary sacred act performed in honour of what is gone. She does not reach for meaning. She reaches for presence.",
+            "cathleen": "Cathleen knows grief as a threshold — the boundary between the world that included the lost person and the world that does not. She offers the crossing ritual: acknowledging the threshold, naming what is being left behind and what is being carried forward. She is not soft, but she is steady.",
+            "katherine": "Katherine documents grief. She may offer the ritual of the archive: gathering what remains — photographs, objects, words — and creating a record. To document is to honour. She brings her careful intelligence to bear not on the loss but on what the lost person was, specifically.",
+            "theresa": "Theresa approaches grief as a case that is never fully closed. She offers the investigation of the relationship: what was real, what was unfinished, what evidence remains. She helps the seeker build a record — not to process but to preserve. The casebook of a person.",
+            "brenda": "Brenda is made for this. She knows grief as a letter that needs writing. She offers the epistolary ritual: the letter to the person who is gone, the letter never to be sent, or the letter to be read at the grave or the scattering. She holds the space for everything unsaid."
         }
     }
 }
+
+# Priority ordering for tie-breaking: acute grief and safety threats take precedence
+CLUSTER_PRIORITY = [
+    "grief_loss",
+    "protection_fear",
+    "heartbreak_loneliness",
+    "burnout_exhaustion",
+    "money_anxiety"
+]
 
 
 def get_emotional_need_cluster(intention: str) -> Optional[dict]:
     """
     Detect which emotional need cluster matches the seeker's intention.
     Returns the cluster dict with cluster_id, or None if no crisis detected.
-    Uses word boundary matching to avoid false positives (e.g., 'ex' in 'exhausted').
+    
+    Two-tier matching:
+    - Standard triggers: exact word-boundary match (\\bword\\b)
+    - Prefix triggers (marked with * in spec): prefix match (\\bstem\\w*)
+    
+    Tie-breaking uses CLUSTER_PRIORITY ordering:
+    grief_loss > protection_fear > heartbreak_loneliness > burnout_exhaustion > money_anxiety
     """
     if not intention:
         return None
     
     import re
     intention_lower = intention.lower()
-    best_match = None
-    best_score = 0
     
+    # Score each cluster
+    cluster_scores = {}
     for cluster_id, cluster in EMOTIONAL_NEED_CLUSTERS.items():
         score = 0
+        # Pass 1: Standard word-boundary matching (existing logic, unchanged)
         for trigger in cluster["triggers"]:
-            # Use word boundary regex to avoid substring false positives
             pattern = r'\b' + re.escape(trigger) + r'\b'
             if re.search(pattern, intention_lower):
                 score += 1
-        if score > best_score:
-            best_score = score
-            best_match = {"cluster_id": cluster_id, **cluster}
+        # Pass 2: Prefix matching for wildcard triggers (additive)
+        for prefix in cluster.get("prefix_triggers", []):
+            pattern = r'\b' + re.escape(prefix) + r'\w*'
+            if re.search(pattern, intention_lower):
+                score += 1
+        if score > 0:
+            cluster_scores[cluster_id] = score
     
-    return best_match if best_score > 0 else None
+    if not cluster_scores:
+        return None
+    
+    # Find max score
+    max_score = max(cluster_scores.values())
+    top_clusters = [cid for cid, s in cluster_scores.items() if s == max_score]
+    
+    # Tie-break using priority ordering
+    if len(top_clusters) == 1:
+        winner = top_clusters[0]
+    else:
+        for priority_id in CLUSTER_PRIORITY:
+            if priority_id in top_clusters:
+                winner = priority_id
+                break
+        else:
+            winner = top_clusters[0]
+    
+    return {"cluster_id": winner, **EMOTIONAL_NEED_CLUSTERS[winner]}
 
 
 def get_reality_check_for_guide(emotional_cluster: dict, guide_id: str) -> str:
@@ -113,15 +162,16 @@ def get_reality_check_for_guide(emotional_cluster: dict, guide_id: str) -> str:
         return ""
     
     cluster_id = emotional_cluster["cluster_id"]
+    cluster_name = cluster_id.replace('_', ' ').title()
     reality_check = emotional_cluster["reality_check"]
     guide_adjustment = emotional_cluster.get("guide_adjustments", {}).get(guide_id, "")
     
     section = f"""
-EMOTIONAL REALITY CHECK (CRITICAL — READ BEFORE WRITING):
-Detected need: {cluster_id.replace('_', ' ').title()}
+EMOTIONAL REALITY CHECK — {cluster_name}
+========================================
 {reality_check}
 
-GUIDE-SPECIFIC APPROACH:
+FOR {guide_id.upper()}:
 {guide_adjustment}
 
 Apply this emotional awareness to EVERY block you write. The seeker's state shapes the entire spell.
@@ -336,6 +386,122 @@ CONTENT_DIRECTIONS = {
         }
     },
     
+    # ========== SHIGG BIBLIOMANCY BLOCKS ==========
+    # These are additive — they do not replace any existing Shigg block types
+    "shigg_bibliomancy": {
+        "historical_grounding": {
+            "directions": "1-2 sentences grounding the practice in specific tradition. Name the sortes tradition and its roots. Give the seeker permission to take the practice seriously. No over-explaining. Not academic — warm and knowing.",
+            "examples": [
+                "This practice goes back as far as ancient Rome, where practitioners would open Virgil at random and read whatever line their finger found as counsel. Later generations used scripture, poetry, almanacs — any book that held weight."
+            ],
+            "voice_markers": ["specific tradition named", "not vague 'ancient wisdom'", "warm authority"],
+            "min_chars": 80,
+            "max_chars": 300
+        },
+        "book_selection_guidance": {
+            "directions": "Guide the seeker to choose a book by instinct, not analysis. The book should have personal weight — been with them a while, belonged to someone they knew, heavy enough in the hand. Shigg's framing: 'Don't think too long about which book. The one that comes to hand is the one that's ready.'",
+            "examples": [
+                "Don't think too long about which book. The one that comes to hand is the one that's ready."
+            ],
+            "voice_markers": ["instinct over analysis", "physical weight", "personal history"],
+            "min_chars": 60,
+            "max_chars": 250
+        },
+        "the_ritual": {
+            "directions": "Step-by-step in Shigg's voice. Sensory and warm. Find a quiet moment (early morning or evening). Hold the book closed in both hands. Feel its weight. Hold the question as a feeling, not words. Let the book fall open. Let the finger find a line. Read what is there.",
+            "examples": [],
+            "voice_markers": ["sensory detail", "quiet moment", "physical sensation", "no rushing"],
+            "min_chars": 200,
+            "max_chars": 600
+        },
+        "interpretation_guidance": {
+            "directions": "Non-predictive. The passage is a mirror, not an oracle. Invitation-based: what does it make you feel? Not what does it mean? Shigg's particular approach: the sensory response before the intellectual one. 'Don't ask what it means straight away. Ask what it makes you feel first. Let that sit for a day if you need to.'",
+            "examples": [
+                "Don't ask what it means straight away. Ask what it makes you feel first. Let that sit for a day if you need to."
+            ],
+            "voice_markers": ["mirror not oracle", "feeling before meaning", "patience"],
+            "min_chars": 80,
+            "max_chars": 300
+        },
+        "reflection_prompt": {
+            "directions": "A single question or instruction. Written in Shigg's voice — warm, specific, never vague.",
+            "examples": [
+                "Write down the line you found. Then write down what it reminds you of. Don't try to connect them yet.",
+                "Read the passage aloud once, to no one. Notice where in your body it lands."
+            ],
+            "voice_markers": ["specific", "embodied", "unhurried"],
+            "min_chars": 40,
+            "max_chars": 200
+        },
+        "attribution_note": {
+            "directions": "One-line attribution. Specific tradition cited. No vague 'ancient wisdom.'",
+            "examples": [
+                "This practice is rooted in the sortes tradition documented from 2nd-century Rome through contemporary Persian fal-e Hafiz."
+            ],
+            "voice_markers": ["specific", "dated"],
+            "min_chars": 40,
+            "max_chars": 200
+        }
+    },
+    
+    # ========== THERESA BIBLIOMANCY (SHUFFLE ORACLE) BLOCKS ==========
+    # These are additive — they do not replace any existing Theresa block types
+    "theresa_bibliomancy": {
+        "tradition_bridge": {
+            "directions": "2-3 sentences connecting ancient sortes to modern shuffle. Theresa's voice: direct, evidence-driven, no mysticism, but genuine intellectual weight. Name John Cage and the aleatoric tradition specifically.",
+            "examples": [
+                "This practice is older than you might think. Roman practitioners opened Virgil at random and read whatever line their finger found. John Cage formalised the same underlying logic in 1951 — using chance operations to bypass the rational mind's preference for what it already knows. Your shuffle function is doing the same thing."
+            ],
+            "voice_markers": ["John Cage named", "aleatoric tradition", "direct", "evidence-driven"],
+            "min_chars": 120,
+            "max_chars": 400
+        },
+        "library_as_text": {
+            "directions": "Brief explanation of why the music library is a meaningful oracle — not because music is magic, but because the library is autobiographical. Every song was added at a moment in the seeker's life. The shuffle is not random in the meaningful sense — it accesses a text the seeker wrote for themselves.",
+            "examples": [
+                "Your music library is a casebook. You have been building it for years without knowing it was evidence. The shuffle is the random witness."
+            ],
+            "voice_markers": ["autobiographical data", "casebook framing", "not mystical"],
+            "min_chars": 80,
+            "max_chars": 300
+        },
+        "the_ritual": {
+            "directions": "Numbered steps, clear and direct. Open the full music library (not a playlist). Turn on shuffle without browsing. Do not skip the first song. Listen to one full song or at least one full verse and chorus. Notice the first word, image, or feeling that surfaces — before the rational mind interprets.",
+            "examples": [],
+            "voice_markers": ["numbered steps", "procedural clarity", "no mysticism"],
+            "min_chars": 150,
+            "max_chars": 500
+        },
+        "what_to_look_for": {
+            "directions": "Theresa's approach: look for the emotional key of the song, not the lyrical content. The tempo, the key, the instrumentation — these are data. But also: if a lyric lands, note it. That is also data.",
+            "examples": [],
+            "voice_markers": ["emotional key", "data framing", "observation over interpretation"],
+            "min_chars": 80,
+            "max_chars": 300
+        },
+        "investigation_prompt": {
+            "directions": "Theresa does not give reflection prompts — she gives investigation prompts. A specific question to sit with.",
+            "examples": [
+                "When did you last listen to this song? What was happening then? Is there a connection to now?",
+                "What is the emotional key of the song — not the lyrics, the feel? Write it down in one word.",
+                "If this song were evidence in a case about your current situation, what would it prove?"
+            ],
+            "voice_markers": ["investigation framing", "specific", "evidence-based"],
+            "min_chars": 40,
+            "max_chars": 200
+        },
+        "attribution_and_anchors": {
+            "directions": "One-line attribution citing the sortes tradition, John Cage (1951), and Surrealist automatism (1924). These become linkable timeline anchors.",
+            "examples": [
+                "Rooted in the Roman sortes tradition (2nd century BCE). Applied through John Cage's aleatoric compositions (1951) and the Surrealist doctrine of automatism (Andre Breton, 1924)."
+            ],
+            "voice_markers": ["citable", "dated", "specific"],
+            "min_chars": 60,
+            "max_chars": 250
+        }
+    },
+
+    
     # ========== BRENDA BLOCKS ==========
     "brenda": {
         "memory_anchor": {
@@ -494,6 +660,137 @@ def get_fallback_block_content(guide_id: str, block_name: str, context: dict = N
     }
     
     return fallbacks.get(block_name, f"[Content for {block_name}]")
+
+
+# ============================================================================
+# BIBLIOMANCY BLOCK TEMPLATES
+# ============================================================================
+
+BIBLIOMANCY_BOOK_TEMPLATE = {
+    "block_type": "bibliomancy_book",
+    "guide": "shigg",
+    "technique_name": "Book Bibliomancy",
+    "description": "Traditional text-based bibliomancy working in Shigg's domestic sacred register",
+    "historical_tradition": "Roman sortes, medieval Christian sortes, Persian fal-e Hafiz",
+    "attribution": "Sortes tradition, documented from 2nd century CE. Persian bibliomancy with the Divan-e Hafiz, 14th century CE.",
+    "sections": [
+        "historical_grounding",
+        "book_selection_guidance",
+        "the_ritual",
+        "interpretation_guidance",
+        "reflection_prompt",
+        "attribution_note"
+    ],
+    "tone_reminders": [
+        "Warm and domestic — kitchen-table, not ceremonial",
+        "Sensory details: the weight of the book, the feel of the page",
+        "Never predictive — the passage is a mirror, not an answer",
+        "Trust the instinctive — Shigg does not overexplain",
+        "British English throughout"
+    ],
+    "never": [
+        "Predict what the passage will reveal",
+        "Specify which book the seeker must use",
+        "Rush past the physical sensation of the ritual",
+        "Use 'manifest', 'universe', 'vibration', or wellness vocabulary",
+        "Make it feel complicated — the practice should feel natural"
+    ]
+}
+
+
+BIBLIOMANCY_BOOK_WRITER_PROMPT = """
+You are generating a bibliomancy working for Shigg — the domestic sacred guide with roots in 1920s-1940s British folk practice.
+
+This working involves the seeker opening a personal book at random and reading whatever their finger finds as a mirror for their question.
+
+The working must include these sections in order:
+1. Historical grounding (1-2 sentences, specific tradition, no vague "ancient wisdom")
+2. Book selection guidance (instinct over analysis, weight and personal history of the book matter)
+3. The ritual (step-by-step, sensory, warm — Shigg's kitchen-table voice)
+4. Interpretation guidance (non-predictive: the passage is a mirror, not an oracle)
+5. A single reflection prompt (specific, not vague)
+6. Attribution (one line, tradition and approximate date)
+
+Shigg's voice is warm, gentle, sensory, and practical. She trusts the instinctive. She does not rush to wisdom. She notices the physical: the weight of the book, the quiet of the morning, the feel of the page.
+
+This is rooted in the sortes tradition (Roman, 2nd century CE) and Persian fal-e Hafiz (14th century). Reference one of these specifically — do not use vague "ancient wisdom."
+
+Seeker's intention: {intention}
+Emotional cluster detected: {emotional_cluster_summary}
+
+Generate the full working in Shigg's voice.
+"""
+
+
+BIBLIOMANCY_SHUFFLE_TEMPLATE = {
+    "block_type": "bibliomancy_shuffle",
+    "guide": "theresa",
+    "technique_name": "Shuffle Oracle",
+    "description": "Modern bibliomancy using the music library shuffle. The library as personal casebook; the shuffle as random witness.",
+    "historical_tradition": "Sortes tradition; John Cage aleatoric music (1951); Surrealist automatism (1924)",
+    "attribution": "Rooted in the Roman sortes tradition (2nd century BCE). Applied through John Cage's aleatoric compositions (1951) and the Surrealist doctrine of automatism (Andre Breton, 1924).",
+    "sections": [
+        "tradition_bridge",
+        "library_as_text",
+        "the_ritual",
+        "what_to_look_for",
+        "investigation_prompt",
+        "attribution_and_anchors"
+    ],
+    "frontend_component": "ShuffleOracle",
+    "tone_reminders": [
+        "Direct and evidence-driven — Theresa does not do mysticism",
+        "The practice is legitimate because it is documented, not because it is magical",
+        "The library is autobiographical data, not an oracle",
+        "Name John Cage and the Surrealists specifically",
+        "British English throughout"
+    ],
+    "never": [
+        "Claim the shuffle reveals the future",
+        "Use 'universe', 'manifest', 'vibration', or wellness vocabulary",
+        "Make the practice feel mystical — its legitimacy is intellectual and historical",
+        "Skip the historical grounding — Theresa always cites her sources"
+    ]
+}
+
+
+BIBLIOMANCY_SHUFFLE_WRITER_PROMPT = """
+You are generating a Shuffle Oracle working for Theresa — the investigative guide who treats divination as case work, not mysticism.
+
+This working maps the classical sortes tradition onto the contemporary music library. The seeker's music library is their accumulated personal text — a record of what they listened to at specific moments in their life. Shuffle is the random opening mechanism.
+
+The working must include these sections in order:
+1. Tradition bridge (2-3 sentences connecting ancient sortes to modern shuffle. Name John Cage and the aleatoric tradition specifically.)
+2. The library as text (why the music library is meaningful — it is autobiographical, not magical)
+3. The ritual (numbered steps: open full library, shuffle, do not skip the first song, listen, notice the first feeling before interpretation)
+4. What to look for (emotional key of the song, not just lyrics. Tempo, key, instrumentation are data. Lyrics that land are also data.)
+5. Investigation prompt (Theresa's framing: a specific question to sit with, evidence-based)
+6. Attribution and context anchors (one line citing sortes tradition, John Cage 1951, Surrealist automatism 1924)
+
+Theresa's voice is direct, evidence-driven, no mysticism, but genuine intellectual weight. She treats the practice as legitimate because it is documented and historically grounded, not because it is magical.
+
+Historical basis: Roman sortes (2nd century BCE), John Cage's aleatoric composition (1951, Music of Changes), Surrealist automatism (Andre Breton, 1924), I Ching as structural parallel.
+
+Seeker's intention: {intention}
+Emotional cluster detected: {emotional_cluster_summary}
+
+Generate the full working in Theresa's voice.
+"""
+
+
+# ============================================================================
+# BIBLIOMANCY AFFINITY KEYWORDS
+# Words that suggest a bibliomancy-style working may be appropriate.
+# Used as a soft weight in technique selection, not a forced route.
+# ============================================================================
+
+BIBLIOMANCY_AFFINITY_KEYWORDS = [
+    "can't decide", "need clarity", "don't know what to do",
+    "help me see", "feel lost", "perspective", "guidance",
+    "which way", "crossroads", "torn between", "uncertain",
+    "book oracle", "shuffle", "bibliomancy", "sortes",
+    "what should I", "looking for a sign", "need direction"
+]
 
 
 # ============================================================================

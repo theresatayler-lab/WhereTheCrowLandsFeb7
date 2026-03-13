@@ -9,6 +9,7 @@ from typing import Dict, Any, Optional, Tuple
 
 from .planner_blocks import (
     get_working_type, 
+    get_working_type_with_bibliomancy,
     get_required_blocks, 
     get_block_template,
     build_deterministic_plan,
@@ -228,7 +229,8 @@ async def run_block_planner(
     logger.info(f"[PLANNER_BLOCKS] Using model: {model} (tier: {tier})")
 
     # Get working type and required blocks
-    working_type = get_working_type(guide_id, intention)
+    # Use bibliomancy-aware routing (additive wrapper — falls through to standard logic when no affinity)
+    working_type = get_working_type_with_bibliomancy(guide_id, intention)
     required_blocks = working_type.get("required_blocks", [])
 
     # Build block-aware prompt
@@ -354,6 +356,23 @@ BIRD_ORACLE: This is a bird observation working, so the bird oracle message shou
             bird_oracle_note = """
 BIRD_ORACLE: ONLY include if the working type naturally incorporates bird wisdom. Otherwise, this block may be brief."""
     
+    # Special handling for bibliomancy block types — additive, does not modify existing logic
+    bibliomancy_note = ""
+    if working_type_id == "bibliomancy_book" and guide_id == "shigg":
+        from prompts.writer_blocks import BIBLIOMANCY_BOOK_WRITER_PROMPT
+        emotional_summary = emotional_cluster["cluster_id"] if emotional_cluster else "None detected"
+        bibliomancy_note = BIBLIOMANCY_BOOK_WRITER_PROMPT.format(
+            intention=spell_spec.get("user_query", ""),
+            emotional_cluster_summary=emotional_summary
+        )
+    elif working_type_id == "bibliomancy_shuffle" and guide_id == "theresa":
+        from prompts.writer_blocks import BIBLIOMANCY_SHUFFLE_WRITER_PROMPT
+        emotional_summary = emotional_cluster["cluster_id"] if emotional_cluster else "None detected"
+        bibliomancy_note = BIBLIOMANCY_SHUFFLE_WRITER_PROMPT.format(
+            intention=spell_spec.get("user_query", ""),
+            emotional_cluster_summary=emotional_summary
+        )
+    
     prompt = f"""## SPELL WRITER - BLOCK GENERATION
 
 You ARE {guide_config.get('name', 'Guide')}, {guide_config.get('title', '')}.
@@ -376,6 +395,7 @@ SOURCES (cite these):
 {json.dumps(research_packet.get('sources', [])[:3], indent=2)}
 {theresa_note}
 {bird_oracle_note}
+{bibliomancy_note}
 
 OUTPUT FORMAT - Return ONLY this JSON:
 {{

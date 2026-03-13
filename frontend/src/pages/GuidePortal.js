@@ -8,6 +8,7 @@ import { Send, Loader2, ChevronLeft } from 'lucide-react';
 import { toast } from 'sonner';
 import SpellPageFrame from "../components/spell/SpellPageFrame";
 import SpellHeader from "../components/spell/SpellHeader";
+import ShuffleOracle from "../components/ShuffleOracle";
 import TarotSummaryCard from "../components/spell/TarotSummaryCard";
 import SpellBookView from "../components/spell/SpellBookView";
 
@@ -441,7 +442,26 @@ export const GuidePortal = () => {
                 spell={spellResult}
               >
                 {/* Spell Content */}
-                {spellResult.blocks ? (
+                {spellResult.blocks && spellResult.blocks.some(b => b.block_type === 'bibliomancy_shuffle') ? (
+                  <div className="space-y-6">
+                    {spellResult.blocks.map((block, idx) => (
+                      block.block_type === 'bibliomancy_shuffle' ? (
+                        <ShuffleOracle key={idx} block={block} />
+                      ) : (
+                        <SpellBlockRenderer
+                          key={idx}
+                          spell={{...spellResult, blocks: [block]}}
+                          archetypeStyle={{
+                            borderColor: `border-${guide.colors.border}`,
+                            accentColor: `text-${guide.colors.accent}`,
+                            bgAccent: 'bg-[#F3EFE8]',
+                            textMuted: 'text-navy-dark/70'
+                          }}
+                        />
+                      )
+                    ))}
+                  </div>
+                ) : spellResult.blocks ? (
                   <SpellBlockRenderer
                     spell={spellResult}
                     archetypeStyle={{

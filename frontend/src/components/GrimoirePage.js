@@ -16,6 +16,7 @@ import { SpellBorderFrame, SectionBorderFrame, TarotCardFrame, PERSONA_BORDER_UR
 import { SpellBlockRenderer } from './SpellBlockRenderer';
 import { BRAND_ASSETS, getSpellWatermarkStyle } from '../assets/brandAssets';
 import SpellPageFrame from "./spell/SpellPageFrame";
+import ShuffleOracle from "./ShuffleOracle";
 import SpellHeader from "./spell/SpellHeader";
 import TarotSummaryCard from "./spell/TarotSummaryCard";
 
@@ -1095,6 +1096,29 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
         {/* BLOCKS-BASED SPELL RENDERING (V3) */}
         {spell.blocks && spell.blocks.length > 0 ? (
           <div className="blocks-spell-container">
+            {/* Bibliomancy shuffle blocks get the ShuffleOracle component */}
+            {spell.blocks.some(b => b.block_type === 'bibliomancy_shuffle') ? (
+              <div className="space-y-6">
+                {spell.blocks.map((block, idx) => (
+                  block.block_type === 'bibliomancy_shuffle' ? (
+                    <ShuffleOracle key={idx} block={block} />
+                  ) : (
+                    <SpellBlockRenderer
+                      key={idx}
+                      spell={{...spell, blocks: [block]}}
+                      archetypeStyle={{
+                        borderColor: style.borderColor,
+                        accentColor: style.accentColor,
+                        bgAccent: style.bgAccent,
+                        textMuted: style.textMuted
+                      }}
+                      onLogUpdate={(log) => console.log('Spell log updated:', log)}
+                      initialLog={{}}
+                    />
+                  )
+                ))}
+              </div>
+            ) : (
             <SpellBlockRenderer
               spell={spell}
               archetypeStyle={{
@@ -1106,6 +1130,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
               onLogUpdate={(log) => console.log('Spell log updated:', log)}
               initialLog={{}}
             />
+            )}
 
             {/* V3 Sources - Always visible for blocks-based spells */}
             {spell.sources && spell.sources.length > 0 && (
