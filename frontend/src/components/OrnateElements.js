@@ -279,22 +279,7 @@ export const DarkSection = ({
   atmosphericTint = 'teal'
 }) => (
   <div className={`relative ${className}`} style={{ backgroundColor: NOUVEAU_COLORS.midnightTeal }}>
-    {/* Subtle texture overlay */}
-    <div className="absolute inset-0 z-0 pointer-events-none" style={{
-      backgroundImage: 'url(/images/brand/profile-frame.png)',
-      backgroundSize: 'cover', backgroundPosition: 'center', opacity: '0.03', filter: 'hue-rotate(160deg) saturate(0.3)',
-    }} />
-    {/* Atmospheric background image (optional) */}
-    {atmosphericImage && (
-      <AtmosphericBackground 
-        image={atmosphericImage}
-        opacity={atmosphericOpacity}
-        position={atmosphericPosition}
-        tint={atmosphericTint}
-        blend="soft-light"
-      />
-    )}
-    {/* Gradient overlay */}
+    {/* Subtle warm radial glow only — no texture overlays */}
     <div className="absolute inset-0 z-0 pointer-events-none" style={{
       background: variant === 'warm' 
         ? `radial-gradient(ellipse at 50% 30%, ${NOUVEAU_COLORS.emberPink}15 0%, transparent 50%), radial-gradient(ellipse at 70% 80%, ${NOUVEAU_COLORS.antiqueGold}10 0%, transparent 40%)`
@@ -313,16 +298,7 @@ export const LightSection = ({
   atmosphericTint = 'sepia'
 }) => (
   <div className={`relative ${className}`} style={{ backgroundColor: NOUVEAU_COLORS.vellum }}>
-    {/* Atmospheric background image (optional) */}
-    {atmosphericImage && (
-      <AtmosphericBackground 
-        image={atmosphericImage}
-        opacity={atmosphericOpacity}
-        position={atmosphericPosition}
-        tint={atmosphericTint}
-        blend="multiply"
-      />
-    )}
+    {/* Atmospheric images removed — clean solid vellum background */}
     {/* Top accent lines */}
     <div className="absolute top-0 left-0 right-0 h-px pointer-events-none z-20" 
       style={{ background: `linear-gradient(to right, transparent, ${NOUVEAU_COLORS.roseClay}, transparent)` }} />
