@@ -441,7 +441,7 @@ export const AIImage = () => {
                     <p className="font-crimson text-base text-cream/50 italic mb-2">
                       Your mystical vision will appear here
                     </p>
-                    <p className="font-montserrat text-xs text-cream/30">
+                    <p className="font-montserrat text-xs text-cream/50">
                       Click to flip between tarot card and full view
                     </p>
                   </motion.div>

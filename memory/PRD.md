@@ -162,8 +162,12 @@ Frontend: React + Tailwind | Backend: FastAPI | DB: MongoDB | AI: DeepSeek + Cla
 - **Updated artNouveau.js, ornaments/index.js** — NOUVEAU_COLORS and COLORS constants corrected
 - **Fixed Navigation.js, Footer.js, App.css** — solid backgrounds, no semi-transparent overlays
 - **Eliminated ALL old rgba teal values** across entire frontend
+- **Fixed BACK/CONTINUE buttons on vellum** — Ember Pink CTA, Oxblood ghost button
+- **Fixed washed-out text** — bumped text-cream/30→/50, /60→/80 where needed
+- **Fixed gold-on-light** in MyGrimoire.js — switched to Oxblood text
+- **Updated BRAND_STYLE_GUIDE.md** with corrected palette + contrast rules
 - **Created design_guidelines.md** — mandatory rules for all new pages/components
-- **Testing:** iteration_15.json — 100% pass (6 pages audited, all backgrounds confirmed Deep Navy, no teal found)
+- **Testing:** iteration_15.json — 100% pass (6 pages audited, all backgrounds confirmed Deep Navy)
 
 ---
 

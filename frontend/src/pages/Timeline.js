@@ -253,7 +253,7 @@ const NetworkGraph = ({ events, onEventClick }) => {
                 <h4 className="font-cinzel text-sm text-gold">{node.name}</h4>
                 <p className="text-xs text-cream/60 font-montserrat">{node.year}</p>
                 {node.traditions?.length > 0 && (
-                  <p className="text-[10px] text-cream/40 font-montserrat mt-1">
+                  <p className="text-[10px] text-cream/50 font-montserrat mt-1">
                     Traditions: {node.traditions.slice(0, 3).join(', ')}
                   </p>
                 )}
@@ -265,7 +265,7 @@ const NetworkGraph = ({ events, onEventClick }) => {
       )}
       
       {/* Instructions */}
-      <div className="absolute top-4 right-4 z-10 text-[10px] text-cream/40 font-montserrat">
+      <div className="absolute top-4 right-4 z-10 text-[10px] text-cream/50 font-montserrat">
         Drag to pan • Scroll to zoom • Click node for details
       </div>
       
@@ -794,7 +794,7 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick, allEvents
                 >
                   Narrative
                 </button>
-                <span className="text-[10px] text-cream/40 italic ml-1">Enhanced</span>
+                <span className="text-[10px] text-cream/50 italic ml-1">Enhanced</span>
               </div>
             )}
             
@@ -934,7 +934,7 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick, allEvents
                               'modern_scholar_practitioner': { color: 'text-yellow-400', icon: '●', label: 'Scholar' },
                               'folk_archive': { color: 'text-purple-400', icon: '●', label: 'Folk' },
                               'community_tradition': { color: 'text-purple-400', icon: '○', label: 'Tradition' },
-                            }[source.quality_tier] || { color: 'text-cream/40', icon: '○', label: '' };
+                            }[source.quality_tier] || { color: 'text-cream/50', icon: '○', label: '' };
                             
                             return (
                               <div key={i} className="flex items-start gap-2 text-xs font-montserrat group">
@@ -954,7 +954,7 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick, allEvents
                                         {source.author}
                                       </button>
                                     )}
-                                    {source.author && <span className="text-cream/40">—</span>}
+                                    {source.author && <span className="text-cream/50">—</span>}
                                     
                                     {/* Title - link if trusted URL exists */}
                                     {isTrustedUrl ? (
@@ -990,7 +990,7 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick, allEvents
                                   
                                   {/* Relevance note if present */}
                                   {source.relevance && (
-                                    <p className="text-[10px] text-cream/40 mt-0.5 leading-tight">{source.relevance}</p>
+                                    <p className="text-[10px] text-cream/50 mt-0.5 leading-tight">{source.relevance}</p>
                                   )}
                                 </div>
                               </div>
@@ -999,7 +999,7 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick, allEvents
                         </div>
                         
                         {/* Subtle disclaimer */}
-                        <p className="text-[9px] text-cream/30 mt-2 italic">
+                        <p className="text-[9px] text-cream/50 mt-2 italic">
                           Sources provided for research. Verify independently for academic use.
                         </p>
                       </div>
@@ -1046,11 +1046,11 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick, allEvents
                             <div className="flex items-center gap-2 text-[9px] font-montserrat">
                               <span className="flex items-center gap-1">
                                 <span className="w-2 h-2 rounded-full bg-teal-500"></span>
-                                <span className="text-cream/40">Linked</span>
+                                <span className="text-cream/50">Linked</span>
                               </span>
                               <span className="flex items-center gap-1">
                                 <span className="w-2 h-2 rounded-full bg-amber-600/50 border border-dashed border-amber-500"></span>
-                                <span className="text-cream/40">Referenced</span>
+                                <span className="text-cream/50">Referenced</span>
                               </span>
                             </div>
                           </div>
@@ -1058,7 +1058,7 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick, allEvents
                             {/* Influenced By */}
                             {rawInfluencedBy.length > 0 && (
                               <div className="flex flex-wrap items-center gap-2">
-                                <span className="text-[10px] text-cream/40 font-montserrat uppercase">Influenced by:</span>
+                                <span className="text-[10px] text-cream/50 font-montserrat uppercase">Influenced by:</span>
                                 {/* Existing events - clickable, teal */}
                                 {influencedByExisting.slice(0, 4).map((connId, i) => {
                                   const connectedEvent = allEvents?.find(e => e.id === connId);
@@ -1096,7 +1096,7 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick, allEvents
                             {/* Influenced */}
                             {rawInfluenced.length > 0 && (
                               <div className="flex flex-wrap items-center gap-2">
-                                <span className="text-[10px] text-cream/40 font-montserrat uppercase">Influenced:</span>
+                                <span className="text-[10px] text-cream/50 font-montserrat uppercase">Influenced:</span>
                                 {/* Existing events - clickable, gold */}
                                 {influencedExisting.slice(0, 4).map((connId, i) => {
                                   const connectedEvent = allEvents?.find(e => e.id === connId);
@@ -1171,7 +1171,7 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick, allEvents
                             
                             if (related.length === 0) {
                               return (
-                                <span className="text-xs text-cream/40 font-montserrat">
+                                <span className="text-xs text-cream/50 font-montserrat">
                                   No closely related events found
                                 </span>
                               );
@@ -1188,7 +1188,7 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick, allEvents
                                 title={`${relEvent.title} - ${relEvent._relationScore} connection points`}
                               >
                                 {relEvent.title.length > 35 ? relEvent.title.slice(0, 35) + '...' : relEvent.title}
-                                <span className="text-cream/30 ml-1">({relEvent.year})</span>
+                                <span className="text-cream/50 ml-1">({relEvent.year})</span>
                               </button>
                             ));
                           })()}
@@ -1804,7 +1804,7 @@ export const Timeline = () => {
                 </button>
               </div>
               {filters.search && (
-                <p className="font-montserrat text-xs text-cream/40 mt-6 max-w-sm">
+                <p className="font-montserrat text-xs text-cream/50 mt-6 max-w-sm">
                   Tip: Try searching for well-known figures like "Aleister Crowley", "Dion Fortune", or topics like "Golden Dawn", "Wicca"
                 </p>
               )}

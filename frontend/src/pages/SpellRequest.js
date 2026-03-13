@@ -207,7 +207,7 @@ const Step1 = ({ spellSpec, updateSpec }) => (
               <div className="flex flex-col items-center gap-2 text-center">
                 <img src={f.iconSrc} alt={f.label} className="w-8 h-8" />
                 <span className="font-montserrat text-sm text-navy-dark font-medium">{f.label}</span>
-                <span className="font-crimson-text text-xs text-navy-dark/60">{f.description}</span>
+                <span className="font-crimson-text text-xs text-navy-dark/70">{f.description}</span>
               </div>
             </OptionCard>
           );
@@ -853,7 +853,13 @@ export const SpellRequest = () => {
               <button
                 onClick={() => setStep(s => s - 1)}
                 disabled={step === 0}
-                className="btn-ritual-ghost px-4 py-2 rounded-sm disabled:opacity-30 disabled:cursor-not-allowed flex items-center gap-2"
+                className="font-cinzel font-normal tracking-widest uppercase px-4 py-2 rounded-sm disabled:opacity-30 disabled:cursor-not-allowed flex items-center gap-2 transition-colors duration-300"
+                style={{ 
+                  color: '#8B2232', 
+                  border: '1px solid #8B223240',
+                  background: 'transparent',
+                }}
+                data-testid="spell-back-btn"
               >
                 <ChevronLeft className="w-4 h-4" />
                 Back
@@ -863,7 +869,8 @@ export const SpellRequest = () => {
                 <button
                   onClick={() => setStep(s => s + 1)}
                   disabled={!canProceed()}
-                  className="btn-ritual-secondary px-6 py-3 rounded-sm disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                  className="btn-ritual px-6 py-3 rounded-sm disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                  data-testid="spell-continue-btn"
                 >
                   Continue
                   <ChevronRight className="w-4 h-4" />
@@ -1019,7 +1026,7 @@ export const SpellRequest = () => {
                       );
                     })}
                   </div>
-                  <div className="flex justify-between text-[10px] text-cream/40 font-montserrat uppercase tracking-wider mt-1.5 max-w-[220px] mx-auto">
+                  <div className="flex justify-between text-[10px] text-cream/50 font-montserrat uppercase tracking-wider mt-1.5 max-w-[220px] mx-auto">
                     <span>Research</span>
                     <span>Plan</span>
                     <span>Write</span>
@@ -1054,7 +1061,7 @@ export const SpellRequest = () => {
         <ElaborateCorner className="absolute bottom-3 right-3 w-16 h-16 rotate-180" variant="gold" />
         
         <div className="max-w-2xl mx-auto text-center relative z-10">
-          <p className="font-crimson text-sm text-cream/60 italic">
+          <p className="font-crimson text-sm text-cream/80 italic">
             Each spell is unique, crafted for this moment, for you.
           </p>
           <div className="flex items-center justify-center gap-4 text-gold/50 mt-3">
@@ -1073,7 +1080,7 @@ export const SpellRequest = () => {
           <h2 className="font-cinzel text-2xl text-center mb-2" style={{ color: '#C8A44D' }}>
             Meet Your Guides
           </h2>
-          <p className="text-center text-cream/60 font-crimson-text mb-10">
+          <p className="text-center text-cream/75 font-crimson-text mb-10">
             Each guide brings unique wisdom. Click to learn more or work with them directly.
           </p>
 
@@ -1095,7 +1102,7 @@ export const SpellRequest = () => {
                 <h3 className="font-cinzel text-sm text-cream group-hover:text-gold transition-colors">
                   {persona.name}
                 </h3>
-                <p className="text-xs text-cream/50 font-crimson-text mt-1">
+                <p className="text-xs text-muted-brass font-crimson-text mt-1">
                   {persona.title}
                 </p>
               </Link>

@@ -282,7 +282,7 @@ export const MyGrimoire = () => {
                   className={`px-6 py-3 font-montserrat text-sm uppercase tracking-wider rounded-sm transition-all flex items-center gap-2 ${
                     activeTab === 'wards'
                       ? 'bg-gradient-to-r from-gold-dark via-gold to-gold-dark text-navy-dark border border-crimson/30'
-                      : 'bg-cream border-2 border-gold/50 text-gold-dark hover:bg-gold/5'
+                      : 'bg-cream border-2 border-gold/50 text-crimson hover:bg-gold/5'
                   }`}
                 >
                   <Hand className="w-4 h-4" />

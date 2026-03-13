@@ -382,7 +382,7 @@ export const GuidePortal = () => {
                   onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend(); }}}
                   placeholder={guide.placeholder}
                   rows={2}
-                  className="flex-1 bg-cream/10 border border-gold/20 rounded-sm px-4 py-2 text-cream font-crimson-text text-sm placeholder:text-cream/30 resize-none focus:border-gold/40 focus:outline-none"
+                  className="flex-1 bg-cream/10 border border-gold/20 rounded-sm px-4 py-2 text-cream font-crimson-text text-sm placeholder:text-cream/50 resize-none focus:border-gold/40 focus:outline-none"
                 />
                 <button
                   onClick={handleSend}
@@ -417,7 +417,7 @@ export const GuidePortal = () => {
                 style={{ width: `${progress}%` }}
               />
             </div>
-            <p className="font-montserrat text-xs text-cream/40 mt-2">{Math.round(progress)}%</p>
+            <p className="font-montserrat text-xs text-cream/50 mt-2">{Math.round(progress)}%</p>
           </motion.div>
         )}
 

@@ -157,17 +157,26 @@ Never mix guide characteristics. Each guide has a distinct voice, era, imagery b
 
 | Role | Name | Hex | Usage |
 |------|------|-----|-------|
-| Primary background | Deep Teal | #0E2A2F | Main app backgrounds, hero sections |
-| Secondary background | Celestial Blue | #123A3F | Layered surfaces, cards |
+| Primary background | Deep Navy | #0C1D2E | Main app backgrounds, hero sections |
+| Secondary background | Celestial Blue | #102534 | Layered surfaces, cards |
 | Reading surface | Vellum / Bone Ivory | #F3EFE8 | All body text containers |
 | Accent | Antique Gold | #C8A44D | Borders, linework, ornamental strokes ONLY |
-| CTA | Ember Pink | #B94E6A | Call-to-action buttons only |
-| Deep accent | Oxblood Burgundy | #8B2232 | Shigg's signature; secondary accents |
+| Faded Gold | Faded Gold | #A89872 | Secondary linework, captions on dark |
+| CTA | Ember Pink | #B94E6A | Call-to-action buttons, links, warm emphasis |
+| Deep accent | Oxblood Burgundy | #8B2232 | Headings on light surfaces, pull quotes |
+| Body on dark | Vellum | #F3EFE8 | All body text on dark surfaces |
+| Body on light | Ink Black | #1A1A1A | All body text on Vellum surfaces |
+| Captions on light | Warm Grey | #5A524E | Metadata, captions on Vellum |
 | Theresa threshold | Iron Grey | (context-specific) | Theresa's threshold workings, Cerberus imagery |
 
-**Gold rule (non-negotiable):** Antique Gold (#C8A44D) is used for strokes and linework only. Never as a flat fill on any surface, background, or solid element. Violating this collapses the luminous quality of the aesthetic.
+**Gold rule (non-negotiable):** Antique Gold (#C8A44D) is used for strokes, borders, and heading text ON DARK SURFACES only. Never as a flat fill. Never as text on light/Vellum surfaces (fails contrast).
 
-**Surface rule:** Body text must always sit on solid surfaces — Vellum (#F3EFE8) or Dark (#0E2A2F / #123A3F). Never on gradients or textured image overlays.
+**Surface rule:** Body text must always sit on solid surfaces — Vellum (#F3EFE8) or Dark (#0C1D2E / #102534). Never on gradients or textured image overlays. Dark backgrounds must be SOLID, not semi-transparent.
+
+**Contrast rules:**
+- On dark (#0C1D2E): Headings = Gold (#C8A44D), Subtitles = Ember Pink (#B94E6A), Body = Vellum (#F3EFE8), Captions = Faded Gold (#A89872)
+- On light (#F3EFE8): Headings = Oxblood (#8B2232) or Ink Black (#1A1A1A), Body = Ink Black (#1A1A1A), Links = Oxblood
+- CTA buttons always use Ember Pink (#B94E6A) background with Vellum text
 
 ### Typography
 
