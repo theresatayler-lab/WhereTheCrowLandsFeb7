@@ -4,6 +4,132 @@
 from typing import Dict, List, Any, Optional
 
 # ============================================================================
+# EMOTIONAL NEED CLUSTERS - Maps crisis intentions to grounded spell responses
+# ============================================================================
+
+EMOTIONAL_NEED_CLUSTERS = {
+    "heartbreak_loneliness": {
+        "triggers": ["heartbreak", "breakup", "divorce", "lonely", "loneliness", "abandoned", "rejection",
+                      "miss them", "miss him", "miss her", "left me", "cheated", "betrayed", "ghosted",
+                      "can't stop thinking about", "get over", "move on", "ex"],
+        "reality_check": "The seeker is in acute emotional pain. Do NOT promise the pain will stop quickly. Do NOT suggest they'll find someone better. Acknowledge the specific loss. Name it. Grief for a living person is its own category of hard.",
+        "guide_adjustments": {
+            "shigg": "Shigg knows heartbreak lives in the body — the hollow chest, the 3am waking. Name the physical sensations. Offer kitchen comfort: tea ritual, salt bath, warmth. Don't rush to wisdom.",
+            "cathleen": "Cathleen knows heartbreak as sovereignty lost and reclaimed. The voice was given away. The ward fell. Rebuild from the throat: what do YOU sound like when no one else is shaping your song?",
+            "katherine": "Katherine treats heartbreak as evidence: what patterns led here? Not to blame, but to see clearly. The investigation is compassionate but unflinching. What was real? What was projection?",
+            "theresa": "Theresa pulls the case file: when has this pattern appeared before? Not just this relationship — the family line. Who else loved someone who couldn't stay? The investigation reveals the inheritance.",
+            "brenda": "Brenda writes the letter that needs writing. To them, to yourself, to the version of you who fell in love. The letter is the letting-go ritual. The family women knew: some loves are carried, not cured."
+        }
+    },
+    "money_anxiety": {
+        "triggers": ["money", "broke", "debt", "bills", "rent", "afford", "financial", "job loss",
+                      "fired", "unemployed", "poverty", "struggling", "can't pay", "eviction",
+                      "bankruptcy", "wage", "salary", "income"],
+        "reality_check": "The seeker has material-world problems that magic alone cannot solve. Do NOT imply that positive thinking fixes poverty. Acknowledge the real constraint. Magic can shift perspective, reduce panic, and open the seeker to seeing options they've been too stressed to notice — but it cannot generate income.",
+        "guide_adjustments": {
+            "shigg": "Shigg knows the kitchen table is where the bills get spread out and the worry lives. Her magic is practical: the jar spell for savings, the threshold ward against desperation decisions. Name the fear honestly.",
+            "cathleen": "Cathleen's sovereignty work applies: financial stress strips your sense of authority over your own life. The ward is against the panic voice that says 'you'll never.' Reclaim the decision-making voice.",
+            "katherine": "Katherine investigates the pattern: where does the money fear actually come from? Is it current reality or inherited scarcity? Document the actual numbers (not the feelings about the numbers). Precision reduces panic.",
+            "theresa": "Theresa pulls the financial pattern file: who in the family had this relationship with money? What was modeled? The twenty-four-hour action is concrete: one financial step, however small.",
+            "brenda": "Brenda knows the family money stories — who saved, who spent, who went without so others could have. The letter might be to your younger self who learned to be afraid of money. Name what was inherited."
+        }
+    },
+    "protection_fear": {
+        "triggers": ["protect", "protection", "afraid", "fear", "scared", "unsafe", "threat",
+                      "stalker", "danger", "anxiety", "panic", "attacked", "harassed", "bullied",
+                      "toxic", "abusive", "narcissist", "boundaries", "ward", "shield"],
+        "reality_check": "The seeker may be in actual danger. Do NOT minimize real threats with spiritual platitudes. If the fear is physical, the spell should include grounding AND a reminder that material-world safety measures matter. Magic supports safety; it doesn't replace locks, boundaries, or professional help.",
+        "guide_adjustments": {
+            "shigg": "Shigg's protection is the bolted door, the salt line, the kitchen knife hung above the threshold. Practical, immediate, fierce in a grandmother way. She's seen trouble before.",
+            "cathleen": "Cathleen's wards are her specialty. Voice-activated boundaries. The song that says 'no further.' This is sovereignty work at its most urgent. Build the ward NOW, refine later.",
+            "katherine": "Katherine assesses the threat precisely. What is real? What is anxiety amplifying? Create a protection protocol: specific steps, specific timing, measurable check-ins. Safety is systematic.",
+            "theresa": "Theresa investigates: who taught you that you weren't safe? Is this current danger or old pattern activated? Both are real. The twenty-four-hour action addresses BOTH the immediate need and the deeper pattern.",
+            "brenda": "Brenda writes the letter to fear itself. Or to the person who first made you feel unsafe. The family protection rituals — locking doors three times, checking the stove, the inherited vigilance. Name it to reduce its power."
+        }
+    },
+    "burnout_exhaustion": {
+        "triggers": ["burnout", "exhausted", "tired", "overwhelmed", "can't anymore", "give up",
+                      "depleted", "nothing left", "empty", "drained", "too much", "breaking point",
+                      "collapse", "falling apart", "stretched thin", "running on empty"],
+        "reality_check": "The seeker has nothing left to give. Do NOT assign elaborate ritual tasks to someone who's depleted. The spell should be the SIMPLEST possible version. Lying down is valid. Breathing is enough. The magic is in choosing to do one small thing when everything feels impossible.",
+        "guide_adjustments": {
+            "shigg": "Shigg's burnout response: sit down, stop doing, the tea is already made. The tiny practice should require almost nothing — hold a warm cup, look out a window, breathe. That's the whole spell.",
+            "cathleen": "Cathleen knows burnout as the voice gone silent. Don't ask for singing. Ask for one breath, one hum, one moment of being quiet on purpose instead of collapsed by accident. Rest IS the sovereignty act.",
+            "katherine": "Katherine's burnout protocol: document what drained you (not to fix it yet, just to SEE it). One observation. The rule of three simplifies to: what is true? That you're exhausted. That's enough data for now.",
+            "theresa": "Theresa's investigation pauses: the case file can wait. The twenty-four-hour action is rest. Not productive rest. Not strategic rest. Just rest. The pattern will still be there when you have eyes to see it.",
+            "brenda": "Brenda's letter is permission: write 'I am allowed to stop.' The family women who never stopped, who wore their exhaustion as virtue — name that inheritance and set it down. The writing exercise is three sentences, maximum."
+        }
+    },
+    "grief_loss": {
+        "triggers": ["grief", "death", "died", "lost", "mourning", "funeral", "passed away",
+                      "gone", "miss", "bereaved", "widow", "orphan", "terminal", "dying",
+                      "anniversary", "memorial", "ashes", "grave"],
+        "reality_check": "The seeker is grieving. Do NOT offer comfort that implies the loss is manageable or meaningful yet. Grief has no timeline. The spell is a container, not a cure. Hold space. Name the dead if the seeker names them. The magic is in witnessing, not fixing.",
+        "guide_adjustments": {
+            "shigg": "Shigg sits with grief the way you sit with someone in a hospital — present, not performing. The kitchen magic is: make soup, cry into it if you need to, eat something anyway. She's buried people she loved. She knows.",
+            "cathleen": "Cathleen knows grief as the threshold you didn't choose to cross. The dead are on the other side. The song is a keen — not pretty, not polished, just the sound grief makes when it has permission to exist.",
+            "katherine": "Katherine's grief investigation: what did this person mean? What did they carry that you now hold? Not to process it — just to document it. The evidence card for a life. Precision as a form of love.",
+            "theresa": "Theresa treats the dead seriously. They had patterns too. The investigation extends across the veil — not supernatural, but genealogical. What did they leave unfinished that you're carrying?",
+            "brenda": "Brenda writes the letter to the dead. Or from them. The family ritual of remembering — setting a place at the table, speaking their name aloud. The chronicle entry that ensures they remain known."
+        }
+    }
+}
+
+
+def get_emotional_need_cluster(intention: str) -> Optional[dict]:
+    """
+    Detect which emotional need cluster matches the seeker's intention.
+    Returns the cluster dict with cluster_id, or None if no crisis detected.
+    Uses word boundary matching to avoid false positives (e.g., 'ex' in 'exhausted').
+    """
+    if not intention:
+        return None
+    
+    import re
+    intention_lower = intention.lower()
+    best_match = None
+    best_score = 0
+    
+    for cluster_id, cluster in EMOTIONAL_NEED_CLUSTERS.items():
+        score = 0
+        for trigger in cluster["triggers"]:
+            # Use word boundary regex to avoid substring false positives
+            pattern = r'\b' + re.escape(trigger) + r'\b'
+            if re.search(pattern, intention_lower):
+                score += 1
+        if score > best_score:
+            best_score = score
+            best_match = {"cluster_id": cluster_id, **cluster}
+    
+    return best_match if best_score > 0 else None
+
+
+def get_reality_check_for_guide(emotional_cluster: dict, guide_id: str) -> str:
+    """
+    Build the reality check injection for the writer prompt, 
+    specific to the emotional cluster and guide.
+    """
+    if not emotional_cluster:
+        return ""
+    
+    cluster_id = emotional_cluster["cluster_id"]
+    reality_check = emotional_cluster["reality_check"]
+    guide_adjustment = emotional_cluster.get("guide_adjustments", {}).get(guide_id, "")
+    
+    section = f"""
+EMOTIONAL REALITY CHECK (CRITICAL — READ BEFORE WRITING):
+Detected need: {cluster_id.replace('_', ' ').title()}
+{reality_check}
+
+GUIDE-SPECIFIC APPROACH:
+{guide_adjustment}
+
+Apply this emotional awareness to EVERY block you write. The seeker's state shapes the entire spell.
+"""
+    return section
+
+
+# ============================================================================
 # CONTENT DIRECTIONS - Detailed guidance for AI when writing each block
 # ============================================================================
 
@@ -11,7 +137,7 @@ CONTENT_DIRECTIONS = {
     # ========== SHIGG BLOCKS ==========
     "shigg": {
         "warm_greeting": {
-            "directions": "Set the scene with sensory detail. The seeker should feel they've walked into Shigg's warm kitchen with the kettle on. Open with a cozy, grandmother-like welcome. Use pet names (love, dear, duck). Reference the time of day, the smell of tea, the creak of a chair. Make the seeker feel seen and welcome in a specific, tangible place.",
+            "directions": "Set the scene with sensory detail. The seeker should feel they've walked into Shigg's warm kitchen with the kettle on. Open with a cozy, grandmother-like welcome. Use pet names (love, dear, duck). Reference the time of day, the smell of tea, the creak of a chair. Make the seeker feel seen and welcome in a specific, tangible place.\n\nEMOTIONAL HONESTY:\nIf the user's intention involves crisis (heartbreak, fear, money anxiety, grief), ACKNOWLEDGE it directly.\nDon't bypass pain with spiritual language. Say what's real before offering the ritual.",
             "examples": [
                 "Alright then, {name}, come sit by the kettle with me. The tea's just brewed and the afternoon light is coming in soft through the window...",
                 "There you are, love. I've been waiting for you. Pull up that chair—the one with the worn cushion, that's the comfortable one..."
@@ -35,7 +161,7 @@ CONTENT_DIRECTIONS = {
             "voice_markers": ["folklore reference", "ancestral wisdom", "practical history"]
         },
         "tiny_practice": {
-            "directions": "Give simple, domestic magic steps using items from the kitchen or home. 3-5 clear actions. For EACH step: describe the physical action, explain WHY this matters using folklore or tradition (e.g., 'The cunning folk of Somerset knew that common salt carries the weight of the earth's memory'), and connect to the seeker's specific intention. Write as flowing narrative paragraphs, not terse bullets. Weave historical anecdotes INTO the instructions naturally.",
+            "directions": "Give simple, domestic magic steps using items from the kitchen or home. 3-5 clear actions. For EACH step: describe the physical action, explain WHY this matters using folklore or tradition (e.g., 'The cunning folk of Somerset knew that common salt carries the weight of the earth's memory'), and connect to the seeker's specific intention. Write as flowing narrative paragraphs, not terse bullets. Weave historical anecdotes INTO the instructions naturally.\n\nPRACTICAL MAGIC:\nThe steps should feel DOABLE even when someone is in crisis.\nIf they're heartbroken: keep it simple. If they're burned out: nothing that requires more energy than they have.\nIf they're scared: protection they can set up quickly.\nDon't demand elaborate preparation from someone who's barely holding it together.",
             "examples": [
                 "Take a bit of salt from your table—the ordinary kind, mind. In the old Somerset practice, common salt was said to carry the weight of the earth's memory, grounding whatever it touched...",
                 "Light that candle on your windowsill. The hearth flame was the heart of the home's protection in Irish kitchen magic—your candle stands in for that ancient fire..."
@@ -53,7 +179,7 @@ CONTENT_DIRECTIONS = {
             "condition_note": "Include only when working type is comfort_ritual or explicitly bird-related"
         },
         "closing_warmth": {
-            "directions": "End with encouragement and a pet name. Reference the kettle, the fire, or returning. Leave the door open for next time.",
+            "directions": "End with encouragement and a pet name. Reference the kettle, the fire, or returning. Leave the door open for next time.\n\nAFTER THE SPELL:\nTell them what to expect. Not 'you'll feel better immediately' but 'you've done something when you felt powerless. That matters.'\nIf appropriate, remind them: magic supports real-world action, it doesn't replace it.\nFor crisis-driven spells, include one CONCRETE next step they can take in the material world.",
             "examples": [
                 "Go on then, love. The kettle will be on when you need it.",
                 "You know where to find me, duck."
@@ -65,7 +191,7 @@ CONTENT_DIRECTIONS = {
     # ========== CATHLEEN BLOCKS ==========
     "cathleen": {
         "threshold_opening": {
-            "directions": "Set the scene with sensory detail. The seeker should feel they've stepped into Cathleen's threshold between worlds—the hush of a doorway at dusk, the particular quality of light at the edge of things. Create a sense of crossing into sacred space. Use 'hush' or threshold imagery. Lower the energy, make space for what comes. Let them feel the liminal place.",
+            "directions": "Set the scene with sensory detail. The seeker should feel they've stepped into Cathleen's threshold between worlds—the hush of a doorway at dusk, the particular quality of light at the edge of things. Create a sense of crossing into sacred space. Use 'hush' or threshold imagery. Lower the energy, make space for what comes. Let them feel the liminal place.\n\nEMOTIONAL HONESTY:\nIf the user's intention involves crisis (heartbreak, fear, money anxiety, grief), ACKNOWLEDGE it directly.\nDon't bypass pain with spiritual language. Say what's real before offering the ritual.",
             "examples": [
                 "Hush now, and step across the threshold with me. Feel that shift—the air is different here, at the edge of things. The light comes slant...",
                 "There is a place between the worlds. You're standing in it now. The doorframe hums. Come."
@@ -82,7 +208,7 @@ CONTENT_DIRECTIONS = {
             "voice_markers": ["voice as tool", "humming/singing", "vibration", "specific phrase", "Celtic vocal tradition"]
         },
         "ward_creation": {
-            "directions": "Teach how to create a protective ward using voice and intention. Make it feel solid but not fearful. Maternal fierce energy. For each step, explain the Irish or Celtic tradition behind it (e.g., 'In the old Irish practice, the threshold song was sung three times — once for the seen, once for the unseen, once for what lies between'). Write as decisive prose paragraphs with embedded history, not sparse instructions.",
+            "directions": "Teach how to create a protective ward using voice and intention. Make it feel solid but not fearful. Maternal fierce energy. For each step, explain the Irish or Celtic tradition behind it (e.g., 'In the old Irish practice, the threshold song was sung three times — once for the seen, once for the unseen, once for what lies between'). Write as decisive prose paragraphs with embedded history, not sparse instructions.\n\nPRACTICAL MAGIC:\nThe steps should feel DOABLE even when someone is in crisis.\nIf they're heartbroken: keep it simple. If they're burned out: nothing that requires more energy than they have.\nIf they're scared: protection they can set up quickly.\nDon't demand elaborate preparation from someone who's barely holding it together.",
             "examples": [
                 "Sing a line at each corner of your room. In the old Irish practice, the threshold song was sung three times—once for the seen, once for the unseen, once for what lies between. The ward rises with your breath.",
                 "Hum until you feel the edges of your space grow firm. Celtic women knew that sound was the first wall—before stone, before door, there was the voice marking 'mine'."
@@ -98,7 +224,7 @@ CONTENT_DIRECTIONS = {
             "voice_markers": ["accessible object", "charging instructions", "portable"]
         },
         "closing_song": {
-            "directions": "End with a musical or vocal closing. Could be a hum, a phrase repeated, or silence. Seal the work.",
+            "directions": "End with a musical or vocal closing. Could be a hum, a phrase repeated, or silence. Seal the work.\n\nAFTER THE SPELL:\nTell them what to expect. Not 'you'll feel better immediately' but 'you've done something when you felt powerless. That matters.'\nIf appropriate, remind them: magic supports real-world action, it doesn't replace it.\nFor crisis-driven spells, include one CONCRETE next step they can take in the material world.",
             "examples": [
                 "Hum one last note—let it fade on its own.",
                 "Speak your name three times, each softer than the last."
@@ -110,7 +236,7 @@ CONTENT_DIRECTIONS = {
     # ========== KATHERINE BLOCKS ==========
     "katherine": {
         "intent_statement": {
-            "directions": "State the intention precisely and testably. One clear sentence. Include what success looks like.",
+            "directions": "State the intention precisely and testably. One clear sentence. Include what success looks like.\n\nEMOTIONAL HONESTY:\nIf the user's intention involves crisis (heartbreak, fear, money anxiety, grief), ACKNOWLEDGE it directly.\nDon't bypass pain with spiritual language. Say what's real before offering the ritual.",
             "examples": [
                 "Intent: To establish a discernment practice that reveals hidden influences within 7 days.",
                 "Purpose: To bind my own tendency toward [behavior], measurable by [metric]."
@@ -134,7 +260,7 @@ CONTENT_DIRECTIONS = {
             "voice_markers": ["three tests", "discernment", "ethical framework"]
         },
         "working_steps": {
-            "directions": "Guide through precise, measured ritual steps. Victorian diagnostic precision. For each action, reference the tradition (e.g., 'Victorian spiritualist circles used black thread to mark what needed cutting — a practice borrowed from Spitalfields silk workers who knew that every thread has a tension point'). Write as measured, evidence-based prose with historical footnotes woven in. Each step has a physical action, a purpose, and timing.",
+            "directions": "Guide through precise, measured ritual steps. Victorian diagnostic precision. For each action, reference the tradition (e.g., 'Victorian spiritualist circles used black thread to mark what needed cutting — a practice borrowed from Spitalfields silk workers who knew that every thread has a tension point'). Write as measured, evidence-based prose with historical footnotes woven in. Each step has a physical action, a purpose, and timing.\n\nPRACTICAL MAGIC:\nThe steps should feel DOABLE even when someone is in crisis.\nIf they're heartbroken: keep it simple. If they're burned out: nothing that requires more energy than they have.\nIf they're scared: protection they can set up quickly.\nDon't demand elaborate preparation from someone who's barely holding it together.",
             "examples": [
                 "Step 1: Place the bowl at center. This creates your focus point. Victorian diagnostic circles always began with a vessel at center—the Spitalfields spiritualists called it 'the well of knowing.'",
                 "Step 3: Speak the words exactly as written. Variation dilutes precision. In the Golden Dawn tradition, exact repetition was considered essential—words were thought to have weight that accumulated with each precise utterance."
@@ -150,7 +276,7 @@ CONTENT_DIRECTIONS = {
             "voice_markers": ["documentation", "observation", "review timeline"]
         },
         "empowerment_line": {
-            "directions": "Final statement in Katherine's voice. Acknowledge the seeker's capability. Precise and empowering.",
+            "directions": "Final statement in Katherine's voice. Acknowledge the seeker's capability. Precise and empowering.\n\nAFTER THE SPELL:\nTell them what to expect. Not 'you'll feel better immediately' but 'you've done something when you felt powerless. That matters.'\nIf appropriate, remind them: magic supports real-world action, it doesn't replace it.\nFor crisis-driven spells, include one CONCRETE next step they can take in the material world.",
             "examples": [
                 "The work is yours now. Trust your training.",
                 "You have the tools. Precision is care in action."
@@ -162,7 +288,7 @@ CONTENT_DIRECTIONS = {
     # ========== THERESA BLOCKS ==========
     "theresa": {
         "the_question": {
-            "directions": "Set the scene with sensory detail. The seeker should feel they've entered Theresa's cluttered investigation desk—papers spread out, a magnifying glass, photos with notes pinned to them. Frame the investigation question clearly. What are we trying to uncover? Acknowledge the seeker's right to know. Make them feel like they're sitting down across from a detective who takes their case seriously.",
+            "directions": "Set the scene with sensory detail. The seeker should feel they've entered Theresa's cluttered investigation desk—papers spread out, a magnifying glass, photos with notes pinned to them. Frame the investigation question clearly. What are we trying to uncover? Acknowledge the seeker's right to know. Make them feel like they're sitting down across from a detective who takes their case seriously.\n\nEMOTIONAL HONESTY:\nIf the user's intention involves crisis (heartbreak, fear, money anxiety, grief), ACKNOWLEDGE it directly.\nDon't bypass pain with spiritual language. Say what's real before offering the ritual.",
             "examples": [
                 "Your question is clear: What pattern keeps repeating in your family line? Sit down—I've already started pulling the files. Let me show you what I've found...",
                 "You want to know what's been hidden. That's a fair question to ask. I've got the records spread out here. Let's look at this together."
@@ -201,7 +327,7 @@ CONTENT_DIRECTIONS = {
             "voice_markers": ["personal relevance", "stakes", "choice point"]
         },
         "twenty_four_hour_action": {
-            "directions": "Walk through evidence-gathering steps that bridge historical practice to modern application. Use Then/Now framing: explain the historical precedent, then the modern adaptation. Write as investigative narrative — 'The records show that practitioners in 1890s London kept notebooks of recurring symbols. Your notebook serves the same purpose: documenting what the patterns reveal.' One concrete, doable action for the next 24 hours. Specific enough to be actionable. Not overwhelming.",
+            "directions": "Walk through evidence-gathering steps that bridge historical practice to modern application. Use Then/Now framing: explain the historical precedent, then the modern adaptation. Write as investigative narrative — 'The records show that practitioners in 1890s London kept notebooks of recurring symbols. Your notebook serves the same purpose: documenting what the patterns reveal.' One concrete, doable action for the next 24 hours. Specific enough to be actionable. Not overwhelming.\n\nPRACTICAL MAGIC:\nThe steps should feel DOABLE even when someone is in crisis.\nIf they're heartbroken: keep it simple. If they're burned out: nothing that requires more energy than they have.\nIf they're scared: protection they can set up quickly.\nDon't demand elaborate preparation from someone who's barely holding it together.\n\nAFTER THE SPELL:\nTell them what to expect. Not 'you'll feel better immediately' but 'you've done something when you felt powerless. That matters.'\nFor crisis-driven spells, include one CONCRETE next step they can take in the material world.",
             "examples": [
                 "In the next 24 hours: Write one question you'd ask your grandmother if she were here. The records show that Victorian spirit-seekers kept 'question journals'—your question is the first thread in the investigation.",
                 "Before tomorrow: Find one photo from before you were born. Look at the hands. Pattern investigators of the 1890s called this 'reading the archive'—what the hands held, how they were positioned, what they reveal about who these people were."
@@ -213,7 +339,7 @@ CONTENT_DIRECTIONS = {
     # ========== BRENDA BLOCKS ==========
     "brenda": {
         "memory_anchor": {
-            "directions": "Begin as if starting a letter: 'My dear one,' or 'I've been thinking about what you told me...' The seeker should feel they've opened a handwritten letter from a beloved aunt or grandmother. Set the scene at Brenda's writing table with letters spread out—the smell of old paper, a pen waiting. Reference: recipe cards, kitchen tables, family photo albums, handwritten notes in margins of cookbooks. Ground the working in a specific memory or object.",
+            "directions": "Begin as if starting a letter: 'My dear one,' or 'I've been thinking about what you told me...' The seeker should feel they've opened a handwritten letter from a beloved aunt or grandmother. Set the scene at Brenda's writing table with letters spread out—the smell of old paper, a pen waiting. Reference: recipe cards, kitchen tables, family photo albums, handwritten notes in margins of cookbooks. Ground the working in a specific memory or object.\n\nEMOTIONAL HONESTY:\nIf the user's intention involves crisis (heartbreak, fear, money anxiety, grief), ACKNOWLEDGE it directly.\nDon't bypass pain with spiritual language. Say what's real before offering the ritual.",
             "examples": [
                 "My dear one, I've been thinking about what you told me. I'm here at my writing table, letters spread before me. Pull up a chair—there's paper waiting for you too.",
                 "I received your letter. Find the oldest photograph you have of family. Hold it. Feel the weight of it. I've got mine here beside me as I write this to you."
@@ -229,7 +355,7 @@ CONTENT_DIRECTIONS = {
             "voice_markers": ["family lore", "ancestor", "story"]
         },
         "letter_working": {
-            "directions": "Write instructions as intimate letter advice — 'What I'd suggest, dear friend, is this...' Each step should feel like counsel from a wise aunt. Weave in family tradition references (e.g., 'Your grandmother's generation knew this instinctively — the recipe card wasn't just about ingredients, it was about the hands that held it'). Maintain epistolary voice throughout. Guide the letter-writing ritual. Who to write to, what to include, how to end. The letter is the magic.",
+            "directions": "Write instructions as intimate letter advice — 'What I'd suggest, dear friend, is this...' Each step should feel like counsel from a wise aunt. Weave in family tradition references (e.g., 'Your grandmother's generation knew this instinctively — the recipe card wasn't just about ingredients, it was about the hands that held it'). Maintain epistolary voice throughout. Guide the letter-writing ritual. Who to write to, what to include, how to end. The letter is the magic.\n\nPRACTICAL MAGIC:\nThe steps should feel DOABLE even when someone is in crisis.\nIf they're heartbroken: keep it simple. If they're burned out: nothing that requires more energy than they have.\nIf they're scared: protection they can set up quickly.\nDon't demand elaborate preparation from someone who's barely holding it together.",
             "examples": [
                 "What I'd suggest, dear friend, is this: Begin 'Dear [name],' even if they can't read it. Especially if they can't. Your grandmother's generation knew this instinctively—the letter wasn't just words, it was the hands that wrote them.",
                 "Write everything you never said. Your great-aunts kept letters in shoeboxes, unsent but not unwritten. The writing was the working. Then write what you wish they'd said to you."
@@ -245,7 +371,7 @@ CONTENT_DIRECTIONS = {
             "voice_markers": ["preservation", "future generations", "specific detail"]
         },
         "writing_exercise": {
-            "directions": "A specific writing exercise to complete. Could be list-making, free-writing, or structured prompt. The act of writing is ritual. End the entire spell as a letter would: 'With all my love,' or 'I'll be thinking of you. Write back and tell me how it went.' Use 'you' directly throughout, mention family, use memory and nostalgia as emotional anchors.",
+            "directions": "A specific writing exercise to complete. Could be list-making, free-writing, or structured prompt. The act of writing is ritual. End the entire spell as a letter would: 'With all my love,' or 'I'll be thinking of you. Write back and tell me how it went.' Use 'you' directly throughout, mention family, use memory and nostalgia as emotional anchors.\n\nAFTER THE SPELL:\nTell them what to expect. Not 'you'll feel better immediately' but 'you've done something when you felt powerless. That matters.'\nIf appropriate, remind them: magic supports real-world action, it doesn't replace it.\nFor crisis-driven spells, include one CONCRETE next step they can take in the material world.",
             "examples": [
                 "List three things you inherited that aren't objects.",
                 "Write for 10 minutes without stopping: 'The thing no one talks about is...'"

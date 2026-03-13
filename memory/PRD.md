@@ -145,11 +145,18 @@ Frontend: React + Tailwind | Backend: FastAPI | DB: MongoDB | AI: DeepSeek + Cla
 - **Files changed:** `server.py` (startup seed), `Deities.js` (field fix + test ids), `OrnateElements.js` (props passthrough)
 - **Tested:** Screenshot verified — 4 deity cards render, modal opens with full details
 
+### FEATURE: Emotional Need Clusters (P0 → DONE)
+- **Added `EMOTIONAL_NEED_CLUSTERS`** dict with 5 crisis clusters: heartbreak_loneliness, money_anxiety, protection_fear, burnout_exhaustion, grief_loss
+- **Added helper functions:** `get_emotional_need_cluster()` (word-boundary trigger matching), `get_reality_check_for_guide()` (guide-specific reality check injection)
+- **Updated CONTENT_DIRECTIONS:** Added EMOTIONAL HONESTY to 5 opening blocks, PRACTICAL MAGIC to 5 working blocks, AFTER THE SPELL to 5 closing blocks (all 5 guides)
+- **Modified `build_block_writer_prompt()`** in `pipeline_blocks.py` to detect emotional clusters and inject reality check section into writer prompt
+- **Fixed substring matching bug:** "ex" no longer falsely matches "exhausted" — uses regex word boundaries
+- **Verified:** All 6 test cases pass (5 clusters + 1 no-match), backend starts cleanly
+
 ---
 
 ## Backlog
 ### P0: Multi-Provider Image Generation (GPT Image 1 + Gemini Nano Banana)
-### P0: Implement Emotional Need Clusters (user's implementation guide)
 ### P0: Implement Shigg Bibliomancy Expansion (user's implementation guide)
 ### P1: Switch Stripe to live mode (test mode working)
 ### P1: Complete timeline/reference export

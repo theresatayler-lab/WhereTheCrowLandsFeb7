@@ -310,6 +310,14 @@ def build_block_writer_prompt(
     working_type_id = plan.get("working_type", "")
     required_blocks = plan.get("section_order", get_required_blocks(guide_id, working_type_id))
     
+    # Emotional need cluster detection
+    from prompts.writer_blocks import get_emotional_need_cluster, get_reality_check_for_guide
+    intention = spell_spec.get("user_query", "")
+    emotional_cluster = get_emotional_need_cluster(intention)
+    reality_check_section = ""
+    if emotional_cluster:
+        reality_check_section = get_reality_check_for_guide(emotional_cluster, guide_id)
+    
     # Build block specifications
     block_specs = []
     for block in required_blocks:
@@ -358,7 +366,7 @@ VOICE:
 SEEKER: {spell_spec.get('user_name', 'Seeker')}
 INTENTION: {spell_spec.get('user_query', '')}
 BELIEF MODE: {belief_mode}
-
+{reality_check_section}
 WORKING TYPE: {plan.get('working_type', 'default')}
 
 RESEARCH FACTS (use these):
