@@ -48,7 +48,7 @@ export const Upgrade = () => {
           <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="text-center">
             <div className="relative inline-block mb-6">
               <Sparkles className="w-14 h-14 sm:w-16 sm:h-16 text-crimson-bright"
-                style={{ filter: 'drop-shadow(0 0 15px rgba(184, 35, 48, 0.5))' }} />
+                style={{ filter: 'drop-shadow(0 0 15px rgba(185, 78, 106, 0.5))' }} />
             </div>
             
             <h1 className="font-italiana text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-gold-light mb-3"

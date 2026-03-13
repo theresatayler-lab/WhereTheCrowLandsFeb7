@@ -8,20 +8,20 @@ module.exports = {
     extend: {
       colors: {
         // ============================================================================
-        // ART NOUVEAU PALETTE - Luminous, celestial, occult
+        // WTC MASTER PALETTE — Where The Crowlands
         // ============================================================================
         
         // Primary backgrounds
-        background: '#0a1628',  // Deep Navy (primary dark - matches Library)
+        background: '#0C1D2E',  // Deep Navy (primary dark)
         foreground: '#F3EFE8',  // Vellum (primary text on dark)
         
         // Card system
         card: {
-          DEFAULT: '#123A3F',  // Celestial Blue
+          DEFAULT: '#102534',  // Celestial Blue
           foreground: '#F3EFE8',
         },
         popover: {
-          DEFAULT: '#123A3F',
+          DEFAULT: '#102534',
           foreground: '#F3EFE8',
         },
         
@@ -31,16 +31,16 @@ module.exports = {
           foreground: '#F3EFE8',
         },
         secondary: {
-          DEFAULT: '#123A3F',  // Celestial Blue
+          DEFAULT: '#102534',  // Celestial Blue
           foreground: '#F3EFE8',
         },
         muted: {
-          DEFAULT: '#123A3F',
-          foreground: '#9E8438',  // Muted Brass
+          DEFAULT: '#102534',
+          foreground: '#A89872',  // Faded Gold
         },
         accent: {
           DEFAULT: '#C8A44D',  // Antique Gold
-          foreground: '#0E2A2F',
+          foreground: '#0C1D2E',
         },
         destructive: {
           DEFAULT: '#C26A5A',  // Rose Clay
@@ -49,47 +49,46 @@ module.exports = {
         
         // Borders and inputs
         border: '#C8A44D',  // Antique Gold borders
-        input: '#123A3F',
+        input: '#102534',
         ring: '#B94E6A',  // Ember Pink focus
         
         // ============================================================================
-        // NOUVEAU COLOR TOKENS (semantic naming)
+        // WTC COLOR TOKENS (semantic naming)
         // ============================================================================
-        'midnight-teal': '#0a1628',  // Updated to match deep navy
-        'celestial-blue': '#123A3F',
+        'midnight-teal': '#0C1D2E',
+        'celestial-blue': '#102534',
         'vellum': '#F3EFE8',
         'antique-gold': '#C8A44D',
-        'muted-brass': '#9E8438',
+        'muted-brass': '#A89872',
         'rose-clay': '#C26A5A',
         'ember-pink': '#B94E6A',
         
         // ============================================================================
         // LEGACY TOKENS (maintained for backward compatibility)
-        // These map to new palette where possible
         // ============================================================================
-        'raven-black': '#0a1628',
-        'ash-gray': '#9E8438',
+        'raven-black': '#0C1D2E',
+        'ash-gray': '#A89872',
         'weathered-beige': '#F3EFE8',
-        'forest-moss': '#123A3F',
+        'forest-moss': '#102534',
         'blood-red': '#B94E6A',
-        'midnight-blue': '#0a1628',
-        'deep-blue': '#123A3F',
+        'midnight-blue': '#0C1D2E',
+        'deep-blue': '#102534',
         'parchment': '#F3EFE8',
-        'ink-black': '#0a1628',
+        'ink-black': '#1A1A1A',
         'crimson': '#8b2232',
         'crimson-bright': '#B94E6A',
         'crimson-deep': '#6b1a28',
         'gold': '#C8A44D',
         'gold-light': '#D4B55D',
-        'gold-dark': '#9E8438',
+        'gold-dark': '#A89872',
         'champagne': '#C8A44D',
         'champagne-light': '#D4B55D',
-        'navy-dark': '#0a1628',
-        'navy-mid': '#0E2A2F',
-        'navy-light': '#1A4A4F',
-        'navy-accent': '#2A5A5F',
-        'silver-mist': '#9E8438',
-        'blue-grey': '#5A7A7F',
+        'navy-dark': '#0C1D2E',
+        'navy-mid': '#102534',
+        'navy-light': '#1A3548',
+        'navy-accent': '#2A4558',
+        'silver-mist': '#A89872',
+        'blue-grey': '#5A524E',
         'cream': '#F3EFE8',
       },
       fontFamily: {

@@ -9,7 +9,7 @@ export const Footer = () => {
     <footer 
       className="mt-24 relative"
       style={{
-        background: 'linear-gradient(to bottom, rgba(14, 42, 47, 0.95) 0%, rgba(10, 30, 35, 1) 100%)',
+        background: '#0C1D2E',
       }}
     >
       {/* Top decorative border - Art Nouveau */}
@@ -104,8 +104,8 @@ export const Footer = () => {
               ))}
             </ul>
             
-            <div className="mt-6 p-4 rounded-sm relative" style={{ border: '1px solid rgba(200, 164, 77, 0.3)', backgroundColor: 'rgba(18, 58, 63, 0.4)' }}>
-              <span className="absolute -top-2 left-3 px-2" style={{ backgroundColor: '#0E2A2F', color: '#B94E6A', fontSize: '0.75rem' }}>◆</span>
+            <div className="mt-6 p-4 rounded-sm relative" style={{ border: '1px solid rgba(200, 164, 77, 0.3)', backgroundColor: '#102534' }}>
+              <span className="absolute -top-2 left-3 px-2" style={{ backgroundColor: '#0C1D2E', color: '#B94E6A', fontSize: '0.75rem' }}>◆</span>
               <p className="font-crimson text-xs italic" style={{ color: 'rgba(243, 239, 232, 0.5)' }}>
                 This project blends documented history, folklore, and myth. Human-curated foundations with AI-informed expansions for inspiration. Please verify sources and use in good faith.
               </p>

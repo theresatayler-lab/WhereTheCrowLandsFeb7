@@ -10,7 +10,7 @@ const Corner = ({ className }) => (
   <svg viewBox="0 0 60 60" className={className} fill="none">
     <path d="M0,30 Q0,0 30,0" stroke="#C8A44D" strokeWidth="1.5" opacity="0.7" />
     <path d="M0,20 Q0,0 20,0" stroke="#C8A44D" strokeWidth="1" opacity="0.4" />
-    <polygon points="8,8 11,4 14,8 11,12" fill="#b82330" opacity="0.8" />
+    <polygon points="8,8 11,4 14,8 11,12" fill="#8B2232" opacity="0.8" />
   </svg>
 );
 
@@ -65,7 +65,7 @@ const EarlyAccessPage = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4 sm:p-6 relative overflow-hidden"
-      style={{ background: 'linear-gradient(135deg, #0E2A2F 0%, #121d33 50%, #0E2A2F 100%)' }}>
+      style={{ background: '#0C1D2E' }}>
       
       {/* Subtle background */}
       <div className="absolute inset-0 opacity-5" style={{
@@ -73,7 +73,7 @@ const EarlyAccessPage = () => {
         backgroundSize: 'cover', backgroundPosition: 'center',
       }} />
       <div className="absolute inset-0" style={{
-        background: 'radial-gradient(ellipse at 50% 30%, rgba(184, 35, 48, 0.08) 0%, transparent 50%)',
+        background: 'radial-gradient(ellipse at 50% 30%, rgba(185, 78, 106, 0.08) 0%, transparent 50%)',
       }} />
       
       {/* Corner ornaments */}

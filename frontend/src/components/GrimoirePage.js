@@ -369,7 +369,7 @@ const TarotCardView = ({ spell, archetype, style, imageBase64, onViewFull, onCop
                 <div className="absolute inset-0">
                   {/* Base: Midnight Teal with radial vignette to Celestial Blue */}
                   <div className="absolute inset-0" style={{
-                    background: `radial-gradient(ellipse at 50% 30%, #123A3F 0%, #0E2A2F 70%, #0A1F24 100%)`
+                    background: `radial-gradient(ellipse at 50% 30%, #102534 0%, #0C1D2E 70%, #0C1D2E 100%)`
                   }} />
                   
                   {/* Vellum inset panel */}

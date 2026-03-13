@@ -159,7 +159,7 @@ const GuideCard = ({ archetype, index, isCurrentGuide, isExpanded, isBioExpanded
     >
       {/* Corner accents with bestiary glyphs */}
       <span className="absolute top-2 left-2 z-10 opacity-70">
-        <BestiaryGlyph animal={GUIDE_GLYPHS[archetype.id]?.main || 'feather'} size="sm" color="#b82330" />
+        <BestiaryGlyph animal={GUIDE_GLYPHS[archetype.id]?.main || 'feather'} size="sm" color="#8B2232" />
       </span>
       <span className="absolute top-2 right-2 z-10 opacity-70">
         <BestiaryGlyph animal={GUIDE_GLYPHS[archetype.id]?.secondary || 'crescent'} size="sm" color="#C8A44D" />

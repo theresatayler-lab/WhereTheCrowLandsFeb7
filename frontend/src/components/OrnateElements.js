@@ -363,7 +363,7 @@ export const LightOrnateCard = ({ children, className = '', hover = true }) => (
     style={{ 
       backgroundColor: NOUVEAU_COLORS.vellum,
       border: `1px solid ${NOUVEAU_COLORS.antiqueGold}50`,
-      boxShadow: '0 1px 3px rgba(14, 42, 47, 0.08), 0 4px 12px rgba(14, 42, 47, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.6)',
+      boxShadow: '0 1px 3px rgba(12, 29, 46, 0.08), 0 4px 12px rgba(12, 29, 46, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.6)',
     }}
   >
     {/* Corner ornaments */}
@@ -600,7 +600,7 @@ export const SpellBorderFrame = ({ children, persona = 'default', className = ''
     style={{ 
       backgroundColor: NOUVEAU_COLORS.vellum,
       border: `2px solid ${NOUVEAU_COLORS.antiqueGold}60`,
-      boxShadow: '0 2px 8px rgba(14, 42, 47, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.6)',
+      boxShadow: '0 2px 8px rgba(12, 29, 46, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.6)',
     }}
   >
     <div className="absolute top-3 left-3 pointer-events-none">

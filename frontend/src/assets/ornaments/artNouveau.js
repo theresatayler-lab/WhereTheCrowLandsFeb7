@@ -6,23 +6,27 @@
 
 import React from 'react';
 
-// Color tokens from new palette - REFINED for clarity
+// Color tokens — WTC Master Palette
 export const NOUVEAU_COLORS = {
   // Backgrounds
-  midnightTeal: '#0a1628',       // Deep Navy (matches Library)
-  celestialBlue: '#123A3F',      // Slightly more saturated teal
+  midnightTeal: '#0C1D2E',       // Deep Navy (primary bg)
+  celestialBlue: '#102534',      // Celestial Blue (secondary bg / cards)
   
   // Light tones
-  vellum: '#F3EFE8',             // Warmer, creamier
-  cream: '#F3EFE8',              // Muted cream for contrast
+  vellum: '#F3EFE8',             // Bone Ivory
+  cream: '#F3EFE8',              // Same as vellum
   
-  // Gold accents - distinct from pink
-  antiqueGold: '#C8A44D',        // Brighter, cleaner gold
-  mutedBrass: '#9E8438',         // Deeper brass for contrast
+  // Gold accents — stroke/border ONLY, never fill
+  antiqueGold: '#C8A44D',        // Primary gold accent
+  mutedBrass: '#A89872',         // Faded Gold for secondary details
   
-  // Pink/Rose accents - cleaner separation
-  roseClay: '#C26A5A',           // Warmer terracotta
-  emberPink: '#B94E6A',          // Cleaner pink, less muddy
+  // Pink/Rose accents
+  roseClay: '#C26A5A',           // Warm terracotta
+  emberPink: '#B94E6A',          // CTAs, links, warm emphasis
+  
+  // Deep accents
+  oxblood: '#8B2232',            // Pull quotes, headings on light surfaces
+  inkBlack: '#1A1A1A',           // Body text on vellum surfaces
 };
 
 // ============================================================================
@@ -519,7 +523,7 @@ export const VellumFrame = ({
   <div 
     className={`relative ${className}`}
     style={{
-      boxShadow: '0 1px 3px rgba(14, 42, 47, 0.06), 0 4px 12px rgba(14, 42, 47, 0.03), inset 0 1px 0 rgba(255, 255, 255, 0.6)',
+      boxShadow: '0 1px 3px rgba(12, 29, 46, 0.06), 0 4px 12px rgba(12, 29, 46, 0.03), inset 0 1px 0 rgba(255, 255, 255, 0.6)',
     }}
   >
     {showCorners && (
@@ -553,7 +557,7 @@ export const VellumPanel = ({
     style={{
       backgroundColor: NOUVEAU_COLORS.vellum,
       border: `1px solid ${NOUVEAU_COLORS.antiqueGold}50`,
-      boxShadow: '0 1px 3px rgba(14, 42, 47, 0.08), 0 4px 12px rgba(14, 42, 47, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.6)',
+      boxShadow: '0 1px 3px rgba(12, 29, 46, 0.08), 0 4px 12px rgba(12, 29, 46, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.6)',
     }}
   >
     {children}

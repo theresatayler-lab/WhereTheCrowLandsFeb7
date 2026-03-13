@@ -3,11 +3,11 @@
 }
 
 .glow-effect {
-  box-shadow: 0 0 20px rgba(184, 35, 48, 0.3);
+  box-shadow: 0 0 20px rgba(185, 78, 106, 0.3);
 }
 
 .glow-effect:hover {
-  box-shadow: 0 0 30px rgba(184, 35, 48, 0.5);
+  box-shadow: 0 0 30px rgba(185, 78, 106, 0.5);
 }
 
 .glow-secondary {
@@ -44,14 +44,14 @@
 .ornate-frame {
   position: relative;
   border: 3px solid #C8A44D;
-  background: linear-gradient(135deg, rgba(18, 29, 51, 0.9) 0%, rgba(14, 22, 41, 0.95) 100%);
+  background: linear-gradient(135deg, rgba(12, 29, 46, 0.9) 0%, rgba(12, 29, 46, 0.95) 100%);
 }
 
 .ornate-frame::before {
   content: '';
   position: absolute;
   inset: 4px;
-  border: 1px solid #b82330;
+  border: 1px solid #8B2232;
   pointer-events: none;
 }
 
@@ -72,9 +72,9 @@
 .ornate-corners::after {
   content: '◆';
   position: absolute;
-  color: #b82330;
+  color: #8B2232;
   font-size: 1.5rem;
-  text-shadow: 0 0 10px rgba(184, 35, 48, 0.5);
+  text-shadow: 0 0 10px rgba(185, 78, 106, 0.5);
 }
 
 .ornate-corners::before {
@@ -118,16 +118,16 @@
   top: -0.6rem;
   left: 50%;
   transform: translateX(-50%);
-  color: #b82330;
+  color: #8B2232;
   font-size: 1rem;
-  background: #0E2A2F;
+  background: #0C1D2E;
   padding: 0 0.5rem;
 }
 
 /* Crimson accent diamonds */
 .crimson-diamond {
-  color: #b82330;
-  text-shadow: 0 0 8px rgba(184, 35, 48, 0.6);
+  color: #8B2232;
+  text-shadow: 0 0 8px rgba(185, 78, 106, 0.6);
 }
 
 /* Gold ornate text */
@@ -149,7 +149,7 @@
   left: 10%;
   right: 10%;
   height: 3px;
-  background: linear-gradient(90deg, transparent, #C8A44D 20%, #b82330 50%, #C8A44D 80%, transparent);
+  background: linear-gradient(90deg, transparent, #C8A44D 20%, #8B2232 50%, #C8A44D 80%, transparent);
 }
 
 .art-deco-border::after {
@@ -159,7 +159,7 @@
   left: 10%;
   right: 10%;
   height: 3px;
-  background: linear-gradient(90deg, transparent, #C8A44D 20%, #b82330 50%, #C8A44D 80%, transparent);
+  background: linear-gradient(90deg, transparent, #C8A44D 20%, #8B2232 50%, #C8A44D 80%, transparent);
 }
 
 /* Victorian ornate corners */
@@ -222,11 +222,11 @@
   border: 3px solid #C8A44D;
   border-radius: 0.25rem;
   box-shadow: 
-    0 0 0 2px #0E2A2F,
-    0 0 0 4px #b82330,
-    0 0 0 6px #0E2A2F,
+    0 0 0 2px #0C1D2E,
+    0 0 0 4px #8B2232,
+    0 0 0 6px #0C1D2E,
     0 0 0 8px rgba(200, 164, 77, 0.3),
-    0 8px 24px rgba(14, 22, 41, 0.6);
+    0 8px 24px rgba(12, 29, 46, 0.6);
 }
 
 /* Ornate text with drop cap */
@@ -237,12 +237,12 @@
   float: left;
   line-height: 0.75;
   margin: 0.1rem 0.75rem 0 0;
-  text-shadow: 2px 2px 4px rgba(14, 22, 41, 0.8);
+  text-shadow: 2px 2px 4px rgba(12, 29, 46, 0.8);
 }
 
 /* Glowing crimson accent */
 .glow-crimson {
-  text-shadow: 0 0 10px rgba(184, 35, 48, 0.6), 0 0 20px rgba(184, 35, 48, 0.3);
+  text-shadow: 0 0 10px rgba(185, 78, 106, 0.6), 0 0 20px rgba(185, 78, 106, 0.3);
 }
 
 /* Glowing gold accent */
@@ -263,15 +263,15 @@
   top: 0;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
-  color: #b82330;
+  color: #8B2232;
   font-size: 1.5rem;
-  background: #0E2A2F;
+  background: #0C1D2E;
   padding: 0 1rem;
-  text-shadow: 0 0 10px rgba(184, 35, 48, 0.5);
+  text-shadow: 0 0 10px rgba(185, 78, 106, 0.5);
 }
 
 /* Mystical glow background */
 .mystical-glow {
-  background: radial-gradient(ellipse at center, rgba(184, 35, 48, 0.1) 0%, transparent 50%),
+  background: radial-gradient(ellipse at center, rgba(185, 78, 106, 0.1) 0%, transparent 50%),
               radial-gradient(ellipse at center, rgba(200, 164, 77, 0.05) 0%, transparent 70%);
 }

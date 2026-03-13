@@ -45,7 +45,7 @@ export const AIChat = () => {
         <div className="max-w-4xl mx-auto relative z-10">
           <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="text-center">
             <Bot className="w-12 h-12 sm:w-14 sm:h-14 text-crimson-bright mx-auto mb-4"
-              style={{ filter: 'drop-shadow(0 0 15px rgba(184, 35, 48, 0.5))' }} />
+              style={{ filter: 'drop-shadow(0 0 15px rgba(185, 78, 106, 0.5))' }} />
             
             <h1 className="font-italiana text-3xl sm:text-4xl md:text-5xl text-gold-light mb-3"
               style={{ textShadow: '0 2px 30px rgba(200, 164, 77, 0.5)' }}>

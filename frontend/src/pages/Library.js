@@ -7,8 +7,8 @@ import { X, ExternalLink, Copy, Check } from 'lucide-react';
 // Art Deco corner ornament
 const ArtDecoCorner = ({ className, variant = 'gold' }) => {
   const colors = variant === 'gold' 
-    ? { primary: '#C8A44D', secondary: '#b82330', tertiary: '#8B7355' }
-    : { primary: '#b82330', secondary: '#C8A44D', tertiary: '#722F37' };
+    ? { primary: '#C8A44D', secondary: '#8B2232', tertiary: '#8B7355' }
+    : { primary: '#8B2232', secondary: '#C8A44D', tertiary: '#722F37' };
   
   return (
     <svg viewBox="0 0 100 100" className={className} fill="none">
@@ -48,7 +48,7 @@ const VictorianBorder = ({ light = false }) => (
                 stroke={light ? '#722F37' : '#C8A44D'} 
                 strokeWidth="1" 
                 opacity="0.6" />
-          <circle cx="20" cy="8" r="2" fill={light ? '#b82330' : '#C8A44D'} opacity="0.4" />
+          <circle cx="20" cy="8" r="2" fill={light ? '#8B2232' : '#C8A44D'} opacity="0.4" />
         </pattern>
       </defs>
       <rect width="400" height="16" fill="url(#victorianPattern)" />
@@ -122,7 +122,7 @@ const LIBRARY_BOOKS = {
     {
       title: "Symbols of the Occult",
       author: "Eric Chaline",
-      color: "#0a1628",
+      color: "#0C1D2E",
       spine: "#0f0f1a",
       accent: "#4169E1",
       description: "A directory of over 500 signs, symbols, and icons from esoteric traditions.",
@@ -837,7 +837,7 @@ const Library = () => {
         
         {/* Art Deco radial glow */}
         <div className="absolute inset-0" style={{
-          background: 'radial-gradient(ellipse at 50% 30%, rgba(184, 35, 48, 0.15) 0%, transparent 50%)'
+          background: 'radial-gradient(ellipse at 50% 30%, rgba(185, 78, 106, 0.15) 0%, transparent 50%)'
         }} />
         <div className="absolute inset-0" style={{
           background: 'radial-gradient(ellipse at 50% 70%, rgba(200, 164, 77, 0.1) 0%, transparent 40%)'

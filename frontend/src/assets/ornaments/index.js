@@ -11,15 +11,18 @@ import React from 'react';
 // ============================================================================
 export const COLORS = {
   gold: '#C8A44D',
-  goldLight: '#e6c068',
-  goldDark: '#b8923d',
-  crimson: '#b82330',
-  oxblood: '#8b2232',
-  navy: '#0E2A2F',
-  navyMid: '#1a2d4d',
+  goldLight: '#D4B55D',
+  goldDark: '#A89872',
+  crimson: '#8B2232',
+  oxblood: '#8B2232',
+  navy: '#0C1D2E',
+  navyMid: '#102534',
   bone: '#F3EFE8',
   copper: '#b87333',
-  silver: '#a8a8a8'
+  silver: '#a8a8a8',
+  emberPink: '#B94E6A',
+  fadedGold: '#A89872',
+  inkBlack: '#1A1A1A',
 };
 
 // ============================================================================

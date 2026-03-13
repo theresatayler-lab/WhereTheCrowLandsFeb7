@@ -106,7 +106,7 @@ const CrowlandsChip = ({ label, selected, onClick }) => (
         ? 'bg-crimson/10 border-crimson text-crimson shadow-sm'
         : 'bg-white border-gold/30 text-navy-dark hover:border-gold/60 hover:bg-gold/5'
     }`}
-    style={{ boxShadow: selected ? 'inset 0 1px 3px rgba(184, 35, 48, 0.1)' : 'none' }}
+    style={{ boxShadow: selected ? 'inset 0 1px 3px rgba(185, 78, 106, 0.1)' : 'none' }}
   >
     {label}
     {selected && <span className="absolute -top-1 -right-1 text-crimson text-xs">◆</span>}
@@ -376,7 +376,7 @@ export const InvisibleHelpers = () => {
         {/* Gradient overlays */}
         <div className="absolute inset-0 bg-gradient-to-t from-navy-dark via-navy-dark/70 to-navy-dark/50" />
         <div className="absolute inset-0" style={{
-          background: 'radial-gradient(ellipse at center, transparent 0%, rgba(14, 22, 41, 0.8) 70%)'
+          background: 'radial-gradient(ellipse at center, transparent 0%, rgba(12, 29, 46, 0.8) 70%)'
         }} />
         
         {/* Corner ornaments */}

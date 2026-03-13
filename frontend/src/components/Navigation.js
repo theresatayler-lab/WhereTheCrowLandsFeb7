@@ -52,7 +52,7 @@ const NavDropdown = ({ label, brandIcon, items, isActive, onItemClick }) => {
         <div 
           className="absolute top-full left-0 mt-2 min-w-[200px] py-3 shadow-2xl z-50"
           style={{ 
-            background: 'linear-gradient(to bottom, rgba(14, 42, 47, 0.99) 0%, rgba(18, 58, 63, 0.98) 100%)', 
+            background: 'linear-gradient(to bottom, #0C1D2E 0%, #102534 100%)', 
             backdropFilter: 'blur(12px)',
             border: '2px solid rgba(200, 164, 77, 0.5)',
             boxShadow: '0 4px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(200, 164, 77, 0.1)',
@@ -173,7 +173,7 @@ export const Navigation = ({ user, onLogout }) => {
     <nav 
       className="sticky top-0 z-50"
       style={{
-        background: 'linear-gradient(to bottom, rgba(14, 42, 47, 0.98) 0%, rgba(14, 42, 47, 0.95) 100%)',
+        background: 'linear-gradient(to bottom, #0C1D2E 0%, #102534 100%)',
         backdropFilter: 'blur(8px)',
         borderBottom: '2px solid rgba(200, 164, 77, 0.4)',
       }}
@@ -344,7 +344,7 @@ export const Navigation = ({ user, onLogout }) => {
             className="lg:hidden py-4 max-h-[70vh] overflow-y-auto"
             style={{
               borderTop: '2px solid rgba(200, 164, 77, 0.5)',
-              background: 'linear-gradient(to bottom, rgba(14, 42, 47, 0.99) 0%, rgba(14, 42, 47, 0.98) 100%)',
+              background: 'linear-gradient(to bottom, #0C1D2E 0%, #102534 100%)',
             }}
           >
             {/* Decorative top accent */}
@@ -385,7 +385,7 @@ export const Navigation = ({ user, onLogout }) => {
                     <div 
                       className="pl-8 space-y-1 pb-2"
                       style={{ 
-                        backgroundColor: 'rgba(18, 58, 63, 0.5)',
+                        backgroundColor: 'rgba(16, 37, 52, 0.5)',
                         borderLeft: '2px solid rgba(200, 164, 77, 0.3)',
                         marginLeft: '1rem',
                       }}

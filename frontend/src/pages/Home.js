@@ -48,7 +48,7 @@ const SectionPlate = ({ children, variant = 'dark', className = '' }) => {
         <div 
           className="absolute inset-0 pointer-events-none"
           style={{
-            background: 'radial-gradient(ellipse at center, transparent 40%, rgba(10, 22, 40, 0.3) 100%)',
+            background: 'radial-gradient(ellipse at center, transparent 40%, rgba(12, 29, 46, 0.3) 100%)',
           }}
         />
       )}
@@ -111,7 +111,7 @@ const VellumPanel = ({ children, className = '' }) => (
     style={{
       backgroundColor: NOUVEAU_COLORS.vellum,
       border: `1px solid ${NOUVEAU_COLORS.antiqueGold}30`,
-      boxShadow: '0 2px 8px rgba(14, 42, 47, 0.06)',
+      boxShadow: '0 2px 8px rgba(12, 29, 46, 0.06)',
     }}
   >
     <div className="relative z-10 p-8 sm:p-10">{children}</div>
