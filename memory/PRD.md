@@ -153,6 +153,18 @@ Frontend: React + Tailwind | Backend: FastAPI | DB: MongoDB | AI: DeepSeek + Cla
 - **Fixed substring matching bug:** "ex" no longer falsely matches "exhausted" — uses regex word boundaries
 - **Verified:** All 6 test cases pass (5 clusters + 1 no-match), backend starts cleanly
 
+### VISUAL OVERHAUL: Site-Wide Color Correction (P0 → DONE)
+- **Replaced ALL teal-green backgrounds** (#0a1628, #0E2A2F, #123A3F) → Deep Navy #0C1D2E + Celestial Blue #102534
+- **Replaced old crimson** (#b82330) → Oxblood #8B2232
+- **Replaced old muted brass** (#9E8438) → Faded Gold #A89872
+- **Added WTC CSS variables** to `:root` in index.css (--wtc-bg-primary, --wtc-bg-secondary, --wtc-surface, --wtc-accent, etc.)
+- **Updated Tailwind config** — all color tokens now point to corrected palette
+- **Updated artNouveau.js, ornaments/index.js** — NOUVEAU_COLORS and COLORS constants corrected
+- **Fixed Navigation.js, Footer.js, App.css** — solid backgrounds, no semi-transparent overlays
+- **Eliminated ALL old rgba teal values** across entire frontend
+- **Created design_guidelines.md** — mandatory rules for all new pages/components
+- **Testing:** iteration_15.json — 100% pass (6 pages audited, all backgrounds confirmed Deep Navy, no teal found)
+
 ---
 
 ## Backlog
