@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Image as ImageIcon, Wand2, Download, Sparkles, RotateCcw, Users } from 'lucide-react';
+import { Loader2, Download, RotateCcw } from 'lucide-react';
+import { BrandIcon } from '../components/BrandIcon';
 import { toast } from 'sonner';
 import { DarkSection, LightSection, GrandDivider, MysticalDivider, ElaborateCorner, PageHeader, LightOrnateCard, OrnateCard, ATMOSPHERIC_IMAGES } from '../components/OrnateElements';
 
@@ -78,7 +79,7 @@ const StyleCard = ({ style, isSelected, onSelect }) => (
   >
     {isSelected && (
       <div className="absolute top-2 right-2">
-        <Sparkles className="w-4 h-4 text-gold" />
+        <BrandIcon name="sparkles" size={16} />
       </div>
     )}
     <div className="flex items-center gap-3 mb-2">
@@ -299,7 +300,7 @@ export const AIImage = () => {
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-6">
             <div className="flex items-center justify-center gap-2 mb-2">
-              <Users className="w-5 h-5 text-crimson" />
+              <BrandIcon name="eye" size={20} />
               <h2 className="font-cinzel text-xl text-crimson">Choose Your Style</h2>
             </div>
             <p className="font-montserrat text-sm text-navy-dark/60">
@@ -329,7 +330,7 @@ export const AIImage = () => {
             {/* Input Panel */}
             <OrnateCard hover={false}>
               <h3 className="font-cinzel text-xl text-gold-light mb-4 flex items-center gap-2">
-                <Wand2 className="w-5 h-5 text-crimson-bright" />
+                <BrandIcon name="star" size={20} />
                 Create Your Vision
               </h3>
               
@@ -357,13 +358,13 @@ export const AIImage = () => {
                       animate={{ rotate: 360 }}
                       transition={{ repeat: Infinity, duration: 1, ease: 'linear' }}
                     >
-                      <Sparkles className="w-5 h-5" />
+                      <BrandIcon name="sparkles" size={20} className="inline-block" />
                     </motion.div>
                     Conjuring your vision...
                   </>
                 ) : (
                   <>
-                    <Wand2 className="w-5 h-5" />
+                    <BrandIcon name="star" size={20} className="inline-block" />
                     Generate Image
                   </>
                 )}
@@ -391,7 +392,7 @@ export const AIImage = () => {
             {/* Output Panel */}
             <OrnateCard hover={false}>
               <h3 className="font-cinzel text-xl text-gold-light mb-4 flex items-center gap-2">
-                <ImageIcon className="w-5 h-5 text-crimson-bright" />
+                <BrandIcon name="crystalBall" size={20} />
                 Generated Image
               </h3>
               
@@ -436,7 +437,7 @@ export const AIImage = () => {
                     className="flex flex-col items-center justify-center py-16 text-center"
                   >
                     <div className="w-24 h-24 rounded-full bg-gold/10 flex items-center justify-center mb-4">
-                      <ImageIcon className="w-12 h-12 text-gold/30" />
+                      <BrandIcon name="crystalBall" size={48} opacity={0.3} className="mx-auto" />
                     </div>
                     <p className="font-crimson text-base text-cream/50 italic mb-2">
                       Your mystical vision will appear here

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { X, Scroll, Sparkles, Mail, BookOpen } from 'lucide-react';
+import { X } from 'lucide-react';
+import { BrandIcon } from './BrandIcon';
 import { toast } from 'sonner';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
@@ -93,7 +94,7 @@ const HandcraftedMagicModal = ({ isOpen, onClose }) => {
         {/* Header */}
         <div className="p-6 border-b border-gold/20">
           <h2 className="text-xl font-cinzel text-gold-light flex items-center gap-2">
-            <Sparkles size={20} className="text-crimson" />
+            <BrandIcon name="sparkles" size={20} />
             Prefer Handcrafted Magic?
           </h2>
           <p className="text-sm text-cream/60 font-montserrat mt-2">
@@ -110,7 +111,7 @@ const HandcraftedMagicModal = ({ isOpen, onClose }) => {
               className="w-full p-4 text-left border border-gold/30 rounded-lg hover:border-gold/60 hover:bg-gold/5 transition-all group"
             >
               <div className="flex items-start gap-3">
-                <BookOpen size={24} className="text-gold mt-1 flex-shrink-0" />
+                <BrandIcon name="grimoire" size={24} className="mt-1 flex-shrink-0" />
                 <div>
                   <h3 className="font-cinzel text-cream group-hover:text-gold-light">
                     The Crowlands Grimoire
@@ -129,7 +130,7 @@ const HandcraftedMagicModal = ({ isOpen, onClose }) => {
               className="w-full p-4 text-left border border-gold/30 rounded-lg hover:border-gold/60 hover:bg-gold/5 transition-all group"
             >
               <div className="flex items-start gap-3">
-                <Scroll size={24} className="text-gold mt-1 flex-shrink-0" />
+                <BrandIcon name="book" size={24} className="mt-1 flex-shrink-0" />
                 <div>
                   <h3 className="font-cinzel text-cream group-hover:text-gold-light">
                     Bespoke Spell & Resource Guide
@@ -166,7 +167,7 @@ const HandcraftedMagicModal = ({ isOpen, onClose }) => {
             
             <div className="p-4 bg-gold/10 border border-gold/20 rounded-lg">
               <h3 className="font-cinzel text-gold-light flex items-center gap-2">
-                <BookOpen size={18} className="text-gold" />
+                <BrandIcon name="grimoire" size={18} />
                 The Crowlands Grimoire
               </h3>
               <p className="text-sm text-cream/60 font-montserrat mt-2">
@@ -197,7 +198,7 @@ const HandcraftedMagicModal = ({ isOpen, onClose }) => {
                 'Processing...'
               ) : (
                 <>
-                  <Mail size={16} />
+                  <BrandIcon name="letter" size={16} />
                   Purchase & Download — $9.99
                 </>
               )}
@@ -217,7 +218,7 @@ const HandcraftedMagicModal = ({ isOpen, onClose }) => {
             
             <div className="p-4 bg-gold/10 border border-gold/20 rounded-lg">
               <h3 className="font-cinzel text-gold-light flex items-center gap-2">
-                <Scroll size={18} className="text-gold" />
+                <BrandIcon name="book" size={18} />
                 Bespoke Spell & Resource Guide
               </h3>
               <p className="text-sm text-cream/60 font-montserrat mt-2">
@@ -300,7 +301,7 @@ const HandcraftedMagicModal = ({ isOpen, onClose }) => {
                 'Processing...'
               ) : (
                 <>
-                  <Scroll size={16} />
+                  <BrandIcon name="book" size={16} />
                   Request Bespoke Spell — $29.99
                 </>
               )}

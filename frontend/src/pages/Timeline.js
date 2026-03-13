@@ -3,10 +3,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { timelineAPI } from '../utils/api';
 import { 
   Clock, Search, Filter, X, ChevronDown, ChevronUp, 
-  Grid3X3, List, Network, Star, BookOpen, Users, MapPin,
-  Calendar, ExternalLink, Compass, Moon, Eye, Sparkles,
-  Flame, Leaf, Film, Sun, Zap, Wand2
+  Grid3X3, List, Network,
+  Calendar, ExternalLink
 } from 'lucide-react';
+import BrandIcon from '../components/BrandIcon';
 import { DarkSection, PageBorderFrame, PageHeader, OrnateCard, GrandDivider } from '../components/OrnateElements';
 import ForceGraph2D from 'react-force-graph-2d';
 
@@ -308,20 +308,20 @@ const NetworkGraph = ({ events, onEventClick }) => {
 // ============================================================================
 
 const TAXONOMY_CATEGORIES = {
-  1: { name: "Pre-Modern Esoteric", icon: Compass, color: "#3a506b", shortName: "Pre-Modern" },
-  2: { name: "Alchemy", icon: Wand2, color: "#5c6b73", shortName: "Alchemy" },
-  3: { name: "Romantic Gothic", icon: Moon, color: "#8e6e53", shortName: "Gothic" },
-  4: { name: "Spiritualism", icon: Eye, color: "#9d8ca1", shortName: "Spiritualism" },
-  5: { name: "Symbolism", icon: Sparkles, color: "#6b5b95", shortName: "Symbolism" },
-  6: { name: "Occult Revival", icon: Star, color: "#C8A44D", shortName: "Revival" },
-  7: { name: "Surrealism", icon: Wand2, color: "#4a6fa5", shortName: "Surrealism" },
-  8: { name: "Folk Magic", icon: Leaf, color: "#6b8e23", shortName: "Folk" },
-  9: { name: "Performance", icon: Flame, color: "#8b2232", shortName: "Performance" },
-  10: { name: "Cinema", icon: Film, color: "#2d3436", shortName: "Cinema" },
-  11: { name: "Visionary", icon: Sun, color: "#e056fd", shortName: "Visionary" },
-  12: { name: "Chaos Magic", icon: Zap, color: "#636e72", shortName: "Chaos" },
-  13: { name: "Pop Culture", icon: Star, color: "#a29bfe", shortName: "Pop" },
-  14: { name: "Political Activism", icon: Flame, color: "#e84393", shortName: "Activism" },
+  1: { name: "Pre-Modern Esoteric", brandIcon: "compass", color: "#3a506b", shortName: "Pre-Modern" },
+  2: { name: "Alchemy", brandIcon: "star", color: "#5c6b73", shortName: "Alchemy" },
+  3: { name: "Romantic Gothic", brandIcon: "moon", color: "#8e6e53", shortName: "Gothic" },
+  4: { name: "Spiritualism", brandIcon: "eye", color: "#9d8ca1", shortName: "Spiritualism" },
+  5: { name: "Symbolism", brandIcon: "sparkles", color: "#6b5b95", shortName: "Symbolism" },
+  6: { name: "Occult Revival", brandIcon: "star", color: "#C8A44D", shortName: "Revival" },
+  7: { name: "Surrealism", brandIcon: "star", color: "#4a6fa5", shortName: "Surrealism" },
+  8: { name: "Folk Magic", brandIcon: "herb", color: "#6b8e23", shortName: "Folk" },
+  9: { name: "Performance", brandIcon: "candle", color: "#8b2232", shortName: "Performance" },
+  10: { name: "Cinema", brandIcon: "crystalBall", color: "#2d3436", shortName: "Cinema" },
+  11: { name: "Visionary", brandIcon: "sunMoon", color: "#e056fd", shortName: "Visionary" },
+  12: { name: "Chaos Magic", brandIcon: "eightstar", color: "#636e72", shortName: "Chaos" },
+  13: { name: "Pop Culture", brandIcon: "star", color: "#a29bfe", shortName: "Pop" },
+  14: { name: "Political Activism", brandIcon: "candle", color: "#e84393", shortName: "Activism" },
 };
 
 const EVENT_CATEGORIES = ['Publication', 'Organization', 'Figure', 'Legal', 'Site', 'Ritual', 'Protest'];
@@ -507,7 +507,6 @@ const FilterPanel = ({ filters, setFilters, stats, isOpen, setIsOpen }) => {
                 <h4 className="font-cinzel text-sm text-gold mb-2">Taxonomy Categories</h4>
                 <div className="flex flex-wrap gap-2">
                   {Object.entries(TAXONOMY_CATEGORIES).map(([id, cat]) => {
-                    const Icon = cat.icon;
                     const isActive = filters.categories?.includes(parseInt(id));
                     return (
                       <button
@@ -520,7 +519,7 @@ const FilterPanel = ({ filters, setFilters, stats, isOpen, setIsOpen }) => {
                         } border`}
                         style={{ borderColor: isActive ? cat.color : undefined }}
                       >
-                        <Icon size={12} style={{ color: cat.color }} />
+                        <BrandIcon name={cat.brandIcon} size={12} />
                         {cat.shortName}
                       </button>
                     );
@@ -592,7 +591,6 @@ const EventImage = ({ event, size = 'md' }) => {
   
   const primaryTaxonomy = event.taxonomy_categories?.[0];
   const taxonomyData = TAXONOMY_CATEGORIES[primaryTaxonomy] || TAXONOMY_CATEGORIES[6];
-  const TaxonomyIcon = taxonomyData.icon;
   
   // Check if event has an image URL
   const imageUrl = event.image_url || event.image?.url;
@@ -607,7 +605,7 @@ const EventImage = ({ event, size = 'md' }) => {
           border: `2px solid ${taxonomyData.color}40`
         }}
       >
-        <TaxonomyIcon size={size === 'sm' ? 16 : size === 'md' ? 20 : 28} style={{ color: taxonomyData.color }} />
+        <BrandIcon name={taxonomyData.brandIcon} size={size === 'sm' ? 16 : size === 'md' ? 20 : 28} />
       </div>
     );
   }
@@ -641,7 +639,6 @@ const EventImage = ({ event, size = 'md' }) => {
 const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick, allEvents, onNavigateToEvent }) => {
   const primaryTaxonomy = event.taxonomy_categories?.[0];
   const taxonomyData = TAXONOMY_CATEGORIES[primaryTaxonomy] || TAXONOMY_CATEGORIES[6];
-  const TaxonomyIcon = taxonomyData.icon;
   
   // Toggle between factual and narrative descriptions
   const [showNarrative, setShowNarrative] = useState(true);
@@ -673,19 +670,19 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick, allEvents
     onFilterClick?.({ type: 'guide', value: guide });
   };
 
-  const getCategoryIcon = (category) => {
+  const getCategoryBrandIcon = (category) => {
     switch(category) {
-      case 'Publication': return BookOpen;
-      case 'Organization': return Users;
-      case 'Figure': return Users;
-      case 'Site': return MapPin;
-      case 'Ritual': return Flame;
-      case 'Legal': return BookOpen;
-      default: return Star;
+      case 'Publication': return 'grimoire';
+      case 'Organization': return 'eye';
+      case 'Figure': return 'eye';
+      case 'Site': return 'map';
+      case 'Ritual': return 'candle';
+      case 'Legal': return 'grimoire';
+      default: return 'star';
     }
   };
 
-  const CategoryIcon = getCategoryIcon(event.primary_category || event.category);
+  const categoryBrandIcon = getCategoryBrandIcon(event.primary_category || event.category);
   
   // Check if event has image
   const hasImage = event.image_url || event.image?.url;
@@ -732,7 +729,7 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick, allEvents
               onClick={(e) => handleTaxonomyClick(e, primaryTaxonomy)}
               title={`Filter by ${taxonomyData.name}`}
             >
-              <TaxonomyIcon size={18} style={{ color: taxonomyData.color }} />
+              <BrandIcon name={taxonomyData.brandIcon} size={18} />
             </button>
             
             <div className="flex-1 min-w-0">
@@ -750,12 +747,12 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick, allEvents
           <div className="flex items-center gap-2 flex-shrink-0">
             {/* Importance Star */}
             {event.importance === 1 && (
-              <Star size={16} className="text-gold fill-gold" />
+              <BrandIcon name="star" size={16} />
             )}
             
             {/* Category Badge */}
             <span className="px-3 py-1 bg-crimson/20 border border-crimson/40 rounded-sm font-montserrat text-xs text-crimson-bright flex items-center gap-1">
-              <CategoryIcon size={12} />
+              <BrandIcon name={categoryBrandIcon} size={12} />
               {event.primary_category || event.category}
             </span>
           </div>
@@ -938,7 +935,7 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick, allEvents
                             
                             return (
                               <div key={i} className="flex items-start gap-2 text-xs font-montserrat group">
-                                <BookOpen size={12} className="mt-0.5 flex-shrink-0 text-cream/50" />
+                                <BrandIcon name="grimoire" size={12} className="mt-0.5 flex-shrink-0" />
                                 <div className="flex-1">
                                   <div className="flex items-center gap-2">
                                     {/* Author - clickable to search */}
@@ -1008,7 +1005,7 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick, allEvents
                     {/* Location */}
                     {event.location && (
                       <div className="flex items-center gap-2 text-xs text-cream/50 font-montserrat">
-                        <MapPin size={12} />
+                        <BrandIcon name="map" size={12} />
                         <span>{event.location.name}, {event.location.region}</span>
                       </div>
                     )}

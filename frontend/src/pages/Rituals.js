@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ritualsAPI } from '../utils/api';
-import { Scroll, Sparkles } from 'lucide-react';
+import { BrandIcon } from '../components/BrandIcon';
 import { DarkSection, PageBorderFrame, PageHeader, OrnateCard, GrandDivider, MysticalDivider } from '../components/OrnateElements';
 
 export const Rituals = () => {
@@ -29,7 +29,7 @@ export const Rituals = () => {
   if (loading) {
     return (
       <DarkSection className="min-h-screen flex items-center justify-center" variant="warm">
-        <Scroll className="w-12 h-12 text-gold animate-pulse" />
+        <BrandIcon name="book" size={48} className="mx-auto animate-pulse" />
       </DarkSection>
     );
   }
@@ -43,7 +43,7 @@ export const Rituals = () => {
           animate={{ opacity: 1, y: 0 }}
         >
           <PageHeader 
-            icon={Scroll}
+            iconSrc="/images/brand/book-gold.png"
             title="Documented Rituals"
             subtitle="Ceremonial practices preserved from the occult revival era"
           />
@@ -127,7 +127,7 @@ export const Rituals = () => {
 
         {rituals.length === 0 && (
           <div className="text-center py-12">
-            <Sparkles className="w-12 h-12 text-gold/50 mx-auto mb-4" />
+            <BrandIcon name="sparkles" size={48} opacity={0.5} className="mx-auto mb-4" />
             <p className="font-montserrat text-muted-brass/60">No rituals found for this category</p>
           </div>
         )}

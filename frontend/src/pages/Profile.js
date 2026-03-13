@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { favoritesAPI, authAPI, subscriptionAPI } from '../utils/api';
-import { User, Heart, Mail, Crown, Loader2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
+import { BrandIcon } from '../components/BrandIcon';
 import { toast } from 'sonner';
 import { 
   DarkSection, LightSection, GrandDivider, MysticalDivider, 
@@ -80,7 +81,7 @@ export const Profile = ({ user }) => {
         <DarkSection className="py-20 px-6">
           <div className="max-w-md mx-auto text-center">
             <OrnateCard hover={false}>
-              <User className="w-12 h-12 text-gold/50 mx-auto mb-4" />
+              <BrandIcon name="eye" size={48} opacity={0.5} className="mx-auto mb-4" />
               <p className="font-montserrat text-muted-brass/80">Please log in to view your profile</p>
               <button
                 onClick={() => navigate('/auth')}
@@ -115,7 +116,7 @@ export const Profile = ({ user }) => {
               </div>
               {isPro && (
                 <div className="absolute -bottom-1 -right-1 bg-gold text-navy-dark p-1.5 rounded-full">
-                  <Crown className="w-4 h-4" />
+                  <BrandIcon name="eightstar" size={16} />
                 </div>
               )}
             </div>
@@ -129,7 +130,7 @@ export const Profile = ({ user }) => {
             {/* Subscription Badge */}
             {subscriptionStatus && (
               <div className="mt-4 inline-flex items-center gap-2 px-4 py-2 bg-gold/10 border border-gold/30 rounded-sm">
-                <Crown className={`w-4 h-4 ${isPro ? 'text-gold' : 'text-muted-brass/50'}`} />
+                <BrandIcon name="eightstar" size={16} className={isPro ? '' : 'opacity-50'} />
                 <span className="font-montserrat text-sm text-gold">
                   {isPro ? 'Pro Member' : 'Free Tier'}
                 </span>
@@ -157,7 +158,7 @@ export const Profile = ({ user }) => {
             {subscriptionStatus && (
               <LightOrnateCard hover={false}>
                 <div className="flex items-center gap-3 mb-4">
-                  <Crown className="w-6 h-6 text-crimson" />
+                  <BrandIcon name="eightstar" size={24} />
                   <h2 className="font-cinzel text-xl text-crimson">Subscription</h2>
                 </div>
                 
@@ -207,7 +208,7 @@ export const Profile = ({ user }) => {
             {/* Email Settings */}
             <LightOrnateCard hover={false}>
               <div className="flex items-center gap-3 mb-4">
-                <Mail className="w-6 h-6 text-crimson" />
+                <BrandIcon name="letter" size={24} />
                 <h2 className="font-cinzel text-xl text-crimson">Email Settings</h2>
               </div>
 
@@ -278,7 +279,7 @@ export const Profile = ({ user }) => {
           {/* Favorites Section */}
           <LightOrnateCard hover={false} className="mt-6">
             <div className="flex items-center gap-3 mb-6">
-              <Heart className="w-6 h-6 text-crimson" />
+              <BrandIcon name="sacredheart" size={24} />
               <h2 className="font-cinzel text-xl text-crimson">Your Favorites</h2>
             </div>
 

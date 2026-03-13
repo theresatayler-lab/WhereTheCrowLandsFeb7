@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { 
-  Menu, X, ChevronDown, LogOut, User
+  Menu, X, ChevronDown, LogOut
 } from 'lucide-react';
 import { BrandIcon } from './BrandIcon';
 
@@ -272,7 +272,7 @@ export const Navigation = ({ user, onLogout }) => {
                   onMouseEnter={(e) => { e.currentTarget.style.color = '#C8A44D'; e.currentTarget.style.backgroundColor = 'rgba(200, 164, 77, 0.1)'; }}
                   onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(243, 239, 232, 0.8)'; e.currentTarget.style.backgroundColor = 'transparent'; }}
                 >
-                  <User className="w-4 h-4" />
+                  <BrandIcon name="eye" size={16} />
                   <span>{user.name}</span>
                 </Link>
                 <Link
@@ -325,7 +325,7 @@ export const Navigation = ({ user, onLogout }) => {
                 onClick={handleLinkClick}
                 className="p-2 rounded-sm text-muted-brass/80 hover:text-gold transition-all"
               >
-                <User className="w-5 h-5" />
+                <BrandIcon name="eye" size={20} />
               </Link>
             )}
             <button

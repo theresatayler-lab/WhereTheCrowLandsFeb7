@@ -10,10 +10,9 @@ import HandcraftedMagicModal from '../components/HandcraftedMagicModal';
 import HandcraftedBanner from '../components/HandcraftedBanner';
 import { DarkSection, LightSection, GrandDivider, MysticalDivider, ElaborateCorner, PageHeader, OrnateCard, LightOrnateCard, StepperOrnament, BestiaryGlyph, ATMOSPHERIC_IMAGES } from '../components/OrnateElements';
 import { 
-  Sparkles, ChevronRight, ChevronLeft, Check, Loader2, 
-  User, Clock, Heart, Flame, Shield, Eye, Zap, Cloud,
-  Coffee, Scissors, Sun, Moon, Bird, Home, Bath, Briefcase, TreeDeciduous
+  ChevronRight, ChevronLeft, Check, Loader2
 } from 'lucide-react';
+import BrandIcon from '../components/BrandIcon';
 import { toast } from 'sonner';
 
 // ===== DERIVE VIDEOS FROM ARCHETYPES.JS (single source of truth) =====
@@ -61,13 +60,13 @@ const ALCHEMIZE_OPTIONS = [
 
 // Keep FEELINGS for backward compatibility with existing grimoire entries
 const FEELINGS = [
-  { id: 'calm', label: 'Calm', icon: Cloud, color: 'text-blue-400', forPersonas: ['shigg', 'brenda', 'katherine'] },
-  { id: 'brave', label: 'Brave', icon: Shield, color: 'text-gold-light', forPersonas: ['cathleen', 'theresa', 'katherine'] },
-  { id: 'clear', label: 'Clear', icon: Eye, color: 'text-gold', forPersonas: ['katherine', 'theresa', 'shigg'] },
-  { id: 'protected', label: 'Protected', icon: Shield, color: 'text-gold', forPersonas: ['cathleen', 'katherine'] },
-  { id: 'softened', label: 'Softened', icon: Heart, color: 'text-crimson-bright', forPersonas: ['shigg', 'brenda', 'cathleen'] },
-  { id: 'energized', label: 'Energized', icon: Zap, color: 'text-gold', forPersonas: ['cathleen', 'theresa'] },
-  { id: 'connected', label: 'Connected', icon: Heart, color: 'text-crimson', forPersonas: ['brenda', 'shigg'] }
+  { id: 'calm', label: 'Calm', brandIcon: 'halfmoon', color: 'text-blue-400', forPersonas: ['shigg', 'brenda', 'katherine'] },
+  { id: 'brave', label: 'Brave', brandIcon: 'pentagram', color: 'text-gold-light', forPersonas: ['cathleen', 'theresa', 'katherine'] },
+  { id: 'clear', label: 'Clear', brandIcon: 'eye', color: 'text-gold', forPersonas: ['katherine', 'theresa', 'shigg'] },
+  { id: 'protected', label: 'Protected', brandIcon: 'pentagram', color: 'text-gold', forPersonas: ['cathleen', 'katherine'] },
+  { id: 'softened', label: 'Softened', brandIcon: 'sacredheart', color: 'text-crimson-bright', forPersonas: ['shigg', 'brenda', 'cathleen'] },
+  { id: 'energized', label: 'Energized', brandIcon: 'eightstar', color: 'text-gold', forPersonas: ['cathleen', 'theresa'] },
+  { id: 'connected', label: 'Connected', brandIcon: 'sacredheart', color: 'text-crimson', forPersonas: ['brenda', 'shigg'] }
 ];
 
 const TIMES = [
@@ -231,7 +230,7 @@ const Step2 = ({ spellSpec, updateSpec }) => (
             light={true}
           >
             <div className="text-center">
-              <Clock className={`w-6 h-6 mx-auto mb-2 ${spellSpec.time === t.id ? 'text-gold-dark' : 'text-navy-dark/60'}`} />
+              <BrandIcon name="halfmoon" size={24} className={`mx-auto mb-2 ${spellSpec.time === t.id ? '' : 'opacity-50'}`} />
               <p className="font-montserrat text-sm text-navy-dark font-bold">{t.label}</p>
               <p className="font-montserrat text-xs text-navy-dark/70 mt-1">{t.description}</p>
             </div>
@@ -888,7 +887,7 @@ export const SpellRequest = () => {
                     </>
                   ) : (
                     <>
-                      <Sparkles className="w-5 h-5" />
+                      <BrandIcon name="sparkles" size={20} />
                       <span>So Mote It Be</span>
                     </>
                   )}
@@ -946,7 +945,7 @@ export const SpellRequest = () => {
                     {selectedGuide.icon ? (
                       <img src={selectedGuide.icon} alt={selectedGuide.name} className="w-14 h-14" />
                     ) : (
-                      <Sparkles className="w-10 h-10 text-gold" />
+                      <BrandIcon name="sparkles" size={40} />
                     )}
                   </div>
                   
@@ -985,7 +984,7 @@ export const SpellRequest = () => {
                   >
                     <div className="absolute inset-0 rounded-full border-2 border-gold/40 animate-pulse" />
                     <div className="absolute inset-2 rounded-full border border-crimson/30" />
-                    <Sparkles className="w-full h-full text-gold p-4" style={{ filter: 'drop-shadow(0 0 20px rgba(200, 164, 77, 0.5))' }} />
+                    <BrandIcon name="sparkles" size={64} className="mx-auto" style={{ filter: 'drop-shadow(0 0 20px rgba(200, 164, 77, 0.5))' }} />
                   </motion.div>
                   
                   <h2 className="font-cinzel text-2xl sm:text-3xl text-gold mb-3" style={{ textShadow: '0 0 30px rgba(185, 78, 106, 0.5), 0 0 60px rgba(185, 78, 106, 0.3)' }}>
@@ -1096,7 +1095,7 @@ export const SpellRequest = () => {
                   {persona.icon ? (
                     <img src={persona.icon} alt={persona.name} className="w-10 h-10 sm:w-12 sm:h-12" />
                   ) : (
-                    <Sparkles className="w-8 h-8 text-gold" />
+                    <BrandIcon name="sparkles" size={32} />
                   )}
                 </div>
                 <h3 className="font-cinzel text-sm text-cream group-hover:text-gold transition-colors">

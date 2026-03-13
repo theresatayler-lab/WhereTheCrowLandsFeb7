@@ -3,7 +3,7 @@
 
 import React, { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { Clock } from 'lucide-react';
+import BrandIcon from './BrandIcon';
 import { cn } from '../lib/utils';
 
 // Ornate section divider - elegant diamond pattern like astrology guides
@@ -249,7 +249,7 @@ const Stepper = ({ c, style }) => (
 
             {step.duration_hint && (
               <p className="text-xs opacity-50 mt-2 flex items-center gap-1">
-                <Clock className="w-3 h-3" /> {step.duration_hint}
+                <BrandIcon name="halfmoon" size={12} /> {step.duration_hint}
               </p>
             )}
           </div>
@@ -434,7 +434,7 @@ const SongPrompt = ({ c, style }) => (
       </blockquote>
     )}
     {c.duration && (
-      <p className="text-navy-dark/50 text-xs flex items-center gap-1"><Clock className="w-3 h-3" /> {c.duration}</p>
+      <p className="text-navy-dark/50 text-xs flex items-center gap-1"><BrandIcon name="halfmoon" size={12} /> {c.duration}</p>
     )}
     {(c.why_this_sound || c.purpose) && (
       <p className="font-crimson-text text-navy-dark/70 text-sm italic mt-1">{c.why_this_sound || c.purpose}</p>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { sitesAPI } from '../utils/api';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../components/ui/dialog';
-import { MapPin, Compass } from 'lucide-react';
+import { BrandIcon } from '../components/BrandIcon';
 import { DarkSection, PageBorderFrame, PageHeader, OrnateCard, GrandDivider } from '../components/OrnateElements';
 
 export const SacredSites = () => {
@@ -28,7 +28,7 @@ export const SacredSites = () => {
   if (loading) {
     return (
       <DarkSection className="min-h-screen flex items-center justify-center" variant="warm">
-        <MapPin className="w-12 h-12 text-gold animate-pulse" />
+        <BrandIcon name="map" size={48} className="mx-auto mb-4 animate-pulse" />
       </DarkSection>
     );
   }
@@ -72,7 +72,7 @@ export const SacredSites = () => {
                   {site.name}
                 </h3>
                 <p className="font-montserrat text-xs uppercase tracking-widest text-crimson-bright mb-3 flex items-center gap-1">
-                  <MapPin className="w-3 h-3" />
+                  <BrandIcon name="map" size={12} />
                   {site.location}, {site.country}
                 </p>
                 <p className="font-montserrat text-sm text-muted-brass/85 leading-relaxed line-clamp-3">
@@ -103,7 +103,7 @@ export const SacredSites = () => {
                   <h4 className="font-montserrat text-xs uppercase tracking-widest text-crimson-bright mb-2">Location</h4>
                   <p className="font-montserrat text-base text-cream/90">{selectedSite.location}, {selectedSite.country}</p>
                   <p className="font-montserrat text-sm text-muted-brass/60 mt-1 flex items-center gap-1">
-                    <Compass className="w-3 h-3" />
+                    <BrandIcon name="compass" size={12} />
                     {selectedSite.coordinates?.lat}, {selectedSite.coordinates?.lng}
                   </p>
                 </div>

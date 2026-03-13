@@ -4,9 +4,9 @@ import { useNavigate, Link } from 'react-router-dom';
 import { GlassCard } from '../components/GlassCard';
 import { ARCHETYPES, getArchetypeById } from '../data/archetypes';
 import { setCurrentArchetype, getCurrentArchetype } from '../components/OnboardingModal';
-import { ArrowRight, Check, ChevronDown, ChevronUp, Sparkles } from 'lucide-react';
-import { toast } from 'sonner';
+import { ArrowRight, Check, ChevronDown, ChevronUp } from 'lucide-react';
 import { BrandIcon } from '../components/BrandIcon';
+import { toast } from 'sonner';
 import { DarkSection, LightSection, GrandDivider, MysticalDivider, ElaborateCorner, PageHeader, PageDivider, BestiaryGlyph, ATMOSPHERIC_IMAGES } from '../components/OrnateElements';
 
 // Glyph mapping per guide
@@ -334,7 +334,7 @@ const GuideCard = ({ archetype, index, isCurrentGuide, isExpanded, isBioExpanded
                 <ul className="space-y-1">
                   {archetype.bestFor.map((item, i) => (
                     <li key={i} className="font-montserrat text-xs text-navy-dark/70 flex items-start gap-2">
-                      <Sparkles className="w-3 h-3 text-gold-dark flex-shrink-0 mt-0.5" />
+                      <BrandIcon name="sparkles" size={12} className="flex-shrink-0 mt-0.5" />
                       <span>{item}</span>
                     </li>
                   ))}

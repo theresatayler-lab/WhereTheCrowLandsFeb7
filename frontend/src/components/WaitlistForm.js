@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Sparkles, CheckCircle2 } from 'lucide-react';
+import { BrandIcon } from './BrandIcon';
 import { toast } from 'sonner';
 import axios from 'axios';
 
@@ -53,7 +53,7 @@ export const WaitlistForm = ({ source = 'homepage' }) => {
         animate={{ opacity: 1, scale: 1 }}
         className="bg-card/70 border-2 border-primary/30 rounded-sm p-6 sm:p-8 text-center max-w-md mx-auto"
       >
-        <CheckCircle2 className="w-12 h-12 sm:w-16 sm:h-16 text-accent mx-auto mb-4" />
+        <BrandIcon name="star" size={48} className="mx-auto mb-4" />
         <h3 className="font-cinzel text-lg sm:text-xl text-secondary mb-2">You&apos;re on the list!</h3>
         <p className="font-montserrat text-sm text-muted-foreground">
           We&apos;ll notify you when we launch. Get ready to reclaim your power.
@@ -69,7 +69,7 @@ export const WaitlistForm = ({ source = 'homepage' }) => {
       className="bg-card/70 border-2 border-primary/30 rounded-sm p-6 sm:p-8 max-w-md mx-auto"
     >
       <div className="text-center mb-6">
-        <Mail className="w-10 h-10 sm:w-12 sm:h-12 text-primary mx-auto mb-3" />
+        <BrandIcon name="letter" size={40} className="mx-auto mb-3" />
         <h3 className="font-cinzel text-lg sm:text-xl text-secondary mb-2">Join the Waitlist</h3>
         <p className="font-montserrat text-sm text-muted-foreground">
           Be the first to know when we launch. Get early access and exclusive updates.

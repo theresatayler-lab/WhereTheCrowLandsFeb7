@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, HelpCircle } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
+import { BrandIcon } from '../components/BrandIcon';
 import { DarkSection, LightSection, GrandDivider, MysticalDivider, ElaborateCorner, PageHeader, ATMOSPHERIC_IMAGES } from '../components/OrnateElements';
 
 const faqs = [
@@ -149,7 +150,7 @@ export const FAQ = () => {
             animate={{ opacity: 1, y: 0 }}
           >
             <PageHeader 
-              icon={HelpCircle}
+              iconSrc="/icons/ui/gold/icon-crystal-ball.png"
               title="Frequently Asked Questions"
               subtitle="Everything you need to know about Where The Crowlands"
             />

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { DarkSection, LightOrnateCard, PageHeader } from '../components/OrnateElements';
-import { Sparkles } from 'lucide-react';
+import { BrandIcon } from '../components/BrandIcon';
 
 const GUIDE_NAMES = {
   shigg: 'Shigg', cathleen: 'Cathleen', katherine: 'Katherine',
@@ -48,7 +48,7 @@ export default function Admin() {
   return (
     <DarkSection className="min-h-screen py-12 px-4" data-testid="admin-dashboard">
       <div className="max-w-4xl mx-auto">
-        <PageHeader icon={Sparkles} title="Admin Dashboard" subtitle="Platform metrics and performance" />
+        <PageHeader iconSrc="/icons/ui/gold/icon-sparkles.png" title="Admin Dashboard" subtitle="Platform metrics and performance" />
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 mt-8">
           <StatCard label="Total Users" value={stats.users.total} />

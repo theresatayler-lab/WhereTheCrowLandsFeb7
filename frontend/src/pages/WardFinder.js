@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  Sparkles, Heart, Eye, MapPin, Hand, Package,
   Loader2, ArrowLeft, RefreshCw, Save, Check
 } from 'lucide-react';
+import { BrandIcon } from '../components/BrandIcon';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { DarkSection, LightSection, GrandDivider, MysticalDivider, ElaborateCorner, PageHeader, LightOrnateCard, OrnateCard, ATMOSPHERIC_IMAGES } from '../components/OrnateElements';
@@ -65,7 +65,7 @@ const WardCard = ({ ward, index, situation, onSave, isSaving, isSaved, isLight }
             <div className={`p-5 space-y-4 ${isLight ? 'bg-crimson/5' : 'bg-gold/5'}`}>
               {/* Meaning */}
               <div className="flex items-start gap-3">
-                <Heart className={`w-5 h-5 mt-0.5 flex-shrink-0 ${isLight ? 'text-crimson' : 'text-crimson-bright'}`} />
+                <BrandIcon name="sacredheart" size={20} className="mt-0.5 flex-shrink-0" />
                 <div>
                   <p className={`font-montserrat text-xs uppercase tracking-wide mb-1 ${isLight ? 'text-navy-dark/50' : 'text-cream/50'}`}>
                     Deeper Meaning
@@ -78,7 +78,7 @@ const WardCard = ({ ward, index, situation, onSave, isSaving, isSaved, isLight }
               
               {/* Where to Find */}
               <div className="flex items-start gap-3">
-                <MapPin className={`w-5 h-5 mt-0.5 flex-shrink-0 ${isLight ? 'text-crimson' : 'text-crimson-bright'}`} />
+                <BrandIcon name="map" size={20} className="mt-0.5 flex-shrink-0" />
                 <div>
                   <p className={`font-montserrat text-xs uppercase tracking-wide mb-1 ${isLight ? 'text-navy-dark/50' : 'text-cream/50'}`}>
                     Where to Find It
@@ -92,7 +92,7 @@ const WardCard = ({ ward, index, situation, onSave, isSaving, isSaved, isLight }
               {/* How to Choose */}
               {ward.how_to_choose && (
                 <div className="flex items-start gap-3">
-                  <Eye className={`w-5 h-5 mt-0.5 flex-shrink-0 ${isLight ? 'text-crimson' : 'text-crimson-bright'}`} />
+                  <BrandIcon name="eye" size={20} className="mt-0.5 flex-shrink-0" />
                   <div>
                     <p className={`font-montserrat text-xs uppercase tracking-wide mb-1 ${isLight ? 'text-navy-dark/50' : 'text-cream/50'}`}>
                       How to Know It&apos;s The One
@@ -106,7 +106,7 @@ const WardCard = ({ ward, index, situation, onSave, isSaving, isSaved, isLight }
               
               {/* Activation */}
               <div className="flex items-start gap-3">
-                <Sparkles className={`w-5 h-5 mt-0.5 flex-shrink-0 ${isLight ? 'text-crimson' : 'text-crimson-bright'}`} />
+                <BrandIcon name="sparkles" size={20} className="mt-0.5 flex-shrink-0" />
                 <div>
                   <p className={`font-montserrat text-xs uppercase tracking-wide mb-1 ${isLight ? 'text-navy-dark/50' : 'text-cream/50'}`}>
                     How to Activate & Bond
@@ -120,7 +120,7 @@ const WardCard = ({ ward, index, situation, onSave, isSaving, isSaved, isLight }
               {/* How to Carry */}
               {ward.how_to_carry && (
                 <div className="flex items-start gap-3">
-                  <Package className={`w-5 h-5 mt-0.5 flex-shrink-0 ${isLight ? 'text-crimson' : 'text-crimson-bright'}`} />
+                  <BrandIcon name="heirloom" size={20} className="mt-0.5 flex-shrink-0" />
                   <div>
                     <p className={`font-montserrat text-xs uppercase tracking-wide mb-1 ${isLight ? 'text-navy-dark/50' : 'text-cream/50'}`}>
                       How to Carry It
@@ -309,7 +309,7 @@ const WardFinder = () => {
                   />
                 </div>
                 <div className="absolute -bottom-1 -right-1 bg-crimson text-cream p-1.5 rounded-full border border-gold/50">
-                  <Hand className="w-4 h-4" />
+                  <BrandIcon name="pentagram" size={16} className="inline-block" />
                 </div>
               </div>
             </div>
@@ -394,7 +394,7 @@ const WardFinder = () => {
                       </>
                     ) : (
                       <>
-                        <Sparkles className="w-5 h-5" />
+                        <BrandIcon name="sparkles" size={20} className="inline-block" />
                         Find My Wards
                       </>
                     )}
@@ -488,7 +488,7 @@ const WardFinder = () => {
                     onClick={() => navigate('/spell-request')}
                     className="px-6 py-3 bg-gradient-to-r from-crimson-deep via-crimson to-crimson-deep text-cream rounded-sm font-montserrat text-sm hover:from-crimson hover:via-crimson-bright hover:to-crimson transition-colors flex items-center justify-center gap-2 border border-gold/30"
                   >
-                    <Sparkles className="w-4 h-4" />
+                    <BrandIcon name="sparkles" size={16} className="inline-block" />
                     Create a Spell with Cathleen
                   </button>
                 </div>

@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { deitiesAPI } from '../utils/api';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../components/ui/dialog';
-import { Moon, ExternalLink } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
+import { BrandIcon } from '../components/BrandIcon';
 import { DarkSection, PageBorderFrame, PageHeader, OrnateCard, GrandDivider } from '../components/OrnateElements';
 
 export const Deities = () => {
@@ -28,7 +29,7 @@ export const Deities = () => {
   if (loading) {
     return (
       <DarkSection className="min-h-screen flex items-center justify-center" variant="warm">
-        <Moon className="w-12 h-12 text-gold animate-pulse" />
+        <BrandIcon name="moon" size={48} className="mx-auto mb-4 animate-pulse" />
       </DarkSection>
     );
   }

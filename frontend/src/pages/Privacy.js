@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Shield, Lock, Eye, Database, Mail } from 'lucide-react';
+import { BrandIcon } from '../components/BrandIcon';
 import { DarkSection, LightSection, GrandDivider, MysticalDivider, ElaborateCorner, PageHeader, LightOrnateCard, OrnateCard, ATMOSPHERIC_IMAGES } from '../components/OrnateElements';
 
 export const Privacy = () => {
@@ -17,7 +17,7 @@ export const Privacy = () => {
             animate={{ opacity: 1, y: 0 }}
           >
             <PageHeader 
-              icon={Shield}
+              iconSrc="/images/brand/pentagram-gold.png"
               title="Privacy Policy"
               subtitle="Your practice is sacred. So is your privacy."
             />
@@ -61,7 +61,7 @@ export const Privacy = () => {
           >
             <OrnateCard hover={false}>
               <h2 className="font-cinzel text-lg sm:text-xl text-gold-light mb-6 flex items-center gap-2">
-                <Database className="w-5 h-5 sm:w-6 sm:h-6 text-crimson-bright" />
+                <BrandIcon name="grimoire" size={24} />
                 Information We Collect
               </h2>
               <div className="space-y-5">
@@ -109,7 +109,7 @@ export const Privacy = () => {
           >
             <LightOrnateCard hover={false}>
               <h2 className="font-cinzel text-lg sm:text-xl text-crimson mb-6 flex items-center gap-2">
-                <Lock className="w-5 h-5 sm:w-6 sm:h-6" />
+                <BrandIcon name="key" size={24} />
                 How We Use Your Information
               </h2>
               <div className="space-y-4 font-montserrat text-sm text-navy-dark/80 leading-relaxed">
@@ -145,7 +145,7 @@ export const Privacy = () => {
           >
             <OrnateCard hover={false}>
               <h2 className="font-cinzel text-lg sm:text-xl text-gold-light mb-6 flex items-center gap-2">
-                <Eye className="w-5 h-5 sm:w-6 sm:h-6 text-crimson-bright" />
+                <BrandIcon name="eye" size={24} />
                 Your Rights
               </h2>
               <div className="space-y-4 font-montserrat text-sm text-cream/70 leading-relaxed">
@@ -181,7 +181,7 @@ export const Privacy = () => {
           >
             <LightOrnateCard hover={false}>
               <h2 className="font-cinzel text-lg sm:text-xl text-crimson mb-4 flex items-center gap-2">
-                <Mail className="w-5 h-5 sm:w-6 sm:h-6" />
+                <BrandIcon name="letter" size={24} />
                 Contact Us
               </h2>
               <p className="font-montserrat text-sm text-navy-dark/80 leading-relaxed">

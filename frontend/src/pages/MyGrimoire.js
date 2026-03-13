@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { BookOpen, Trash2, Eye, Loader2, Calendar, Sparkles, Hand, Heart, MapPin } from 'lucide-react';
+import { Trash2, Eye, Loader2, Calendar } from 'lucide-react';
+import { BrandIcon } from '../components/BrandIcon';
 import { grimoireAPI } from '../utils/api';
 import { GrimoirePage } from '../components/GrimoirePage';
 import { GrimoireDownloader } from '../components/GrimoireDownloader';
@@ -219,7 +220,7 @@ export const MyGrimoire = () => {
                 <OrnateCard hover={false} className="cursor-pointer">
                   <div className="flex items-center justify-between">
                     <span className="font-cinzel text-sm text-gold-light flex items-center gap-2">
-                      <Sparkles className="w-4 h-4 text-crimson-bright" />
+                      <BrandIcon name="sparkles" size={16} className="inline-block" />
                       What is a Grimoire?
                     </span>
                     <span className="text-cream/50 text-xs font-montserrat group-open:hidden">Click to discover</span>
@@ -236,9 +237,9 @@ export const MyGrimoire = () => {
                       who use them to explore the mysteries that connect us all.
                     </p>
                     <div className="mt-4 pt-4 border-t border-gold/20 flex flex-wrap gap-4 text-xs font-montserrat text-cream/60">
-                      <span className="flex items-center gap-1"><Sparkles className="w-3 h-3 text-crimson-bright" /> Save spells from your guides</span>
-                      <span className="flex items-center gap-1"><Hand className="w-3 h-3 text-gold" /> Collect wards from Cathleen</span>
-                      <span className="flex items-center gap-1"><Heart className="w-3 h-3 text-crimson" /> Build your personal practice</span>
+                      <span className="flex items-center gap-1"><BrandIcon name="sparkles" size={12} className="inline-block" /> Save spells from your guides</span>
+                      <span className="flex items-center gap-1"><BrandIcon name="pentagram" size={12} className="inline-block" /> Collect wards from Cathleen</span>
+                      <span className="flex items-center gap-1"><BrandIcon name="sacredheart" size={12} className="inline-block" /> Build your personal practice</span>
                     </div>
                   </div>
                 </OrnateCard>
@@ -274,7 +275,7 @@ export const MyGrimoire = () => {
                       : 'bg-cream border-2 border-crimson/30 text-crimson hover:bg-crimson/5'
                   }`}
                 >
-                  <Sparkles className="w-4 h-4" />
+                  <BrandIcon name="sparkles" size={16} className="inline-block" />
                   Spells ({spells.length})
                 </button>
                 <button
@@ -285,7 +286,7 @@ export const MyGrimoire = () => {
                       : 'bg-cream border-2 border-gold/50 text-crimson hover:bg-gold/5'
                   }`}
                 >
-                  <Hand className="w-4 h-4" />
+                  <BrandIcon name="pentagram" size={16} className="inline-block" />
                   Wards ({wards.length})
                 </button>
               </div>
@@ -312,7 +313,7 @@ export const MyGrimoire = () => {
                         href="/spell-request"
                         className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-crimson-deep via-crimson to-crimson-deep text-cream rounded-sm font-montserrat tracking-widest uppercase text-xs hover:from-crimson hover:via-crimson-bright hover:to-crimson transition-all border border-gold/30"
                       >
-                        <Sparkles className="w-4 h-4" />
+                        <BrandIcon name="sparkles" size={16} className="inline-block" />
                         Create Your First Spell
                       </a>
                     </LightOrnateCard>
@@ -339,7 +340,7 @@ export const MyGrimoire = () => {
                           </div>
                         ) : (
                           <div className="h-48 bg-crimson/5 flex items-center justify-center">
-                            <BookOpen className="w-16 h-16 text-crimson/20" />
+                            <BrandIcon name="grimoire" size={64} opacity={0.2} />
                           </div>
                         )}
 
@@ -414,7 +415,7 @@ export const MyGrimoire = () => {
                         href="/ward-finder"
                         className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-gold-dark via-gold to-gold-dark text-navy-dark rounded-sm font-montserrat tracking-widest uppercase text-xs hover:from-gold hover:via-gold-light hover:to-gold transition-all border border-crimson/30"
                       >
-                        <Hand className="w-4 h-4" />
+                        <BrandIcon name="pentagram" size={16} className="inline-block" />
                         Find Your Ward
                       </a>
                     </LightOrnateCard>
@@ -454,7 +455,7 @@ export const MyGrimoire = () => {
                           
                           {ward.ward_data?.meaning && (
                             <div className="flex items-start gap-2">
-                              <Heart className="w-4 h-4 text-crimson mt-0.5 flex-shrink-0" />
+                              <BrandIcon name="sacredheart" size={16} className="mt-0.5 flex-shrink-0" />
                               <p className="font-montserrat text-sm text-navy-dark/70 line-clamp-2">
                                 {ward.ward_data.meaning}
                               </p>
@@ -463,7 +464,7 @@ export const MyGrimoire = () => {
 
                           {ward.ward_data?.where_to_find && (
                             <div className="flex items-start gap-2">
-                              <MapPin className="w-4 h-4 text-gold-dark mt-0.5 flex-shrink-0" />
+                              <BrandIcon name="map" size={16} className="mt-0.5 flex-shrink-0" />
                               <p className="font-montserrat text-sm text-navy-dark/70 line-clamp-2">
                                 {ward.ward_data.where_to_find}
                               </p>

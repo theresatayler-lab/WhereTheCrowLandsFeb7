@@ -1,12 +1,12 @@
 import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import {
-  Clock, Moon, Sun, Calendar,
-  BookOpen, Feather, Copy, Download, CheckCircle2, Circle,
-  Flame, Droplets, Wind, Sparkles, Star, Eye, Heart,
-  AlertTriangle, Quote, History, Users, Save, Lock, Key,
-  ExternalLink, ArrowRight, Search, Loader2
+  Clock, Calendar,
+  Copy, Download, CheckCircle2,
+  AlertTriangle, ArrowRight, Search, Loader2, Save,
+  ExternalLink
 } from 'lucide-react';
+import { BrandIcon } from './BrandIcon';
 import { toast } from 'sonner';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
@@ -25,26 +25,26 @@ const SEAL_LOGO_URL = "/images/brand/logo.png";
 // Parliament Crow watermark
 const CROW_WATERMARK = BRAND_ASSETS.crowAvatar;
 
-// Icon mapping for materials
+// Icon mapping for materials (maps to BrandIcon names)
 const MATERIAL_ICONS = {
-  candle: Flame,
-  herb: Feather,
-  crystal: Star,
-  feather: Feather,
-  water: Droplets,
-  fire: Flame,
-  moon: Moon,
-  sun: Sun,
-  book: BookOpen,
-  pen: Feather,
-  mirror: Eye,
-  salt: Sparkles,
-  oil: Droplets,
-  incense: Wind,
-  bell: Sparkles,
-  cord: Heart,
-  photo: Eye,
-  bowl: Circle,
+  candle: 'candle',
+  herb: 'herb',
+  crystal: 'crystalBall',
+  feather: 'feather',
+  water: 'halfmoon',
+  fire: 'candle',
+  moon: 'moon',
+  sun: 'sunMoon',
+  book: 'book',
+  pen: 'feather',
+  mirror: 'mirror',
+  salt: 'salt',
+  oil: 'herb',
+  incense: 'candle',
+  bell: 'bell',
+  cord: 'thread',
+  photo: 'photograph',
+  bowl: 'heirloom',
 };
 
 // Archetype-specific styling (supporting both legacy and new IDs)
@@ -454,7 +454,7 @@ const TarotCardView = ({ spell, archetype, style, imageBase64, onViewFull, onCop
                 {/* Decorative divider */}
                 <div className="flex items-center justify-center gap-2 mb-3">
                   <div className="h-px bg-gradient-to-r from-transparent to-gold/50 flex-1" />
-                  <Moon className="w-4 h-4 text-gold/60" />
+                  <BrandIcon name="moon" size={16} opacity={0.6} />
                   <div className="h-px bg-gradient-to-l from-transparent to-gold/50 flex-1" />
                 </div>
                 
@@ -1044,7 +1044,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
         <div className="relative h-48 md:h-64 overflow-hidden bg-gradient-to-br from-gold/20 to-gold/10 animate-pulse">
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="text-center">
-              <Sparkles className="w-8 h-8 text-navy-dark/80/40 mx-auto mb-2 animate-pulse" />
+              <BrandIcon name="sparkles" size={32} opacity={0.4} className="mx-auto mb-2" />
               <span className="text-navy-dark/80/50 text-sm font-montserrat">Generating header image...</span>
             </div>
           </div>
@@ -1111,7 +1111,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
               <div className="mt-8 border border-gold/30 rounded-sm overflow-hidden">
                 <div className="p-4 bg-gold/10">
                   <h3 className="font-cinzel text-base text-crimson flex items-center gap-2 mb-4">
-                    <BookOpen className="w-5 h-5" />
+                    <BrandIcon name="grimoire" size={20} />
                     Research Sources
                   </h3>
                   <div className="space-y-3">
@@ -1186,7 +1186,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
               
               <div className="space-y-4 font-montserrat text-sm">
                 <div className="flex items-start gap-2">
-                  <Heart className="w-4 h-4 text-crimson mt-1 flex-shrink-0" />
+                  <BrandIcon name="sacredheart" size={16} className="mt-1 flex-shrink-0" />
                   <div>
                     <p className="text-xs text-crimson uppercase tracking-wide mb-1">What It Means</p>
                     <p className="text-navy-dark">{spell.suggested_ward.meaning}</p>
@@ -1194,7 +1194,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                 </div>
                 
                 <div className="flex items-start gap-2">
-                  <Eye className="w-4 h-4 text-navy-dark/70 mt-1 flex-shrink-0" />
+                  <BrandIcon name="eye" size={16} className="mt-1 flex-shrink-0" />
                   <div>
                     <p className="text-xs text-navy-dark/70 uppercase tracking-wide mb-1">How to Find It</p>
                     <p className="text-navy-dark">{spell.suggested_ward.how_to_find}</p>
@@ -1203,7 +1203,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                 
                 {spell.suggested_ward.activation && (
                   <div className="flex items-start gap-2">
-                    <Sparkles className="w-4 h-4 text-navy-dark/70 mt-1 flex-shrink-0" />
+                    <BrandIcon name="sparkles" size={16} className="mt-1 flex-shrink-0" />
                     <div>
                       <p className="text-xs text-navy-dark/70 uppercase tracking-wide mb-1">Awakening Your Ward</p>
                       <p className="text-navy-dark">{spell.suggested_ward.activation}</p>
@@ -1227,7 +1227,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
             <div className="relative p-6 border-2 border-crimson/40 rounded-lg bg-[#F3EFE8] shadow-sm">
               <div className="flex items-center gap-3 mb-4">
                 <div className="p-3 bg-gold/10 border border-gold/30 rounded-full">
-                  <Lock className="w-6 h-6 text-crimson" />
+                  <BrandIcon name="key" size={24} />
                 </div>
                 <div>
                   <p className="font-cinzel text-xs text-crimson uppercase tracking-wider">Cathleen&apos;s Secret</p>
@@ -1239,7 +1239,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                 {/* Historical Inspiration */}
                 {spell.concealment_suggestion.historical_inspiration && (
                   <div className="flex items-start gap-2">
-                    <History className="w-4 h-4 text-crimson mt-1 flex-shrink-0" />
+                    <BrandIcon name="skull" size={16} className="mt-1 flex-shrink-0" />
                     <div>
                       <p className="text-xs text-crimson uppercase tracking-wide mb-1">From the Secret History</p>
                       <p className="text-navy-dark italic">{spell.concealment_suggestion.historical_inspiration}</p>
@@ -1250,7 +1250,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                 {/* Your Adaptation */}
                 {spell.concealment_suggestion.your_adaptation && (
                   <div className="flex items-start gap-2">
-                    <Key className="w-4 h-4 text-crimson mt-1 flex-shrink-0" />
+                    <BrandIcon name="key" size={16} className="mt-1 flex-shrink-0" />
                     <div>
                       <p className="text-xs text-crimson uppercase tracking-wide mb-1">Your Hidden Place</p>
                       <p className="text-navy-dark">{spell.concealment_suggestion.your_adaptation}</p>
@@ -1293,7 +1293,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
             />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {spell.materials.map((material, idx) => {
-                const IconComponent = MATERIAL_ICONS[material.icon] || Circle;
+                const materialBrandIcon = MATERIAL_ICONS[material.icon] || 'sparkles';
                 return (
                   <div 
                     key={idx}
@@ -1303,7 +1303,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                       {material.icon ? (
                         <span className="text-lg">{material.icon}</span>
                       ) : (
-                        <IconComponent className="w-5 h-5 text-gold" />
+                        <BrandIcon name={materialBrandIcon} size={20} />
                       )}
                     </div>
                     <div>
@@ -1443,7 +1443,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
           <section className="border border-gold/30 rounded-sm overflow-hidden">
             <div className="p-4 bg-gold/10">
               <h3 className="font-cinzel text-base text-crimson flex items-center gap-2 mb-4">
-                <History className="w-5 h-5" />
+                <BrandIcon name="skull" size={20} />
                 Historical Context & Sources
               </h3>
 
@@ -1465,7 +1465,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                 {spell.historical_context.practitioners && spell.historical_context.practitioners.length > 0 && (
                   <div>
                     <p className="font-montserrat text-xs text-navy-dark/70 uppercase tracking-wider flex items-center gap-1">
-                      <Users className="w-3 h-3" /> Historical Practitioners
+                      <BrandIcon name="eye" size={12} className="inline-block" /> Historical Practitioners
                     </p>
                     <div className="flex flex-wrap gap-2 mt-1">
                       {spell.historical_context.practitioners.map((name, idx) => (
@@ -1532,7 +1532,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
           <section className="border border-gold/30 rounded-sm overflow-hidden">
             <div className="p-4 bg-gold/10">
               <h3 className="font-cinzel text-base text-crimson flex items-center gap-2 mb-4">
-                <BookOpen className="w-5 h-5" />
+                <BrandIcon name="grimoire" size={20} />
                 References &amp; Where This Comes From
               </h3>
 
@@ -1560,7 +1560,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
 
                     {source.key_concept_used && (
                       <div className="flex items-start gap-2">
-                        <Key className="w-4 h-4 text-gold mt-0.5 flex-shrink-0" />
+                        <BrandIcon name="key" size={16} className="mt-0.5 flex-shrink-0" />
                         <div>
                           <p className="font-montserrat text-xs text-navy-dark/80 uppercase tracking-wider">Concept used</p>
                           <p className="font-montserrat text-sm text-navy-dark/80">{source.key_concept_used}</p>
@@ -1602,7 +1602,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                 {spell.historical_context && (
                   <div className="p-3 bg-gold/5 rounded-sm border border-gold/20 mt-3">
                     <div className="flex items-center gap-2 mb-2">
-                      <History className="w-4 h-4 text-navy-dark/70" />
+                      <BrandIcon name="skull" size={16} />
                       <span className="font-montserrat text-xs text-navy-dark/70 uppercase tracking-wider">Historical Context</span>
                     </div>
                     <div className="space-y-1 text-sm">
@@ -1776,7 +1776,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
               {/* Spellbook Response (Persona Voice) */}
               <div className="bg-gold/10/80 p-4 rounded-sm border border-gold/30">
                 <div className="flex items-center gap-2 mb-3">
-                  <BookOpen className="w-4 h-4 text-navy-dark/80" />
+                  <BrandIcon name="grimoire" size={16} />
                   <span className="font-cinzel text-sm text-crimson uppercase tracking-wider">
                     {researchData.persona_used}&apos;s Wisdom
                   </span>

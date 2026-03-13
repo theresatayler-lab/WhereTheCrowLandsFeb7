@@ -1,7 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { } from 'lucide-react';
 import { WaitlistForm } from '../components/WaitlistForm';
 import { BrandIcon } from '../components/BrandIcon';
 import {

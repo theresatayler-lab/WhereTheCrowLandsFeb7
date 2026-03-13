@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { aiAPI } from '../utils/api';
-import { Compass, Send, Loader2, ScrollText } from 'lucide-react';
+import { Send, Loader2 } from 'lucide-react';
+import { BrandIcon } from '../components/BrandIcon';
 import { toast } from 'sonner';
 import { 
   DarkSection, LightSection, GrandDivider, MysticalDivider, 
@@ -44,7 +45,7 @@ export const AIChat = () => {
         
         <div className="max-w-4xl mx-auto relative z-10">
           <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="text-center">
-            <Compass className="w-12 h-12 sm:w-14 sm:h-14 text-gold mx-auto mb-4"
+            <BrandIcon name="compass" size={48} className="mx-auto mb-4"
               style={{ filter: 'drop-shadow(0 0 15px rgba(200, 164, 77, 0.4))' }} />
             
             <h1 className="font-italiana text-3xl sm:text-4xl md:text-5xl text-gold-light mb-3"
@@ -83,7 +84,7 @@ export const AIChat = () => {
                 {messages.length === 0 ? (
                   <div className="flex flex-col items-center justify-center h-full text-center py-16">
                     <div className="w-16 h-16 rounded-full bg-gold/10 border border-gold/30 flex items-center justify-center mb-4">
-                      <ScrollText className="w-8 h-8 text-gold" />
+                      <BrandIcon name="book" size={32} />
                     </div>
                     <p className="font-montserrat text-sm text-navy-dark/70 max-w-md">
                       Start a conversation by asking about occult history, deities, practices, or any esoteric knowledge
@@ -116,7 +117,7 @@ export const AIChat = () => {
                       >
                         {msg.role === 'assistant' && (
                           <div className="flex items-center gap-2 mb-2">
-                            <ScrollText className="w-4 h-4 text-gold" />
+                            <BrandIcon name="book" size={16} />
                             <span className="font-cinzel text-xs text-gold">Research Assistant</span>
                           </div>
                         )}

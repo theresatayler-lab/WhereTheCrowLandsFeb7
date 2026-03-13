@@ -42,10 +42,15 @@ const ICON_MAP = {
   eightstar: BRAND_ASSETS.icons.eightstar,
   scissors: BRAND_ASSETS.icons.scissors,
 
-  // Anchor icons (gold, from /icons/anchors/gold/)
+  // UI icons (gold)
   sparkles: '/icons/ui/gold/icon-sparkles.png',
   grimoire: '/icons/ui/gold/icon-grimoire.png',
   crystalBall: '/icons/ui/gold/icon-crystal-ball.png',
+  saveBook: '/icons/ui/gold/icon-save-book.png',
+  libraryBooks: '/icons/ui/gold/icon-library-books.png',
+  copy: '/icons/ui/gold/icon-copy.png',
+  
+  // Anchor icons (gold)
   compass: '/icons/anchors/gold/anchor-compass.png',
   feather: '/icons/anchors/gold/anchor-feather.png',
   letter: '/icons/anchors/gold/anchor-letter.png',
@@ -64,6 +69,8 @@ const ICON_MAP = {
   bell: '/icons/anchors/gold/anchor-bell.png',
   crowFeather: '/icons/anchors/gold/anchor-crow-feather.png',
   tea: '/icons/anchors/gold/anchor-tea.png',
+  song: '/icons/anchors/gold/anchor-song.png',
+  photograph: '/icons/anchors/gold/anchor-photograph.png',
 };
 
 /**

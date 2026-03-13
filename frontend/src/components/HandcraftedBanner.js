@@ -1,5 +1,5 @@
 import React from 'react';
-import { Wand2 } from 'lucide-react';
+import { BrandIcon } from './BrandIcon';
 
 const HandcraftedBanner = ({ onClick }) => {
   return (
@@ -10,7 +10,7 @@ const HandcraftedBanner = ({ onClick }) => {
         data-testid="handcrafted-banner"
       >
         <div className="w-7 h-7 rounded-full bg-gold/20 border border-gold/40 flex items-center justify-center group-hover:bg-gold/30 transition-colors">
-          <Wand2 size={14} className="text-gold" />
+          <BrandIcon name="star" size={14} />
         </div>
         <span className="text-cream/90 text-sm font-medium">
           Prefer handcrafted?

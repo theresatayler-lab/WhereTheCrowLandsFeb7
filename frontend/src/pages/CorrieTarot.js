@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  Sparkles, Tv, Heart, ArrowLeft, RefreshCw, 
-  Loader2, Crown, Lock, ChevronDown, ChevronUp, Eye
+  ArrowLeft, RefreshCw, 
+  Loader2, ChevronDown, ChevronUp
 } from 'lucide-react';
+import { BrandIcon } from '../components/BrandIcon';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { setCurrentArchetype } from '../components/OnboardingModal';
@@ -291,7 +292,7 @@ const CorrieTarot = () => {
                   <img src={SHIGG_IMAGE} alt="Shigg" className="w-full h-full object-cover" />
                 </div>
                 <div className="absolute -bottom-1 -right-1 bg-crimson text-cream p-2 rounded-full border-2 border-gold/50">
-                  <Tv className="w-4 h-4" />
+                  <BrandIcon name="crystalBall" size={16} />
                 </div>
               </div>
             </div>
@@ -322,7 +323,7 @@ const CorrieTarot = () => {
                 <div className="absolute inset-1.5 border border-crimson/30 rounded-sm" />
                 <div className="absolute inset-0 bg-navy-mid rounded-sm" />
                 <div className="relative z-10 p-8">
-                  <Lock className="w-12 h-12 text-gold/50 mx-auto mb-4" />
+                  <BrandIcon name="key" size={48} opacity={0.5} className="mx-auto mb-4" />
                   <h3 className="font-cinzel text-xl text-gold mb-2">Please Log In</h3>
                   <p className="font-montserrat text-sm text-muted-brass/70 mb-6">
                     Log in to receive your Cobbles Oracle reading.
@@ -391,7 +392,7 @@ const CorrieTarot = () => {
                   <span className="absolute inset-0 border border-gold/50 rounded-sm" />
                   <span className="absolute inset-0.5 bg-gradient-to-r from-crimson-deep via-crimson to-crimson-deep rounded-sm" />
                   <span className="relative text-cream flex items-center gap-2">
-                    <Sparkles className="w-4 h-4" />
+                    <BrandIcon name="sparkles" size={16} className="inline-block" />
                     Create a Spell with Shigg
                   </span>
                 </button>
@@ -432,7 +433,7 @@ const CorrieTarot = () => {
                     >
                       {spread.pro && (
                         <span className="absolute top-2 right-2">
-                          <Crown className={`w-4 h-4 ${isPro ? 'text-gold' : 'text-navy-dark/40'}`} />
+                          <BrandIcon name="eightstar" size={16} className={isPro ? '' : 'opacity-40'} />
                         </span>
                       )}
                       <span className="text-2xl block mb-2">{spread.symbol}</span>
@@ -493,7 +494,7 @@ const CorrieTarot = () => {
                       </>
                     ) : (
                       <>
-                        <Eye className="w-5 h-5" />
+                        <BrandIcon name="eye" size={20} className="inline-block" />
                         Draw the Cards
                       </>
                     )}
@@ -511,7 +512,7 @@ const CorrieTarot = () => {
               <div className="absolute inset-0 bg-white/80 rounded-sm" />
               <div className="relative z-10 p-6">
                 <div className="flex items-start gap-4">
-                  <Tv className="w-8 h-8 text-crimson flex-shrink-0" />
+                  <BrandIcon name="crystalBall" size={32} />
                   <div>
                     <h4 className="font-cinzel text-lg text-crimson mb-2">About The Cobbles Oracle</h4>
                     <p className="font-montserrat text-sm text-navy-dark/80 leading-relaxed mb-3">

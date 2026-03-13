@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { authAPI } from '../utils/api';
 import { toast } from 'sonner';
 import { DarkSection, LightSection, PageBorderFrame, CornerFlourish, GrandDivider, MysticalDivider, ATMOSPHERIC_IMAGES } from '../components/OrnateElements';
-import { Sparkles, User, Mail, Lock, Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff } from 'lucide-react';
+import { BrandIcon } from '../components/BrandIcon';
 import { motion } from 'framer-motion';
 
 export const Auth = ({ onLogin }) => {
@@ -99,7 +100,7 @@ export const Auth = ({ onLogin }) => {
                   {!isLogin && (
                     <div>
                       <label className="block font-montserrat text-xs text-navy-dark/70 uppercase tracking-wider mb-2 flex items-center gap-2">
-                        <User className="w-3 h-3 text-crimson" />
+                        <BrandIcon name="eye" size={12} className="inline-block" />
                         Name
                       </label>
                       <input
@@ -116,7 +117,7 @@ export const Auth = ({ onLogin }) => {
 
                   <div>
                     <label className="block font-montserrat text-xs text-navy-dark/70 uppercase tracking-wider mb-2 flex items-center gap-2">
-                      <Mail className="w-3 h-3 text-crimson" />
+                      <BrandIcon name="letter" size={12} className="inline-block" />
                       Email
                     </label>
                     <input
@@ -132,7 +133,7 @@ export const Auth = ({ onLogin }) => {
 
                   <div>
                     <label className="block font-montserrat text-xs text-navy-dark/70 uppercase tracking-wider mb-2 flex items-center gap-2">
-                      <Lock className="w-3 h-3 text-crimson" />
+                      <BrandIcon name="key" size={12} className="inline-block" />
                       Password
                     </label>
                     <div className="relative">

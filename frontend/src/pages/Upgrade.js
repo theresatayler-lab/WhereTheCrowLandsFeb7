@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Check, Sparkles, BookOpen, Download, X, Loader2, Crown } from 'lucide-react';
+import { Check, X, Loader2 } from 'lucide-react';
+import { BrandIcon } from '../components/BrandIcon';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import axios from 'axios';
@@ -47,7 +48,7 @@ export const Upgrade = () => {
           <div className="max-w-4xl mx-auto relative z-10">
           <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="text-center">
             <div className="relative inline-block mb-6">
-              <Sparkles className="w-14 h-14 sm:w-16 sm:h-16 text-crimson-bright"
+              <BrandIcon name="sparkles" size={56} variant="pink" className="mx-auto"
                 style={{ filter: 'drop-shadow(0 0 15px rgba(185, 78, 106, 0.5))' }} />
             </div>
             
@@ -134,7 +135,7 @@ export const Upgrade = () => {
               {/* Best Value Badge */}
               <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-20 px-4 py-1 bg-crimson text-cream rounded-sm border border-gold/50">
                 <span className="font-montserrat text-xs tracking-widest uppercase flex items-center gap-1">
-                  <Crown className="w-3 h-3" /> Best Value
+                  <BrandIcon name="eightstar" size={12} className="inline-block" /> Best Value
                 </span>
               </div>
               
@@ -191,7 +192,7 @@ export const Upgrade = () => {
                         </>
                       ) : (
                         <>
-                          <Sparkles className="w-5 h-5" />
+                          <BrandIcon name="sparkles" size={20} className="inline-block" />
                           Upgrade to Pro - $19/Year
                         </>
                       )}
@@ -215,7 +216,7 @@ export const Upgrade = () => {
             className="grid md:grid-cols-3 gap-6 mt-8"
           >
             <LightOrnateCard hover={false} className="text-center">
-              <Sparkles className="w-10 h-10 text-crimson mx-auto mb-4" />
+              <BrandIcon name="sparkles" size={40} className="mx-auto mb-4" />
               <h4 className="font-cinzel text-lg text-crimson mb-2">Unlimited Spells</h4>
               <p className="font-montserrat text-sm text-navy-dark/70">
                 Generate as many rituals as you need, whenever inspiration strikes
@@ -223,7 +224,7 @@ export const Upgrade = () => {
             </LightOrnateCard>
 
             <LightOrnateCard hover={false} className="text-center">
-              <BookOpen className="w-10 h-10 text-crimson mx-auto mb-4" />
+              <BrandIcon name="grimoire" size={40} className="mx-auto mb-4" />
               <h4 className="font-cinzel text-lg text-crimson mb-2">Your Grimoire</h4>
               <p className="font-montserrat text-sm text-navy-dark/70">
                 Save and organize your spells in your personal grimoire forever
@@ -231,7 +232,7 @@ export const Upgrade = () => {
             </LightOrnateCard>
 
             <LightOrnateCard hover={false} className="text-center">
-              <Download className="w-10 h-10 text-crimson mx-auto mb-4" />
+              <BrandIcon name="saveBook" size={40} className="mx-auto mb-4" />
               <h4 className="font-cinzel text-lg text-crimson mb-2">PDF Export</h4>
               <p className="font-montserrat text-sm text-navy-dark/70">
                 Download beautiful PDFs of your spells for offline use

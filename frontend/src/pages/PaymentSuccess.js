@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { CheckCircle2, Loader2, Sparkles } from 'lucide-react';
+import { CheckCircle2, Loader2 } from 'lucide-react';
+import { BrandIcon } from '../components/BrandIcon';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { toast } from 'sonner';
 import axios from 'axios';
@@ -102,7 +103,7 @@ export const PaymentSuccess = () => {
               Welcome to Pro! Your account has been upgraded.
             </p>
             <div className="p-4 bg-primary/10 border border-primary/30 rounded-sm">
-              <Sparkles className="w-6 h-6 text-primary mx-auto mb-2" />
+              <BrandIcon name="sparkles" size={24} className="mx-auto mb-2" />
               <p className="font-montserrat text-sm text-primary font-medium">
                 You now have unlimited access to all features!
               </p>

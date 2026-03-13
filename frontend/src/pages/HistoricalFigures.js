@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { figuresAPI } from '../utils/api';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../components/ui/dialog';
-import { Users } from 'lucide-react';
+import { BrandIcon } from '../components/BrandIcon';
 import { DarkSection, PageBorderFrame, PageHeader, OrnateCard, GrandDivider } from '../components/OrnateElements';
 
 export const HistoricalFigures = () => {
@@ -28,7 +28,7 @@ export const HistoricalFigures = () => {
   if (loading) {
     return (
       <DarkSection className="min-h-screen flex items-center justify-center" variant="warm">
-        <Users className="w-12 h-12 text-gold animate-pulse" />
+        <BrandIcon name="familyPhoto" size={48} className="mx-auto mb-4 animate-pulse" />
       </DarkSection>
     );
   }
