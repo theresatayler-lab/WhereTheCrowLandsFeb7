@@ -6355,10 +6355,13 @@ async def stripe_webhook(request: Request):
 # Include router
 app.include_router(api_router)
 
+cors_env = os.environ.get('CORS_ORIGINS', '')
+cors_origins = [o.strip() for o in cors_env.split(',') if o.strip()] if cors_env else ['http://localhost:3000', 'http://localhost:3001']
+
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
-    allow_origins=os.environ.get('CORS_ORIGINS', '*').split(','),
+    allow_origins=cors_origins,
     allow_methods=['*'],
     allow_headers=['*'],
 )
