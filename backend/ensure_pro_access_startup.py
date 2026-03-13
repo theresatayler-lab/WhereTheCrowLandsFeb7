@@ -28,40 +28,44 @@ def ensure_pro_access():
         
         password_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
         
-        for email in emails:
-            existing_user = users_collection.find_one({'email': email})
-            
-            pro_data = {
-                'password_hash': password_hash,
-                'subscription_tier': 'pro',
-                'subscription_status': 'active',
-                'subscription_start': datetime.utcnow(),
-                'subscription_end': datetime.utcnow() + timedelta(days=36500),
-                'stripe_customer_id': 'manual_premium_user',
-                'stripe_subscription_id': 'manual_premium_subscription',
-                'updated_at': datetime.utcnow()
-            }
-            
-            if existing_user:
-                # Ensure id field exists
-                if 'id' not in existing_user:
-                    pro_data['id'] = str(uuid.uuid4())
-                users_collection.update_one({'email': email}, {'$set': pro_data})
-                print(f'✅ PRO access ensured: {email}')
-            else:
-                user_doc = {
-                    'id': str(uuid.uuid4()),
-                    'email': email,
-                    'password_hash': password_hash,
-                    'name': name,
-                    'spell_generation_count': 0,
-                    'created_at': datetime.utcnow(),
-                    **pro_data
-                }
-                users_collection.insert_one(user_doc)
-                print(f'✅ PRO account created: {email}')
+        # Only ensure the canonical email - do NOT create lowercase duplicate
+        canonical_email = 'TheresaTayler@me.com'
+        existing_user = users_collection.find_one({'email': canonical_email})
         
-        print('🎉 Theresa Tayler PRO access: CONFIRMED')
+        pro_data = {
+            'password_hash': password_hash,
+            'subscription_tier': 'pro',
+            'subscription_status': 'active',
+            'subscription_start': datetime.utcnow(),
+            'subscription_end': datetime.utcnow() + timedelta(days=36500),
+            'stripe_customer_id': 'manual_premium_user',
+            'stripe_subscription_id': 'manual_premium_subscription',
+            'updated_at': datetime.utcnow()
+        }
+        
+        if existing_user:
+            # Ensure id field exists
+            if 'id' not in existing_user:
+                pro_data['id'] = str(uuid.uuid4())
+            users_collection.update_one({'email': canonical_email}, {'$set': pro_data})
+            print(f'PRO access ensured: {canonical_email}')
+        else:
+            user_doc = {
+                'id': str(uuid.uuid4()),
+                'email': canonical_email,
+                'password_hash': password_hash,
+                'name': name,
+                'spell_generation_count': 0,
+                'created_at': datetime.utcnow(),
+                **pro_data
+            }
+            users_collection.insert_one(user_doc)
+            print(f'PRO account created: {canonical_email}')
+        
+        # Clean up any lowercase duplicate
+        users_collection.delete_many({'email': 'theresatayler@me.com'})
+        
+        print('Theresa Tayler PRO access: CONFIRMED')
         return True
     except Exception as e:
         print(f'⚠️  Could not ensure PRO access: {e}')

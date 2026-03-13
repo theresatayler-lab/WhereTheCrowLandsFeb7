@@ -692,7 +692,11 @@ async def register(user_data: UserRegister):
 
 @api_router.post('/auth/login', response_model=AuthResponse)
 async def login(credentials: UserLogin):
-    user = await db.users.find_one({'email': credentials.email}, {'_id': 0})
+    # Case-insensitive email lookup
+    user = await db.users.find_one(
+        {'email': {'$regex': f'^{credentials.email}$', '$options': 'i'}},
+        {'_id': 0}
+    )
     if not user or not verify_password(credentials.password, user['password_hash']):
         raise HTTPException(status_code=401, detail='Invalid credentials')
     
