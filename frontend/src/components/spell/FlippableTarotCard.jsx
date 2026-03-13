@@ -127,7 +127,7 @@ export default function FlippableTarotCard({
 
             {/* Essence */}
             {essence && (
-              <p className="font-crimson text-xs sm:text-sm text-stone-700 italic text-center mb-3 leading-relaxed flex-shrink-0">
+              <p className="font-crimson text-xs sm:text-sm text-navy-dark/80 italic text-center mb-3 leading-relaxed flex-shrink-0">
                 "{essence}"
               </p>
             )}
@@ -139,7 +139,7 @@ export default function FlippableTarotCard({
                   <span className="font-montserrat text-[10px] text-amber-800/60 uppercase tracking-wider block">
                     Key Action
                   </span>
-                  <span className="font-crimson text-xs text-stone-800">
+                  <span className="font-crimson text-xs text-navy-dark">
                     {keyAction}
                   </span>
                 </div>
@@ -149,7 +149,7 @@ export default function FlippableTarotCard({
                   <span className="font-montserrat text-[10px] text-amber-800/60 uppercase tracking-wider block">
                     Timing
                   </span>
-                  <span className="font-crimson text-xs text-stone-800">
+                  <span className="font-crimson text-xs text-navy-dark">
                     {timing}
                   </span>
                 </div>

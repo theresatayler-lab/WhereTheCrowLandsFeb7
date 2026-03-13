@@ -26,7 +26,7 @@ const ARCHETYPE_STYLES = {
     description: 'Celtic goddess aesthetic with the Morrigan, candlelit séances, Pre-Raphaelite oil painting quality',
     emoji: '🪶',
     iconPath: '/icons/guides/guide-cathleen.png',
-    color: 'from-slate-800 to-slate-900',
+    color: 'from-navy-dark to-navy-mid',
     borderColor: 'border-blue-400/50',
     keywords: ['Morrigan', 'crows', 'séance', 'Celtic', 'moonlight']
   },
@@ -37,7 +37,7 @@ const ARCHETYPE_STYLES = {
     description: 'Victorian spiritualist photography, spirit photography with ethereal double exposures, shadow work',
     emoji: '🧵',
     iconPath: '/icons/guides/guide-katherine.png',
-    color: 'from-stone-800 to-stone-900',
+    color: 'from-navy-dark to-navy-mid',
     borderColor: 'border-purple-400/50',
     keywords: ['Victorian', 'séance', 'spirit photography', 'textiles', 'shadow']
   },
@@ -58,7 +58,7 @@ const ARCHETYPE_STYLES = {
     title: 'Traditional Occult',
     description: 'Vintage grimoire illustrations, woodcut engravings, aged parchment with alchemical symbols',
     emoji: '📖',
-    color: 'from-zinc-800 to-zinc-900',
+    color: 'from-navy-dark to-navy-mid',
     borderColor: 'border-gold/50',
     keywords: ['grimoire', 'woodcut', 'alchemical', 'vintage', 'mystical']
   }

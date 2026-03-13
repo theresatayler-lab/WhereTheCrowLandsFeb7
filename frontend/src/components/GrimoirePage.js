@@ -59,8 +59,8 @@ const ARCHETYPE_STYLES = {
     decorativeBorder: 'border-amber-600/30',
     headerGradient: 'from-amber-900/30 via-amber-800/20 to-transparent',
     cardGradient: 'from-amber-950/90 via-amber-900/80 to-amber-950/90',
-    textMuted: 'text-stone-600',
-    textOnVellum: 'text-stone-800',
+    textMuted: 'text-navy-dark/70',
+    textOnVellum: 'text-navy-dark',
   },
   // Cathleen - Deep teal/emerald (Irish, protective, voice magic)
   cathleen: {
@@ -70,9 +70,9 @@ const ARCHETYPE_STYLES = {
     bgAccent: 'bg-[#F3EFE8]', // Solid vellum - CONTRAST LOCKED
     decorativeBorder: 'border-teal-600/30',
     headerGradient: 'from-teal-900/30 via-teal-800/20 to-transparent',
-    cardGradient: 'from-slate-900/90 via-teal-950/80 to-slate-900/90',
-    textMuted: 'text-stone-600',
-    textOnVellum: 'text-stone-800',
+    cardGradient: 'from-navy-dark/90 via-teal-950/80 to-navy-dark/90',
+    textMuted: 'text-navy-dark/70',
+    textOnVellum: 'text-navy-dark',
   },
   // Katherine - Rich purple/violet (ceremonial, Golden Dawn, precise)
   katherine: {
@@ -82,9 +82,9 @@ const ARCHETYPE_STYLES = {
     bgAccent: 'bg-[#F3EFE8]', // Solid vellum - CONTRAST LOCKED
     decorativeBorder: 'border-violet-600/30',
     headerGradient: 'from-violet-900/30 via-violet-800/20 to-transparent',
-    cardGradient: 'from-slate-900/90 via-violet-950/80 to-slate-900/90',
-    textMuted: 'text-stone-600',
-    textOnVellum: 'text-stone-800',
+    cardGradient: 'from-navy-dark/90 via-violet-950/80 to-navy-dark/90',
+    textMuted: 'text-navy-dark/70',
+    textOnVellum: 'text-navy-dark',
   },
   // Theresa - Cool indigo/slate (investigative, pattern-breaking, seer)
   theresa: {
@@ -93,10 +93,10 @@ const ARCHETYPE_STYLES = {
     accentColorLight: 'text-indigo-400',
     bgAccent: 'bg-[#F3EFE8]', // Solid vellum - CONTRAST LOCKED
     decorativeBorder: 'border-indigo-500/30',
-    headerGradient: 'from-indigo-900/30 via-slate-800/20 to-transparent',
-    cardGradient: 'from-slate-900/90 via-indigo-950/80 to-slate-900/90',
-    textMuted: 'text-stone-600',
-    textOnVellum: 'text-stone-800',
+    headerGradient: 'from-indigo-900/30 via-navy-mid/20 to-transparent',
+    cardGradient: 'from-navy-dark/90 via-indigo-950/80 to-navy-dark/90',
+    textMuted: 'text-navy-dark/70',
+    textOnVellum: 'text-navy-dark',
   },
   // Brenda - Warm rose/copper (chronicler, memory keeper, crow communer)
   brenda: {
@@ -106,9 +106,9 @@ const ARCHETYPE_STYLES = {
     bgAccent: 'bg-[#F3EFE8]', // Solid vellum - CONTRAST LOCKED
     decorativeBorder: 'border-rose-600/30',
     headerGradient: 'from-rose-900/30 via-rose-800/20 to-transparent',
-    cardGradient: 'from-slate-900/90 via-rose-950/80 to-slate-900/90',
-    textMuted: 'text-stone-600',
-    textOnVellum: 'text-stone-800',
+    cardGradient: 'from-navy-dark/90 via-rose-950/80 to-navy-dark/90',
+    textMuted: 'text-navy-dark/70',
+    textOnVellum: 'text-navy-dark',
   },
   // Legacy IDs (for backwards compatibility)
   shiggy: {
@@ -119,8 +119,8 @@ const ARCHETYPE_STYLES = {
     decorativeBorder: 'border-amber-600/30',
     headerGradient: 'from-amber-900/30 via-amber-800/20 to-transparent',
     cardGradient: 'from-amber-950/90 via-amber-900/80 to-amber-950/90',
-    textMuted: 'text-stone-600',
-    textOnVellum: 'text-stone-800',
+    textMuted: 'text-navy-dark/70',
+    textOnVellum: 'text-navy-dark',
   },
   kathleen: {
     borderColor: 'border-teal-600',
@@ -129,9 +129,9 @@ const ARCHETYPE_STYLES = {
     bgAccent: 'bg-[#F3EFE8]',
     decorativeBorder: 'border-teal-600/30',
     headerGradient: 'from-teal-900/30 via-teal-800/20 to-transparent',
-    cardGradient: 'from-slate-900/90 via-teal-950/80 to-slate-900/90',
-    textMuted: 'text-stone-600',
-    textOnVellum: 'text-stone-800',
+    cardGradient: 'from-navy-dark/90 via-teal-950/80 to-navy-dark/90',
+    textMuted: 'text-navy-dark/70',
+    textOnVellum: 'text-navy-dark',
   },
   catherine: {
     borderColor: 'border-violet-600',
@@ -140,20 +140,20 @@ const ARCHETYPE_STYLES = {
     bgAccent: 'bg-[#F3EFE8]',
     decorativeBorder: 'border-violet-600/30',
     headerGradient: 'from-violet-900/30 via-violet-800/20 to-transparent',
-    cardGradient: 'from-slate-900/90 via-violet-950/80 to-slate-900/90',
-    textMuted: 'text-stone-600',
-    textOnVellum: 'text-stone-800',
+    cardGradient: 'from-navy-dark/90 via-violet-950/80 to-navy-dark/90',
+    textMuted: 'text-navy-dark/70',
+    textOnVellum: 'text-navy-dark',
   },
   neutral: {
-    borderColor: 'border-stone-500',
-    accentColor: 'text-stone-700',
-    accentColorLight: 'text-stone-400',
+    borderColor: 'border-gold/50',
+    accentColor: 'text-navy-dark/80',
+    accentColorLight: 'text-navy-dark/50',
     bgAccent: 'bg-[#F3EFE8]',
-    decorativeBorder: 'border-stone-400/30',
-    headerGradient: 'from-slate-800/30 to-transparent',
-    cardGradient: 'from-slate-900/90 via-slate-800/80 to-slate-900/90',
-    textMuted: 'text-stone-600',
-    textOnVellum: 'text-stone-800',
+    decorativeBorder: 'border-gold/30',
+    headerGradient: 'from-navy-mid/30 to-transparent',
+    cardGradient: 'from-navy-dark/90 via-navy-mid/80 to-navy-dark/90',
+    textMuted: 'text-navy-dark/70',
+    textOnVellum: 'text-navy-dark',
   },
 };
 
@@ -200,20 +200,20 @@ const PrintablesBlock = ({ tarotImageBase64, sigilImageBase64, spellTitle, tarot
           <Download className="w-5 h-5" />
           Printable Elements
         </h3>
-        <p className="font-montserrat text-xs text-stone-600 text-center mb-4">
+        <p className="font-montserrat text-xs text-navy-dark/70 text-center mb-4">
           Generating your personalized tarot card and sigil...
         </p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="text-center">
-            <p className="font-montserrat text-xs text-stone-600 mb-2 uppercase tracking-wider">Tarot Card</p>
+            <p className="font-montserrat text-xs text-navy-dark/70 mb-2 uppercase tracking-wider">Tarot Card</p>
             <div className="w-full max-w-[180px] mx-auto aspect-[2/3] bg-amber-800/10 rounded-sm animate-pulse" />
           </div>
           <div className="text-center">
-            <p className="font-montserrat text-xs text-stone-600 mb-2 uppercase tracking-wider">Card Back</p>
+            <p className="font-montserrat text-xs text-navy-dark/70 mb-2 uppercase tracking-wider">Card Back</p>
             <div className="w-full max-w-[180px] mx-auto aspect-[2/3] bg-amber-800/10 rounded-sm animate-pulse" />
           </div>
           <div className="text-center">
-            <p className="font-montserrat text-xs text-stone-600 mb-2 uppercase tracking-wider">Sigil</p>
+            <p className="font-montserrat text-xs text-navy-dark/70 mb-2 uppercase tracking-wider">Sigil</p>
             <div className="w-full max-w-[150px] mx-auto aspect-square bg-amber-800/10 rounded-sm animate-pulse" />
           </div>
         </div>
@@ -229,7 +229,7 @@ const PrintablesBlock = ({ tarotImageBase64, sigilImageBase64, spellTitle, tarot
         <Download className="w-5 h-5" />
         Printable Elements
       </h3>
-      <p className="font-montserrat text-xs text-stone-700 text-center mb-4">
+      <p className="font-montserrat text-xs text-navy-dark/80 text-center mb-4">
         Right-click to save these images for your physical grimoire
       </p>
       
@@ -237,7 +237,7 @@ const PrintablesBlock = ({ tarotImageBase64, sigilImageBase64, spellTitle, tarot
         {/* Tarot Card - Front */}
         {tarotImageBase64 && (
           <div className="text-center">
-            <p className="font-montserrat text-xs text-stone-600 mb-2 uppercase tracking-wider">
+            <p className="font-montserrat text-xs text-navy-dark/70 mb-2 uppercase tracking-wider">
               Tarot Card (Front)
             </p>
             <img 
@@ -251,7 +251,7 @@ const PrintablesBlock = ({ tarotImageBase64, sigilImageBase64, spellTitle, tarot
         {/* Tarot Card - Back (Text version with essence) */}
         {tarotCard && (
           <div className="text-center">
-            <p className="font-montserrat text-xs text-stone-600 mb-2 uppercase tracking-wider">
+            <p className="font-montserrat text-xs text-navy-dark/70 mb-2 uppercase tracking-wider">
               Tarot Card (Back)
             </p>
             <div className="w-full max-w-[180px] mx-auto aspect-[2/3] rounded-sm border border-amber-800/30 shadow-md bg-gradient-to-br from-navy-dark via-navy-mid to-navy-dark p-3 flex flex-col justify-between">
@@ -280,7 +280,7 @@ const PrintablesBlock = ({ tarotImageBase64, sigilImageBase64, spellTitle, tarot
         {/* Sigil */}
         {sigilImageBase64 && (
           <div className="text-center">
-            <p className="font-montserrat text-xs text-stone-600 mb-2 uppercase tracking-wider">
+            <p className="font-montserrat text-xs text-navy-dark/70 mb-2 uppercase tracking-wider">
               Sigil
             </p>
             <img 
@@ -505,12 +505,12 @@ const TarotCardView = ({ spell, archetype, style, imageBase64, onViewFull, onCop
                   
                   {/* Cathleen's Ward Preview */}
                   {spell.suggested_ward && (
-                    <div className="bg-slate-800/60 backdrop-blur-sm border border-slate-500/40 rounded-sm p-2 mt-2">
+                    <div className="bg-navy-mid/60 backdrop-blur-sm border border-gold/40 rounded-sm p-2 mt-2">
                       <div className="flex items-center justify-center gap-2">
                         <img src="/icons/anchors/gold/anchor-feather.png" alt="" className="w-5 h-5" />
                         <div className="text-center">
-                          <p className="font-montserrat text-[10px] text-slate-400 uppercase tracking-wider">Your Ward</p>
-                          <p className="font-crimson text-sm text-slate-200">{spell.suggested_ward.name}</p>
+                          <p className="font-montserrat text-[10px] text-cream/50 uppercase tracking-wider">Your Ward</p>
+                          <p className="font-crimson text-sm text-cream/80">{spell.suggested_ward.name}</p>
                         </div>
                       </div>
                     </div>
@@ -1003,7 +1003,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
             className={`px-4 py-2 rounded-sm font-montserrat tracking-wider text-xs transition-all ${
               viewMode === 'card' 
                 ? 'bg-amber-800 text-amber-50' 
-                : 'bg-transparent text-stone-700 hover:text-amber-900'
+                : 'bg-transparent text-navy-dark/80 hover:text-amber-900'
             }`}
           >
             <img src="/icons/ui/gold/icon-sparkles.png" alt="" className="w-3 h-3 inline-block mr-1 opacity-70" /> Card View
@@ -1013,7 +1013,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
             className={`px-4 py-2 rounded-sm font-montserrat tracking-wider text-xs transition-all ${
               viewMode === 'full' 
                 ? 'bg-amber-800 text-amber-50' 
-                : 'bg-transparent text-stone-700 hover:text-amber-900'
+                : 'bg-transparent text-navy-dark/80 hover:text-amber-900'
             }`}
           >
             Full Grimoire
@@ -1052,7 +1052,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
               {spell.title || 'Untitled Spell'}
             </h1>
             {spell.subtitle && spell.subtitle !== 'null' && (
-              <p className="font-montserrat text-sm text-stone-700 mt-1">{spell.subtitle}</p>
+              <p className="font-montserrat text-sm text-navy-dark/80 mt-1">{spell.subtitle}</p>
             )}
           </div>
         </div>
@@ -1060,7 +1060,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
         <div className={`p-6 ${style.bgAccent} border-b border-amber-800/30`}>
           <h1 className="ritual-title text-3xl md:text-4xl text-amber-900">{spell.title || 'Untitled Spell'}</h1>
           {spell.subtitle && spell.subtitle !== 'null' && (
-            <p className="font-montserrat text-sm text-stone-700 mt-1">{spell.subtitle}</p>
+            <p className="font-montserrat text-sm text-navy-dark/80 mt-1">{spell.subtitle}</p>
           )}
         </div>
       )}
@@ -1076,7 +1076,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
             />
             <div>
               <p className="font-cinzel text-sm text-amber-900">Crafted by {archetype.name}</p>
-              <p className="font-montserrat text-xs text-stone-600">{archetype.title}</p>
+              <p className="font-montserrat text-xs text-navy-dark/70">{archetype.title}</p>
             </div>
           </div>
         )}
@@ -1084,7 +1084,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
         {/* Introduction - CONTRAST LOCKED: Solid vellum plate */}
         {spell.introduction && (
           <div className="p-4 bg-[#F3EFE8] border-l-4 border-amber-700 rounded-r-sm shadow-sm">
-            <p className="font-crimson text-base md:text-lg text-stone-800 italic leading-relaxed">
+            <p className="font-crimson text-base md:text-lg text-navy-dark italic leading-relaxed">
               {spell.introduction}
             </p>
           </div>
@@ -1116,12 +1116,12 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                   <div className="space-y-3">
                     {spell.sources.map((source, idx) => (
                       <div key={idx} className="p-3 bg-[#F3EFE8] border border-amber-600/30 rounded-sm">
-                        <p className="font-montserrat text-sm text-stone-800">
+                        <p className="font-montserrat text-sm text-navy-dark">
                           <strong>{source.author}</strong>
                           {source.work && <>, <em>{source.work}</em></>}
                         </p>
                         {source.relevance && (
-                          <p className="font-montserrat text-xs text-stone-600 mt-1">{source.relevance}</p>
+                          <p className="font-montserrat text-xs text-navy-dark/70 mt-1">{source.relevance}</p>
                         )}
                         {source.learn_more_url && (
                           <a
@@ -1142,8 +1142,8 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
 
             {/* Ethics Statement */}
             {spell.ethics_statement && (
-              <div className="mt-4 p-3 bg-stone-100/60 border border-stone-300/30 rounded-sm">
-                <p className="font-montserrat text-xs text-stone-600 italic text-center">{spell.ethics_statement}</p>
+              <div className="mt-4 p-3 bg-gold/5 border border-gold/20 rounded-sm">
+                <p className="font-montserrat text-xs text-navy-dark/70 italic text-center">{spell.ethics_statement}</p>
               </div>
             )}
           </div>
@@ -1172,7 +1172,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                   </div>
                   <div>
                     <p className="font-cinzel text-xs text-teal-700 uppercase tracking-wider">Cathleen&apos;s Gift</p>
-                    <h3 className="font-cinzel text-xl text-stone-800">Your Ward: {spell.suggested_ward.name}</h3>
+                    <h3 className="font-cinzel text-xl text-navy-dark">Your Ward: {spell.suggested_ward.name}</h3>
                   </div>
                 </div>
                 
@@ -1188,31 +1188,31 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                   <Heart className="w-4 h-4 text-teal-600 mt-1 flex-shrink-0" />
                   <div>
                     <p className="text-xs text-teal-700 uppercase tracking-wide mb-1">What It Means</p>
-                    <p className="text-stone-800">{spell.suggested_ward.meaning}</p>
+                    <p className="text-navy-dark">{spell.suggested_ward.meaning}</p>
                   </div>
                 </div>
                 
                 <div className="flex items-start gap-2">
-                  <Eye className="w-4 h-4 text-slate-600 mt-1 flex-shrink-0" />
+                  <Eye className="w-4 h-4 text-navy-dark/70 mt-1 flex-shrink-0" />
                   <div>
-                    <p className="text-xs text-slate-600 uppercase tracking-wide mb-1">How to Find It</p>
-                    <p className="text-stone-800">{spell.suggested_ward.how_to_find}</p>
+                    <p className="text-xs text-navy-dark/70 uppercase tracking-wide mb-1">How to Find It</p>
+                    <p className="text-navy-dark">{spell.suggested_ward.how_to_find}</p>
                   </div>
                 </div>
                 
                 {spell.suggested_ward.activation && (
                   <div className="flex items-start gap-2">
-                    <Sparkles className="w-4 h-4 text-slate-600 mt-1 flex-shrink-0" />
+                    <Sparkles className="w-4 h-4 text-navy-dark/70 mt-1 flex-shrink-0" />
                     <div>
-                      <p className="text-xs text-slate-600 uppercase tracking-wide mb-1">Awakening Your Ward</p>
-                      <p className="text-stone-800">{spell.suggested_ward.activation}</p>
+                      <p className="text-xs text-navy-dark/70 uppercase tracking-wide mb-1">Awakening Your Ward</p>
+                      <p className="text-navy-dark">{spell.suggested_ward.activation}</p>
                     </div>
                   </div>
                 )}
               </div>
               
-              <div className="mt-4 pt-4 border-t border-slate-400/30">
-                <p className="font-montserrat text-xs text-slate-600 italic text-center">
+              <div className="mt-4 pt-4 border-t border-gold/30">
+                <p className="font-montserrat text-xs text-navy-dark/70 italic text-center">
                   &ldquo;Carry your ward close—a physical anchor for invisible magic.&rdquo; — Cathleen
                 </p>
               </div>
@@ -1230,7 +1230,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                 </div>
                 <div>
                   <p className="font-cinzel text-xs text-teal-700 uppercase tracking-wider">Cathleen&apos;s Secret</p>
-                  <h3 className="font-cinzel text-xl text-stone-800">{spell.concealment_suggestion.title || 'Keep Your Secrets Close'}</h3>
+                  <h3 className="font-cinzel text-xl text-navy-dark">{spell.concealment_suggestion.title || 'Keep Your Secrets Close'}</h3>
                 </div>
               </div>
               
@@ -1241,7 +1241,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                     <History className="w-4 h-4 text-teal-600 mt-1 flex-shrink-0" />
                     <div>
                       <p className="text-xs text-teal-700 uppercase tracking-wide mb-1">From the Secret History</p>
-                      <p className="text-stone-800 italic">{spell.concealment_suggestion.historical_inspiration}</p>
+                      <p className="text-navy-dark italic">{spell.concealment_suggestion.historical_inspiration}</p>
                     </div>
                   </div>
                 )}
@@ -1252,7 +1252,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                     <Key className="w-4 h-4 text-teal-600 mt-1 flex-shrink-0" />
                     <div>
                       <p className="text-xs text-teal-700 uppercase tracking-wide mb-1">Your Hidden Place</p>
-                      <p className="text-stone-800">{spell.concealment_suggestion.your_adaptation}</p>
+                      <p className="text-navy-dark">{spell.concealment_suggestion.your_adaptation}</p>
                     </div>
                   </div>
                 )}
@@ -1261,7 +1261,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                 {spell.concealment_suggestion.suggested_items && spell.concealment_suggestion.suggested_items.length > 0 && (
                   <div className="flex flex-wrap gap-2 mt-3">
                     {spell.concealment_suggestion.suggested_items.map((item, idx) => (
-                      <span key={idx} className="px-3 py-1 bg-teal-100 border border-teal-300 text-stone-800 rounded-full text-xs">
+                      <span key={idx} className="px-3 py-1 bg-teal-100 border border-teal-300 text-navy-dark rounded-full text-xs">
                         {item}
                       </span>
                     ))}
@@ -1271,7 +1271,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                 {/* Cathleen's Note */}
                 {spell.concealment_suggestion.cathleen_note && (
                   <div className="mt-4 pt-4 border-t border-teal-300">
-                    <p className="text-stone-700 italic text-center text-xs">
+                    <p className="text-navy-dark/80 italic text-center text-xs">
                       &ldquo;{spell.concealment_suggestion.cathleen_note}&rdquo;
                     </p>
                     <p className="text-teal-600 text-xs text-center mt-1">— Cathleen</p>
@@ -1306,9 +1306,9 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                       )}
                     </div>
                     <div>
-                      <p className="font-montserrat text-sm font-medium text-stone-800">{material.name}</p>
+                      <p className="font-montserrat text-sm font-medium text-navy-dark">{material.name}</p>
                       {material.note && (
-                        <p className="font-montserrat text-xs text-stone-600 mt-0.5">{material.note}</p>
+                        <p className="font-montserrat text-xs text-navy-dark/70 mt-0.5">{material.note}</p>
                       )}
                     </div>
                   </div>
@@ -1335,7 +1335,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                 className={`px-3 py-1 rounded-sm text-xs font-montserrat tracking-wider transition-all ${
                   checklistMode 
                     ? 'bg-amber-800 text-amber-50' 
-                    : 'bg-amber-900/20 text-stone-700 hover:bg-amber-900/30'
+                    : 'bg-amber-900/20 text-navy-dark/80 hover:bg-amber-900/30'
                 }`}
               >
                 {checklistMode ? 'Checklist On' : 'Track Progress'}
@@ -1344,7 +1344,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
             
             {/* Working description */}
             {spell.the_working?.description && (
-              <p className="font-montserrat text-sm text-stone-800 mb-4">{spell.the_working.description}</p>
+              <p className="font-montserrat text-sm text-navy-dark mb-4">{spell.the_working.description}</p>
             )}
             
             <div className="space-y-4">
@@ -1375,12 +1375,12 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                     
                     <div className={`transition-opacity ${checklistMode && completedSteps.has(stepNum) ? 'opacity-50' : ''}`}>
                       <h3 className="font-cinzel text-base text-amber-900 mb-1">{step.title}</h3>
-                      <p className="font-montserrat text-sm text-stone-800 leading-relaxed">{step.instruction}</p>
+                      <p className="font-montserrat text-sm text-navy-dark leading-relaxed">{step.instruction}</p>
                       {step.spoken_words && (
                         <p className="font-crimson text-sm text-amber-800 italic mt-2">&ldquo;{step.spoken_words}&rdquo;</p>
                       )}
                       {step.duration && (
-                        <p className="font-montserrat text-xs text-stone-600 mt-2 flex items-center gap-1">
+                        <p className="font-montserrat text-xs text-navy-dark/70 mt-2 flex items-center gap-1">
                           <Clock className="w-3 h-3" /> {step.duration}
                         </p>
                       )}
@@ -1413,14 +1413,14 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
             <div className="space-y-4">
               {spell.spoken_words.invocation && (
                 <div>
-                  <p className="font-montserrat text-xs text-stone-600 uppercase tracking-wider mb-1">Opening Invocation</p>
-                  <p className="font-crimson text-base text-stone-800 italic">&ldquo;{spell.spoken_words.invocation}&rdquo;</p>
+                  <p className="font-montserrat text-xs text-navy-dark/70 uppercase tracking-wider mb-1">Opening Invocation</p>
+                  <p className="font-crimson text-base text-navy-dark italic">&ldquo;{spell.spoken_words.invocation}&rdquo;</p>
                 </div>
               )}
               
               {spell.spoken_words.main_incantation && (
                 <div className="py-4 border-y border-amber-800/30">
-                  <p className="font-montserrat text-xs text-stone-600 uppercase tracking-wider mb-2">Main Incantation</p>
+                  <p className="font-montserrat text-xs text-navy-dark/70 uppercase tracking-wider mb-2">Main Incantation</p>
                   <p className="font-crimson text-lg text-amber-900 text-center leading-relaxed">
                     &ldquo;{spell.spoken_words.main_incantation}&rdquo;
                   </p>
@@ -1429,8 +1429,8 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
               
               {spell.spoken_words.closing && (
                 <div>
-                  <p className="font-montserrat text-xs text-stone-600 uppercase tracking-wider mb-1">Closing Words</p>
-                  <p className="font-crimson text-base text-stone-800 italic">&ldquo;{spell.spoken_words.closing}&rdquo;</p>
+                  <p className="font-montserrat text-xs text-navy-dark/70 uppercase tracking-wider mb-1">Closing Words</p>
+                  <p className="font-crimson text-base text-navy-dark italic">&ldquo;{spell.spoken_words.closing}&rdquo;</p>
                 </div>
               )}
             </div>
@@ -1449,26 +1449,26 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
               <div className="space-y-4">
                 {spell.historical_context.tradition && (
                   <div>
-                    <p className="font-montserrat text-xs text-stone-600 uppercase tracking-wider">Tradition</p>
-                    <p className="font-montserrat text-sm text-stone-800">{spell.historical_context.tradition}</p>
+                    <p className="font-montserrat text-xs text-navy-dark/70 uppercase tracking-wider">Tradition</p>
+                    <p className="font-montserrat text-sm text-navy-dark">{spell.historical_context.tradition}</p>
                   </div>
                 )}
 
                 {spell.historical_context.time_period && (
                   <div>
-                    <p className="font-montserrat text-xs text-stone-600 uppercase tracking-wider">Time Period</p>
-                    <p className="font-montserrat text-sm text-stone-800">{spell.historical_context.time_period}</p>
+                    <p className="font-montserrat text-xs text-navy-dark/70 uppercase tracking-wider">Time Period</p>
+                    <p className="font-montserrat text-sm text-navy-dark">{spell.historical_context.time_period}</p>
                   </div>
                 )}
 
                 {spell.historical_context.practitioners && spell.historical_context.practitioners.length > 0 && (
                   <div>
-                    <p className="font-montserrat text-xs text-stone-600 uppercase tracking-wider flex items-center gap-1">
+                    <p className="font-montserrat text-xs text-navy-dark/70 uppercase tracking-wider flex items-center gap-1">
                       <Users className="w-3 h-3" /> Historical Practitioners
                     </p>
                     <div className="flex flex-wrap gap-2 mt-1">
                       {spell.historical_context.practitioners.map((name, idx) => (
-                        <span key={idx} className="px-2 py-1 bg-amber-900/15 text-stone-800 rounded-sm text-xs font-montserrat">
+                        <span key={idx} className="px-2 py-1 bg-amber-900/15 text-navy-dark rounded-sm text-xs font-montserrat">
                           {name}
                         </span>
                       ))}
@@ -1478,15 +1478,15 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
 
                 {spell.historical_context.sources && spell.historical_context.sources.length > 0 && (
                   <div>
-                    <p className="font-montserrat text-xs text-stone-600 uppercase tracking-wider mb-2">Sources & References</p>
+                    <p className="font-montserrat text-xs text-navy-dark/70 uppercase tracking-wider mb-2">Sources & References</p>
                     <div className="space-y-2">
                       {spell.historical_context.sources.map((source, idx) => (
                         <div key={idx} className="p-3 bg-amber-900/10 rounded-sm">
-                          <p className="font-montserrat text-sm text-stone-800">
+                          <p className="font-montserrat text-sm text-navy-dark">
                             <strong>{source.author}</strong>, <em>{source.work}</em> ({source.year})
                           </p>
                           {source.relevance && (
-                            <p className="font-montserrat text-xs text-stone-600 mt-1">{source.relevance}</p>
+                            <p className="font-montserrat text-xs text-navy-dark/70 mt-1">{source.relevance}</p>
                           )}
                         </div>
                       ))}
@@ -1496,8 +1496,8 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
 
                 {spell.historical_context.cultural_notes && (
                   <div className="p-3 bg-amber-800/10 border-l-2 border-amber-800 rounded-r-sm">
-                    <p className="font-montserrat text-xs text-stone-600 uppercase tracking-wider mb-1">Cultural Notes</p>
-                    <p className="font-crimson text-sm text-stone-800 italic">{spell.historical_context.cultural_notes}</p>
+                    <p className="font-montserrat text-xs text-navy-dark/70 uppercase tracking-wider mb-1">Cultural Notes</p>
+                    <p className="font-crimson text-sm text-navy-dark italic">{spell.historical_context.cultural_notes}</p>
                   </div>
                 )}
               </div>
@@ -1513,11 +1513,11 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
               {spell.variations.map((variation, idx) => (
                 <div key={idx} className="p-3 bg-amber-900/10 rounded-sm">
                   {typeof variation === 'string' ? (
-                    <p className="font-montserrat text-sm text-stone-800">{variation}</p>
+                    <p className="font-montserrat text-sm text-navy-dark">{variation}</p>
                   ) : (
                     <>
-                      <p className="font-montserrat text-sm font-medium text-stone-800">{variation.name}</p>
-                      <p className="font-montserrat text-xs text-stone-600">{variation.description}</p>
+                      <p className="font-montserrat text-sm font-medium text-navy-dark">{variation.name}</p>
+                      <p className="font-montserrat text-xs text-navy-dark/70">{variation.description}</p>
                     </>
                   )}
                 </div>
@@ -1543,7 +1543,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                       <div className="flex-1 min-w-0">
                         <p className="font-cinzel text-sm font-medium text-amber-900">
                           {source.name}
-                          {source.author && <span className="text-stone-600 font-montserrat text-xs ml-1">&mdash; {source.author}</span>}
+                          {source.author && <span className="text-navy-dark/70 font-montserrat text-xs ml-1">&mdash; {source.author}</span>}
                         </p>
                       </div>
                     </div>
@@ -1551,7 +1551,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                     {(source.connection_to_spell || source.connection) && (
                       <div className="bg-white/60 p-3 rounded border-l-2 border-amber-700">
                         <p className="font-montserrat text-xs text-amber-800 uppercase tracking-wider mb-1">Why this matters here</p>
-                        <p className="font-crimson text-sm text-stone-700 leading-relaxed">
+                        <p className="font-crimson text-sm text-navy-dark/80 leading-relaxed">
                           {source.connection_to_spell || source.connection}
                         </p>
                       </div>
@@ -1562,7 +1562,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                         <Key className="w-4 h-4 text-amber-700 mt-0.5 flex-shrink-0" />
                         <div>
                           <p className="font-montserrat text-xs text-amber-800 uppercase tracking-wider">Concept used</p>
-                          <p className="font-montserrat text-sm text-stone-700">{source.key_concept_used}</p>
+                          <p className="font-montserrat text-sm text-navy-dark/80">{source.key_concept_used}</p>
                         </div>
                       </div>
                     )}
@@ -1599,24 +1599,24 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
 
                 {/* Historical Context - Compact */}
                 {spell.historical_context && (
-                  <div className="p-3 bg-stone-100/80 rounded-sm border border-stone-300/50 mt-3">
+                  <div className="p-3 bg-gold/5 rounded-sm border border-gold/20 mt-3">
                     <div className="flex items-center gap-2 mb-2">
-                      <History className="w-4 h-4 text-stone-600" />
-                      <span className="font-montserrat text-xs text-stone-600 uppercase tracking-wider">Historical Context</span>
+                      <History className="w-4 h-4 text-navy-dark/70" />
+                      <span className="font-montserrat text-xs text-navy-dark/70 uppercase tracking-wider">Historical Context</span>
                     </div>
                     <div className="space-y-1 text-sm">
                       {spell.historical_context.tradition && (
-                        <p className="font-montserrat text-stone-700">
+                        <p className="font-montserrat text-navy-dark/80">
                           <span className="font-medium">Tradition:</span> {spell.historical_context.tradition}
                         </p>
                       )}
                       {spell.historical_context.cultural_note && (
-                        <p className="font-crimson text-stone-600 italic text-sm">
+                        <p className="font-crimson text-navy-dark/70 italic text-sm">
                           {spell.historical_context.cultural_note}
                         </p>
                       )}
                       {spell.historical_context.modern_adaptation && (
-                        <p className="font-montserrat text-xs text-stone-500 mt-1">
+                        <p className="font-montserrat text-xs text-navy-dark/60 mt-1">
                           <span className="font-medium">Today:</span> {spell.historical_context.modern_adaptation}
                         </p>
                       )}
@@ -1636,7 +1636,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
             </p>
             <ul className="space-y-1">
               {spell.warnings.map((warning, idx) => (
-                <li key={idx} className="font-montserrat text-sm text-stone-800">• {warning}</li>
+                <li key={idx} className="font-montserrat text-sm text-navy-dark">• {warning}</li>
               ))}
             </ul>
           </div>
@@ -1645,7 +1645,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
         {/* Closing Message */}
         {spell.closing_message && (
           <div className={`p-4 bg-amber-900/10 border-l-4 border-amber-800 rounded-r-sm`}>
-            <p className="font-crimson text-base text-stone-800 italic">{spell.closing_message}</p>
+            <p className="font-crimson text-base text-navy-dark italic">{spell.closing_message}</p>
           </div>
         )}
         
@@ -1658,12 +1658,12 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
               iconPath={getSectionIconPath('closing')}
             />
             {spell.closing.description && (
-              <p className="font-montserrat text-sm text-stone-800 mb-3">{spell.closing.description}</p>
+              <p className="font-montserrat text-sm text-navy-dark mb-3">{spell.closing.description}</p>
             )}
             {spell.closing.steps && spell.closing.steps.length > 0 && (
               <ul className="space-y-2 mb-3">
                 {spell.closing.steps.map((step, idx) => (
-                  <li key={idx} className="font-montserrat text-sm text-stone-800 flex items-start gap-2">
+                  <li key={idx} className="font-montserrat text-sm text-navy-dark flex items-start gap-2">
                     <img src="/icons/anchors/gold/anchor-feather.png" alt="" className="w-4 h-4 opacity-70 mt-0.5" />
                     {step}
                   </li>
@@ -1688,14 +1688,14 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
             />
             {spell.aftercare.immediate && (
               <div className="mb-3">
-                <p className="font-montserrat text-xs text-stone-600 uppercase tracking-wider mb-1">Immediately After</p>
-                <p className="font-montserrat text-sm text-stone-800">{spell.aftercare.immediate}</p>
+                <p className="font-montserrat text-xs text-navy-dark/70 uppercase tracking-wider mb-1">Immediately After</p>
+                <p className="font-montserrat text-sm text-navy-dark">{spell.aftercare.immediate}</p>
               </div>
             )}
             {spell.aftercare.ongoing && (
               <div>
-                <p className="font-montserrat text-xs text-stone-600 uppercase tracking-wider mb-1">Ongoing Practice</p>
-                <p className="font-montserrat text-sm text-stone-800">{spell.aftercare.ongoing}</p>
+                <p className="font-montserrat text-xs text-navy-dark/70 uppercase tracking-wider mb-1">Ongoing Practice</p>
+                <p className="font-montserrat text-sm text-navy-dark">{spell.aftercare.ongoing}</p>
               </div>
             )}
           </section>
@@ -1780,7 +1780,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                     {researchData.persona_used}&apos;s Wisdom
                   </span>
                 </div>
-                <p className="font-crimson text-base text-stone-700 leading-relaxed whitespace-pre-wrap">
+                <p className="font-crimson text-base text-navy-dark/80 leading-relaxed whitespace-pre-wrap">
                   {researchData.spellbook_response}
                 </p>
               </div>
@@ -1796,7 +1796,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
 
                 {/* Summary */}
                 {researchData.research_origins?.summary && (
-                  <p className="font-montserrat text-sm text-stone-700 leading-relaxed mb-4">
+                  <p className="font-montserrat text-sm text-navy-dark/80 leading-relaxed mb-4">
                     {researchData.research_origins.summary}
                   </p>
                 )}
@@ -1807,7 +1807,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                     <p className="font-montserrat text-xs text-indigo-800 uppercase tracking-wider mb-2">Key Points</p>
                     <ul className="space-y-2">
                       {researchData.research_origins.key_takeaways.map((takeaway, idx) => (
-                        <li key={idx} className="font-montserrat text-sm text-stone-700 flex items-start gap-2">
+                        <li key={idx} className="font-montserrat text-sm text-navy-dark/80 flex items-start gap-2">
                           <span className="text-indigo-600 mt-1 flex-shrink-0">&bull;</span>
                           <span>{typeof takeaway === 'string' ? takeaway : takeaway.text || JSON.stringify(takeaway)}</span>
                         </li>
@@ -1822,7 +1822,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                     <p className="font-montserrat text-xs text-indigo-800 uppercase tracking-wider mb-2">Why This Works</p>
                     <ul className="space-y-2">
                       {researchData.research_origins.why_this_works_facts.map((fact, idx) => (
-                        <li key={idx} className="font-montserrat text-sm text-stone-600 italic flex items-start gap-2">
+                        <li key={idx} className="font-montserrat text-sm text-navy-dark/70 italic flex items-start gap-2">
                           <span className="text-amber-700 mt-1 flex-shrink-0">&#9670;</span>
                           <span>{typeof fact === 'string' ? fact : fact.claim || JSON.stringify(fact)}</span>
                         </li>
@@ -1905,7 +1905,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
 const TimingCard = ({ icon: Icon, label, value, small = false }) => (
   <div className="p-3 bg-amber-900/10 border border-amber-800/30 rounded-sm text-center">
     <Icon className="w-5 h-5 text-amber-800 mx-auto mb-1" />
-    <p className="font-montserrat text-xs text-stone-600 uppercase tracking-wider">{label}</p>
-    <p className={`font-cinzel ${small ? 'text-xs' : 'text-sm'} text-stone-800`}>{value || 'Any'}</p>
+    <p className="font-montserrat text-xs text-navy-dark/70 uppercase tracking-wider">{label}</p>
+    <p className={`font-cinzel ${small ? 'text-xs' : 'text-sm'} text-navy-dark`}>{value || 'Any'}</p>
   </div>
 );

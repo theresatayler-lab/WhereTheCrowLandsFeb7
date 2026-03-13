@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { aiAPI } from '../utils/api';
+import { aiAPI, grimoireAPI } from '../utils/api';
 import { SpellBlockRenderer } from '../components/SpellBlockRenderer';
 import { DarkSection, LightSection, PageHeader } from '../components/OrnateElements';
 import { Send, Loader2, ChevronLeft } from 'lucide-react';
@@ -110,6 +110,8 @@ export const GuidePortal = () => {
   const [loading, setLoading] = useState(false);
   const [jobId, setJobId] = useState(null);
   const [progress, setProgress] = useState(0);
+  const [spellSaved, setSpellSaved] = useState(false);
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     if (chatEndRef.current) {
@@ -330,9 +332,9 @@ export const GuidePortal = () => {
             key="conversation"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="max-w-3xl mx-auto px-4 pb-32"
+            className="max-w-3xl mx-auto px-4 flex flex-col min-h-[calc(100vh-200px)]"
           >
-            <div className="space-y-4 mb-6">
+            <div className="space-y-4 mb-4 flex-1">
               {messages.map((msg, i) => (
                 <motion.div
                   key={i}
@@ -362,7 +364,7 @@ export const GuidePortal = () => {
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="text-center mb-6"
+                className="text-center py-4 pb-28"
               >
                 <button
                   onClick={handleGenerate}
@@ -497,12 +499,45 @@ export const GuidePortal = () => {
             </SpellPageFrame>
 
             <div className="text-center mt-8 space-x-4">
+              {!spellSaved ? (
+                <button
+                  onClick={async () => {
+                    setSaving(true);
+                    try {
+                      await grimoireAPI.saveSpell(
+                        spellResult,
+                        guideId,
+                        guide.name,
+                        guide.title,
+                        null,
+                        spellResult?.asset_plan || null
+                      );
+                      setSpellSaved(true);
+                      toast.success('Spell saved to your Grimoire!');
+                    } catch (err) {
+                      toast.error('Failed to save spell');
+                    } finally {
+                      setSaving(false);
+                    }
+                  }}
+                  disabled={saving}
+                  className="font-cinzel px-6 py-2 bg-gold text-navy-dark hover:bg-gold-light rounded-sm transition-colors font-semibold"
+                  data-testid="save-spell-btn"
+                >
+                  {saving ? 'Saving...' : 'Save to Grimoire'}
+                </button>
+              ) : (
+                <span className="font-cinzel px-6 py-2 text-gold inline-flex items-center gap-2">
+                  Saved to Grimoire
+                </span>
+              )}
               <button
                 onClick={() => {
                   setPhase('greeting');
                   setMessages([]);
                   setFollowUpIndex(0);
                   setSpellResult(null);
+                  setSpellSaved(false);
                 }}
                 className="font-cinzel px-6 py-2 border border-gold/30 text-cream hover:bg-gold/10 rounded-sm transition-colors"
               >

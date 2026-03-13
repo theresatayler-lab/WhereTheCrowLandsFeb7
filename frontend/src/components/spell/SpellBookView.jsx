@@ -316,7 +316,7 @@ function QuickSummaryCard({ title, essence, keyAction, timing, materials, guideN
         {/* Essence */}
         {essence && (
           <div className="mb-4">
-            <p className={`font-crimson text-stone-700 italic text-center leading-relaxed ${compact ? 'text-sm' : 'text-base'}`}>
+            <p className={`font-crimson text-navy-dark/80 italic text-center leading-relaxed ${compact ? 'text-sm' : 'text-base'}`}>
               "{essence}"
             </p>
           </div>
@@ -334,7 +334,7 @@ function QuickSummaryCard({ title, essence, keyAction, timing, materials, guideN
               <p className="font-cinzel text-[10px] text-amber-800/70 tracking-wider uppercase mb-1">
                 Begin With
               </p>
-              <p className={`font-crimson text-stone-800 ${compact ? 'text-xs' : 'text-sm'}`}>
+              <p className={`font-crimson text-navy-dark ${compact ? 'text-xs' : 'text-sm'}`}>
                 {keyAction}
               </p>
             </div>
@@ -345,7 +345,7 @@ function QuickSummaryCard({ title, essence, keyAction, timing, materials, guideN
               <p className="font-cinzel text-[10px] text-amber-800/70 tracking-wider uppercase mb-1">
                 You'll Need
               </p>
-              <p className={`font-crimson text-stone-700 ${compact ? 'text-xs' : 'text-sm'}`}>
+              <p className={`font-crimson text-navy-dark/80 ${compact ? 'text-xs' : 'text-sm'}`}>
                 {materials.join(' · ')}
               </p>
             </div>
@@ -356,7 +356,7 @@ function QuickSummaryCard({ title, essence, keyAction, timing, materials, guideN
               <p className="font-cinzel text-[10px] text-amber-800/70 tracking-wider uppercase mb-1">
                 Best Time
               </p>
-              <p className={`font-crimson text-stone-700 ${compact ? 'text-xs' : 'text-sm'}`}>
+              <p className={`font-crimson text-navy-dark/80 ${compact ? 'text-xs' : 'text-sm'}`}>
                 {timing}
               </p>
             </div>
@@ -443,7 +443,7 @@ function FullRitualContent({ children, title, spellNumber }) {
         )}
 
         {/* Spell content - flowing narrative */}
-        <div className="spell-content-area font-crimson text-stone-800 leading-relaxed">
+        <div className="spell-content-area font-crimson text-navy-dark leading-relaxed">
           {children}
         </div>
 

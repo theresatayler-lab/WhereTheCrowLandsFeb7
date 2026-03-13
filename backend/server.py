@@ -6090,8 +6090,8 @@ async def get_subscription_status(user = Depends(get_current_user)):
         'spells_used': user.get('spell_generation_count', 0),
         'total_spells_generated': user.get('total_spells_generated', 0),
         'total_spells_saved': user.get('total_spells_saved', 0),
-        'can_save_spells': user.get('subscription_tier') == 'paid',
-        'can_download_pdf': user.get('subscription_tier') == 'paid'
+        'can_save_spells': user.get('subscription_tier') in ('paid', 'pro'),
+        'can_download_pdf': user.get('subscription_tier') in ('paid', 'pro')
     }
 
 @api_router.post('/subscription/upgrade-manual')

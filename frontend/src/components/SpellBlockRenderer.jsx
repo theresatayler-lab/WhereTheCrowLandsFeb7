@@ -47,7 +47,7 @@ export const SpellBlockRenderer = ({
       {/* Persona Lock Header - elegant presentation */}
       {personaLock.props && (
         <div className="text-center mb-6 pb-4 border-b border-amber-700/20">
-          <p className="font-crimson text-stone-600 italic text-sm">
+          <p className="font-crimson text-navy-dark/70 italic text-sm">
             {personaLock.props.join(' · ')}{personaLock.sensory_cue ? ` · ${personaLock.sensory_cue}` : ''}
           </p>
         </div>
@@ -298,7 +298,7 @@ const Choice = ({ c, style }) => {
   const [selected, setSelected] = useState(null);
   return (
     <div data-testid="choice-block">
-      <p className="font-crimson-text text-stone-800 text-base leading-relaxed mb-3">{c.prompt}</p>
+      <p className="font-crimson-text text-navy-dark text-base leading-relaxed mb-3">{c.prompt}</p>
       <div className="space-y-2">
         {c.options?.map((opt) => (
           <button
@@ -307,17 +307,17 @@ const Choice = ({ c, style }) => {
             className={cn(
               "w-full text-left p-3 rounded transition-all font-crimson-text text-sm",
               selected === opt.id
-                ? "bg-amber-100/60 border border-amber-600/40 text-stone-800"
-                : "bg-stone-100/40 border border-stone-200 text-stone-700 hover:bg-stone-100/60"
+                ? "bg-amber-100/60 border border-amber-600/40 text-navy-dark"
+                : "bg-gold/5 border border-gold/20 text-navy-dark/80 hover:bg-gold/10"
             )}
           >
             <span className="font-semibold">{opt.label}</span>
-            {opt.description && <span className="text-stone-500"> — {opt.description}</span>}
+            {opt.description && <span className="text-navy-dark/60"> — {opt.description}</span>}
           </button>
         ))}
       </div>
       {c.consequence_hint && (
-        <p className="font-crimson-text text-sm italic text-stone-500 mt-2">"{c.consequence_hint}"</p>
+        <p className="font-crimson-text text-sm italic text-navy-dark/60 mt-2">"{c.consequence_hint}"</p>
       )}
     </div>
   );
@@ -391,11 +391,11 @@ const BirdOracle = ({ c, style }) => (
       <p className="font-cinzel text-sm text-amber-800/70 tracking-[0.15em] uppercase mb-2">
         {c.bird || c.bird_name || 'The Bird Oracle'}
       </p>
-      <blockquote className="font-crimson text-stone-700 italic text-lg leading-relaxed">
+      <blockquote className="font-crimson text-navy-dark/80 italic text-lg leading-relaxed">
         "{c.message || c.oracle_message}"
       </blockquote>
       {c.observation_prompt && (
-        <p className="font-crimson text-stone-500 text-sm mt-3">{c.observation_prompt}</p>
+        <p className="font-crimson text-navy-dark/60 text-sm mt-3">{c.observation_prompt}</p>
       )}
     </div>
   </div>
@@ -405,13 +405,13 @@ const BirdOracle = ({ c, style }) => (
 const Ward = ({ c, style }) => (
   <div data-testid="ward-block">
     {c.ward_name && (
-      <p className="font-cinzel text-sm text-stone-500 tracking-wide mb-2">{c.ward_name}</p>
+      <p className="font-cinzel text-sm text-navy-dark/60 tracking-wide mb-2">{c.ward_name}</p>
     )}
     {c.protects_against && (
-      <p className="font-crimson-text text-stone-600 text-sm italic mb-2">{c.protects_against}</p>
+      <p className="font-crimson-text text-navy-dark/70 text-sm italic mb-2">{c.protects_against}</p>
     )}
     {c.creation_steps && Array.isArray(c.creation_steps) && c.creation_steps.map((step, i) => (
-      <p key={i} className="font-crimson-text text-stone-800 leading-relaxed mb-2">{step}</p>
+      <p key={i} className="font-crimson-text text-navy-dark leading-relaxed mb-2">{step}</p>
     ))}
     {c.activation_phrase && (
       <blockquote className="font-crimson-text text-amber-800 italic text-center my-3 py-2 border-y border-amber-400/30">
@@ -419,7 +419,7 @@ const Ward = ({ c, style }) => (
       </blockquote>
     )}
     {c.talisman_option && (
-      <p className="font-crimson-text text-stone-500 text-sm mt-2">{c.talisman_option}</p>
+      <p className="font-crimson-text text-navy-dark/60 text-sm mt-2">{c.talisman_option}</p>
     )}
   </div>
 );
@@ -427,17 +427,17 @@ const Ward = ({ c, style }) => (
 // Song Prompt - voice instruction as flowing text
 const SongPrompt = ({ c, style }) => (
   <div data-testid="song-prompt-block">
-    <p className="font-crimson-text text-stone-800 leading-relaxed">{c.instruction}</p>
+    <p className="font-crimson-text text-navy-dark leading-relaxed">{c.instruction}</p>
     {(c.phrase || c.words_optional) && (
-      <blockquote className="font-crimson-text italic text-stone-700 my-2 pl-4 border-l-2 border-amber-400/40">
+      <blockquote className="font-crimson-text italic text-navy-dark/80 my-2 pl-4 border-l-2 border-amber-400/40">
         "{c.phrase || c.words_optional}"
       </blockquote>
     )}
     {c.duration && (
-      <p className="text-stone-400 text-xs flex items-center gap-1"><Clock className="w-3 h-3" /> {c.duration}</p>
+      <p className="text-navy-dark/50 text-xs flex items-center gap-1"><Clock className="w-3 h-3" /> {c.duration}</p>
     )}
     {(c.why_this_sound || c.purpose) && (
-      <p className="font-crimson-text text-stone-600 text-sm italic mt-1">{c.why_this_sound || c.purpose}</p>
+      <p className="font-crimson-text text-navy-dark/70 text-sm italic mt-1">{c.why_this_sound || c.purpose}</p>
     )}
   </div>
 );
@@ -447,30 +447,30 @@ const EvidenceCard = ({ c }) => (
   <div data-testid="evidence-card-block">
     {c.known?.length > 0 && (
       <div className="mb-3">
-        <p className="font-cinzel text-xs text-stone-400 uppercase tracking-widest mb-1">What the records show</p>
+        <p className="font-cinzel text-xs text-navy-dark/50 uppercase tracking-widest mb-1">What the records show</p>
         {c.known.map((item, i) => (
-          <p key={i} className="font-crimson-text text-stone-700 leading-relaxed">{item}</p>
+          <p key={i} className="font-crimson-text text-navy-dark/80 leading-relaxed">{item}</p>
         ))}
       </div>
     )}
     {c.likely?.length > 0 && (
       <div className="mb-3">
-        <p className="font-cinzel text-xs text-stone-400 uppercase tracking-widest mb-1">What the patterns suggest</p>
+        <p className="font-cinzel text-xs text-navy-dark/50 uppercase tracking-widest mb-1">What the patterns suggest</p>
         {c.likely.map((item, i) => (
-          <p key={i} className="font-crimson-text text-stone-600 leading-relaxed">{item}</p>
+          <p key={i} className="font-crimson-text text-navy-dark/70 leading-relaxed">{item}</p>
         ))}
       </div>
     )}
     {c.lore?.length > 0 && (
       <div>
-        <p className="font-cinzel text-xs text-stone-400 uppercase tracking-widest mb-1">What the stories tell</p>
+        <p className="font-cinzel text-xs text-navy-dark/50 uppercase tracking-widest mb-1">What the stories tell</p>
         {c.lore.map((item, i) => (
-          <p key={i} className="font-crimson-text text-stone-600 italic leading-relaxed">{item}</p>
+          <p key={i} className="font-crimson-text text-navy-dark/70 italic leading-relaxed">{item}</p>
         ))}
       </div>
     )}
     {c.pattern_note && (
-      <p className="font-crimson-text text-sm italic text-stone-500 mt-2">"{c.pattern_note}"</p>
+      <p className="font-crimson-text text-sm italic text-navy-dark/60 mt-2">"{c.pattern_note}"</p>
     )}
   </div>
 );
@@ -478,12 +478,12 @@ const EvidenceCard = ({ c }) => (
 // Safety Note - minimal but clear
 const SafetyNote = ({ c }) => (
   <div className="py-2 px-4 border-l-2 border-amber-500/60 bg-amber-50/30 rounded-r" data-testid="safety-note-block">
-    <p className="font-crimson-text text-sm text-stone-700">{c.warning || c.note}</p>
+    <p className="font-crimson-text text-sm text-navy-dark/80">{c.warning || c.note}</p>
     {c.when_to_stop && (
-      <p className="font-crimson-text text-xs text-stone-600 mt-1">When to pause: {c.when_to_stop}</p>
+      <p className="font-crimson-text text-xs text-navy-dark/70 mt-1">When to pause: {c.when_to_stop}</p>
     )}
     {c.consent_check && (
-      <p className="font-crimson-text text-xs text-stone-500 italic mt-1">{c.consent_check}</p>
+      <p className="font-crimson-text text-xs text-navy-dark/60 italic mt-1">{c.consent_check}</p>
     )}
   </div>
 );
@@ -492,21 +492,21 @@ const SafetyNote = ({ c }) => (
 const PoetryReading = ({ c, style }) => (
   <div data-testid="poetry-reading-block">
     {c.poem_title && (
-      <p className="font-cinzel text-sm text-stone-500 tracking-wide mb-1">{c.poem_title}</p>
+      <p className="font-cinzel text-sm text-navy-dark/60 tracking-wide mb-1">{c.poem_title}</p>
     )}
     {c.poem_author && (
-      <p className="text-xs text-stone-400 italic mb-2">by {c.poem_author}</p>
+      <p className="text-xs text-navy-dark/50 italic mb-2">by {c.poem_author}</p>
     )}
     {c.poem_text && (
-      <blockquote className="font-crimson-text text-stone-800 italic leading-relaxed whitespace-pre-line pl-4 border-l-2 border-amber-500/30">
+      <blockquote className="font-crimson-text text-navy-dark italic leading-relaxed whitespace-pre-line pl-4 border-l-2 border-amber-500/30">
         {c.poem_text}
       </blockquote>
     )}
     {c.guide_commentary && (
-      <p className="font-crimson-text text-stone-600 text-sm mt-3">{c.guide_commentary}</p>
+      <p className="font-crimson-text text-navy-dark/70 text-sm mt-3">{c.guide_commentary}</p>
     )}
     {c.reading_instruction && (
-      <p className="font-crimson-text text-stone-500 text-sm mt-1 italic">{c.reading_instruction}</p>
+      <p className="font-crimson-text text-navy-dark/60 text-sm mt-1 italic">{c.reading_instruction}</p>
     )}
   </div>
 );
@@ -514,15 +514,15 @@ const PoetryReading = ({ c, style }) => (
 // Observation Task - simple instruction
 const ObservationTask = ({ c }) => (
   <div data-testid="observation-task-block">
-    <p className="font-crimson-text text-stone-800 leading-relaxed">{c.task_description}</p>
+    <p className="font-crimson-text text-navy-dark leading-relaxed">{c.task_description}</p>
     {c.location_suggestion && (
-      <p className="font-crimson-text text-stone-600 text-sm mt-1">Where: {c.location_suggestion}</p>
+      <p className="font-crimson-text text-navy-dark/70 text-sm mt-1">Where: {c.location_suggestion}</p>
     )}
     {c.what_to_notice && (
-      <p className="font-crimson-text text-stone-600 text-sm mt-1">Notice: {c.what_to_notice}</p>
+      <p className="font-crimson-text text-navy-dark/70 text-sm mt-1">Notice: {c.what_to_notice}</p>
     )}
     {c.recording_prompt && (
-      <p className="font-crimson-text text-stone-500 text-sm italic mt-1">{c.recording_prompt}</p>
+      <p className="font-crimson-text text-navy-dark/60 text-sm italic mt-1">{c.recording_prompt}</p>
     )}
   </div>
 );
@@ -530,15 +530,15 @@ const ObservationTask = ({ c }) => (
 // Further Reading - simple list of recommendations
 const FurtherReading = ({ c, style }) => (
   <div data-testid="further-reading-block">
-    <p className="font-cinzel text-xs text-stone-400 uppercase tracking-widest mb-2">For further reading</p>
+    <p className="font-cinzel text-xs text-navy-dark/50 uppercase tracking-widest mb-2">For further reading</p>
     {c.recommendations?.map((rec, i) => (
       <div key={i} className="mb-2">
-        <p className="font-crimson-text text-stone-800">
+        <p className="font-crimson-text text-navy-dark">
           <span className="font-semibold">{rec.title}</span>
-          {rec.author && <span className="text-stone-600"> by {rec.author}</span>}
+          {rec.author && <span className="text-navy-dark/70"> by {rec.author}</span>}
         </p>
         {rec.guide_note && (
-          <p className="font-crimson-text text-stone-600 text-sm italic">{rec.guide_note}</p>
+          <p className="font-crimson-text text-navy-dark/70 text-sm italic">{rec.guide_note}</p>
         )}
         {rec.learn_more_url && (
           <a href={rec.learn_more_url} target="_blank" rel="noopener noreferrer"
@@ -549,7 +549,7 @@ const FurtherReading = ({ c, style }) => (
       </div>
     ))}
     {c.reading_ritual && (
-      <p className="font-crimson-text text-stone-500 text-sm italic mt-2">{c.reading_ritual}</p>
+      <p className="font-crimson-text text-navy-dark/60 text-sm italic mt-2">{c.reading_ritual}</p>
     )}
   </div>
 );

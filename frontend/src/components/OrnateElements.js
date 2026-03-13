@@ -279,12 +279,6 @@ export const DarkSection = ({
   atmosphericTint = 'teal'
 }) => (
   <div className={`relative ${className}`} style={{ backgroundColor: NOUVEAU_COLORS.midnightTeal }}>
-    {/* Subtle warm radial glow only — no texture overlays */}
-    <div className="absolute inset-0 z-0 pointer-events-none" style={{
-      background: variant === 'warm' 
-        ? `radial-gradient(ellipse at 50% 30%, ${NOUVEAU_COLORS.emberPink}15 0%, transparent 50%), radial-gradient(ellipse at 70% 80%, ${NOUVEAU_COLORS.antiqueGold}10 0%, transparent 40%)`
-        : `radial-gradient(ellipse at 30% 50%, ${NOUVEAU_COLORS.celestialBlue}50 0%, transparent 50%), radial-gradient(ellipse at 70% 50%, ${NOUVEAU_COLORS.celestialBlue}30 0%, transparent 40%)`,
-    }} />
     <div className="relative z-10">{children}</div>
   </div>
 );
