@@ -4,7 +4,7 @@ import sys
 from datetime import datetime
 
 class SubscriptionSystemTester:
-    def __init__(self, base_url="https://spell-forge-7.preview.emergentagent.com"):
+    def __init__(self, base_url="https://spell-generation.preview.emergentagent.com"):
         self.base_url = base_url
         self.token = None
         self.user_id = None
