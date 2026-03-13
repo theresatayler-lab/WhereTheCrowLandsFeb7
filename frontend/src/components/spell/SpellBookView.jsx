@@ -301,15 +301,15 @@ function QuickSummaryCard({ title, essence, keyAction, timing, materials, guideN
       <div className={`relative z-5 ${compact ? 'p-4 pt-6' : 'p-6 pt-8'} h-full flex flex-col`}>
         {/* Header label */}
         <div className="flex items-center justify-center gap-2 mb-3">
-          <div className="h-px w-6 bg-amber-800/40" />
-          <span className="font-cinzel text-[10px] text-amber-800/60 tracking-[0.2em] uppercase">
+          <div className="h-px w-6 bg-gold-dark/40" />
+          <span className="font-cinzel text-[10px] text-gold-dark/60 tracking-[0.2em] uppercase">
             Spell Summary
           </span>
-          <div className="h-px w-6 bg-amber-800/40" />
+          <div className="h-px w-6 bg-gold-dark/40" />
         </div>
 
         {/* Title */}
-        <h3 className={`font-cinzel text-amber-950 text-center ${compact ? 'text-base mb-3' : 'text-lg mb-4'}`}>
+        <h3 className={`font-cinzel text-navy-dark text-center ${compact ? 'text-base mb-3' : 'text-lg mb-4'}`}>
           {title || "Your Spell"}
         </h3>
 
@@ -324,14 +324,14 @@ function QuickSummaryCard({ title, essence, keyAction, timing, materials, guideN
 
         {/* Divider */}
         <div className="flex items-center justify-center py-2">
-          <div className="h-px w-full bg-amber-700/20" />
+          <div className="h-px w-full bg-gold/20" />
         </div>
 
         {/* Quick info grid */}
         <div className="flex-1 space-y-3">
           {keyAction && (
             <div>
-              <p className="font-cinzel text-[10px] text-amber-800/70 tracking-wider uppercase mb-1">
+              <p className="font-cinzel text-[10px] text-gold-dark/70 tracking-wider uppercase mb-1">
                 Begin With
               </p>
               <p className={`font-crimson text-navy-dark ${compact ? 'text-xs' : 'text-sm'}`}>
@@ -342,7 +342,7 @@ function QuickSummaryCard({ title, essence, keyAction, timing, materials, guideN
 
           {materials?.length > 0 && (
             <div>
-              <p className="font-cinzel text-[10px] text-amber-800/70 tracking-wider uppercase mb-1">
+              <p className="font-cinzel text-[10px] text-gold-dark/70 tracking-wider uppercase mb-1">
                 You'll Need
               </p>
               <p className={`font-crimson text-navy-dark/80 ${compact ? 'text-xs' : 'text-sm'}`}>
@@ -353,7 +353,7 @@ function QuickSummaryCard({ title, essence, keyAction, timing, materials, guideN
 
           {timing && (
             <div>
-              <p className="font-cinzel text-[10px] text-amber-800/70 tracking-wider uppercase mb-1">
+              <p className="font-cinzel text-[10px] text-gold-dark/70 tracking-wider uppercase mb-1">
                 Best Time
               </p>
               <p className={`font-crimson text-navy-dark/80 ${compact ? 'text-xs' : 'text-sm'}`}>
@@ -365,7 +365,7 @@ function QuickSummaryCard({ title, essence, keyAction, timing, materials, guideN
 
         {/* Footer */}
         {guideName && (
-          <p className={`font-crimson text-amber-800/50 text-center italic mt-4 ${compact ? 'text-xs' : 'text-sm'}`}>
+          <p className={`font-crimson text-gold-dark/50 text-center italic mt-4 ${compact ? 'text-xs' : 'text-sm'}`}>
             Crafted by {guideName}
           </p>
         )}
@@ -406,10 +406,10 @@ function FullRitualContent({ children, title, spellNumber }) {
       />
 
       {/* Decorative corner accents */}
-      <div className="absolute top-3 left-3 w-8 h-8 border-l-2 border-t-2 border-amber-700/30 rounded-tl" />
-      <div className="absolute top-3 right-3 w-8 h-8 border-r-2 border-t-2 border-amber-700/30 rounded-tr" />
-      <div className="absolute bottom-3 left-3 w-8 h-8 border-l-2 border-b-2 border-amber-700/30 rounded-bl" />
-      <div className="absolute bottom-3 right-3 w-8 h-8 border-r-2 border-b-2 border-amber-700/30 rounded-br" />
+      <div className="absolute top-3 left-3 w-8 h-8 border-l-2 border-t-2 border-gold/30 rounded-tl" />
+      <div className="absolute top-3 right-3 w-8 h-8 border-r-2 border-t-2 border-gold/30 rounded-tr" />
+      <div className="absolute bottom-3 left-3 w-8 h-8 border-l-2 border-b-2 border-gold/30 rounded-bl" />
+      <div className="absolute bottom-3 right-3 w-8 h-8 border-r-2 border-b-2 border-gold/30 rounded-br" />
       
       {/* Content area */}
       <div 
@@ -418,7 +418,7 @@ function FullRitualContent({ children, title, spellNumber }) {
         {/* Roman numeral chapter marker */}
         {spellNumber && (
           <div className="text-center mb-6">
-            <span className="font-cinzel text-2xl sm:text-3xl text-amber-800/40 tracking-widest">
+            <span className="font-cinzel text-2xl sm:text-3xl text-gold-dark/40 tracking-widest">
               {spellNumber}
             </span>
           </div>
@@ -426,18 +426,18 @@ function FullRitualContent({ children, title, spellNumber }) {
 
         {/* Decorative header */}
         <div className="flex items-center justify-center mb-8">
-          <div className="h-px flex-1 bg-gradient-to-r from-transparent to-amber-700/30" />
+          <div className="h-px flex-1 bg-gradient-to-r from-transparent to-gold/30" />
           <div className="px-4">
-            <span className="font-cinzel text-xs text-amber-800/60 tracking-[0.2em] uppercase">
+            <span className="font-cinzel text-xs text-gold-dark/60 tracking-[0.2em] uppercase">
               The Full Ritual
             </span>
           </div>
-          <div className="h-px flex-1 bg-gradient-to-l from-transparent to-amber-700/30" />
+          <div className="h-px flex-1 bg-gradient-to-l from-transparent to-gold/30" />
         </div>
 
         {/* Title */}
         {title && (
-          <h1 className="font-cinzel text-xl sm:text-2xl text-amber-950 text-center mb-8">
+          <h1 className="font-cinzel text-xl sm:text-2xl text-navy-dark text-center mb-8">
             {title}
           </h1>
         )}

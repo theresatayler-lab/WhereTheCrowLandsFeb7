@@ -15,8 +15,8 @@ const ARCHETYPE_STYLES = {
     description: 'Edmund J. Sullivan pen-and-ink style, Rubáiyát illustrations, black & white engravings with birds, roses, and celestial symbols',
     emoji: '🐦',
     iconPath: '/icons/guides/guide-shigg.png',
-    color: 'from-amber-800 to-amber-900',
-    borderColor: 'border-amber-500/50',
+    color: 'from-navy-dark to-navy-mid',
+    borderColor: 'border-gold/50',
     keywords: ['black and white', 'cross-hatching', 'Art Nouveau', 'birds', 'roses']
   },
   kathleen: {
@@ -38,7 +38,7 @@ const ARCHETYPE_STYLES = {
     emoji: '🧵',
     iconPath: '/icons/guides/guide-katherine.png',
     color: 'from-navy-dark to-navy-mid',
-    borderColor: 'border-purple-400/50',
+    borderColor: 'border-gold/50',
     keywords: ['Victorian', 'séance', 'spirit photography', 'textiles', 'shadow']
   },
   theresa: {
@@ -48,8 +48,8 @@ const ARCHETYPE_STYLES = {
     description: 'Modern collage with vintage elements, genealogy imagery, documentary style meets magical realism',
     emoji: '🪞',
     iconPath: '/icons/guides/guide-theresa.png',
-    color: 'from-violet-800 to-violet-900',
-    borderColor: 'border-violet-400/50',
+    color: 'from-navy-dark to-navy-mid',
+    borderColor: 'border-crimson-bright/50',
     keywords: ['collage', 'photographs', 'ancestry', 'documentary', 'truth-seeking']
   },
   neutral: {

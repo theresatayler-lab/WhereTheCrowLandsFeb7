@@ -16,7 +16,7 @@ const OrnateSectionDivider = () => (
 // Simple elegant divider for minor breaks
 const SubtleDivider = () => (
   <div className="flex items-center justify-center py-3 opacity-50">
-    <div className="h-px w-12 bg-gradient-to-r from-transparent via-amber-700/40 to-transparent" />
+    <div className="h-px w-12 bg-gradient-to-r from-transparent via-gold/40 to-transparent" />
   </div>
 );
 
@@ -46,7 +46,7 @@ export const SpellBlockRenderer = ({
     <div className="spell-content space-y-1" data-testid="spell-block-renderer">
       {/* Persona Lock Header - elegant presentation */}
       {personaLock.props && (
-        <div className="text-center mb-6 pb-4 border-b border-amber-700/20">
+        <div className="text-center mb-6 pb-4 border-b border-gold/20">
           <p className="font-crimson text-navy-dark/70 italic text-sm">
             {personaLock.props.join(' · ')}{personaLock.sensory_cue ? ` · ${personaLock.sensory_cue}` : ''}
           </p>
@@ -182,7 +182,7 @@ const Materials = ({ c, style }) => {
                 <img src={getIconForMaterial(item.name)} alt="" className="w-5 h-5 opacity-60 flex-shrink-0 mt-0.5" />
               ) : (
                 <div className="w-5 h-5 flex-shrink-0 flex items-center justify-center">
-                  <div className="w-2 h-2 rotate-45 border border-amber-700/50" />
+                  <div className="w-2 h-2 rotate-45 border border-gold/50" />
                 </div>
               )}
               <div>
@@ -225,7 +225,7 @@ const Stepper = ({ c, style }) => (
         >
           <div>
             {step.title && (
-              <span className="font-cinzel text-sm text-amber-900/80 mr-2">
+              <span className="font-cinzel text-sm text-crimson/80 mr-2">
                 {step.title}:
               </span>
             )}
@@ -242,7 +242,7 @@ const Stepper = ({ c, style }) => (
 
             {/* Why - explanation */}
             {step.why && (
-              <p className="text-sm opacity-70 mt-2 italic pl-4 border-l border-amber-700/20">
+              <p className="text-sm opacity-70 mt-2 italic pl-4 border-l border-gold/20">
                 {step.why}
               </p>
             )}
@@ -270,13 +270,13 @@ const LoreVignette = ({ c, style }) => (
   <div className="py-6 my-2" data-testid="lore-vignette-block">
     <div className="relative px-8 py-6 rounded-2xl" style={{ background: 'rgba(200, 164, 77, 0.04)' }}>
       {/* Decorative corner accents */}
-      <div className="absolute top-3 left-3 w-4 h-4 border-l border-t border-amber-700/25" />
-      <div className="absolute top-3 right-3 w-4 h-4 border-r border-t border-amber-700/25" />
-      <div className="absolute bottom-3 left-3 w-4 h-4 border-l border-b border-amber-700/25" />
-      <div className="absolute bottom-3 right-3 w-4 h-4 border-r border-b border-amber-700/25" />
+      <div className="absolute top-3 left-3 w-4 h-4 border-l border-t border-gold/25" />
+      <div className="absolute top-3 right-3 w-4 h-4 border-r border-t border-gold/25" />
+      <div className="absolute bottom-3 left-3 w-4 h-4 border-l border-b border-gold/25" />
+      <div className="absolute bottom-3 right-3 w-4 h-4 border-r border-b border-gold/25" />
       
       {(c.era || c.tradition || c.title) && (
-        <p className="font-cinzel text-[10px] text-amber-800/60 uppercase tracking-[0.2em] mb-4 text-center">
+        <p className="font-cinzel text-[10px] text-gold-dark/60 uppercase tracking-[0.2em] mb-4 text-center">
           {c.era && `${c.era} · `}{c.tradition || c.title}
         </p>
       )}
@@ -287,7 +287,7 @@ const LoreVignette = ({ c, style }) => (
         <p className="grimoire-body text-sm opacity-80 mt-4 text-center">{c.relevance_to_working}</p>
       )}
       {c.source_connection && (
-        <p className="text-xs text-amber-800/50 mt-4 text-center tracking-wide">— {c.source_connection}</p>
+        <p className="text-xs text-gold-dark/50 mt-4 text-center tracking-wide">— {c.source_connection}</p>
       )}
     </div>
   </div>
@@ -307,7 +307,7 @@ const Choice = ({ c, style }) => {
             className={cn(
               "w-full text-left p-3 rounded transition-all font-crimson-text text-sm",
               selected === opt.id
-                ? "bg-amber-100/60 border border-amber-600/40 text-navy-dark"
+                ? "bg-gold/10 border border-gold/40 text-navy-dark"
                 : "bg-gold/5 border border-gold/20 text-navy-dark/80 hover:bg-gold/10"
             )}
           >
@@ -388,7 +388,7 @@ const BirdOracle = ({ c, style }) => (
         alt="" 
         className="w-12 h-12 mx-auto mb-3 opacity-60"
       />
-      <p className="font-cinzel text-sm text-amber-800/70 tracking-[0.15em] uppercase mb-2">
+      <p className="font-cinzel text-sm text-gold-dark/70 tracking-[0.15em] uppercase mb-2">
         {c.bird || c.bird_name || 'The Bird Oracle'}
       </p>
       <blockquote className="font-crimson text-navy-dark/80 italic text-lg leading-relaxed">
@@ -414,7 +414,7 @@ const Ward = ({ c, style }) => (
       <p key={i} className="font-crimson-text text-navy-dark leading-relaxed mb-2">{step}</p>
     ))}
     {c.activation_phrase && (
-      <blockquote className="font-crimson-text text-amber-800 italic text-center my-3 py-2 border-y border-amber-400/30">
+      <blockquote className="font-crimson-text text-navy-dark italic text-center my-3 py-2 border-y border-gold/30">
         "{c.activation_phrase}"
       </blockquote>
     )}
@@ -429,7 +429,7 @@ const SongPrompt = ({ c, style }) => (
   <div data-testid="song-prompt-block">
     <p className="font-crimson-text text-navy-dark leading-relaxed">{c.instruction}</p>
     {(c.phrase || c.words_optional) && (
-      <blockquote className="font-crimson-text italic text-navy-dark/80 my-2 pl-4 border-l-2 border-amber-400/40">
+      <blockquote className="font-crimson-text italic text-navy-dark/80 my-2 pl-4 border-l-2 border-gold/40">
         "{c.phrase || c.words_optional}"
       </blockquote>
     )}
@@ -477,7 +477,7 @@ const EvidenceCard = ({ c }) => (
 
 // Safety Note - minimal but clear
 const SafetyNote = ({ c }) => (
-  <div className="py-2 px-4 border-l-2 border-amber-500/60 bg-amber-50/30 rounded-r" data-testid="safety-note-block">
+  <div className="py-2 px-4 border-l-2 border-gold/60 bg-gold/5 rounded-r" data-testid="safety-note-block">
     <p className="font-crimson-text text-sm text-navy-dark/80">{c.warning || c.note}</p>
     {c.when_to_stop && (
       <p className="font-crimson-text text-xs text-navy-dark/70 mt-1">When to pause: {c.when_to_stop}</p>
@@ -498,7 +498,7 @@ const PoetryReading = ({ c, style }) => (
       <p className="text-xs text-navy-dark/50 italic mb-2">by {c.poem_author}</p>
     )}
     {c.poem_text && (
-      <blockquote className="font-crimson-text text-navy-dark italic leading-relaxed whitespace-pre-line pl-4 border-l-2 border-amber-500/30">
+      <blockquote className="font-crimson-text text-navy-dark italic leading-relaxed whitespace-pre-line pl-4 border-l-2 border-gold/30">
         {c.poem_text}
       </blockquote>
     )}
@@ -542,7 +542,7 @@ const FurtherReading = ({ c, style }) => (
         )}
         {rec.learn_more_url && (
           <a href={rec.learn_more_url} target="_blank" rel="noopener noreferrer"
-            className="text-amber-700 hover:text-amber-600 text-sm underline">
+            className="text-crimson hover:text-crimson-bright text-sm underline">
             Learn more
           </a>
         )}

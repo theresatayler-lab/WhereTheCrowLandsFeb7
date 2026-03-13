@@ -28,9 +28,9 @@ const CardSymbols = () => (
 // Oracle Card component with enhanced styling
 const OracleCard = ({ cardData, position, index, isExpanded, onToggle, light = false }) => {
   const positionStyles = {
-    'Past': { accent: 'amber', symbol: '☾' },
+    'Past': { accent: 'gold', symbol: '☾' },
     'Present': { accent: 'emerald', symbol: '☀' },
-    'Future': { accent: 'violet', symbol: '☽' },
+    'Future': { accent: 'crimson', symbol: '☽' },
     'The Message': { accent: 'crimson', symbol: '👁' }
   };
   

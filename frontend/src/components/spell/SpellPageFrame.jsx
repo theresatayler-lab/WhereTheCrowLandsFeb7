@@ -28,10 +28,10 @@ export default function SpellPageFrame({ children, backgroundImageUrl }) {
             data-surface="light"
           >
             {/* Corner decorations */}
-            <div className="absolute top-4 left-4 w-8 h-8 border-t border-l border-amber-700/20 rounded-tl-lg" />
-            <div className="absolute top-4 right-4 w-8 h-8 border-t border-r border-amber-700/20 rounded-tr-lg" />
-            <div className="absolute bottom-4 left-4 w-8 h-8 border-b border-l border-amber-700/20 rounded-bl-lg" />
-            <div className="absolute bottom-4 right-4 w-8 h-8 border-b border-r border-amber-700/20 rounded-br-lg" />
+            <div className="absolute top-4 left-4 w-8 h-8 border-t border-l border-gold/20 rounded-tl-lg" />
+            <div className="absolute top-4 right-4 w-8 h-8 border-t border-r border-gold/20 rounded-tr-lg" />
+            <div className="absolute bottom-4 left-4 w-8 h-8 border-b border-l border-gold/20 rounded-bl-lg" />
+            <div className="absolute bottom-4 right-4 w-8 h-8 border-b border-r border-gold/20 rounded-br-lg" />
             
             {/* Content with generous padding */}
             <div className="px-2 sm:px-6 py-4">

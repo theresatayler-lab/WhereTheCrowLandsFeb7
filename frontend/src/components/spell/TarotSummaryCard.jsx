@@ -77,19 +77,19 @@ export default function TarotSummaryCard({
                   </div>
                   <div className="flex flex-wrap items-center justify-center gap-2">
                     {keyAction ? (
-                      <span className="font-cinzel text-[9px] uppercase tracking-[0.15em] px-3 py-1.5 rounded-full border border-amber-700/25 text-[#2a1f14]/70">
+                      <span className="font-cinzel text-[9px] uppercase tracking-[0.15em] px-3 py-1.5 rounded-full border border-gold/25 text-[#2a1f14]/70">
                         {keyAction}
                       </span>
                     ) : null}
 
                     {timing ? (
-                      <span className="font-cinzel text-[9px] uppercase tracking-[0.15em] px-3 py-1.5 rounded-full border border-amber-700/25 text-[#2a1f14]/70">
+                      <span className="font-cinzel text-[9px] uppercase tracking-[0.15em] px-3 py-1.5 rounded-full border border-gold/25 text-[#2a1f14]/70">
                         {timing}
                       </span>
                     ) : null}
 
                     {guideBadge ? (
-                      <span className="font-cinzel text-[9px] uppercase tracking-[0.15em] px-3 py-1.5 rounded-full border border-amber-700/25 text-[#2a1f14]/70">
+                      <span className="font-cinzel text-[9px] uppercase tracking-[0.15em] px-3 py-1.5 rounded-full border border-gold/25 text-[#2a1f14]/70">
                         {guideBadge}
                       </span>
                     ) : null}

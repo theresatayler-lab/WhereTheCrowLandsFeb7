@@ -19,7 +19,7 @@ const GUIDE_CONFIGS = {
     subtitle: 'Domestic magic, bird oracles, literary rituals & tea divination',
     buttonText: 'Put the kettle on',
     iconSrc: '/icons/guides/guide-shigg.png',
-    colors: { accent: 'amber-500', bg: 'amber-900/15', border: 'amber-600', text: 'amber-400' },
+    colors: { accent: 'gold', bg: 'gold/10', border: 'gold', text: 'gold-light' },
     greeting: "Come sit, love. The kettle's on. What's troubling you?",
     placeholder: "Tell Shigg what's on your mind... I need courage to speak up at work... I'm grieving and need comfort... I can't see my way through this...",
     interactionModel: 'conversation',
@@ -35,7 +35,7 @@ const GUIDE_CONFIGS = {
     subtitle: 'Protection magic, spiritualist practices & kitchen improvisation',
     buttonText: 'Answer the call',
     iconSrc: '/icons/guides/guide-cathleen.png',
-    colors: { accent: 'teal-500', bg: 'teal-900/15', border: 'teal-600', text: 'teal-400' },
+    colors: { accent: 'crimson-bright', bg: 'crimson/10', border: 'crimson', text: 'crimson-bright' },
     greeting: "You're needed. Sit down and I'll tell you why.",
     placeholder: "Tell Cathleen what needs protecting... Someone crossed a line... I need to feel safe... I need protection for someone I love...",
     interactionModel: 'assessment',
@@ -51,7 +51,7 @@ const GUIDE_CONFIGS = {
     subtitle: 'Thread magic, mirror work, justice spells & Victorian diagnostics',
     buttonText: 'Enter the sitting room',
     iconSrc: '/icons/guides/guide-katherine.png',
-    colors: { accent: 'violet-500', bg: 'violet-900/15', border: 'violet-600', text: 'violet-400' },
+    colors: { accent: 'gold', bg: 'gold/10', border: 'gold', text: 'gold-light' },
     greeting: "Sit. Let me look at you. Yes, I can see what this is about.",
     placeholder: "Katherine already knows, but tell her anyway... Someone betrayed me... I need justice... I'm tangled up in something I can't see clearly...",
     interactionModel: 'diagnostic',
@@ -67,7 +67,7 @@ const GUIDE_CONFIGS = {
     subtitle: 'Historical synthesis, modern divination & sign-reading',
     buttonText: 'Cross the threshold',
     iconSrc: '/icons/guides/guide-theresa.png',
-    colors: { accent: 'rose-500', bg: 'rose-900/15', border: 'rose-600', text: 'rose-400' },
+    colors: { accent: 'crimson', bg: 'crimson/10', border: 'crimson', text: 'crimson-bright' },
     greeting: "Here's what they did then, here's what you do now. Let me show you the bridge.",
     placeholder: "Tell Theresa what you're seeking... I need clarity about a decision... I keep seeing the same signs everywhere... I want to understand this practice's history...",
     interactionModel: 'threshold_bridge',
@@ -83,7 +83,7 @@ const GUIDE_CONFIGS = {
     subtitle: 'Epistolary meditation, Hermetic pathworking & sustained workings',
     buttonText: 'Write to Brenda',
     iconSrc: '/icons/guides/guide-brenda.png',
-    colors: { accent: 'indigo-500', bg: 'indigo-900/15', border: 'indigo-600', text: 'indigo-400' },
+    colors: { accent: 'gold-dark', bg: 'gold/10', border: 'gold-dark', text: 'gold' },
     greeting: "Dear friend, I received your letter. Let me tell you what I see.",
     placeholder: "Write to Brenda about what you're facing... Dear Brenda, I feel lost and need guidance... I'm going through a major life change... I want to commit to a sustained practice...",
     interactionModel: 'letter_correspondence',
@@ -487,7 +487,7 @@ export const GuidePortal = () => {
                         )}
                         {source.learn_more_url && (
                           <a href={source.learn_more_url} target="_blank" rel="noopener noreferrer"
-                            className="font-montserrat text-xs text-amber-700 hover:text-amber-900 mt-1 inline-block">
+                            className="font-montserrat text-xs text-crimson hover:text-crimson-bright mt-1 inline-block">
                             Learn more
                           </a>
                         )}

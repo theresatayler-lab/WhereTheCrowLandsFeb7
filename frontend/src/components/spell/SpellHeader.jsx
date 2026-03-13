@@ -23,7 +23,7 @@ export default function SpellHeader({
 
         {/* Guide attribution */}
         {guideLine ? (
-          <div className="font-cinzel uppercase tracking-[0.2em] text-[10px] sm:text-xs text-amber-800/60">
+          <div className="font-cinzel uppercase tracking-[0.2em] text-[10px] sm:text-xs text-gold-dark/60">
             {guideLine}
           </div>
         ) : null}

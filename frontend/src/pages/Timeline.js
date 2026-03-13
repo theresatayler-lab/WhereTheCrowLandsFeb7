@@ -213,7 +213,7 @@ const NetworkGraph = ({ events, onEventClick }) => {
         <h4 className="font-cinzel text-xs text-gold mb-2">Connections</h4>
         <div className="space-y-1 text-[10px] font-montserrat">
           <div className="flex items-center gap-2">
-            <div className="w-4 h-0.5 bg-teal-500"></div>
+            <div className="w-4 h-0.5 bg-crimson-bright"></div>
             <span className="text-cream/60">Direct influence</span>
           </div>
           <div className="flex items-center gap-2">
@@ -236,7 +236,7 @@ const NetworkGraph = ({ events, onEventClick }) => {
             <span className="text-cream/60">Folk Magic</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-violet-500"></div>
+            <div className="w-2 h-2 rounded-full bg-gold"></div>
             <span className="text-cream/60">Spirit Work</span>
           </div>
         </div>
@@ -788,7 +788,7 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick, allEvents
                   }}
                   className={`px-2 py-0.5 rounded text-xs font-montserrat transition-all ${
                     showNarrative 
-                      ? 'bg-violet-600/20 text-violet-400 border border-violet-500/40' 
+                      ? 'bg-gold/20 text-gold border border-gold/40' 
                       : 'text-cream/50 hover:text-cream/85'
                   }`}
                 >
@@ -929,11 +929,11 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick, allEvents
                             
                             // Quality tier badges
                             const qualityBadge = {
-                              'academic_primary': { color: 'text-green-400', icon: '●', label: 'Academic' },
+                              'academic_primary': { color: 'text-gold', icon: '●', label: 'Academic' },
                               'practitioner_primary': { color: 'text-blue-400', icon: '●', label: 'Primary' },
-                              'modern_scholar_practitioner': { color: 'text-yellow-400', icon: '●', label: 'Scholar' },
-                              'folk_archive': { color: 'text-purple-400', icon: '●', label: 'Folk' },
-                              'community_tradition': { color: 'text-purple-400', icon: '○', label: 'Tradition' },
+                              'modern_scholar_practitioner': { color: 'text-gold', icon: '●', label: 'Scholar' },
+                              'folk_archive': { color: 'text-gold', icon: '●', label: 'Folk' },
+                              'community_tradition': { color: 'text-gold', icon: '○', label: 'Tradition' },
                             }[source.quality_tier] || { color: 'text-cream/50', icon: '○', label: '' };
                             
                             return (
@@ -967,7 +967,7 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick, allEvents
                                         title="Opens in new tab (trusted source)"
                                       >
                                         {source.title || source.work}
-                                        <span className="ml-1 text-[10px] text-green-400/70">↗</span>
+                                        <span className="ml-1 text-[10px] text-gold/70">↗</span>
                                       </a>
                                     ) : (
                                       <span className="text-cream/80 italic">
@@ -1045,11 +1045,11 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick, allEvents
                             <h4 className="font-cinzel text-xs text-gold/70 uppercase">Connections</h4>
                             <div className="flex items-center gap-2 text-[9px] font-montserrat">
                               <span className="flex items-center gap-1">
-                                <span className="w-2 h-2 rounded-full bg-teal-500"></span>
+                                <span className="w-2 h-2 rounded-full bg-crimson-bright"></span>
                                 <span className="text-cream/50">Linked</span>
                               </span>
                               <span className="flex items-center gap-1">
-                                <span className="w-2 h-2 rounded-full bg-amber-600/50 border border-dashed border-amber-500"></span>
+                                <span className="w-2 h-2 rounded-full bg-gold/10 border border-dashed border-gold/30"></span>
                                 <span className="text-cream/50">Referenced</span>
                               </span>
                             </div>
@@ -1065,7 +1065,7 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick, allEvents
                                   return (
                                     <button
                                       key={`exist-${i}`}
-                                      className="px-2 py-0.5 bg-teal-600/20 hover:bg-teal-600/30 border border-teal-500/40 hover:border-teal-500/60 rounded text-[11px] text-teal-300 hover:text-teal-200 font-montserrat transition-all cursor-pointer"
+                                      className="px-2 py-0.5 bg-crimson/20 hover:bg-crimson/30 border border-crimson/40 hover:border-crimson/60 rounded text-[11px] text-crimson-bright hover:text-cream font-montserrat transition-all cursor-pointer"
                                       onClick={(e) => {
                                         e.stopPropagation();
                                         onNavigateToEvent?.(connectedEvent.id);
@@ -1073,7 +1073,7 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick, allEvents
                                       title={`Click to view: ${connectedEvent.title} (${connectedEvent.year})`}
                                     >
                                       {connectedEvent.title.length > 25 ? connectedEvent.title.slice(0, 25) + '...' : connectedEvent.title}
-                                      <span className="text-teal-400/60 ml-1">({connectedEvent.year})</span>
+                                      <span className="text-crimson-bright/60 ml-1">({connectedEvent.year})</span>
                                     </button>
                                   );
                                 })}
@@ -1081,14 +1081,14 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick, allEvents
                                 {influencedByReferenced.slice(0, 3).map((connId, i) => (
                                   <span
                                     key={`ref-${i}`}
-                                    className="px-2 py-0.5 bg-amber-900/20 border border-dashed border-amber-600/40 rounded text-[11px] text-amber-500/70 font-montserrat italic"
+                                    className="px-2 py-0.5 bg-gold/20 border border-dashed border-gold/40 rounded text-[11px] text-gold/70 font-montserrat italic"
                                     title={`Referenced: Event not yet in timeline`}
                                   >
                                     {formatId(connId)}
                                   </span>
                                 ))}
                                 {influencedByReferenced.length > 3 && (
-                                  <span className="text-[10px] text-amber-600/50 italic">+{influencedByReferenced.length - 3} more</span>
+                                  <span className="text-[10px] text-gold/50 italic">+{influencedByReferenced.length - 3} more</span>
                                 )}
                               </div>
                             )}
@@ -1119,14 +1119,14 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick, allEvents
                                 {influencedReferenced.slice(0, 3).map((connId, i) => (
                                   <span
                                     key={`ref-${i}`}
-                                    className="px-2 py-0.5 bg-amber-900/20 border border-dashed border-amber-600/40 rounded text-[11px] text-amber-500/70 font-montserrat italic"
+                                    className="px-2 py-0.5 bg-gold/20 border border-dashed border-gold/40 rounded text-[11px] text-gold/70 font-montserrat italic"
                                     title={`Referenced: Event not yet in timeline`}
                                   >
                                     {formatId(connId)}
                                   </span>
                                 ))}
                                 {influencedReferenced.length > 3 && (
-                                  <span className="text-[10px] text-amber-600/50 italic">+{influencedReferenced.length - 3} more</span>
+                                  <span className="text-[10px] text-gold/50 italic">+{influencedReferenced.length - 3} more</span>
                                 )}
                               </div>
                             )}

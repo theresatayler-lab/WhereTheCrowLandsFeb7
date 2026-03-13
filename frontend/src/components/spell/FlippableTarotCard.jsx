@@ -81,7 +81,7 @@ export default function FlippableTarotCard({
           </div>
           
           {/* Flip indicator */}
-          <div className="absolute bottom-2 right-2 bg-black/50 text-amber-200 text-xs px-2 py-1 rounded">
+          <div className="absolute bottom-2 right-2 bg-black/50 text-gold text-xs px-2 py-1 rounded">
             Tap to flip
           </div>
         </div>
@@ -114,15 +114,15 @@ export default function FlippableTarotCard({
             </div>
 
             {/* Title */}
-            <h3 className="font-cinzel text-sm sm:text-base text-amber-900 text-center leading-tight mb-2">
+            <h3 className="font-cinzel text-sm sm:text-base text-crimson text-center leading-tight mb-2">
               {title || "Your Spell"}
             </h3>
 
             {/* Divider */}
             <div className="flex items-center justify-center gap-2 mb-3">
-              <div className="h-px w-8 bg-amber-800/40" />
-              <div className="w-1 h-1 bg-amber-800/40 rotate-45" />
-              <div className="h-px w-8 bg-amber-800/40" />
+              <div className="h-px w-8 bg-gold-dark/40" />
+              <div className="w-1 h-1 bg-gold-dark/40 rotate-45" />
+              <div className="h-px w-8 bg-gold-dark/40" />
             </div>
 
             {/* Essence */}
@@ -136,7 +136,7 @@ export default function FlippableTarotCard({
             <div className="flex-1 flex flex-col justify-center space-y-2">
               {keyAction && (
                 <div className="text-center">
-                  <span className="font-montserrat text-[10px] text-amber-800/60 uppercase tracking-wider block">
+                  <span className="font-montserrat text-[10px] text-gold-dark/60 uppercase tracking-wider block">
                     Key Action
                   </span>
                   <span className="font-crimson text-xs text-navy-dark">
@@ -146,7 +146,7 @@ export default function FlippableTarotCard({
               )}
               {timing && (
                 <div className="text-center">
-                  <span className="font-montserrat text-[10px] text-amber-800/60 uppercase tracking-wider block">
+                  <span className="font-montserrat text-[10px] text-gold-dark/60 uppercase tracking-wider block">
                     Timing
                   </span>
                   <span className="font-crimson text-xs text-navy-dark">
@@ -159,7 +159,7 @@ export default function FlippableTarotCard({
             {/* Guide attribution */}
             {guideName && (
               <div className="mt-auto pt-2 text-center">
-                <span className="font-montserrat text-[10px] text-amber-800/50 uppercase tracking-wider">
+                <span className="font-montserrat text-[10px] text-gold-dark/50 uppercase tracking-wider">
                   by {guideName}
                 </span>
               </div>
@@ -168,15 +168,15 @@ export default function FlippableTarotCard({
             {/* Decorative bottom */}
             <div className="flex justify-center mt-2">
               <div className="flex items-center gap-1">
-                <div className="w-1 h-1 bg-amber-800/30 rotate-45" />
-                <div className="w-1.5 h-1.5 bg-amber-800/40 rotate-45" />
-                <div className="w-1 h-1 bg-amber-800/30 rotate-45" />
+                <div className="w-1 h-1 bg-gold-dark/30 rotate-45" />
+                <div className="w-1.5 h-1.5 bg-gold-dark/40 rotate-45" />
+                <div className="w-1 h-1 bg-gold-dark/30 rotate-45" />
               </div>
             </div>
           </div>
           
           {/* Flip indicator */}
-          <div className="absolute bottom-2 right-2 bg-amber-900/50 text-amber-100 text-xs px-2 py-1 rounded">
+          <div className="absolute bottom-2 right-2 bg-navy-dark/50 text-cream text-xs px-2 py-1 rounded">
             Tap for image
           </div>
         </div>

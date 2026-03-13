@@ -49,25 +49,25 @@ const PERSONAS = [
 ];
 
 const ALCHEMIZE_OPTIONS = [
-  { id: 'protection', label: 'Protection', iconSrc: '/icons/alchemize/alchemize-protection.png', color: 'text-teal-400', description: 'Wards, shields, boundaries', forPersonas: ['cathleen', 'katherine', 'shigg'] },
-  { id: 'baneful_justice', label: 'Baneful Justice', iconSrc: '/icons/alchemize/alchemize-baneful-justice.png', color: 'text-red-400', description: 'Binding, truth-revealing, accountability', forPersonas: ['katherine', 'cathleen', 'theresa'] },
-  { id: 'comfort_healing', label: 'Comfort & Healing', iconSrc: '/icons/alchemize/alchemize-comfort-healing.png', color: 'text-amber-400', description: 'Grief, loss, emotional support', forPersonas: ['shigg', 'brenda', 'cathleen'] },
-  { id: 'clarity_truth', label: 'Clarity & Truth', iconSrc: '/icons/alchemize/alchemize-clarity-truth.png', color: 'text-violet-400', description: 'Discernment, seeing clearly, revelation', forPersonas: ['theresa', 'katherine', 'shigg'] },
+  { id: 'protection', label: 'Protection', iconSrc: '/icons/alchemize/alchemize-protection.png', color: 'text-crimson-bright', description: 'Wards, shields, boundaries', forPersonas: ['cathleen', 'katherine', 'shigg'] },
+  { id: 'baneful_justice', label: 'Baneful Justice', iconSrc: '/icons/alchemize/alchemize-baneful-justice.png', color: 'text-crimson', description: 'Binding, truth-revealing, accountability', forPersonas: ['katherine', 'cathleen', 'theresa'] },
+  { id: 'comfort_healing', label: 'Comfort & Healing', iconSrc: '/icons/alchemize/alchemize-comfort-healing.png', color: 'text-gold-light', description: 'Grief, loss, emotional support', forPersonas: ['shigg', 'brenda', 'cathleen'] },
+  { id: 'clarity_truth', label: 'Clarity & Truth', iconSrc: '/icons/alchemize/alchemize-clarity-truth.png', color: 'text-gold', description: 'Discernment, seeing clearly, revelation', forPersonas: ['theresa', 'katherine', 'shigg'] },
   { id: 'releasing', label: 'Releasing & Letting Go', iconSrc: '/icons/alchemize/alchemize-releasing.png', color: 'text-blue-400', description: 'Breaking patterns, cord-cutting, freedom', forPersonas: ['theresa', 'katherine', 'brenda'] },
-  { id: 'ancestral_work', label: 'Ancestral Work', iconSrc: '/icons/alchemize/alchemize-ancestral-work.png', color: 'text-rose-400', description: 'Family patterns, lineage healing, memory', forPersonas: ['theresa', 'brenda', 'shigg'] },
-  { id: 'domestic_magic', label: 'Domestic Magic', iconSrc: '/icons/alchemize/alchemize-domestic-magic.png', color: 'text-yellow-400', description: 'Home blessing, kitchen magic, hearth craft', forPersonas: ['shigg', 'cathleen'] },
-  { id: 'courage_strength', label: 'Courage & Strength', iconSrc: '/icons/alchemize/alchemize-courage-strength.png', color: 'text-green-400', description: 'Empowerment, voice, standing ground', forPersonas: ['cathleen', 'theresa'] }
+  { id: 'ancestral_work', label: 'Ancestral Work', iconSrc: '/icons/alchemize/alchemize-ancestral-work.png', color: 'text-crimson', description: 'Family patterns, lineage healing, memory', forPersonas: ['theresa', 'brenda', 'shigg'] },
+  { id: 'domestic_magic', label: 'Domestic Magic', iconSrc: '/icons/alchemize/alchemize-domestic-magic.png', color: 'text-gold', description: 'Home blessing, kitchen magic, hearth craft', forPersonas: ['shigg', 'cathleen'] },
+  { id: 'courage_strength', label: 'Courage & Strength', iconSrc: '/icons/alchemize/alchemize-courage-strength.png', color: 'text-gold', description: 'Empowerment, voice, standing ground', forPersonas: ['cathleen', 'theresa'] }
 ];
 
 // Keep FEELINGS for backward compatibility with existing grimoire entries
 const FEELINGS = [
   { id: 'calm', label: 'Calm', icon: Cloud, color: 'text-blue-400', forPersonas: ['shigg', 'brenda', 'katherine'] },
-  { id: 'brave', label: 'Brave', icon: Shield, color: 'text-amber-400', forPersonas: ['cathleen', 'theresa', 'katherine'] },
-  { id: 'clear', label: 'Clear', icon: Eye, color: 'text-purple-400', forPersonas: ['katherine', 'theresa', 'shigg'] },
-  { id: 'protected', label: 'Protected', icon: Shield, color: 'text-green-400', forPersonas: ['cathleen', 'katherine'] },
-  { id: 'softened', label: 'Softened', icon: Heart, color: 'text-pink-400', forPersonas: ['shigg', 'brenda', 'cathleen'] },
-  { id: 'energized', label: 'Energized', icon: Zap, color: 'text-yellow-400', forPersonas: ['cathleen', 'theresa'] },
-  { id: 'connected', label: 'Connected', icon: Heart, color: 'text-rose-400', forPersonas: ['brenda', 'shigg'] }
+  { id: 'brave', label: 'Brave', icon: Shield, color: 'text-gold-light', forPersonas: ['cathleen', 'theresa', 'katherine'] },
+  { id: 'clear', label: 'Clear', icon: Eye, color: 'text-gold', forPersonas: ['katherine', 'theresa', 'shigg'] },
+  { id: 'protected', label: 'Protected', icon: Shield, color: 'text-gold', forPersonas: ['cathleen', 'katherine'] },
+  { id: 'softened', label: 'Softened', icon: Heart, color: 'text-crimson-bright', forPersonas: ['shigg', 'brenda', 'cathleen'] },
+  { id: 'energized', label: 'Energized', icon: Zap, color: 'text-gold', forPersonas: ['cathleen', 'theresa'] },
+  { id: 'connected', label: 'Connected', icon: Heart, color: 'text-crimson', forPersonas: ['brenda', 'shigg'] }
 ];
 
 const TIMES = [
