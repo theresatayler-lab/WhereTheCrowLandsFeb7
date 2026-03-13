@@ -159,9 +159,9 @@ code {
 }
 
 .btn-ritual:disabled {
-    background: #5A4A4F;
-    color: #9A9A9A;
-    border-color: #5A5A5A;
+    background: #6B3A4A;
+    color: #C8A44D80;
+    border-color: #8B223240;
     cursor: not-allowed;
     box-shadow: none;
 }

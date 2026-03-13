@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { X, ArrowRight, Feather, Moon, BookOpen, Sparkles } from 'lucide-react';
+import { X, ArrowRight } from 'lucide-react';
 import { ARCHETYPES } from '../data/archetypes';
 
 const ONBOARDING_KEY = 'crowlands_onboarding_complete';
@@ -96,8 +96,8 @@ const WelcomeStep = ({ onContinue, onSkip }) => (
     {/* Decorative header */}
     <div className="flex justify-center mb-6">
       <div className="relative">
-        <Feather className="w-16 h-16 text-primary" />
-        <Sparkles className="w-6 h-6 text-accent absolute -top-1 -right-1" />
+        <img src="/icons/anchors/gold/anchor-feather.png" alt="" className="w-16 h-16" />
+        <img src="/icons/ui/gold/icon-sparkles.png" alt="" className="w-6 h-6 absolute -top-1 -right-1" />
       </div>
     </div>
 
@@ -121,17 +121,17 @@ const WelcomeStep = ({ onContinue, onSkip }) => (
     {/* Features */}
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
       <FeatureCard
-        icon={Moon}
+        iconSrc="/icons/anchors/gold/anchor-candle.png"
         title="Ancestral Wisdom"
         description="Learn from four generations of women who practiced in secret"
       />
       <FeatureCard
-        icon={BookOpen}
+        iconSrc="/icons/anchors/gold/anchor-notebook.png"
         title="Practical Rituals"
         description="Get tested formulas you can adapt to your own needs"
       />
       <FeatureCard
-        icon={Sparkles}
+        iconSrc="/icons/ui/gold/icon-sparkles.png"
         title="Your Power"
         description="No gatekeepers. No intermediaries. Just you and the work."
       />
@@ -155,9 +155,9 @@ const WelcomeStep = ({ onContinue, onSkip }) => (
   </div>
 );
 
-const FeatureCard = ({ icon: Icon, title, description }) => (
+const FeatureCard = ({ iconSrc, title, description }) => (
   <div className="p-4 bg-card/50 border border-border rounded-sm">
-    <Icon className="w-8 h-8 text-primary mx-auto mb-2" />
+    <img src={iconSrc} alt="" className="w-8 h-8 mx-auto mb-2" />
     <h3 className="font-cinzel text-sm text-secondary mb-1">{title}</h3>
     <p className="font-montserrat text-xs text-muted-foreground">{description}</p>
   </div>

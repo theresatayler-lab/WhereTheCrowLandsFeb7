@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Users, Feather } from 'lucide-react';
+import { } from 'lucide-react';
 import { WaitlistForm } from '../components/WaitlistForm';
 import { BrandIcon } from '../components/BrandIcon';
 import {
@@ -431,7 +431,7 @@ export const Home = () => {
                 border: `1px solid ${NOUVEAU_COLORS.emberPink}50`,
               }}
             >
-              <Feather className="w-5 h-5" /> Learn Our Story
+              <img src="/icons/anchors/gold/anchor-feather.png" alt="" className="w-5 h-5" /> Learn Our Story
             </Link>
           </div>
         </div>

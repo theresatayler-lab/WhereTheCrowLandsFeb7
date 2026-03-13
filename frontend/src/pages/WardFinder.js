@@ -142,7 +142,7 @@ const WardCard = ({ ward, index, situation, onSave, isSaving, isSaved, isLight }
                   disabled={isSaving || isSaved}
                   className={`w-full px-4 py-2 rounded-sm font-montserrat text-sm transition-all flex items-center justify-center gap-2 ${
                     isSaved 
-                      ? 'bg-green-500/20 text-green-400 border border-green-500/30 cursor-default'
+                      ? 'bg-gold/20 text-gold border border-gold/30 cursor-default'
                       : isLight
                         ? 'bg-crimson/10 text-crimson border border-crimson/40 hover:bg-crimson/20'
                         : 'bg-gold/10 text-gold border border-gold/40 hover:bg-gold/20'

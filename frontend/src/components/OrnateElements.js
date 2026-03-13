@@ -109,7 +109,7 @@ export const CornerFlourish = ({ position = 'top-left', variant = 'gold', classN
 
 export const GrandDivider = ({ variant = 'default', light = false }) => {
   const color = light ? NOUVEAU_COLORS.mutedBrass : NOUVEAU_COLORS.antiqueGold;
-  const opacity = light ? 0.5 : 0.6;
+  const opacity = light ? 0.75 : 0.6;
   
   return (
     <div className="relative py-6 sm:py-8 flex justify-center">
@@ -152,7 +152,7 @@ export const GrandDivider = ({ variant = 'default', light = false }) => {
 
 export const MysticalDivider = ({ variant = 'default', light = false }) => {
   const color = light ? NOUVEAU_COLORS.mutedBrass : NOUVEAU_COLORS.antiqueGold;
-  const opacity = light ? 0.4 : 0.5;
+  const opacity = light ? 0.7 : 0.5;
   
   return (
     <div className="flex items-center justify-center py-4 sm:py-5">
@@ -191,26 +191,26 @@ export const SectionDivider = ({ variant = 'default', className = '' }) => {
     <div className={`flex items-center justify-center py-4 ${className}`}>
       {variant === 'stars' ? (
         <div className="flex items-center gap-2">
-          <StarGlyph size={12} points={4} color={color} opacity={0.4} />
-          <StarGlyph size={16} points={6} color={color} opacity={0.6} />
-          <SunDisc size={20} color={color} opacity={0.5} />
-          <StarGlyph size={16} points={6} color={color} opacity={0.6} />
-          <StarGlyph size={12} points={4} color={color} opacity={0.4} />
+          <StarGlyph size={12} points={4} color={color} opacity={0.6} />
+          <StarGlyph size={16} points={6} color={color} opacity={0.8} />
+          <SunDisc size={20} color={color} opacity={0.7} />
+          <StarGlyph size={16} points={6} color={color} opacity={0.8} />
+          <StarGlyph size={12} points={4} color={color} opacity={0.6} />
         </div>
       ) : variant === 'moons' ? (
         <div className="flex items-center gap-2">
-          <CrescentMoon size={14} facing="left" color={color} opacity={0.5} />
-          <MoonDisc size={18} color={color} opacity={0.6} />
-          <CrescentMoon size={14} facing="right" color={color} opacity={0.5} />
+          <CrescentMoon size={14} facing="left" color={color} opacity={0.7} />
+          <MoonDisc size={18} color={color} opacity={0.8} />
+          <CrescentMoon size={14} facing="right" color={color} opacity={0.7} />
         </div>
       ) : variant === 'birds' || variant === 'ouroboros' ? (
         <div className="flex items-center gap-3">
           <BrandIcon name="ouroboros" size={24} opacity={0.6} />
-          <StarGlyph size={12} color={color} opacity={0.4} />
+          <StarGlyph size={12} color={color} opacity={0.6} />
           <BrandIcon name="ouroboros" size={24} opacity={0.6} />
         </div>
       ) : (
-        <SimpleDivider width={120} color={color} opacity={0.4} />
+        <SimpleDivider width={120} color={color} opacity={0.6} />
       )}
     </div>
   );
@@ -313,16 +313,16 @@ export const LightSection = ({
     
     {/* Corner ornaments - structural, at edges */}
     <div className="absolute top-3 left-3 pointer-events-none z-20">
-      <HaloCorner size={45} position="top-left" color={NOUVEAU_COLORS.mutedBrass} opacity={0.5} />
+      <HaloCorner size={45} position="top-left" color={NOUVEAU_COLORS.mutedBrass} opacity={0.7} />
     </div>
     <div className="absolute top-3 right-3 pointer-events-none z-20">
-      <HaloCorner size={45} position="top-right" color={NOUVEAU_COLORS.mutedBrass} opacity={0.5} />
+      <HaloCorner size={45} position="top-right" color={NOUVEAU_COLORS.mutedBrass} opacity={0.7} />
     </div>
     <div className="absolute bottom-3 left-3 pointer-events-none z-20">
-      <HaloCorner size={45} position="bottom-left" color={NOUVEAU_COLORS.mutedBrass} opacity={0.5} />
+      <HaloCorner size={45} position="bottom-left" color={NOUVEAU_COLORS.mutedBrass} opacity={0.7} />
     </div>
     <div className="absolute bottom-3 right-3 pointer-events-none z-20">
-      <HaloCorner size={45} position="bottom-right" color={NOUVEAU_COLORS.mutedBrass} opacity={0.5} />
+      <HaloCorner size={45} position="bottom-right" color={NOUVEAU_COLORS.mutedBrass} opacity={0.7} />
     </div>
     
     <div className="relative z-10">{children}</div>
@@ -338,22 +338,22 @@ export const LightOrnateCard = ({ children, className = '', hover = true }) => (
     className={`relative p-5 sm:p-6 ${hover ? 'transition-all duration-300 hover:shadow-lg' : ''} ${className}`}
     style={{ 
       backgroundColor: NOUVEAU_COLORS.vellum,
-      border: `1px solid ${NOUVEAU_COLORS.antiqueGold}50`,
+      border: `1px solid ${NOUVEAU_COLORS.antiqueGold}80`,
       boxShadow: '0 1px 3px rgba(12, 29, 46, 0.08), 0 4px 12px rgba(12, 29, 46, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.6)',
     }}
   >
     {/* Corner ornaments */}
     <div className="absolute top-2 left-2 pointer-events-none">
-      <HaloCorner size={40} position="top-left" color={NOUVEAU_COLORS.mutedBrass} opacity={0.4} />
+      <HaloCorner size={40} position="top-left" color={NOUVEAU_COLORS.mutedBrass} opacity={0.6} />
     </div>
     <div className="absolute top-2 right-2 pointer-events-none">
-      <HaloCorner size={40} position="top-right" color={NOUVEAU_COLORS.mutedBrass} opacity={0.4} />
+      <HaloCorner size={40} position="top-right" color={NOUVEAU_COLORS.mutedBrass} opacity={0.6} />
     </div>
     <div className="absolute bottom-2 left-2 pointer-events-none">
-      <HaloCorner size={40} position="bottom-left" color={NOUVEAU_COLORS.mutedBrass} opacity={0.4} />
+      <HaloCorner size={40} position="bottom-left" color={NOUVEAU_COLORS.mutedBrass} opacity={0.6} />
     </div>
     <div className="absolute bottom-2 right-2 pointer-events-none">
-      <HaloCorner size={40} position="bottom-right" color={NOUVEAU_COLORS.mutedBrass} opacity={0.4} />
+      <HaloCorner size={40} position="bottom-right" color={NOUVEAU_COLORS.mutedBrass} opacity={0.6} />
     </div>
     
     <div className="relative z-10">{children}</div>

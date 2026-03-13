@@ -134,7 +134,7 @@ const LIBRARY_BOOKS = {
       author: "Various",
       color: "#556B2F",
       spine: "#3B4A23",
-      accent: "#9ACD32",
+      accent: "#C8A44D",
       description: "Kitchen magic, recipes, and rituals for the hearth witch.",
       relevantTo: ["Shigg"],
       link: "https://www.amazon.com/Witchs-Cookbook-Enchanting-Recipes-Inspired/dp/1681884755"
@@ -323,7 +323,7 @@ const LIBRARY_BOOKS = {
       author: "Dee Gordon",
       color: "#6B8E23",
       spine: "#4A6316",
-      accent: "#9ACD32",
+      accent: "#C8A44D",
       description: "Women's wartime service in Essex - the world Cathleen knew.",
       relevantTo: ["Cathleen"],
       link: "https://www.amazon.com/Essex-Land-Girls-Dee-Gordon/dp/0752458124"
@@ -803,8 +803,8 @@ const VictorianBookModal = ({ book, onClose }) => {
               >
                 {copied ? (
                   <>
-                    <Check className="w-4 h-4 text-green-600" />
-                    <span className="text-green-600">Link Copied!</span>
+                    <Check className="w-4 h-4 text-gold" />
+                    <span className="text-gold">Link Copied!</span>
                   </>
                 ) : (
                   <>

@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { aiAPI } from '../utils/api';
 import { SpellBlockRenderer } from '../components/SpellBlockRenderer';
 import { DarkSection, LightSection, PageHeader } from '../components/OrnateElements';
-import { Send, Loader2, ChevronLeft, Bird, Scissors, Flame, BookOpen, Mail } from 'lucide-react';
+import { Send, Loader2, ChevronLeft } from 'lucide-react';
 import { toast } from 'sonner';
 import SpellPageFrame from "../components/spell/SpellPageFrame";
 import SpellHeader from "../components/spell/SpellHeader";
@@ -18,7 +18,7 @@ const GUIDE_CONFIGS = {
     title: "Shigg's Kitchen Table",
     subtitle: 'Domestic magic, bird oracles, literary rituals & tea divination',
     buttonText: 'Put the kettle on',
-    icon: Bird,
+    iconSrc: '/icons/guides/guide-shigg.png',
     colors: { accent: 'amber-500', bg: 'amber-900/15', border: 'amber-600', text: 'amber-400' },
     greeting: "Come sit, love. The kettle's on. What's troubling you?",
     placeholder: "Tell Shigg what's on your mind... I need courage to speak up at work... I'm grieving and need comfort... I can't see my way through this...",
@@ -34,7 +34,7 @@ const GUIDE_CONFIGS = {
     title: "Cathleen's Vigil",
     subtitle: 'Protection magic, spiritualist practices & kitchen improvisation',
     buttonText: 'Answer the call',
-    icon: Flame,
+    iconSrc: '/icons/guides/guide-cathleen.png',
     colors: { accent: 'teal-500', bg: 'teal-900/15', border: 'teal-600', text: 'teal-400' },
     greeting: "You're needed. Sit down and I'll tell you why.",
     placeholder: "Tell Cathleen what needs protecting... Someone crossed a line... I need to feel safe... I need protection for someone I love...",
@@ -50,7 +50,7 @@ const GUIDE_CONFIGS = {
     title: "Katherine's Sitting Room",
     subtitle: 'Thread magic, mirror work, justice spells & Victorian diagnostics',
     buttonText: 'Enter the sitting room',
-    icon: Scissors,
+    iconSrc: '/icons/guides/guide-katherine.png',
     colors: { accent: 'violet-500', bg: 'violet-900/15', border: 'violet-600', text: 'violet-400' },
     greeting: "Sit. Let me look at you. Yes, I can see what this is about.",
     placeholder: "Katherine already knows, but tell her anyway... Someone betrayed me... I need justice... I'm tangled up in something I can't see clearly...",
@@ -66,7 +66,7 @@ const GUIDE_CONFIGS = {
     title: "Theresa's Threshold",
     subtitle: 'Historical synthesis, modern divination & sign-reading',
     buttonText: 'Cross the threshold',
-    icon: BookOpen,
+    iconSrc: '/icons/guides/guide-theresa.png',
     colors: { accent: 'rose-500', bg: 'rose-900/15', border: 'rose-600', text: 'rose-400' },
     greeting: "Here's what they did then, here's what you do now. Let me show you the bridge.",
     placeholder: "Tell Theresa what you're seeking... I need clarity about a decision... I keep seeing the same signs everywhere... I want to understand this practice's history...",
@@ -82,7 +82,7 @@ const GUIDE_CONFIGS = {
     title: "Brenda's Letter Box",
     subtitle: 'Epistolary meditation, Hermetic pathworking & sustained workings',
     buttonText: 'Write to Brenda',
-    icon: Mail,
+    iconSrc: '/icons/guides/guide-brenda.png',
     colors: { accent: 'indigo-500', bg: 'indigo-900/15', border: 'indigo-600', text: 'indigo-400' },
     greeting: "Dear friend, I received your letter. Let me tell you what I see.",
     placeholder: "Write to Brenda about what you're facing... Dear Brenda, I feel lost and need guidance... I'm going through a major life change... I want to commit to a sustained practice...",
@@ -130,7 +130,7 @@ export const GuidePortal = () => {
     );
   }
 
-  const GuideIcon = guide.icon;
+  const guideIconSrc = guide.iconSrc;
 
   const addMessage = (role, text) => {
     setMessages(prev => [...prev, { role, text, timestamp: Date.now() }]);
@@ -291,7 +291,7 @@ export const GuidePortal = () => {
       {/* Header */}
       <div className="max-w-3xl mx-auto px-4 pt-4 pb-2 text-center">
         <div className={`inline-flex items-center justify-center w-16 h-16 rounded-full bg-${guide.colors.bg} border border-${guide.colors.border}/30 mb-4`}>
-          <GuideIcon className={`w-8 h-8 text-${guide.colors.text}`} />
+          <img src={guideIconSrc} alt={guide.name} className="w-10 h-10 rounded-full object-cover" />
         </div>
         <h1 className="font-cinzel text-3xl text-cream font-bold">{guide.title}</h1>
         <p className={`font-montserrat text-sm text-${guide.colors.text} mt-2`}>{guide.subtitle}</p>
@@ -446,19 +446,19 @@ export const GuidePortal = () => {
                       borderColor: `border-${guide.colors.border}`,
                       accentColor: `text-${guide.colors.accent}`,
                       bgAccent: 'bg-[#F3EFE8]',
-                      textMuted: 'text-stone-600'
+                      textMuted: 'text-navy-dark/70'
                     }}
                   />
                 ) : (
-                  <div className="font-crimson text-stone-800 whitespace-pre-wrap leading-relaxed">
+                  <div className="font-crimson text-navy-dark whitespace-pre-wrap leading-relaxed">
                     {spellResult.content || spellResult.spell_text || JSON.stringify(spellResult, null, 2)}
                   </div>
                 )}
 
                 {/* Ethics Statement */}
                 {spellResult.ethics_statement && (
-                  <div className="mt-8 pt-6 border-t border-stone-300">
-                    <p className="font-crimson text-stone-600 text-sm italic leading-relaxed">
+                  <div className="mt-8 pt-6 border-t border-gold/30">
+                    <p className="font-crimson text-navy-dark/70 text-sm italic leading-relaxed">
                       {spellResult.ethics_statement}
                     </p>
                   </div>
@@ -467,21 +467,21 @@ export const GuidePortal = () => {
 
               {/* Research Sources - Outside the book view */}
               {spellResult.sources && spellResult.sources.length > 0 && (
-                <div className="mt-8 p-6 bg-stone-100/50 rounded-lg">
-                  <h3 className="font-cinzel text-lg text-amber-900 font-semibold mb-4">Sources & Further Reading</h3>
+                <div className="mt-8 p-6 bg-gold/5 border border-gold/20 rounded-lg">
+                  <h3 className="font-cinzel text-lg text-crimson font-semibold mb-4">Sources & Further Reading</h3>
                   <div className="space-y-3">
                     {spellResult.sources.map((source, i) => (
                       <div key={i} className="bg-white/50 rounded p-3">
-                        <p className="font-crimson text-stone-800 font-semibold text-sm">
+                        <p className="font-crimson text-navy-dark font-semibold text-sm">
                           {source.author && `${source.author} — `}
                           <span className="italic">{source.work || source.title}</span>
                           {source.year && ` (${source.year})`}
                         </p>
                         {source.relevance && (
-                          <p className="font-crimson text-stone-600 text-sm mt-1">{source.relevance}</p>
+                          <p className="font-crimson text-navy-dark/70 text-sm mt-1">{source.relevance}</p>
                         )}
                         {source.further_reading_note && (
-                          <p className="font-crimson text-stone-500 text-xs mt-1 italic">{source.further_reading_note}</p>
+                          <p className="font-crimson text-navy-dark/60 text-xs mt-1 italic">{source.further_reading_note}</p>
                         )}
                         {source.learn_more_url && (
                           <a href={source.learn_more_url} target="_blank" rel="noopener noreferrer"

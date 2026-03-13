@@ -158,18 +158,18 @@ const OptionCard = ({ selected, onClick, children, className = '', light = false
     className={`relative p-4 rounded-sm text-left transition-all ${
       light 
         ? selected 
-          ? 'bg-crimson/15 border-2 border-crimson shadow-md' 
-          : 'bg-white border-2 border-navy-dark/20 hover:border-crimson/40 hover:shadow-sm'
+          ? 'bg-crimson/10 border-2 border-gold shadow-md shadow-gold/10' 
+          : 'bg-white border-2 border-gold/30 hover:border-gold/60 hover:shadow-sm'
         : selected 
-          ? 'bg-gradient-to-br from-crimson/20 to-crimson/10 border-2 border-crimson shadow-lg' 
-          : 'bg-navy-mid border border-gold/20 hover:border-gold/40'
+          ? 'bg-gradient-to-br from-crimson/20 to-crimson/10 border-2 border-gold shadow-lg shadow-gold/10' 
+          : 'bg-navy-mid border border-gold/30 hover:border-gold/50'
     } ${className}`}
     whileHover={{ scale: 1.02 }}
     whileTap={{ scale: 0.98 }}
   >
     {selected && (
       <div className="absolute top-2 right-2">
-        <Check className={`w-5 h-5 ${light ? 'text-crimson' : 'text-crimson'}`} />
+        <Check className={`w-5 h-5 ${light ? 'text-gold-dark' : 'text-gold'}`} />
       </div>
     )}
     {children}
@@ -231,7 +231,7 @@ const Step2 = ({ spellSpec, updateSpec }) => (
             light={true}
           >
             <div className="text-center">
-              <Clock className={`w-6 h-6 mx-auto mb-2 ${spellSpec.time === t.id ? 'text-crimson' : 'text-navy-dark'}`} />
+              <Clock className={`w-6 h-6 mx-auto mb-2 ${spellSpec.time === t.id ? 'text-gold-dark' : 'text-navy-dark/60'}`} />
               <p className="font-montserrat text-sm text-navy-dark font-bold">{t.label}</p>
               <p className="font-montserrat text-xs text-navy-dark/70 mt-1">{t.description}</p>
             </div>

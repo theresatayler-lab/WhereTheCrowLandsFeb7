@@ -739,7 +739,7 @@ export const InvisibleHelpers = () => {
                       className={`w-full py-4 font-cinzel text-sm tracking-wider uppercase transition-all flex items-center justify-center gap-2 ${
                         isFormValid()
                           ? 'bg-crimson hover:bg-crimson-bright text-cream'
-                          : 'bg-navy-mid/20 text-navy-dark/40 cursor-not-allowed'
+                          : 'bg-crimson/20 text-crimson/40 cursor-not-allowed'
                       }`}
                       data-testid="continue-to-checkout-btn"
                     >
@@ -794,7 +794,7 @@ export const InvisibleHelpers = () => {
                       className={`w-full py-4 font-cinzel text-sm tracking-wider uppercase transition-all flex items-center justify-center gap-2 ${
                         email && name.trim()
                           ? 'bg-crimson hover:bg-crimson-bright text-cream'
-                          : 'bg-navy-mid/20 text-navy-dark/40 cursor-not-allowed'
+                          : 'bg-crimson/20 text-crimson/40 cursor-not-allowed'
                       }`}
                       data-testid="email-submit-btn"
                     >
