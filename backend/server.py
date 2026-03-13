@@ -670,6 +670,14 @@ async def get_optional_user(credentials: HTTPAuthorizationCredentials = Depends(
     except Exception:
         return None
 
+ADMIN_EMAILS = ['sub_test@test.com']
+
+async def get_admin_user(user = Depends(get_current_user)):
+    """Require authenticated user with admin email."""
+    if user.get('email') not in ADMIN_EMAILS:
+        raise HTTPException(status_code=403, detail='Admin access required')
+    return user
+
 # Auth endpoints
 @api_router.post('/auth/register', response_model=AuthResponse)
 async def register(user_data: UserRegister):
@@ -783,17 +791,17 @@ async def update_email(request: UpdateEmailRequest, user = Depends(get_current_u
 # ============================================================================
 
 @api_router.get('/health/providers')
-async def health_providers():
+async def health_providers(user = Depends(get_admin_user)):
     """Return configuration status for all AI providers"""
     return get_provider_status()
 
 @api_router.get('/research/config')
-async def research_config():
+async def research_config(user = Depends(get_admin_user)):
     """Return research pipeline configuration (V3 enhanced)"""
     return get_research_config()
 
 @api_router.get('/llm/status')
-async def llm_status():
+async def llm_status(user = Depends(get_admin_user)):
     """Return LLM provider configuration and status"""
     return get_llm_status()
 
@@ -1894,12 +1902,8 @@ async def capture_lead_and_generate(request: Request, body: LeadCaptureRequest):
 
 
 @api_router.get('/admin/stats')
-async def get_admin_stats(user = Depends(get_current_user)):
+async def get_admin_stats(user = Depends(get_admin_user)):
     """Basic admin stats dashboard data."""
-    admin_emails = ['sub_test@test.com']
-    user_data = await db.users.find_one({'id': user['id']}, {'_id': 0, 'email': 1})
-    if not user_data or user_data.get('email') not in admin_emails:
-        raise HTTPException(status_code=403, detail='Admin access required')
 
     from datetime import timedelta
     now = datetime.now(timezone.utc)
