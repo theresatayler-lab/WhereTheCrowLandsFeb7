@@ -261,7 +261,7 @@ const PrintablesBlock = ({ tarotImageBase64, sigilImageBase64, spellTitle, tarot
               <div className="text-center flex-1 flex flex-col justify-center">
                 <p className="font-cinzel text-xs text-gold-light mb-2">{tarotCard.title || spellTitle}</p>
                 {tarotCard.essence && (
-                  <p className="font-montserrat text-[10px] text-silver-mist/80 italic leading-tight">
+                  <p className="font-montserrat text-[10px] text-muted-brass/80 italic leading-tight">
                     &ldquo;{tarotCard.essence}&rdquo;
                   </p>
                 )}

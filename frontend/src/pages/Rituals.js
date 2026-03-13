@@ -110,7 +110,7 @@ export const Rituals = () => {
                   </div>
                 )}
                 <MysticalDivider />
-                <div className="flex flex-wrap gap-4 text-xs font-montserrat text-silver-mist/70">
+                <div className="flex flex-wrap gap-4 text-xs font-montserrat text-muted-brass/70">
                   <div>
                     <span className="uppercase tracking-wider text-gold/60">Period: </span>
                     <span className="text-cream/80">{ritual.time_period}</span>
@@ -128,7 +128,7 @@ export const Rituals = () => {
         {rituals.length === 0 && (
           <div className="text-center py-12">
             <Sparkles className="w-12 h-12 text-gold/50 mx-auto mb-4" />
-            <p className="font-montserrat text-silver-mist/60">No rituals found for this category</p>
+            <p className="font-montserrat text-muted-brass/60">No rituals found for this category</p>
           </div>
         )}
       </div>

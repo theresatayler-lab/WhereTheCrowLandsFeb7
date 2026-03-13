@@ -71,7 +71,7 @@ const StyleCard = ({ style, isSelected, onSelect }) => (
     className={`relative p-4 rounded-sm text-left transition-all ${
       isSelected 
         ? 'bg-gradient-to-br ' + style.color + ' border-2 ' + style.borderColor + ' shadow-lg'
-        : 'bg-navy-mid/40 border border-gold/20 hover:border-gold/40'
+        : 'bg-navy-mid border border-gold/20 hover:border-gold/40'
     }`}
     whileHover={{ scale: 1.02 }}
     whileTap={{ scale: 0.98 }}
@@ -145,7 +145,7 @@ const FlippableImageCard = ({ imageBase64, prompt, onDownload }) => {
               
               {/* Click to flip hint */}
               <div className="absolute bottom-6 left-0 right-0 text-center z-20">
-                <p className="font-montserrat text-xs text-gold/80 bg-navy-dark/60 inline-block px-3 py-1 rounded-full backdrop-blur-sm">
+                <p className="font-montserrat text-xs text-gold/80 bg-navy-dark inline-block px-3 py-1 rounded-full backdrop-blur-sm">
                   Click to see full image
                 </p>
               </div>
@@ -167,7 +167,7 @@ const FlippableImageCard = ({ imageBase64, prompt, onDownload }) => {
             
             {/* Click to flip back hint */}
             <div className="absolute bottom-4 left-0 right-0 text-center">
-              <p className="font-montserrat text-xs text-cream/80 bg-navy-dark/80 inline-block px-3 py-1 rounded-full backdrop-blur-sm">
+              <p className="font-montserrat text-xs text-cream/80 bg-navy-dark inline-block px-3 py-1 rounded-full backdrop-blur-sm">
                 Click to flip back
               </p>
             </div>
@@ -342,7 +342,7 @@ export const AIImage = () => {
                   onChange={(e) => setPrompt(e.target.value)}
                   placeholder="Describe the mystical image you want to create..."
                   rows={4}
-                  className="w-full bg-navy-dark/50 border border-gold/30 focus:border-gold/60 focus:ring-1 focus:ring-gold/30 rounded-sm px-4 py-3 text-cream font-montserrat text-sm placeholder:text-cream/40"
+                  className="w-full bg-navy-dark border border-gold/30 focus:border-gold/60 focus:ring-1 focus:ring-gold/30 rounded-sm px-4 py-3 text-cream font-montserrat text-sm placeholder:text-cream/40"
                 />
               </div>
 
@@ -379,7 +379,7 @@ export const AIImage = () => {
                     <button
                       key={idx}
                       onClick={() => setPrompt(example)}
-                      className="w-full text-left px-3 py-2 bg-navy-dark/50 border border-gold/20 rounded-sm font-montserrat text-xs text-cream/70 hover:border-gold/40 hover:text-cream transition-all"
+                      className="w-full text-left px-3 py-2 bg-navy-dark border border-gold/20 rounded-sm font-montserrat text-xs text-cream/70 hover:border-gold/40 hover:text-cream transition-all"
                     >
                       {example}
                     </button>

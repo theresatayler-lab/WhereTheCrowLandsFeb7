@@ -74,7 +74,7 @@ export const HistoricalFigures = () => {
                 <p className="font-montserrat text-xs uppercase tracking-widest text-crimson-bright mb-3">
                   {figure.birth_death}
                 </p>
-                <p className="font-montserrat text-sm text-silver-mist/85 leading-relaxed line-clamp-3">
+                <p className="font-montserrat text-sm text-muted-brass/85 leading-relaxed line-clamp-3">
                   {figure.bio}
                 </p>
               </OrnateCard>

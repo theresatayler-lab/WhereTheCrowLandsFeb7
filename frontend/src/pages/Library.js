@@ -675,7 +675,7 @@ const VictorianBookModal = ({ book, onClose }) => {
         onClick={onClose}
       >
         {/* Backdrop */}
-        <div className="absolute inset-0 bg-navy-dark/95 backdrop-blur-md" />
+        <div className="absolute inset-0 bg-navy-dark backdrop-blur-md" />
         
         {/* Modal */}
         <motion.div
@@ -892,7 +892,7 @@ const Library = () => {
           </motion.p>
           
           <motion.p 
-            className="font-montserrat text-sm text-silver-mist/60 max-w-xl mx-auto"
+            className="font-montserrat text-sm text-muted-brass/60 max-w-xl mx-auto"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}

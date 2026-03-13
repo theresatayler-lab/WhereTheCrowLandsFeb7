@@ -35,9 +35,9 @@ const OracleCard = ({ cardData, position, index, isExpanded, onToggle, light = f
   };
   
   const style = positionStyles[position] || positionStyles['The Message'];
-  const bgClass = light ? 'bg-white/90' : 'bg-navy-mid/80';
+  const bgClass = light ? 'bg-white/90' : 'bg-navy-mid';
   const textClass = light ? 'text-navy-dark' : 'text-cream';
-  const mutedClass = light ? 'text-navy-dark/70' : 'text-silver-mist/80';
+  const mutedClass = light ? 'text-navy-dark/70' : 'text-muted-brass/80';
   
   return (
     <motion.div
@@ -140,7 +140,7 @@ const OracleCard = ({ cardData, position, index, isExpanded, onToggle, light = f
                 {/* Rover's Return Line */}
                 {cardData.rovers_return_line && (
                   <div className="text-center pt-4 border-t border-gold/20">
-                    <p className={`font-montserrat text-xs ${light ? 'text-navy-dark/50' : 'text-silver-mist/50'} mb-1`}>As heard at the Rover's Return...</p>
+                    <p className={`font-montserrat text-xs ${light ? 'text-navy-dark/50' : 'text-muted-brass/50'} mb-1`}>As heard at the Rover's Return...</p>
                     <p className={`font-cinzel text-base ${light ? 'text-crimson' : 'text-gold'} italic`}>
                       "{cardData.rovers_return_line}"
                     </p>
@@ -277,7 +277,7 @@ const CorrieTarot = () => {
             {/* Back button */}
             <button
               onClick={() => navigate('/guides')}
-              className="inline-flex items-center gap-2 text-silver-mist/70 hover:text-gold mb-6 transition-colors"
+              className="inline-flex items-center gap-2 text-muted-brass/70 hover:text-gold mb-6 transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
               <span className="font-montserrat text-sm">Back to Guides</span>
@@ -305,7 +305,7 @@ const CorrieTarot = () => {
               <p className="font-cinzel text-base sm:text-lg text-crimson-bright mb-2">
                 What Would Corrie Do?
               </p>
-              <p className="font-montserrat text-sm text-silver-mist/80 max-w-lg mx-auto">
+              <p className="font-montserrat text-sm text-muted-brass/80 max-w-lg mx-auto">
                 78 cards drawn from Coronation Street's wisdom. Characters and places that 
                 know how ordinary people handle extraordinary troubles.
               </p>
@@ -320,11 +320,11 @@ const CorrieTarot = () => {
               <div className="relative max-w-md mx-auto">
                 <div className="absolute inset-0 border-2 border-gold/40 rounded-sm" />
                 <div className="absolute inset-1.5 border border-crimson/30 rounded-sm" />
-                <div className="absolute inset-0 bg-navy-mid/80 rounded-sm" />
+                <div className="absolute inset-0 bg-navy-mid rounded-sm" />
                 <div className="relative z-10 p-8">
                   <Lock className="w-12 h-12 text-gold/50 mx-auto mb-4" />
                   <h3 className="font-cinzel text-xl text-gold mb-2">Please Log In</h3>
-                  <p className="font-montserrat text-sm text-silver-mist/70 mb-6">
+                  <p className="font-montserrat text-sm text-muted-brass/70 mb-6">
                     Log in to receive your Cobbles Oracle reading.
                   </p>
                   <button
@@ -347,7 +347,7 @@ const CorrieTarot = () => {
               <div className="relative">
                 <div className="absolute inset-0 border-2 border-gold/40 rounded-sm" />
                 <div className="absolute inset-1.5 border border-crimson/30 rounded-sm" />
-                <div className="absolute inset-0 bg-navy-mid/80 rounded-sm backdrop-blur-sm" />
+                <div className="absolute inset-0 bg-navy-mid rounded-sm backdrop-blur-sm" />
                 <div className="relative z-10 p-6 text-center">
                   <img src="/icons/ui/icon-crystal-ball.png" alt="" className="w-8 h-8 mx-auto mb-2" />
                   <h3 className="font-cinzel text-lg text-gold mb-3">Shigg's Reading</h3>

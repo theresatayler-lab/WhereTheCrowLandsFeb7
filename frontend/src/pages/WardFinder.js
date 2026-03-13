@@ -23,7 +23,7 @@ const WardCard = ({ ward, index, situation, onSave, isSaving, isSaved, isLight }
       transition={{ delay: index * 0.2 }}
       className={`rounded-lg overflow-hidden ${isLight 
         ? 'bg-cream/60 border-2 border-crimson/20' 
-        : 'bg-navy-mid/40 border-2 border-gold/30'}`}
+        : 'bg-navy-mid border-2 border-gold/30'}`}
     >
       {/* Header */}
       <div 

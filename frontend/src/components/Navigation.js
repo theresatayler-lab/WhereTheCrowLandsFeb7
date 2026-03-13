@@ -323,14 +323,14 @@ export const Navigation = ({ user, onLogout }) => {
               <Link
                 to="/profile"
                 onClick={handleLinkClick}
-                className="p-2 rounded-sm text-silver-mist/80 hover:text-gold transition-all"
+                className="p-2 rounded-sm text-muted-brass/80 hover:text-gold transition-all"
               >
                 <User className="w-5 h-5" />
               </Link>
             )}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-sm text-silver-mist/80 hover:text-gold transition-all"
+              className="p-2 rounded-sm text-muted-brass/80 hover:text-gold transition-all"
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -444,7 +444,7 @@ export const Navigation = ({ user, onLogout }) => {
                   key={link.to}
                   to={link.to}
                   onClick={handleLinkClick}
-                  className="flex items-center gap-3 px-4 py-2.5 rounded-sm font-montserrat text-xs text-silver-mist/60 hover:bg-gold/5 hover:text-gold transition-all"
+                  className="flex items-center gap-3 px-4 py-2.5 rounded-sm font-montserrat text-xs text-muted-brass/60 hover:bg-gold/5 hover:text-gold transition-all"
                 >
                   <BrandIcon name={link.brandIcon} size={18} variant="gold" opacity={0.8} />
                   <span>{link.label}</span>
@@ -468,7 +468,7 @@ export const Navigation = ({ user, onLogout }) => {
                       onLogout();
                       handleLinkClick();
                     }}
-                    className="w-full flex items-center gap-3 px-4 py-3 rounded-sm font-montserrat text-sm text-silver-mist/60 hover:text-crimson hover:bg-crimson/10 transition-all"
+                    className="w-full flex items-center gap-3 px-4 py-3 rounded-sm font-montserrat text-sm text-muted-brass/60 hover:text-crimson hover:bg-crimson/10 transition-all"
                   >
                     <LogOut className="w-5 h-5" />
                     <span>Logout</span>

@@ -412,7 +412,7 @@ export const InvisibleHelpers = () => {
             Crafting your intention...
           </p>
           
-          <p className="text-silver-mist/60 text-sm font-montserrat">
+          <p className="text-muted-brass/60 text-sm font-montserrat">
             This may take a moment
           </p>
         </div>
@@ -494,7 +494,7 @@ export const InvisibleHelpers = () => {
             </h1>
             
             {/* Subtitle */}
-            <p className="font-crimson text-sm sm:text-base text-silver-mist/80 italic"
+            <p className="font-crimson text-sm sm:text-base text-muted-brass/80 italic"
               style={{ textShadow: '0 0 20px rgba(185, 78, 106, 0.35)' }}>
               A Structured Intention for Protection & Clarity
             </p>
@@ -996,7 +996,7 @@ export const InvisibleHelpers = () => {
         />
         
         <div className="max-w-xl mx-auto text-center relative z-10">
-          <p className="font-crimson text-base text-silver-mist/80 italic">
+          <p className="font-crimson text-base text-muted-brass/80 italic">
             Inner work does not replace resistance.
           </p>
           <p className="font-crimson text-lg text-gold mt-1">

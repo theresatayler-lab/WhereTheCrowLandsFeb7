@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { aiAPI } from '../utils/api';
-import { Bot, Send, Loader2 } from 'lucide-react';
+import { Compass, Send, Loader2, ScrollText } from 'lucide-react';
 import { toast } from 'sonner';
 import { 
   DarkSection, LightSection, GrandDivider, MysticalDivider, 
@@ -44,14 +44,14 @@ export const AIChat = () => {
         
         <div className="max-w-4xl mx-auto relative z-10">
           <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="text-center">
-            <Bot className="w-12 h-12 sm:w-14 sm:h-14 text-crimson-bright mx-auto mb-4"
-              style={{ filter: 'drop-shadow(0 0 15px rgba(185, 78, 106, 0.5))' }} />
+            <Compass className="w-12 h-12 sm:w-14 sm:h-14 text-gold mx-auto mb-4"
+              style={{ filter: 'drop-shadow(0 0 15px rgba(200, 164, 77, 0.4))' }} />
             
             <h1 className="font-italiana text-3xl sm:text-4xl md:text-5xl text-gold-light mb-3"
               style={{ textShadow: '0 2px 30px rgba(200, 164, 77, 0.5)' }}>
-              AI Research Assistant
+              Research Assistant
             </h1>
-            <p className="font-montserrat text-sm sm:text-base text-silver-mist/80 max-w-2xl mx-auto">
+            <p className="font-montserrat text-sm sm:text-base text-cream/80 max-w-2xl mx-auto">
               Ask questions about deities, historical figures, rituals, and sacred sites from 1910-1945
             </p>
           </motion.div>
@@ -82,8 +82,8 @@ export const AIChat = () => {
               <div className="min-h-[400px] max-h-[500px] overflow-y-auto space-y-4 mb-6" data-testid="chat-messages">
                 {messages.length === 0 ? (
                   <div className="flex flex-col items-center justify-center h-full text-center py-16">
-                    <div className="w-16 h-16 rounded-full bg-crimson/10 flex items-center justify-center mb-4">
-                      <Bot className="w-8 h-8 text-crimson" />
+                    <div className="w-16 h-16 rounded-full bg-gold/10 border border-gold/30 flex items-center justify-center mb-4">
+                      <ScrollText className="w-8 h-8 text-gold" />
                     </div>
                     <p className="font-montserrat text-sm text-navy-dark/70 max-w-md">
                       Start a conversation by asking about occult history, deities, practices, or any esoteric knowledge
@@ -116,8 +116,8 @@ export const AIChat = () => {
                       >
                         {msg.role === 'assistant' && (
                           <div className="flex items-center gap-2 mb-2">
-                            <Bot className="w-4 h-4 text-gold-dark" />
-                            <span className="font-cinzel text-xs text-gold-dark">Research Assistant</span>
+                            <ScrollText className="w-4 h-4 text-gold" />
+                            <span className="font-cinzel text-xs text-gold">Research Assistant</span>
                           </div>
                         )}
                         <p className="font-montserrat text-sm text-navy-dark leading-relaxed whitespace-pre-wrap">

@@ -78,7 +78,7 @@ export const Deities = () => {
                   {deity.origin}
                 </p>
                 {/* Description in silver-mist for readability */}
-                <p className="font-montserrat text-sm text-silver-mist/85 leading-relaxed line-clamp-3">
+                <p className="font-montserrat text-sm text-muted-brass/85 leading-relaxed line-clamp-3">
                   {deity.description}
                 </p>
               </OrnateCard>
@@ -106,7 +106,7 @@ export const Deities = () => {
                   <h4 className="font-montserrat text-xs uppercase tracking-widest text-crimson-bright mb-2">
                     Origin
                   </h4>
-                  <p className="font-montserrat text-sm text-silver-mist">
+                  <p className="font-montserrat text-sm text-muted-brass">
                     {selectedDeity.origin}
                   </p>
                 </div>

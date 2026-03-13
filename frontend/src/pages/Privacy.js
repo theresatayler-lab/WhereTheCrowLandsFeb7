@@ -21,7 +21,7 @@ export const Privacy = () => {
               title="Privacy Policy"
               subtitle="Your practice is sacred. So is your privacy."
             />
-            <p className="font-montserrat text-xs sm:text-sm text-silver-mist/60 text-center">
+            <p className="font-montserrat text-xs sm:text-sm text-muted-brass/60 text-center">
               Last updated: January 4, 2026
             </p>
           </motion.div>

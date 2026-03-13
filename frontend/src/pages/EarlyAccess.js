@@ -125,7 +125,7 @@ const EarlyAccessPage = () => {
           className="relative mb-5"
         >
           <div className="absolute inset-0 border border-gold/40 rounded-sm" />
-          <div className="absolute inset-0 bg-navy-mid/60 backdrop-blur-sm rounded-sm" />
+          <div className="absolute inset-0 bg-navy-mid backdrop-blur-sm rounded-sm" />
           
           <div className="relative z-10 p-4 sm:p-5">
             {!isSubmitted ? (
@@ -136,7 +136,7 @@ const EarlyAccessPage = () => {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Your name"
-                    className="w-full bg-navy-dark/50 border border-gold/30 focus:border-gold/60 rounded-sm px-3 py-2.5 text-cream text-sm font-montserrat placeholder:text-silver-mist/40"
+                    className="w-full bg-navy-dark border border-gold/30 focus:border-gold/60 rounded-sm px-3 py-2.5 text-cream text-sm font-montserrat placeholder:text-muted-brass/40"
                   />
                   <input
                     type="email"
@@ -144,7 +144,7 @@ const EarlyAccessPage = () => {
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Your email *"
                     required
-                    className="w-full bg-navy-dark/50 border border-gold/30 focus:border-gold/60 rounded-sm px-3 py-2.5 text-cream text-sm font-montserrat placeholder:text-silver-mist/40"
+                    className="w-full bg-navy-dark border border-gold/30 focus:border-gold/60 rounded-sm px-3 py-2.5 text-cream text-sm font-montserrat placeholder:text-muted-brass/40"
                   />
                 </div>
                 
@@ -168,7 +168,7 @@ const EarlyAccessPage = () => {
                   </span>
                 </button>
                 
-                <p className="font-montserrat text-xs text-silver-mist/50">
+                <p className="font-montserrat text-xs text-muted-brass/50">
                   No spam. Only magic.
                 </p>
               </form>
@@ -176,7 +176,7 @@ const EarlyAccessPage = () => {
               <motion.div className="py-3" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
                 <Check className="w-10 h-10 text-gold mx-auto mb-2" />
                 <p className="font-cinzel text-base text-gold">Welcome to the Murder</p>
-                <p className="font-montserrat text-sm text-silver-mist/70 mt-1">You're part of the flock now.</p>
+                <p className="font-montserrat text-sm text-muted-brass/70 mt-1">You're part of the flock now.</p>
               </motion.div>
             )}
           </div>

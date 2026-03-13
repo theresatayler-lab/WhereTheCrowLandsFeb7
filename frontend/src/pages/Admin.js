@@ -87,7 +87,7 @@ export default function Admin() {
 
 function StatCard({ label, value, color = 'gold' }) {
   return (
-    <div className="bg-navy-dark/50 rounded-lg p-4 border border-gold/20 text-center" data-testid={`stat-${label.toLowerCase().replace(/\s/g,'-')}`}>
+    <div className="bg-navy-dark rounded-lg p-4 border border-gold/20 text-center" data-testid={`stat-${label.toLowerCase().replace(/\s/g,'-')}`}>
       <p className={`font-cinzel text-2xl ${color === 'crimson' ? 'text-crimson' : 'text-gold'}`}>{value}</p>
       <p className="font-montserrat text-xs text-cream/50 uppercase tracking-wider mt-1">{label}</p>
     </div>

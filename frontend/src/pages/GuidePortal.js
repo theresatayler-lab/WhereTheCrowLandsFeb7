@@ -289,7 +289,7 @@ export const GuidePortal = () => {
       </div>
 
       {/* Header */}
-      <div className="max-w-3xl mx-auto px-4 pt-8 pb-4 text-center">
+      <div className="max-w-3xl mx-auto px-4 pt-4 pb-2 text-center">
         <div className={`inline-flex items-center justify-center w-16 h-16 rounded-full bg-${guide.colors.bg} border border-${guide.colors.border}/30 mb-4`}>
           <GuideIcon className={`w-8 h-8 text-${guide.colors.text}`} />
         </div>
@@ -305,7 +305,7 @@ export const GuidePortal = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="max-w-3xl mx-auto px-4 py-12 text-center"
+            className="max-w-3xl mx-auto px-4 py-6 text-center"
           >
             <div className={`bg-${guide.colors.bg} border border-${guide.colors.border}/20 rounded-lg p-8 mb-8`}>
               <p className="font-crimson-text text-xl text-cream italic leading-relaxed">
@@ -374,7 +374,7 @@ export const GuidePortal = () => {
             )}
 
             {/* Input area - fixed at bottom */}
-            <div className="fixed bottom-0 left-0 right-0 bg-navy-dark/95 border-t border-gold/10 p-4">
+            <div className="fixed bottom-0 left-0 right-0 bg-navy-dark border-t border-gold/10 p-4">
               <div className="max-w-3xl mx-auto flex gap-3">
                 <textarea
                   value={userInput}

@@ -55,7 +55,7 @@ export const Auth = ({ onLogin }) => {
               style={{ textShadow: '0 2px 30px rgba(200, 164, 77, 0.5)' }}>
               {isLogin ? 'Enter the Coven' : 'Join the Coven'}
             </h1>
-            <p className="font-montserrat text-sm text-silver-mist/80">
+            <p className="font-montserrat text-sm text-muted-brass/80">
               {isLogin ? 'Welcome back, seeker of mysteries' : 'Begin your journey into the unknown'}
             </p>
           </motion.div>

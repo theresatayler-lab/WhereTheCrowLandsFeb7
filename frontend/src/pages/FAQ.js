@@ -113,7 +113,7 @@ const FAQCategory = ({ category, questions, isLight }) => {
   const [openIndex, setOpenIndex] = useState(null);
   
   return (
-    <div className={`rounded-lg overflow-hidden ${isLight ? 'bg-cream/60 border-2 border-crimson/20' : 'bg-navy-mid/40 border-2 border-gold/30'}`}>
+    <div className={`rounded-lg overflow-hidden ${isLight ? 'bg-cream/60 border-2 border-crimson/20' : 'bg-navy-mid border-2 border-gold/30'}`}>
       <div className={`px-5 py-3 ${isLight ? 'bg-crimson/10 border-b border-crimson/20' : 'bg-gold/10 border-b border-gold/20'}`}>
         <h3 className={`font-cinzel text-lg ${isLight ? 'text-crimson' : 'text-gold-light'}`}>
           {category}

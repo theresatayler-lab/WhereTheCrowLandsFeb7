@@ -207,9 +207,9 @@ const NetworkGraph = ({ events, onEventClick }) => {
   }, [hoveredNode]);
   
   return (
-    <div ref={containerRef} className="relative w-full rounded-lg overflow-hidden border border-gold/20 bg-navy-dark/50">
+    <div ref={containerRef} className="relative w-full rounded-lg overflow-hidden border border-gold/20 bg-navy-dark">
       {/* Legend */}
-      <div className="absolute top-4 left-4 z-10 bg-navy-dark/90 p-3 rounded-lg border border-gold/20">
+      <div className="absolute top-4 left-4 z-10 bg-navy-dark p-3 rounded-lg border border-gold/20">
         <h4 className="font-cinzel text-xs text-gold mb-2">Connections</h4>
         <div className="space-y-1 text-[10px] font-montserrat">
           <div className="flex items-center gap-2">
@@ -244,7 +244,7 @@ const NetworkGraph = ({ events, onEventClick }) => {
       
       {/* Hovered node info */}
       {hoveredNode && (
-        <div className="absolute bottom-4 left-4 z-10 bg-navy-dark/95 p-3 rounded-lg border border-gold/30 max-w-xs">
+        <div className="absolute bottom-4 left-4 z-10 bg-navy-dark p-3 rounded-lg border border-gold/30 max-w-xs">
           {(() => {
             const node = graphData.nodes.find(n => n.id === hoveredNode);
             if (!node) return null;
@@ -456,7 +456,7 @@ const FilterPanel = ({ filters, setFilters, stats, isOpen, setIsOpen }) => {
       <div className="flex items-center gap-4 mb-4">
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="flex items-center gap-2 px-4 py-2 bg-navy-mid/50 border border-gold/30 rounded-lg text-cream/90 hover:border-gold/50 transition-colors"
+          className="flex items-center gap-2 px-4 py-2 bg-navy-mid border border-gold/30 rounded-lg text-cream/90 hover:border-gold/50 transition-colors"
         >
           <Filter size={18} />
           <span className="font-montserrat text-sm">Filters</span>
@@ -475,7 +475,7 @@ const FilterPanel = ({ filters, setFilters, stats, isOpen, setIsOpen }) => {
               value={localSearch}
               onChange={(e) => setLocalSearch(e.target.value)}
               placeholder="Search events, figures..."
-              className="w-full pl-10 pr-4 py-2 bg-navy-dark/50 border border-gold/20 rounded-lg text-cream placeholder-cream/40 font-montserrat text-sm focus:border-gold/50 focus:outline-none"
+              className="w-full pl-10 pr-4 py-2 bg-navy-dark border border-gold/20 rounded-lg text-cream placeholder-cream/50 font-montserrat text-sm focus:border-gold/50 focus:outline-none"
             />
           </div>
         </form>
@@ -501,7 +501,7 @@ const FilterPanel = ({ filters, setFilters, stats, isOpen, setIsOpen }) => {
             transition={{ duration: 0.2 }}
             className="overflow-hidden"
           >
-            <div className="p-4 bg-navy-mid/30 border border-gold/20 rounded-lg space-y-4">
+            <div className="p-4 bg-navy-mid border border-gold/20 rounded-lg space-y-4">
               {/* Taxonomy Categories */}
               <div>
                 <h4 className="font-cinzel text-sm text-gold mb-2">Taxonomy Categories</h4>
@@ -516,7 +516,7 @@ const FilterPanel = ({ filters, setFilters, stats, isOpen, setIsOpen }) => {
                         className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-montserrat transition-all ${
                           isActive
                             ? 'bg-gold/20 border-gold text-gold'
-                            : 'bg-navy-dark/50 border-gold/20 text-cream/70 hover:border-gold/40'
+                            : 'bg-navy-dark border-gold/20 text-cream/85 hover:border-gold/40'
                         } border`}
                         style={{ borderColor: isActive ? cat.color : undefined }}
                       >
@@ -541,7 +541,7 @@ const FilterPanel = ({ filters, setFilters, stats, isOpen, setIsOpen }) => {
                         className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-montserrat transition-all ${
                           isActive
                             ? 'bg-gold/20 text-gold'
-                            : 'bg-navy-dark/50 text-cream/70 hover:border-gold/40'
+                            : 'bg-navy-dark text-cream/85 hover:border-gold/40'
                         } border border-gold/20`}
                         style={{ 
                           borderColor: isActive ? guide.color : undefined,
@@ -776,7 +776,7 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick, allEvents
                   className={`px-2 py-0.5 rounded text-xs font-montserrat transition-all ${
                     !showNarrative 
                       ? 'bg-gold/20 text-gold border border-gold/40' 
-                      : 'text-cream/50 hover:text-cream/70'
+                      : 'text-cream/50 hover:text-cream/85'
                   }`}
                 >
                   Factual
@@ -789,7 +789,7 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick, allEvents
                   className={`px-2 py-0.5 rounded text-xs font-montserrat transition-all ${
                     showNarrative 
                       ? 'bg-violet-600/20 text-violet-400 border border-violet-500/40' 
-                      : 'text-cream/50 hover:text-cream/70'
+                      : 'text-cream/50 hover:text-cream/85'
                   }`}
                 >
                   Narrative
@@ -864,7 +864,7 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick, allEvents
                     {event.significance && (
                       <div>
                         <h4 className="font-cinzel text-xs text-gold/70 uppercase mb-1">Significance</h4>
-                        <p className="font-montserrat text-sm text-cream/70">{event.significance}</p>
+                        <p className="font-montserrat text-sm text-cream/85">{event.significance}</p>
                       </div>
                     )}
 
@@ -882,7 +882,7 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick, allEvents
                             return (
                               <button 
                                 key={i} 
-                                className="px-2 py-1 bg-navy-dark/50 hover:bg-navy-dark/80 hover:ring-1 hover:ring-gold/40 rounded text-xs text-cream/80 hover:text-cream font-montserrat transition-all cursor-pointer text-left"
+                                className="px-2 py-1 bg-navy-dark hover:bg-navy-dark hover:ring-1 hover:ring-gold/40 rounded text-xs text-cream/80 hover:text-cream font-montserrat transition-all cursor-pointer text-left"
                                 onClick={(e) => handleFigureClick(e, figureName)}
                                 title={figureRole ? `${figureName}${figureDates ? ` (${figureDates})` : ''}: ${figureRole}` : `Search for ${figureName}`}
                               >
@@ -944,7 +944,7 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick, allEvents
                                     {/* Author - clickable to search */}
                                     {source.author && (
                                       <button
-                                        className="text-cream/70 hover:text-gold transition-colors font-medium"
+                                        className="text-cream/85 hover:text-gold transition-colors font-medium"
                                         onClick={(e) => {
                                           e.stopPropagation();
                                           onFilterClick?.({ type: 'author', value: source.author });
@@ -1017,7 +1017,7 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick, allEvents
                     {event.expanded_context && (
                       <div className="mt-4 pt-3 border-t border-gold/10">
                         <h4 className="font-cinzel text-xs text-gold/70 uppercase mb-2">Deep Dive</h4>
-                        <p className="font-montserrat text-sm text-cream/70 leading-relaxed">{event.expanded_context}</p>
+                        <p className="font-montserrat text-sm text-cream/85 leading-relaxed">{event.expanded_context}</p>
                       </div>
                     )}
 
@@ -1180,7 +1180,7 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick, allEvents
                             return related.map((relEvent, i) => (
                               <button
                                 key={i}
-                                className="px-2 py-1 bg-navy-dark/50 hover:bg-navy-dark/80 border border-cream/10 hover:border-gold/30 rounded text-[11px] text-cream/60 hover:text-cream font-montserrat transition-all"
+                                className="px-2 py-1 bg-navy-dark hover:bg-navy-dark border border-cream/10 hover:border-gold/30 rounded text-[11px] text-cream/60 hover:text-cream font-montserrat transition-all"
                                 onClick={(e) => {
                                   e.stopPropagation();
                                   onNavigateToEvent?.(relEvent.id);
@@ -1265,7 +1265,7 @@ const ViewToggle = ({ view, setView }) => {
   ];
 
   return (
-    <div className="flex items-center gap-1 p-1 bg-navy-mid/50 rounded-lg border border-gold/20">
+    <div className="flex items-center gap-1 p-1 bg-navy-mid rounded-lg border border-gold/20">
       {views.map(({ id, icon: Icon, label }) => (
         <button
           key={id}
@@ -1323,7 +1323,7 @@ const EraNav = ({ events, activeEra, setActiveEra }) => {
         className={`px-3 py-1.5 rounded-full font-montserrat text-xs whitespace-nowrap transition-all ${
           activeEra === null
             ? 'bg-gold text-navy-dark'
-            : 'bg-navy-mid/50 text-cream/70 hover:text-cream border border-gold/20'
+            : 'bg-navy-mid text-cream/85 hover:text-cream border border-gold/20'
         }`}
       >
         All Eras
@@ -1335,7 +1335,7 @@ const EraNav = ({ events, activeEra, setActiveEra }) => {
           className={`px-3 py-1.5 rounded-full font-montserrat text-xs whitespace-nowrap transition-all border ${
             activeEra === key
               ? 'text-navy-dark'
-              : 'bg-navy-mid/50 text-cream/70 hover:text-cream border-gold/20'
+              : 'bg-navy-mid text-cream/85 hover:text-cream border-gold/20'
           }`}
           style={{
             backgroundColor: activeEra === key ? era.color : undefined,
@@ -1394,7 +1394,7 @@ const DecadeNav = ({ events, activeDecade, setActiveDecade, activeEra }) => {
         className={`px-3 py-1.5 rounded-full font-montserrat text-sm whitespace-nowrap transition-all ${
           activeDecade === null
             ? 'bg-gold text-navy-dark'
-            : 'bg-navy-mid/50 text-cream/70 hover:text-cream border border-gold/20'
+            : 'bg-navy-mid text-cream/85 hover:text-cream border border-gold/20'
         }`}
       >
         All
@@ -1406,7 +1406,7 @@ const DecadeNav = ({ events, activeDecade, setActiveDecade, activeEra }) => {
           className={`px-3 py-1.5 rounded-full font-montserrat text-sm whitespace-nowrap transition-all ${
             activeDecade === decade
               ? 'bg-gold text-navy-dark'
-              : 'bg-navy-mid/50 text-cream/70 hover:text-cream border border-gold/20'
+              : 'bg-navy-mid text-cream/85 hover:text-cream border border-gold/20'
           }`}
         >
           {formatDecade(decade)}

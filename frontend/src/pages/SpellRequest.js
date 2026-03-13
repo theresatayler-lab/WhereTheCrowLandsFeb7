@@ -162,7 +162,7 @@ const OptionCard = ({ selected, onClick, children, className = '', light = false
           : 'bg-white border-2 border-navy-dark/20 hover:border-crimson/40 hover:shadow-sm'
         : selected 
           ? 'bg-gradient-to-br from-crimson/20 to-crimson/10 border-2 border-crimson shadow-lg' 
-          : 'bg-navy-mid/30 border border-gold/20 hover:border-gold/40'
+          : 'bg-navy-mid border border-gold/20 hover:border-gold/40'
     } ${className}`}
     whileHover={{ scale: 1.02 }}
     whileTap={{ scale: 0.98 }}
@@ -753,7 +753,7 @@ export const SpellRequest = () => {
                   <Loader2 className="w-5 h-5 text-gold animate-spin" />
                   <span className="font-cinzel text-base text-gold">Crafting Your Imagery</span>
                 </div>
-                <p className="font-montserrat text-xs text-silver-mist/80 ml-8">
+                <p className="font-montserrat text-xs text-muted-brass/80 ml-8">
                   Generating tarot card, sigil, and decorative elements... Your working is ready to explore while we paint the details.
                 </p>
               </div>
@@ -942,7 +942,7 @@ export const SpellRequest = () => {
                   transition={{ duration: 0.8 }}
                 >
                   {/* Guide avatar */}
-                  <div className="w-24 h-24 mx-auto mb-6 rounded-full overflow-hidden border-2 border-gold/50 flex items-center justify-center bg-navy-dark/50">
+                  <div className="w-24 h-24 mx-auto mb-6 rounded-full overflow-hidden border-2 border-gold/50 flex items-center justify-center bg-navy-dark">
                     {selectedGuide.icon ? (
                       <img src={selectedGuide.icon} alt={selectedGuide.name} className="w-14 h-14" />
                     ) : (
@@ -1089,10 +1089,10 @@ export const SpellRequest = () => {
               <Link
                 key={persona.id}
                 to={`/guides/${persona.id}`}
-                className="group text-center p-4 rounded-lg border border-gold/20 hover:border-gold/50 transition-all bg-navy-mid/30 hover:bg-navy-mid/50"
+                className="group text-center p-4 rounded-lg border border-gold/20 hover:border-gold/50 transition-all bg-navy-mid hover:bg-navy-mid"
               >
                 {/* Guide avatar */}
-                <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-3 rounded-full overflow-hidden border-2 border-gold/30 group-hover:border-gold transition-colors flex items-center justify-center bg-navy-dark/50">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-3 rounded-full overflow-hidden border-2 border-gold/30 group-hover:border-gold transition-colors flex items-center justify-center bg-navy-dark">
                   {persona.icon ? (
                     <img src={persona.icon} alt={persona.name} className="w-10 h-10 sm:w-12 sm:h-12" />
                   ) : (

@@ -55,7 +55,7 @@ export const Upgrade = () => {
               style={{ textShadow: '0 2px 30px rgba(200, 164, 77, 0.5)' }}>
               Unlock the Full Grimoire
             </h1>
-            <p className="font-montserrat text-sm sm:text-base text-silver-mist/80 max-w-2xl mx-auto">
+            <p className="font-montserrat text-sm sm:text-base text-muted-brass/80 max-w-2xl mx-auto">
               Get unlimited access to spell generation, save your rituals forever, and unlock premium features
             </p>
           </motion.div>

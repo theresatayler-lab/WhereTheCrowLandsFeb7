@@ -75,7 +75,7 @@ export const SacredSites = () => {
                   <MapPin className="w-3 h-3" />
                   {site.location}, {site.country}
                 </p>
-                <p className="font-montserrat text-sm text-silver-mist/85 leading-relaxed line-clamp-3">
+                <p className="font-montserrat text-sm text-muted-brass/85 leading-relaxed line-clamp-3">
                   {site.historical_significance}
                 </p>
               </OrnateCard>
@@ -102,7 +102,7 @@ export const SacredSites = () => {
                 <div>
                   <h4 className="font-montserrat text-xs uppercase tracking-widest text-crimson-bright mb-2">Location</h4>
                   <p className="font-montserrat text-base text-cream/90">{selectedSite.location}, {selectedSite.country}</p>
-                  <p className="font-montserrat text-sm text-silver-mist/60 mt-1 flex items-center gap-1">
+                  <p className="font-montserrat text-sm text-muted-brass/60 mt-1 flex items-center gap-1">
                     <Compass className="w-3 h-3" />
                     {selectedSite.coordinates?.lat}, {selectedSite.coordinates?.lng}
                   </p>
