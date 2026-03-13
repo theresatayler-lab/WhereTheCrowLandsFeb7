@@ -33,33 +33,21 @@ Build a spell-generation application, "Where The Crowlands," with a highly speci
 - Exhaustive color/brand overhaul (150+ fixes)
 - Pro tier permissions fix, "Save to Grimoire" button
 
-### Session 2 (Current, March 2026)
+### Session 2
 - **Complete site-wide icon sweep** (80+ decorative Lucide icons -> custom BrandIcon PNG assets across 25+ files)
-- **Bug fix:** Undefined icon references on Deities, HistoricalFigures, SacredSites, GrimoirePage pages
-- **Emotional Need Clusters Enhancement:**
-  - Added prefix matching for wildcard triggers (isolat*, harass*, bully*, intimidat*)
-  - Implemented priority-based tie-breaking (grief > protection > heartbreak > burnout > money)
-  - Enriched guide adjustment texts from spec
-  - Added missing trigger words (miscarriage, estranged, numb, hollow, redundant, mortgage, etc.)
-  - Updated reality check output format
-- **Shigg Bibliomancy (Book Bibliomancy):**
-  - BIBLIOMANCY_BOOK_TEMPLATE + BIBLIOMANCY_BOOK_WRITER_PROMPT in writer_blocks.py
-  - bibliomancy_book working type in planner_blocks.py
-  - Content direction blocks for all 6 sections
-  - Expanded technique definition in persona_config.py
-- **Theresa Bibliomancy (Shuffle Oracle):**
-  - BIBLIOMANCY_SHUFFLE_TEMPLATE + BIBLIOMANCY_SHUFFLE_WRITER_PROMPT in writer_blocks.py
-  - bibliomancy_shuffle working type in planner_blocks.py
-  - Content direction blocks for all 6 sections
-  - THERESA_SHUFFLE_ORACLE expanded definition in persona_config.py
-  - ShuffleOracle.js frontend component (THEN/NOW two-column layout)
-  - Conditional rendering in GrimoirePage.js and GuidePortal.js
-- **Bibliomancy Pipeline Routing:**
-  - Affinity-based soft routing (clarity/perspective/lost keywords)
-  - get_bibliomancy_affinity() and get_working_type_with_bibliomancy() functions
-  - Only fires for Shigg/Theresa, other guides unaffected
-  - Explicit matches (protection, grief, etc.) always win over bibliomancy affinity
+- **Emotional Need Clusters Enhancement** with prefix matching, priority tie-breaking, enriched guide texts
+- **Shigg Bibliomancy (Book Bibliomancy)** full-stack implementation
+- **Theresa Bibliomancy (Shuffle Oracle)** full-stack implementation with ShuffleOracle.js component
+- **Bibliomancy Pipeline Routing** with affinity-based soft routing
 - **20 pytest tests** for all new features (all passing)
+
+### Session 3 (Current, March 2026)
+- **P0 UI Regression Fixes — COMPLETE:**
+  - **Guide Portal layout:** Eliminated large empty space via flex centering (min-h-[calc(100vh-4rem)] + flex-col + flex-1)
+  - **Guide avatars enlarged site-wide:** GuidePortal w-24 h-24 (was w-10), Guides listing w-20 h-20 (was w-16), About page w-10 h-10 (was w-6), PageHeader w-12/w-16 (was w-10/w-12)
+  - **Button readability standardized:** All CTA buttons migrated to `.btn-ritual` class (Ember Pink bg, Vellum text, 14px, uppercase, 0.15em letter-spacing, inline-flex, cursor:pointer). Secondary buttons use `.btn-ritual-secondary`. Ghost buttons use `.btn-ritual-ghost`.
+  - All 3 button classes updated with explicit `font-size`, `display: inline-flex`, `align-items: center`, `cursor: pointer`
+  - Testing agent validated all 5 guide portals, guides listing, about page — 100% pass rate
 
 ## Prioritized Backlog
 
@@ -89,6 +77,11 @@ Build a spell-generation application, "Where The Crowlands," with a highly speci
 - backend/prompts/planner_blocks.py - Working types, bibliomancy routing
 - backend/prompts/pipeline_blocks.py - Writer stage with bibliomancy prompt injection
 - backend/persona_config.py - BIBLIOMANCY_TECHNIQUES, THERESA_SHUFFLE_ORACLE
-- backend/tests/test_bibliomancy.py - 20 regression tests
+- backend/tests/test_pipeline_logic.py - 20 regression tests
+- frontend/src/pages/GuidePortal.js - Flex-centered layout, w-24 avatar, btn-ritual buttons
+- frontend/src/pages/Guides.js - w-20 avatar, btn-ritual "Choose as My Guide"
+- frontend/src/pages/About.js - w-10 guide avatars
+- frontend/src/components/OrnateElements.js - PageHeader icon sizes w-12/w-16
+- frontend/src/index.css - btn-ritual/btn-ritual-secondary/btn-ritual-ghost classes
 - frontend/src/components/ShuffleOracle.js - Shuffle Oracle component
 - frontend/src/components/BrandIcon.js - Brand icon system
