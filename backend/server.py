@@ -89,7 +89,7 @@ async def rate_limit_handler(request: Request, exc: RateLimitExceeded):
     )
 
 api_router = APIRouter(prefix="/api")
-security = HTTPBearer()
+security = HTTPBearer(auto_error=False)
 
 JWT_SECRET = os.environ.get('JWT_SECRET', 'your-secret-key-change-in-production')
 JWT_ALGORITHM = 'HS256'
@@ -637,6 +637,8 @@ If the seeker's intention aligns with these, lean into this expertise.
     return "\n".join(context_parts)
 
 async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
+    if not credentials:
+        raise HTTPException(status_code=401, detail='Please log in to generate spells')
     try:
         token = credentials.credentials
         payload = jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALGORITHM])
@@ -647,6 +649,8 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(s
         return user
     except jwt.ExpiredSignatureError:
         raise HTTPException(status_code=401, detail='Token expired')
+    except HTTPException:
+        raise
     except Exception:
         raise HTTPException(status_code=401, detail='Invalid token')
 
@@ -2952,7 +2956,7 @@ async def chat_with_ai(request: Request, message_data: ChatMessage):
 
 @api_router.post('/research', response_model=dict)
 @limiter.limit("5/minute")
-async def research_endpoint(request: Request, body: ResearchRequest):
+async def research_endpoint(request: Request, body: ResearchRequest, user = Depends(get_current_user)):
     """
     Research endpoint using DeepSeek as the research engine.
     Returns factual, scholarly information about magical traditions.
@@ -2970,7 +2974,7 @@ async def research_endpoint(request: Request, body: ResearchRequest):
 
 @api_router.post('/spellbook', response_model=dict)
 @limiter.limit("5/minute")
-async def spellbook_endpoint(request: Request, body: SpellbookRequest):
+async def spellbook_endpoint(request: Request, body: SpellbookRequest, user = Depends(get_current_user)):
     """
     Spellbook endpoint using OpenAI for persona-voiced responses.
     Returns in-character ritual guidance.
@@ -2992,7 +2996,7 @@ async def spellbook_endpoint(request: Request, body: SpellbookRequest):
 
 @api_router.post('/combined', response_model=dict)
 @limiter.limit("3/minute")
-async def combined_endpoint(request: Request, body: CombinedRequest):
+async def combined_endpoint(request: Request, body: CombinedRequest, user = Depends(get_current_user)):
     """
     Combined endpoint that calls BOTH engines:
     - DeepSeek for research/origins
@@ -4146,34 +4150,22 @@ ARCHETYPE_IMAGE_STYLE_DESCRIPTIONS = {
 async def generate_spell(
     request: Request,
     body: SpellRequest,
-    credentials: Optional[HTTPAuthorizationCredentials] = Depends(HTTPBearer(auto_error=False))
+    user = Depends(get_current_user)
 ):
     """Generate a structured spell with historical context and optional imagery"""
     try:
-        # Check if user is authenticated
-        user = None
-        if credentials:
-            try:
-                token = credentials.credentials
-                payload = jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALGORITHM])
-                user_id = payload.get('user_id')
-                user = await db.users.find_one({'id': user_id}, {'_id': 0})
-            except Exception:
-                pass  # Anonymous user
-        
-        # Check generation limits for authenticated users
-        if user:
-            limit_check = await check_spell_generation_limit(user)
-            if not limit_check['can_generate']:
-                raise HTTPException(
-                    status_code=403, 
-                    detail={
-                        'error': 'spell_limit_reached',
-                        'message': f"You've reached your limit of {limit_check['limit']} free spells. Upgrade to Pro for unlimited spell generation!",
-                        'limit': limit_check['limit'],
-                        'current_count': limit_check['current_count']
-                    }
-                )
+        # Check generation limits
+        limit_check = await check_spell_generation_limit(user)
+        if not limit_check['can_generate']:
+            raise HTTPException(
+                status_code=403, 
+                detail={
+                    'error': 'spell_limit_reached',
+                    'message': f"You've reached your limit of {limit_check['limit']} free spells. Upgrade to Pro for unlimited spell generation!",
+                    'limit': limit_check['limit'],
+                    'current_count': limit_check['current_count']
+                }
+            )
         
         session_id = str(uuid.uuid4())
         archetype_id = body.archetype
@@ -4655,7 +4647,7 @@ async def get_image_styles():
 # ===== NEW PERSONALIZED SPELL GENERATION ENDPOINT =====
 @api_router.post('/ai/generate-personalized-spell')
 @limiter.limit("5/minute")
-async def generate_personalized_spell(request: Request, body: PersonalizedSpellRequest, user = Depends(get_optional_user)):
+async def generate_personalized_spell(request: Request, body: PersonalizedSpellRequest, user = Depends(get_current_user)):
     """
     Generate a highly personalized spell using the 2-stage prompt system:
     1. Planner - selects scenario, format, sources, generates variation_tokens, builds AssetPlan
@@ -4990,7 +4982,7 @@ class SpellRequestV2(BaseModel):
 
 @api_router.post('/ai/generate-spell-v2')
 @limiter.limit("5/minute")
-async def generate_spell_v2_endpoint(request: Request, body: SpellRequestV2, user = Depends(get_optional_user)):
+async def generate_spell_v2_endpoint(request: Request, body: SpellRequestV2, user = Depends(get_current_user)):
     """
     V2 Spell Generation - Production-ready 4-stage pipeline.
     
@@ -5154,7 +5146,7 @@ class SpellRequestV3(BaseModel):
 
 @api_router.post('/ai/generate-spell-v3')
 @limiter.limit("5/minute")
-async def generate_spell_v3_endpoint(request: Request, body: SpellRequestV3, user = Depends(get_optional_user)):
+async def generate_spell_v3_endpoint(request: Request, body: SpellRequestV3, user = Depends(get_current_user)):
     """
     V3 Spell Generation - Blocks-based experience with TIERED AI.
     
@@ -5652,7 +5644,7 @@ async def _generate_spell_background(job_id: str, request_data: dict, user_id: O
 
 @api_router.post('/ai/generate-spell-job')
 @limiter.limit("5/minute")
-async def create_spell_job(request: Request, body: SpellRequestV3, background_tasks: BackgroundTasks, user = Depends(get_optional_user)):
+async def create_spell_job(request: Request, body: SpellRequestV3, background_tasks: BackgroundTasks, user = Depends(get_current_user)):
     """
     Create an async spell generation job.
     Returns immediately with a job_id that can be polled for completion.
