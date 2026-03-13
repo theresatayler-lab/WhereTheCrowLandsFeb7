@@ -332,9 +332,9 @@ export const GuidePortal = () => {
             key="conversation"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="max-w-3xl mx-auto px-4 flex flex-col min-h-[calc(100vh-200px)]"
+            className="max-w-3xl mx-auto px-4 pb-32"
           >
-            <div className="space-y-4 mb-4 flex-1">
+            <div className="space-y-4 mb-4">
               {messages.map((msg, i) => (
                 <motion.div
                   key={i}
@@ -364,7 +364,7 @@ export const GuidePortal = () => {
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="text-center py-4 pb-28"
+                className="text-center py-4"
               >
                 <button
                   onClick={handleGenerate}

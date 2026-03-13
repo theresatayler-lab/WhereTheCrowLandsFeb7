@@ -41,6 +41,29 @@ const ICON_MAP = {
   sacredheart: BRAND_ASSETS.icons.sacredheart,
   eightstar: BRAND_ASSETS.icons.eightstar,
   scissors: BRAND_ASSETS.icons.scissors,
+
+  // Anchor icons (gold, from /icons/anchors/gold/)
+  sparkles: '/icons/ui/gold/icon-sparkles.png',
+  grimoire: '/icons/ui/gold/icon-grimoire.png',
+  crystalBall: '/icons/ui/gold/icon-crystal-ball.png',
+  compass: '/icons/anchors/gold/anchor-compass.png',
+  feather: '/icons/anchors/gold/anchor-feather.png',
+  letter: '/icons/anchors/gold/anchor-letter.png',
+  notebook: '/icons/anchors/gold/anchor-notebook.png',
+  map: '/icons/anchors/gold/anchor-map.png',
+  candle: '/icons/anchors/gold/anchor-candle.png',
+  herb: '/icons/anchors/gold/anchor-herb.png',
+  mirror: '/icons/anchors/gold/anchor-mirror.png',
+  thread: '/icons/anchors/gold/anchor-red-thread.png',
+  salt: '/icons/anchors/gold/anchor-salt.png',
+  bread: '/icons/anchors/gold/anchor-bread.png',
+  familyPhoto: '/icons/anchors/gold/anchor-family-photo.png',
+  poetry: '/icons/anchors/gold/anchor-poetry.png',
+  magnifyingGlass: '/icons/anchors/gold/anchor-magnifying-glass.png',
+  heirloom: '/icons/anchors/gold/anchor-heirloom.png',
+  bell: '/icons/anchors/gold/anchor-bell.png',
+  crowFeather: '/icons/anchors/gold/anchor-crow-feather.png',
+  tea: '/icons/anchors/gold/anchor-tea.png',
 };
 
 /**
