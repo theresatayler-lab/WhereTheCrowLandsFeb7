@@ -42,7 +42,7 @@ export const SacredSites = () => {
           animate={{ opacity: 1, y: 0 }}
         >
           <PageHeader 
-            icon={MapPin}
+            iconSrc="/icons/anchors/gold/anchor-map.png"
             title="Sacred Sites"
             subtitle="Power places across the UK and Europe that anchored occult practice"
           />

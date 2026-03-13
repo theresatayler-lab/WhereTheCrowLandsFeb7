@@ -42,7 +42,7 @@ export const HistoricalFigures = () => {
           animate={{ opacity: 1, y: 0 }}
         >
           <PageHeader 
-            icon={Users}
+            iconSrc="/icons/anchors/gold/anchor-family-photo.png"
             title="Pioneers of the Craft"
             subtitle="The visionaries who shaped modern occultism between the wars"
           />

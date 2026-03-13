@@ -43,7 +43,7 @@ export const Deities = () => {
           animate={{ opacity: 1, y: 0 }}
         >
           <PageHeader 
-            icon={Moon}
+            iconSrc="/icons/ui/gold/icon-crystal-ball.png"
             title="Divine Pantheon"
             subtitle="The goddesses who guided the occult revival of 1910-1945"
           />

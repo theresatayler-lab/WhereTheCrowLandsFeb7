@@ -297,10 +297,11 @@ const PrintablesBlock = ({ tarotImageBase64, sigilImageBase64, spellTitle, tarot
 };
 
 // Section Header with Woodcut Icon
-const SectionHeader = ({ icon: Icon, title, iconPath, accentColor }) => (
+const SectionHeader = ({ icon: Icon, brandIconName, title, iconPath, accentColor }) => (
   <h2 className={`font-cinzel text-xl text-crimson mb-4 flex items-center gap-2`}>
     {iconPath && <img src={iconPath} alt="" className="w-5 h-5 opacity-80" />}
-    {Icon && !iconPath && <Icon className="w-5 h-5" />}
+    {brandIconName && !iconPath && <BrandIcon name={brandIconName} size={20} />}
+    {Icon && !iconPath && !brandIconName && <Icon className="w-5 h-5" />}
     {title}
   </h2>
 );
@@ -1155,8 +1156,8 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
             {/* Timing */}
             {spell.timing && (
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <TimingCard icon={Moon} label="Moon Phase" value={spell.timing?.moon_phase} />
-                <TimingCard icon={Sun} label="Time" value={spell.timing?.time_of_day} />
+                <TimingCard brandIconName="moon" label="Moon Phase" value={spell.timing?.moon_phase} />
+                <TimingCard brandIconName="sunMoon" label="Time" value={spell.timing?.time_of_day} />
                 <TimingCard icon={Calendar} label="Day" value={spell.timing?.day} />
                 <TimingCard icon={Clock} label="Note" value={spell.timing?.note} small />
               </div>
@@ -1287,7 +1288,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
         {spell.materials && spell.materials.length > 0 && (
           <section>
             <SectionHeader 
-              icon={Sparkles} 
+              brandIconName="sparkles" 
               title="Materials Needed" 
               iconPath={getSectionIconPath('materials')}
             />
@@ -1327,7 +1328,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
           <section>
             <div className="flex items-center justify-between mb-4">
               <SectionHeader 
-                icon={BookOpen} 
+                brandIconName="grimoire" 
                 title="The Working" 
                 iconPath={getSectionIconPath('the_working')}
               />
@@ -1406,7 +1407,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
         {spell.spoken_words && (
           <section className="p-6 bg-[#F3EFE8] border border-gold/40 rounded-sm shadow-sm">
             <SectionHeader 
-              icon={Quote} 
+              brandIconName="feather" 
               title="Words of Power" 
               iconPath={getSectionIconPath('spoken_words')}
             />
@@ -1683,7 +1684,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
         {spell.aftercare && (
           <section className="p-4 bg-gold/10 border border-gold/30 rounded-sm">
             <SectionHeader 
-              icon={Heart} 
+              brandIconName="sacredheart" 
               title="Aftercare" 
               iconPath={getSectionIconPath('aftercare')}
             />
@@ -1903,9 +1904,9 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
   );
 };
 
-const TimingCard = ({ icon: Icon, label, value, small = false }) => (
+const TimingCard = ({ icon: Icon, brandIconName, label, value, small = false }) => (
   <div className="p-3 bg-gold/10 border border-gold/30 rounded-sm text-center">
-    <Icon className="w-5 h-5 text-navy-dark/80 mx-auto mb-1" />
+    {brandIconName ? <BrandIcon name={brandIconName} size={20} className="mx-auto mb-1" /> : <Icon className="w-5 h-5 text-navy-dark/80 mx-auto mb-1" />}
     <p className="font-montserrat text-xs text-navy-dark/70 uppercase tracking-wider">{label}</p>
     <p className={`font-cinzel ${small ? 'text-xs' : 'text-sm'} text-navy-dark`}>{value || 'Any'}</p>
   </div>
