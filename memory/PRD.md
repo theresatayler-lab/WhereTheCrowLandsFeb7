@@ -137,12 +137,23 @@ Frontend: React + Tailwind | Backend: FastAPI | DB: MongoDB | AI: DeepSeek + Cla
 
 ---
 
+## Session Report: March 13, 2026 - Deity Modal Bug Fix
+
+### BUG FIX: Deity Modal Click Handler (P2 → DONE)
+- **Root cause 1:** Deities collection never seeded on startup — added startup seeding for deities (4), historical figures (4), sacred sites (3), rituals (5)
+- **Root cause 2:** Frontend `Deities.js` referenced `associations` field but data uses `associated_practices`
+- **Files changed:** `server.py` (startup seed), `Deities.js` (field fix + test ids), `OrnateElements.js` (props passthrough)
+- **Tested:** Screenshot verified — 4 deity cards render, modal opens with full details
+
+---
+
 ## Backlog
+### P0: Multi-Provider Image Generation (GPT Image 1 + Gemini Nano Banana)
 ### P0: Implement Emotional Need Clusters (user's implementation guide)
 ### P0: Implement Shigg Bibliomancy Expansion (user's implementation guide)
 ### P1: Switch Stripe to live mode (test mode working)
 ### P1: Complete timeline/reference export
-### P2: Deity modal click handler bug fix
+### P1: Manifesto Integration (user finalizing)
 ### P2: Manual QA of spell presentation (post-generation)
 ### P2: Dynamic spell borders based on AI tarot card
 ### P2: Remaining emoji cleanup on secondary pages

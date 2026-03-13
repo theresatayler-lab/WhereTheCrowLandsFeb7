@@ -61,6 +61,7 @@ export const Deities = () => {
               <OrnateCard 
                 className="cursor-pointer"
                 onClick={() => setSelectedDeity(deity)}
+                data-testid={`deity-card-${deity.id}`}
               >
                 <div
                   className="h-48 -m-4 sm:-m-6 mb-4 sm:mb-6 bg-cover bg-center relative rounded-t-lg"
@@ -117,15 +118,15 @@ export const Deities = () => {
                     {selectedDeity.description}
                   </p>
                 </div>
-                {selectedDeity.associations && selectedDeity.associations.length > 0 && (
+                {selectedDeity.associated_practices && selectedDeity.associated_practices.length > 0 && (
                   <div>
                     <h4 className="font-montserrat text-xs uppercase tracking-widest text-crimson-bright mb-2">
-                      Associations
+                      Associated Practices
                     </h4>
                     <div className="flex flex-wrap gap-2">
-                      {selectedDeity.associations.map((assoc, idx) => (
-                        <span key={idx} className="px-3 py-1 bg-gold/10 border border-gold/30 rounded-sm text-sm text-gold-light">
-                          {assoc}
+                      {selectedDeity.associated_practices.map((practice, idx) => (
+                        <span key={idx} className="px-3 py-1 bg-gold/10 border border-gold/30 rounded-sm text-sm text-gold-light" data-testid={`deity-practice-${idx}`}>
+                          {practice}
                         </span>
                       ))}
                     </div>
