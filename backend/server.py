@@ -690,7 +690,7 @@ async def get_optional_user(credentials: HTTPAuthorizationCredentials = Depends(
     except Exception:
         return None
 
-ADMIN_EMAILS = ['sub_test@test.com']
+ADMIN_EMAILS = [e.strip() for e in os.environ.get('ADMIN_EMAILS', 'sub_test@test.com').split(',')]
 
 async def get_admin_user(user = Depends(get_current_user)):
     """Require authenticated user with admin email."""
@@ -2960,7 +2960,7 @@ Remember: Every spell is a formula others have used. Users can adapt, break, and
 # AI Chat endpoint
 @api_router.post('/ai/chat')
 @limiter.limit("5/minute")
-async def chat_with_ai(request: Request, message_data: ChatMessage):
+async def chat_with_ai(request: Request, message_data: ChatMessage, user = Depends(get_current_user)):
     try:
         await check_and_increment_daily_usage()
         session_id = message_data.session_id or str(uuid.uuid4())
@@ -3213,7 +3213,7 @@ async def get_bird_oracle():
 
 @api_router.post('/ai/bird-oracle-reading')
 @limiter.limit("5/minute")
-async def get_bird_oracle_reading(request: Request, body: dict):
+async def get_bird_oracle_reading(request: Request, body: dict, user = Depends(get_current_user)):
     """Get a personalized bird oracle reading from Shigg"""
     try:
         await check_and_increment_daily_usage()
@@ -3786,7 +3786,7 @@ Remember: You are Cathleen. Speak with warmth, wisdom, and the quiet certainty o
 
 @api_router.post('/ai/suggest-ward')
 @limiter.limit("5/minute")
-async def suggest_ward(request: Request, body: WardRequest):
+async def suggest_ward(request: Request, body: WardRequest, user = Depends(get_current_user)):
     """Cathleen's Ward Finder - suggests personalized wards based on the seeker's situation"""
     try:
         await check_and_increment_daily_usage()
