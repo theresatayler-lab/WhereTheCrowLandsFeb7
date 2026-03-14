@@ -16,7 +16,7 @@ import time
 import os
 
 # Get backend URL from environment
-BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', 'https://guide-portal-polish.preview.emergentagent.com')
+BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', 'https://text-extraction-6.preview.emergentagent.com')
 API_URL = f"{BASE_URL}/api"
 
 
