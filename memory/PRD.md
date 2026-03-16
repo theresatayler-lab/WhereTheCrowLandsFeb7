@@ -55,6 +55,15 @@ Build a spell-generation application, "Where The Crowlands," with a highly speci
   - 429 response: {"detail": "Too many requests. Please wait before trying again."}
   - IP extraction via X-Forwarded-For header for proxy/Railway compatibility
 
+### Session 4 (March 2026)
+- **P0 Timeline Event Enrichment:** Expanded all 126 timeline events with rich content
+  - Created `backend/timeline_enrichments.py` with enrichment data for 93 events
+  - All 126 events now have `expanded_context` (avg 739 chars)
+  - Enriched descriptions (avg 384 chars) and significance (avg ~400 chars)
+  - Added historical connections, learn_more_links, and location data
+  - Updated `timeline_service.py` seed function with version-based reseeding
+  - Coverage: Ancient era (Egyptian, Greek, Chinese, Roman) through contemporary (WitchTok, AHS Coven)
+
 ## Prioritized Backlog
 
 ### P0 (Critical)
@@ -81,7 +90,10 @@ Build a spell-generation application, "Where The Crowlands," with a highly speci
 - Access Level: PRO
 
 ## Key Files
-- backend/server.py - 6,440 lines, all routes, rate limiting via SlowAPI
+- backend/server.py - 6,440+ lines, all routes, rate limiting via SlowAPI
+- backend/timeline_events_expanded.py - 126 timeline events with enrichment merge logic
+- backend/timeline_enrichments.py - Enrichment data (expanded_context, descriptions, significance)
+- backend/timeline_service.py - Timeline API service with version-based seeding
 - backend/image_provider.py - Static image library (no real AI provider connected)
 - frontend/src/index.css - Global CSS including btn-ritual classes
 - frontend/src/pages/GuidePortal.js - Flex-centered layout

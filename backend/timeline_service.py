@@ -23,16 +23,26 @@ EXPECTED_EVENT_COUNT = len(ALL_TIMELINE_EVENTS)
 # SERVICE FUNCTIONS
 # ============================================================================
 
+_ENRICHMENT_VERSION = 2  # Increment when enrichment data changes
+
 async def seed_timeline_data(db: AsyncIOMotorDatabase):
-    """Seed initial timeline events - reseed if count doesn't match"""
-    count = await db.timeline_events_v2.count_documents({})
+    """Seed initial timeline events - reseed if count or enrichment version mismatches"""
+    count = await db.timeline_events_v2.count_documents({"_meta": {"$exists": False}})
     
-    # If count doesn't match expected, clear and reseed
-    if count != EXPECTED_EVENT_COUNT:
-        logger.info(f"Timeline data mismatch ({count} vs {EXPECTED_EVENT_COUNT}). Reseeding...")
+    # Check enrichment version marker
+    version_doc = await db.timeline_meta.find_one({"key": "enrichment_version"})
+    current_version = version_doc.get("version", 0) if version_doc else 0
+    
+    if count != EXPECTED_EVENT_COUNT or current_version < _ENRICHMENT_VERSION:
+        logger.info(f"Timeline data needs update (count={count}/{EXPECTED_EVENT_COUNT}, version={current_version}/{_ENRICHMENT_VERSION}). Reseeding...")
         await db.timeline_events_v2.delete_many({})
         await db.timeline_events_v2.insert_many(INITIAL_TIMELINE_EVENTS)
-        logger.info(f"Seeded {len(INITIAL_TIMELINE_EVENTS)} timeline events")
+        await db.timeline_meta.update_one(
+            {"key": "enrichment_version"},
+            {"$set": {"version": _ENRICHMENT_VERSION}},
+            upsert=True
+        )
+        logger.info(f"Seeded {len(INITIAL_TIMELINE_EVENTS)} timeline events (enrichment v{_ENRICHMENT_VERSION})")
         return len(INITIAL_TIMELINE_EVENTS)
     
     return count

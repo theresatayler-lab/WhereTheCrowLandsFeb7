@@ -9,7 +9,7 @@ import pytest
 import requests
 import os
 
-BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', 'https://text-extraction-6.preview.emergentagent.com')
+BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', 'https://timeline-enrichment.preview.emergentagent.com')
 
 class TestProgressiveLoading:
     """Test progressive loading implementation for spell generation"""
