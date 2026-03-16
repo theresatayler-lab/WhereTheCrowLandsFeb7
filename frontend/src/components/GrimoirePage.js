@@ -135,7 +135,7 @@ const ARCHETYPE_STYLES = {
     textMuted: 'text-navy-dark/70',
     textOnVellum: 'text-navy-dark',
   },
-  catherine: {
+  katherine: {
     borderColor: 'border-gold',
     accentColor: 'text-crimson',
     accentColorLight: 'text-gold-light',
@@ -726,7 +726,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
   
   // Normalize archetype ID for styling
   const normalizeId = (id) => {
-    const map = { 'shiggy': 'shigg', 'kathleen': 'cathleen', 'catherine': 'katherine' };
+    const map = { 'shiggy': 'shigg', 'kathleen': 'cathleen' };
     return map[id] || id;
   };
   // For blocks-based spells (V3), prefer the guide_id from the spell itself
@@ -920,7 +920,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
       const spellContext = `Spell: "${spell.title}". Intention: ${spell.introduction || spell.scenario || 'self-improvement'}`;
       // Normalize archetype ID for research API (backend uses shigg, not shiggy)
       const rawId = archetype?.id || spell?.guide_id || 'shigg';
-      const idMap = { 'shiggy': 'shigg', 'kathleen': 'cathleen', 'catherine': 'katherine' };
+      const idMap = { 'shiggy': 'shigg', 'kathleen': 'cathleen' };
       const personaId = idMap[rawId] || rawId;
 
       const result = await researchAPI.combined(
@@ -1073,7 +1073,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
         {archetype && (
           <div className="flex items-center gap-3 pb-4 border-b border-gold/30">
             <img 
-              src={`/icons/anchors/anchor-${archetype.id === 'shiggy' ? 'bird' : archetype.id === 'kathleen' ? 'feather' : archetype.id === 'catherine' ? 'thread' : archetype.id === 'theresa' ? 'magnifying-glass' : 'crow-feather'}.png`}
+              src={`/icons/anchors/anchor-${archetype.id === 'shiggy' ? 'bird' : archetype.id === 'kathleen' ? 'feather' : archetype.id === 'katherine' ? 'thread' : archetype.id === 'theresa' ? 'magnifying-glass' : 'crow-feather'}.png`}
               alt={archetype.name}
               className="w-8 h-8"
             />

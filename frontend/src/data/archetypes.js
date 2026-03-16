@@ -255,7 +255,7 @@ She gave her great-granddaughter a silver rabbit teething ring that is treasured
     ]
   },
   {
-    id: 'catherine',
+    id: 'katherine',
     name: 'Katherine',
     title: 'The Weaver of Hidden Knowledge',
     shortName: 'Katherine',

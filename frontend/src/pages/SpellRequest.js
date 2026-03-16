@@ -21,7 +21,7 @@ const getArchetypeVideo = (personaId) => {
   const idMap = {
     'shigg': 'shiggy',
     'cathleen': 'kathleen',
-    'katherine': 'catherine',
+    'katherine': 'katherine',
     'theresa': 'theresa',
     'brenda': 'brenda'
   };
@@ -395,7 +395,7 @@ export const SpellRequest = () => {
   useEffect(() => {
     // Normalize legacy archetype IDs
     const currentArchetype = getCurrentArchetype();
-    const idMap = { 'shiggy': 'shigg', 'kathleen': 'cathleen', 'catherine': 'katherine' };
+    const idMap = { 'shiggy': 'shigg', 'kathleen': 'cathleen' };
     const normalizedArchetype = idMap[currentArchetype] || currentArchetype || 'choose_for_me';
     
     // Track last selected persona

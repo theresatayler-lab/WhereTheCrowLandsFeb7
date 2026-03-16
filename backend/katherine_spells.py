@@ -4,7 +4,7 @@
 KATHERINE_SAMPLE_SPELLS = [
     {
         "id": "katherine-mirror-of-truth",
-        "archetype_id": "catherine",
+        "archetype_id": "katherine",
         "archetype_name": "Katherine",
         "archetype_title": "The Weaver of Hidden Knowledge",
         "category": "Shadow Integration",
@@ -78,7 +78,7 @@ KATHERINE_SAMPLE_SPELLS = [
     },
     {
         "id": "katherine-midnight-stitch",
-        "archetype_id": "catherine",
+        "archetype_id": "katherine",
         "archetype_name": "Katherine",
         "archetype_title": "The Weaver of Hidden Knowledge",
         "category": "Night Magic",
@@ -151,7 +151,7 @@ KATHERINE_SAMPLE_SPELLS = [
     },
     {
         "id": "katherine-crows-vigil",
-        "archetype_id": "catherine",
+        "archetype_id": "katherine",
         "archetype_name": "Katherine",
         "archetype_title": "The Weaver of Hidden Knowledge",
         "category": "Ancestor & Grief Work",
@@ -230,7 +230,7 @@ KATHERINE_SAMPLE_SPELLS = [
     },
     {
         "id": "katherine-witch-bottle",
-        "archetype_id": "catherine",
+        "archetype_id": "katherine",
         "archetype_name": "Katherine",
         "archetype_title": "The Weaver of Hidden Knowledge",
         "category": "Protective Dark Magic",
@@ -316,7 +316,7 @@ async def seed_katherine_spells(db):
     collection = db.sample_spells
     
     # Remove existing Katherine spells
-    await collection.delete_many({"archetype_id": "catherine"})
+    await collection.delete_many({"archetype_id": "katherine"})
     
     # Insert new spells
     for spell in KATHERINE_SAMPLE_SPELLS:
