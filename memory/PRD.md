@@ -74,6 +74,11 @@ Build a spell-generation application, "Where The Crowlands," with a highly speci
   - Fixed 4 backend files: server.py, persona_config.py, katherine_spells.py, migrate_tarot_cards.py
   - Removed all `catherine → katherine` normalization mappings (no longer needed)
   - Tested: 100% pass rate (backend API + frontend UI + code verification)
+- **P0 Remove Hardcoded Guide Counts:** Replaced all "four guides/women" copy with count-agnostic phrasing
+  - Fixed 8 files: Home.js, About.js, FAQ.js, Guides.js, Upgrade.js, OnboardingModal.js, archetypes.js
+  - Added missing Brenda entry to About.js guides section (was listing only 4 of 5 guides)
+  - Added missing Theresa to FAQ.js guide descriptions
+  - Zero hardcoded guide counts remain in frontend source
 
 ## Prioritized Backlog
 

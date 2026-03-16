@@ -1,4 +1,4 @@
-// Archetype data for the four women of the Family Lineage
+// Archetype data for the women of the Family Lineage
 
 export const ARCHETYPES = [
   {
