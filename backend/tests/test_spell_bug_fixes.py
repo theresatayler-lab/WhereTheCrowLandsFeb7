@@ -16,7 +16,7 @@ import time
 import os
 
 # Get backend URL from environment
-BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', 'https://site-content-scan.preview.emergentagent.com')
+BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', 'https://timeline-enrichment.preview.emergentagent.com')
 API_URL = f"{BASE_URL}/api"
 
 

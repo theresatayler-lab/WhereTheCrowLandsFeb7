@@ -10,7 +10,7 @@ import statistics
 from typing import Dict, List, Any
 import httpx
 
-API_URL = "https://site-content-scan.preview.emergentagent.com"
+API_URL = "https://timeline-enrichment.preview.emergentagent.com"
 
 # Quality benchmarks based on historical GPT-4o performance
 QUALITY_BENCHMARKS = {
