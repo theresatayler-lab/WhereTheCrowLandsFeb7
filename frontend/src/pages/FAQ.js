@@ -10,15 +10,15 @@ const faqs = [
     questions: [
       {
         q: 'What is Where The Crowlands?',
-        a: 'Where The Crowlands is a DIY ritual builder and historical witchcraft archive. We provide tested formulas from the occult revival period (1910-1945), guided by four historical women who each practiced their own form of magic. You can generate personalized spells, save them to your grimoire, and build your own practice without gatekeepers or expensive services.'
+        a: 'Where The Crowlands is a DIY ritual builder and historical witchcraft archive. We provide tested formulas from the occult revival period (1910-1945), guided by historical women who each practiced their own form of magic. You can generate personalized spells, save them to your grimoire, and build your own practice without gatekeepers or expensive services.'
       },
       {
-        q: 'Who are the four guides?',
-        a: 'Shigg - The Birds of Parliament Poet Laureate, drawing on Rubáiyát wisdom and bird oracle traditions; Cathleen - The Singer of Strength, bridging British Spiritualism and voice magic; Katherine - The Weaver of Hidden Knowledge, master of craft-based sympathetic magic; and Brenda - The Family Chronicler, keeper of memory and crow communion. Each guide has a unique voice, ritual style, and area of expertise spanning over a century of practice.'
+        q: 'Who are the guides?',
+        a: 'Shigg - The Birds of Parliament Poet Laureate, drawing on Rubáiyát wisdom and bird oracle traditions; Cathleen - The Singer of Strength, bridging British Spiritualism and voice magic; Katherine - The Weaver of Hidden Knowledge, master of craft-based sympathetic magic; Theresa - The Diviner of Truth, practitioner of cartomancy, mirror scrying, and séance traditions; and Brenda - The Family Chronicler, keeper of memory and crow communion. Each guide has a unique voice, ritual style, and area of expertise spanning over a century of practice.'
       },
       {
         q: 'Do I have to choose a guide?',
-        a: "No. You can generate spells with neutral Crowlands guidance, or you can work with any of the four guides. Each guide brings their own personality, historical context, and ritual style to the spells they craft. You can change guides anytime or work with all of them."
+        a: "No. You can generate spells with neutral Crowlands guidance, or you can work with any of the guides. Each guide brings their own personality, historical context, and ritual style to the spells they craft. You can change guides anytime or work with all of them."
       }
     ]
   },
