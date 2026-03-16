@@ -3607,3 +3607,21 @@ DEEPSEEK_GENERATED_EVENTS = [
 ]
 
 ALL_TIMELINE_EVENTS = EXPANDED_TIMELINE_EVENTS + HISTORICAL_EVENTS_EXTENDED + POLITICAL_ACTIVISM_EVENTS + DEEPSEEK_GENERATED_EVENTS
+
+# ============================================================================
+# APPLY ENRICHMENTS - Merge expanded descriptions, significance, and context
+# ============================================================================
+from timeline_enrichments import ENRICHMENTS
+
+for event in ALL_TIMELINE_EVENTS:
+    event_id = event.get("id")
+    if event_id in ENRICHMENTS:
+        enrichment = ENRICHMENTS[event_id]
+        for key, value in enrichment.items():
+            if key in ("description", "significance") and key in event:
+                # Only override if enrichment is longer (richer content)
+                if len(value) > len(event[key]):
+                    event[key] = value
+            elif key not in event:
+                # Add new fields (expanded_context, learn_more_links, location)
+                event[key] = value
