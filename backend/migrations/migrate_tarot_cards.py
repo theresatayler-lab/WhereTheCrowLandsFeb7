@@ -83,7 +83,6 @@ def generate_tarot_card_from_spell(spell: dict) -> dict:
         'cathleen': '🪶',
         'kathleen': '🪶',
         'katherine': '⚗️',
-        'catherine': '⚗️',
         'theresa': '🔮',
     }
     symbol = symbols.get(guide_id.lower(), '✨')

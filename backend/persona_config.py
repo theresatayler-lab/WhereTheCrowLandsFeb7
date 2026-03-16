@@ -3237,8 +3237,7 @@ def get_persona_config(persona_id: str) -> dict:
     # Handle legacy IDs
     id_map = {
         "shiggy": "shigg",
-        "kathleen": "cathleen",
-        "catherine": "katherine"
+        "kathleen": "cathleen"
     }
     normalized_id = id_map.get(persona_id, persona_id)
     return PERSONA_CONFIG.get(normalized_id, PERSONA_CONFIG.get("shigg"))

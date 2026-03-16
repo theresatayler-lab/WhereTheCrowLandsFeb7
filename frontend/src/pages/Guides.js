@@ -50,7 +50,7 @@ export const Guides = () => {
             <PageHeader 
               brandIcon="skull"
               title="Meet the Guides"
-              subtitle="Four generations of women who practiced in secret, each with her own wisdom, ritual style, and way of seeing the world."
+              subtitle="Generations of women who practiced in secret, each with her own wisdom, ritual style, and way of seeing the world."
             />
             <p className="font-crimson text-base sm:text-lg text-gold/90 italic text-center max-w-2xl mx-auto px-2">
               &ldquo;The women who walked before you left their spells in stories, their magic in memories.&rdquo;
@@ -122,7 +122,7 @@ export const Guides = () => {
                   <div>
                     <h3 className="font-cinzel text-xl text-crimson mb-3" style={{ textShadow: '0 0 20px rgba(185, 78, 106, 0.4)' }}>The Lineage</h3>
                     <p className="font-montserrat text-sm text-navy-dark/80 leading-relaxed mb-3">
-                      These four women span over a century of practice—from Victorian Spitalfields to contemporary 
+                      These women span over a century of practice—from Victorian Spitalfields to contemporary 
                       London. Each carried the magic forward in her own way: through craft, through secrets, through 
                       poetry, and through truth-telling.
                     </p>
