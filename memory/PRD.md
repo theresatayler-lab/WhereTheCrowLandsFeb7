@@ -63,6 +63,12 @@ Build a spell-generation application, "Where The Crowlands," with a highly speci
   - Added historical connections, learn_more_links, and location data
   - Updated `timeline_service.py` seed function with version-based reseeding
   - Coverage: Ancient era (Egyptian, Greek, Chinese, Roman) through contemporary (WitchTok, AHS Coven)
+- **P0 Fix Broken Connection References:** Audited and fixed 105 broken connection references
+  - Remapped 62 event-to-event refs to valid existing event IDs
+  - Removed 18 refs with no valid match (pre-timeline scope or out of scope)
+  - Normalized 25 `part_of_movement` labels from inconsistent Title Case to snake_case
+  - Created `backend/connection_fixes.py` with complete mapping table
+  - Zero broken event-to-event references remaining (verified via API)
 
 ## Prioritized Backlog
 
