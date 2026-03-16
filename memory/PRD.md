@@ -80,18 +80,28 @@ Build a spell-generation application, "Where The Crowlands," with a highly speci
   - Added missing Theresa to FAQ.js guide descriptions
   - Zero hardcoded guide counts remain in frontend source
 
+### Session 5 (March 2026)
+- **P0 AI Image Generation (Gemini Nano Banana):** Connected real AI image provider
+  - Replaced static/DALL-E fallback with Gemini Nano Banana (`gemini-3-pro-image-preview`) via `emergentintegrations`
+  - Uses `EMERGENT_LLM_KEY` from backend/.env
+  - All 5 archetype styles generate real images (shiggy, kathleen, katherine, theresa, neutral)
+  - Frontend updated to handle both base64 and URL image responses
+  - Fixed missing `ImageIcon` import that was crashing the page
+  - Tested: 100% pass rate (7/7 backend, 8/8 frontend UI tests)
+
 ## Prioritized Backlog
 
 ### P0 (Critical)
 - Remaining user security prompts (auth enforcement, CORS, info disclosure)
-- Integrate AI Image Generation (Gemini Nano Banana via Emergent Key)
 
 ### P1 (High)
 - Finalize Manifesto Integration (awaiting user document)
+- Backend refactor: break server.py into route modules
 
 ### P2 (Medium)
 - Switch Stripe to Live Mode (needs live API keys)
-- Backend refactor: break server.py into route modules
+- Complete UI Consistency Sweep (btn-ritual, avatar sizes)
+- Implement Password Reset Flow
 
 ### P3 (Low/Future)
 - Print-on-demand integration (Lulu.com)
@@ -99,6 +109,8 @@ Build a spell-generation application, "Where The Crowlands," with a highly speci
 - Deprecate legacy V1/V2 spell pipeline
 - PWA Support
 - Email service integration (Resend)
+- React ErrorBoundary components
+- Spell sharing feature
 
 ## Test Credentials
 - Email: TheresaTayler@me.com
@@ -106,11 +118,12 @@ Build a spell-generation application, "Where The Crowlands," with a highly speci
 - Access Level: PRO
 
 ## Key Files
-- backend/server.py - 6,440+ lines, all routes, rate limiting via SlowAPI
+- backend/server.py - 6,500+ lines, all routes, rate limiting via SlowAPI
 - backend/timeline_events_expanded.py - 126 timeline events with enrichment merge logic
 - backend/timeline_enrichments.py - Enrichment data (expanded_context, descriptions, significance)
 - backend/timeline_service.py - Timeline API service with version-based seeding
-- backend/image_provider.py - Static image library (no real AI provider connected)
+- backend/image_provider.py - Static image library + Gemini Nano Banana integration
+- frontend/src/pages/AIImage.js - AI Image Generator page (Gemini Nano Banana)
 - frontend/src/index.css - Global CSS including btn-ritual classes
 - frontend/src/pages/GuidePortal.js - Flex-centered layout
 - memory/BRAND_STYLE_GUIDE.md - Visual design source of truth
