@@ -371,7 +371,7 @@ export const Home = () => {
             <FeatureCard 
               brandIcon="star"
               title="Craft Your Spells" 
-              desc="Generate personalized rituals guided by four ancestral archetypes, each with their own voice and wisdom." 
+              desc="Generate personalized rituals guided by ancestral archetypes, each with their own voice and wisdom." 
             />
             <FeatureCard 
               brandIcon="book"
@@ -410,7 +410,7 @@ export const Home = () => {
             >
               <p>
                 The druids, templars, occultists, astrologers, hermetic philosophers, &quot;witches,&quot; midwives 
-                and alchemists before them… These four women span over a century of practice—from Victorian 
+                and alchemists before them… These women span over a century of practice—from Victorian 
                 Spitalfields to contemporary London.
               </p>
               <p className="italic" style={{ color: NOUVEAU_COLORS.mutedBrass }}>

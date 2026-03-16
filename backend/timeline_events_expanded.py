@@ -3607,3 +3607,56 @@ DEEPSEEK_GENERATED_EVENTS = [
 ]
 
 ALL_TIMELINE_EVENTS = EXPANDED_TIMELINE_EVENTS + HISTORICAL_EVENTS_EXTENDED + POLITICAL_ACTIVISM_EVENTS + DEEPSEEK_GENERATED_EVENTS
+
+# ============================================================================
+# APPLY ENRICHMENTS - Merge expanded descriptions, significance, and context
+# ============================================================================
+from timeline_enrichments import ENRICHMENTS
+
+for event in ALL_TIMELINE_EVENTS:
+    event_id = event.get("id")
+    if event_id in ENRICHMENTS:
+        enrichment = ENRICHMENTS[event_id]
+        for key, value in enrichment.items():
+            if key in ("description", "significance") and key in event:
+                # Only override if enrichment is longer (richer content)
+                if len(value) > len(event[key]):
+                    event[key] = value
+            elif key not in event:
+                # Add new fields (expanded_context, learn_more_links, location)
+                event[key] = value
+
+# ============================================================================
+# FIX BROKEN CONNECTION REFERENCES
+# ============================================================================
+from connection_fixes import EVENT_REF_FIXES, MOVEMENT_LABEL_FIXES
+
+_valid_ids = {e["id"] for e in ALL_TIMELINE_EVENTS}
+
+for event in ALL_TIMELINE_EVENTS:
+    eid = event.get("id")
+    conns = event.get("connections", {})
+
+    for field in ["influenced_by", "influenced", "related_events"]:
+        refs = conns.get(field, [])
+        fixed = []
+        for ref in refs:
+            key = (eid, field, ref)
+            if key in EVENT_REF_FIXES:
+                replacement = EVENT_REF_FIXES[key]
+                if replacement is not None and replacement not in fixed:
+                    fixed.append(replacement)
+            elif ref in _valid_ids:
+                if ref not in fixed:
+                    fixed.append(ref)
+            # else: broken ref with no mapping — silently drop
+        conns[field] = fixed
+
+    # Normalize part_of_movement labels
+    movements = conns.get("part_of_movement", [])
+    normalized = []
+    for m in movements:
+        label = MOVEMENT_LABEL_FIXES.get(m, m)
+        if label not in normalized:
+            normalized.append(label)
+    conns["part_of_movement"] = normalized

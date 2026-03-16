@@ -31,8 +31,8 @@ const ARCHETYPE_STYLES = {
     borderColor: 'border-blue-400/50',
     keywords: ['Morrigan', 'crows', 'séance', 'Celtic', 'moonlight']
   },
-  catherine: {
-    id: 'catherine',
+  katherine: {
+    id: 'katherine',
     name: 'Katherine',
     title: 'Weaver of Hidden Knowledge',
     description: 'Victorian spiritualist photography, spirit photography with ethereal double exposures, shadow work',
@@ -244,7 +244,7 @@ export const AIImage = () => {
         'A silver talisman brooch glowing with protective energy',
         'A powerful soprano voice made visible as waves of light'
       ],
-      catherine: [
+      katherine: [
         'A Victorian spirit photograph with ethereal double exposure',
         'Huguenot silk weaving patterns forming mystical sigils',
         'A séance room with a single candle and scrying mirror',

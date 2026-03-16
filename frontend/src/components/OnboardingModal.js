@@ -123,7 +123,7 @@ const WelcomeStep = ({ onContinue, onSkip }) => (
       <FeatureCard
         iconSrc="/icons/anchors/gold/anchor-candle.png"
         title="Ancestral Wisdom"
-        description="Learn from four generations of women who practiced in secret"
+        description="Learn from generations of women who practiced in secret"
       />
       <FeatureCard
         iconSrc="/icons/anchors/gold/anchor-notebook.png"

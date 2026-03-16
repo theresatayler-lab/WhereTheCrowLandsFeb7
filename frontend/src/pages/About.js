@@ -81,7 +81,7 @@ export const About = () => {
         </div>
       </LightSection>
 
-      {/* Dark Section - The Four Guides */}
+      {/* Dark Section - The Guides */}
       <DarkSection className="py-12 sm:py-16 px-4 sm:px-6">
         <div className="max-w-4xl mx-auto">
           <motion.div
@@ -92,7 +92,7 @@ export const About = () => {
             <OrnateCard hover={false}>
               <h2 className="font-cinzel text-xl sm:text-2xl text-gold-light mb-6 flex items-center gap-3">
                 <BrandIcon name="skull" size={28} opacity={0.85} />
-                The Four Guides
+                The Guides
               </h2>
               <div className="space-y-6">
                 <div className="border-l-2 border-gold/40 pl-4">
@@ -129,6 +129,15 @@ export const About = () => {
                     The Seer & Storyteller. Journalist, historian, and truth-seeker, Theresa uncovered hidden 
                     paternity, mapped generational trauma, and broke the &ldquo;veil spell&rdquo; through research and ritual. 
                     She blends factual investigation with mystical insight.
+                  </p>
+                </div>
+
+                <div className="border-l-2 border-gold/40 pl-4">
+                  <h3 className="font-cinzel text-lg text-crimson-bright mb-2 flex items-center gap-2"><img src="/icons/guides/guide-brenda.png" alt="Brenda" className="w-10 h-10 rounded-full object-cover border border-gold/30" /> Brenda</h3>
+                  <p className="font-montserrat text-sm text-cream/80 leading-relaxed">
+                    The Family Chronicler. Keeper of memory and crow communion, Brenda bridges the living 
+                    and the dead through scrapbook magic, automatic writing, and communion with the corvid 
+                    messengers who carry word between worlds.
                   </p>
                 </div>
               </div>

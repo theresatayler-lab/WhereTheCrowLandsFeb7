@@ -319,7 +319,7 @@ class SpellContextQuestions(BaseModel):
 
 class ImageGenerationRequest(BaseModel):
     prompt: str
-    archetype: Optional[str] = None  # Optional archetype style (shiggy, kathleen, catherine, theresa, neutral)
+    archetype: Optional[str] = None  # Optional archetype style (shiggy, kathleen, katherine, theresa, neutral)
 
 class PersonalizedSpellRequest(BaseModel):
     """Request for the new personalized spell wizard"""
@@ -567,7 +567,7 @@ CATHLEEN'S SPIRITUAL TRADITIONS:
 """)
     
     # === KATHERINE-SPECIFIC DYNAMIC CONTENT ===
-    elif archetype_id == 'catherine':
+    elif archetype_id == 'katherine':
         # Select thread color based on intention
         thread_selections = {
             'grief': ['black', 'white', 'purple'],
@@ -2795,7 +2795,7 @@ YOUR TONE:
 
 SPEAK AS CATHLEEN—tender yet unbreakable, a singer whose voice carries ancestral magic, a mother who knows that sometimes the dead are simply waiting in the next room."""
     },
-    'catherine': {
+    'katherine': {
         'name': 'Katherine',
         'title': 'The Weaver of Hidden Knowledge',
         'system_prompt': """You ARE Katherine, the Weaver of Hidden Knowledge. You are Cathleen's mum and Shigg's nan. Born in the late 1800s in Spitalfields, London, into a Huguenot community where your parents were BOTH musicians AND weavers. You became a master tailor, weaver, and court dressmaker, working with the first ladies of the West End court dress makers and high-end shops.
@@ -4131,7 +4131,7 @@ velvet silk sheen, sacred flame, altar cloth, crescent moon, ivy vine accents,
 NOT a portrait, home-circle gathering energy, protective ward symbolism,
 NO text, NO letters, NO words, NO watermark, NO photorealism, NO neon, NO kitchen objects""",
 
-    'catherine': """ornate occult silk scarf tapestry illustration, ultra-detailed engraved linework,
+    'katherine': """ornate occult silk scarf tapestry illustration, ultra-detailed engraved linework,
 etched texture with art nouveau filigree border, symmetrical medallion layout, collector plate finish,
 cooler steel silver and oxblood burgundy and navy palette, high-contrast engraved plate feel,
 needle and thread, scrying mirror, brass compass, sealed letter, astrolabe, wax seal,
@@ -4172,7 +4172,7 @@ ARCHETYPE_IMAGE_STYLE_DESCRIPTIONS = {
         'description': 'Ornate silk scarf tapestry with candlelit altar scenes, raven feathers, protective circles, Brigid cross motifs, devotional mystery',
         'keywords': ['candlelit', 'raven', 'protective', 'crimson gold', 'Celtic', 'altar']
     },
-    'catherine': {
+    'katherine': {
         'name': 'Katherine - The Weaver of Hidden Knowledge',
         'description': 'Ornate silk scarf tapestry with atelier desk scene, needle and thread, mirrors, geometric diagrams, cool steel and silver tones',
         'keywords': ['atelier', 'geometric', 'mirror', 'compass', 'silver oxblood', 'tailoring']
@@ -4296,7 +4296,7 @@ async def generate_spell(
         
         # Add Katherine-specific context when she is the selected archetype
         katherine_context = ""
-        if archetype_id == 'catherine':
+        if archetype_id == 'katherine':
             katherine_materials = ", ".join([m['name'] for m in KATHERINE_MATERIALS['signature_materials'][:6]])
             katherine_context = f"""
 
@@ -4734,7 +4734,7 @@ async def generate_personalized_spell(request: Request, body: PersonalizedSpellR
         persona_id = spell_spec.get('persona_id', 'shigg')
         
         # Normalize legacy IDs
-        id_map = {'shiggy': 'shigg', 'kathleen': 'cathleen', 'catherine': 'katherine'}
+        id_map = {'shiggy': 'shigg', 'kathleen': 'cathleen'}
         persona_id = id_map.get(persona_id, persona_id)
         
         if persona_id == 'choose_for_me':
@@ -5077,7 +5077,7 @@ async def generate_spell_v2_endpoint(request: Request, body: SpellRequestV2, use
         
         # Resolve persona ID
         persona_id = spell_spec.get('persona_id', 'shigg')
-        id_map = {'shiggy': 'shigg', 'kathleen': 'cathleen', 'catherine': 'katherine'}
+        id_map = {'shiggy': 'shigg', 'kathleen': 'cathleen'}
         persona_id = id_map.get(persona_id, persona_id)
         
         if persona_id == 'choose_for_me':
@@ -5253,7 +5253,7 @@ async def generate_spell_v3_endpoint(request: Request, body: SpellRequestV3, use
         
         # Resolve persona
         persona_id = spell_spec.get('persona_id', 'shigg')
-        id_map = {'shiggy': 'shigg', 'kathleen': 'cathleen', 'catherine': 'katherine'}
+        id_map = {'shiggy': 'shigg', 'kathleen': 'cathleen'}
         persona_id = id_map.get(persona_id, persona_id)
         
         routing_reason = None
@@ -5497,7 +5497,7 @@ async def _generate_spell_background(job_id: str, request_data: dict, user_id: O
         
         # Resolve persona
         persona_id = spell_spec.get('persona_id', 'shigg')
-        id_map = {'shiggy': 'shigg', 'kathleen': 'cathleen', 'catherine': 'katherine'}
+        id_map = {'shiggy': 'shigg', 'kathleen': 'cathleen'}
         persona_id = id_map.get(persona_id, persona_id)
         
         routing_reason = None
