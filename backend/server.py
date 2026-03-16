@@ -4648,7 +4648,7 @@ Respond ONLY with the JSON object, no other text."""
         logging.error(f'Spell generation error: {str(e)}')
         raise HTTPException(status_code=500, detail=f'Failed to generate spell: {str(e)}')
 
-# AI Image Generation endpoint with archetype style support
+# AI Image Generation endpoint with archetype style support (Gemini Nano Banana)
 @api_router.post('/ai/generate-image')
 @limiter.limit("5/minute")
 async def generate_image(request: Request, body: ImageGenerationRequest):
@@ -4664,22 +4664,36 @@ async def generate_image(request: Request, body: ImageGenerationRequest):
         # Build the full prompt with archetype styling
         full_prompt = f"{archetype_style}, {body.prompt}, mystical ritual scene, highly detailed, no text or words"
         
-        # Use static image library
-        from image_provider import generate_image as gen_img, is_static_url, get_url_from_static
-        image_result = await gen_img(
-            prompt=full_prompt,
-            persona_id=getattr(body, 'archetype', 'shigg') or 'shigg',
-            asset_type="header"
+        # Use Gemini Nano Banana for real image generation
+        from emergentintegrations.llm.chat import LlmChat, UserMessage
+        
+        emergent_key = os.environ.get('EMERGENT_LLM_KEY')
+        if not emergent_key:
+            raise HTTPException(status_code=500, detail='Image generation not configured')
+        
+        session_id = f"img-gen-{uuid.uuid4().hex[:12]}"
+        chat = LlmChat(
+            api_key=emergent_key,
+            session_id=session_id,
+            system_message="You are an expert mystical image generator. Generate the requested image without any text or words in the image."
         )
-        if image_result:
-            if is_static_url(image_result):
-                return {'image_url': get_url_from_static(image_result)}
-            return {'image_base64': image_result}
+        chat.with_model("gemini", "gemini-3-pro-image-preview").with_params(modalities=["image", "text"])
+        
+        msg = UserMessage(text=f"Generate this image: {full_prompt}")
+        text_response, images = await chat.send_message_multimodal_response(msg)
+        
+        if images and len(images) > 0:
+            image_data = images[0]['data']  # Already base64
+            logging.info(f"[GEMINI] Image generated for archetype={body.archetype}, data_len={len(image_data[:10])}...")
+            return {'image_base64': image_data}
         else:
-            raise HTTPException(status_code=500, detail='No image available')
+            logging.warning(f"[GEMINI] No image returned for prompt")
+            raise HTTPException(status_code=500, detail='No image generated')
+    except HTTPException:
+        raise
     except Exception as e:
         logging.error(f'Image generation error: {str(e)}')
-        raise HTTPException(status_code=500, detail='Failed to generate image')
+        raise HTTPException(status_code=500, detail=f'Failed to generate image: {str(e)}')
 
 # Get archetype image style descriptions for frontend
 @api_router.get('/ai/image-styles')

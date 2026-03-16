@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Loader2, Download, RotateCcw } from 'lucide-react';
+import { Loader2, Download, RotateCcw, Image as ImageIcon } from 'lucide-react';
 import { BrandIcon } from '../components/BrandIcon';
 import { toast } from 'sonner';
 import { DarkSection, LightSection, GrandDivider, MysticalDivider, ElaborateCorner, PageHeader, LightOrnateCard, OrnateCard, ATMOSPHERIC_IMAGES } from '../components/OrnateElements';
@@ -100,8 +100,9 @@ const StyleCard = ({ style, isSelected, onSelect }) => (
 );
 
 // Flippable image card component
-const FlippableImageCard = ({ imageBase64, prompt, onDownload }) => {
+const FlippableImageCard = ({ image, prompt, onDownload }) => {
   const [isFlipped, setIsFlipped] = useState(false);
+  const imgSrc = image.type === 'base64' ? `data:image/png;base64,${image.data}` : image.data;
   
   return (
     <div 
@@ -138,7 +139,7 @@ const FlippableImageCard = ({ imageBase64, prompt, onDownload }) => {
               
               {/* Image with gradient overlay */}
               <img
-                src={`data:image/png;base64,${imageBase64}`}
+                src={imgSrc}
                 alt="Generated artwork"
                 className="w-full h-full object-cover"
               />
@@ -161,7 +162,7 @@ const FlippableImageCard = ({ imageBase64, prompt, onDownload }) => {
         >
           <div className="absolute inset-0 rounded-lg border-2 border-gold/50 overflow-hidden">
             <img
-              src={`data:image/png;base64,${imageBase64}`}
+              src={imgSrc}
               alt="Generated artwork - full view"
               className="w-full h-full object-contain bg-navy-dark"
             />
@@ -202,13 +203,22 @@ export const AIImage = () => {
         })
       });
       
-      if (!response.ok) throw new Error('Failed to generate image');
+      if (!response.ok) {
+        const errData = await response.json().catch(() => ({}));
+        throw new Error(errData.detail || 'Failed to generate image');
+      }
       
       const data = await response.json();
-      setGeneratedImage(data.image_base64);
-      toast.success('Image generated successfully!');
+      if (data.image_base64) {
+        setGeneratedImage({ type: 'base64', data: data.image_base64 });
+      } else if (data.image_url) {
+        setGeneratedImage({ type: 'url', data: data.image_url });
+      } else {
+        throw new Error('No image data received');
+      }
+      toast.success('Image conjured successfully!');
     } catch (error) {
-      toast.error('Failed to generate image');
+      toast.error(error.message || 'Failed to generate image');
       console.error('Image generation error:', error);
     } finally {
       setLoading(false);
@@ -218,7 +228,11 @@ export const AIImage = () => {
   const handleDownload = () => {
     if (!generatedImage) return;
     const link = document.createElement('a');
-    link.href = `data:image/png;base64,${generatedImage}`;
+    if (generatedImage.type === 'base64') {
+      link.href = `data:image/png;base64,${generatedImage.data}`;
+    } else {
+      link.href = generatedImage.data;
+    }
     link.download = `crowlands-${selectedStyle}-${Date.now()}.png`;
     link.click();
     toast.success('Image downloaded!');
@@ -406,7 +420,7 @@ export const AIImage = () => {
                     className="space-y-4"
                   >
                     <FlippableImageCard 
-                      imageBase64={generatedImage}
+                      image={generatedImage}
                       prompt={prompt}
                       onDownload={handleDownload}
                     />
