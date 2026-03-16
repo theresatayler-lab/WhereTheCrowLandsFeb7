@@ -69,6 +69,11 @@ Build a spell-generation application, "Where The Crowlands," with a highly speci
   - Normalized 25 `part_of_movement` labels from inconsistent Title Case to snake_case
   - Created `backend/connection_fixes.py` with complete mapping table
   - Zero broken event-to-event references remaining (verified via API)
+- **P0 Katherine ID Standardization:** Renamed all `catherine` → `katherine` across entire codebase
+  - Fixed 5 frontend files: archetypes.js, SpellRequest.js, AIImage.js, GrimoirePage.js
+  - Fixed 4 backend files: server.py, persona_config.py, katherine_spells.py, migrate_tarot_cards.py
+  - Removed all `catherine → katherine` normalization mappings (no longer needed)
+  - Tested: 100% pass rate (backend API + frontend UI + code verification)
 
 ## Prioritized Backlog
 
