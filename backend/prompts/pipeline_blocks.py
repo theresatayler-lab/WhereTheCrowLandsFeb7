@@ -1050,6 +1050,7 @@ class BlocksSpellPipeline:
             metadata["stages_completed"].append("qa")
             
             metadata["timing"]["total_ms"] = int((time.time() - start) * 1000)
+            metadata["research_packet"] = research_packet
             
             return spell_output, metadata
             

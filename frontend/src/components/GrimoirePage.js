@@ -914,6 +914,21 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
   const fetchResearchOrigins = async () => {
     if (researchData) return; // Already loaded
 
+    // Check if research_origins is already attached to the spell (from spell generation)
+    const preAttached = spell?.research_origins 
+      || spell?.spell_data?.research_origins
+      || (typeof spell === 'object' && spell.research_origins);
+    
+    if (preAttached) {
+      // Use pre-attached data instantly — no API call needed
+      setResearchData({
+        research_origins: preAttached,
+        persona_used: archetype?.name || 'Guide'
+      });
+      return;
+    }
+
+    // Fallback: fetch from API for older spells without pre-attached research
     setIsLoadingResearch(true);
 
     try {

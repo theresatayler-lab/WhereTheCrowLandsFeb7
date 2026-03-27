@@ -337,6 +337,7 @@ class SaveSpellRequest(BaseModel):
     archetype_title: Optional[str] = None
     image_base64: Optional[str] = None
     asset_plan: Optional[dict] = None  # Contains generated_assets (tarot, sigil, dividers) and micro_icons
+    research_origins: Optional[dict] = None  # Pre-computed research data from spell generation
 
 class SavedSpellResponse(BaseModel):
     model_config = ConfigDict(extra="ignore")
@@ -351,6 +352,7 @@ class SavedSpellResponse(BaseModel):
     created_at: str
     title: str
     tarot_card: Optional[dict] = None
+    research_origins: Optional[dict] = None  # Pre-computed research data from spell generation
 
 class WaitlistRequest(BaseModel):
     email: EmailStr
@@ -982,6 +984,56 @@ def sanitize_for_prompt(text: str, max_length: int = 2000) -> str:
     for pattern in _INJECTION_PATTERNS:
         text = pattern.sub('', text)
     return text.strip()
+
+
+def transform_research_packet_to_origins(research_packet: dict) -> dict:
+    """Transform archivist research_packet into research_origins format for the frontend.
+    This allows 'Show Research & Origins' to display instantly without a second API call."""
+    if not research_packet:
+        return None
+    key_takeaways = []
+    why_this_works_facts = []
+    for fact in research_packet.get('facts', []):
+        if isinstance(fact, dict):
+            entry = {
+                'text': fact.get('claim', ''),
+                'claim_flag': fact.get('claim_type', 'folklore'),
+                'confidence': fact.get('confidence', 'medium'),
+                'source_refs': fact.get('source_refs', [])
+            }
+            key_takeaways.append(entry)
+            if fact.get('why_it_works'):
+                why_this_works_facts.append({
+                    'claim': fact['why_it_works'],
+                    'claim_flag': fact.get('claim_type', 'folklore'),
+                    'confidence': fact.get('confidence', 'medium'),
+                    'source_refs': fact.get('source_refs', [])
+                })
+    sources = []
+    for s in research_packet.get('sources', []):
+        if isinstance(s, dict):
+            sources.append({
+                'id': s.get('source_id', ''),
+                'author': s.get('author', ''),
+                'title': s.get('work', ''),
+                'year': s.get('year'),
+                'quality_tier': s.get('quality_tier', 'folk_archive'),
+                'url': s.get('url'),
+                'notes': s.get('relevance', '')
+            })
+    tc = research_packet.get('tradition_context', {})
+    return {
+        'research_mode': research_packet.get('research_mode', 'spell_origins'),
+        'summary': research_packet.get('summary', ''),
+        'key_takeaways': key_takeaways,
+        'why_this_works_facts': why_this_works_facts,
+        'practice_context': {
+            'tradition_tags': tc.get('related_traditions', []),
+            'time_period': tc.get('time_period', ''),
+            'region': tc.get('geographic_origin', '')
+        },
+        'sources': sources
+    }
 
 
 def sanitize_input(text: str) -> str:
@@ -5010,6 +5062,44 @@ async def generate_personalized_spell(request: Request, body: PersonalizedSpellR
         timing_log['total_ms'] = int((time.time() - total_start) * 1000)
         logging.info(f"[TIMING] TOTAL: {timing_log['total_ms']}ms (planner={timing_log.get('planner_ms', 0)}ms, writer={timing_log.get('writer_ms', 0)}ms, images={timing_log.get('images_ms', 0)}ms)")
         
+        # Build research_origins from inspired_by references (already validated)
+        research_origins = None
+        inspired_by = spell.get('inspired_by', [])
+        if inspired_by:
+            key_takeaways = []
+            sources = []
+            for ref in inspired_by:
+                if isinstance(ref, dict):
+                    key_takeaways.append({
+                        'text': ref.get('connection_to_spell', ''),
+                        'claim_flag': 'historical',
+                        'confidence': 'medium',
+                        'source_refs': [ref.get('source_id', '')]
+                    })
+                    source_entry = {
+                        'id': ref.get('source_id', ''),
+                        'author': '',
+                        'title': ref.get('source_id', '').replace('_', ' ').title(),
+                        'notes': ref.get('beginner_takeaway', '')
+                    }
+                    learn_more = ref.get('learn_more', [])
+                    if learn_more and isinstance(learn_more, list) and len(learn_more) > 0:
+                        first_link = learn_more[0]
+                        if isinstance(first_link, dict):
+                            source_entry['url'] = first_link.get('url')
+                            source_entry['title'] = first_link.get('label', source_entry['title'])
+                        elif isinstance(first_link, str):
+                            source_entry['url'] = first_link
+                    sources.append(source_entry)
+            research_origins = {
+                'research_mode': 'spell_origins',
+                'summary': f"This spell draws on {len(inspired_by)} historical source(s) validated against the Crowlands encyclopedia.",
+                'key_takeaways': key_takeaways,
+                'why_this_works_facts': [],
+                'sources': sources
+            }
+            spell['research_origins'] = research_origins
+        
         return {
             'spell': spell,
             'archetype': archetype_info,
@@ -5020,7 +5110,8 @@ async def generate_personalized_spell(request: Request, body: PersonalizedSpellR
                 'name': scenario['name']
             },
             'spell_spec': spell_spec,
-            'timing': timing_log  # Include timing in response for debugging
+            'research_origins': research_origins,
+            'timing': timing_log
         }
         
     except HTTPException:
@@ -5155,6 +5246,12 @@ async def generate_spell_v2_endpoint(request: Request, body: SpellRequestV2, use
         total_ms = int((time_module.time() - total_start) * 1000)
         metadata['timing']['total_ms'] = total_ms
         
+        # Extract archivist research and transform for instant frontend display
+        research_packet = metadata.pop('research_packet', None)
+        research_origins = transform_research_packet_to_origins(research_packet)
+        if research_origins:
+            spell_output['research_origins'] = research_origins
+        
         logging.info(f"[V2] Spell generated in {total_ms}ms. Stages: {metadata['stages_completed']}")
         
         return {
@@ -5162,6 +5259,7 @@ async def generate_spell_v2_endpoint(request: Request, body: SpellRequestV2, use
             'archetype': archetype_info,
             'metadata': metadata,
             'belief_mode': belief_mode,
+            'research_origins': research_origins,
             'validation': {
                 'hard_limits_passed': is_valid,
                 'violations': violations if not is_valid else [],
@@ -5426,6 +5524,14 @@ async def generate_spell_v3_endpoint(request: Request, body: SpellRequestV3, use
         total_ms = int((time_module.time() - total_start) * 1000)
         metadata['timing']['total_ms'] = total_ms
         
+        # Extract archivist research and transform for instant frontend display
+        research_packet = metadata.pop('research_packet', None)
+        research_origins = transform_research_packet_to_origins(research_packet)
+        
+        # Attach research_origins to spell output so it's saved with the spell
+        if research_origins:
+            spell_output['research_origins'] = research_origins
+        
         logging.info(f"[V3] Blocks spell generated in {total_ms}ms. Blocks: {len(spell_output.get('blocks', []))}")
         
         return {
@@ -5433,6 +5539,7 @@ async def generate_spell_v3_endpoint(request: Request, body: SpellRequestV3, use
             'archetype': archetype_info,
             'metadata': metadata,
             'belief_mode': belief_mode,
+            'research_origins': research_origins,
             'validation': {
                 'qa_passed': metadata.get('qa_passed', True),
                 'qa_report': metadata.get('qa_report', {})
@@ -5902,6 +6009,12 @@ async def save_spell_to_grimoire(request: SaveSpellRequest, user = Depends(get_c
         'created_at': datetime.now(timezone.utc).isoformat(),
         'storage_version': 2  # Indicates GridFS storage
     }
+    
+    # Store research_origins if provided (from spell generation pipeline)
+    # Also check spell_data for embedded research_origins
+    research_origins = request.research_origins or request.spell_data.get('research_origins')
+    if research_origins:
+        saved_spell['research_origins'] = research_origins
     
     await db.user_spells.insert_one(saved_spell)
     
