@@ -88,6 +88,14 @@ Build a spell-generation application, "Where The Crowlands," with a highly speci
   - Frontend updated to handle both base64 and URL image responses
   - Fixed missing `ImageIcon` import that was crashing the page
   - Tested: 100% pass rate (7/7 backend, 8/8 frontend UI tests)
+- **P0 Research at Birth (Instant Research & Origins):** Eliminated 20-35s delay on "Show Research & Origins"
+  - Archivist research data now captured during spell generation and attached to spell output
+  - V2, V3, and Personalized spell endpoints all return `research_origins` with the spell
+  - `research_origins` saved to Grimoire with the spell for instant retrieval later
+  - Frontend checks for pre-attached data first (instant), falls back to API for older spells
+  - Fixed `SavedSpellResponse` model and `researchAPI.combined` auth header
+  - Covers all spell creation flows across the entire app
+  - Tested: 100% pass rate (backend + frontend)
 
 ## Prioritized Backlog
 
