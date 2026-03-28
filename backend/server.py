@@ -337,6 +337,7 @@ class SaveSpellRequest(BaseModel):
     archetype_title: Optional[str] = None
     image_base64: Optional[str] = None
     asset_plan: Optional[dict] = None  # Contains generated_assets (tarot, sigil, dividers) and micro_icons
+    research_origins: Optional[dict] = None  # Pre-computed research data from spell generation
 
 class SavedSpellResponse(BaseModel):
     model_config = ConfigDict(extra="ignore")
@@ -351,6 +352,7 @@ class SavedSpellResponse(BaseModel):
     created_at: str
     title: str
     tarot_card: Optional[dict] = None
+    research_origins: Optional[dict] = None  # Pre-computed research data from spell generation
 
 class WaitlistRequest(BaseModel):
     email: EmailStr
@@ -982,6 +984,96 @@ def sanitize_for_prompt(text: str, max_length: int = 2000) -> str:
     for pattern in _INJECTION_PATTERNS:
         text = pattern.sub('', text)
     return text.strip()
+
+
+def transform_research_packet_to_origins(research_packet: dict, rich_research: dict = None) -> dict:
+    """Transform archivist research_packet into research_origins format for the frontend.
+    If rich_research (from parallel DeepSeek call) is available, use it for the full spec."""
+    if not research_packet and not rich_research:
+        return None
+    
+    # If we have rich research origins from the parallel generator, use it
+    if rich_research:
+        # Merge with basic archivist data for completeness
+        basic_sources = []
+        for s in (research_packet or {}).get('sources', []):
+            if isinstance(s, dict):
+                basic_sources.append({
+                    'id': s.get('source_id', ''),
+                    'author': s.get('author', ''),
+                    'title': s.get('work', ''),
+                    'year': s.get('year'),
+                    'quality_tier': s.get('quality_tier', 'folk_archive'),
+                    'url': s.get('url'),
+                    'notes': s.get('relevance', '')
+                })
+        
+        tc = (research_packet or {}).get('tradition_context', {})
+        return {
+            'research_mode': (research_packet or {}).get('research_mode', 'spell_origins'),
+            'summary': rich_research.get('opening_summary', (research_packet or {}).get('summary', '')),
+            'guide_name': rich_research.get('guide_name', ''),
+            'guide_section_title': rich_research.get('guide_section_title', ''),
+            'suggested_further_reading': rich_research.get('suggested_further_reading', []),
+            'ethical_statement': rich_research.get('ethical_statement', ''),
+            'research_table': rich_research.get('research_table', []),
+            'closing_statement': rich_research.get('closing_statement', 'No vague spirituality. No unsourced claims. Every practice has a name, a date, an archive.'),
+            'key_takeaways': [],  # Superseded by research_table
+            'why_this_works_facts': [],
+            'practice_context': {
+                'tradition_tags': tc.get('related_traditions', []),
+                'time_period': tc.get('time_period', ''),
+                'region': tc.get('geographic_origin', '')
+            },
+            'sources': basic_sources
+        }
+    
+    # Fallback: basic transformation without rich research
+    if not research_packet:
+        return None
+    key_takeaways = []
+    why_this_works_facts = []
+    for fact in research_packet.get('facts', []):
+        if isinstance(fact, dict):
+            entry = {
+                'text': fact.get('claim', ''),
+                'claim_flag': fact.get('claim_type', 'folklore'),
+                'confidence': fact.get('confidence', 'medium'),
+                'source_refs': fact.get('source_refs', [])
+            }
+            key_takeaways.append(entry)
+            if fact.get('why_it_works'):
+                why_this_works_facts.append({
+                    'claim': fact['why_it_works'],
+                    'claim_flag': fact.get('claim_type', 'folklore'),
+                    'confidence': fact.get('confidence', 'medium'),
+                    'source_refs': fact.get('source_refs', [])
+                })
+    sources = []
+    for s in research_packet.get('sources', []):
+        if isinstance(s, dict):
+            sources.append({
+                'id': s.get('source_id', ''),
+                'author': s.get('author', ''),
+                'title': s.get('work', ''),
+                'year': s.get('year'),
+                'quality_tier': s.get('quality_tier', 'folk_archive'),
+                'url': s.get('url'),
+                'notes': s.get('relevance', '')
+            })
+    tc = research_packet.get('tradition_context', {})
+    return {
+        'research_mode': research_packet.get('research_mode', 'spell_origins'),
+        'summary': research_packet.get('summary', ''),
+        'key_takeaways': key_takeaways,
+        'why_this_works_facts': why_this_works_facts,
+        'practice_context': {
+            'tradition_tags': tc.get('related_traditions', []),
+            'time_period': tc.get('time_period', ''),
+            'region': tc.get('geographic_origin', '')
+        },
+        'sources': sources
+    }
 
 
 def sanitize_input(text: str) -> str:
@@ -4648,7 +4740,7 @@ Respond ONLY with the JSON object, no other text."""
         logging.error(f'Spell generation error: {str(e)}')
         raise HTTPException(status_code=500, detail=f'Failed to generate spell: {str(e)}')
 
-# AI Image Generation endpoint with archetype style support
+# AI Image Generation endpoint with archetype style support (Gemini Nano Banana)
 @api_router.post('/ai/generate-image')
 @limiter.limit("5/minute")
 async def generate_image(request: Request, body: ImageGenerationRequest):
@@ -4664,22 +4756,36 @@ async def generate_image(request: Request, body: ImageGenerationRequest):
         # Build the full prompt with archetype styling
         full_prompt = f"{archetype_style}, {body.prompt}, mystical ritual scene, highly detailed, no text or words"
         
-        # Use static image library
-        from image_provider import generate_image as gen_img, is_static_url, get_url_from_static
-        image_result = await gen_img(
-            prompt=full_prompt,
-            persona_id=getattr(body, 'archetype', 'shigg') or 'shigg',
-            asset_type="header"
+        # Use Gemini Nano Banana for real image generation
+        from emergentintegrations.llm.chat import LlmChat, UserMessage
+        
+        emergent_key = os.environ.get('EMERGENT_LLM_KEY')
+        if not emergent_key:
+            raise HTTPException(status_code=500, detail='Image generation not configured')
+        
+        session_id = f"img-gen-{uuid.uuid4().hex[:12]}"
+        chat = LlmChat(
+            api_key=emergent_key,
+            session_id=session_id,
+            system_message="You are an expert mystical image generator. Generate the requested image without any text or words in the image."
         )
-        if image_result:
-            if is_static_url(image_result):
-                return {'image_url': get_url_from_static(image_result)}
-            return {'image_base64': image_result}
+        chat.with_model("gemini", "gemini-3-pro-image-preview").with_params(modalities=["image", "text"])
+        
+        msg = UserMessage(text=f"Generate this image: {full_prompt}")
+        text_response, images = await chat.send_message_multimodal_response(msg)
+        
+        if images and len(images) > 0:
+            image_data = images[0]['data']  # Already base64
+            logging.info(f"[GEMINI] Image generated for archetype={body.archetype}, data_len={len(image_data[:10])}...")
+            return {'image_base64': image_data}
         else:
-            raise HTTPException(status_code=500, detail='No image available')
+            logging.warning(f"[GEMINI] No image returned for prompt")
+            raise HTTPException(status_code=500, detail='No image generated')
+    except HTTPException:
+        raise
     except Exception as e:
         logging.error(f'Image generation error: {str(e)}')
-        raise HTTPException(status_code=500, detail='Failed to generate image')
+        raise HTTPException(status_code=500, detail=f'Failed to generate image: {str(e)}')
 
 # Get archetype image style descriptions for frontend
 @api_router.get('/ai/image-styles')
@@ -4996,6 +5102,44 @@ async def generate_personalized_spell(request: Request, body: PersonalizedSpellR
         timing_log['total_ms'] = int((time.time() - total_start) * 1000)
         logging.info(f"[TIMING] TOTAL: {timing_log['total_ms']}ms (planner={timing_log.get('planner_ms', 0)}ms, writer={timing_log.get('writer_ms', 0)}ms, images={timing_log.get('images_ms', 0)}ms)")
         
+        # Build research_origins from inspired_by references (already validated)
+        research_origins = None
+        inspired_by = spell.get('inspired_by', [])
+        if inspired_by:
+            key_takeaways = []
+            sources = []
+            for ref in inspired_by:
+                if isinstance(ref, dict):
+                    key_takeaways.append({
+                        'text': ref.get('connection_to_spell', ''),
+                        'claim_flag': 'historical',
+                        'confidence': 'medium',
+                        'source_refs': [ref.get('source_id', '')]
+                    })
+                    source_entry = {
+                        'id': ref.get('source_id', ''),
+                        'author': '',
+                        'title': ref.get('source_id', '').replace('_', ' ').title(),
+                        'notes': ref.get('beginner_takeaway', '')
+                    }
+                    learn_more = ref.get('learn_more', [])
+                    if learn_more and isinstance(learn_more, list) and len(learn_more) > 0:
+                        first_link = learn_more[0]
+                        if isinstance(first_link, dict):
+                            source_entry['url'] = first_link.get('url')
+                            source_entry['title'] = first_link.get('label', source_entry['title'])
+                        elif isinstance(first_link, str):
+                            source_entry['url'] = first_link
+                    sources.append(source_entry)
+            research_origins = {
+                'research_mode': 'spell_origins',
+                'summary': f"This spell draws on {len(inspired_by)} historical source(s) validated against the Crowlands encyclopedia.",
+                'key_takeaways': key_takeaways,
+                'why_this_works_facts': [],
+                'sources': sources
+            }
+            spell['research_origins'] = research_origins
+        
         return {
             'spell': spell,
             'archetype': archetype_info,
@@ -5006,7 +5150,8 @@ async def generate_personalized_spell(request: Request, body: PersonalizedSpellR
                 'name': scenario['name']
             },
             'spell_spec': spell_spec,
-            'timing': timing_log  # Include timing in response for debugging
+            'research_origins': research_origins,
+            'timing': timing_log
         }
         
     except HTTPException:
@@ -5141,6 +5286,13 @@ async def generate_spell_v2_endpoint(request: Request, body: SpellRequestV2, use
         total_ms = int((time_module.time() - total_start) * 1000)
         metadata['timing']['total_ms'] = total_ms
         
+        # Extract archivist research and rich research origins, transform for frontend
+        research_packet = metadata.pop('research_packet', None)
+        rich_research = metadata.pop('rich_research_origins', None)
+        research_origins = transform_research_packet_to_origins(research_packet, rich_research)
+        if research_origins:
+            spell_output['research_origins'] = research_origins
+        
         logging.info(f"[V2] Spell generated in {total_ms}ms. Stages: {metadata['stages_completed']}")
         
         return {
@@ -5148,6 +5300,7 @@ async def generate_spell_v2_endpoint(request: Request, body: SpellRequestV2, use
             'archetype': archetype_info,
             'metadata': metadata,
             'belief_mode': belief_mode,
+            'research_origins': research_origins,
             'validation': {
                 'hard_limits_passed': is_valid,
                 'violations': violations if not is_valid else [],
@@ -5412,6 +5565,15 @@ async def generate_spell_v3_endpoint(request: Request, body: SpellRequestV3, use
         total_ms = int((time_module.time() - total_start) * 1000)
         metadata['timing']['total_ms'] = total_ms
         
+        # Extract archivist research and rich research origins, transform for frontend
+        research_packet = metadata.pop('research_packet', None)
+        rich_research = metadata.pop('rich_research_origins', None)
+        research_origins = transform_research_packet_to_origins(research_packet, rich_research)
+        
+        # Attach research_origins to spell output so it's saved with the spell
+        if research_origins:
+            spell_output['research_origins'] = research_origins
+        
         logging.info(f"[V3] Blocks spell generated in {total_ms}ms. Blocks: {len(spell_output.get('blocks', []))}")
         
         return {
@@ -5419,6 +5581,7 @@ async def generate_spell_v3_endpoint(request: Request, body: SpellRequestV3, use
             'archetype': archetype_info,
             'metadata': metadata,
             'belief_mode': belief_mode,
+            'research_origins': research_origins,
             'validation': {
                 'qa_passed': metadata.get('qa_passed', True),
                 'qa_report': metadata.get('qa_report', {})
@@ -5652,12 +5815,22 @@ async def _generate_spell_background(job_id: str, request_data: dict, user_id: O
         total_ms = int((time_module.time() - total_start) * 1000)
         metadata['timing']['total_ms'] = total_ms
         
+        # Extract archivist research and rich research origins for the async job result
+        research_packet = metadata.pop('research_packet', None)
+        rich_research = metadata.pop('rich_research_origins', None)
+        research_origins = transform_research_packet_to_origins(research_packet, rich_research)
+        
+        # Attach to spell output so it gets saved with the spell
+        if research_origins:
+            spell_output['research_origins'] = research_origins
+        
         # Update job with completed result
         result = {
             'spell': spell_output,
             'archetype': archetype_info,
             'metadata': metadata,
             'belief_mode': belief_mode,
+            'research_origins': research_origins,
             'validation': {
                 'qa_passed': metadata.get('qa_passed', True),
                 'qa_report': metadata.get('qa_report', {})
@@ -5888,6 +6061,12 @@ async def save_spell_to_grimoire(request: SaveSpellRequest, user = Depends(get_c
         'created_at': datetime.now(timezone.utc).isoformat(),
         'storage_version': 2  # Indicates GridFS storage
     }
+    
+    # Store research_origins if provided (from spell generation pipeline)
+    # Also check spell_data for embedded research_origins
+    research_origins = request.research_origins or request.spell_data.get('research_origins')
+    if research_origins:
+        saved_spell['research_origins'] = research_origins
     
     await db.user_spells.insert_one(saved_spell)
     

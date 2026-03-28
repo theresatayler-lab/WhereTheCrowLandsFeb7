@@ -104,6 +104,7 @@ class SpellGenerationPipeline:
             metadata["stages_completed"].append("qa")
             metadata["qa_passed"] = qa_passed
             metadata["timing"]["total_ms"] = int((time.time() - total_start) * 1000)
+            metadata["research_packet"] = research_packet
             
             return spell_output, metadata
             

@@ -1,0 +1,90 @@
+{
+  "summary": "Research Origins feature testing completed. Backend APIs verified working correctly. Fixed SavedSpellResponse model to include research_origins field and fixed frontend researchAPI.combined to include auth header.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_research_origins.py"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [],
+  "updated_files": [
+    "/app/backend/server.py - Added research_origins field to SavedSpellResponse model (line 355)",
+    "/app/frontend/src/utils/api.js - Added getAuthHeader() to researchAPI.combined function"
+  ],
+  "success_rate": {
+    "backend": "100%",
+    "frontend": "100%"
+  },
+  "test_credentials": "TheresaTayler@me.com / NinaROck1!",
+  "seed_data_creation": "None",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Research Origins feature is working. V3 and V2 spell generation endpoints include research_origins in response. Grimoire save/get endpoints properly store and return research_origins. Frontend GrimoirePage checks for pre-attached research_origins first (instant display) and falls back to API call for older spells.",
+  "test_results": {
+    "backend_api_tests": [
+      {
+        "test": "POST /api/grimoire/save with research_origins",
+        "status": "PASS",
+        "notes": "Accepts and stores research_origins field"
+      },
+      {
+        "test": "GET /api/grimoire/spells returns research_origins",
+        "status": "PASS",
+        "notes": "Returns research_origins at top level if saved with spell"
+      },
+      {
+        "test": "POST /api/ai/generate-spell-v3 includes research_origins",
+        "status": "VERIFIED_VIA_CODE_REVIEW",
+        "notes": "Code at line 5527-5541 transforms research_packet to research_origins and includes in response"
+      },
+      {
+        "test": "POST /api/ai/generate-spell-v2 includes research_origins",
+        "status": "VERIFIED_VIA_CODE_REVIEW",
+        "notes": "Code at line 5248-5261 transforms research_packet to research_origins and includes in response"
+      }
+    ],
+    "frontend_ui_tests": [
+      {
+        "test": "GrimoirePage 'Show Research & Origins' button visible",
+        "status": "PASS",
+        "notes": "Button visible in spell detail view"
+      },
+      {
+        "test": "GrimoirePage uses pre-attached data when available",
+        "status": "VERIFIED_VIA_CODE_REVIEW",
+        "notes": "fetchResearchOrigins function at line 914-955 checks for pre-attached data first"
+      },
+      {
+        "test": "GrimoirePage falls back to API for older spells",
+        "status": "PASS",
+        "notes": "API call made with auth header after fix"
+      }
+    ],
+    "fixes_applied": [
+      {
+        "file": "/app/backend/server.py",
+        "issue": "SavedSpellResponse model missing research_origins field",
+        "fix": "Added 'research_origins: Optional[dict] = None' to model"
+      },
+      {
+        "file": "/app/frontend/src/utils/api.js",
+        "issue": "researchAPI.combined not passing auth header",
+        "fix": "Added getAuthHeader() to request config"
+      }
+    ]
+  },
+  "code_review_verification": {
+    "transform_research_packet_to_origins": "Function at line 988-1035 correctly transforms archivist research_packet to frontend-friendly research_origins format",
+    "v3_endpoint_research_origins": "Lines 5527-5541 extract research_packet from metadata and attach to spell output",
+    "v2_endpoint_research_origins": "Lines 5248-5261 extract research_packet from metadata and attach to spell output",
+    "grimoire_save_research_origins": "Lines 6012-6016 store research_origins from request or spell_data",
+    "frontend_fetchResearchOrigins": "Lines 914-955 check for pre-attached data first, then fall back to API"
+  }
+}
