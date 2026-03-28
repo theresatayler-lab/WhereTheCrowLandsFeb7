@@ -92,11 +92,20 @@ Build a spell-generation application, "Where The Crowlands," with a highly speci
   - Archivist research data now captured during spell generation and attached to spell output
   - V2, V3, and Personalized spell endpoints all return `research_origins` with the spell
   - `research_origins` saved to Grimoire with the spell for instant retrieval later
-  - **Existing spells (51+):** Frontend extracts research from embedded spell data (sources, evidence_card, lore_vignette, further_reading blocks) — instant, no API call
+  - **Existing spells (52+):** Frontend extracts research from embedded spell data (sources, evidence_card, lore_vignette, further_reading blocks) — instant, no API call
   - Only falls back to slow API for spells with zero embedded data
   - Fixed `SavedSpellResponse` model and `researchAPI.combined` auth header
   - Covers all spell creation flows across the entire app
-  - Tested: 100% pass rate (backend + frontend), verified instant display on existing spells
+  - Tested: 100% pass rate (backend + frontend)
+- **P0 Rich Research & Origins Spec:** Full structured Research & Origins section per user spec
+  - **Parallel DeepSeek call** generates: suggested_further_reading boxes, research_table (Element/Origin/Tradition/Direct Source/Key Links), ethical_statement, closing_statement
+  - Runs IN PARALLEL with the writer stage — adds ~5s overhead, not 30s
+  - **Confidence tiers:** VERIFIED/REPORTED/INFERENCE labels on table rows with color coding
+  - **Per-guide customization:** Guide voice/focus mapped for Shigg, Cathleen, Katherine, Theresa, Brenda
+  - **Frontend:** Full spec rendering — guide attribution, opening summary, reading grid (2-col), ethical statement, research table with links, closing tagline
+  - **Legacy support:** Older spells use extraction from evidence_card/lore_vignette blocks + sources
+  - **Async job path fixed:** Research origins now included in background job results
+  - Tested: 100% pass (7/7 backend, 9/9 frontend, load time 602ms), verified instant display on existing spells
 
 ## Prioritized Backlog
 
