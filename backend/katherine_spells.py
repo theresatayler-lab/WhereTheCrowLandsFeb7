@@ -316,7 +316,7 @@ async def seed_katherine_spells(db):
     collection = db.sample_spells
     
     # Remove existing Katherine spells
-    await collection.delete_many({"archetype_id": "katherine"})
+    await collection.delete_many({"archetype_id": {"$in": ["katherine", "catherine"]}})
     
     # Insert new spells
     for spell in KATHERINE_SAMPLE_SPELLS:
