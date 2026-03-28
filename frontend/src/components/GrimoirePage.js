@@ -1018,12 +1018,15 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
     // Extract from sources field
     sources.forEach(s => {
       if (typeof s === 'object') {
+        // Build a readable title from source_id if no title exists
+        const rawId = s.source_id || s.id || '';
+        const readableTitle = s.title || s.work || (rawId ? rawId.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) : 'Source');
         extractedSources.push({
-          id: s.source_id || '',
+          id: rawId,
           author: s.author || '',
-          title: s.title || s.source_id || '',
-          quality_tier: s.type || 'historical',
-          notes: s.relevance || ''
+          title: readableTitle,
+          quality_tier: s.type || s.quality_tier || 'historical',
+          notes: s.relevance || s.notes || ''
         });
       }
     });
@@ -1915,44 +1918,131 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
           )}
 
           {researchData && (
-            <div className="p-4 space-y-4 bg-gold/5">
+            <div className="p-4 space-y-5 bg-gold/5">
+              {/* Section Header */}
               <div className="flex items-center gap-2 mb-2">
                 <Search className="w-5 h-5 text-crimson" />
                 <h3 className="font-cinzel text-base text-crimson">Research & Origins</h3>
               </div>
 
-              {/* Spellbook Response (Persona Voice) */}
-              <div className="bg-gold/10/80 p-4 rounded-sm border border-gold/30">
-                <div className="flex items-center gap-2 mb-3">
-                  <BrandIcon name="grimoire" size={16} />
-                  <span className="font-cinzel text-sm text-crimson uppercase tracking-wider">
-                    {researchData.persona_used}&apos;s Wisdom
-                  </span>
+              {/* Guide Attribution */}
+              {(researchData.research_origins?.guide_section_title || researchData.persona_used) && (
+                <div className="bg-gold/10/80 p-3 rounded-sm border border-gold/30">
+                  <div className="flex items-center gap-2">
+                    <BrandIcon name="grimoire" size={16} />
+                    <span className="font-cinzel text-sm text-crimson uppercase tracking-wider">
+                      {researchData.research_origins?.guide_section_title || `${researchData.persona_used}'s Wisdom`}
+                    </span>
+                  </div>
                 </div>
-                <p className="font-crimson text-base text-navy-dark/80 leading-relaxed whitespace-pre-wrap">
-                  {researchData.spellbook_response}
-                </p>
-              </div>
+              )}
 
-              {/* Research Origins (DeepSeek V2) */}
-              <div className="bg-white/60 p-4 rounded-sm border border-crimson/20">
-                <div className="flex items-center gap-2 mb-3">
+              {/* Persona Voice Response (legacy combined endpoint) */}
+              {researchData.spellbook_response && (
+                <div className="bg-gold/10/80 p-4 rounded-sm border border-gold/30">
+                  <p className="font-crimson text-base text-navy-dark/80 leading-relaxed whitespace-pre-wrap">
+                    {researchData.spellbook_response}
+                  </p>
+                </div>
+              )}
+
+              {/* Research Origins Content */}
+              <div className="bg-white/60 p-4 rounded-sm border border-crimson/20 space-y-5">
+                <div className="flex items-center gap-2">
                   <Search className="w-4 h-4 text-crimson" />
                   <span className="font-cinzel text-sm text-crimson uppercase tracking-wider">
                     Research & Origins
                   </span>
                 </div>
 
-                {/* Summary */}
+                {/* Opening Summary */}
                 {researchData.research_origins?.summary && (
-                  <p className="font-montserrat text-sm text-navy-dark/80 leading-relaxed mb-4">
+                  <p className="font-montserrat text-sm text-navy-dark/80 leading-relaxed">
                     {researchData.research_origins.summary}
                   </p>
                 )}
 
-                {/* Key Takeaways */}
-                {researchData.research_origins?.key_takeaways?.length > 0 && (
-                  <div className="mb-4">
+                {/* Suggested Further Reading Grid */}
+                {researchData.research_origins?.suggested_further_reading?.length > 0 && (
+                  <div>
+                    <p className="font-montserrat text-xs text-crimson uppercase tracking-wider mb-3">Suggested Further Reading</p>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      {researchData.research_origins.suggested_further_reading.map((item, idx) => (
+                        <div key={idx} className="p-3 bg-navy-dark/5 rounded-sm border border-gold/20" data-testid={`reading-box-${idx}`}>
+                          <p className="font-cinzel text-sm text-crimson mb-1">{item.tradition_name}</p>
+                          <p className="font-montserrat text-xs text-navy-dark/70 leading-relaxed">{item.description}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Ethical Statement */}
+                {researchData.research_origins?.ethical_statement && (
+                  <div className="py-3 border-y border-gold/20">
+                    <p className="font-crimson text-sm text-navy-dark/70 italic text-center leading-relaxed">
+                      {researchData.research_origins.ethical_statement}
+                    </p>
+                  </div>
+                )}
+
+                {/* Research Origins Table */}
+                {researchData.research_origins?.research_table?.length > 0 && (
+                  <div>
+                    <p className="font-montserrat text-xs text-crimson uppercase tracking-wider mb-3">Research Origins</p>
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-xs border-collapse" data-testid="research-origins-table">
+                        <thead>
+                          <tr className="border-b border-crimson/30">
+                            <th className="font-montserrat text-left text-crimson uppercase tracking-wider p-2">Element</th>
+                            <th className="font-montserrat text-left text-crimson uppercase tracking-wider p-2">Origin</th>
+                            <th className="font-montserrat text-left text-crimson uppercase tracking-wider p-2">Tradition</th>
+                            <th className="font-montserrat text-left text-crimson uppercase tracking-wider p-2">Direct Source</th>
+                            <th className="font-montserrat text-left text-crimson uppercase tracking-wider p-2">Key Links</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {researchData.research_origins.research_table.map((row, idx) => (
+                            <tr key={idx} className="border-b border-gold/15 hover:bg-gold/5">
+                              <td className="p-2 font-montserrat text-navy-dark/90 font-medium">{row.element}</td>
+                              <td className="p-2 font-montserrat text-navy-dark/70">{row.origin}</td>
+                              <td className="p-2 font-montserrat text-navy-dark/70">{row.tradition}</td>
+                              <td className="p-2 font-crimson text-navy-dark/70 italic">{row.direct_source}</td>
+                              <td className="p-2">
+                                {row.key_links?.map((link, li) => (
+                                  <span key={li}>
+                                    {li > 0 && <span className="text-navy-dark/30"> / </span>}
+                                    <a 
+                                      href={link.url} 
+                                      target="_blank" 
+                                      rel="noopener noreferrer" 
+                                      className="text-crimson hover:text-crimson-bright underline font-montserrat"
+                                    >
+                                      {link.label || 'Source'}
+                                    </a>
+                                  </span>
+                                ))}
+                                {row.confidence_tier && (
+                                  <span className={`ml-1 text-[10px] font-montserrat uppercase ${
+                                    row.confidence_tier === 'VERIFIED' ? 'text-green-700' :
+                                    row.confidence_tier === 'REPORTED' ? 'text-amber-600' :
+                                    'text-navy-dark/50'
+                                  }`}>
+                                    [{row.confidence_tier}]
+                                  </span>
+                                )}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                )}
+
+                {/* Legacy: Key Takeaways (for older spells without research_table) */}
+                {!researchData.research_origins?.research_table?.length && researchData.research_origins?.key_takeaways?.length > 0 && (
+                  <div>
                     <p className="font-montserrat text-xs text-crimson uppercase tracking-wider mb-2">Key Points</p>
                     <ul className="space-y-2">
                       {researchData.research_origins.key_takeaways.map((takeaway, idx) => (
@@ -1965,9 +2055,9 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                   </div>
                 )}
 
-                {/* Why This Works */}
-                {researchData.research_origins?.why_this_works_facts?.length > 0 && (
-                  <div className="mb-4">
+                {/* Legacy: Why This Works (for older spells without research_table) */}
+                {!researchData.research_origins?.research_table?.length && researchData.research_origins?.why_this_works_facts?.length > 0 && (
+                  <div>
                     <p className="font-montserrat text-xs text-crimson uppercase tracking-wider mb-2">Why This Works</p>
                     <ul className="space-y-2">
                       {researchData.research_origins.why_this_works_facts.map((fact, idx) => (
@@ -1980,10 +2070,10 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                   </div>
                 )}
 
-                {/* Sources */}
-                {researchData.research_origins?.sources?.length > 0 && (
+                {/* Legacy: Sources (for older spells without research_table) */}
+                {!researchData.research_origins?.research_table?.length && researchData.research_origins?.sources?.length > 0 && (
                   <div>
-                    <p className="font-montserrat text-xs text-crimson uppercase tracking-wider mb-2">Suggested Further Reading</p>
+                    <p className="font-montserrat text-xs text-crimson uppercase tracking-wider mb-2">Sources</p>
                     <div className="space-y-2">
                       {researchData.research_origins.sources.map((source, idx) => (
                         <div key={idx} className="p-2 bg-gold/5 rounded border border-gold/20">
@@ -2007,6 +2097,11 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                     </div>
                   </div>
                 )}
+
+                {/* Closing Statement */}
+                <p className="font-crimson text-xs text-navy-dark/50 italic text-center pt-2 border-t border-gold/15">
+                  {researchData.research_origins?.closing_statement || 'No vague spirituality. No unsourced claims. Every practice has a name, a date, an archive.'}
+                </p>
               </div>
             </div>
           )}

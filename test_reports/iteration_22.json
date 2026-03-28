@@ -1,0 +1,121 @@
+{
+  "summary": "Research Origins feature fully verified. Backend async job system returns research_origins with all spec fields (research_table, closing_statement, ethical_statement, suggested_further_reading). Frontend renders research section INSTANTLY (<1 second) for existing spells using legacy extraction from sources/blocks.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_research_origins_v2.py",
+    "/app/test_reports/pytest/pytest_research_origins_v2.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [],
+  "updated_files": [
+    "/app/backend/tests/test_research_origins_v2.py"
+  ],
+  "success_rate": {
+    "backend": "100% (7/7 tests passed)",
+    "frontend": "100%"
+  },
+  "test_credentials": "TheresaTayler@me.com / NinaROck1!",
+  "seed_data_creation": "None",
+  "retest_needed": false,
+  "main_agent_can_self_test": false,
+  "context_for_next_testing_agent": "Research Origins feature is fully working. V3 async spell job system (POST /api/ai/generate-spell-job, GET /api/ai/spell-job/{job_id}) returns research_origins with all new spec fields. Frontend GrimoirePage extracts research from legacy spells (sources, blocks, evidence_card, lore_vignette) for instant display. 52 spells in grimoire, all have extractable data.",
+  "test_results": {
+    "backend_api_tests": [
+      {
+        "test": "POST /api/ai/generate-spell-job",
+        "status": "PASS",
+        "notes": "Creates async job, returns job_id, status='pending', poll_url"
+      },
+      {
+        "test": "GET /api/ai/spell-job/{job_id} (polling)",
+        "status": "PASS",
+        "notes": "Returns status, progress percentage, current_stage (archivist/writer)"
+      },
+      {
+        "test": "GET /api/ai/spell-job/{job_id} (complete)",
+        "status": "PASS",
+        "notes": "Returns result with research_origins containing: research_mode, summary, guide_name, guide_section_title, suggested_further_reading, ethical_statement, research_table, closing_statement, key_takeaways, why_this_works_facts, practice_context, sources"
+      },
+      {
+        "test": "GET /api/grimoire/spells",
+        "status": "PASS",
+        "notes": "Returns 52 spells with spell_data containing sources and blocks for legacy extraction"
+      }
+    ],
+    "frontend_ui_tests": [
+      {
+        "test": "/my-grimoire page loads",
+        "status": "PASS",
+        "notes": "Shows 52 spells with VIEW buttons"
+      },
+      {
+        "test": "Clicking VIEW opens spell detail",
+        "status": "PASS",
+        "notes": "Spell detail view renders correctly with title, guide attribution, content blocks"
+      },
+      {
+        "test": "'Show Research & Origins' button visible",
+        "status": "PASS",
+        "notes": "Button found at bottom of spell detail"
+      },
+      {
+        "test": "Research section appears INSTANTLY",
+        "status": "PASS",
+        "notes": "Load time: 602ms (< 1 second) - no loading spinner"
+      },
+      {
+        "test": "Research section shows guide attribution",
+        "status": "PASS",
+        "notes": "Shows 'THERESA'S WISDOM' for Theresa guide"
+      },
+      {
+        "test": "Research section shows summary",
+        "status": "PASS",
+        "notes": "Ethical statement about protection magic displayed"
+      },
+      {
+        "test": "Research section shows 'For Further Reading'",
+        "status": "PASS",
+        "notes": "References section with source descriptions"
+      },
+      {
+        "test": "Research section shows 'Research Sources'",
+        "status": "PASS",
+        "notes": "Sources like 'Documents British folk magic practices for neighbor protection'"
+      },
+      {
+        "test": "Closing statement renders",
+        "status": "PASS",
+        "notes": "'No vague spirituality. No unsourced claims. Every practice has a name, a date, an archive.' found in page HTML"
+      }
+    ],
+    "research_origins_structure_verified": {
+      "research_mode": "spell_origins",
+      "summary": "present",
+      "guide_name": "present",
+      "guide_section_title": "present",
+      "suggested_further_reading": "array",
+      "ethical_statement": "present",
+      "research_table": "array with rows",
+      "closing_statement": "present",
+      "key_takeaways": "array",
+      "why_this_works_facts": "array",
+      "practice_context": "object with tradition_tags, time_period, region",
+      "sources": "array"
+    }
+  },
+  "integration_verification": {
+    "deepseek_archivist": "REAL - Used for research generation",
+    "claude_writer": "REAL - Used for spell writing",
+    "async_job_system": "WORKING - Jobs complete in ~90-115 seconds",
+    "mocked": false
+  }
+}

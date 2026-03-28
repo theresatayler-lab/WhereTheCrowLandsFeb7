@@ -986,9 +986,49 @@ def sanitize_for_prompt(text: str, max_length: int = 2000) -> str:
     return text.strip()
 
 
-def transform_research_packet_to_origins(research_packet: dict) -> dict:
+def transform_research_packet_to_origins(research_packet: dict, rich_research: dict = None) -> dict:
     """Transform archivist research_packet into research_origins format for the frontend.
-    This allows 'Show Research & Origins' to display instantly without a second API call."""
+    If rich_research (from parallel DeepSeek call) is available, use it for the full spec."""
+    if not research_packet and not rich_research:
+        return None
+    
+    # If we have rich research origins from the parallel generator, use it
+    if rich_research:
+        # Merge with basic archivist data for completeness
+        basic_sources = []
+        for s in (research_packet or {}).get('sources', []):
+            if isinstance(s, dict):
+                basic_sources.append({
+                    'id': s.get('source_id', ''),
+                    'author': s.get('author', ''),
+                    'title': s.get('work', ''),
+                    'year': s.get('year'),
+                    'quality_tier': s.get('quality_tier', 'folk_archive'),
+                    'url': s.get('url'),
+                    'notes': s.get('relevance', '')
+                })
+        
+        tc = (research_packet or {}).get('tradition_context', {})
+        return {
+            'research_mode': (research_packet or {}).get('research_mode', 'spell_origins'),
+            'summary': rich_research.get('opening_summary', (research_packet or {}).get('summary', '')),
+            'guide_name': rich_research.get('guide_name', ''),
+            'guide_section_title': rich_research.get('guide_section_title', ''),
+            'suggested_further_reading': rich_research.get('suggested_further_reading', []),
+            'ethical_statement': rich_research.get('ethical_statement', ''),
+            'research_table': rich_research.get('research_table', []),
+            'closing_statement': rich_research.get('closing_statement', 'No vague spirituality. No unsourced claims. Every practice has a name, a date, an archive.'),
+            'key_takeaways': [],  # Superseded by research_table
+            'why_this_works_facts': [],
+            'practice_context': {
+                'tradition_tags': tc.get('related_traditions', []),
+                'time_period': tc.get('time_period', ''),
+                'region': tc.get('geographic_origin', '')
+            },
+            'sources': basic_sources
+        }
+    
+    # Fallback: basic transformation without rich research
     if not research_packet:
         return None
     key_takeaways = []
@@ -5246,9 +5286,10 @@ async def generate_spell_v2_endpoint(request: Request, body: SpellRequestV2, use
         total_ms = int((time_module.time() - total_start) * 1000)
         metadata['timing']['total_ms'] = total_ms
         
-        # Extract archivist research and transform for instant frontend display
+        # Extract archivist research and rich research origins, transform for frontend
         research_packet = metadata.pop('research_packet', None)
-        research_origins = transform_research_packet_to_origins(research_packet)
+        rich_research = metadata.pop('rich_research_origins', None)
+        research_origins = transform_research_packet_to_origins(research_packet, rich_research)
         if research_origins:
             spell_output['research_origins'] = research_origins
         
@@ -5524,9 +5565,10 @@ async def generate_spell_v3_endpoint(request: Request, body: SpellRequestV3, use
         total_ms = int((time_module.time() - total_start) * 1000)
         metadata['timing']['total_ms'] = total_ms
         
-        # Extract archivist research and transform for instant frontend display
+        # Extract archivist research and rich research origins, transform for frontend
         research_packet = metadata.pop('research_packet', None)
-        research_origins = transform_research_packet_to_origins(research_packet)
+        rich_research = metadata.pop('rich_research_origins', None)
+        research_origins = transform_research_packet_to_origins(research_packet, rich_research)
         
         # Attach research_origins to spell output so it's saved with the spell
         if research_origins:
@@ -5773,12 +5815,22 @@ async def _generate_spell_background(job_id: str, request_data: dict, user_id: O
         total_ms = int((time_module.time() - total_start) * 1000)
         metadata['timing']['total_ms'] = total_ms
         
+        # Extract archivist research and rich research origins for the async job result
+        research_packet = metadata.pop('research_packet', None)
+        rich_research = metadata.pop('rich_research_origins', None)
+        research_origins = transform_research_packet_to_origins(research_packet, rich_research)
+        
+        # Attach to spell output so it gets saved with the spell
+        if research_origins:
+            spell_output['research_origins'] = research_origins
+        
         # Update job with completed result
         result = {
             'spell': spell_output,
             'archetype': archetype_info,
             'metadata': metadata,
             'belief_mode': belief_mode,
+            'research_origins': research_origins,
             'validation': {
                 'qa_passed': metadata.get('qa_passed', True),
                 'qa_report': metadata.get('qa_report', {})

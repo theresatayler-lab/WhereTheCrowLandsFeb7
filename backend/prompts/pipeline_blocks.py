@@ -954,6 +954,150 @@ def should_skip_planner(tier: str) -> bool:
     return get_tier_config(tier).get("skip_planner_llm", False)
 
 
+
+# ============================================================================
+# RESEARCH ORIGINS GENERATOR (Runs in parallel with Writer)
+# ============================================================================
+
+GUIDE_VOICE_MAP = {
+    "shigg": {"name": "Shigg", "focus": "hearth magic, grounding, domestic practice", "tone": "Practical, warm, rooted in everyday survival"},
+    "shiggy": {"name": "Shigg", "focus": "hearth magic, grounding, domestic practice", "tone": "Practical, warm, rooted in everyday survival"},
+    "cathleen": {"name": "Cathleen", "focus": "protection, boundaries, sovereignty", "tone": "Direct, unflinching, honoring both light and shadow"},
+    "kathleen": {"name": "Cathleen", "focus": "protection, boundaries, sovereignty", "tone": "Direct, unflinching, honoring both light and shadow"},
+    "katherine": {"name": "Katherine", "focus": "truth-seeking, documentation, pattern recognition", "tone": "Scholarly, precise, emphasizing verification"},
+    "theresa": {"name": "Theresa", "focus": "ancestral patterns, genealogy, inherited wisdom", "tone": "Investigative, connecting lineages across time"},
+    "brenda": {"name": "Brenda", "focus": "memory, legacy, multigenerational knowledge", "tone": "Reverent, archival, honoring the recorded & unrecorded"},
+}
+
+RESEARCH_ORIGINS_PROMPT = """You are generating a structured Research & Origins section for a spell/ritual working.
+
+CORE PRINCIPLE: No vague spirituality. No unsourced claims. Every practice has a name, a date, an archive.
+
+Given the archivist's research data about this working, generate a complete Research & Origins section in JSON.
+
+USE THREE CONFIDENCE TIERS:
+- VERIFIED: Named credible source (manuscript, archive, peer-reviewed study)
+- REPORTED: Repeated across multiple sources but no single primary cited
+- INFERENCE: Logical reasoning from documented practices
+
+OUTPUT THIS EXACT JSON STRUCTURE:
+{
+  "guide_name": "The guide's name",
+  "guide_section_title": "[Guide Name]'s Wisdom",
+  "opening_summary": "This working draws on N core tradition(s) with N documented reference(s). Every element is grounded in historical manuscript, archaeological evidence, or verified folklore practice.",
+  "suggested_further_reading": [
+    {
+      "tradition_name": "Name of the tradition (e.g., Irish Monastic Protection Prayers)",
+      "description": "2 sentences explaining what this tradition covers and why it matters to the spell"
+    }
+  ],
+  "ethical_statement": "This working seeks [goal], not [what it does NOT do]. You're [positive action]—both ethical responses to [context].",
+  "research_table": [
+    {
+      "element": "Ritual element name (e.g., Lorica, Salt Boundaries)",
+      "origin": "Where & when (e.g., Ireland, 6th-8th century)",
+      "tradition": "Category (e.g., Monastic protection prayer)",
+      "direct_source": "Specific manuscript, archive, or evidence type with dates",
+      "key_links": [
+        {"label": "Link text", "url": "https://..."}
+      ],
+      "confidence_tier": "VERIFIED | REPORTED | INFERENCE"
+    }
+  ],
+  "closing_statement": "No vague spirituality. No unsourced claims. Every practice has a name, a date, an archive."
+}
+
+RULES:
+- suggested_further_reading: One box per core tradition (5-7 typical). Each must have a SPECIFIC tradition name and a meaningful 2-sentence description.
+- research_table: One row per ritual element (5-7 rows). Each MUST have specific manuscript/archive names with dates.
+- key_links: Provide 1-2 REAL URLs per row. Prefer Wikipedia, academic archives, British Library, museum sites, folklore societies. If uncertain about a URL, use the most likely Wikipedia article URL.
+- ethical_statement: Customize to the spell's actual intent. Never generic.
+- opening_summary: Count actual traditions and references accurately.
+- DO NOT use placeholder text like "Reference" or "Source 1".
+- DO NOT invent manuscripts or dates. If uncertain, use REPORTED or INFERENCE tier.
+- All output must be strict JSON."""
+
+
+async def generate_rich_research_origins(
+    research_packet: dict,
+    spell_spec: dict,
+    guide_id: str
+) -> Optional[dict]:
+    """
+    Generate a rich, structured Research & Origins section using DeepSeek.
+    Runs IN PARALLEL with the writer stage for zero additional latency.
+    """
+    start = time.time()
+    
+    guide_info = GUIDE_VOICE_MAP.get(guide_id, GUIDE_VOICE_MAP.get("shigg"))
+    intention = spell_spec.get("user_query", spell_spec.get("intention", ""))
+    
+    # Build context from research_packet
+    facts_summary = []
+    for f in research_packet.get("facts", []):
+        if isinstance(f, dict):
+            facts_summary.append(f"- [{f.get('claim_type','folklore').upper()}] {f.get('claim','')}")
+    
+    sources_summary = []
+    for s in research_packet.get("sources", []):
+        if isinstance(s, dict):
+            src_str = f"- {s.get('author','')} - {s.get('work','')} ({s.get('year','')}) [{s.get('quality_tier','')}]"
+            if s.get("url"):
+                src_str += f" URL: {s['url']}"
+            sources_summary.append(src_str)
+    
+    tc = research_packet.get("tradition_context", {})
+    
+    user_message = f"""SPELL CONTEXT:
+- Intention: {intention}
+- Guide: {guide_info['name']} (Focus: {guide_info['focus']})
+- Primary tradition: {tc.get('primary_tradition', 'folk_magic')}
+- Related traditions: {', '.join(tc.get('related_traditions', []))}
+- Region: {tc.get('geographic_origin', 'British Isles')}
+- Time period: {tc.get('time_period', 'Traditional')}
+
+ARCHIVIST RESEARCH FINDINGS:
+Summary: {research_packet.get('summary', '')}
+
+Key Facts:
+{chr(10).join(facts_summary) or 'No specific facts available'}
+
+Sources Found:
+{chr(10).join(sources_summary) or 'No specific sources available'}
+
+Generate the complete Research & Origins section. Be specific about manuscripts, dates, and traditions. Provide real Wikipedia/archive URLs where confident."""
+
+    try:
+        from research_service import get_deepseek_client, DEEPSEEK_MODEL
+        client = get_deepseek_client()
+        if not client:
+            logger.warning("[RESEARCH_ORIGINS] DeepSeek not configured")
+            return None
+        
+        response = await client.chat.completions.create(
+            model=DEEPSEEK_MODEL,
+            messages=[
+                {"role": "system", "content": RESEARCH_ORIGINS_PROMPT},
+                {"role": "user", "content": user_message}
+            ],
+            temperature=0.5,
+            max_tokens=3000,
+            response_format={"type": "json_object"}
+        )
+        
+        result = json.loads(response.choices[0].message.content)
+        
+        elapsed_ms = int((time.time() - start) * 1000)
+        logger.info(f"[RESEARCH_ORIGINS] Generated in {elapsed_ms}ms: {len(result.get('research_table', []))} table rows, {len(result.get('suggested_further_reading', []))} reading boxes")
+        
+        return result
+        
+    except Exception as e:
+        logger.error(f"[RESEARCH_ORIGINS] Generation failed: {e}")
+        return None
+
+
+
 # ============================================================================
 # BLOCKS SPELL PIPELINE CLASS
 # ============================================================================
@@ -1029,16 +1173,39 @@ class BlocksSpellPipeline:
             metadata["planner_mode"] = planner_meta.get("planner_mode", "unknown")
             metadata["stages_completed"].append("planner")
             
-            # Stage 3: Writer
+            # Stage 3: Writer + Research Origins Generator (PARALLEL)
             if on_stage_change:
                 await on_stage_change("writer")
-            spell_output, writer_meta = await run_block_writer(
+            
+            import asyncio
+            # Run writer and research origins generator concurrently
+            writer_task = run_block_writer(
                 spell_spec, guide_config, research_packet, plan,
                 belief_mode, self.anthropic_client, tier
             )
+            research_origins_task = generate_rich_research_origins(
+                research_packet, spell_spec, guide_id
+            )
+            
+            (spell_output, writer_meta), rich_research = await asyncio.gather(
+                writer_task, research_origins_task, return_exceptions=True
+            )
+            
+            # Handle exceptions from gather
+            if isinstance(spell_output, Exception):
+                raise spell_output
+            if isinstance(rich_research, Exception):
+                logger.warning(f"[RESEARCH_ORIGINS] Failed in parallel: {rich_research}")
+                rich_research = None
+            
             metadata["timing"]["writer_ms"] = writer_meta.get("writer_ms", 0)
             metadata["writer_model"] = writer_meta.get("writer_model", "unknown")
             metadata["stages_completed"].append("writer")
+            
+            # Attach rich research origins to metadata
+            if rich_research:
+                metadata["rich_research_origins"] = rich_research
+                metadata["stages_completed"].append("research_origins")
             
             # Stage 4: QA validation
             if on_stage_change:
