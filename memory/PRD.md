@@ -92,10 +92,11 @@ Build a spell-generation application, "Where The Crowlands," with a highly speci
   - Archivist research data now captured during spell generation and attached to spell output
   - V2, V3, and Personalized spell endpoints all return `research_origins` with the spell
   - `research_origins` saved to Grimoire with the spell for instant retrieval later
-  - Frontend checks for pre-attached data first (instant), falls back to API for older spells
+  - **Existing spells (51+):** Frontend extracts research from embedded spell data (sources, evidence_card, lore_vignette, further_reading blocks) — instant, no API call
+  - Only falls back to slow API for spells with zero embedded data
   - Fixed `SavedSpellResponse` model and `researchAPI.combined` auth header
   - Covers all spell creation flows across the entire app
-  - Tested: 100% pass rate (backend + frontend)
+  - Tested: 100% pass rate (backend + frontend), verified instant display on existing spells
 
 ## Prioritized Backlog
 

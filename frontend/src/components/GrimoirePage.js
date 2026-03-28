@@ -914,13 +914,11 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
   const fetchResearchOrigins = async () => {
     if (researchData) return; // Already loaded
 
-    // Check if research_origins is already attached to the spell (from spell generation)
+    // Priority 1: Check for pre-attached research_origins (from spell generation pipeline)
     const preAttached = spell?.research_origins 
-      || spell?.spell_data?.research_origins
-      || (typeof spell === 'object' && spell.research_origins);
+      || spell?.spell_data?.research_origins;
     
     if (preAttached) {
-      // Use pre-attached data instantly — no API call needed
       setResearchData({
         research_origins: preAttached,
         persona_used: archetype?.name || 'Guide'
@@ -928,12 +926,22 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
       return;
     }
 
-    // Fallback: fetch from API for older spells without pre-attached research
-    setIsLoadingResearch(true);
+    // Priority 2: Extract research from existing spell content (sources, blocks)
+    // This covers all 51+ older saved spells — instant, no API call
+    const spellData = spell?.spell_data || spell || {};
+    const extracted = extractResearchFromSpellData(spellData);
+    if (extracted) {
+      setResearchData({
+        research_origins: extracted,
+        persona_used: archetype?.name || 'Guide'
+      });
+      return;
+    }
 
+    // Priority 3 (last resort): Fetch from API — slow path for spells with no embedded data
+    setIsLoadingResearch(true);
     try {
       const spellContext = `Spell: "${spell.title}". Intention: ${spell.introduction || spell.scenario || 'self-improvement'}`;
-      // Normalize archetype ID for research API (backend uses shigg, not shiggy)
       const rawId = archetype?.id || spell?.guide_id || 'shigg';
       const idMap = { 'shiggy': 'shigg', 'kathleen': 'cathleen' };
       const personaId = idMap[rawId] || rawId;
@@ -944,7 +952,6 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
         'gentle',
         spellContext
       );
-
       setResearchData(result);
     } catch (error) {
       console.error('Research fetch error:', error);
@@ -952,6 +959,106 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
     } finally {
       setIsLoadingResearch(false);
     }
+  };
+
+  // Extract research_origins from existing spell data (sources, lore_vignette, evidence_card, further_reading blocks)
+  const extractResearchFromSpellData = (spellData) => {
+    const sources = spellData.sources || [];
+    const blocks = spellData.blocks || [];
+    
+    const keyTakeaways = [];
+    const whyThisWorksFacts = [];
+    const extractedSources = [];
+    
+    // Extract from evidence_card blocks (known/likely/lore facts)
+    blocks.forEach(block => {
+      const bt = block.block_type || block.type || '';
+      const content = block.content || {};
+      
+      if (bt === 'evidence_card' && typeof content === 'object') {
+        (content.known || []).forEach(text => {
+          if (typeof text === 'string' && text.trim()) {
+            keyTakeaways.push({
+              text: text.replace(/^KNOWN:\s*/i, ''),
+              claim_flag: 'historical',
+              confidence: 'high'
+            });
+          }
+        });
+        (content.likely || []).forEach(text => {
+          if (typeof text === 'string' && text.trim()) {
+            keyTakeaways.push({
+              text: text.replace(/^LIKELY:\s*/i, ''),
+              claim_flag: 'folklore',
+              confidence: 'medium'
+            });
+          }
+        });
+        (content.lore || []).forEach(text => {
+          if (typeof text === 'string' && text.trim()) {
+            keyTakeaways.push({
+              text: text.replace(/^LORE:\s*/i, ''),
+              claim_flag: 'lore',
+              confidence: 'low'
+            });
+          }
+        });
+      }
+      
+      // Extract from lore_vignette blocks
+      if (bt === 'lore_vignette' && typeof content === 'object' && content.narrative) {
+        whyThisWorksFacts.push({
+          claim: content.narrative,
+          claim_flag: 'folklore',
+          confidence: 'medium'
+        });
+      }
+    });
+    
+    // Extract from sources field
+    sources.forEach(s => {
+      if (typeof s === 'object') {
+        extractedSources.push({
+          id: s.source_id || '',
+          author: s.author || '',
+          title: s.title || s.source_id || '',
+          quality_tier: s.type || 'historical',
+          notes: s.relevance || ''
+        });
+      }
+    });
+    
+    // Extract from further_reading blocks
+    blocks.forEach(block => {
+      const bt = block.block_type || block.type || '';
+      const content = block.content || {};
+      if (bt === 'further_reading' && content.recommendations) {
+        content.recommendations.forEach(rec => {
+          if (typeof rec === 'object') {
+            extractedSources.push({
+              id: '',
+              author: rec.author || '',
+              title: rec.title || 'Reference',
+              notes: rec.guide_note || rec.specific_passage || '',
+              url: rec.url || null
+            });
+          }
+        });
+      }
+    });
+    
+    // Only return if we found something meaningful
+    if (keyTakeaways.length === 0 && whyThisWorksFacts.length === 0 && extractedSources.length === 0) {
+      return null;
+    }
+    
+    return {
+      research_mode: 'spell_origins',
+      summary: `This working draws on ${extractedSources.length} source(s) with ${keyTakeaways.length} documented reference(s).`,
+      key_takeaways: keyTakeaways,
+      why_this_works_facts: whyThisWorksFacts,
+      sources: extractedSources
+    };
   };
 
 
