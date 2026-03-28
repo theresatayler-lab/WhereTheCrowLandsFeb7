@@ -5,6 +5,7 @@ import json
 import logging
 import time
 import re
+import asyncio
 from typing import Dict, Any, Optional, Tuple
 
 from .planner_blocks import (
@@ -1177,7 +1178,6 @@ class BlocksSpellPipeline:
             if on_stage_change:
                 await on_stage_change("writer")
             
-            import asyncio
             # Run writer and research origins generator concurrently
             writer_task = run_block_writer(
                 spell_spec, guide_config, research_packet, plan,
@@ -1187,16 +1187,19 @@ class BlocksSpellPipeline:
                 research_packet, spell_spec, guide_id
             )
             
-            (spell_output, writer_meta), rich_research = await asyncio.gather(
+            results = await asyncio.gather(
                 writer_task, research_origins_task, return_exceptions=True
             )
+            writer_result, rich_research = results
             
-            # Handle exceptions from gather
-            if isinstance(spell_output, Exception):
-                raise spell_output
+            # Handle exceptions safely before destructuring
+            if isinstance(writer_result, Exception):
+                raise writer_result
             if isinstance(rich_research, Exception):
                 logger.warning(f"[RESEARCH_ORIGINS] Failed in parallel: {rich_research}")
                 rich_research = None
+            
+            spell_output, writer_meta = writer_result
             
             metadata["timing"]["writer_ms"] = writer_meta.get("writer_ms", 0)
             metadata["writer_model"] = writer_meta.get("writer_model", "unknown")
