@@ -18,7 +18,7 @@ import bcrypt
 import jwt
 import asyncio
 import anthropic
-from emergentintegrations.payments.stripe.checkout import StripeCheckout, CheckoutSessionResponse, CheckoutStatusResponse, CheckoutSessionRequest
+import stripe as stripe_sdk  # Direct Stripe SDK — no Emergent dependency
 import base64
 from katherine_spells import KATHERINE_SAMPLE_SPELLS, seed_katherine_spells
 from cathleen_spells import CATHLEEN_SAMPLE_SPELLS, seed_cathleen_spells
@@ -4756,31 +4756,34 @@ async def generate_image(request: Request, body: ImageGenerationRequest):
         # Build the full prompt with archetype styling
         full_prompt = f"{archetype_style}, {body.prompt}, mystical ritual scene, highly detailed, no text or words"
         
-        # Use Gemini Nano Banana for real image generation
-        from emergentintegrations.llm.chat import LlmChat, UserMessage
-        
-        emergent_key = os.environ.get('EMERGENT_LLM_KEY')
-        if not emergent_key:
-            raise HTTPException(status_code=500, detail='Image generation not configured')
-        
-        session_id = f"img-gen-{uuid.uuid4().hex[:12]}"
-        chat = LlmChat(
-            api_key=emergent_key,
-            session_id=session_id,
-            system_message="You are an expert mystical image generator. Generate the requested image without any text or words in the image."
+        # Use Google Gemini directly (YOUR GOOGLE_API_KEY)
+        from google import genai
+        from google.genai import types
+        import base64 as b64
+
+        api_key = os.environ.get('GOOGLE_API_KEY')
+        if not api_key:
+            raise HTTPException(status_code=500, detail='Image generation not configured — set GOOGLE_API_KEY')
+
+        client = genai.Client(api_key=api_key)
+        response = client.models.generate_content(
+            model="gemini-2.0-flash-exp",
+            contents=f"Generate this image: {full_prompt}",
+            config=types.GenerateContentConfig(
+                response_modalities=["TEXT", "IMAGE"],
+            ),
         )
-        chat.with_model("gemini", "gemini-3-pro-image-preview").with_params(modalities=["image", "text"])
-        
-        msg = UserMessage(text=f"Generate this image: {full_prompt}")
-        text_response, images = await chat.send_message_multimodal_response(msg)
-        
-        if images and len(images) > 0:
-            image_data = images[0]['data']  # Already base64
-            logging.info(f"[GEMINI] Image generated for archetype={body.archetype}, data_len={len(image_data[:10])}...")
-            return {'image_base64': image_data}
-        else:
-            logging.warning(f"[GEMINI] No image returned for prompt")
-            raise HTTPException(status_code=500, detail='No image generated')
+
+        # Extract image from response
+        if response.candidates and response.candidates[0].content.parts:
+            for part in response.candidates[0].content.parts:
+                if part.inline_data and part.inline_data.mime_type.startswith("image/"):
+                    image_data = b64.b64encode(part.inline_data.data).decode("utf-8")
+                    logging.info(f"[GEMINI] Image generated for archetype={body.archetype}")
+                    return {'image_base64': image_data}
+
+        logging.warning(f"[GEMINI] No image returned for prompt")
+        raise HTTPException(status_code=500, detail='No image generated')
     except HTTPException:
         raise
     except Exception as e:
@@ -6458,20 +6461,18 @@ class CreateCheckoutRequest(BaseModel):
 
 @api_router.post('/stripe/create-checkout')
 async def create_stripe_checkout(request: CreateCheckoutRequest, user = Depends(get_current_user)):
-    """Create a Stripe checkout session for yearly subscription"""
+    """Create a Stripe checkout session for yearly subscription — direct SDK"""
     try:
-        # Initialize Stripe with webhook URL
-        webhook_url = f"{request.origin_url}/api/webhook/stripe"
-        stripe_checkout = StripeCheckout(api_key=STRIPE_API_KEY, webhook_url=webhook_url)
-        
+        stripe_sdk.api_key = os.environ.get('STRIPE_SECRET_KEY') or os.environ.get('STRIPE_API_KEY')
+
         # Fixed yearly subscription: $19.00/year
-        amount = 19.00
+        amount = 1900  # cents
         currency = "usd"
-        
+
         # Success and cancel URLs
         success_url = f"{request.origin_url}/payment-success?session_id={{CHECKOUT_SESSION_ID}}"
         cancel_url = f"{request.origin_url}/upgrade"
-        
+
         # Metadata to identify the user
         metadata = {
             'user_id': user['id'],
@@ -6479,83 +6480,90 @@ async def create_stripe_checkout(request: CreateCheckoutRequest, user = Depends(
             'subscription_type': 'yearly',
             'plan': 'pro'
         }
-        
-        # Create checkout session
-        checkout_request = CheckoutSessionRequest(
-            amount=amount,
-            currency=currency,
+
+        session = stripe_sdk.checkout.Session.create(
+            payment_method_types=['card'],
+            line_items=[{
+                'price_data': {
+                    'currency': currency,
+                    'product_data': {
+                        'name': 'Crowlands PRO - Yearly',
+                        'description': 'Full access to all guides, unlimited spells, grimoire saving',
+                    },
+                    'unit_amount': amount,
+                },
+                'quantity': 1,
+            }],
+            mode='payment',
             success_url=success_url,
             cancel_url=cancel_url,
-            metadata=metadata
+            metadata=metadata,
         )
-        
-        session = await stripe_checkout.create_checkout_session(checkout_request)
-        
+
         # Create payment transaction record
         transaction = {
             'id': str(uuid.uuid4()),
-            'session_id': session.session_id,
+            'session_id': session.id,
             'user_id': user['id'],
             'user_email': user['email'],
-            'amount': amount,
+            'amount': 19.00,
             'currency': currency,
             'metadata': metadata,
             'payment_status': 'pending',
             'status': 'initiated',
             'created_at': datetime.now(timezone.utc).isoformat()
         }
-        
+
         await db.payment_transactions.insert_one(transaction)
-        
+
         return {
             'checkout_url': session.url,
-            'session_id': session.session_id
+            'session_id': session.id
         }
-        
+
     except Exception as e:
         logging.error(f'Stripe checkout error: {str(e)}')
         raise HTTPException(status_code=500, detail=f'Failed to create checkout session: {str(e)}')
 
 @api_router.get('/stripe/checkout-status/{session_id}')
 async def get_checkout_status(session_id: str, user = Depends(get_current_user)):
-    """Check the status of a Stripe checkout session"""
+    """Check the status of a Stripe checkout session — direct SDK"""
     try:
-        # Initialize Stripe (webhook URL not needed for status check)
-        stripe_checkout = StripeCheckout(api_key=STRIPE_API_KEY, webhook_url="")
-        
-        # Get status from Stripe
-        status_response: CheckoutStatusResponse = await stripe_checkout.get_checkout_status(session_id)
-        
+        stripe_sdk.api_key = os.environ.get('STRIPE_SECRET_KEY') or os.environ.get('STRIPE_API_KEY')
+
+        # Retrieve session directly from Stripe
+        session = stripe_sdk.checkout.Session.retrieve(session_id)
+
         # Find transaction in database
         transaction = await db.payment_transactions.find_one({'session_id': session_id}, {'_id': 0})
-        
+
         if not transaction:
             raise HTTPException(status_code=404, detail='Transaction not found')
-        
+
         # Check if we've already processed this payment
         if transaction.get('payment_status') == 'paid' and transaction.get('processed'):
             return {
-                'status': status_response.status,
-                'payment_status': status_response.payment_status,
+                'status': session.status,
+                'payment_status': session.payment_status,
                 'already_processed': True
             }
-        
+
         # Update transaction status
         await db.payment_transactions.update_one(
             {'session_id': session_id},
             {
                 '$set': {
-                    'status': status_response.status,
-                    'payment_status': status_response.payment_status,
+                    'status': session.status,
+                    'payment_status': session.payment_status,
                     'updated_at': datetime.now(timezone.utc).isoformat()
                 }
             }
         )
-        
+
         # If payment succeeded, upgrade the user
-        if status_response.payment_status == 'paid' and not transaction.get('processed'):
+        if session.payment_status == 'paid' and not transaction.get('processed'):
             current_time = datetime.now(timezone.utc)
-            
+
             # Upgrade user to paid tier
             await db.users.update_one(
                 {'id': transaction['user_id']},
@@ -6566,53 +6574,61 @@ async def get_checkout_status(session_id: str, user = Depends(get_current_user))
                         'subscription_start': current_time.isoformat(),
                         'subscription_end': (current_time + timedelta(days=365)).isoformat(),
                         'upgraded_at': current_time.isoformat(),
-                        'stripe_customer_id': status_response.metadata.get('stripe_customer_id'),
+                        'stripe_customer_id': (session.metadata or {}).get('stripe_customer_id'),
                         'stripe_subscription_id': session_id
                     }
                 }
             )
-            
+
             # Mark transaction as processed
             await db.payment_transactions.update_one(
                 {'session_id': session_id},
                 {'$set': {'processed': True, 'processed_at': current_time.isoformat()}}
             )
-        
+
         return {
-            'status': status_response.status,
-            'payment_status': status_response.payment_status,
-            'amount_total': status_response.amount_total,
-            'currency': status_response.currency
+            'status': session.status,
+            'payment_status': session.payment_status,
+            'amount_total': session.amount_total,
+            'currency': session.currency
         }
-        
+
     except Exception as e:
         logging.error(f'Checkout status error: {str(e)}')
         raise HTTPException(status_code=500, detail=f'Failed to check status: {str(e)}')
 
 @api_router.post('/webhook/stripe')
 async def stripe_webhook(request: Request):
-    """Handle Stripe webhook events"""
+    """Handle Stripe webhook events — direct SDK"""
     try:
         # Get raw body and signature
         body = await request.body()
         signature = request.headers.get('Stripe-Signature', '')
-        
-        # Initialize Stripe
-        stripe_checkout = StripeCheckout(api_key=STRIPE_API_KEY, webhook_url="")
-        
-        # Handle webhook
-        webhook_response = await stripe_checkout.handle_webhook(body, signature)
-        
+
+        stripe_sdk.api_key = os.environ.get('STRIPE_SECRET_KEY') or os.environ.get('STRIPE_API_KEY')
+        webhook_secret = os.environ.get('STRIPE_WEBHOOK_SECRET', '')
+
+        # Verify and parse the webhook event
+        if webhook_secret and signature:
+            event = stripe_sdk.Webhook.construct_event(body, signature, webhook_secret)
+        else:
+            # Fallback: parse without signature verification (dev/test mode)
+            import json as json_mod
+            event = json_mod.loads(body)
+
+        event_type = event.get('type') if isinstance(event, dict) else event.type
+
         # Process based on event type
-        if webhook_response.event_type == 'checkout.session.completed':
-            session_id = webhook_response.session_id
-            
+        if event_type == 'checkout.session.completed':
+            session_data = event.get('data', {}).get('object', {}) if isinstance(event, dict) else event.data.object
+            session_id = session_data.get('id') if isinstance(session_data, dict) else session_data.id
+
             # Find transaction
             transaction = await db.payment_transactions.find_one({'session_id': session_id}, {'_id': 0})
-            
+
             if transaction and not transaction.get('processed'):
                 current_time = datetime.now(timezone.utc)
-                
+
                 # Upgrade user
                 await db.users.update_one(
                     {'id': transaction['user_id']},
@@ -6626,7 +6642,7 @@ async def stripe_webhook(request: Request):
                         }
                     }
                 )
-                
+
                 # Mark as processed
                 await db.payment_transactions.update_one(
                     {'session_id': session_id},
@@ -6638,9 +6654,9 @@ async def stripe_webhook(request: Request):
                         }
                     }
                 )
-        
-        return {'status': 'success', 'event_type': webhook_response.event_type}
-        
+
+        return {'status': 'success', 'event_type': event_type}
+
     except Exception as e:
         logging.error(f'Webhook error: {str(e)}')
         raise HTTPException(status_code=500, detail=safe_error_detail(e, "payment webhook"))
