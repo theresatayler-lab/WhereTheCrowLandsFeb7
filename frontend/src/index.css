@@ -243,7 +243,7 @@ code {
     content: '';
     position: absolute;
     inset: 0;
-    background-image: url('https://customer-assets.emergentagent.com/job_mystic-grimoire-1/artifacts/jcxzlb20_SiteOverallCorners%20and%20any%20borders.png');
+    background-image: url('/images/borders/site-corners.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -260,7 +260,7 @@ code {
     content: '';
     position: absolute;
     inset: 0;
-    background-image: url('https://customer-assets.emergentagent.com/job_mystic-grimoire-1/artifacts/12ds6wfx_CathleenBorder.png');
+    background-image: url('/images/borders/cathleen-border-alt.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -276,7 +276,7 @@ code {
     content: '';
     position: absolute;
     inset: 0;
-    background-image: url('https://customer-assets.emergentagent.com/job_mystic-grimoire-1/artifacts/85szfipf_KateBorder.png');
+    background-image: url('/images/borders/kate-border-alt.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -292,7 +292,7 @@ code {
     content: '';
     position: absolute;
     inset: 0;
-    background-image: url('https://customer-assets.emergentagent.com/job_mystic-grimoire-1/artifacts/8jgu6o97_TheresaBorder.png');
+    background-image: url('/images/borders/theresa-border-alt.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;

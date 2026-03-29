@@ -30,8 +30,9 @@ def get_provider_status() -> Dict[str, Any]:
     status = get_llm_status()
     return {
         "anthropic_configured": status.get("anthropic_configured", False),
-        "emergent_configured": status.get("emergent_key_configured", False),
         "deepseek_configured": status.get("deepseek_configured", False),
+        "google_configured": status.get("google_configured", False),
+        "openai_configured": status.get("openai_configured", False),
         "deepseek_base_url": DEEPSEEK_BASE_URL,
         "deepseek_model": DEEPSEEK_MODEL,
         "anthropic_model": ANTHROPIC_MODEL,

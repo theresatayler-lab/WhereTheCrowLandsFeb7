@@ -10,7 +10,7 @@ import statistics
 from typing import Dict, List, Any
 import httpx
 
-API_URL = "https://env-refresh-deploy.preview.emergentagent.com"
+API_URL = "http://localhost:8000"
 
 # Quality benchmarks based on historical GPT-4o performance
 QUALITY_BENCHMARKS = {

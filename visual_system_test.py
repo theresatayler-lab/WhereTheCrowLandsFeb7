@@ -10,7 +10,7 @@ import json
 from datetime import datetime
 
 class VisualSystemTester:
-    def __init__(self, base_url="https://env-refresh-deploy.preview.emergentagent.com"):
+    def __init__(self, base_url="http://localhost:8000"):
         self.base_url = base_url
         self.token = None
         self.tests_run = 0

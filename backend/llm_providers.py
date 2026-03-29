@@ -130,7 +130,7 @@ async def chat_completion(
                 raise ValueError("DeepSeek not configured")
 
             # Extract extra kwargs excluding reserved keys
-            reserved_keys = {"provider", "model", "temperature", "max_tokens", "use_emergent_key"}
+            reserved_keys = {"provider", "model", "temperature", "max_tokens"}
             extra_kwargs = {k: v for k, v in config.items() if k not in reserved_keys}
 
             response = await client.chat.completions.create(

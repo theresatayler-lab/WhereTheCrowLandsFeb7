@@ -7,7 +7,7 @@ import requests
 import json
 
 def quick_spell_test():
-    base_url = "https://env-refresh-deploy.preview.emergentagent.com"
+    base_url = "http://localhost:8000"
     
     print("🧙‍♀️ Quick Spell Generation Test")
     print("=" * 40)
