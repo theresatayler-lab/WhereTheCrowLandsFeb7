@@ -5,8 +5,10 @@
 ```
 STACK:        React 18 + FastAPI + MongoDB + Multi-LLM
 GUIDES:       Shigg (amber), Cathleen (teal), Katherine (violet), Theresa (investigator), Brenda (chronicler)
-AI ROUTING:   DeepSeek (research) → Claude Sonnet (writing) → GPT-4o (fallback)
+AI TEXT:      DeepSeek (research) → Claude Sonnet (writing) → direct Anthropic/DeepSeek clients
+AI IMAGES:    Gemini (headers) → OpenAI GPT Image 1 (tarot/sigils) → Static PNGs (dividers)
 COLORS:       Navy (#0a1628), Cream (#F3EFE8), Gold (#C8A44D), Crimson (#8b2232)
+INDEPENDENCE: Site uses YOUR API keys only — zero Emergent dependencies
 ```
 
 ---
@@ -21,7 +23,7 @@ COLORS:       Navy (#0a1628), Cream (#F3EFE8), Gold (#C8A44D), Crimson (#8b2232)
 
 ---
 
-## The Three Guides (AI Personas)
+## The Five Guides (AI Personas)
 
 **CRITICAL: Never mix guide characteristics. Each has distinct voice, colors, and taboos.**
 
@@ -73,9 +75,11 @@ COLORS:       Navy (#0a1628), Cream (#F3EFE8), Gold (#C8A44D), Crimson (#8b2232)
 ```
 Frontend:  React 18 + Tailwind CSS + Shadcn/UI
 Backend:   FastAPI (Python) + Motor (async MongoDB)
-Database:  MongoDB + GridFS (for spell images)
-AI:        Multi-model orchestration (see below)
-Hosting:   Emergent Platform (Kubernetes)
+Database:  MongoDB Atlas + GridFS (for spell images)
+AI Text:   Anthropic Claude + DeepSeek (direct SDKs, YOUR keys)
+AI Images: Google Gemini + OpenAI GPT Image 1 (direct SDKs, YOUR keys)
+Payments:  Stripe (direct SDK, YOUR key)
+Hosting:   TBD (migrating from Emergent to Railway/Render)
 ```
 
 ### AI Model Architecture
@@ -105,14 +109,27 @@ Stage 3: WRITER (Claude)       → Full content in guide voice
 Stage 4: QA (Programmatic)     → Validation, auto-rewrite if fails
 ```
 
+### Image Generation Pipeline (Per-Asset Routing)
+```
+Headers   → Google Gemini (GOOGLE_API_KEY)    — atmospheric scenes, fast
+Tarot     → OpenAI GPT Image 1 (OPENAI_API_KEY) — precise symmetry
+Sigils    → OpenAI GPT Image 1 (OPENAI_API_KEY) — clean geometry
+Dividers  → Static PNGs                       — instant, pre-made
+```
+
+Style is driven by `image_style_matrix.py`:
+- 5 guides x 3 emotional registers (gentle/practical/intense) = 15 artist styles
+- 10 working categories (protection, healing, clarity, etc.) = visual modifiers
+- Spell-specific tokens extracted from content = unique per spell
+- Combined via `build_style_layer()` in spell_prompts.py
+
 ---
 
 ## Directory Structure
 
 ```
-/app/
 ├── backend/
-│   ├── server.py              # Main FastAPI app (4000+ lines)
+│   ├── server.py              # Main FastAPI app (6600+ lines)
 │   ├── prompts/               # AI prompt system
 │   │   ├── pipeline_blocks.py # V3 4-stage pipeline
 │   │   ├── archivist.py       # Research prompts
@@ -121,8 +138,11 @@ Stage 4: QA (Programmatic)     → Validation, auto-rewrite if fails
 │   │   ├── qa_blocks.py       # Validation
 │   │   └── belief_modes.py    # Secular/Spiritual/Practitioner
 │   ├── spell_tiers.py         # Tiered AI selection logic
-│   ├── llm_providers.py       # Multi-LLM abstraction
-│   ├── persona_config.py      # Guide configurations (3 guides)
+│   ├── llm_providers.py       # Multi-LLM abstraction (Anthropic + DeepSeek direct)
+│   ├── image_provider.py      # Multi-provider image generation (Gemini + OpenAI direct)
+│   ├── image_style_matrix.py  # Artist styles, category modifiers, quick spell visuals
+│   ├── spell_prompts.py       # Spell-specific image prompts + style layer integration
+│   ├── persona_config.py      # Guide configurations (5 guides)
 │   ├── timeline_service.py    # Timeline API
 │   ├── timeline_events_expanded.py  # 94 historical events
 │   └── .env                   # API keys (NEVER commit)
@@ -186,7 +206,10 @@ UI/Labels: Montserrat
 | Task | Files |
 |------|-------|
 | Spell generation | `prompts/pipeline_blocks.py`, `spell_tiers.py` |
+| Image generation | `image_provider.py`, `image_style_matrix.py`, `spell_prompts.py` |
 | Guide personas | `persona_config.py` |
+| LLM routing | `llm_providers.py` |
+| Payments | `server.py` (lines 6458+), direct `stripe` SDK |
 | Design components | `OrnateElements.js` |
 | Timeline | `Timeline.js`, `timeline_service.py` |
 | API client | `frontend/src/utils/api.js` |
@@ -198,14 +221,23 @@ UI/Labels: Montserrat
 
 ### Backend (.env)
 ```
-MONGO_URL=mongodb://...
+MONGO_URL=mongodb://...          # Your MongoDB Atlas cluster
 DB_NAME=webapp
 JWT_SECRET=...
-OPENAI_API_KEY=sk-...
-DEEPSEEK_API_KEY=sk-...
-ANTHROPIC_API_KEY=sk-ant-...
-STRIPE_API_KEY=sk_test_...
+ANTHROPIC_API_KEY=sk-ant-...     # All spell writing, guide voices
+DEEPSEEK_API_KEY=sk-...          # Research/archivist stage
+GOOGLE_API_KEY=AIza...           # Gemini image generation (headers, /ai-image)
+OPENAI_API_KEY=sk-proj-...       # GPT Image 1 (tarot cards, sigils)
+STRIPE_API_KEY=sk_test_...       # Payments (direct SDK)
+STRIPE_WEBHOOK_SECRET=whsec_... # Optional: webhook signature verification
 ```
+
+### API Independence Rule
+**The site uses ONLY your API keys. Zero Emergent dependencies.**
+- `emergentintegrations` package has been fully removed
+- All LLM calls go through direct Anthropic/DeepSeek SDKs
+- All image generation goes through direct Google GenAI/OpenAI SDKs
+- All payments go through direct Stripe SDK
 
 ### Frontend (.env)
 ```
@@ -255,18 +287,15 @@ Free User: free_test@test.com / test123
 ## Common Commands
 
 ```bash
-# Check backend status
-sudo supervisorctl status
+# Local development
+cd frontend && npm start          # React dev server (port 3000)
+cd backend && uvicorn server:app --reload --port 8000  # FastAPI dev server
 
-# View backend logs
-tail -100 /var/log/supervisor/backend.err.log
+# Syntax check after edits
+python3 -c "import py_compile; py_compile.compile('backend/server.py')"
 
-# Restart after .env changes
-sudo supervisorctl restart backend
-
-# Test API
-API_URL=$(grep REACT_APP_BACKEND_URL /app/frontend/.env | cut -d '=' -f2)
-curl -s "$API_URL/api/timeline/v2/stats"
+# Verify no Emergent dependencies
+grep -r "emergentintegrations" backend/*.py  # Should return nothing
 ```
 
 ---
@@ -274,17 +303,22 @@ curl -s "$API_URL/api/timeline/v2/stats"
 ## What's Working vs Gaps
 
 ### Working
-- Spell generation (V3 blocks system)
+- Spell generation (V3 blocks system) — all 5 guides
 - My Grimoire (save/retrieve)
 - Interactive Timeline (94 events, 3 views)
 - User authentication (JWT)
 - Invisible Helpers portal
+- Stripe payments (direct SDK, test mode)
+- Image provider routing (Gemini + OpenAI + static)
+- Artist style matrix (150 combinations)
 
-### Gaps
-- All 5 guides functional (Shigg, Cathleen, Katherine, Theresa, Brenda)
+### Gaps / Next Up
+- Wire image generation into actual spell output (visual pipeline)
+- Quick spell visual system (CSS-based, no AI — needs frontend wiring)
 - ~35/94 timeline events have rich narratives
 - 98 broken connection references in timeline
-- Stripe payments BLOCKED (needs valid key)
+- Brenda missing custom border assets
+- Deploy to Railway/Render (migrate off Emergent hosting)
 
 ---
 
