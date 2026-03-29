@@ -80,18 +80,49 @@ Build a spell-generation application, "Where The Crowlands," with a highly speci
   - Added missing Theresa to FAQ.js guide descriptions
   - Zero hardcoded guide counts remain in frontend source
 
+### Session 5 (March 2026)
+- **P0 V3 Image Generation Pipeline:** Wired Gemini Nano Banana into spell generation
+  - Added GEMINI provider to `image_provider.py` as default (replaces library mode)
+  - V3 spell endpoint generates `header_image` + `tarot_card_image` via Gemini during spell creation
+  - Both sync and async job paths generate images
+  - `skip_images` field on SpellRequestV3; quick tier auto-skips for speed
+  - Fixed border file mismatch in OrnateElements.js (111-byte stubs → real -alt.png files)
+  - Added Shigg/Brenda border fallback (site-corners.png)
+  - SpellHeader.jsx now renders headerImage; GrimoirePage wires generated images into all display slots
+  - Fixed duplicate prompt bug in spell_prompts.py (tarot_emblem undefined)
+  - Tested: 100% pass (10/10 backend, 4/4 frontend)
+- **P0 Research at Birth (Instant Research & Origins):** Eliminated 20-35s delay on "Show Research & Origins"
+  - Archivist research data now captured during spell generation and attached to spell output
+  - V2, V3, and Personalized spell endpoints all return `research_origins` with the spell
+  - `research_origins` saved to Grimoire with the spell for instant retrieval later
+  - **Existing spells (52+):** Frontend extracts research from embedded spell data (sources, evidence_card, lore_vignette, further_reading blocks) — instant, no API call
+  - Only falls back to slow API for spells with zero embedded data
+  - Fixed `SavedSpellResponse` model and `researchAPI.combined` auth header
+  - Covers all spell creation flows across the entire app
+  - Tested: 100% pass rate (backend + frontend)
+- **P0 Rich Research & Origins Spec:** Full structured Research & Origins section per user spec
+  - **Parallel DeepSeek call** generates: suggested_further_reading boxes, research_table (Element/Origin/Tradition/Direct Source/Key Links), ethical_statement, closing_statement
+  - Runs IN PARALLEL with the writer stage — adds ~5s overhead, not 30s
+  - **Confidence tiers:** VERIFIED/REPORTED/INFERENCE labels on table rows with color coding
+  - **Per-guide customization:** Guide voice/focus mapped for Shigg, Cathleen, Katherine, Theresa, Brenda
+  - **Frontend:** Full spec rendering — guide attribution, opening summary, reading grid (2-col), ethical statement, research table with links, closing tagline
+  - **Legacy support:** Older spells use extraction from evidence_card/lore_vignette blocks + sources
+  - **Async job path fixed:** Research origins now included in background job results
+  - Tested: 100% pass (7/7 backend, 9/9 frontend, load time 602ms), verified instant display on existing spells
+
 ## Prioritized Backlog
 
 ### P0 (Critical)
 - Remaining user security prompts (auth enforcement, CORS, info disclosure)
-- Integrate AI Image Generation (Gemini Nano Banana via Emergent Key)
 
 ### P1 (High)
 - Finalize Manifesto Integration (awaiting user document)
+- Backend refactor: break server.py into route modules
 
 ### P2 (Medium)
 - Switch Stripe to Live Mode (needs live API keys)
-- Backend refactor: break server.py into route modules
+- Complete UI Consistency Sweep (btn-ritual, avatar sizes)
+- Implement Password Reset Flow
 
 ### P3 (Low/Future)
 - Print-on-demand integration (Lulu.com)
@@ -99,6 +130,8 @@ Build a spell-generation application, "Where The Crowlands," with a highly speci
 - Deprecate legacy V1/V2 spell pipeline
 - PWA Support
 - Email service integration (Resend)
+- React ErrorBoundary components
+- Spell sharing feature
 
 ## Test Credentials
 - Email: TheresaTayler@me.com
@@ -106,11 +139,12 @@ Build a spell-generation application, "Where The Crowlands," with a highly speci
 - Access Level: PRO
 
 ## Key Files
-- backend/server.py - 6,440+ lines, all routes, rate limiting via SlowAPI
+- backend/server.py - 6,500+ lines, all routes, rate limiting via SlowAPI
 - backend/timeline_events_expanded.py - 126 timeline events with enrichment merge logic
 - backend/timeline_enrichments.py - Enrichment data (expanded_context, descriptions, significance)
 - backend/timeline_service.py - Timeline API service with version-based seeding
-- backend/image_provider.py - Static image library (no real AI provider connected)
+- backend/image_provider.py - Static image library + Gemini Nano Banana integration
+- frontend/src/pages/AIImage.js - AI Image Generator page (Gemini Nano Banana)
 - frontend/src/index.css - Global CSS including btn-ritual classes
 - frontend/src/pages/GuidePortal.js - Flex-centered layout
 - memory/BRAND_STYLE_GUIDE.md - Visual design source of truth

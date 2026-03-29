@@ -189,7 +189,10 @@ export const researchAPI = {
       persona,
       tone,
       context,
-    }, { timeout: 120000 }); // 2 min timeout for dual-model research
+    }, { 
+      headers: getAuthHeader(),
+      timeout: 120000 
+    }); // 2 min timeout for dual-model research
     return response.data;
   },
 };
@@ -227,6 +230,8 @@ export const favoritesAPI = {
 
 export const grimoireAPI = {
   saveSpell: async (spellData, archetypeId, archetypeName, archetypeTitle, imageBase64, assetPlan = null) => {
+    // Extract research_origins from spell data if present
+    const researchOrigins = spellData?.research_origins || null;
     const response = await axios.post(
       `${API}/grimoire/save`,
       {
@@ -235,7 +240,8 @@ export const grimoireAPI = {
         archetype_name: archetypeName,
         archetype_title: archetypeTitle,
         image_base64: imageBase64,
-        asset_plan: assetPlan,  // Include tarot, sigil, dividers, micro_icons
+        asset_plan: assetPlan,
+        research_origins: researchOrigins,
       },
       { headers: getAuthHeader() }
     );

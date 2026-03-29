@@ -738,6 +738,9 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
   const generatedAssets = assetPlan?.generated_assets || {};
   const microIcons = assetPlan?.micro_icons || [];
   
+  // Get V3 generated images (header, tarot) from spell data
+  const generatedImages = spell?.generated_images || spell?.spell_data?.generated_images || {};
+  
   // Helper to get woodcut icon path for a section (replaces emoji micro-icons)
   const getSectionIconPath = (sectionName) => {
     const sectionIconMap = {
@@ -914,11 +917,34 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
   const fetchResearchOrigins = async () => {
     if (researchData) return; // Already loaded
 
-    setIsLoadingResearch(true);
+    // Priority 1: Check for pre-attached research_origins (from spell generation pipeline)
+    const preAttached = spell?.research_origins 
+      || spell?.spell_data?.research_origins;
+    
+    if (preAttached) {
+      setResearchData({
+        research_origins: preAttached,
+        persona_used: archetype?.name || 'Guide'
+      });
+      return;
+    }
 
+    // Priority 2: Extract research from existing spell content (sources, blocks)
+    // This covers all 51+ older saved spells — instant, no API call
+    const spellData = spell?.spell_data || spell || {};
+    const extracted = extractResearchFromSpellData(spellData);
+    if (extracted) {
+      setResearchData({
+        research_origins: extracted,
+        persona_used: archetype?.name || 'Guide'
+      });
+      return;
+    }
+
+    // Priority 3 (last resort): Fetch from API — slow path for spells with no embedded data
+    setIsLoadingResearch(true);
     try {
       const spellContext = `Spell: "${spell.title}". Intention: ${spell.introduction || spell.scenario || 'self-improvement'}`;
-      // Normalize archetype ID for research API (backend uses shigg, not shiggy)
       const rawId = archetype?.id || spell?.guide_id || 'shigg';
       const idMap = { 'shiggy': 'shigg', 'kathleen': 'cathleen' };
       const personaId = idMap[rawId] || rawId;
@@ -929,7 +955,6 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
         'gentle',
         spellContext
       );
-
       setResearchData(result);
     } catch (error) {
       console.error('Research fetch error:', error);
@@ -937,6 +962,109 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
     } finally {
       setIsLoadingResearch(false);
     }
+  };
+
+  // Extract research_origins from existing spell data (sources, lore_vignette, evidence_card, further_reading blocks)
+  const extractResearchFromSpellData = (spellData) => {
+    const sources = spellData.sources || [];
+    const blocks = spellData.blocks || [];
+    
+    const keyTakeaways = [];
+    const whyThisWorksFacts = [];
+    const extractedSources = [];
+    
+    // Extract from evidence_card blocks (known/likely/lore facts)
+    blocks.forEach(block => {
+      const bt = block.block_type || block.type || '';
+      const content = block.content || {};
+      
+      if (bt === 'evidence_card' && typeof content === 'object') {
+        (content.known || []).forEach(text => {
+          if (typeof text === 'string' && text.trim()) {
+            keyTakeaways.push({
+              text: text.replace(/^KNOWN:\s*/i, ''),
+              claim_flag: 'historical',
+              confidence: 'high'
+            });
+          }
+        });
+        (content.likely || []).forEach(text => {
+          if (typeof text === 'string' && text.trim()) {
+            keyTakeaways.push({
+              text: text.replace(/^LIKELY:\s*/i, ''),
+              claim_flag: 'folklore',
+              confidence: 'medium'
+            });
+          }
+        });
+        (content.lore || []).forEach(text => {
+          if (typeof text === 'string' && text.trim()) {
+            keyTakeaways.push({
+              text: text.replace(/^LORE:\s*/i, ''),
+              claim_flag: 'lore',
+              confidence: 'low'
+            });
+          }
+        });
+      }
+      
+      // Extract from lore_vignette blocks
+      if (bt === 'lore_vignette' && typeof content === 'object' && content.narrative) {
+        whyThisWorksFacts.push({
+          claim: content.narrative,
+          claim_flag: 'folklore',
+          confidence: 'medium'
+        });
+      }
+    });
+    
+    // Extract from sources field
+    sources.forEach(s => {
+      if (typeof s === 'object') {
+        // Build a readable title from source_id if no title exists
+        const rawId = s.source_id || s.id || '';
+        const readableTitle = s.title || s.work || (rawId ? rawId.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) : 'Source');
+        extractedSources.push({
+          id: rawId,
+          author: s.author || '',
+          title: readableTitle,
+          quality_tier: s.type || s.quality_tier || 'historical',
+          notes: s.relevance || s.notes || ''
+        });
+      }
+    });
+    
+    // Extract from further_reading blocks
+    blocks.forEach(block => {
+      const bt = block.block_type || block.type || '';
+      const content = block.content || {};
+      if (bt === 'further_reading' && content.recommendations) {
+        content.recommendations.forEach(rec => {
+          if (typeof rec === 'object') {
+            extractedSources.push({
+              id: '',
+              author: rec.author || '',
+              title: rec.title || 'Reference',
+              notes: rec.guide_note || rec.specific_passage || '',
+              url: rec.url || null
+            });
+          }
+        });
+      }
+    });
+    
+    // Only return if we found something meaningful
+    if (keyTakeaways.length === 0 && whyThisWorksFacts.length === 0 && extractedSources.length === 0) {
+      return null;
+    }
+    
+    return {
+      research_mode: 'spell_origins',
+      summary: `This working draws on ${extractedSources.length} source(s) with ${keyTakeaways.length} documented reference(s).`,
+      key_takeaways: keyTakeaways,
+      why_this_works_facts: whyThisWorksFacts,
+      sources: extractedSources
+    };
   };
 
 
@@ -987,10 +1115,15 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
           title={spell?.tarot_card?.title || spell?.title || "Saved Spell"}
           guideLine={`${spell?.archetype_name || ""}${spell?.archetype_title ? " • " + spell.archetype_title : ""}`}
           summaryLine={spell?.tarot_card?.essence || ""}
+          headerImage={generatedImages.header_image ? `data:image/png;base64,${generatedImages.header_image}` : null}
         />
 
         <TarotSummaryCard
-          tarotImageUrl={spell?.asset_plan?.generated_assets?.tarot_card_image || spell?.tarot_card_image || null}
+          tarotImageUrl={
+            spell?.asset_plan?.generated_assets?.tarot_card_image 
+            || spell?.tarot_card_image 
+            || (generatedImages.tarot_card_image ? `data:image/png;base64,${generatedImages.tarot_card_image}` : null)
+          }
           title={spell?.tarot_card?.title || ""}
           essence={spell?.tarot_card?.essence || ""}
           keyAction={spell?.tarot_card?.key_action || ""}
@@ -1737,7 +1870,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
         
         {/* Printables Block - Tarot Card (front & back) and Sigil */}
         <PrintablesBlock 
-          tarotImageBase64={generatedAssets?.tarot_card_image}
+          tarotImageBase64={generatedAssets?.tarot_card_image || generatedImages.tarot_card_image}
           sigilImageBase64={generatedAssets?.sigil}
           spellTitle={spell.title}
           tarotCard={spell.tarot_card}
@@ -1793,44 +1926,131 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
           )}
 
           {researchData && (
-            <div className="p-4 space-y-4 bg-gold/5">
+            <div className="p-4 space-y-5 bg-gold/5">
+              {/* Section Header */}
               <div className="flex items-center gap-2 mb-2">
                 <Search className="w-5 h-5 text-crimson" />
                 <h3 className="font-cinzel text-base text-crimson">Research & Origins</h3>
               </div>
 
-              {/* Spellbook Response (Persona Voice) */}
-              <div className="bg-gold/10/80 p-4 rounded-sm border border-gold/30">
-                <div className="flex items-center gap-2 mb-3">
-                  <BrandIcon name="grimoire" size={16} />
-                  <span className="font-cinzel text-sm text-crimson uppercase tracking-wider">
-                    {researchData.persona_used}&apos;s Wisdom
-                  </span>
+              {/* Guide Attribution */}
+              {(researchData.research_origins?.guide_section_title || researchData.persona_used) && (
+                <div className="bg-gold/10/80 p-3 rounded-sm border border-gold/30">
+                  <div className="flex items-center gap-2">
+                    <BrandIcon name="grimoire" size={16} />
+                    <span className="font-cinzel text-sm text-crimson uppercase tracking-wider">
+                      {researchData.research_origins?.guide_section_title || `${researchData.persona_used}'s Wisdom`}
+                    </span>
+                  </div>
                 </div>
-                <p className="font-crimson text-base text-navy-dark/80 leading-relaxed whitespace-pre-wrap">
-                  {researchData.spellbook_response}
-                </p>
-              </div>
+              )}
 
-              {/* Research Origins (DeepSeek V2) */}
-              <div className="bg-white/60 p-4 rounded-sm border border-crimson/20">
-                <div className="flex items-center gap-2 mb-3">
+              {/* Persona Voice Response (legacy combined endpoint) */}
+              {researchData.spellbook_response && (
+                <div className="bg-gold/10/80 p-4 rounded-sm border border-gold/30">
+                  <p className="font-crimson text-base text-navy-dark/80 leading-relaxed whitespace-pre-wrap">
+                    {researchData.spellbook_response}
+                  </p>
+                </div>
+              )}
+
+              {/* Research Origins Content */}
+              <div className="bg-white/60 p-4 rounded-sm border border-crimson/20 space-y-5">
+                <div className="flex items-center gap-2">
                   <Search className="w-4 h-4 text-crimson" />
                   <span className="font-cinzel text-sm text-crimson uppercase tracking-wider">
                     Research & Origins
                   </span>
                 </div>
 
-                {/* Summary */}
+                {/* Opening Summary */}
                 {researchData.research_origins?.summary && (
-                  <p className="font-montserrat text-sm text-navy-dark/80 leading-relaxed mb-4">
+                  <p className="font-montserrat text-sm text-navy-dark/80 leading-relaxed">
                     {researchData.research_origins.summary}
                   </p>
                 )}
 
-                {/* Key Takeaways */}
-                {researchData.research_origins?.key_takeaways?.length > 0 && (
-                  <div className="mb-4">
+                {/* Suggested Further Reading Grid */}
+                {researchData.research_origins?.suggested_further_reading?.length > 0 && (
+                  <div>
+                    <p className="font-montserrat text-xs text-crimson uppercase tracking-wider mb-3">Suggested Further Reading</p>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      {researchData.research_origins.suggested_further_reading.map((item, idx) => (
+                        <div key={idx} className="p-3 bg-navy-dark/5 rounded-sm border border-gold/20" data-testid={`reading-box-${idx}`}>
+                          <p className="font-cinzel text-sm text-crimson mb-1">{item.tradition_name}</p>
+                          <p className="font-montserrat text-xs text-navy-dark/70 leading-relaxed">{item.description}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Ethical Statement */}
+                {researchData.research_origins?.ethical_statement && (
+                  <div className="py-3 border-y border-gold/20">
+                    <p className="font-crimson text-sm text-navy-dark/70 italic text-center leading-relaxed">
+                      {researchData.research_origins.ethical_statement}
+                    </p>
+                  </div>
+                )}
+
+                {/* Research Origins Table */}
+                {researchData.research_origins?.research_table?.length > 0 && (
+                  <div>
+                    <p className="font-montserrat text-xs text-crimson uppercase tracking-wider mb-3">Research Origins</p>
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-xs border-collapse" data-testid="research-origins-table">
+                        <thead>
+                          <tr className="border-b border-crimson/30">
+                            <th className="font-montserrat text-left text-crimson uppercase tracking-wider p-2">Element</th>
+                            <th className="font-montserrat text-left text-crimson uppercase tracking-wider p-2">Origin</th>
+                            <th className="font-montserrat text-left text-crimson uppercase tracking-wider p-2">Tradition</th>
+                            <th className="font-montserrat text-left text-crimson uppercase tracking-wider p-2">Direct Source</th>
+                            <th className="font-montserrat text-left text-crimson uppercase tracking-wider p-2">Key Links</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {researchData.research_origins.research_table.map((row, idx) => (
+                            <tr key={idx} className="border-b border-gold/15 hover:bg-gold/5">
+                              <td className="p-2 font-montserrat text-navy-dark/90 font-medium">{row.element}</td>
+                              <td className="p-2 font-montserrat text-navy-dark/70">{row.origin}</td>
+                              <td className="p-2 font-montserrat text-navy-dark/70">{row.tradition}</td>
+                              <td className="p-2 font-crimson text-navy-dark/70 italic">{row.direct_source}</td>
+                              <td className="p-2">
+                                {row.key_links?.map((link, li) => (
+                                  <span key={li}>
+                                    {li > 0 && <span className="text-navy-dark/30"> / </span>}
+                                    <a 
+                                      href={link.url} 
+                                      target="_blank" 
+                                      rel="noopener noreferrer" 
+                                      className="text-crimson hover:text-crimson-bright underline font-montserrat"
+                                    >
+                                      {link.label || 'Source'}
+                                    </a>
+                                  </span>
+                                ))}
+                                {row.confidence_tier && (
+                                  <span className={`ml-1 text-[10px] font-montserrat uppercase ${
+                                    row.confidence_tier === 'VERIFIED' ? 'text-green-700' :
+                                    row.confidence_tier === 'REPORTED' ? 'text-amber-600' :
+                                    'text-navy-dark/50'
+                                  }`}>
+                                    [{row.confidence_tier}]
+                                  </span>
+                                )}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                )}
+
+                {/* Legacy: Key Takeaways (for older spells without research_table) */}
+                {!researchData.research_origins?.research_table?.length && researchData.research_origins?.key_takeaways?.length > 0 && (
+                  <div>
                     <p className="font-montserrat text-xs text-crimson uppercase tracking-wider mb-2">Key Points</p>
                     <ul className="space-y-2">
                       {researchData.research_origins.key_takeaways.map((takeaway, idx) => (
@@ -1843,9 +2063,9 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                   </div>
                 )}
 
-                {/* Why This Works */}
-                {researchData.research_origins?.why_this_works_facts?.length > 0 && (
-                  <div className="mb-4">
+                {/* Legacy: Why This Works (for older spells without research_table) */}
+                {!researchData.research_origins?.research_table?.length && researchData.research_origins?.why_this_works_facts?.length > 0 && (
+                  <div>
                     <p className="font-montserrat text-xs text-crimson uppercase tracking-wider mb-2">Why This Works</p>
                     <ul className="space-y-2">
                       {researchData.research_origins.why_this_works_facts.map((fact, idx) => (
@@ -1858,10 +2078,10 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                   </div>
                 )}
 
-                {/* Sources */}
-                {researchData.research_origins?.sources?.length > 0 && (
+                {/* Legacy: Sources (for older spells without research_table) */}
+                {!researchData.research_origins?.research_table?.length && researchData.research_origins?.sources?.length > 0 && (
                   <div>
-                    <p className="font-montserrat text-xs text-crimson uppercase tracking-wider mb-2">Suggested Further Reading</p>
+                    <p className="font-montserrat text-xs text-crimson uppercase tracking-wider mb-2">Sources</p>
                     <div className="space-y-2">
                       {researchData.research_origins.sources.map((source, idx) => (
                         <div key={idx} className="p-2 bg-gold/5 rounded border border-gold/20">
@@ -1885,6 +2105,11 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                     </div>
                   </div>
                 )}
+
+                {/* Closing Statement */}
+                <p className="font-crimson text-xs text-navy-dark/50 italic text-center pt-2 border-t border-gold/15">
+                  {researchData.research_origins?.closing_statement || 'No vague spirituality. No unsourced claims. Every practice has a name, a date, an archive.'}
+                </p>
               </div>
             </div>
           )}

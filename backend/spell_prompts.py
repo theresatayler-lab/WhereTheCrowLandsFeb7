@@ -13,6 +13,7 @@ from persona_config import (
     BELIEF_BOUNDARY_DESCRIPTIONS, ASSET_TYPES,
     CROWLANDS_ART_BIBLE, ASSET_ROLE_LOCKS, get_art_bible_prompt_suffix
 )
+from image_style_matrix import build_style_layer
 
 # ============================================================================
 # V1.1: TEXT VARIATION TOKENS - Behind-the-scenes uniqueness drivers
@@ -914,31 +915,41 @@ Each entry MUST include:
 
 def build_image_prompt(asset_type: str, asset_plan: dict, persona_config: dict, spell_title: str, spell_data: dict = None) -> str:
     """
-    Build DALL-E prompt for each asset type
-    CRITICAL: CROWLANDS_ART_BIBLE is the PREFIX - it dominates the prompt
-    Rules: "No text", print-friendly linework, hard art style rules
-    
-    V2.0: For tarot_card_image, uses spell-specific visual tokens for uniqueness
+    Build image generation prompt for each asset type.
+    CRITICAL: CROWLANDS_ART_BIBLE is the PREFIX - it dominates the prompt.
+    Rules: "No text", print-friendly linework, hard art style rules.
+
+    V2.0: For tarot_card_image, uses spell-specific visual tokens for uniqueness.
+    V3.0: Adds artist style layer from image_style_matrix for visual variety.
     """
-    
+
+    persona_id = persona_config.get("archetype_id", "shigg")
     base_style = persona_config['visual_dna']['constants']['art_style']
     dall_e_rules = persona_config['visual_dna'].get('dall_e_rules', 'pen-and-ink illustration, NO text')
     avoid_list = persona_config['visual_dna']['avoid']
-    
+
     # Get the global art bible - this is PREFIX (dominates the prompt)
     art_bible_prefix = get_art_bible_prompt_suffix()
-    
+
     # Get asset role lock constraints
     role_lock = ASSET_ROLE_LOCKS.get(asset_type.split("_")[0], ASSET_ROLE_LOCKS.get("header", {}))
     role_suffix = role_lock.get('prompt_suffix', '')
-    
+
+    # V3.0: Detect intent and build artist style layer
+    detected_intent = "protection"  # default
+    if spell_data:
+        visual_tokens = extract_spell_visual_tokens(spell_data, persona_config)
+        detected_intent = visual_tokens.get("detected_intent", "protection")
+    style_layer = build_style_layer(persona_id, detected_intent)
+
     if asset_type == "header_image":
         asset_info = asset_plan.get("header_image", {})
         header_scene = persona_config['visual_dna'].get('header_scene', asset_info.get('scene_description', 'mystical scene'))
-        
+
         prompt = f"""{art_bible_prefix},
-{base_style}, {header_scene}, 
-{asset_info.get('mood', 'contemplative')} mood, 
+{style_layer},
+{base_style}, {header_scene},
+{asset_info.get('mood', 'contemplative')} mood,
 featuring {', '.join(asset_info.get('key_elements', ['candle']))},
 {role_suffix},
 {dall_e_rules},
@@ -946,17 +957,18 @@ AVOID: {', '.join(avoid_list)}"""
 
     elif asset_type == "tarot_card_image":
         asset_info = asset_plan.get("tarot_card_image", {})
-        
+
         # V2.0: Use spell-specific visual tokens for uniqueness
         if spell_data:
-            visual_tokens = extract_spell_visual_tokens(spell_data, persona_config)
+            # visual_tokens already extracted above for style_layer
             primary_motif = visual_tokens["primary_motif"]
             secondary_motifs = visual_tokens["secondary_motifs"]
             geometry = visual_tokens["geometry"]
             guide_signature = visual_tokens["guide_signature"]
             forbidden = visual_tokens["forbidden"]
-            
+
             prompt = f"""{art_bible_prefix},
+{style_layer},
 STYLE: engraved Victorian woodcut / etching, high detail linework, symmetrical medallion, antique vellum background.
 COMPOSITION: {geometry} emblem design (NOT a scene, NOT a figure).
 FOCAL EMBLEM: {primary_motif}.
@@ -973,20 +985,9 @@ AVOID: {', '.join(avoid_list + forbidden)}"""
             focal = asset_info.get('must_include_focal', 'mystical emblem')
             framing = asset_info.get('must_use_framing', 'circular border')
             symbols = asset_info.get('must_include_symbols', ['star'])
-            
+
             prompt = f"""{art_bible_prefix},
-{base_style}, SYMBOLIC EMBLEM (NOT a scene),
-{tarot_emblem if tarot_emblem else f'FOCAL ELEMENT: {focal}'},
-FRAMING: {framing},
-SUPPORTING SYMBOLS: {', '.join(symbols)},
-centered composition, suitable for tarot/oracle card,
-medallion or seal style, symmetrical,
-{role_suffix},
-{dall_e_rules},
-MUST be visually DISTINCT from header image,
-AVOID: {', '.join(avoid_list)}"""
-        
-        prompt = f"""{art_bible_prefix},
+{style_layer},
 {base_style}, SYMBOLIC EMBLEM (NOT a scene),
 {tarot_emblem if tarot_emblem else f'FOCAL ELEMENT: {focal}'},
 FRAMING: {framing},

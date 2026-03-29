@@ -18,12 +18,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-from emergentintegrations.payments.stripe.checkout import (
-    StripeCheckout, 
-    CheckoutSessionResponse, 
-    CheckoutStatusResponse, 
-    CheckoutSessionRequest
-)
+import stripe  # Direct Stripe SDK — no Emergent dependency
 
 # MongoDB will be injected from server.py
 db = None

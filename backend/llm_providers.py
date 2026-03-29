@@ -8,7 +8,6 @@
 # ============================================================================
 
 import os
-import uuid
 import logging
 from typing import Dict, Any, Optional
 from openai import AsyncOpenAI
@@ -23,35 +22,30 @@ PROVIDER_CONFIG = {
     "persona_voice": {
         "provider": "anthropic",
         "model": "claude-sonnet-4-20250514",
-        "use_emergent_key": False,
         "temperature": 0.8,
         "max_tokens": 2000
     },
     "research": {
         "provider": "deepseek",
         "model": "deepseek-chat",
-        "use_emergent_key": False,
         "temperature": 0.3,
         "max_tokens": 3000
     },
     "spell_planner": {
         "provider": "anthropic",
         "model": "claude-haiku-4-5-20251001",
-        "use_emergent_key": False,
         "temperature": 0.7,
         "max_tokens": 2500
     },
     "spell_writer": {
         "provider": "anthropic",
         "model": "claude-sonnet-4-20250514",
-        "use_emergent_key": False,
         "temperature": 0.85,
         "max_tokens": 3500
     },
     "invisible_helpers_writer": {
         "provider": "anthropic",
         "model": "claude-sonnet-4-20250514",
-        "use_emergent_key": True,
         "temperature": 0.7,
         "max_tokens": 1800
     }
@@ -67,40 +61,7 @@ PROVIDER_ENDPOINTS = {
 ENV_KEYS = {
     "deepseek": "DEEPSEEK_API_KEY",
     "anthropic": "ANTHROPIC_API_KEY",
-    "emergent": "EMERGENT_LLM_KEY"
 }
-
-# ============================================================================
-# Emergent Integration (Universal Key)
-# ============================================================================
-
-async def emergent_chat(
-    system_message: str,
-    user_message: str,
-    provider: str = "anthropic",
-    model: str = "claude-sonnet-4-20250514",
-    temperature: float = 0.8,
-    max_tokens: int = 2000
-) -> str:
-    """
-    Chat completion using Emergent Universal Key
-    Supports: anthropic, deepseek
-    """
-    from emergentintegrations.llm.chat import LlmChat, UserMessage
-
-    api_key = os.environ.get('EMERGENT_LLM_KEY', '')
-    if not api_key:
-        raise ValueError("EMERGENT_LLM_KEY not configured")
-
-    chat = LlmChat(
-        api_key=api_key,
-        session_id=str(uuid.uuid4()),
-        system_message=system_message
-    ).with_model(provider, model)
-
-    user_msg = UserMessage(text=user_message)
-    response = await chat.send_message(user_msg)
-    return response
 
 # ============================================================================
 # Direct Provider Clients
@@ -158,23 +119,11 @@ async def chat_completion(
     model = config["model"]
     temperature = config.get("temperature", 0.8)
     max_tokens = config.get("max_tokens", 2000)
-    use_emergent = config.get("use_emergent_key", False)
 
-    logger.info(f"[LLM_CALL] purpose={purpose} provider={provider} model={model} emergent={use_emergent}")
+    logger.info(f"[LLM_CALL] purpose={purpose} provider={provider} model={model}")
 
     try:
-        # Route 1: Emergent Universal Key
-        if use_emergent:
-            return await emergent_chat(
-                system_message=system_message,
-                user_message=user_message,
-                provider=provider,
-                model=model,
-                temperature=temperature,
-                max_tokens=max_tokens
-            )
-
-        # Route 2: DeepSeek (direct client, OpenAI-compatible API)
+        # Route 1: DeepSeek (direct client, OpenAI-compatible API)
         if provider == "deepseek":
             client = get_deepseek_client()
             if not client:
@@ -243,14 +192,14 @@ async def spell_writer(system_message: str, user_message: str) -> str:
 def get_llm_status() -> Dict[str, Any]:
     """Return status of all configured LLM providers"""
     return {
-        "emergent_key_configured": bool(os.environ.get('EMERGENT_LLM_KEY')),
         "anthropic_configured": bool(os.environ.get('ANTHROPIC_API_KEY')),
         "deepseek_configured": bool(os.environ.get('DEEPSEEK_API_KEY')),
+        "google_configured": bool(os.environ.get('GOOGLE_API_KEY')),
+        "openai_configured": bool(os.environ.get('OPENAI_API_KEY')),
         "current_config": {
             purpose: {
                 "provider": cfg["provider"],
                 "model": cfg["model"],
-                "uses_emergent": cfg.get("use_emergent_key", False)
             }
             for purpose, cfg in PROVIDER_CONFIG.items()
         }
