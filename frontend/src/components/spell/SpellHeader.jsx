@@ -5,11 +5,24 @@ export default function SpellHeader({
   title,
   guideLine,
   summaryLine,
+  headerImage = null,
   iconRow = [],
   actions = null,
 }) {
   return (
     <header className="mb-8 text-center">
+      {/* Generated header image */}
+      {headerImage && (
+        <div className="mb-6 rounded-sm overflow-hidden border border-gold/20 shadow-lg">
+          <img
+            src={headerImage}
+            alt={title || "Spell header"}
+            className="w-full h-48 sm:h-56 md:h-64 object-cover"
+            data-testid="spell-header-image"
+          />
+        </div>
+      )}
+
       {/* Decorative top element */}
       <div className="grimoire-divider mb-6">
         <div className="grimoire-divider-symbol" />

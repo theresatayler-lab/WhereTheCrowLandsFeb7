@@ -81,13 +81,16 @@ Build a spell-generation application, "Where The Crowlands," with a highly speci
   - Zero hardcoded guide counts remain in frontend source
 
 ### Session 5 (March 2026)
-- **P0 AI Image Generation (Gemini Nano Banana):** Connected real AI image provider
-  - Replaced static/DALL-E fallback with Gemini Nano Banana (`gemini-3-pro-image-preview`) via `emergentintegrations`
-  - Uses `EMERGENT_LLM_KEY` from backend/.env
-  - All 5 archetype styles generate real images (shiggy, kathleen, katherine, theresa, neutral)
-  - Frontend updated to handle both base64 and URL image responses
-  - Fixed missing `ImageIcon` import that was crashing the page
-  - Tested: 100% pass rate (7/7 backend, 8/8 frontend UI tests)
+- **P0 V3 Image Generation Pipeline:** Wired Gemini Nano Banana into spell generation
+  - Added GEMINI provider to `image_provider.py` as default (replaces library mode)
+  - V3 spell endpoint generates `header_image` + `tarot_card_image` via Gemini during spell creation
+  - Both sync and async job paths generate images
+  - `skip_images` field on SpellRequestV3; quick tier auto-skips for speed
+  - Fixed border file mismatch in OrnateElements.js (111-byte stubs → real -alt.png files)
+  - Added Shigg/Brenda border fallback (site-corners.png)
+  - SpellHeader.jsx now renders headerImage; GrimoirePage wires generated images into all display slots
+  - Fixed duplicate prompt bug in spell_prompts.py (tarot_emblem undefined)
+  - Tested: 100% pass (10/10 backend, 4/4 frontend)
 - **P0 Research at Birth (Instant Research & Origins):** Eliminated 20-35s delay on "Show Research & Origins"
   - Archivist research data now captured during spell generation and attached to spell output
   - V2, V3, and Personalized spell endpoints all return `research_origins` with the spell

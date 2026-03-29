@@ -1,25 +1,29 @@
 # Image Provider Abstraction
 # Single interface for all image generation with provider switching
-# Providers: library (static), dalle, flux (future)
+# Providers: library (static), dalle, gemini (Nano Banana), flux (future)
 # Config: IMAGE_PROVIDER env var
 
 import os
 import hashlib
 import json
 import logging
+import uuid
 from typing import Optional, Dict, Any
 from enum import Enum
 
 class ImageProvider(Enum):
     LIBRARY = "library"  # Static pre-made images
     DALLE = "dalle"      # OpenAI DALL-E 3
+    GEMINI = "gemini"    # Gemini Nano Banana (via emergentintegrations)
     FLUX = "flux"        # Future: fal.ai/Flux (not implemented)
 
-# Get provider from env, default to library for speed
+# Get provider from env, default to gemini
 def get_image_provider() -> ImageProvider:
-    provider = os.environ.get("IMAGE_PROVIDER", "library").lower()
+    provider = os.environ.get("IMAGE_PROVIDER", "gemini").lower()
     if provider == "dalle":
         return ImageProvider.DALLE
+    elif provider == "gemini":
+        return ImageProvider.GEMINI
     elif provider == "flux":
         return ImageProvider.FLUX
     return ImageProvider.LIBRARY
@@ -201,9 +205,40 @@ async def generate_image(
         if static_url:
             return f"STATIC_URL:{static_url}"
         
-        # Fall back to DALL-E if no static image available
-        logging.info(f"[LIBRARY] No static {asset_type} for {persona_id}, falling back to DALL-E")
-        provider = ImageProvider.DALLE
+        # Fall back to Gemini if no static image available
+        logging.info(f"[LIBRARY] No static {asset_type} for {persona_id}, falling back to Gemini")
+        provider = ImageProvider.GEMINI
+    
+    # GEMINI generation (Nano Banana via emergentintegrations)
+    if provider == ImageProvider.GEMINI:
+        emergent_key = os.environ.get('EMERGENT_LLM_KEY')
+        if not emergent_key:
+            logging.error("EMERGENT_LLM_KEY not set for Gemini image generation")
+            return None
+        
+        try:
+            from emergentintegrations.llm.chat import LlmChat, UserMessage
+            session_id = f"img-gen-{uuid.uuid4().hex[:12]}"
+            chat = LlmChat(
+                api_key=emergent_key,
+                session_id=session_id,
+                system_message="Generate the requested mystical image. No text or words in the image."
+            )
+            chat.with_model("gemini", "gemini-3-pro-image-preview").with_params(modalities=["image", "text"])
+            msg = UserMessage(text=f"Generate this image: {prompt}")
+            text_response, images = await chat.send_message_multimodal_response(msg)
+            
+            if images and len(images) > 0:
+                image_data = images[0]['data']
+                set_cached_image(cache_key, image_data)
+                logging.info(f"[GEMINI] Generated {asset_type} for {persona_id}, size={len(image_data[:20])}...")
+                return image_data
+            else:
+                logging.warning(f"[GEMINI] No image returned for {asset_type}/{persona_id}")
+                return None
+        except Exception as e:
+            logging.error(f"[GEMINI] Generation failed for {asset_type}/{persona_id}: {e}")
+            return None
     
     # DALL-E generation
     if provider == ImageProvider.DALLE:

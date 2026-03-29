@@ -738,6 +738,9 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
   const generatedAssets = assetPlan?.generated_assets || {};
   const microIcons = assetPlan?.micro_icons || [];
   
+  // Get V3 generated images (header, tarot) from spell data
+  const generatedImages = spell?.generated_images || spell?.spell_data?.generated_images || {};
+  
   // Helper to get woodcut icon path for a section (replaces emoji micro-icons)
   const getSectionIconPath = (sectionName) => {
     const sectionIconMap = {
@@ -1112,10 +1115,15 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
           title={spell?.tarot_card?.title || spell?.title || "Saved Spell"}
           guideLine={`${spell?.archetype_name || ""}${spell?.archetype_title ? " • " + spell.archetype_title : ""}`}
           summaryLine={spell?.tarot_card?.essence || ""}
+          headerImage={generatedImages.header_image ? `data:image/png;base64,${generatedImages.header_image}` : null}
         />
 
         <TarotSummaryCard
-          tarotImageUrl={spell?.asset_plan?.generated_assets?.tarot_card_image || spell?.tarot_card_image || null}
+          tarotImageUrl={
+            spell?.asset_plan?.generated_assets?.tarot_card_image 
+            || spell?.tarot_card_image 
+            || (generatedImages.tarot_card_image ? `data:image/png;base64,${generatedImages.tarot_card_image}` : null)
+          }
           title={spell?.tarot_card?.title || ""}
           essence={spell?.tarot_card?.essence || ""}
           keyAction={spell?.tarot_card?.key_action || ""}
@@ -1862,7 +1870,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
         
         {/* Printables Block - Tarot Card (front & back) and Sigil */}
         <PrintablesBlock 
-          tarotImageBase64={generatedAssets?.tarot_card_image}
+          tarotImageBase64={generatedAssets?.tarot_card_image || generatedImages.tarot_card_image}
           sigilImageBase64={generatedAssets?.sigil}
           spellTitle={spell.title}
           tarotCard={spell.tarot_card}

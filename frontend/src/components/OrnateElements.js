@@ -621,12 +621,13 @@ export const TarotCardFrame = ({ children, className = '' }) => (
 
 // Persona border URLs - now local
 export const PERSONA_BORDER_URLS = {
-  cathleen: '/images/borders/cathleen-border.png',
-  katherine: '/images/borders/kate-border.png',
-  kate: '/images/borders/kate-border.png',
-  theresa: '/images/borders/theresa-border.png',
-  shigg: null,
-  shiggy: null,
+  cathleen: '/images/borders/cathleen-border-alt.png',
+  katherine: '/images/borders/kate-border-alt.png',
+  kate: '/images/borders/kate-border-alt.png',
+  theresa: '/images/borders/theresa-border-alt.png',
+  shigg: '/images/borders/site-corners.png',
+  shiggy: '/images/borders/site-corners.png',
+  brenda: '/images/borders/site-corners.png',
 };
 
 // ============================================================================
