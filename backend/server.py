@@ -126,7 +126,7 @@ from llm_providers import (
 )
 
 # Central wrapper for all text generation (now uses Anthropic Claude)
-async def emergent_chat_completion(messages: list, model: str = "claude-sonnet-4-20250514", temperature: float = 0.7, max_tokens: int = 4000) -> str:
+async def claude_chat_completion(messages: list, model: str = "claude-sonnet-4-20250514", temperature: float = 0.7, max_tokens: int = 4000) -> str:
     """Central text generation wrapper - routes through Anthropic Claude"""
     system_msg = "You are a helpful assistant."
     user_content = ""
@@ -803,6 +803,18 @@ async def update_email(request: UpdateEmailRequest, user = Depends(get_current_u
         id=user['id'],
         email=request.new_email,
         name=user['name'],
+        subscription_tier=user.get('subscription_tier', 'free'),
+        subscription_status=user.get('subscription_status', 'active'),
+        spell_generation_count=user.get('spell_generation_count', 0)
+    )
+
+@api_router.get('/users/me', response_model=UserResponse)
+async def get_current_user_info(user = Depends(get_current_user)):
+    """Get current authenticated user's profile"""
+    return UserResponse(
+        id=user['id'],
+        email=user['email'],
+        name=user.get('name', ''),
         subscription_tier=user.get('subscription_tier', 'free'),
         subscription_status=user.get('subscription_status', 'active'),
         spell_generation_count=user.get('spell_generation_count', 0)
@@ -3065,7 +3077,7 @@ async def chat_with_ai(request: Request, message_data: ChatMessage, user = Depen
             system_message = DEFAULT_SYSTEM_MESSAGE
         
         # Use Emergent LLM Key for chat
-        response = await emergent_chat_completion(
+        response = await claude_chat_completion(
             messages=[
                 {"role": "system", "content": system_message},
                 {"role": "user", "content": message_data.message}
@@ -3356,7 +3368,7 @@ Remember: You are warm, dawn-quiet, British-inflected. Use understatement. Offer
         if not user_message:
             user_message = "The seeker asks for general guidance from the Bird Oracle today."
 
-        response_text = await emergent_chat_completion(
+        response_text = await claude_chat_completion(
             messages=[
                 {"role": "system", "content": bird_oracle_prompt},
                 {"role": "user", "content": user_message}
@@ -3485,7 +3497,7 @@ async def get_corrie_tarot_reading(request: Request, body: CorrieTarotRequest, u
         if body.question:
             user_message += f"\nTheir specific question: {sanitize_for_prompt(body.question)}"
 
-        response_text = await emergent_chat_completion(
+        response_text = await claude_chat_completion(
             messages=[
                 {"role": "system", "content": CORRIE_TAROT_PROMPT},
                 {"role": "user", "content": user_message}
@@ -3563,6 +3575,27 @@ CARD SELECTION RULES:
 5. Choose cards that offer UNEXPECTED but FITTING wisdom
 
 You will receive the cards that have been pre-selected based on the user's situation. Your job is to bring them to life with personalized, specific guidance that feels like Shigg is really seeing them."""
+
+# Oracle endpoint aliases — frontend uses /oracle/cobbles/* paths
+@api_router.post('/oracle/cobbles/one-card')
+@limiter.limit("5/minute")
+async def oracle_one_card(request: Request, body: CobbleOracleRequest, user = Depends(get_current_user)):
+    """Alias: one-card reading → cobbles oracle with spread_type=one_card"""
+    body.spread_type = "one_card"
+    return await get_cobbles_oracle_reading(request, body, user)
+
+@api_router.post('/oracle/cobbles/three-card')
+@limiter.limit("5/minute")
+async def oracle_three_card(request: Request, body: CobbleOracleRequest, user = Depends(get_current_user)):
+    """Alias: three-card reading → cobbles oracle with spread_type=three_card"""
+    body.spread_type = "three_card"
+    return await get_cobbles_oracle_reading(request, body, user)
+
+@api_router.post('/oracle/cobbles/spread')
+@limiter.limit("5/minute")
+async def oracle_spread(request: Request, body: CobbleOracleRequest, user = Depends(get_current_user)):
+    """Alias: full spread → cobbles oracle with spread_type from body"""
+    return await get_cobbles_oracle_reading(request, body, user)
 
 @api_router.get('/ai/cobbles-oracle/deck')
 async def get_oracle_deck_info():
@@ -3687,7 +3720,7 @@ Return JSON:
         if body.question:
             user_message += f"\nTheir question: {sanitize_for_prompt(body.question)}"
 
-        response_text = await emergent_chat_completion(
+        response_text = await claude_chat_completion(
             messages=[
                 {"role": "system", "content": oracle_prompt},
                 {"role": "user", "content": user_message}
@@ -3897,7 +3930,7 @@ async def suggest_ward(request: Request, body: WardRequest, user = Depends(get_c
         user_message += "\n\nPlease suggest 2-3 wards that would be perfect for them. Remember to vary your suggestions and make them specific to THIS person."
         
         # Use Emergent LLM Key
-        response_text = await emergent_chat_completion(
+        response_text = await claude_chat_completion(
             messages=[
                 {"role": "system", "content": WARD_FINDER_PROMPT},
                 {"role": "user", "content": user_message}
@@ -4655,7 +4688,7 @@ Respond ONLY with the JSON object, no other text."""
             system_message = DEFAULT_SYSTEM_MESSAGE + "\n\nYou must respond with structured JSON as specified."
         
         # Use Emergent LLM Key for spell generation
-        response = await emergent_chat_completion(
+        response = await claude_chat_completion(
             messages=[
                 {"role": "system", "content": system_message},
                 {"role": "user", "content": structured_prompt}
@@ -4899,7 +4932,7 @@ async def generate_personalized_spell(request: Request, body: PersonalizedSpellR
         planner_prompt = build_planner_prompt(spell_spec, persona_config, scenario)
         
         # Use Emergent LLM Key for chat completion
-        planner_text = await emergent_chat_completion(
+        planner_text = await claude_chat_completion(
             messages=[
                 {"role": "system", "content": "You are a spell planner. Return ONLY valid JSON, no markdown, no explanation."},
                 {"role": "user", "content": planner_prompt}
@@ -4940,7 +4973,7 @@ async def generate_personalized_spell(request: Request, body: PersonalizedSpellR
         writer_prompt = build_spell_writer_prompt(spell_spec, persona_config, scenario, plan)
         
         # Use Emergent LLM Key for chat completion
-        spell_text = await emergent_chat_completion(
+        spell_text = await claude_chat_completion(
             messages=[
                 {"role": "system", "content": f"You are {persona_config['name']}, {persona_config['title']}. Write spells in your unique voice. Return ONLY valid JSON, no markdown."},
                 {"role": "user", "content": writer_prompt}
