@@ -5344,6 +5344,7 @@ class SpellRequestV3(BaseModel):
     belief_mode: str = "SPIRITUAL"
     generate_images: bool = False
     tier_preference: str = None  # "quick", "standard", "deep" - optional user override
+    skip_images: bool = False  # Set True for quick tier to skip image generation
 
 @api_router.post('/ai/generate-spell-v3')
 @limiter.limit("5/minute")
@@ -5494,6 +5495,9 @@ async def generate_spell_v3_endpoint(request: Request, body: SpellRequestV3, use
         tier_config['tier_name'] = selected_tier.value
         logger.info(f"[TIER] Selected {selected_tier.value}: {tier_reason}")
         
+        # Skip images for quick tier (speed priority)
+        skip_images = body.skip_images or selected_tier.value == 'quick'
+        
         # Initialize clients
         deepseek_client = get_deepseek_client()
         
@@ -5574,6 +5578,35 @@ async def generate_spell_v3_endpoint(request: Request, body: SpellRequestV3, use
         if research_origins:
             spell_output['research_origins'] = research_origins
         
+        # Generate images for the spell (after research_origins, before return)
+        generated_images = {}
+        if not skip_images:
+            try:
+                from image_provider import generate_image as gen_img
+                from spell_prompts import build_image_prompt
+                
+                persona_cfg = get_persona_config(persona_id)
+                spell_title = spell_output.get('title', 'Spell')
+                
+                # Header image (scene)
+                header_prompt = build_image_prompt("header_image", {}, persona_cfg, spell_title)
+                header_result = await gen_img(prompt=header_prompt, persona_id=persona_id, asset_type="header")
+                if header_result:
+                    generated_images['header_image'] = header_result
+                
+                # Tarot card (emblem, uses spell content for unique tokens)
+                tarot_prompt = build_image_prompt("tarot_card_image", {}, persona_cfg, spell_title, spell_output)
+                tarot_result = await gen_img(prompt=tarot_prompt, persona_id=persona_id, asset_type="tarot")
+                if tarot_result:
+                    generated_images['tarot_card_image'] = tarot_result
+                
+                # Attach to spell output
+                if generated_images:
+                    spell_output['generated_images'] = generated_images
+                    logging.info(f"[V3] Generated {len(generated_images)} images for spell")
+            except Exception as img_err:
+                logging.warning(f"[V3] Image generation failed (non-fatal): {img_err}")
+        
         logging.info(f"[V3] Blocks spell generated in {total_ms}ms. Blocks: {len(spell_output.get('blocks', []))}")
         
         return {
@@ -5582,6 +5615,7 @@ async def generate_spell_v3_endpoint(request: Request, body: SpellRequestV3, use
             'metadata': metadata,
             'belief_mode': belief_mode,
             'research_origins': research_origins,
+            'generated_images': generated_images,
             'validation': {
                 'qa_passed': metadata.get('qa_passed', True),
                 'qa_report': metadata.get('qa_report', {})
@@ -5824,6 +5858,39 @@ async def _generate_spell_background(job_id: str, request_data: dict, user_id: O
         if research_origins:
             spell_output['research_origins'] = research_origins
         
+        # Generate images for the spell (async job path)
+        generated_images = {}
+        skip_images = request_data.get('skip_images', False) or selected_tier.value == 'quick'
+        if not skip_images:
+            try:
+                await db.spell_jobs.update_one(
+                    {'job_id': job_id},
+                    {'$set': {'stage_message': 'Conjuring images...', 'current_stage': 'images', 'updated_at': datetime.now(timezone.utc)}}
+                )
+                from image_provider import generate_image as gen_img
+                from spell_prompts import build_image_prompt
+                
+                persona_cfg = get_persona_config(persona_id)
+                spell_title = spell_output.get('title', 'Spell')
+                
+                # Header image (scene)
+                header_prompt = build_image_prompt("header_image", {}, persona_cfg, spell_title)
+                header_result = await gen_img(prompt=header_prompt, persona_id=persona_id, asset_type="header")
+                if header_result:
+                    generated_images['header_image'] = header_result
+                
+                # Tarot card (emblem)
+                tarot_prompt = build_image_prompt("tarot_card_image", {}, persona_cfg, spell_title, spell_output)
+                tarot_result = await gen_img(prompt=tarot_prompt, persona_id=persona_id, asset_type="tarot")
+                if tarot_result:
+                    generated_images['tarot_card_image'] = tarot_result
+                
+                if generated_images:
+                    spell_output['generated_images'] = generated_images
+                    logging.info(f"[ASYNC_JOB] Generated {len(generated_images)} images for spell")
+            except Exception as img_err:
+                logging.warning(f"[ASYNC_JOB] Image generation failed (non-fatal): {img_err}")
+        
         # Update job with completed result
         result = {
             'spell': spell_output,
@@ -5831,6 +5898,7 @@ async def _generate_spell_background(job_id: str, request_data: dict, user_id: O
             'metadata': metadata,
             'belief_mode': belief_mode,
             'research_origins': research_origins,
+            'generated_images': generated_images,
             'validation': {
                 'qa_passed': metadata.get('qa_passed', True),
                 'qa_report': metadata.get('qa_report', {})

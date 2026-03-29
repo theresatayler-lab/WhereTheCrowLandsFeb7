@@ -985,18 +985,6 @@ medallion or seal style, symmetrical,
 {dall_e_rules},
 MUST be visually DISTINCT from header image,
 AVOID: {', '.join(avoid_list)}"""
-        
-        prompt = f"""{art_bible_prefix},
-{base_style}, SYMBOLIC EMBLEM (NOT a scene),
-{tarot_emblem if tarot_emblem else f'FOCAL ELEMENT: {focal}'},
-FRAMING: {framing},
-SUPPORTING SYMBOLS: {', '.join(symbols)},
-centered composition, suitable for tarot/oracle card,
-medallion or seal style, symmetrical,
-{role_suffix},
-{dall_e_rules},
-MUST be visually DISTINCT from header image,
-AVOID: {', '.join(avoid_list)}"""
 
     elif asset_type == "sigil":
         asset_info = asset_plan.get("sigil", {})

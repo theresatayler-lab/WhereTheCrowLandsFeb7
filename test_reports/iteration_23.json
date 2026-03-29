@@ -1,0 +1,119 @@
+{
+  "summary": "V3 Image Generation Integration - All tests passed. Fixed critical bug in spell_prompts.py (duplicate prompt assignment causing 'tarot_emblem' undefined error). Backend generates header_image and tarot_card_image via Gemini when skip_images=false. Frontend GrimoirePage correctly wired to render generated images.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_v3_image_generation.py"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [],
+  "updated_files": [
+    "/app/backend/spell_prompts.py",
+    "/app/backend/tests/test_v3_image_generation.py"
+  ],
+  "success_rate": {
+    "backend": "100% (10/10 tests passed)",
+    "frontend": "100%"
+  },
+  "test_credentials": "TheresaTayler@me.com / NinaROck1!",
+  "seed_data_creation": "None",
+  "retest_needed": false,
+  "main_agent_can_self_test": false,
+  "context_for_next_testing_agent": "V3 image generation is now working. Fixed bug in spell_prompts.py where duplicate prompt assignment (lines 989-999) was outside the else block, causing 'tarot_emblem' undefined error. The async job endpoint POST /api/ai/generate-spell-job with skip_images=false now correctly generates header_image and tarot_card_image via Gemini. Quick tier auto-skips images. Catherine alias resolves to Katherine in persona_config. Border files use -alt.png versions (real images 500KB+, non-alt are 111-byte stubs).",
+  "test_results": {
+    "backend_api_tests": [
+      {
+        "test": "Image provider compiles",
+        "status": "PASS",
+        "notes": "image_provider.py imports correctly, get_image_provider() returns ImageProvider.GEMINI"
+      },
+      {
+        "test": "Gemini is default provider",
+        "status": "PASS",
+        "notes": "When IMAGE_PROVIDER env not set, defaults to GEMINI"
+      },
+      {
+        "test": "Catherine alias resolves to Katherine",
+        "status": "PASS",
+        "notes": "get_persona_config('catherine') returns Katherine config"
+      },
+      {
+        "test": "V3 spell job creation",
+        "status": "PASS",
+        "notes": "POST /api/ai/generate-spell-job returns job_id, status, poll_url"
+      },
+      {
+        "test": "skip_images=true no generated_images",
+        "status": "PASS",
+        "notes": "Job completes without generated_images when skip_images=true"
+      },
+      {
+        "test": "skip_images=false generates images",
+        "status": "PASS",
+        "notes": "Job completes with header_image (1.7MB) and tarot_card_image (1.7MB)"
+      },
+      {
+        "test": "Border files use -alt.png",
+        "status": "PASS",
+        "notes": "PERSONA_BORDER_URLS in OrnateElements.js uses cathleen-border-alt.png, kate-border-alt.png, theresa-border-alt.png"
+      },
+      {
+        "test": "Border files exist and are real",
+        "status": "PASS",
+        "notes": "-alt.png files are 500KB+ (real images), non-alt are 111 bytes (stubs)"
+      },
+      {
+        "test": "SpellHeader has headerImage prop",
+        "status": "PASS",
+        "notes": "SpellHeader.jsx accepts headerImage prop with data-testid='spell-header-image'"
+      },
+      {
+        "test": "GrimoirePage extracts generatedImages",
+        "status": "PASS",
+        "notes": "GrimoirePage.js extracts generated_images and passes headerImage to SpellHeader"
+      }
+    ],
+    "frontend_ui_tests": [
+      {
+        "test": "Homepage loads",
+        "status": "PASS",
+        "notes": "Where The Crowlands homepage renders correctly"
+      },
+      {
+        "test": "Login works",
+        "status": "PASS",
+        "notes": "Login with test credentials shows 'Welcome back!' toast"
+      },
+      {
+        "test": "/my-grimoire page loads",
+        "status": "PASS",
+        "notes": "Shows 55 spells with VIEW buttons"
+      },
+      {
+        "test": "Spell detail view works",
+        "status": "PASS",
+        "notes": "Clicking VIEW opens spell detail with title, guide attribution, content"
+      }
+    ]
+  },
+  "bug_fixed": {
+    "file": "/app/backend/spell_prompts.py",
+    "issue": "Duplicate prompt assignment (lines 989-999) was outside the else block, causing 'cannot access local variable tarot_emblem' error when spell_data was provided",
+    "fix": "Removed duplicate prompt assignment that was incorrectly placed outside the else block",
+    "verification": "V3 spell generation with skip_images=false now correctly generates both header_image and tarot_card_image"
+  },
+  "integration_verification": {
+    "gemini_image_generation": "REAL - Uses emergentintegrations LlmChat with gemini-3-pro-image-preview",
+    "deepseek_archivist": "REAL - Used for research generation",
+    "claude_writer": "REAL - Used for spell writing",
+    "async_job_system": "WORKING - Jobs complete in ~90-120 seconds",
+    "mocked": false
+  }
+}
