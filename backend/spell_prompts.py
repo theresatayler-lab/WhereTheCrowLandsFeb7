@@ -13,7 +13,7 @@ from persona_config import (
     BELIEF_BOUNDARY_DESCRIPTIONS, ASSET_TYPES,
     CROWLANDS_ART_BIBLE, ASSET_ROLE_LOCKS, get_art_bible_prompt_suffix
 )
-from image_style_matrix import build_style_layer
+from image_style_matrix import build_style_layer, get_artist_style
 
 # ============================================================================
 # V1.1: TEXT VARIATION TOKENS - Behind-the-scenes uniqueness drivers
@@ -941,6 +941,7 @@ def build_image_prompt(asset_type: str, asset_plan: dict, persona_config: dict, 
         visual_tokens = extract_spell_visual_tokens(spell_data, persona_config)
         detected_intent = visual_tokens.get("detected_intent", "protection")
     style_layer = build_style_layer(persona_id, detected_intent)
+    artist = get_artist_style(persona_id, detected_intent)
 
     if asset_type == "header_image":
         asset_info = asset_plan.get("header_image", {})
@@ -948,12 +949,13 @@ def build_image_prompt(asset_type: str, asset_plan: dict, persona_config: dict, 
 
         prompt = f"""{art_bible_prefix},
 {style_layer},
-{base_style}, {header_scene},
-{asset_info.get('mood', 'contemplative')} mood,
+A {asset_info.get('mood', 'contemplative')} atmospheric scene in the style of {artist['artist']}: {header_scene},
 featuring {', '.join(asset_info.get('key_elements', ['candle']))},
+PALETTE: {artist['palette_shift']},
+QUALITY: Should look like a fine art illustration or lithograph — visible artistic technique, NOT flat AI-generated imagery.
 {role_suffix},
 {dall_e_rules},
-AVOID: {', '.join(avoid_list)}"""
+AVOID: {', '.join(avoid_list)}, generic stock photo look, oversaturated muddy colors"""
 
     elif asset_type == "tarot_card_image":
         asset_info = asset_plan.get("tarot_card_image", {})
@@ -969,14 +971,14 @@ AVOID: {', '.join(avoid_list)}"""
 
             prompt = f"""{art_bible_prefix},
 {style_layer},
-STYLE: engraved Victorian woodcut / etching, high detail linework, symmetrical medallion, antique vellum background.
-COMPOSITION: {geometry} emblem design (NOT a scene, NOT a figure).
-FOCAL EMBLEM: {primary_motif}.
-SECONDARY SYMBOLS: {', '.join(secondary_motifs)}.
-GEOMETRY: {geometry} with thin art nouveau corners (no heavy fills).
-GUIDE SIGNATURE (subtle, small): {guide_signature}.
-COLOR: midnight teal background + antique gold linework + bone ivory accents; no neon; no gradients that flatten contrast.
-CONSTRAINTS: no text, no letters, no numbers, no banners with writing, no photorealism, no 3D render.
+STYLE: hand-rendered occult illustration, visible pen-and-ink cross-hatching like Aubrey Beardsley or Edward Sullivan, rich blacks and whites with selective color accents.
+COMPOSITION: {geometry} emblem or vignette (NOT a flat medallion, NOT a generic mandala).
+FOCAL ELEMENT: {primary_motif} — rendered with craft and detail as if for a limited-edition occult press.
+SUPPORTING ELEMENTS: {', '.join(secondary_motifs)}.
+GUIDE SIGNATURE (small, organic): {guide_signature}.
+PALETTE: Use this guide's palette — {artist['palette_shift']} — NOT generic gold-on-teal. Deep contrast, printmaking quality.
+QUALITY: Should look like it belongs in a beautiful 1920s occult book, NOT like generic AI art.
+CONSTRAINTS: no text, no letters, no numbers, no banners, no photorealism, no 3D render, no oversaturated neon.
 {dall_e_rules},
 AVOID: {', '.join(avoid_list + forbidden)}"""
         else:

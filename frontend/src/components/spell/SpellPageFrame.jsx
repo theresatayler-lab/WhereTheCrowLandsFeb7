@@ -1,8 +1,9 @@
 import React from "react";
 
 /**
- * SpellPageFrame - Elegant grimoire page wrapper
- * Inspired by vintage astrology guides with ornate borders and generous whitespace
+ * SpellPageFrame — Grimoire manuscript page
+ * Triple-border aged parchment with Art Nouveau corner flourishes.
+ * Sullivan-inspired: let the page breathe, ornament only at edges.
  */
 export default function SpellPageFrame({ children, backgroundImageUrl }) {
   return (
@@ -19,25 +20,51 @@ export default function SpellPageFrame({ children, backgroundImageUrl }) {
         />
       ) : null}
 
-      <main className="relative z-10 mx-auto w-full max-w-4xl px-4 py-8 sm:px-6 sm:py-12">
-        {/* Outer glow container */}
-        <div className="box-glow-gold rounded-[28px] p-1" style={{ background: 'rgba(200, 164, 77, 0.08)' }}>
-          {/* Triple border grimoire frame */}
-          <section
-            className="grimoire-page-border relative"
+      <main className="relative z-10 mx-auto w-full max-w-3xl px-2 py-6 sm:px-4 sm:py-10">
+        <div className="grimoire-manuscript-page">
+          {/* Art Nouveau corner flourishes */}
+          <img
+            src="/images/spell-decor/corner-flourish.png"
+            alt=""
+            className="grimoire-corner grimoire-corner--tl"
+            aria-hidden="true"
+          />
+          <img
+            src="/images/spell-decor/corner-flourish.png"
+            alt=""
+            className="grimoire-corner grimoire-corner--tr"
+            aria-hidden="true"
+          />
+          <img
+            src="/images/spell-decor/corner-flourish.png"
+            alt=""
+            className="grimoire-corner grimoire-corner--bl"
+            aria-hidden="true"
+          />
+          <img
+            src="/images/spell-decor/corner-flourish.png"
+            alt=""
+            className="grimoire-corner grimoire-corner--br"
+            aria-hidden="true"
+          />
+
+          {/* Manuscript content */}
+          <div
+            className="px-6 sm:px-10 md:px-14 py-8 sm:py-12"
             data-surface="light"
           >
-            {/* Corner decorations */}
-            <div className="absolute top-4 left-4 w-8 h-8 border-t border-l border-gold/20 rounded-tl-lg" />
-            <div className="absolute top-4 right-4 w-8 h-8 border-t border-r border-gold/20 rounded-tr-lg" />
-            <div className="absolute bottom-4 left-4 w-8 h-8 border-b border-l border-gold/20 rounded-bl-lg" />
-            <div className="absolute bottom-4 right-4 w-8 h-8 border-b border-r border-gold/20 rounded-br-lg" />
-            
-            {/* Content with generous padding */}
-            <div className="px-2 sm:px-6 py-4">
-              {children}
-            </div>
-          </section>
+            {children}
+          </div>
+
+          {/* Footer ornament */}
+          <div className="flex justify-center pb-6">
+            <img
+              src="/images/spell-decor/footer-decoration.png"
+              alt=""
+              className="h-8 sm:h-10 w-auto opacity-70"
+              aria-hidden="true"
+            />
+          </div>
         </div>
       </main>
     </div>

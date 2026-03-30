@@ -1097,134 +1097,20 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
   }
 
   return (
-    <SpellPageFrame>
-      <SpellBorderFrame persona={archetype?.id || 'site'}>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          ref={grimoireRef}
-          className="bg-card/80 rounded-sm overflow-hidden shadow-xl"
-          style={{ 
-            backgroundColor: '#D8CBB3',
-            backgroundImage: "url('/images/textures/parchment-texture.png')",
-            backgroundSize: "cover",
-            backgroundPosition: "center"
-          }}
-        >
+    <SpellPageFrame backgroundImageUrl={generatedImages.header_image ? `data:image/png;base64,${generatedImages.header_image}` : undefined}>
+        <div ref={grimoireRef}>
         <SpellHeader
           title={spell?.tarot_card?.title || spell?.title || "Saved Spell"}
           guideLine={`${spell?.archetype_name || ""}${spell?.archetype_title ? " • " + spell.archetype_title : ""}`}
           summaryLine={spell?.tarot_card?.essence || ""}
-          headerImage={generatedImages.header_image ? `data:image/png;base64,${generatedImages.header_image}` : null}
-        />
-
-        <TarotSummaryCard
           tarotImageUrl={
-            spell?.asset_plan?.generated_assets?.tarot_card_image 
-            || spell?.tarot_card_image 
+            spell?.asset_plan?.generated_assets?.tarot_card_image
+            || spell?.tarot_card_image
             || (generatedImages.tarot_card_image ? `data:image/png;base64,${generatedImages.tarot_card_image}` : null)
           }
-          title={spell?.tarot_card?.title || ""}
-          essence={spell?.tarot_card?.essence || ""}
-          keyAction={spell?.tarot_card?.key_action || ""}
-          timing={spell?.tarot_card?.timing || ""}
-          guideBadge={spell?.archetype_name || ""}
         />
 
-        {/* View Toggle - Show only if tarot_card exists */}
-        {spell.tarot_card && (
-        <div className="flex justify-center gap-2 p-4 bg-gold/15 border-b border-gold/30">
-          <button
-            onClick={() => setViewMode('card')}
-            className={`px-4 py-2 rounded-sm font-montserrat tracking-wider text-xs transition-all ${
-              viewMode === 'card' 
-                ? 'bg-crimson text-cream' 
-                : 'bg-transparent text-navy-dark/80 hover:text-crimson'
-            }`}
-          >
-            <img src="/icons/ui/gold/icon-sparkles.png" alt="" className="w-3 h-3 inline-block mr-1 opacity-70" /> Card View
-          </button>
-          <button
-            onClick={() => setViewMode('full')}
-            className={`px-4 py-2 rounded-sm font-montserrat tracking-wider text-xs transition-all ${
-              viewMode === 'full' 
-                ? 'bg-crimson text-cream' 
-                : 'bg-transparent text-navy-dark/80 hover:text-crimson'
-            }`}
-          >
-            Full Grimoire
-          </button>
-        </div>
-      )}
-
-      {/* Header Image - show skeleton while loading */}
-      {imageBase64 ? (
-        <div className="relative h-48 md:h-64 overflow-hidden">
-          <img 
-            src={`data:image/png;base64,${imageBase64}`}
-            alt={spell.title}
-            className="w-full h-full object-cover"
-          />
-          <div className={`absolute inset-0 bg-gradient-to-t ${style.headerGradient}`} />
-          <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-card to-transparent">
-            <h1 className="ritual-title text-3xl md:text-4xl text-primary drop-shadow-lg">
-              {spell.title || 'Untitled Spell'}
-            </h1>
-            {spell.subtitle && spell.subtitle !== 'null' && (
-              <p className="font-montserrat text-sm text-cream/90 mt-1">{spell.subtitle}</p>
-            )}
-          </div>
-        </div>
-      ) : isLoadingImages ? (
-        <div className="relative h-48 md:h-64 overflow-hidden bg-gradient-to-br from-gold/20 to-gold/10 animate-pulse">
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="text-center">
-              <BrandIcon name="sparkles" size={32} opacity={0.4} className="mx-auto mb-2" />
-              <span className="text-navy-dark/80/50 text-sm font-montserrat">Generating header image...</span>
-            </div>
-          </div>
-          <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-[#D8CBB3] to-transparent">
-            <h1 className="ritual-title text-3xl md:text-4xl text-crimson">
-              {spell.title || 'Untitled Spell'}
-            </h1>
-            {spell.subtitle && spell.subtitle !== 'null' && (
-              <p className="font-montserrat text-sm text-navy-dark/80 mt-1">{spell.subtitle}</p>
-            )}
-          </div>
-        </div>
-      ) : (
-        <div className={`p-6 ${style.bgAccent} border-b border-gold/30`}>
-          <h1 className="ritual-title text-3xl md:text-4xl text-crimson">{spell.title || 'Untitled Spell'}</h1>
-          {spell.subtitle && spell.subtitle !== 'null' && (
-            <p className="font-montserrat text-sm text-navy-dark/80 mt-1">{spell.subtitle}</p>
-          )}
-        </div>
-      )}
-
-      <div className="p-6 md:p-8 space-y-8">
-        {/* Archetype Attribution */}
-        {archetype && (
-          <div className="flex items-center gap-3 pb-4 border-b border-gold/30">
-            <img 
-              src={`/icons/anchors/anchor-${archetype.id === 'shiggy' ? 'bird' : archetype.id === 'kathleen' ? 'feather' : archetype.id === 'katherine' ? 'thread' : archetype.id === 'theresa' ? 'magnifying-glass' : 'crow-feather'}.png`}
-              alt={archetype.name}
-              className="w-8 h-8"
-            />
-            <div>
-              <p className="font-cinzel text-sm text-crimson">Crafted by {archetype.name}</p>
-              <p className="font-montserrat text-xs text-navy-dark/70">{archetype.title}</p>
-            </div>
-          </div>
-        )}
-
-        {/* Introduction - CONTRAST LOCKED: Solid vellum plate */}
-        {spell.introduction && (
-          <div className="p-4 bg-[#F3EFE8] border-l-4 border-gold rounded-r-sm shadow-sm">
-            <p className="font-crimson text-base md:text-lg text-navy-dark italic leading-relaxed">
-              {spell.introduction}
-            </p>
-          </div>
-        )}
+        <div className="pb-6">
 
         {/* BLOCKS-BASED SPELL RENDERING (V3) */}
         {spell.blocks && spell.blocks.length > 0 ? (
@@ -2148,8 +2034,8 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
           </button>
         </div>
       </div>
-    </motion.div>
-    </SpellBorderFrame>
+        </div>
+      </div>
     </SpellPageFrame>
   );
 };
