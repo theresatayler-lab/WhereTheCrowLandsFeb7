@@ -185,10 +185,10 @@ async def _generate_gemini(prompt: str, cache_key: str) -> Optional[str]:
         client = genai.Client(api_key=api_key)
 
         response = client.models.generate_content(
-            model="gemini-2.0-flash-exp",
+            model="gemini-2.0-flash-preview-image-generation",
             contents=f"Generate this image: {prompt}",
             config=types.GenerateContentConfig(
-                response_modalities=["TEXT", "IMAGE"],
+                response_modalities=["IMAGE"],
             ),
         )
 
@@ -229,7 +229,7 @@ async def _generate_openai(prompt: str, cache_key: str, size: str = "1024x1024")
             model="gpt-image-1",
             prompt=prompt,
             size=size,
-            quality="medium",
+            quality="high",
             n=1,
         )
 

@@ -46,7 +46,7 @@ CROWLANDS_ART_BIBLE = {
         "NO photorealism", "NO neon colors", "NO modern logos",
         "NO messy collage", "NO 3D render look", "NO clipart", "NO cartoon style"
     ],
-    "dall_e_global_suffix": "ornate occult silk scarf tapestry illustration, ultra-detailed engraved linework, etched texture, art nouveau filigree border, symmetrical medallion layout, collector plate finish, velvet silk sheen, midnight navy and oxblood and antique gold and bone ivory palette, British folklore motifs, NO text, NO letters, NO words, NO watermark, NO photorealism, NO neon, NO modern logos, NO 3D render"
+    "dall_e_global_suffix": "Fine art illustration, hand-rendered quality, visible brushwork or pen-and-ink hatching, rich texture like aged printmaking or lithography, art nouveau or pre-raphaelite compositional structure, subtle British folklore symbolism, NO text, NO letters, NO words, NO watermark, NO photorealism, NO neon, NO modern logos, NO 3D render, NO generic AI art style, NO oversaturated colors"
 }
 
 # ============================================================================
