@@ -2034,7 +2034,6 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
           </button>
         </div>
       </div>
-        </div>
       </div>
     </SpellPageFrame>
   );
