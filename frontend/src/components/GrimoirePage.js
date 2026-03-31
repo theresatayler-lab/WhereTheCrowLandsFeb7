@@ -1,5 +1,4 @@
-import React, { useState, useRef } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   Clock, Calendar,
   Copy, Download, CheckCircle2,
@@ -12,13 +11,11 @@ import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
 import { grimoireAPI, subscriptionAPI, researchAPI } from '../utils/api';
 import { useNavigate } from 'react-router-dom';
-import { SpellBorderFrame, SectionBorderFrame, TarotCardFrame, PERSONA_BORDER_URLS } from './OrnateElements';
 import { SpellBlockRenderer } from './SpellBlockRenderer';
 import { BRAND_ASSETS, getSpellWatermarkStyle } from '../assets/brandAssets';
 import SpellPageFrame from "./spell/SpellPageFrame";
 import ShuffleOracle from "./ShuffleOracle";
 import SpellHeader from "./spell/SpellHeader";
-import TarotSummaryCard from "./spell/TarotSummaryCard";
 
 // Ornate seal logo for spell pages
 const SEAL_LOGO_URL = "/images/brand/logo.png";
@@ -307,325 +304,6 @@ const SectionHeader = ({ icon: Icon, brandIconName, title, iconPath, accentColor
   </h2>
 );
 
-// Enhanced Tarot Card View with Image and Flip Functionality
-const TarotCardView = ({ spell, archetype, style, imageBase64, onViewFull, onCopy, onSave, onNewSpell, isSaving }) => {
-  const [isFlipped, setIsFlipped] = useState(false);
-  const tarot = spell?.tarot_card;
-  if (!tarot) return null;
-  
-  return (
-    <SpellBorderFrame persona={archetype?.id || 'site'}>
-    <motion.div
-      initial={{ opacity: 0, scale: 0.95, rotateY: -10 }}
-      animate={{ opacity: 1, scale: 1, rotateY: 0 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      className="max-w-md mx-auto perspective-1000"
-    >
-      {/* Main Card with Flip */}
-      <div 
-        className="relative cursor-pointer"
-        style={{ 
-          aspectRatio: '2.5/4',
-          transformStyle: 'preserve-3d',
-        }}
-        onClick={() => imageBase64 && setIsFlipped(!isFlipped)}
-      >
-        <motion.div
-          className="relative w-full h-full"
-          style={{ transformStyle: 'preserve-3d' }}
-          animate={{ rotateY: isFlipped ? 180 : 0 }}
-          transition={{ duration: 0.6, ease: 'easeInOut' }}
-        >
-          {/* Front - Tarot Card */}
-          <div 
-            className="absolute inset-0 rounded-xl overflow-hidden"
-            style={{ 
-              backfaceVisibility: 'hidden',
-              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 40px rgba(139, 90, 43, 0.2)',
-            }}
-          >
-            {/* Gold outer border effect */}
-            <div 
-              className="absolute inset-0 rounded-xl"
-              style={{
-                background: 'linear-gradient(135deg, #B8860B 0%, #DAA520 20%, #FFD700 50%, #DAA520 80%, #B8860B 100%)',
-                padding: '4px',
-              }}
-            />
-            
-            {/* Card inner container */}
-            <div className="absolute inset-1 rounded-lg overflow-hidden bg-[#1a1a1a]">
-              {/* Background Image */}
-              {imageBase64 ? (
-                <div className="absolute inset-0">
-                  <img 
-                    src={`data:image/png;base64,${imageBase64}`}
-                    alt={spell.title}
-                    className="w-full h-full object-cover"
-                  />
-                  {/* Gradient overlays for readability */}
-                  <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-transparent to-black/80" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                </div>
-              ) : (
-                /* Art Nouveau Tarot Plate fallback - no image variant */
-                <div className="absolute inset-0">
-                  {/* Base: Midnight Teal with radial vignette to Celestial Blue */}
-                  <div className="absolute inset-0" style={{
-                    background: `radial-gradient(ellipse at 50% 30%, #102534 0%, #0C1D2E 70%, #0C1D2E 100%)`
-                  }} />
-                  
-                  {/* Vellum inset panel */}
-                  <div className="absolute inset-6 rounded-sm" style={{
-                    backgroundColor: '#F3EFE8',
-                    boxShadow: 'inset 0 2px 8px rgba(0,0,0,0.15)'
-                  }}>
-                    {/* Double border - outer */}
-                    <div className="absolute inset-0 rounded-sm" style={{
-                      border: '2px solid #C8A44D'
-                    }} />
-                    {/* Double border - inner */}
-                    <div className="absolute inset-2 rounded-sm" style={{
-                      border: '1px solid rgba(200,164,77,0.5)'
-                    }} />
-                    
-                    {/* Placeholder Sigil Medallion - Moon & Star */}
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="opacity-30">
-                        {/* Outer circle */}
-                        <circle cx="60" cy="60" r="50" stroke="#C8A44D" strokeWidth="1.5" fill="none" />
-                        {/* Inner circle */}
-                        <circle cx="60" cy="60" r="40" stroke="#C8A44D" strokeWidth="0.75" fill="none" />
-                        {/* Crescent moon */}
-                        <path d="M70 35 A25 25 0 1 1 70 85 A20 20 0 1 0 70 35" stroke="#C8A44D" strokeWidth="1.5" fill="none" />
-                        {/* Star points */}
-                        <path d="M45 60 L50 55 L55 60 L50 65 Z" stroke="#C8A44D" strokeWidth="1" fill="none" />
-                        <path d="M50 50 L52 55 L48 55 Z" stroke="#C8A44D" strokeWidth="0.75" fill="none" />
-                        <path d="M42 55 L47 57 L47 53 Z" stroke="#C8A44D" strokeWidth="0.75" fill="none" />
-                        {/* Corner flourishes */}
-                        <path d="M20 20 Q30 25 25 35" stroke="#C8A44D" strokeWidth="0.75" fill="none" />
-                        <path d="M100 20 Q90 25 95 35" stroke="#C8A44D" strokeWidth="0.75" fill="none" />
-                        <path d="M20 100 Q30 95 25 85" stroke="#C8A44D" strokeWidth="0.75" fill="none" />
-                        <path d="M100 100 Q90 95 95 85" stroke="#C8A44D" strokeWidth="0.75" fill="none" />
-                      </svg>
-                    </div>
-                  </div>
-                  
-                  {/* Top gradient for title readability */}
-                  <div className="absolute inset-x-0 top-0 h-24" style={{
-                    background: 'linear-gradient(to bottom, rgba(14,42,47,0.95) 0%, transparent 100%)'
-                  }} />
-                  {/* Bottom gradient for text readability */}
-                  <div className="absolute inset-x-0 bottom-0 h-32" style={{
-                    background: 'linear-gradient(to top, rgba(14,42,47,0.95) 0%, transparent 100%)'
-                  }} />
-                </div>
-              )}
-              
-              {/* Decorative inner borders */}
-              <div className="absolute inset-3 border border-gold/30 rounded-md pointer-events-none" />
-              <div className="absolute inset-5 border border-gold/20 rounded-sm pointer-events-none" />
-              
-              {/* Corner ornaments */}
-              <div className="absolute top-4 left-4 w-6 h-6 border-t-2 border-l-2 border-gold/50" />
-              <div className="absolute top-4 right-4 w-6 h-6 border-t-2 border-r-2 border-gold/50" />
-              <div className="absolute bottom-4 left-4 w-6 h-6 border-b-2 border-l-2 border-gold/50" />
-              <div className="absolute bottom-4 right-4 w-6 h-6 border-b-2 border-r-2 border-gold/50" />
-              
-              {/* Card Content */}
-              <div className="relative h-full flex flex-col p-6 text-white">
-                {/* Top Section - Symbol & Title */}
-                <div className="text-center mb-2">
-                  <img src="/icons/ui/cream/icon-sparkles.png" alt="" className="w-10 h-10 mx-auto drop-shadow-lg" />
-                </div>
-                
-                <h2 
-                  className="ritual-title text-2xl md:text-3xl text-cream text-center mb-1"
-                  style={{ textShadow: '2px 2px 8px rgba(0,0,0,0.8)' }}
-                >
-                  {tarot.title || spell.title}
-                </h2>
-                
-                {/* Archetype Attribution */}
-                {archetype && (
-                  <p className="font-montserrat text-xs text-gold/80 text-center mb-3 tracking-[0.2em] uppercase">
-                    {archetype.name}
-                  </p>
-                )}
-                
-                {/* Decorative divider */}
-                <div className="flex items-center justify-center gap-2 mb-3">
-                  <div className="h-px bg-gradient-to-r from-transparent to-gold/50 flex-1" />
-                  <BrandIcon name="moon" size={16} opacity={0.6} />
-                  <div className="h-px bg-gradient-to-l from-transparent to-gold/50 flex-1" />
-                </div>
-                
-                {/* Middle Section - Essence & Key Action */}
-                <div className="flex-1 flex flex-col justify-center space-y-3">
-                  {/* Essence */}
-                  <p 
-                    className="font-crimson text-base text-cream/90 text-center leading-relaxed"
-                    style={{ textShadow: '1px 1px 4px rgba(0,0,0,0.7)' }}
-                  >
-                    {tarot.essence}
-                  </p>
-                  
-                  {/* Key Action Box */}
-                  <div className="bg-black/40 backdrop-blur-sm border border-gold/30 rounded-sm p-3">
-                    <p className="font-montserrat text-xs text-gold/70 uppercase tracking-wider mb-1 text-center">
-                      Key Action
-                    </p>
-                    <p className="font-crimson text-sm text-cream/80 text-center">
-                      {tarot.key_action}
-                    </p>
-                  </div>
-                  
-                  {/* Incantation */}
-                  <div className="py-3 border-y border-gold/30">
-                    <p 
-                      className="font-crimson text-lg text-gold italic text-center"
-                      style={{ textShadow: '1px 1px 6px rgba(0,0,0,0.8)' }}
-                    >
-                      &ldquo;{tarot.incantation}&rdquo;
-                    </p>
-                  </div>
-                </div>
-                
-                {/* Bottom Section - Timing & Flip Hint */}
-                <div className="mt-3 space-y-2">
-                  {tarot.timing && (
-                    <div className="flex items-center justify-center gap-2 text-xs text-gold/70">
-                      <Clock className="w-3 h-3" />
-                      <span className="font-montserrat tracking-wider">{tarot.timing}</span>
-                    </div>
-                  )}
-                  
-                  {tarot.warning && (
-                    <p className="font-montserrat text-xs text-red-400/80 text-center italic">
-                      ⚠ {tarot.warning}
-                    </p>
-                  )}
-                  
-                  {/* Cathleen's Ward Preview */}
-                  {spell.suggested_ward && (
-                    <div className="bg-navy-mid/60 backdrop-blur-sm border border-gold/40 rounded-sm p-2 mt-2">
-                      <div className="flex items-center justify-center gap-2">
-                        <img src="/icons/anchors/gold/anchor-feather.png" alt="" className="w-5 h-5" />
-                        <div className="text-center">
-                          <p className="font-montserrat text-[10px] text-cream/50 uppercase tracking-wider">Your Ward</p>
-                          <p className="font-crimson text-sm text-cream/80">{spell.suggested_ward.name}</p>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                  
-                  {/* Flip hint - only show if there's an image */}
-                  {imageBase64 && (
-                    <div className="text-center pt-1">
-                      <p className="font-montserrat text-[10px] text-gold/60 animate-pulse">
-                        Click card to see full artwork
-                      </p>
-                    </div>
-                  )}
-                  
-                  {/* Bottom symbol */}
-                  <div className="text-center pt-1">
-                    <img src="/icons/ui/gold/icon-sparkles.png" alt="" className="w-6 h-6 mx-auto opacity-40" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          {/* Back - Full Image */}
-          <div 
-            className="absolute inset-0 rounded-xl overflow-hidden"
-            style={{ 
-              backfaceVisibility: 'hidden', 
-              transform: 'rotateY(180deg)',
-              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 40px rgba(139, 90, 43, 0.2)',
-            }}
-          >
-            {/* Gold border */}
-            <div 
-              className="absolute inset-0 rounded-xl"
-              style={{
-                background: 'linear-gradient(135deg, #B8860B 0%, #DAA520 20%, #FFD700 50%, #DAA520 80%, #B8860B 100%)',
-                padding: '4px',
-              }}
-            />
-            
-            <div className="absolute inset-1 rounded-lg overflow-hidden bg-[#1a1a1a]">
-              {imageBase64 && (
-                <img 
-                  src={`data:image/png;base64,${imageBase64}`}
-                  alt={spell.title}
-                  className="w-full h-full object-contain bg-[#0a0a0a]"
-                />
-              )}
-              
-              {/* Flip back hint */}
-              <div className="absolute bottom-4 left-0 right-0 text-center">
-                <p className="font-montserrat text-xs text-gold/80 bg-black/60 inline-block px-3 py-1 rounded-full backdrop-blur-sm">
-                  Click to flip back
-                </p>
-              </div>
-              
-              {/* Title overlay at top */}
-              <div className="absolute top-4 left-0 right-0 text-center">
-                <p className="font-italiana text-lg text-gold bg-black/60 inline-block px-4 py-1 rounded-full backdrop-blur-sm">
-                  {spell.title}
-                </p>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-      </div>
-      
-      {/* Action Buttons Below Card */}
-      <div className="mt-6 space-y-4">
-        {/* View Full Ritual Button */}
-        <button
-          onClick={onViewFull}
-          className="w-full px-6 py-3 bg-crimson text-cream rounded-sm font-montserrat tracking-widest uppercase text-sm hover:bg-crimson-bright transition-all flex items-center justify-center gap-2 shadow-lg"
-          style={{ boxShadow: '0 4px 15px rgba(139, 90, 43, 0.4)' }}
-        >
-          <img src="/icons/ui/cream/icon-grimoire.png" alt="" className="w-5 h-5" />
-          View Full Ritual
-        </button>
-        
-        {/* Quick Actions */}
-        <div className="flex justify-center gap-3">
-          <button
-            onClick={onCopy}
-            className="p-3 bg-card/80 border border-primary/30 rounded-sm hover:bg-primary/10 transition-all shadow-md"
-            title="Copy to clipboard"
-          >
-            <img src="/icons/ui/gold/icon-copy.png" alt="Copy" className="w-5 h-5" />
-          </button>
-          <button
-            onClick={onSave}
-            disabled={isSaving}
-            className="p-3 bg-accent rounded-sm hover:bg-accent/90 transition-all disabled:opacity-50 shadow-md"
-            title="Save to Grimoire"
-          >
-            <img src="/icons/ui/gold/icon-save-book.png" alt="Save" className={`w-5 h-5 ${isSaving ? 'animate-pulse' : ''}`} />
-          </button>
-          <button
-            onClick={onNewSpell}
-            className="p-3 bg-card/80 border border-primary/30 rounded-sm hover:bg-primary/10 transition-all shadow-md"
-            title="New Spell"
-          >
-            <img src="/icons/ui/gold/icon-sparkles.png" alt="New Spell" className="w-5 h-5" />
-          </button>
-        </div>
-      </div>
-    </motion.div>
-    </SpellBorderFrame>
-  );
-};
-
-// Save Ward Button Component
 const SaveWardButton = ({ ward, spellTitle }) => {
   const [isSaving, setIsSaving] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
@@ -717,13 +395,26 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
   const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [subscriptionTier, setSubscriptionTier] = useState('free'); // Default to free
-  const [viewMode, setViewMode] = useState('card'); // 'card' or 'full' - start with card view
   // Research & Origins state
   const [isLoadingResearch, setIsLoadingResearch] = useState(false);
   const [researchData, setResearchData] = useState(null);
   const grimoireRef = useRef(null);
   const navigate = useNavigate();
-  
+
+  // Auto-load research_origins from spell data (V3 spells have it pre-attached)
+  useEffect(() => {
+    if (!researchData) {
+      const preAttached = spell?.research_origins
+        || spell?.spell_data?.research_origins;
+      if (preAttached) {
+        setResearchData({
+          research_origins: preAttached,
+          persona_used: archetype?.name || 'Guide'
+        });
+      }
+    }
+  }, [spell]); // eslint-disable-line
+
   // Normalize archetype ID for styling
   const normalizeId = (id) => {
     const map = { 'shiggy': 'shigg', 'kathleen': 'cathleen' };
@@ -1079,22 +770,6 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
     );
   }
 
-  // If viewing tarot card mode and we have tarot data
-  if (viewMode === 'card' && spell.tarot_card) {
-    return (
-      <TarotCardView 
-        spell={spell}
-        archetype={archetype}
-        style={style}
-        imageBase64={imageBase64}
-        onViewFull={() => setViewMode('full')}
-        onCopy={copySpellToClipboard}
-        onSave={saveToGrimoire}
-        onNewSpell={onNewSpell}
-        isSaving={isSaving}
-      />
-    );
-  }
 
   return (
     <SpellPageFrame backgroundImageUrl={generatedImages.header_image ? `data:image/png;base64,${generatedImages.header_image}` : undefined}>
@@ -1399,7 +1074,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                 const stepNum = step.step || step.number || idx + 1;
                 const stepsArray = spell.the_working?.steps || spell.steps || [];
                 return (
-                  <motion.div 
+                  <div 
                     key={stepNum}
                     className={`relative pl-12 pb-4 ${stepNum < stepsArray.length ? 'border-l-2 border-gold/30 ml-4' : 'ml-4'}`}
                   >
@@ -1437,7 +1112,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                         </p>
                       )}
                     </div>
-                  </motion.div>
+                  </div>
                 );
               })}
             </div>
@@ -1763,243 +1438,142 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
           isLoading={isLoadingImages}
         />
 
-        {/* Embossed Seal Stamp */}
-        <div className="flex justify-center py-6">
-          <div className="relative">
-            <img 
-              src={SEAL_LOGO_URL}
-              alt="Where The Crowlands Seal"
-              className="w-36 h-36 md:w-48 md:h-48 object-contain"
-              style={{ 
-                mixBlendMode: 'multiply',
-                opacity: 0.6
-              }}
-            />
-          </div>
-        </div>
-
-        {/* Parliament Crow Watermark */}
-        <div className="flex justify-center pb-4">
-          <img 
-            src={CROW_WATERMARK}
-            alt="Parliament Crow"
-            className="w-16 h-16 md:w-20 md:h-20 object-contain rounded-full"
-            style={{ 
-              opacity: 0.15,
-              filter: 'grayscale(30%)'
-            }}
-          />
-        </div>
-
-        {/* Research & Origins - Load button that expands inline (no collapse) */}
-        <section className="border border-crimson/30 rounded-sm overflow-hidden">
-          {!researchData && (
-            <button
-              onClick={fetchResearchOrigins}
-              disabled={isLoadingResearch}
-              className="w-full p-4 flex items-center justify-center gap-2 bg-crimson/10 hover:bg-crimson/20 transition-all disabled:opacity-70"
-              data-testid="show-research-origins-btn"
-            >
-              {isLoadingResearch ? (
-                <Loader2 className="w-5 h-5 animate-spin text-crimson" />
-              ) : (
-                <Search className="w-5 h-5 text-crimson" />
-              )}
-              <span className="font-cinzel text-base text-crimson">
-                {isLoadingResearch ? 'Researching...' : 'Show Research & Origins'}
-              </span>
-            </button>
-          )}
-
-          {researchData && (
-            <div className="p-4 space-y-5 bg-gold/5">
-              {/* Section Header */}
-              <div className="flex items-center gap-2 mb-2">
-                <Search className="w-5 h-5 text-crimson" />
-                <h3 className="font-cinzel text-base text-crimson">Research & Origins</h3>
-              </div>
-
-              {/* Guide Attribution */}
-              {(researchData.research_origins?.guide_section_title || researchData.persona_used) && (
-                <div className="bg-gold/10/80 p-3 rounded-sm border border-gold/30">
-                  <div className="flex items-center gap-2">
-                    <BrandIcon name="grimoire" size={16} />
-                    <span className="font-cinzel text-sm text-crimson uppercase tracking-wider">
-                      {researchData.research_origins?.guide_section_title || `${researchData.persona_used}'s Wisdom`}
-                    </span>
-                  </div>
-                </div>
-              )}
-
-              {/* Persona Voice Response (legacy combined endpoint) */}
-              {researchData.spellbook_response && (
-                <div className="bg-gold/10/80 p-4 rounded-sm border border-gold/30">
-                  <p className="font-crimson text-base text-navy-dark/80 leading-relaxed whitespace-pre-wrap">
-                    {researchData.spellbook_response}
-                  </p>
-                </div>
-              )}
-
-              {/* Research Origins Content */}
-              <div className="bg-white/60 p-4 rounded-sm border border-crimson/20 space-y-5">
-                <div className="flex items-center gap-2">
-                  <Search className="w-4 h-4 text-crimson" />
-                  <span className="font-cinzel text-sm text-crimson uppercase tracking-wider">
-                    Research & Origins
-                  </span>
-                </div>
-
-                {/* Opening Summary */}
-                {researchData.research_origins?.summary && (
-                  <p className="font-montserrat text-sm text-navy-dark/80 leading-relaxed">
-                    {researchData.research_origins.summary}
-                  </p>
-                )}
-
-                {/* Suggested Further Reading Grid */}
-                {researchData.research_origins?.suggested_further_reading?.length > 0 && (
-                  <div>
-                    <p className="font-montserrat text-xs text-crimson uppercase tracking-wider mb-3">Suggested Further Reading</p>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      {researchData.research_origins.suggested_further_reading.map((item, idx) => (
-                        <div key={idx} className="p-3 bg-navy-dark/5 rounded-sm border border-gold/20" data-testid={`reading-box-${idx}`}>
-                          <p className="font-cinzel text-sm text-crimson mb-1">{item.tradition_name}</p>
-                          <p className="font-montserrat text-xs text-navy-dark/70 leading-relaxed">{item.description}</p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* Ethical Statement */}
-                {researchData.research_origins?.ethical_statement && (
-                  <div className="py-3 border-y border-gold/20">
-                    <p className="font-crimson text-sm text-navy-dark/70 italic text-center leading-relaxed">
-                      {researchData.research_origins.ethical_statement}
-                    </p>
-                  </div>
-                )}
-
-                {/* Research Origins Table */}
-                {researchData.research_origins?.research_table?.length > 0 && (
-                  <div>
-                    <p className="font-montserrat text-xs text-crimson uppercase tracking-wider mb-3">Research Origins</p>
-                    <div className="overflow-x-auto">
-                      <table className="w-full text-xs border-collapse" data-testid="research-origins-table">
-                        <thead>
-                          <tr className="border-b border-crimson/30">
-                            <th className="font-montserrat text-left text-crimson uppercase tracking-wider p-2">Element</th>
-                            <th className="font-montserrat text-left text-crimson uppercase tracking-wider p-2">Origin</th>
-                            <th className="font-montserrat text-left text-crimson uppercase tracking-wider p-2">Tradition</th>
-                            <th className="font-montserrat text-left text-crimson uppercase tracking-wider p-2">Direct Source</th>
-                            <th className="font-montserrat text-left text-crimson uppercase tracking-wider p-2">Key Links</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {researchData.research_origins.research_table.map((row, idx) => (
-                            <tr key={idx} className="border-b border-gold/15 hover:bg-gold/5">
-                              <td className="p-2 font-montserrat text-navy-dark/90 font-medium">{row.element}</td>
-                              <td className="p-2 font-montserrat text-navy-dark/70">{row.origin}</td>
-                              <td className="p-2 font-montserrat text-navy-dark/70">{row.tradition}</td>
-                              <td className="p-2 font-crimson text-navy-dark/70 italic">{row.direct_source}</td>
-                              <td className="p-2">
-                                {row.key_links?.map((link, li) => (
-                                  <span key={li}>
-                                    {li > 0 && <span className="text-navy-dark/30"> / </span>}
-                                    <a 
-                                      href={link.url} 
-                                      target="_blank" 
-                                      rel="noopener noreferrer" 
-                                      className="text-crimson hover:text-crimson-bright underline font-montserrat"
-                                    >
-                                      {link.label || 'Source'}
-                                    </a>
-                                  </span>
-                                ))}
-                                {row.confidence_tier && (
-                                  <span className={`ml-1 text-[10px] font-montserrat uppercase ${
-                                    row.confidence_tier === 'VERIFIED' ? 'text-green-700' :
-                                    row.confidence_tier === 'REPORTED' ? 'text-amber-600' :
-                                    'text-navy-dark/50'
-                                  }`}>
-                                    [{row.confidence_tier}]
-                                  </span>
-                                )}
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                )}
-
-                {/* Legacy: Key Takeaways (for older spells without research_table) */}
-                {!researchData.research_origins?.research_table?.length && researchData.research_origins?.key_takeaways?.length > 0 && (
-                  <div>
-                    <p className="font-montserrat text-xs text-crimson uppercase tracking-wider mb-2">Key Points</p>
-                    <ul className="space-y-2">
-                      {researchData.research_origins.key_takeaways.map((takeaway, idx) => (
-                        <li key={idx} className="font-montserrat text-sm text-navy-dark/80 flex items-start gap-2">
-                          <span className="text-crimson mt-1 flex-shrink-0">&bull;</span>
-                          <span>{typeof takeaway === 'string' ? takeaway : takeaway.text || JSON.stringify(takeaway)}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-
-                {/* Legacy: Why This Works (for older spells without research_table) */}
-                {!researchData.research_origins?.research_table?.length && researchData.research_origins?.why_this_works_facts?.length > 0 && (
-                  <div>
-                    <p className="font-montserrat text-xs text-crimson uppercase tracking-wider mb-2">Why This Works</p>
-                    <ul className="space-y-2">
-                      {researchData.research_origins.why_this_works_facts.map((fact, idx) => (
-                        <li key={idx} className="font-montserrat text-sm text-navy-dark/70 italic flex items-start gap-2">
-                          <span className="text-gold mt-1 flex-shrink-0">&#9670;</span>
-                          <span>{typeof fact === 'string' ? fact : fact.claim || JSON.stringify(fact)}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-
-                {/* Legacy: Sources (for older spells without research_table) */}
-                {!researchData.research_origins?.research_table?.length && researchData.research_origins?.sources?.length > 0 && (
-                  <div>
-                    <p className="font-montserrat text-xs text-crimson uppercase tracking-wider mb-2">Sources</p>
-                    <div className="space-y-2">
-                      {researchData.research_origins.sources.map((source, idx) => (
-                        <div key={idx} className="p-2 bg-gold/5 rounded border border-gold/20">
-                          {typeof source === 'string' ? (
-                            <span className="font-montserrat text-xs text-crimson">{source}</span>
-                          ) : (
-                            <div>
-                              <span className="font-montserrat text-xs font-medium text-crimson">
-                                {source.author && `${source.author} — `}{source.title || 'Unknown'}
-                              </span>
-                              {source.year && <span className="font-montserrat text-xs text-crimson"> ({source.year})</span>}
-                              {source.url && (
-                                <a href={source.url} target="_blank" rel="noopener noreferrer" className="block text-xs text-gold hover:text-gold mt-1 underline">
-                                  View source
-                                </a>
-                              )}
-                            </div>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* Closing Statement */}
-                <p className="font-crimson text-xs text-navy-dark/50 italic text-center pt-2 border-t border-gold/15">
-                  {researchData.research_origins?.closing_statement || 'No vague spirituality. No unsourced claims. Every practice has a name, a date, an archive.'}
-                </p>
-              </div>
+        {/* Research & Origins — inline grimoire-styled with full data */}
+        {researchData?.research_origins && (
+          <div className="mt-2" data-testid="research-origins-inline">
+            <div className="flex items-center justify-center py-1.5 opacity-30">
+              <img src="/images/ornaments/divider-ornate-horizontal.png" alt="" className="h-3 w-auto" aria-hidden="true" />
             </div>
-          )}
-        </section>
+            <p className="grimoire-section-label text-center">Origins &amp; Sources</p>
+
+            {/* Opening summary */}
+            {(researchData.research_origins.opening_summary || researchData.research_origins.summary) && (
+              <p className="grimoire-body text-sm opacity-80 mb-1">
+                {researchData.research_origins.opening_summary || researchData.research_origins.summary}
+              </p>
+            )}
+
+            {/* Research table — compact rows with links preserved */}
+            {researchData.research_origins.research_table?.length > 0 && (
+              <div className="mt-1 space-y-1">
+                {researchData.research_origins.research_table.map((row, idx) => (
+                  <div key={idx} className="grimoire-body text-sm pl-3 border-l border-gold/20">
+                    <strong>{row.element}</strong>
+                    {row.tradition && <span> — {row.tradition}</span>}
+                    {row.origin && <span className="opacity-70"> ({row.origin})</span>}
+                    {row.direct_source && (
+                      <span className="italic opacity-70"> — {row.direct_source}</span>
+                    )}
+                    {row.confidence_tier && (
+                      <span className={`text-xs ml-1 opacity-50 ${
+                        row.confidence_tier === 'VERIFIED' ? 'text-green-800' :
+                        row.confidence_tier === 'REPORTED' ? 'text-amber-800' : 'text-stone-500'
+                      }`}>[{row.confidence_tier}]</span>
+                    )}
+                    {row.key_links?.length > 0 && (
+                      <span className="text-xs ml-1">
+                        {row.key_links.map((link, li) => (
+                          <span key={li}>
+                            {li > 0 && <span className="opacity-30"> / </span>}
+                            <a href={link.url} target="_blank" rel="noopener noreferrer"
+                              className="text-crimson hover:text-crimson-bright underline opacity-70 hover:opacity-100">
+                              {link.label || 'Source'}
+                            </a>
+                          </span>
+                        ))}
+                      </span>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Fallback: key takeaways if no research table */}
+            {!researchData.research_origins.research_table?.length && researchData.research_origins.key_takeaways?.length > 0 && (
+              <ul className="grimoire-inline-list mt-1">
+                {researchData.research_origins.key_takeaways.map((t, idx) => (
+                  <li key={idx} className="grimoire-body text-sm opacity-85">
+                    {typeof t === 'string' ? t : t.text || JSON.stringify(t)}
+                  </li>
+                ))}
+              </ul>
+            )}
+
+            {/* Why This Works */}
+            {researchData.research_origins.why_this_works_facts?.length > 0 && (
+              <div className="mt-1">
+                <p className="grimoire-section-label">Why This Works</p>
+                {researchData.research_origins.why_this_works_facts.map((fact, idx) => (
+                  <p key={idx} className="grimoire-body text-sm italic opacity-80 pl-3 border-l border-gold/15 mb-0.5">
+                    {typeof fact === 'string' ? fact : fact.claim || JSON.stringify(fact)}
+                  </p>
+                ))}
+              </div>
+            )}
+
+            {/* Suggested Further Reading */}
+            {researchData.research_origins.suggested_further_reading?.length > 0 && (
+              <div className="mt-1">
+                <p className="grimoire-section-label">Further Reading</p>
+                {researchData.research_origins.suggested_further_reading.map((item, idx) => (
+                  <p key={idx} className="grimoire-body text-sm mb-0.5">
+                    <strong>{item.tradition_name}</strong>
+                    {item.description && <span className="opacity-80"> — {item.description}</span>}
+                  </p>
+                ))}
+              </div>
+            )}
+
+            {/* Sources as bibliography with links */}
+            {researchData.research_origins.sources?.length > 0 && (
+              <div className="mt-1">
+                <p className="grimoire-section-label">Sources</p>
+                {researchData.research_origins.sources.map((src, idx) => (
+                  <p key={idx} className="grimoire-body text-xs opacity-70">
+                    {typeof src === 'string' ? src : (
+                      <>
+                        {src.author && <span>{src.author}. </span>}
+                        <em>{src.title || 'Unknown'}</em>
+                        {src.year && <span> ({src.year})</span>}
+                        {src.notes && <span> — {src.notes}</span>}
+                        {src.url && (
+                          <> — <a href={src.url} target="_blank" rel="noopener noreferrer"
+                            className="text-crimson hover:text-crimson-bright underline opacity-80 hover:opacity-100">
+                            View source
+                          </a></>
+                        )}
+                      </>
+                    )}
+                  </p>
+                ))}
+              </div>
+            )}
+
+            {/* Ethical statement */}
+            {researchData.research_origins.ethical_statement && (
+              <p className="grimoire-body text-xs italic text-center opacity-50 mt-1">
+                {researchData.research_origins.ethical_statement}
+              </p>
+            )}
+
+            {/* Closing statement */}
+            {researchData.research_origins.closing_statement && (
+              <p className="grimoire-body text-xs italic text-center opacity-40 mt-0.5">
+                {researchData.research_origins.closing_statement}
+              </p>
+            )}
+          </div>
+        )}
+
+        {/* Fallback for V2 spells without pre-attached research */}
+        {!researchData && (
+          <p
+            className="grimoire-body text-sm text-center opacity-40 cursor-pointer hover:opacity-70 mt-2 transition-opacity"
+            onClick={fetchResearchOrigins}
+          >
+            {isLoadingResearch ? 'Loading research...' : '\u2014 View Research & Origins \u2014'}
+          </p>
+        )}
 
         {/* Action Buttons */}
         <div className="flex flex-wrap gap-3 pt-4 border-t border-gold/30">
@@ -2035,7 +1609,6 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
         </div>
       </div>
         </div>
-      </div>
     </SpellPageFrame>
   );
 };
