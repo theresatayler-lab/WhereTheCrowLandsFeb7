@@ -18,7 +18,7 @@ import bcrypt
 import jwt
 import asyncio
 import anthropic
-import stripe as stripe_sdk  # Direct Stripe SDK — no Emergent dependency
+import stripe as stripe_sdk
 import base64
 from katherine_spells import KATHERINE_SAMPLE_SPELLS, seed_katherine_spells
 from cathleen_spells import CATHLEEN_SAMPLE_SPELLS, seed_cathleen_spells
@@ -1402,7 +1402,7 @@ OUTPUT FORMAT (JSON only, exactly 6 steps in guided_working):
 TONE: Calm, disciplined, reverent. "Quiet chapel," not sensational.
 The "before_you_begin" and "after_the_spell" sections must be: optional, non-dramatic, non-theatrical, aligned with Dion Fortune's wartime discipline (simple, repeatable, ethically contained). No complex props or ritual tools."""
 
-# Claude-specific system prompt for Invisible Helpers (via Emergent routing)
+# Claude-specific system prompt for Invisible Helpers
 BATTLE_CRY_SYSTEM_PROMPT_CLAUDE = """You are an ethical ritual-text generator for "Where the Crowlands."
 You are NOT a chatbot. You do not ask questions. You do not explain. You do not output analysis.
 You output ONE valid JSON object and nothing else.
@@ -2276,7 +2276,7 @@ Each step MUST include: step number, title, duration, instructions.
 
 Output valid JSON only."""
 
-        # Generate working via abstraction layer (using Claude via Emergent)
+        # Generate working via Claude
         # Track repair attempts for monitoring (lightweight circuit breaker)
         repair_attempted = False
         working_data = None
@@ -2288,7 +2288,7 @@ Output valid JSON only."""
                 override_config={
                     "temperature": 0.7,
                     "max_tokens": 1800
-                    # NOTE: No response_format for Anthropic/Emergent; rely on validator + repair
+                    # NOTE: No response_format for Anthropic; rely on validator + repair
                 }
             )
             # Surgical markdown extraction - only extract from fenced blocks, preserve otherwise
@@ -3076,7 +3076,6 @@ async def chat_with_ai(request: Request, message_data: ChatMessage, user = Depen
         else:
             system_message = DEFAULT_SYSTEM_MESSAGE
         
-        # Use Emergent LLM Key for chat
         response = await claude_chat_completion(
             messages=[
                 {"role": "system", "content": system_message},
@@ -3929,7 +3928,6 @@ async def suggest_ward(request: Request, body: WardRequest, user = Depends(get_c
         
         user_message += "\n\nPlease suggest 2-3 wards that would be perfect for them. Remember to vary your suggestions and make them specific to THIS person."
         
-        # Use Emergent LLM Key
         response_text = await claude_chat_completion(
             messages=[
                 {"role": "system", "content": WARD_FINDER_PROMPT},
@@ -4687,7 +4685,6 @@ Respond ONLY with the JSON object, no other text."""
         else:
             system_message = DEFAULT_SYSTEM_MESSAGE + "\n\nYou must respond with structured JSON as specified."
         
-        # Use Emergent LLM Key for spell generation
         response = await claude_chat_completion(
             messages=[
                 {"role": "system", "content": system_message},
@@ -4931,7 +4928,6 @@ async def generate_personalized_spell(request: Request, body: PersonalizedSpellR
         planner_start = time.time()
         planner_prompt = build_planner_prompt(spell_spec, persona_config, scenario)
         
-        # Use Emergent LLM Key for chat completion
         planner_text = await claude_chat_completion(
             messages=[
                 {"role": "system", "content": "You are a spell planner. Return ONLY valid JSON, no markdown, no explanation."},
@@ -4972,7 +4968,6 @@ async def generate_personalized_spell(request: Request, body: PersonalizedSpellR
         writer_start = time.time()
         writer_prompt = build_spell_writer_prompt(spell_spec, persona_config, scenario, plan)
         
-        # Use Emergent LLM Key for chat completion
         spell_text = await claude_chat_completion(
             messages=[
                 {"role": "system", "content": f"You are {persona_config['name']}, {persona_config['title']}. Write spells in your unique voice. Return ONLY valid JSON, no markdown."},

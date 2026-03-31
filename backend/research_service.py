@@ -7,6 +7,7 @@ import logging
 import time
 import re
 import uuid
+import asyncio
 from typing import Dict, List, Optional, Any
 # openai import kept only for DeepSeek compatibility (OpenAI-compatible API)
 from openai import AsyncOpenAI
@@ -689,31 +690,34 @@ Remember: You are THE ARCHIVIST. No persona voice. Strict JSON only."""
 
     for attempt in range(max_retries + 1):
         try:
-            response = await client.chat.completions.create(
-                model=DEEPSEEK_MODEL,
-                messages=[
-                    {"role": "system", "content": ARCHIVIST_SYSTEM_PROMPT},
-                    {"role": "user", "content": user_message}
-                ],
-                temperature=0.6,
-                max_tokens=2500,
-                response_format={"type": "json_object"}
+            response = await asyncio.wait_for(
+                client.chat.completions.create(
+                    model=DEEPSEEK_MODEL,
+                    messages=[
+                        {"role": "system", "content": ARCHIVIST_SYSTEM_PROMPT},
+                        {"role": "user", "content": user_message}
+                    ],
+                    temperature=0.6,
+                    max_tokens=2500,
+                    response_format={"type": "json_object"}
+                ),
+                timeout=45.0
             )
-            
+
             import json
             result = json.loads(response.choices[0].message.content)
-            
+
             # Validate output
             is_valid, errors = validate_research_output(result, research_mode)
-            
+
             if not is_valid:
                 logger.warning(f"[VALIDATION] Attempt {attempt+1}: {errors}")
                 if attempt < max_retries:
                     continue  # Retry
-            
+
             elapsed = time.time() - start_time
             logger.info(f"[PROVIDER_CALL] endpoint={endpoint_name} provider={provider} status=SUCCESS timing={elapsed:.3f}s attempt={attempt+1}")
-            
+
             return ResearchResponseV2(
                 research_mode=result.get("research_mode", research_mode),
                 summary=result.get("summary", ""),
@@ -724,7 +728,16 @@ Remember: You are THE ARCHIVIST. No persona voice. Strict JSON only."""
                 sources=result.get("sources", []),
                 source_map=result.get("source_map", {})
             )
-            
+
+        except asyncio.TimeoutError:
+            elapsed = time.time() - start_time
+            logger.warning(f"[PROVIDER_CALL] endpoint={endpoint_name} status=TIMEOUT attempt={attempt+1} timing={elapsed:.3f}s")
+            if attempt == max_retries:
+                return ResearchResponseV2(
+                    research_mode=research_mode,
+                    summary="The Archivist's research took too long. The working proceeds with the guide's own knowledge.",
+                    sources=[]
+                )
         except Exception as e:
             elapsed = time.time() - start_time
             logger.error(f"[PROVIDER_CALL] endpoint={endpoint_name} status=ERROR attempt={attempt+1} timing={elapsed:.3f}s error={str(e)}")

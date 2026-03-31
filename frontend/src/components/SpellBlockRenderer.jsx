@@ -5,12 +5,15 @@
 import React, { useState } from 'react';
 import { cn } from '../lib/utils';
 
-// Tiny flourish between major sections — just a thin gold line, nothing heavy
+// Ornamental flourish between major sections
 const Flourish = () => (
-  <div className="flex items-center justify-center py-3 opacity-40">
-    <div className="h-px w-8 bg-gold/50" />
-    <div className="w-1.5 h-1.5 rotate-45 border border-gold/50 mx-2" />
-    <div className="h-px w-8 bg-gold/50" />
+  <div className="flex items-center justify-center py-1.5 opacity-30">
+    <img
+      src="/images/ornaments/divider-ornate-horizontal.png"
+      alt=""
+      className="h-3 w-auto"
+      aria-hidden="true"
+    />
   </div>
 );
 
@@ -69,9 +72,9 @@ const ColdOpen = ({ c, essenceLine = '' }) => {
   const greetingMatchesEssence = c.greeting && essenceLine &&
     c.greeting.trim().toLowerCase() === essenceLine.trim().toLowerCase();
   return (
-  <div className="mb-2" data-testid="cold-open-block">
+  <div className="mb-1" data-testid="cold-open-block">
     {c.greeting && !greetingMatchesEssence && (
-      <p className="grimoire-body italic">{c.greeting}</p>
+      <p className="grimoire-body italic grimoire-drop-cap">{c.greeting}</p>
     )}
     {c.scene_setting && (
       <p className="grimoire-body mt-1 opacity-85">{c.scene_setting}</p>
@@ -85,7 +88,7 @@ const ColdOpen = ({ c, essenceLine = '' }) => {
 
 // Materials — inline list, not a framed card
 const Materials = ({ c }) => (
-  <div className="my-2" data-testid="materials-block">
+  <div className="my-1" data-testid="materials-block">
     <p className="grimoire-section-label">Gather</p>
     <ul className="grimoire-inline-list">
       {c.items?.map((item, i) => (
@@ -106,7 +109,7 @@ const Materials = ({ c }) => (
 
 // Stepper — numbered steps, flowing naturally
 const Stepper = ({ c }) => (
-  <div className="my-2" data-testid="stepper-block">
+  <div className="my-1" data-testid="stepper-block">
     <p className="grimoire-section-label">The Working</p>
     <ol className="grimoire-steps">
       {c.steps?.map((step, index) => (
@@ -134,7 +137,7 @@ const Stepper = ({ c }) => (
 
 // Lore Vignette — just prose with a small tradition label
 const LoreVignette = ({ c }) => (
-  <div className="my-2" data-testid="lore-vignette-block">
+  <div className="my-1" data-testid="lore-vignette-block">
     {(c.era || c.tradition || c.title) && (
       <p className="grimoire-section-label text-center">
         {c.era && `${c.era} · `}{c.tradition || c.title}
@@ -154,7 +157,7 @@ const LoreVignette = ({ c }) => (
 const Choice = ({ c }) => {
   const [selected, setSelected] = useState(null);
   return (
-    <div className="my-2" data-testid="choice-block">
+    <div className="my-1" data-testid="choice-block">
       <p className="grimoire-body">{c.prompt}</p>
       <div className="mt-1 pl-4 border-l border-gold/20 space-y-0.5">
         {c.options?.map((opt) => (
@@ -181,7 +184,7 @@ const Choice = ({ c }) => {
 
 // Closing — flowing farewell text
 const Closing = ({ c }) => (
-  <div className="my-2" data-testid="closing-block">
+  <div className="my-1" data-testid="closing-block">
     {c.license_to_depart && (
       <p className="grimoire-body">{c.license_to_depart}</p>
     )}
@@ -201,7 +204,7 @@ const Closing = ({ c }) => (
 
 // Reflection — prompts as a simple list
 const Reflection = ({ c }) => (
-  <div className="my-2" data-testid="reflection-block">
+  <div className="my-1" data-testid="reflection-block">
     {c.guide_note && (
       <p className="grimoire-body italic opacity-80">&ldquo;{c.guide_note}&rdquo;</p>
     )}
@@ -217,7 +220,7 @@ const Reflection = ({ c }) => (
 
 // Bird Oracle — small icon, italic message
 const BirdOracle = ({ c }) => (
-  <div className="my-2 text-center" data-testid="bird-oracle-block">
+  <div className="my-1 text-center" data-testid="bird-oracle-block">
     <img
       src="/icons/anchors/gold/anchor-bird.png"
       alt=""
@@ -237,7 +240,7 @@ const BirdOracle = ({ c }) => (
 
 // Ward — inline prose
 const Ward = ({ c }) => (
-  <div className="my-2" data-testid="ward-block">
+  <div className="my-1" data-testid="ward-block">
     {c.ward_name && (
       <p className="grimoire-section-label">{c.ward_name}</p>
     )}
@@ -273,7 +276,7 @@ const SongPrompt = ({ c }) => (
 
 // Evidence Card
 const EvidenceCard = ({ c }) => (
-  <div className="my-2" data-testid="evidence-card-block">
+  <div className="my-1" data-testid="evidence-card-block">
     {c.known?.length > 0 && (
       <div className="mb-1">
         <p className="grimoire-section-label">What the records show</p>
@@ -314,7 +317,7 @@ const SafetyNote = ({ c }) => (
 
 // Poetry Reading
 const PoetryReading = ({ c }) => (
-  <div className="my-2" data-testid="poetry-reading-block">
+  <div className="my-1" data-testid="poetry-reading-block">
     {c.poem_title && (
       <p className="grimoire-section-label">{c.poem_title}{c.poem_author && ` — ${c.poem_author}`}</p>
     )}
@@ -341,7 +344,7 @@ const ObservationTask = ({ c }) => (
 
 // Further Reading
 const FurtherReading = ({ c }) => (
-  <div className="my-2" data-testid="further-reading-block">
+  <div className="my-1" data-testid="further-reading-block">
     <p className="grimoire-section-label">Further Reading</p>
     {c.recommendations?.map((rec, i) => (
       <p key={i} className="grimoire-body text-sm">
