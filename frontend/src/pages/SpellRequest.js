@@ -694,12 +694,29 @@ export const SpellRequest = () => {
       toast.success('Your working has been crafted!');
       window.scrollTo({ top: 0, behavior: 'smooth' });
       
-      // PHASE 2: Lazy load images in background
-      if (data.spell?.image_prompt) {
+      // PHASE 2: Use server-generated images or lazy load as fallback
+      const serverImages = data.generated_images || data.spell?.generated_images;
+      if (serverImages && Object.keys(serverImages).length > 0) {
+        // V3 returned images directly — use them, no extra API calls
+        setSpellResult(prev => ({
+          ...prev,
+          image_base64: serverImages.header_image || prev.image_base64,
+          asset_plan: {
+            ...prev.asset_plan,
+            generated_assets: {
+              header_image: serverImages.header_image,
+              tarot_card_image: serverImages.tarot_card_image,
+              sigil: serverImages.sigil,
+              ...prev.asset_plan?.generated_assets,
+            }
+          }
+        }));
+      } else if (data.spell?.image_prompt) {
+        // Fallback: lazy load images via separate API calls
         const assetPlan = {
-          header: data.spell.image_prompt.header,
-          tarot: data.spell.image_prompt.tarot,
-          sigil: data.spell.image_prompt.sigil
+          header_image: data.spell.image_prompt.header,
+          tarot_card_image: data.spell.image_prompt.tarot,
+          sigil: data.spell.image_prompt.sigil,
         };
         lazyLoadImages(assetPlan, data.archetype?.id || spellSpec.persona_id);
       }

@@ -431,6 +431,9 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
   
   // Get V3 generated images (header, tarot) from spell data
   const generatedImages = spell?.generated_images || spell?.spell_data?.generated_images || {};
+
+  // Quick tier CSS visuals (static per-guide treatment, no AI images)
+  const quickVisuals = spell?.quick_visuals || null;
   
   // Helper to get woodcut icon path for a section (replaces emoji micro-icons)
   const getSectionIconPath = (sectionName) => {
@@ -772,7 +775,11 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
 
 
   return (
-    <SpellPageFrame backgroundImageUrl={generatedImages.header_image ? `data:image/png;base64,${generatedImages.header_image}` : undefined}>
+    <SpellPageFrame backgroundImageUrl={
+      generatedImages.header_image
+        ? `data:image/png;base64,${generatedImages.header_image}`
+        : quickVisuals?.page_gradient || undefined
+    }>
         <div ref={grimoireRef}>
         <SpellHeader
           title={spell?.tarot_card?.title || spell?.title || "Saved Spell"}

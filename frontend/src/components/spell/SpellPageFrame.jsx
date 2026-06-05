@@ -12,11 +12,11 @@ export default function SpellPageFrame({ children, backgroundImageUrl }) {
         <div
           className="spell-atmosphere"
           aria-hidden="true"
-          style={{
-            backgroundImage: `url(${backgroundImageUrl})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
+          style={
+            backgroundImageUrl.startsWith("linear-gradient") || backgroundImageUrl.startsWith("radial-gradient")
+              ? { backgroundImage: backgroundImageUrl }
+              : { backgroundImage: `url(${backgroundImageUrl})`, backgroundSize: "cover", backgroundPosition: "center" }
+          }
         />
       ) : null}
 
