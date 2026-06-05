@@ -56,13 +56,21 @@ import random
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
-# MongoDB connection
+# MongoDB connection — deferred to avoid event loop conflicts with Motor 3.7+
 mongo_url = os.environ['MONGO_URL']
-client = AsyncIOMotorClient(mongo_url)
-db = client[os.environ['DB_NAME']]
+db_name = os.environ['DB_NAME']
+client = None
+db = None
+image_storage = None
 
-# Initialize GridFS-based image storage (solves DocumentTooLarge error)
-image_storage = ImageStorage(db)
+def _ensure_db():
+    """Lazily initialize MongoDB client on first use (inside the running event loop)."""
+    global client, db, image_storage
+    if client is None:
+        client = AsyncIOMotorClient(mongo_url)
+        db = client[db_name]
+        image_storage = ImageStorage(db)
+    return db
 
 # ============================================================================
 # RATE LIMITING
@@ -6745,6 +6753,7 @@ logger = logging.getLogger(__name__)
 @app.on_event('startup')
 async def startup_ensure_indexes():
     """Create TTL index on spell_jobs so completed jobs auto-delete after 30 days."""
+    _ensure_db()
     await db.spell_jobs.create_index('created_at', expireAfterSeconds=86400 * 30)
     logger.info("[STARTUP] TTL index ensured on spell_jobs (30 day expiry)")
     
