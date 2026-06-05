@@ -5611,30 +5611,63 @@ async def generate_spell_v3_endpoint(request: Request, body: SpellRequestV3, use
         
         # Generate images for the spell (after research_origins, before return)
         generated_images = {}
-        if not skip_images:
+        tier_name = selected_tier.value
+        if skip_images:
+            # Quick tier: attach static CSS visuals instead of AI images
+            try:
+                from image_style_matrix import QUICK_SPELL_VISUALS
+                quick_visuals = QUICK_SPELL_VISUALS.get(persona_id)
+                if quick_visuals:
+                    spell_output['quick_visuals'] = quick_visuals
+                    logging.info(f"[V3] Attached quick_visuals for {persona_id}")
+            except Exception as qv_err:
+                logging.warning(f"[V3] Quick visuals lookup failed: {qv_err}")
+        else:
             try:
                 from image_provider import generate_image as gen_img
                 from spell_prompts import build_image_prompt
-                
+                import asyncio
+
                 persona_cfg = get_persona_config(persona_id)
                 spell_title = spell_output.get('title', 'Spell')
-                
-                # Header image (scene)
-                header_prompt = build_image_prompt("header_image", {}, persona_cfg, spell_title)
-                header_result = await gen_img(prompt=header_prompt, persona_id=persona_id, asset_type="header")
-                if header_result:
-                    generated_images['header_image'] = header_result
-                
-                # Tarot card (emblem, uses spell content for unique tokens)
+
+                # Build all image tasks — run in parallel
+                image_tasks = {}
+
+                # Header image (all paid tiers)
+                header_prompt = build_image_prompt("header_image", {}, persona_cfg, spell_title, spell_output)
+                image_tasks['header_image'] = gen_img(
+                    prompt=header_prompt, persona_id=persona_id,
+                    asset_type="header", tier=tier_name
+                )
+
+                # Tarot card (all paid tiers, uses spell content for unique tokens)
                 tarot_prompt = build_image_prompt("tarot_card_image", {}, persona_cfg, spell_title, spell_output)
-                tarot_result = await gen_img(prompt=tarot_prompt, persona_id=persona_id, asset_type="tarot")
-                if tarot_result:
-                    generated_images['tarot_card_image'] = tarot_result
-                
-                # Attach to spell output
+                image_tasks['tarot_card_image'] = gen_img(
+                    prompt=tarot_prompt, persona_id=persona_id,
+                    asset_type="tarot", tier=tier_name
+                )
+
+                # Sigil (premium tier only)
+                if tier_name == 'premium':
+                    sigil_prompt = build_image_prompt("sigil", {}, persona_cfg, spell_title, spell_output)
+                    image_tasks['sigil'] = gen_img(
+                        prompt=sigil_prompt, persona_id=persona_id,
+                        asset_type="sigil", tier=tier_name
+                    )
+
+                # Generate all images in parallel
+                keys = list(image_tasks.keys())
+                results = await asyncio.gather(*image_tasks.values(), return_exceptions=True)
+                for key, result in zip(keys, results):
+                    if result and not isinstance(result, Exception):
+                        generated_images[key] = result
+                    elif isinstance(result, Exception):
+                        logging.warning(f"[V3] {key} generation failed: {result}")
+
                 if generated_images:
                     spell_output['generated_images'] = generated_images
-                    logging.info(f"[V3] Generated {len(generated_images)} images for spell")
+                    logging.info(f"[V3] Generated {len(generated_images)} images ({tier_name} tier) in parallel")
             except Exception as img_err:
                 logging.warning(f"[V3] Image generation failed (non-fatal): {img_err}")
         

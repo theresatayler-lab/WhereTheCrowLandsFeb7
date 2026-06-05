@@ -1,11 +1,13 @@
 # Image Provider Abstraction
-# Single interface for all image generation with per-asset-type provider routing
-# Providers: gemini (Google direct), openai (GPT Image 1), library (static), flux (future)
-# Config: Uses per-asset routing by default, IMAGE_PROVIDER env overrides for all
+# Single interface for all image generation with tier-aware per-asset-type provider routing
+# Providers: gemini, openai, fal (Flux Pro), ideogram, library (static)
+# Config: Tier-aware routing by default, IMAGE_PROVIDER env overrides for all
 #
 # INDEPENDENCE: This module uses YOUR API keys directly — no Emergent dependencies.
-#   - GOOGLE_API_KEY for Gemini (headers, atmospheric scenes)
-#   - OPENAI_API_KEY for GPT Image 1 (tarot cards, sigils, structured compositions)
+#   - GOOGLE_API_KEY for Gemini (standard headers, atmospheric scenes)
+#   - OPENAI_API_KEY for GPT Image 1 (tarot cards, structured compositions)
+#   - FAL_API_KEY for fal.ai Flux Pro (premium headers, cinematic detail)
+#   - IDEOGRAM_API_KEY for Ideogram V2 (premium sigils, geometric design)
 
 import os
 import hashlib
@@ -20,13 +22,14 @@ logger = logging.getLogger(__name__)
 
 
 class ImageProvider(Enum):
-    LIBRARY = "library"   # Static pre-made images
-    GEMINI = "gemini"     # Google Gemini (direct, YOUR key)
-    OPENAI = "openai"     # OpenAI GPT Image 1 / DALL-E 3 (YOUR key)
-    FLUX = "flux"         # Future: fal.ai/Flux
+    LIBRARY = "library"     # Static pre-made images
+    GEMINI = "gemini"       # Google Gemini (direct, YOUR key)
+    OPENAI = "openai"       # OpenAI GPT Image 1 / DALL-E 3 (YOUR key)
+    FLUX = "flux"           # fal.ai Flux Pro (YOUR FAL_API_KEY)
+    IDEOGRAM = "ideogram"   # Ideogram V2 (YOUR IDEOGRAM_API_KEY)
 
 
-# Per-asset-type provider routing — best provider for each job
+# Per-asset-type provider routing — best provider for each job (standard tier)
 ASSET_PROVIDER_MAP = {
     "header":  "gemini",   # Atmospheric scenes — fast, moody
     "tarot":   "openai",   # Structured emblems — precise, symmetrical
@@ -34,35 +37,44 @@ ASSET_PROVIDER_MAP = {
     "divider": "static",   # Pre-made PNGs — instant
 }
 
+# Tier-aware routing — premium tier uses upgraded providers
+TIER_PROVIDER_MAP = {
+    "quick":    {},  # No images generated
+    "standard": {"header": "gemini",  "tarot": "openai", "sigil": "openai",   "divider": "static"},
+    "premium":  {"header": "flux",    "tarot": "openai", "sigil": "ideogram", "divider": "static"},
+}
 
-def get_image_provider(asset_type: str = None) -> ImageProvider:
-    """Get the image provider for a given asset type.
 
-    Uses per-asset routing by default. IMAGE_PROVIDER env var overrides all.
+def _resolve_provider_name(name: str) -> ImageProvider:
+    """Map a provider name string to its enum value."""
+    mapping = {
+        "gemini": ImageProvider.GEMINI,
+        "openai": ImageProvider.OPENAI,
+        "dalle": ImageProvider.OPENAI,
+        "flux": ImageProvider.FLUX,
+        "fal": ImageProvider.FLUX,
+        "ideogram": ImageProvider.IDEOGRAM,
+        "library": ImageProvider.LIBRARY,
+        "static": ImageProvider.LIBRARY,
+    }
+    return mapping.get(name, ImageProvider.GEMINI)
+
+
+def get_image_provider(asset_type: str = None, tier: str = "standard") -> ImageProvider:
+    """Get the image provider for a given asset type and spell tier.
+
+    Uses tier-aware routing by default. IMAGE_PROVIDER env var overrides all.
     """
-    # Global override from env (if set explicitly)
     override = os.environ.get("IMAGE_PROVIDER", "").lower()
     if override and override != "auto":
-        if override == "gemini":
-            return ImageProvider.GEMINI
-        elif override in ("openai", "dalle"):
-            return ImageProvider.OPENAI
-        elif override == "flux":
-            return ImageProvider.FLUX
-        elif override == "library":
-            return ImageProvider.LIBRARY
+        return _resolve_provider_name(override)
 
-    # Per-asset routing (default behavior)
     if asset_type:
-        provider_name = ASSET_PROVIDER_MAP.get(asset_type, "gemini")
-        if provider_name == "gemini":
-            return ImageProvider.GEMINI
-        elif provider_name == "openai":
-            return ImageProvider.OPENAI
-        elif provider_name == "static":
-            return ImageProvider.LIBRARY
+        tier_map = TIER_PROVIDER_MAP.get(tier, TIER_PROVIDER_MAP["standard"])
+        provider_name = tier_map.get(asset_type) or ASSET_PROVIDER_MAP.get(asset_type, "gemini")
+        return _resolve_provider_name(provider_name)
 
-    return ImageProvider.GEMINI  # Default fallback
+    return ImageProvider.GEMINI
 
 
 # ============================================================================
@@ -258,6 +270,130 @@ async def _generate_openai(prompt: str, cache_key: str, size: str = "1024x1024")
 
 
 # ============================================================================
+# FAL.AI FLUX PRO - Direct HTTP API (YOUR FAL_API_KEY)
+# Best for: Premium headers — cinematic, high-detail atmospheric scenes
+# ============================================================================
+
+async def _generate_fal(prompt: str, cache_key: str, size: str = "landscape_16_9") -> Optional[str]:
+    """Generate image via fal.ai Flux Pro (direct HTTP API, your key)."""
+    api_key = os.environ.get('FAL_API_KEY')
+    if not api_key:
+        logger.error("[FAL] FAL_API_KEY not set")
+        return None
+
+    try:
+        import httpx
+
+        headers = {"Authorization": f"Key {api_key}", "Content-Type": "application/json"}
+        payload = {
+            "prompt": prompt,
+            "image_size": size,
+            "num_images": 1,
+            "enable_safety_checker": True,
+        }
+
+        async with httpx.AsyncClient(timeout=90.0) as client:
+            # Submit generation request
+            submit_resp = await client.post(
+                "https://queue.fal.run/fal-ai/flux-pro/v1.1",
+                headers=headers,
+                json=payload,
+            )
+            submit_resp.raise_for_status()
+            result_data = submit_resp.json()
+
+            # fal.ai queue API: if response has 'images', it completed synchronously
+            images = result_data.get("images")
+            if not images:
+                # Async queue — poll for result
+                request_id = result_data.get("request_id")
+                if not request_id:
+                    logger.warning("[FAL] No request_id or images in response")
+                    return None
+
+                status_url = f"https://queue.fal.run/fal-ai/flux-pro/v1.1/requests/{request_id}/status"
+                for _ in range(30):  # Poll up to 60 seconds
+                    import asyncio
+                    await asyncio.sleep(2)
+                    status_resp = await client.get(status_url, headers=headers)
+                    status_data = status_resp.json()
+                    if status_data.get("status") == "COMPLETED":
+                        result_url = f"https://queue.fal.run/fal-ai/flux-pro/v1.1/requests/{request_id}"
+                        result_resp = await client.get(result_url, headers=headers)
+                        images = result_resp.json().get("images")
+                        break
+                    elif status_data.get("status") in ("FAILED", "CANCELLED"):
+                        logger.error(f"[FAL] Generation {status_data.get('status')}")
+                        return None
+
+            if images and len(images) > 0:
+                image_url = images[0].get("url")
+                if image_url:
+                    img_resp = await client.get(image_url)
+                    image_data = base64.b64encode(img_resp.content).decode("utf-8")
+                    set_cached_image(cache_key, image_data)
+                    logger.info(f"[FAL] Image generated via Flux Pro")
+                    return image_data
+
+        logger.warning("[FAL] No image in response")
+        return None
+    except Exception as e:
+        logger.error(f"[FAL] Generation failed: {e}")
+        return None
+
+
+# ============================================================================
+# IDEOGRAM V2 - Direct HTTP API (YOUR IDEOGRAM_API_KEY)
+# Best for: Sigils — clean geometric linework, precise symbolic compositions
+# ============================================================================
+
+async def _generate_ideogram(prompt: str, cache_key: str) -> Optional[str]:
+    """Generate image via Ideogram V2 (direct HTTP API, your key)."""
+    api_key = os.environ.get('IDEOGRAM_API_KEY')
+    if not api_key:
+        logger.error("[IDEOGRAM] IDEOGRAM_API_KEY not set")
+        return None
+
+    try:
+        import httpx
+
+        headers = {"Api-Key": api_key, "Content-Type": "application/json"}
+        payload = {
+            "image_request": {
+                "prompt": prompt,
+                "model": "V_2",
+                "style_type": "DESIGN",
+                "aspect_ratio": "ASPECT_1_1",
+            }
+        }
+
+        async with httpx.AsyncClient(timeout=60.0) as client:
+            resp = await client.post(
+                "https://api.ideogram.ai/generate",
+                headers=headers,
+                json=payload,
+            )
+            resp.raise_for_status()
+            data = resp.json()
+
+            images = data.get("data", [])
+            if images and len(images) > 0:
+                image_url = images[0].get("url")
+                if image_url:
+                    img_resp = await client.get(image_url)
+                    image_data = base64.b64encode(img_resp.content).decode("utf-8")
+                    set_cached_image(cache_key, image_data)
+                    logger.info("[IDEOGRAM] Image generated via Ideogram V2")
+                    return image_data
+
+        logger.warning("[IDEOGRAM] No image in response")
+        return None
+    except Exception as e:
+        logger.error(f"[IDEOGRAM] Generation failed: {e}")
+        return None
+
+
+# ============================================================================
 # MAIN INTERFACE - generate_image() with per-asset routing
 # ============================================================================
 
@@ -266,15 +402,22 @@ async def generate_image(
     persona_id: str,
     asset_type: str,   # "header", "tarot", "sigil", "divider"
     size: str = "1024x1024",
+    tier: str = "standard",
     openai_client=None  # Legacy param, ignored — uses OPENAI_API_KEY directly
 ) -> Optional[str]:
     """
-    Main image generation interface with per-asset-type provider routing.
+    Main image generation interface with tier-aware per-asset-type provider routing.
 
-    Default routing:
+    Standard tier routing:
         header  → Google Gemini (fast, atmospheric)
         tarot   → OpenAI GPT Image 1 (precise, structured)
         sigil   → OpenAI GPT Image 1 (clean geometry)
+        divider → Static PNGs (instant)
+
+    Premium tier routing:
+        header  → fal.ai Flux Pro (cinematic, high-detail)
+        tarot   → OpenAI GPT Image 1 (precise, structured)
+        sigil   → Ideogram V2 (clean geometric design)
         divider → Static PNGs (instant)
 
     Override: Set IMAGE_PROVIDER env to force all assets to one provider.
@@ -299,8 +442,8 @@ async def generate_image(
         logger.info(f"[CACHE HIT] {asset_type} for {persona_id}")
         return cached
 
-    # Get provider for this asset type
-    provider = get_image_provider(asset_type)
+    # Get provider for this asset type + tier
+    provider = get_image_provider(asset_type, tier)
 
     # Library mode — try static first, fall back to Gemini
     if provider == ImageProvider.LIBRARY:
@@ -318,12 +461,34 @@ async def generate_image(
         logger.info(f"[LIBRARY] No static {asset_type} for {persona_id}, falling back to Gemini")
         provider = ImageProvider.GEMINI
 
+    # fal.ai Flux Pro (YOUR key) — premium headers
+    if provider == ImageProvider.FLUX:
+        fal_size = "landscape_16_9" if asset_type == "header" else "square"
+        result = await _generate_fal(prompt, cache_key, fal_size)
+        if result:
+            return result
+        logger.info(f"[FAL] Failed, falling back to Gemini for {asset_type}")
+        result = await _generate_gemini(prompt, cache_key)
+        if result:
+            return result
+        return None
+
+    # Ideogram V2 (YOUR key) — premium sigils
+    if provider == ImageProvider.IDEOGRAM:
+        result = await _generate_ideogram(prompt, cache_key)
+        if result:
+            return result
+        logger.info(f"[IDEOGRAM] Failed, falling back to OpenAI for {asset_type}")
+        result = await _generate_openai(prompt, cache_key, size)
+        if result:
+            return result
+        return None
+
     # Google Gemini (YOUR key)
     if provider == ImageProvider.GEMINI:
         result = await _generate_gemini(prompt, cache_key)
         if result:
             return result
-        # Fall back to OpenAI if Gemini fails
         logger.info(f"[GEMINI] Failed, falling back to OpenAI for {asset_type}")
         result = await _generate_openai(prompt, cache_key, size)
         if result:
@@ -335,17 +500,11 @@ async def generate_image(
         result = await _generate_openai(prompt, cache_key, size)
         if result:
             return result
-        # Fall back to Gemini if OpenAI fails
         logger.info(f"[OPENAI] Failed, falling back to Gemini for {asset_type}")
         result = await _generate_gemini(prompt, cache_key)
         if result:
             return result
         return None
-
-    # FLUX (future — fal.ai)
-    if provider == ImageProvider.FLUX:
-        logger.warning("Flux provider not yet implemented")
-        return await _generate_gemini(prompt, cache_key)
 
     return None
 
