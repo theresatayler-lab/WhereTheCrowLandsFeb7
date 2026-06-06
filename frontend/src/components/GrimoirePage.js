@@ -509,63 +509,69 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
       toast.error('Unable to generate PDF - page reference missing');
       return;
     }
-    
+
     setIsGeneratingPdf(true);
-    
+
     try {
-      console.log('Attempting PDF generation with jsPDF + html2canvas...');
       const element = grimoireRef.current;
-      
-      // Wait a brief moment for any images to load
-      await new Promise(resolve => setTimeout(resolve, 500));
-      
-      // Create canvas from the element
+
+      // Hide UI-only elements during capture
+      const hiddenEls = element.querySelectorAll('[data-pdf-hide]');
+      hiddenEls.forEach(el => el.style.display = 'none');
+
+      await new Promise(resolve => setTimeout(resolve, 300));
+
+      const captureWidth = 800;
       const canvas = await html2canvas(element, {
         scale: 2,
         useCORS: true,
         allowTaint: true,
-        backgroundColor: '#D8CBB3',
+        backgroundColor: '#F3EFE8',
         logging: false,
-        windowWidth: element.scrollWidth,
-        windowHeight: element.scrollHeight
+        width: captureWidth,
+        windowWidth: captureWidth,
+        scrollX: 0,
+        scrollY: 0,
+        x: 0,
+        y: 0,
       });
-      
-      // Calculate PDF dimensions
-      const imgData = canvas.toDataURL('image/jpeg', 0.95);
-      const imgWidth = 210; // A4 width in mm
-      const pageHeight = 297; // A4 height in mm
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      
-      // Create PDF
-      const pdf = new jsPDF({
-        orientation: imgHeight > imgWidth ? 'portrait' : 'landscape',
-        unit: 'mm',
-        format: 'a4'
-      });
-      
+
+      // Restore hidden elements
+      hiddenEls.forEach(el => el.style.display = '');
+
+      const imgData = canvas.toDataURL('image/jpeg', 0.92);
+      const margin = 8;
+      const pdfPageWidth = 210;
+      const pdfPageHeight = 297;
+      const contentWidth = pdfPageWidth - (margin * 2);
+      const imgHeight = (canvas.height * contentWidth) / canvas.width;
+
+      const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+
       let heightLeft = imgHeight;
-      let position = 0;
-      
-      // Add first page
-      pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
-      
-      // Add remaining pages if content is longer than one page
+      let position = margin;
+
+      pdf.addImage(imgData, 'JPEG', margin, position, contentWidth, imgHeight);
+      heightLeft -= (pdfPageHeight - margin * 2);
+
       while (heightLeft > 0) {
-        position = heightLeft - imgHeight;
         pdf.addPage();
-        pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
+        position = margin - (imgHeight - heightLeft);
+        pdf.addImage(imgData, 'JPEG', margin, position, contentWidth, imgHeight);
+        heightLeft -= (pdfPageHeight - margin * 2);
       }
-      
+
       const filename = `${spell.title?.replace(/[^a-z0-9]/gi, '_') || 'spell'}_grimoire.pdf`;
       pdf.save(filename);
-      
+
       toast.success('PDF downloaded to your Downloads folder!');
     } catch (error) {
       console.error('PDF generation error:', error);
-      
-      // Fallback: Open print dialog
+
+      // Restore hidden elements on error
+      const errHiddenEls = grimoireRef.current?.querySelectorAll('[data-pdf-hide]');
+      if (errHiddenEls) errHiddenEls.forEach(el => el.style.display = '');
+
       toast.info('Opening print dialog - use "Save as PDF" option');
       window.print();
     } finally {
@@ -1575,6 +1581,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
         {/* Fallback for V2 spells without pre-attached research */}
         {!researchData && (
           <p
+            data-pdf-hide
             className="grimoire-body text-sm text-center opacity-40 cursor-pointer hover:opacity-70 mt-2 transition-opacity"
             onClick={fetchResearchOrigins}
           >
@@ -1583,7 +1590,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
         )}
 
         {/* Action Buttons */}
-        <div className="flex flex-wrap gap-3 pt-4 border-t border-gold/30">
+        <div data-pdf-hide className="flex flex-wrap gap-3 pt-4 border-t border-gold/30">
           <button
             onClick={saveToGrimoire}
             disabled={isSaving}
