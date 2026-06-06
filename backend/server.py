@@ -1006,6 +1006,29 @@ def sanitize_for_prompt(text: str, max_length: int = 2000) -> str:
     return text.strip()
 
 
+def normalize_multiselect_fields(spell_spec: dict) -> dict:
+    """Normalize multi-select array fields to strings for prompt compatibility.
+    Ensures anchor_object and desired_feeling are always strings, never arrays."""
+    if isinstance(spell_spec.get('alchemize_categories'), list) and spell_spec['alchemize_categories']:
+        spell_spec['alchemize_category'] = spell_spec['alchemize_categories'][0]
+        spell_spec['desired_feeling'] = spell_spec['alchemize_categories'][0]
+        spell_spec['alchemize_categories_display'] = ', '.join(
+            c.replace('_', ' ').title() for c in spell_spec['alchemize_categories']
+        )
+    if isinstance(spell_spec.get('anchor_objects'), list) and spell_spec['anchor_objects']:
+        spell_spec['anchor_object'] = spell_spec['anchor_objects'][0]
+        spell_spec['anchor_objects_display'] = ', '.join(
+            a.replace('_', ' ').title() for a in spell_spec['anchor_objects']
+        )
+    for key in ('desired_feeling', 'alchemize_category', 'anchor_object'):
+        val = spell_spec.get(key)
+        if isinstance(val, list):
+            spell_spec[key] = val[0] if val else ''
+        elif val is not None and not isinstance(val, str):
+            spell_spec[key] = str(val)
+    return spell_spec
+
+
 def transform_research_packet_to_origins(research_packet: dict, rich_research: dict = None) -> dict:
     """Transform archivist research_packet into research_origins format for the frontend.
     If rich_research (from parallel DeepSeek call) is available, use it for the full spec."""
@@ -4876,14 +4899,16 @@ async def generate_personalized_spell(request: Request, body: PersonalizedSpellR
                             'current': spell_count
                         })
         
+        normalize_multiselect_fields(spell_spec)
+
         # Resolve "choose_for_me" persona based on feeling and anchor
         # Use standardized IDs: shigg, cathleen, katherine
         persona_id = spell_spec.get('persona_id', 'shigg')
-        
+
         # Normalize legacy IDs
         id_map = {'shiggy': 'shigg', 'kathleen': 'cathleen'}
         persona_id = id_map.get(persona_id, persona_id)
-        
+
         if persona_id == 'choose_for_me':
             feeling = spell_spec.get('desired_feeling', 'calm')
             anchor = spell_spec.get('anchor_object', 'candle')
@@ -5259,11 +5284,13 @@ async def generate_spell_v2_endpoint(request: Request, body: SpellRequestV2, use
                             'current': spell_count
                         })
         
+        normalize_multiselect_fields(spell_spec)
+
         # Resolve persona ID
         persona_id = spell_spec.get('persona_id', 'shigg')
         id_map = {'shiggy': 'shigg', 'kathleen': 'cathleen'}
         persona_id = id_map.get(persona_id, persona_id)
-        
+
         if persona_id == 'choose_for_me':
             feeling = spell_spec.get('desired_feeling', 'calm')
             anchor = spell_spec.get('anchor_object', 'candle')
@@ -5417,18 +5444,7 @@ async def generate_spell_v3_endpoint(request: Request, body: SpellRequestV3, use
         if belief_mode not in BELIEF_MODES:
             belief_mode = "SPIRITUAL"
 
-        # Normalize multi-select arrays into strings for prompt compatibility
-        if isinstance(spell_spec.get('alchemize_categories'), list) and spell_spec['alchemize_categories']:
-            spell_spec['alchemize_category'] = spell_spec['alchemize_categories'][0]
-            spell_spec['desired_feeling'] = spell_spec['alchemize_categories'][0]
-            spell_spec['alchemize_categories_display'] = ', '.join(
-                c.replace('_', ' ').title() for c in spell_spec['alchemize_categories']
-            )
-        if isinstance(spell_spec.get('anchor_objects'), list) and spell_spec['anchor_objects']:
-            spell_spec['anchor_object'] = spell_spec['anchor_objects'][0]
-            spell_spec['anchor_objects_display'] = ', '.join(
-                a.replace('_', ' ').title() for a in spell_spec['anchor_objects']
-            )
+        normalize_multiselect_fields(spell_spec)
 
         # Sanitize user-provided text fields against prompt injection
         for key in ('user_query', 'intention', 'desired_feeling', 'user_name', 'anchor_object', 'setting', 'situation'):
@@ -5772,18 +5788,7 @@ async def _generate_spell_background(job_id: str, request_data: dict, user_id: O
         if belief_mode not in BELIEF_MODES:
             belief_mode = "SPIRITUAL"
         
-        # Normalize multi-select arrays into strings for prompt compatibility
-        if isinstance(spell_spec.get('alchemize_categories'), list) and spell_spec['alchemize_categories']:
-            spell_spec['alchemize_category'] = spell_spec['alchemize_categories'][0]
-            spell_spec['desired_feeling'] = spell_spec['alchemize_categories'][0]
-            spell_spec['alchemize_categories_display'] = ', '.join(
-                c.replace('_', ' ').title() for c in spell_spec['alchemize_categories']
-            )
-        if isinstance(spell_spec.get('anchor_objects'), list) and spell_spec['anchor_objects']:
-            spell_spec['anchor_object'] = spell_spec['anchor_objects'][0]
-            spell_spec['anchor_objects_display'] = ', '.join(
-                a.replace('_', ' ').title() for a in spell_spec['anchor_objects']
-            )
+        normalize_multiselect_fields(spell_spec)
 
         # Sanitize user-provided text fields
         for key in ('user_query', 'intention', 'desired_feeling', 'user_name', 'anchor_object', 'setting', 'situation'):
