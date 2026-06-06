@@ -77,10 +77,10 @@ You are planning a spell for {guide_config.get('name', 'Guide')}, {guide_config.
 
 ## SEEKER'S REQUEST
 - Query: "{spell_spec.get('user_query', 'No specific query')}"
-- Desired Feeling: {spell_spec.get('desired_feeling', 'calm')}
+- Desired Feeling: {spell_spec.get('alchemize_categories_display', spell_spec.get('desired_feeling', 'calm'))}
 - Time Available: {spell_spec.get('time', '10_min')}
 - Belief Mode: {belief_mode}
-- Anchor Object: {spell_spec.get('anchor_object', 'candle')}
+- Anchor Objects: {spell_spec.get('anchor_objects_display', spell_spec.get('anchor_object', 'candle'))}
 - Setting: {spell_spec.get('setting', 'home_quiet')}
 - Name: {spell_spec.get('user_name', 'Seeker')}
 - Avoid: {spell_spec.get('avoid', 'None')}

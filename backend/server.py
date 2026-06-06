@@ -5417,11 +5417,24 @@ async def generate_spell_v3_endpoint(request: Request, body: SpellRequestV3, use
         if belief_mode not in BELIEF_MODES:
             belief_mode = "SPIRITUAL"
 
+        # Normalize multi-select arrays into strings for prompt compatibility
+        if isinstance(spell_spec.get('alchemize_categories'), list) and spell_spec['alchemize_categories']:
+            spell_spec['alchemize_category'] = spell_spec['alchemize_categories'][0]
+            spell_spec['desired_feeling'] = spell_spec['alchemize_categories'][0]
+            spell_spec['alchemize_categories_display'] = ', '.join(
+                c.replace('_', ' ').title() for c in spell_spec['alchemize_categories']
+            )
+        if isinstance(spell_spec.get('anchor_objects'), list) and spell_spec['anchor_objects']:
+            spell_spec['anchor_object'] = spell_spec['anchor_objects'][0]
+            spell_spec['anchor_objects_display'] = ', '.join(
+                a.replace('_', ' ').title() for a in spell_spec['anchor_objects']
+            )
+
         # Sanitize user-provided text fields against prompt injection
         for key in ('user_query', 'intention', 'desired_feeling', 'user_name', 'anchor_object', 'setting', 'situation'):
             if key in spell_spec and isinstance(spell_spec[key], str):
                 spell_spec[key] = sanitize_for_prompt(spell_spec[key])
-        
+
         # Check spell limits (atomic claim to prevent race conditions)
         spell_slot_claimed = False
         if user:
@@ -5759,18 +5772,31 @@ async def _generate_spell_background(job_id: str, request_data: dict, user_id: O
         if belief_mode not in BELIEF_MODES:
             belief_mode = "SPIRITUAL"
         
+        # Normalize multi-select arrays into strings for prompt compatibility
+        if isinstance(spell_spec.get('alchemize_categories'), list) and spell_spec['alchemize_categories']:
+            spell_spec['alchemize_category'] = spell_spec['alchemize_categories'][0]
+            spell_spec['desired_feeling'] = spell_spec['alchemize_categories'][0]
+            spell_spec['alchemize_categories_display'] = ', '.join(
+                c.replace('_', ' ').title() for c in spell_spec['alchemize_categories']
+            )
+        if isinstance(spell_spec.get('anchor_objects'), list) and spell_spec['anchor_objects']:
+            spell_spec['anchor_object'] = spell_spec['anchor_objects'][0]
+            spell_spec['anchor_objects_display'] = ', '.join(
+                a.replace('_', ' ').title() for a in spell_spec['anchor_objects']
+            )
+
         # Sanitize user-provided text fields
         for key in ('user_query', 'intention', 'desired_feeling', 'user_name', 'anchor_object', 'setting', 'situation'):
             if key in spell_spec and isinstance(spell_spec[key], str):
                 spell_spec[key] = sanitize_for_prompt(spell_spec[key])
-        
+
         # Resolve persona
         persona_id = spell_spec.get('persona_id', 'shigg')
         id_map = {'shiggy': 'shigg', 'kathleen': 'cathleen'}
         persona_id = id_map.get(persona_id, persona_id)
-        
+
         routing_reason = None
-        
+
         if persona_id == 'choose_for_me' or persona_id == 'surprise':
             intention = spell_spec.get('intention', '').lower()
             feeling = spell_spec.get('desired_feeling', 'calm').lower()

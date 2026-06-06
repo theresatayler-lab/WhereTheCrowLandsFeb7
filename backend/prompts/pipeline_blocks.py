@@ -1236,8 +1236,8 @@ class BlocksSpellPipeline:
         start = time.time()
 
         intention = spell_spec.get("user_query", spell_spec.get("intention", ""))
-        anchor = spell_spec.get("anchor_object")
-        context = spell_spec.get("desired_feeling", "")
+        anchor = spell_spec.get("anchor_objects_display", spell_spec.get("anchor_object"))
+        context = spell_spec.get("alchemize_categories_display", spell_spec.get("desired_feeling", ""))
 
         try:
             from research_service import research_query_v2
