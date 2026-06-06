@@ -197,7 +197,7 @@ async def _generate_gemini(prompt: str, cache_key: str) -> Optional[str]:
         client = genai.Client(api_key=api_key)
 
         response = client.models.generate_content(
-            model="gemini-2.0-flash-preview-image-generation",
+            model="gemini-2.5-flash-image",
             contents=f"Generate this image: {prompt}",
             config=types.GenerateContentConfig(
                 response_modalities=["IMAGE"],

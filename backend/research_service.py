@@ -746,7 +746,7 @@ Remember: You are THE ARCHIVIST. No persona voice. Strict JSON only."""
             if attempt == max_retries:
                 return ResearchResponseV2(
                     research_mode=research_mode,
-                    summary=f"Research query failed: {str(e)}",
+                    summary="The Archivist's archives are temporarily unreachable. The working proceeds with the guide's own knowledge and tradition.",
                     sources=[]
                 )
 
