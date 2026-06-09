@@ -13,7 +13,7 @@ from persona_config import (
     BELIEF_BOUNDARY_DESCRIPTIONS, ASSET_TYPES,
     CROWLANDS_ART_BIBLE, ASSET_ROLE_LOCKS, get_art_bible_prompt_suffix
 )
-from image_style_matrix import build_style_layer, get_artist_style
+from image_style_matrix import build_style_layer, get_artist_style, get_category_modifier
 
 # ============================================================================
 # V1.1: TEXT VARIATION TOKENS - Behind-the-scenes uniqueness drivers
@@ -1003,17 +1003,24 @@ AVOID: {', '.join(avoid_list)}"""
 
     elif asset_type == "sigil":
         asset_info = asset_plan.get("sigil", {})
+        category = get_category_modifier(detected_intent)
+        primary_motif_str = persona_config.get('visual_dna', {}).get('constants', {}).get('primary_motif', 'crow, moon')
+        sigil_motif = primary_motif_str.split(',')[0].strip()
+
         prompt = f"""Ornate occult engraved linework sigil,
 High contrast BLACK AND WHITE sigil design,
-{asset_info.get('design_concept', 'mystical protective symbol')},
-elements: {', '.join(asset_info.get('elements', ['circle', 'line']))},
+{asset_info.get('design_concept', f'{detected_intent} sigil incorporating {sigil_motif}')},
+Central symbol: {sigil_motif} rendered as geometric seal,
+Supporting geometry: {category['composition']},
+elements: {', '.join(asset_info.get('elements', ['circle', 'line', sigil_motif]))},
 geometric and organic lines combined,
 PRINTABLE at small size, clear bold lines,
 magical seal or protective mark style,
 ultra-detailed engraved linework, symmetrical medallion,
 art nouveau border flourishes,
 BLACK AND WHITE ONLY, no color, no grey, no shading,
-NO text, NO letters, NO words, NO signatures, NO watermarks"""
+NO text, NO letters, NO words, NO signatures, NO watermarks,
+AVOID: {', '.join(avoid_list)}"""
 
     elif asset_type.startswith("divider"):
         divider_idx = int(asset_type.split("_")[1]) - 1 if "_" in asset_type else 0
