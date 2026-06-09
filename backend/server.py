@@ -4801,7 +4801,7 @@ Respond ONLY with the JSON object, no other text."""
         logging.error(f'Spell generation error: {str(e)}')
         raise HTTPException(status_code=500, detail=f'Failed to generate spell: {str(e)}')
 
-# AI Image Generation endpoint with archetype style support (Gemini Nano Banana)
+# AI Image Generation endpoint with archetype style support (YOUR GOOGLE_API_KEY)
 @api_router.post('/ai/generate-image')
 @limiter.limit("5/minute")
 async def generate_image(request: Request, body: ImageGenerationRequest):
@@ -4813,10 +4813,10 @@ async def generate_image(request: Request, body: ImageGenerationRequest):
             archetype_style = ARCHETYPE_IMAGE_STYLES.get(body.archetype, ARCHETYPE_IMAGE_STYLES['neutral'])
         else:
             archetype_style = ARCHETYPE_IMAGE_STYLES['neutral']
-        
+
         # Build the full prompt with archetype styling
         full_prompt = f"{archetype_style}, {body.prompt}, mystical ritual scene, highly detailed, no text or words"
-        
+
         # Use Google Gemini directly (YOUR GOOGLE_API_KEY)
         from google import genai
         from google.genai import types
@@ -4828,10 +4828,10 @@ async def generate_image(request: Request, body: ImageGenerationRequest):
 
         client = genai.Client(api_key=api_key)
         response = client.models.generate_content(
-            model="gemini-2.0-flash-exp",
+            model="gemini-2.5-flash-image",
             contents=f"Generate this image: {full_prompt}",
             config=types.GenerateContentConfig(
-                response_modalities=["TEXT", "IMAGE"],
+                response_modalities=["IMAGE"],
             ),
         )
 
@@ -6787,6 +6787,11 @@ async def startup_ensure_indexes():
     _ensure_db()
     await db.spell_jobs.create_index('created_at', expireAfterSeconds=86400 * 30)
     logger.info("[STARTUP] TTL index ensured on spell_jobs (30 day expiry)")
+
+    # Legacy spells store base64 images inline (~90MB); without this index Mongo
+    # sorts in memory and aborts at its 32MB limit, returning 500 on grimoire load.
+    await db.user_spells.create_index([('user_id', 1), ('created_at', -1)])
+    logger.info("[STARTUP] Compound index ensured on user_spells (user_id, created_at)")
     
     # Seed deities, figures, sites, rituals if collections are empty
     try:
