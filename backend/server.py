@@ -5719,10 +5719,10 @@ async def generate_spell_v3_endpoint(request: Request, body: SpellRequestV3, use
             'generated_images': generated_images,
             'validation': {
                 'qa_passed': metadata.get('qa_passed', True),
-                'qa_report': metadata.get('qa_report', {})
+                'qa_errors': metadata.get('qa_errors', []),
             }
         }
-        
+
     except HTTPException:
         raise
     except Exception as e:
@@ -6004,10 +6004,10 @@ async def _generate_spell_background(job_id: str, request_data: dict, user_id: O
             'generated_images': generated_images,
             'validation': {
                 'qa_passed': metadata.get('qa_passed', True),
-                'qa_report': metadata.get('qa_report', {})
+                'qa_errors': metadata.get('qa_errors', []),
             }
         }
-        
+
         await db.spell_jobs.update_one(
             {'job_id': job_id},
             {'$set': {
