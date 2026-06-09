@@ -193,13 +193,24 @@ const Step1 = ({ spellSpec, updateSpec }) => (
 
     <div>
       <h3 className="font-cinzel text-xl text-crimson mb-3 font-semibold">Alchemize This Into...</h3>
+      <p className="font-montserrat text-sm text-navy-dark/80 mb-3">Choose up to 3 intentions to weave together.</p>
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {ALCHEMIZE_OPTIONS.map((f) => {
+          const categories = spellSpec.alchemize_categories || [];
+          const isSelected = categories.includes(f.id);
           return (
             <OptionCard
               key={f.id}
-              selected={spellSpec.alchemize_category === f.id}
-              onClick={() => updateSpec({ alchemize_category: f.id, desired_feeling: f.id })}
+              selected={isSelected}
+              onClick={() => {
+                if (isSelected) {
+                  const updated = categories.filter(c => c !== f.id);
+                  updateSpec({ alchemize_categories: updated, alchemize_category: updated[0] || '', desired_feeling: updated[0] || '' });
+                } else if (categories.length < 3) {
+                  const updated = [...categories, f.id];
+                  updateSpec({ alchemize_categories: updated, alchemize_category: updated[0], desired_feeling: updated[0] });
+                }
+              }}
               className="py-4"
               light={true}
             >
@@ -288,23 +299,35 @@ const Step3 = ({ spellSpec, updateSpec }) => {
   return (
     <div className="space-y-6">
       <div>
-        <h3 className="font-cinzel text-xl text-crimson mb-3 font-semibold">Choose an anchor object</h3>
-        <p className="font-montserrat text-sm text-navy-dark/80 mb-3">This will be central to your ritual.</p>
+        <h3 className="font-cinzel text-xl text-crimson mb-3 font-semibold">Choose your anchor objects</h3>
+        <p className="font-montserrat text-sm text-navy-dark/80 mb-3">Pick up to 3 objects to ground your working.</p>
         <div className="flex flex-wrap gap-2">
-          {relevantAnchors.map((a) => (
-            <OptionCard
-              key={a.id}
-              selected={spellSpec.anchor_object === a.id}
-              onClick={() => updateSpec({ anchor_object: a.id })}
-              className="px-4 py-2"
-              light={true}
-            >
-              <div className="flex items-center gap-2">
-                <img src={a.icon} alt={a.label} className="w-6 h-6 flex-shrink-0" />
-                <span className="font-montserrat text-sm text-navy-dark font-medium">{a.label}</span>
-              </div>
-            </OptionCard>
-          ))}
+          {relevantAnchors.map((a) => {
+            const anchors = spellSpec.anchor_objects || [];
+            const isSelected = anchors.includes(a.id);
+            return (
+              <OptionCard
+                key={a.id}
+                selected={isSelected}
+                onClick={() => {
+                  if (isSelected) {
+                    const updated = anchors.filter(x => x !== a.id);
+                    updateSpec({ anchor_objects: updated, anchor_object: updated[0] || '' });
+                  } else if (anchors.length < 3) {
+                    const updated = [...anchors, a.id];
+                    updateSpec({ anchor_objects: updated, anchor_object: updated[0] });
+                  }
+                }}
+                className="px-4 py-2"
+                light={true}
+              >
+                <div className="flex items-center gap-2">
+                  <img src={a.icon} alt={a.label} className="w-6 h-6 flex-shrink-0" />
+                  <span className="font-montserrat text-sm text-navy-dark font-medium">{a.label}</span>
+                </div>
+              </OptionCard>
+            );
+          })}
         </div>
       </div>
 
@@ -372,11 +395,13 @@ export const SpellRequest = () => {
     persona_id: getCurrentArchetype() || 'choose_for_me',
     user_query: '',
     desired_feeling: 'protection', // Keep field name for backend compat, but use alchemize values
-    alchemize_category: 'protection', // New field
+    alchemize_category: 'protection', // Primary category (first selected)
+    alchemize_categories: ['protection'], // All selected categories (up to 3)
     time: '10_min',
     tone: 'practical',
     belief_boundary: 'spiritual_grounded',
-    anchor_object: 'candle',
+    anchor_object: 'candle', // Primary anchor (first selected)
+    anchor_objects: ['candle'], // All selected anchors (up to 3)
     setting: 'home_quiet',
     user_name: '',
     avoid: ''
@@ -436,9 +461,11 @@ export const SpellRequest = () => {
 
   const updateSpec = (updates) => {
     setSpellSpec(prev => {
-      // When persona changes, reset anchor to that guide's default
+      // When persona changes, reset anchors to that guide's default
       if (updates.persona_id && updates.persona_id !== prev.persona_id) {
-        updates.anchor_object = DEFAULT_ANCHORS[updates.persona_id] || 'candle';
+        const defaultAnchor = DEFAULT_ANCHORS[updates.persona_id] || 'candle';
+        updates.anchor_object = defaultAnchor;
+        updates.anchor_objects = [defaultAnchor];
       }
       return { ...prev, ...updates };
     });
@@ -446,13 +473,13 @@ export const SpellRequest = () => {
 
   const canProceed = () => {
     if (step === 0) {
-      return spellSpec.persona_id && spellSpec.user_query?.trim().length > 10 && spellSpec.alchemize_category;
+      return spellSpec.persona_id && spellSpec.user_query?.trim().length > 10 && (spellSpec.alchemize_categories?.length > 0 || spellSpec.alchemize_category);
     }
     if (step === 1) {
       return spellSpec.time && spellSpec.tone && spellSpec.belief_boundary;
     }
     if (step === 2) {
-      return spellSpec.anchor_object && spellSpec.setting;
+      return (spellSpec.anchor_objects?.length > 0 || spellSpec.anchor_object) && spellSpec.setting;
     }
     return true;
   };

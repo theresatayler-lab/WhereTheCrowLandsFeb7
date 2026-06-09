@@ -392,8 +392,10 @@ def select_research_mode(user_request: str, anchor_object: Optional[str] = None,
         return "source_explainer"
     
     # Mode C: Safety Substitutions
-    if anchor_object and anchor_object.lower() in SAFETY_TRIGGER_OBJECTS:
-        return "safety_substitutions"
+    if anchor_object:
+        anchor_words = [w.strip().lower() for w in str(anchor_object).split(',')]
+        if any(w in SAFETY_TRIGGER_OBJECTS for w in anchor_words):
+            return "safety_substitutions"
     if materials:
         materials_lower = [m.lower() for m in materials]
         if any(obj in " ".join(materials_lower) for obj in SAFETY_TRIGGER_OBJECTS):
@@ -744,7 +746,7 @@ Remember: You are THE ARCHIVIST. No persona voice. Strict JSON only."""
             if attempt == max_retries:
                 return ResearchResponseV2(
                     research_mode=research_mode,
-                    summary=f"Research query failed: {str(e)}",
+                    summary="The Archivist's archives are temporarily unreachable. The working proceeds with the guide's own knowledge and tradition.",
                     sources=[]
                 )
 

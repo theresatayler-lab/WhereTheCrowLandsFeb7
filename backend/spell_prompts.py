@@ -443,11 +443,11 @@ Create a detailed spell plan. You MUST:
 
 ## SEEKER'S REQUEST (SpellSpec)
 - Query: "{spell_spec.get('user_query', 'No specific query')}"
-- Desired Feeling: {spell_spec.get('desired_feeling', 'calm')}
+- Desired Feeling: {spell_spec.get('alchemize_categories_display', spell_spec.get('desired_feeling', 'calm'))}
 - Time Available: {spell_spec.get('time', '10_min')}
 - Tone: {spell_spec.get('tone', 'practical')}
 - Belief Boundary: {spell_spec.get('belief_boundary', 'spiritual_grounded')}
-- Anchor Object: {spell_spec.get('anchor_object', 'candle')}
+- Anchor Objects: {spell_spec.get('anchor_objects_display', spell_spec.get('anchor_object', 'candle'))}
 - Setting: {spell_spec.get('setting', 'bedroom')}
 - Name/Nickname: {spell_spec.get('user_name', 'Seeker')}
 - Things to Avoid: {spell_spec.get('avoid', 'None specified')}
@@ -723,8 +723,8 @@ Format: {plan.get('format_id', 'general')}
 ## SEEKER DETAILS
 - Name: {spell_spec.get('user_name', 'Seeker')}
 - Their Need: "{spell_spec.get('user_query', '')}"
-- Desired Feeling: {spell_spec.get('desired_feeling', 'calm')}
-- Anchor Object: {spell_spec.get('anchor_object', 'candle')}
+- Desired Feeling: {spell_spec.get('alchemize_categories_display', spell_spec.get('desired_feeling', 'calm'))}
+- Anchor Objects: {spell_spec.get('anchor_objects_display', spell_spec.get('anchor_object', 'candle'))}
 - Setting: {spell_spec.get('setting', 'home_quiet')}
 - Things to Avoid: {spell_spec.get('avoid', 'None')}
 
@@ -896,7 +896,7 @@ Each entry MUST include:
 
 ## CRITICAL RULES (Contract Enforcement)
 1. Use seeker's name ({spell_spec.get('user_name', 'Seeker')}) at least TWICE
-2. Anchor object ({spell_spec.get('anchor_object', 'candle')}) must be CENTRAL with WHY explanation
+2. Anchor objects ({spell_spec.get('anchor_objects_display', spell_spec.get('anchor_object', 'candle'))}) must be CENTRAL with WHY explanation
 3. Use ALL text_variation_tokens in the spell text
 4. spoken_words.main_incantation MUST have 3 concrete nouns + 1 emotion word
 5. Include 2 micro_lore details: {json.dumps(selected_micro_lore)}
