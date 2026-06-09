@@ -6787,6 +6787,11 @@ async def startup_ensure_indexes():
     _ensure_db()
     await db.spell_jobs.create_index('created_at', expireAfterSeconds=86400 * 30)
     logger.info("[STARTUP] TTL index ensured on spell_jobs (30 day expiry)")
+
+    # Legacy spells store base64 images inline (~90MB); without this index Mongo
+    # sorts in memory and aborts at its 32MB limit, returning 500 on grimoire load.
+    await db.user_spells.create_index([('user_id', 1), ('created_at', -1)])
+    logger.info("[STARTUP] Compound index ensured on user_spells (user_id, created_at)")
     
     # Seed deities, figures, sites, rituals if collections are empty
     try:
