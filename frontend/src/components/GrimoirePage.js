@@ -796,6 +796,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
             || spell?.tarot_card_image
             || (generatedImages.tarot_card_image ? `data:image/png;base64,${generatedImages.tarot_card_image}` : null)
           }
+          quickVisuals={quickVisuals}
         />
 
         <div className="pb-6">

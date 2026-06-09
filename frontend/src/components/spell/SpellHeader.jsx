@@ -1,5 +1,6 @@
 import React from "react";
 import CrowlandsIcon from "../CrowlandsIcon";
+import { BrandIcon } from "../BrandIcon";
 
 /**
  * SpellHeader — Grimoire title page
@@ -11,6 +12,7 @@ export default function SpellHeader({
   guideLine,
   summaryLine,
   tarotImageUrl,
+  quickVisuals = null,
   iconRow = [],
   actions = null,
 }) {
@@ -40,7 +42,7 @@ export default function SpellHeader({
         </p>
       ) : null}
 
-      {/* Tarot frontispiece — inline book illustration */}
+      {/* Tarot frontispiece — AI-generated or Quick-tier CSS placeholder */}
       {tarotImageUrl ? (
         <div className="grimoire-frontispiece">
           <div className="grimoire-frontispiece-frame">
@@ -48,6 +50,26 @@ export default function SpellHeader({
               src={tarotImageUrl}
               alt={title || "Spell illustration"}
               className="grimoire-frontispiece-img"
+            />
+          </div>
+        </div>
+      ) : quickVisuals?.tarot_placeholder_icon ? (
+        <div className="grimoire-frontispiece">
+          <div
+            className="grimoire-frontispiece-frame flex items-center justify-center"
+            style={{
+              background: quickVisuals.tarot_placeholder_bg || 'linear-gradient(180deg, #0E2A2F 0%, #123A3F 100%)',
+              aspectRatio: '2/3',
+              maxWidth: '200px',
+              margin: '0 auto',
+              border: quickVisuals.accent_border || '1px solid rgba(200, 164, 77, 0.3)',
+            }}
+          >
+            <BrandIcon
+              name={quickVisuals.tarot_placeholder_icon}
+              size={64}
+              variant="gold"
+              opacity={0.35}
             />
           </div>
         </div>
