@@ -419,11 +419,11 @@ Rewrite: 1 retry max, then fallback spell
 
 | Purpose | Provider | Model |
 |---------|----------|-------|
-| Persona Voice | OpenAI | gpt-4o |
+| Persona Voice | Anthropic | claude-sonnet-4-20250514 |
 | Research | DeepSeek | deepseek-chat |
-| Spell Planner | OpenAI | gpt-4o |
+| Spell Planner | Anthropic | claude-haiku-4-5-20251001 |
 | Spell Writer | Anthropic | claude-sonnet-4-20250514 |
-| Invisible Helpers | Anthropic (Emergent) | claude-sonnet-4-20250514 |
+| Invisible Helpers | Anthropic | claude-sonnet-4-20250514 |
 
 Fallback: GPT-4o when Claude/DeepSeek unavailable
 

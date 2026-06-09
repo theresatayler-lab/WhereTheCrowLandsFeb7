@@ -70,13 +70,13 @@ tea, candle, breath, ground, center
 
 ### Provider Routing Table
 
-| Purpose | Provider | Model | Emergent Key | Temp | Max Tokens |
-|---------|----------|-------|-------------|------|------------|
-| **Persona Voice** | OpenAI | gpt-4o | No | 0.8 | 2000 |
-| **Research** | DeepSeek | deepseek-chat | No | 0.3 | 3000 |
-| **Spell Planner** | OpenAI | gpt-4o | No | 0.8 | 2500 |
-| **Spell Writer** | Anthropic | claude-sonnet-4-20250514 | No | 0.85 | 3500 |
-| **Invisible Helpers Writer** | Anthropic | claude-sonnet-4-20250514 | Yes (Emergent) | 0.7 | 1800 |
+| Purpose | Provider | Model | Temp | Max Tokens |
+|---------|----------|-------|------|------------|
+| **Persona Voice** | Anthropic | claude-sonnet-4-20250514 | 0.8 | 2000 |
+| **Research** | DeepSeek | deepseek-chat | 0.3 | 3000 |
+| **Spell Planner** | Anthropic | claude-haiku-4-5-20251001 | 0.7 | 2500 |
+| **Spell Writer** | Anthropic | claude-sonnet-4-20250514 | 0.85 | 3500 |
+| **Invisible Helpers Writer** | Anthropic | claude-sonnet-4-20250514 | 0.7 | 1800 |
 
 ### Provider Endpoints
 | Provider | Endpoint |
@@ -89,16 +89,17 @@ tea, candle, breath, ground, center
 ### Environment Variables Required
 | Variable | Provider |
 |----------|----------|
-| `OPENAI_API_KEY` | OpenAI (direct) |
-| `DEEPSEEK_API_KEY` | DeepSeek (direct) |
-| `ANTHROPIC_API_KEY` | Anthropic (direct) |
-| `GEMINI_API_KEY` | Gemini (optional) |
-| `EMERGENT_LLM_KEY` | Emergent Universal Key |
+| `ANTHROPIC_API_KEY` | Anthropic (text: persona voice, spell writer, planner, invisible helpers) |
+| `DEEPSEEK_API_KEY` | DeepSeek (text: research/archivist) |
+| `OPENAI_API_KEY` | OpenAI (images: tarot cards, sigils) |
+| `GOOGLE_API_KEY` | Google Gemini (images: headers, atmospheric scenes) |
+| `FAL_API_KEY` | fal.ai Flux Pro (images: premium headers) |
+| `IDEOGRAM_API_KEY` | Ideogram V2 (images: premium sigils) |
 
 ### Routing Priority
-1. **Emergent Universal Key** — Used when `use_emergent_key: True`; supports OpenAI, Anthropic, Gemini through unified endpoint
-2. **DeepSeek Direct** — OpenAI-compatible API at DeepSeek endpoint; supports `response_format` and other kwargs
-3. **OpenAI Direct** — Fallback when Emergent unavailable
+1. **Anthropic Direct** — All text generation (Claude Sonnet for writing, Claude Haiku for planning)
+2. **DeepSeek Direct** — OpenAI-compatible API for research; supports `response_format` and other kwargs
+3. **GPT-4o Fallback** — When Claude/DeepSeek unavailable
 
 ### Fallback Configuration
 When Claude/DeepSeek are unavailable:
@@ -191,17 +192,16 @@ await chat_completion(
 Returns current configuration status:
 ```json
 {
-    "emergent_key_configured": true,
-    "openai_configured": true,
-    "deepseek_configured": true,
     "anthropic_configured": true,
-    "gemini_configured": false,
+    "deepseek_configured": true,
+    "google_configured": true,
+    "openai_configured": true,
     "current_config": {
-        "persona_voice": {"provider": "openai", "model": "gpt-4o", "uses_emergent": false},
-        "research": {"provider": "deepseek", "model": "deepseek-chat", "uses_emergent": false},
-        "spell_planner": {"provider": "openai", "model": "gpt-4o", "uses_emergent": false},
-        "spell_writer": {"provider": "anthropic", "model": "claude-sonnet-4-20250514", "uses_emergent": false},
-        "invisible_helpers_writer": {"provider": "anthropic", "model": "claude-sonnet-4-20250514", "uses_emergent": true}
+        "persona_voice": {"provider": "anthropic", "model": "claude-sonnet-4-20250514"},
+        "research": {"provider": "deepseek", "model": "deepseek-chat"},
+        "spell_planner": {"provider": "anthropic", "model": "claude-haiku-4-5-20251001"},
+        "spell_writer": {"provider": "anthropic", "model": "claude-sonnet-4-20250514"},
+        "invisible_helpers_writer": {"provider": "anthropic", "model": "claude-sonnet-4-20250514"}
     }
 }
 ```
