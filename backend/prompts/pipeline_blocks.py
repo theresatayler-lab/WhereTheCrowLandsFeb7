@@ -501,6 +501,14 @@ async def run_block_writer(
         logger.error(f"[WRITER_BLOCKS] JSON parse error: {e}")
         raise ValueError(f"Failed to parse spell output: {e}")
 
+    # Validate while blocks are still keyed by name — the array transform
+    # below drops block names, so QA cannot run after it
+    qa_passed, qa_errors = validate_spell_blocks(
+        spell_output, guide_id, plan.get("working_type", "")
+    )
+    metadata["qa_passed"] = qa_passed
+    metadata["qa_errors"] = qa_errors
+
     # Transform blocks dict to array format for frontend compatibility
     spell_output = transform_blocks_to_array(spell_output, guide_id)
 
@@ -724,16 +732,20 @@ def _build_structured_content(block_type: str, block_name: str, raw_content: str
         # Try to parse materials from the plan, or create from content
         materials = spell_output.get("materials", [])
         if materials and isinstance(materials, list):
-            return {
-                "items": [
-                    {
+            # Writer may emit materials as dicts or plain strings
+            items = []
+            for m in materials:
+                if isinstance(m, dict):
+                    items.append({
                         "name": m.get("name", "item"),
                         "purpose": m.get("purpose", ""),
                         "substitution": m.get("substitution", ""),
                         "optional": False
-                    }
-                    for m in materials
-                ],
+                    })
+                else:
+                    items.append({"name": str(m), "purpose": "", "substitution": "", "optional": False})
+            return {
+                "items": items,
                 "gathering_note": raw_content if len(raw_content) < 200 else ""
             }
         return {
@@ -875,16 +887,20 @@ def _build_structured_content(block_type: str, block_name: str, raw_content: str
     elif block_type == "further_reading":
         sources = spell_output.get("sources", [])
         if sources and isinstance(sources, list):
-            return {
-                "recommendations": [
-                    {
+            # Writer may emit sources as dicts or plain strings
+            recommendations = []
+            for s in sources:
+                if isinstance(s, dict):
+                    recommendations.append({
                         "title": s.get("work", s.get("title", "Reference")),
                         "author": s.get("author", ""),
                         "guide_note": s.get("relevance", ""),
                         "specific_passage": None
-                    }
-                    for s in sources
-                ],
+                    })
+                else:
+                    recommendations.append({"title": str(s), "author": "", "guide_note": "", "specific_passage": None})
+            return {
+                "recommendations": recommendations,
                 "reading_ritual": None
             }
         return {
@@ -1227,13 +1243,12 @@ class BlocksSpellPipeline:
                 metadata["rich_research_origins"] = rich_research
                 metadata["stages_completed"].append("research_origins")
             
-            # Stage 4: QA validation
+            # Stage 4: QA validation (computed in the writer stage on the
+            # name-keyed blocks, before the frontend array transform)
             if on_stage_change:
                 await on_stage_change("qa")
-            working_type = plan.get("working_type", "")
-            qa_passed, qa_errors = validate_spell_blocks(spell_output, guide_id, working_type)
-            metadata["qa_passed"] = qa_passed
-            metadata["qa_errors"] = qa_errors
+            metadata["qa_passed"] = writer_meta.get("qa_passed", True)
+            metadata["qa_errors"] = writer_meta.get("qa_errors", [])
             metadata["stages_completed"].append("qa")
             
             metadata["timing"]["total_ms"] = int((time.time() - start) * 1000)
