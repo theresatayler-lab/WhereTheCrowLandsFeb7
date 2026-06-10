@@ -23,24 +23,24 @@ code {
            WTC MASTER PALETTE — Where The Crowlands
            ============================================================ */
         
-        /* Backgrounds */
-        --wtc-bg-primary:      #0C1D2E;  /* Deep Navy — page backgrounds */
-        --wtc-bg-secondary:    #102534;  /* Celestial Blue — cards, layered surfaces */
-        
+        /* Backgrounds (§0 canonical palette) */
+        --wtc-bg:              #0C1D2E;  /* Deep Navy / Midnight — page backgrounds */
+        --wtc-bg-primary:      #102534;  /* Primary Navy — secondary dark containers, nav, footers */
+        --wtc-card-dark:       #123A3F;  /* Celestial Blue/Teal — cards on dark */
+
         /* Surfaces */
         --wtc-surface:         #F3EFE8;  /* Vellum / Bone Ivory — reading surfaces */
-        
+
         /* Accents */
-        --wtc-accent:          #C8A44D;  /* Antique Gold — borders, linework, NEVER fill */
-        --wtc-accent-faded:    #A89872;  /* Faded Gold — secondary details, captions on dark */
-        --wtc-cta:             #B94E6A;  /* Ember Pink — buttons, links, warm emphasis */
-        --wtc-deep-accent:     #8B2232;  /* Oxblood Burgundy — pull quotes, headings on light */
-        
+        --wtc-gold:            #C8A44D;  /* Antique Gold — strokes/linework ONLY, never fill */
+        --wtc-gold-faded:      #A89872;  /* Faded Gold — tags, metadata, secondary linework */
+        --wtc-cta:             #B94E6A;  /* Ember Pink — buttons, CTAs, drop caps */
+        --wtc-oxblood:         #8B2232;  /* Oxblood Burgundy — pull quotes, headings on vellum */
+
         /* Text */
-        --wtc-text-dark:       #1A1A1A;  /* Ink Black — body on Vellum */
-        --wtc-text-light:      #F3EFE8;  /* Vellum — body on dark surfaces */
-        --wtc-text-muted-dark: #A89872;  /* Faded Gold — captions on dark */
-        --wtc-text-muted-light: #5A524E; /* Warm Grey — captions on light */
+        --wtc-ink:             #1A1A1A;  /* Ink Black — body on Vellum */
+        --wtc-text-light:      #F3EFE8;  /* Vellum @ 72–80% — body on dark */
+        --wtc-grey-warm:       #5A524E;  /* Warm Grey — captions on vellum */
         
         /* Shadcn/UI compatibility tokens */
         --background: #0C1D2E;

@@ -73,7 +73,7 @@ export default function SpellHeader({
           <div
             className="grimoire-frontispiece-frame flex items-center justify-center"
             style={{
-              background: quickVisuals.tarot_placeholder_bg || 'linear-gradient(180deg, #0E2A2F 0%, #123A3F 100%)',
+              background: quickVisuals.tarot_placeholder_bg || 'linear-gradient(180deg, #102534 0%, #123A3F 100%)',
               aspectRatio: '2/3',
               maxWidth: '200px',
               margin: '0 auto',

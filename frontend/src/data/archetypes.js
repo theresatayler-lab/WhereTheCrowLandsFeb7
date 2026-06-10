@@ -11,9 +11,9 @@ export const ARCHETYPES = [
     birdEmoji: '🐦',
     iconPath: '/icons/guides/guide-shigg.png',
     colorScheme: {
-      primary: '#750609',
-      secondary: '#D8CBB3',
-      accent: '#06133c'
+      primary: '#8B2232',
+      secondary: '#F3EFE8',
+      accent: '#102534'
     },
     bio: `Shigg is Cathleen's daughter and Katherine's granddaughter. Born in the 1920s in London, her family moved to Crowlands Avenue in Dagenham in 1939, just as war began. She was a teenager during the Blitz, surviving alongside her mum, nan, and sisters, finding strength in family, verse, and the constant birdsong above the bombs.
 
@@ -137,9 +137,9 @@ She was her granddaughter's greatest ally and friend, staying up all night telli
     birdEmoji: '🪶',
     iconPath: '/icons/guides/guide-cathleen.png',
     colorScheme: {
-      primary: '#06133c',
-      secondary: '#D8CBB3',
-      accent: '#750609'
+      primary: '#102534',
+      secondary: '#F3EFE8',
+      accent: '#8B2232'
     },
     bio: `Cathleen is Katherine's daughter and Shigg's mum. Born around 1904, she was raised in London's West End where her parents were master tailors and court dressmakers. She inherited their craft—her hands skilled in transformation, bridging elegance and survival.
 
@@ -265,8 +265,8 @@ She gave her great-granddaughter a silver rabbit teething ring that is treasured
     iconPath: '/icons/guides/guide-katherine.png',
     colorScheme: {
       primary: '#4B5A3E',
-      secondary: '#D8CBB3',
-      accent: '#750609'
+      secondary: '#F3EFE8',
+      accent: '#8B2232'
     },
     bio: `Katherine is Cathleen's mum and Shigg's nan—the eldest of the lineage. Born in the late 1800s in Spitalfields, London, into a Huguenot community where her parents were BOTH musicians AND weavers. She became a master tailor and court dressmaker, working with the first ladies of the West End high-end shops.
 
@@ -361,8 +361,8 @@ Her magic lies in craft: every stitch is intention, every pattern holds knowledg
     birdEmoji: '🪽',
     iconPath: '/icons/guides/guide-theresa.png',
     colorScheme: {
-      primary: '#750609',
-      secondary: '#06133c',
+      primary: '#8B2232',
+      secondary: '#102534',
       accent: '#4B5A3E'
     },
     bio: `Theresa is the convergence point—journalist, historian, seer, and storyteller. She uncovered hidden paternity, mapped generational trauma, and broke the "veil spell" through research, narrative, and ritual. Her life's work is to blend the factual and the mystical, using birds as spiritual messengers and stories as spells for healing. Direct, candid, and emotionally honest, Theresa's archetype guides users through the work of truth-seeking, pattern-breaking, and self-invention.`,

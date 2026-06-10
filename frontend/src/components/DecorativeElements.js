@@ -178,7 +178,7 @@ export const ParchmentBackground = ({ children, className = '', intensity = 'med
     <div 
       className={`relative ${className}`}
       style={{
-        backgroundColor: '#D8CBB3',
+        backgroundColor: '#F3EFE8',
         backgroundImage: `
           radial-gradient(ellipse at 20% 30%, rgba(139, 90, 43, 0.08) 0%, transparent 50%),
           radial-gradient(ellipse at 80% 70%, rgba(139, 90, 43, 0.06) 0%, transparent 50%),
@@ -238,7 +238,7 @@ export const TarotCardBorder = ({ children, className = '' }) => {
           padding: '3px',
         }}
       >
-        <div className="w-full h-full rounded-lg bg-[#D8CBB3]" />
+        <div className="w-full h-full rounded-lg bg-[#F3EFE8]" />
       </div>
       
       {/* Inner decorative border */}

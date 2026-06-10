@@ -72,6 +72,16 @@ export const BestiaryGlyphs = {
       <path d="M14.5 7l1.5-1M10 15c0 1.5 1 3 2 3s2-1.5 2-3" stroke={color} strokeWidth="1" strokeLinecap="round"/>
     </svg>
   ),
+  wren: ({ size = 24, color = COLORS.gold }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <ellipse cx="11" cy="15" rx="3.5" ry="4" stroke={color} strokeWidth="1.5"/>
+      <circle cx="11" cy="9" r="2.5" stroke={color} strokeWidth="1.5"/>
+      <circle cx="10" cy="8.5" r="0.6" fill={color}/>
+      <path d="M13.5 9l1.5-0.5" stroke={color} strokeWidth="1" strokeLinecap="round"/>
+      <path d="M14 14Q16 11 17 7" stroke={color} strokeWidth="1.5" fill="none" strokeLinecap="round" opacity="0.7"/>
+      <path d="M9 16c0 1.5 1 3 2 3s2-1.5 2-3" stroke={color} strokeWidth="1" strokeLinecap="round"/>
+    </svg>
+  ),
   owl: ({ size = 24, color = COLORS.gold }) => (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
       <ellipse cx="12" cy="14" rx="6" ry="7" stroke={color} strokeWidth="1.5"/>
@@ -480,6 +490,208 @@ export const DividerStrips = {
 };
 
 // ============================================================================
+// GUIDE-SPECIFIC DIVIDER STRIPS
+// Per-guide ornamental vocabulary, 1–2px gold strokes, bilateral symmetry.
+// Each guide gets 3 variants; the spell renderer cycles them down the page.
+// ============================================================================
+export const GuideDividerStrips = {
+  botanicalSprig: ({ width = 200, color = COLORS.gold }) => (
+    <svg width={width} height="24" viewBox="0 0 200 24" fill="none" preserveAspectRatio="xMidYMid meet">
+      <line x1="0" y1="12" x2="60" y2="12" stroke={color} strokeWidth="1" opacity="0.4"/>
+      <path d="M68 12Q74 6 80 8L88 12L80 16Q74 18 68 12" stroke={color} strokeWidth="1.5" fill="none" opacity="0.6"/>
+      <circle cx="100" cy="12" r="2.5" fill={color} opacity="0.8"/>
+      <path d="M132 12Q126 6 120 8L112 12L120 16Q126 18 132 12" stroke={color} strokeWidth="1.5" fill="none" opacity="0.6"/>
+      <line x1="140" y1="12" x2="200" y2="12" stroke={color} strokeWidth="1" opacity="0.4"/>
+    </svg>
+  ),
+  teacupSteam: ({ width = 200, color = COLORS.gold }) => (
+    <svg width={width} height="24" viewBox="0 0 200 24" fill="none" preserveAspectRatio="xMidYMid meet">
+      <line x1="0" y1="12" x2="70" y2="12" stroke={color} strokeWidth="1" opacity="0.4"/>
+      <path d="M80 16Q84 16 86 14L88 12L86 10Q84 8 80 8" stroke={color} strokeWidth="1.5" fill="none" opacity="0.5"/>
+      <path d="M92 8Q96 4 100 8Q104 4 108 8" stroke={color} strokeWidth="1" fill="none" opacity="0.5"/>
+      <path d="M120 16Q116 16 114 14L112 12L114 10Q116 8 120 8" stroke={color} strokeWidth="1.5" fill="none" opacity="0.5"/>
+      <line x1="130" y1="12" x2="200" y2="12" stroke={color} strokeWidth="1" opacity="0.4"/>
+    </svg>
+  ),
+  birdBranch: ({ width = 200, color = COLORS.gold }) => (
+    <svg width={width} height="24" viewBox="0 0 200 24" fill="none" preserveAspectRatio="xMidYMid meet">
+      <line x1="0" y1="14" x2="65" y2="14" stroke={color} strokeWidth="1" opacity="0.4"/>
+      <path d="M70 14L130 14" stroke={color} strokeWidth="1.5" opacity="0.5"/>
+      <path d="M75 14Q78 10 82 14" stroke={color} strokeWidth="1" fill="none" opacity="0.4"/>
+      <path d="M118 14Q122 10 126 14" stroke={color} strokeWidth="1" fill="none" opacity="0.4"/>
+      <ellipse cx="100" cy="10" rx="4" ry="3" stroke={color} strokeWidth="1.5" fill="none" opacity="0.7"/>
+      <path d="M96 10L93 11" stroke={color} strokeWidth="1" opacity="0.6"/>
+      <line x1="135" y1="14" x2="200" y2="14" stroke={color} strokeWidth="1" opacity="0.4"/>
+    </svg>
+  ),
+  featherNote: ({ width = 200, color = COLORS.gold }) => (
+    <svg width={width} height="24" viewBox="0 0 200 24" fill="none" preserveAspectRatio="xMidYMid meet">
+      <line x1="0" y1="12" x2="65" y2="12" stroke={color} strokeWidth="1" opacity="0.4"/>
+      <path d="M72 12Q80 6 88 12Q80 18 72 12" stroke={color} strokeWidth="1.5" fill="none" opacity="0.6"/>
+      <path d="M94 8L100 12L94 16" stroke={color} strokeWidth="1" fill="none" opacity="0.5"/>
+      <path d="M106 8L100 12L106 16" stroke={color} strokeWidth="1" fill="none" opacity="0.5"/>
+      <path d="M112 12Q120 6 128 12Q120 18 112 12" stroke={color} strokeWidth="1.5" fill="none" opacity="0.6"/>
+      <line x1="135" y1="12" x2="200" y2="12" stroke={color} strokeWidth="1" opacity="0.4"/>
+    </svg>
+  ),
+  talismanChain: ({ width = 200, color = COLORS.gold }) => (
+    <svg width={width} height="24" viewBox="0 0 200 24" fill="none" preserveAspectRatio="xMidYMid meet">
+      <line x1="0" y1="12" x2="60" y2="12" stroke={color} strokeWidth="1" opacity="0.4"/>
+      <circle cx="72" cy="12" r="4" stroke={color} strokeWidth="1.5" fill="none" opacity="0.5"/>
+      <line x1="76" y1="12" x2="86" y2="12" stroke={color} strokeWidth="1" opacity="0.5"/>
+      <polygon points="100 6 106 12 100 18 94 12" stroke={color} strokeWidth="1.5" fill="none" opacity="0.7"/>
+      <line x1="114" y1="12" x2="124" y2="12" stroke={color} strokeWidth="1" opacity="0.5"/>
+      <circle cx="128" cy="12" r="4" stroke={color} strokeWidth="1.5" fill="none" opacity="0.5"/>
+      <line x1="140" y1="12" x2="200" y2="12" stroke={color} strokeWidth="1" opacity="0.4"/>
+    </svg>
+  ),
+  needleThread: ({ width = 200, color = COLORS.gold }) => (
+    <svg width={width} height="24" viewBox="0 0 200 24" fill="none" preserveAspectRatio="xMidYMid meet">
+      <path d="M0 12Q20 6 40 12Q60 18 80 12Q90 8 100 12Q110 16 120 12Q140 6 160 12Q180 18 200 12" stroke={color} strokeWidth="1" fill="none" opacity="0.4" strokeDasharray="4 3"/>
+      <ellipse cx="100" cy="12" rx="2" ry="5" stroke={color} strokeWidth="1.5" fill="none" opacity="0.7"/>
+      <circle cx="100" cy="10" r="0.8" fill={color} opacity="0.8"/>
+    </svg>
+  ),
+  stitchedSeam: ({ width = 200, color = COLORS.gold }) => (
+    <svg width={width} height="20" viewBox="0 0 200 20" fill="none" preserveAspectRatio="xMidYMid meet">
+      <line x1="0" y1="10" x2="200" y2="10" stroke={color} strokeWidth="0.5" opacity="0.3"/>
+      {[20,40,60,80,100,120,140,160,180].map((x, i) => (
+        <line key={i} x1={x-4} y1={i % 2 === 0 ? 6 : 14} x2={x+4} y2={i % 2 === 0 ? 14 : 6} stroke={color} strokeWidth="1.5" opacity="0.5"/>
+      ))}
+      <circle cx="100" cy="10" r="3" stroke={color} strokeWidth="1" fill="none" opacity="0.7"/>
+    </svg>
+  ),
+  pinPentacle: ({ width = 200, color = COLORS.gold }) => (
+    <svg width={width} height="24" viewBox="0 0 200 24" fill="none" preserveAspectRatio="xMidYMid meet">
+      <line x1="0" y1="12" x2="70" y2="12" stroke={color} strokeWidth="1" opacity="0.4"/>
+      <circle cx="82" cy="12" r="1.5" fill={color} opacity="0.6"/>
+      <polygon points="100 4 103 10 110 10 105 14 107 20 100 16 93 20 95 14 90 10 97 10" stroke={color} strokeWidth="1" fill="none" opacity="0.7"/>
+      <circle cx="118" cy="12" r="1.5" fill={color} opacity="0.6"/>
+      <line x1="130" y1="12" x2="200" y2="12" stroke={color} strokeWidth="1" opacity="0.4"/>
+    </svg>
+  ),
+  redThreadLine: ({ width = 200, color = COLORS.gold }) => (
+    <svg width={width} height="20" viewBox="0 0 200 20" fill="none" preserveAspectRatio="xMidYMid meet">
+      <line x1="0" y1="10" x2="75" y2="10" stroke={color} strokeWidth="1" opacity="0.4"/>
+      <path d="M80 10L88 6L96 14L104 6L112 14L120 10" stroke={COLORS.crimson} strokeWidth="1.5" fill="none" opacity="0.6"/>
+      <circle cx="100" cy="10" r="2" fill={COLORS.crimson} opacity="0.7"/>
+      <line x1="125" y1="10" x2="200" y2="10" stroke={color} strokeWidth="1" opacity="0.4"/>
+    </svg>
+  ),
+  magnifierDots: ({ width = 200, color = COLORS.gold }) => (
+    <svg width={width} height="24" viewBox="0 0 200 24" fill="none" preserveAspectRatio="xMidYMid meet">
+      <line x1="0" y1="12" x2="70" y2="12" stroke={color} strokeWidth="1" opacity="0.4"/>
+      {[76,82,88].map((x, i) => <circle key={i} cx={x} cy="12" r="1.5" fill={color} opacity="0.5"/>)}
+      <circle cx="100" cy="12" r="7" stroke={color} strokeWidth="1.5" fill="none" opacity="0.6"/>
+      <line x1="105" y1="17" x2="110" y2="22" stroke={color} strokeWidth="1.5" opacity="0.6"/>
+      {[112,118,124].map((x, i) => <circle key={i} cx={x} cy="12" r="1.5" fill={color} opacity="0.5"/>)}
+      <line x1="130" y1="12" x2="200" y2="12" stroke={color} strokeWidth="1" opacity="0.4"/>
+    </svg>
+  ),
+  mapContour: ({ width = 200, color = COLORS.gold }) => (
+    <svg width={width} height="24" viewBox="0 0 200 24" fill="none" preserveAspectRatio="xMidYMid meet">
+      <line x1="0" y1="12" x2="60" y2="12" stroke={color} strokeWidth="1" opacity="0.4"/>
+      <path d="M65 8Q75 16 85 8Q95 16 105 8Q115 16 125 8Q135 16 135 12" stroke={color} strokeWidth="1" fill="none" opacity="0.4"/>
+      <path d="M70 16Q80 8 90 16Q100 8 110 16Q120 8 130 16" stroke={color} strokeWidth="1" fill="none" opacity="0.3"/>
+      <circle cx="100" cy="12" r="2" fill={color} opacity="0.7"/>
+      <line x1="140" y1="12" x2="200" y2="12" stroke={color} strokeWidth="1" opacity="0.4"/>
+    </svg>
+  ),
+  envelopeSeam: ({ width = 200, color = COLORS.gold }) => (
+    <svg width={width} height="24" viewBox="0 0 200 24" fill="none" preserveAspectRatio="xMidYMid meet">
+      <line x1="0" y1="12" x2="70" y2="12" stroke={color} strokeWidth="1" opacity="0.4"/>
+      <path d="M75 8L100 18L125 8" stroke={color} strokeWidth="1.5" fill="none" opacity="0.5"/>
+      <line x1="75" y1="8" x2="125" y2="8" stroke={color} strokeWidth="1" opacity="0.4"/>
+      <circle cx="100" cy="6" r="2" fill={color} opacity="0.7"/>
+      <line x1="130" y1="12" x2="200" y2="12" stroke={color} strokeWidth="1" opacity="0.4"/>
+    </svg>
+  ),
+  recipeRule: ({ width = 200, color = COLORS.gold }) => (
+    <svg width={width} height="20" viewBox="0 0 200 20" fill="none" preserveAspectRatio="xMidYMid meet">
+      <line x1="0" y1="7" x2="200" y2="7" stroke={color} strokeWidth="1" opacity="0.3"/>
+      <line x1="0" y1="13" x2="200" y2="13" stroke={color} strokeWidth="1" opacity="0.3"/>
+      <line x1="90" y1="4" x2="90" y2="16" stroke={color} strokeWidth="1" opacity="0.4"/>
+      <circle cx="100" cy="10" r="3" fill={color} opacity="0.6"/>
+      <line x1="110" y1="4" x2="110" y2="16" stroke={color} strokeWidth="1" opacity="0.4"/>
+    </svg>
+  ),
+  featherQuill: ({ width = 200, color = COLORS.gold }) => (
+    <svg width={width} height="24" viewBox="0 0 200 24" fill="none" preserveAspectRatio="xMidYMid meet">
+      <line x1="0" y1="14" x2="72" y2="14" stroke={color} strokeWidth="1" opacity="0.4"/>
+      <path d="M80 14Q88 6 96 10L100 12L104 10Q112 6 120 14" stroke={color} strokeWidth="1.5" fill="none" opacity="0.6"/>
+      <line x1="100" y1="12" x2="100" y2="20" stroke={color} strokeWidth="1" opacity="0.5"/>
+      <line x1="128" y1="14" x2="200" y2="14" stroke={color} strokeWidth="1" opacity="0.4"/>
+    </svg>
+  ),
+};
+
+// ============================================================================
+// GUIDE ORNAMENT CONFIG — Per-guide visual DNA (§4 of Visual System Brief)
+// Never mix guide characteristics. The spell renderer pulls the active guide's
+// set instead of PAGE_ORNAMENT_CONFIG for spell pages.
+// ============================================================================
+export const GUIDE_ORNAMENT_CONFIG = {
+  shigg: {
+    corner: 'floral',
+    dividers: ['botanicalSprig', 'teacupSteam', 'birdBranch'],
+    accentGlyph: 'robin',
+    secondaryGlyph: 'wren',
+    tint: 'amber',
+  },
+  cathleen: {
+    corner: 'celtic',
+    dividers: ['celtic', 'featherNote', 'talismanChain'],
+    accentGlyph: 'triquetra',
+    secondaryGlyph: 'raven',
+    tint: 'teal',
+  },
+  katherine: {
+    corner: 'occult',
+    dividers: ['needleThread', 'stitchedSeam', 'pinPentacle'],
+    accentGlyph: 'thread',
+    secondaryGlyph: 'mirror',
+    tint: 'violet',
+  },
+  theresa: {
+    corner: 'geometric',
+    dividers: ['redThreadLine', 'magnifierDots', 'mapContour'],
+    accentGlyph: 'key',
+    secondaryGlyph: 'compass',
+    tint: 'oxblood',
+  },
+  brenda: {
+    corner: 'scroll',
+    dividers: ['envelopeSeam', 'recipeRule', 'featherQuill'],
+    accentGlyph: 'feather',
+    secondaryGlyph: 'crow',
+    tint: 'sepia',
+  },
+};
+
+// Helper: get a guide's divider component by index (cycles through the 3 variants)
+export const getGuideDivider = (guideId, sectionIndex = 0, props = {}) => {
+  const config = GUIDE_ORNAMENT_CONFIG[guideId];
+  if (!config) return getDividerForPage('default', props);
+  const dividerName = config.dividers[sectionIndex % config.dividers.length];
+  const Divider = GuideDividerStrips[dividerName] || DividerStrips[dividerName] || DividerStrips.classic;
+  return <Divider {...props} />;
+};
+
+// Helper: get full guide ornament set for a spell page
+export const getGuideOrnamentSet = (guideId) => {
+  const config = GUIDE_ORNAMENT_CONFIG[guideId];
+  if (!config) return null;
+  const Corner = CornerOrnaments[config.corner] || CornerOrnaments.classic;
+  return {
+    config,
+    Corner,
+    getDivider: (idx, props = {}) => getGuideDivider(guideId, idx, props),
+    accentGlyph: BestiaryGlyphs[config.accentGlyph],
+    secondaryGlyph: BestiaryGlyphs[config.secondaryGlyph],
+  };
+};
+
+// ============================================================================
 // PAGE ORNAMENT CONFIG - Single Source of Truth
 // Deterministic mapping: each page gets specific ornaments
 // ============================================================================
@@ -757,7 +969,9 @@ export default {
   BestiaryGlyphs,
   CornerOrnaments,
   DividerStrips,
+  GuideDividerStrips,
   PAGE_ORNAMENT_CONFIG,
+  GUIDE_ORNAMENT_CONFIG,
   COLORS,
   getGlyph,
   getCornerForPage,
@@ -765,6 +979,8 @@ export default {
   getAccentGlyph,
   getSecondaryGlyph,
   getPageOrnamentSet,
+  getGuideDivider,
+  getGuideOrnamentSet,
   PageCorners,
   SectionDivider,
   GlyphAccent,

@@ -6,8 +6,9 @@
 STACK:        React 18 + FastAPI + MongoDB + Multi-LLM
 GUIDES:       Shigg (amber), Cathleen (teal), Katherine (violet), Theresa (investigator), Brenda (chronicler)
 AI TEXT:      DeepSeek (research) → Claude Sonnet (writing) → direct Anthropic/DeepSeek clients
-AI IMAGES:    Gemini (headers) → OpenAI GPT Image 1 (tarot/sigils) → Static PNGs (dividers)
-COLORS:       Navy (#0a1628), Cream (#F3EFE8), Gold (#C8A44D), Crimson (#8b2232)
+AI IMAGES:    Gemini (std headers) → FAL Flux Pro (premium headers) → OpenAI GPT Image 1 (tarot/sigils) → Ideogram (premium sigils) → Static PNGs (dividers)
+COLORS:       Deep Navy (#0C1D2E), Primary Navy (#102534), Card Teal (#123A3F), Vellum (#F3EFE8), Gold (#C8A44D), Ember Pink (#B94E6A), Oxblood (#8B2232)
+VISUAL BRIEF: design_assets/VISUAL_SYSTEM_BRIEF.md (canonical — read before touching any visual/image code)
 INDEPENDENCE: Site uses YOUR API keys only — zero Emergent dependencies
 ```
 
@@ -109,12 +110,21 @@ Stage 3: WRITER (Claude)       → Full content in guide voice
 Stage 4: QA (Programmatic)     → Validation, auto-rewrite if fails
 ```
 
-### Image Generation Pipeline (Per-Asset Routing)
+### Image Generation Pipeline (Tier-Aware Per-Asset Routing)
 ```
-Headers   → Google Gemini (GOOGLE_API_KEY)    — atmospheric scenes, fast
-Tarot     → OpenAI GPT Image 1 (OPENAI_API_KEY) — precise symmetry
-Sigils    → OpenAI GPT Image 1 (OPENAI_API_KEY) — clean geometry
-Dividers  → Static PNGs                       — instant, pre-made
+STANDARD TIER:
+  Headers   → Google Gemini (GOOGLE_API_KEY)        — atmospheric scenes, fast
+  Tarot     → OpenAI GPT Image 1 (OPENAI_API_KEY)   — precise symmetry
+  Sigils    → OpenAI GPT Image 1 (OPENAI_API_KEY)   — clean geometry
+  Dividers  → Per-guide SVG ornaments (zero API)     — instant, from ornaments/index.js
+
+PREMIUM TIER:
+  Headers   → FAL Flux Pro (FAL_API_KEY)             — cinematic detail (fallback → Gemini)
+  Tarot     → OpenAI GPT Image 1 (OPENAI_API_KEY)   — precise symmetry
+  Sigils    → Ideogram V2 (IDEOGRAM_API_KEY)         — geometric design (fallback → OpenAI)
+  Dividers  → Per-guide SVG ornaments (zero API)     — instant
+
+QUICK TIER: Zero image API calls — CSS gradients + guide icon + SVG dividers
 ```
 
 Style is driven by `image_style_matrix.py`:
@@ -167,14 +177,18 @@ Style is driven by `image_style_matrix.py`:
 
 ## Design System
 
-### Color Palette (MANDATORY)
+### Color Palette (MANDATORY — matches VISUAL_SYSTEM_BRIEF.md §0)
 ```css
---navy-dark: #0a1628      /* Deep navy - main backgrounds */
---navy-mid: #0E2A2F       /* Midnight teal - section backgrounds */
---cream: #F3EFE8          /* Vellum - text/reading surfaces */
---gold: #C8A44D           /* Antique gold - accents, icons */
---crimson: #8b2232        /* Deep crimson - CTAs */
---crimson-bright: #B94E6A /* Ember pink - highlights */
+--wtc-bg:          #0C1D2E;  /* Deep Navy — page backgrounds */
+--wtc-bg-primary:  #102534;  /* Primary Navy — secondary containers, nav, footers */
+--wtc-card-dark:   #123A3F;  /* Celestial Blue/Teal — cards on dark */
+--wtc-surface:     #F3EFE8;  /* Vellum — ALL body-text containers */
+--wtc-gold:        #C8A44D;  /* Antique Gold — strokes/linework ONLY, never fill */
+--wtc-gold-faded:  #A89872;  /* Faded Gold — tags, metadata */
+--wtc-cta:         #B94E6A;  /* Ember Pink — buttons, CTAs, drop caps */
+--wtc-oxblood:     #8B2232;  /* Oxblood — pull quotes, headings on vellum */
+--wtc-ink:         #1A1A1A;  /* Ink Black — body on vellum */
+--wtc-grey-warm:   #5A524E;  /* Warm Grey — captions on vellum */
 ```
 
 ### Typography
@@ -304,17 +318,26 @@ grep -r "emergentintegrations" backend/*.py  # Should return nothing
 
 ### Working
 - Spell generation (V3 blocks system) — all 5 guides
-- My Grimoire (save/retrieve)
+- My Grimoire (save/retrieve) with GridFS image persistence
 - Interactive Timeline (94 events, 3 views)
 - User authentication (JWT)
 - Invisible Helpers portal
 - Stripe payments (direct SDK, test mode)
-- Image provider routing (Gemini + OpenAI + static)
+- Image provider routing: Gemini + FAL + OpenAI + Ideogram + static fallbacks
 - Artist style matrix (150 combinations)
+- Tier-aware image generation (standard/premium) in parallel
+- SpellComics loading screen rotation (47 curated assets, guide-specific)
+- Framed-plate header images + closing-seal sigils (layout wired, commit 878dadf)
+- FAL queue API fix (PR #27) + premium tier gating fix (PAID_TIERS)
+- Image data flow: GridFS save, dual-path reconstruction on load
 
-### Gaps / Next Up
-- Wire image generation into actual spell output (visual pipeline)
-- Quick spell visual system (CSS-based, no AI — needs frontend wiring)
+### Gaps / Next Up (see VISUAL_SYSTEM_BRIEF.md §8 for implementation order)
+- Palette purge — deprecated hexes still in some components (in progress)
+- GUIDE_ORNAMENT_CONFIG — per-guide SVG dividers + corners (§4)
+- Spell page layout polish — plate caption, sigil seal styling, tarot frontispiece sizing (§3)
+- Quick tier visuals — CSS medallion header + guide icon + dividers (§3.5)
+- Static fallback libraries — populate STATIC_HEADERS/TAROT/SIGILS per guide (§6)
+- PDF/print layout — chapter opener, half-page tarot, full-page seal (§3.6)
 - ~35/94 timeline events have rich narratives
 - 98 broken connection references in timeline
 - Brenda missing custom border assets
