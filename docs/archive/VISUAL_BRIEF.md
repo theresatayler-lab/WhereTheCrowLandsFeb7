@@ -1,3 +1,5 @@
+> DEPRECATED 2026-06-10 — superseded by design_assets/VISUAL_SYSTEM_BRIEF.md. Do not implement from this file.
+
 # Visual System Brief — Spell Pages & Asset Integration
 
 *Decisions by Theresa, 2026-06-10. Companion docs: `design_assets/CATALOG.md` (pack assessments), `frontend/public/spell_comics/MANIFEST.md` (loading-screen rotation).*
