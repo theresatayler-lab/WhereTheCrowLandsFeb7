@@ -80,50 +80,67 @@ def repair_truncated_json(text: str, max_repair_chars: int = JSON_REPAIR_MAX_CHA
         return text
     except json.JSONDecodeError:
         pass
-    
-    # Count open brackets/braces in the last portion
-    check_portion = text[-max_repair_chars:] if len(text) > max_repair_chars else text
-    
-    open_braces = check_portion.count('{') - check_portion.count('}')
-    open_brackets = check_portion.count('[') - check_portion.count(']')
-    
-    # Check if we're inside a string (unclosed quote)
-    in_string = False
-    escape_next = False
-    for char in check_portion:
-        if escape_next:
-            escape_next = False
-            continue
-        if char == '\\':
-            escape_next = True
-            continue
-        if char == '"':
-            in_string = not in_string
-    
-    # Build repair suffix
-    repair = ""
-    
-    # Close string if needed
-    if in_string:
-        repair += '"'
-    
-    # Close arrays
-    repair += ']' * max(0, open_brackets)
-    
-    # Close objects
-    repair += '}' * max(0, open_braces)
-    
-    repaired = text + repair
-    
-    # Validate repair worked
+
+    def _scan(s: str):
+        """Walk the text tracking the open-structure stack and string state."""
+        stack = []
+        in_string = False
+        escape_next = False
+        for char in s:
+            if escape_next:
+                escape_next = False
+                continue
+            if in_string:
+                if char == '\\':
+                    escape_next = True
+                elif char == '"':
+                    in_string = False
+                continue
+            if char == '"':
+                in_string = True
+            elif char in '{[':
+                stack.append(char)
+            elif char == '}' and stack and stack[-1] == '{':
+                stack.pop()
+            elif char == ']' and stack and stack[-1] == '[':
+                stack.pop()
+        return stack, in_string
+
+    def _close(s: str) -> str:
+        stack, in_string = _scan(s)
+        repair = '"' if in_string else ''
+        for opener in reversed(stack):
+            repair += '}' if opener == '{' else ']'
+        return s + repair
+
+    # Pass 1: close the open string and structures in reverse nesting order
+    repaired = _close(text)
     try:
         json.loads(repaired)
-        logger.info(f"[JSON_REPAIR] Successfully repaired JSON (added {len(repair)} chars)")
+        logger.info(f"[JSON_REPAIR] Successfully repaired JSON (added {len(repaired) - len(text)} chars)")
         return repaired
-    except json.JSONDecodeError as e:
-        logger.warning(f"[JSON_REPAIR] Repair failed: {e}")
-        # Return original - let caller handle the error
-        return text
+    except json.JSONDecodeError:
+        pass
+
+    # Pass 2: truncation may have left a dangling fragment (e.g. a key with no
+    # value, or a trailing comma) — trim back to the last complete element
+    trimmed = text.rstrip()
+    for _ in range(20):
+        cut = max(trimmed.rfind(','), trimmed.rfind('{'), trimmed.rfind('['))
+        if cut <= 0:
+            break
+        trimmed = trimmed[:cut].rstrip()
+        repaired = _close(trimmed)
+        try:
+            json.loads(repaired)
+            logger.info(f"[JSON_REPAIR] Repaired by trimming dangling fragment ({len(text) - len(trimmed)} chars dropped)")
+            return repaired
+        except json.JSONDecodeError:
+            continue
+
+    logger.warning("[JSON_REPAIR] Repair failed: could not recover valid JSON")
+    # Return original - let caller handle the error
+    return text
 
 
 def clean_json_response(text: str) -> str:
@@ -1086,8 +1103,8 @@ Generate the complete Research & Origins section. Be specific about manuscripts,
             response_format={"type": "json_object"}
         )
         
-        result = json.loads(response.choices[0].message.content)
-        
+        result = json.loads(repair_truncated_json(response.choices[0].message.content))
+
         elapsed_ms = int((time.time() - start) * 1000)
         logger.info(f"[RESEARCH_ORIGINS] Generated in {elapsed_ms}ms: {len(result.get('research_table', []))} table rows, {len(result.get('suggested_further_reading', []))} reading boxes")
         

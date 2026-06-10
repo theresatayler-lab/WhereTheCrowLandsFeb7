@@ -700,14 +700,24 @@ Remember: You are THE ARCHIVIST. No persona voice. Strict JSON only."""
                         {"role": "user", "content": user_message}
                     ],
                     temperature=0.6,
-                    max_tokens=2500,
+                    max_tokens=4000,
                     response_format={"type": "json_object"}
                 ),
                 timeout=45.0
             )
 
             import json
-            result = json.loads(response.choices[0].message.content)
+            raw_content = response.choices[0].message.content
+            finish_reason = response.choices[0].finish_reason
+            if finish_reason == "length":
+                logger.warning(f"[PROVIDER_CALL] endpoint={endpoint_name} response truncated at max_tokens, attempting repair")
+            try:
+                result = json.loads(raw_content)
+            except json.JSONDecodeError:
+                # Truncated responses end mid-string ("Unterminated string") —
+                # close open structures and salvage the completed facts/sources
+                from prompts.pipeline_blocks import repair_truncated_json
+                result = json.loads(repair_truncated_json(raw_content))
 
             # Validate output
             is_valid, errors = validate_research_output(result, research_mode)
