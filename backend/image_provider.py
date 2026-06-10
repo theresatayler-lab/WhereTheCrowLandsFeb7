@@ -311,14 +311,23 @@ async def _generate_fal(prompt: str, cache_key: str, size: str = "landscape_16_9
                     logger.warning("[FAL] No request_id or images in response")
                     return None
 
-                status_url = f"https://queue.fal.run/fal-ai/flux-pro/v1.1/requests/{request_id}/status"
+                # Use the URLs FAL returns in the submit response — the queue API
+                # strips the model version segment (/v1.1) from poll/result paths,
+                # so hand-building them yields a non-JSON 404.
+                status_url = result_data.get(
+                    "status_url",
+                    f"https://queue.fal.run/fal-ai/flux-pro/requests/{request_id}/status",
+                )
+                result_url = result_data.get(
+                    "response_url",
+                    f"https://queue.fal.run/fal-ai/flux-pro/requests/{request_id}",
+                )
                 for _ in range(30):  # Poll up to 60 seconds
                     import asyncio
                     await asyncio.sleep(2)
                     status_resp = await client.get(status_url, headers=headers)
                     status_data = status_resp.json()
                     if status_data.get("status") == "COMPLETED":
-                        result_url = f"https://queue.fal.run/fal-ai/flux-pro/v1.1/requests/{request_id}"
                         result_resp = await client.get(result_url, headers=headers)
                         images = result_resp.json().get("images")
                         break
