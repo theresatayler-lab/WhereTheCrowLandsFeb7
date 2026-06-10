@@ -286,7 +286,7 @@ class GuideCommentaries(BaseModel):
 class ImageSuggestion(BaseModel):
     """AI image generation prompt data"""
     description: str
-    palette: List[str] = ["#0E2A2F", "#8b2232", "#C8A44D", "#f5f0e6"]
+    palette: List[str] = ["#0C1D2E", "#8B2232", "#C8A44D", "#F3EFE8"]
     style: str = "ornate occult silk scarf illustration, art nouveau filigree"
     motifs: List[str] = []
 

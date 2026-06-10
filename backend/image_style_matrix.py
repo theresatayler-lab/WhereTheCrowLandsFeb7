@@ -262,7 +262,7 @@ def build_style_layer(guide_id: str, detected_intent: str) -> str:
 
 QUICK_SPELL_VISUALS = {
     "shigg": {
-        "page_gradient": "linear-gradient(135deg, #2a1f0e 0%, #1a1408 50%, #0a1628 100%)",
+        "page_gradient": "linear-gradient(135deg, #2a1f0e 0%, #1a1408 50%, #0C1D2E 100%)",
         "accent_border": "1px solid rgba(200, 164, 77, 0.3)",
         "card_bg": "#F3EFE8",
         "header_pattern": "radial-gradient(circle at 30% 40%, rgba(200, 164, 77, 0.08) 0%, transparent 60%)",
@@ -271,7 +271,7 @@ QUICK_SPELL_VISUALS = {
         "divider_style": "ornate_botanical",
     },
     "cathleen": {
-        "page_gradient": "linear-gradient(135deg, #2d0a14 0%, #1a0810 50%, #0a1628 100%)",
+        "page_gradient": "linear-gradient(135deg, #2d0a14 0%, #1a0810 50%, #0C1D2E 100%)",
         "accent_border": "1px solid rgba(139, 34, 50, 0.3)",
         "card_bg": "#F3EFE8",
         "header_pattern": "radial-gradient(circle at 70% 30%, rgba(139, 34, 50, 0.08) 0%, transparent 60%)",
@@ -280,7 +280,7 @@ QUICK_SPELL_VISUALS = {
         "divider_style": "ornate_celtic",
     },
     "katherine": {
-        "page_gradient": "linear-gradient(135deg, #0e1a2a 0%, #0a1220 50%, #0a1628 100%)",
+        "page_gradient": "linear-gradient(135deg, #0e1a2a 0%, #0a1220 50%, #0C1D2E 100%)",
         "accent_border": "1px solid rgba(168, 152, 114, 0.3)",
         "card_bg": "#F3EFE8",
         "header_pattern": "radial-gradient(circle at 50% 50%, rgba(168, 152, 114, 0.06) 0%, transparent 50%)",
@@ -289,7 +289,7 @@ QUICK_SPELL_VISUALS = {
         "divider_style": "ornate_geometric",
     },
     "theresa": {
-        "page_gradient": "linear-gradient(135deg, #1a1008 0%, #140e06 50%, #0a1628 100%)",
+        "page_gradient": "linear-gradient(135deg, #1a1008 0%, #140e06 50%, #0C1D2E 100%)",
         "accent_border": "1px solid rgba(180, 100, 60, 0.3)",
         "card_bg": "#F3EFE8",
         "header_pattern": "radial-gradient(circle at 40% 60%, rgba(180, 100, 60, 0.06) 0%, transparent 60%)",
@@ -298,7 +298,7 @@ QUICK_SPELL_VISUALS = {
         "divider_style": "ornate_investigative",
     },
     "brenda": {
-        "page_gradient": "linear-gradient(135deg, #1a1218 0%, #140e14 50%, #0a1628 100%)",
+        "page_gradient": "linear-gradient(135deg, #1a1218 0%, #140e14 50%, #0C1D2E 100%)",
         "accent_border": "1px solid rgba(200, 164, 77, 0.25)",
         "card_bg": "#F3EFE8",
         "header_pattern": "radial-gradient(circle at 60% 40%, rgba(200, 164, 77, 0.06) 0%, transparent 60%)",

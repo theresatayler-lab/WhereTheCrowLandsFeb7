@@ -797,6 +797,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
             || spell?.tarot_card_image
             || (generatedImages.tarot_card_image ? `data:image/png;base64,${generatedImages.tarot_card_image}` : null)
           }
+          category={spell?.category || spell?.working_category}
           quickVisuals={quickVisuals}
         />
 
@@ -815,6 +816,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                     <SpellBlockRenderer
                       key={idx}
                       spell={{...spell, blocks: [block]}}
+                      guideId={normalizedArchetypeId}
                       archetypeStyle={{
                         borderColor: style.borderColor,
                         accentColor: style.accentColor,
@@ -830,6 +832,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
             ) : (
             <SpellBlockRenderer
               spell={spell}
+              guideId={normalizedArchetypeId}
               archetypeStyle={{
                 borderColor: style.borderColor,
                 accentColor: style.accentColor,
@@ -883,13 +886,16 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
               </div>
             )}
 
-            {/* Closing Seal — sigil as wax-seal after the working */}
+            {/* Closing Seal — sigil as wax-seal after the working (Brief §3.2) */}
             {(generatedAssets?.sigil || generatedImages.sigil) && (
               <div className="grimoire-closing-seal">
-                <img
-                  src={`data:image/png;base64,${generatedAssets?.sigil || generatedImages.sigil}`}
-                  alt="Spell sigil"
-                />
+                <div className="grimoire-seal-ring">
+                  <img
+                    src={`data:image/png;base64,${generatedAssets?.sigil || generatedImages.sigil}`}
+                    alt="The seal of this working"
+                  />
+                </div>
+                <p className="grimoire-seal-caption">THE SEAL OF THIS WORKING</p>
               </div>
             )}
           </div>

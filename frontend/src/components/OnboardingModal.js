@@ -226,7 +226,7 @@ const ArchetypeCard = ({ archetype, isSelected, onSelect }) => {
       {/* Image or Placeholder */}
       <div 
         className="w-full h-40 flex items-center justify-center rounded-t-sm border-b border-border overflow-hidden relative"
-        style={{ backgroundColor: '#D8CBB3' }}
+        style={{ backgroundColor: '#F3EFE8' }}
       >
         {archetype.image ? (
           <>

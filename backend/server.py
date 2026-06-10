@@ -5658,7 +5658,7 @@ async def generate_spell_v3_endpoint(request: Request, body: SpellRequestV3, use
                 from image_style_matrix import QUICK_SPELL_VISUALS
                 quick_visuals = QUICK_SPELL_VISUALS.get(persona_id)
                 if quick_visuals:
-                    spell_output['quick_visuals'] = quick_visuals
+                    spell_output['quick_visuals'] = {**quick_visuals, 'guide_id': persona_id}
                     logging.info(f"[V3] Attached quick_visuals for {persona_id}")
             except Exception as qv_err:
                 logging.warning(f"[V3] Quick visuals lookup failed: {qv_err}")
@@ -6196,7 +6196,7 @@ async def save_spell_to_grimoire(request: SaveSpellRequest, user = Depends(get_c
     
     # Check subscription - only paid users can save
     subscription_tier = user.get('subscription_tier', 'free')
-    if subscription_tier == 'free':
+    if subscription_tier not in PAID_TIERS:
         raise HTTPException(
             status_code=403,
             detail={
@@ -6379,7 +6379,7 @@ async def save_ward_to_grimoire(request: SaveWardRequest, user = Depends(get_cur
     
     # Check subscription - only paid users can save
     subscription_tier = user.get('subscription_tier', 'free')
-    if subscription_tier == 'free':
+    if subscription_tier not in PAID_TIERS:
         raise HTTPException(
             status_code=403,
             detail={
@@ -6469,7 +6469,7 @@ async def export_grimoire_pdf(user = Depends(get_current_user)):
     doc = SimpleDocTemplate(buffer, pagesize=letter, topMargin=1*inch, bottomMargin=1*inch, leftMargin=1.2*inch, rightMargin=1.2*inch)
 
     styles = getSampleStyleSheet()
-    title_style = ParagraphStyle('GrimoireTitle', parent=styles['Title'], fontName='Times-Bold', fontSize=28, spaceAfter=30, textColor=HexColor('#0a1628'), alignment=1)
+    title_style = ParagraphStyle('GrimoireTitle', parent=styles['Title'], fontName='Times-Bold', fontSize=28, spaceAfter=30, textColor=HexColor('#0C1D2E'), alignment=1)
     spell_title_style = ParagraphStyle('SpellTitle', parent=styles['Heading1'], fontName='Times-Bold', fontSize=18, spaceBefore=20, spaceAfter=12, textColor=HexColor('#8b2232'))
     guide_style = ParagraphStyle('GuideName', parent=styles['Normal'], fontName='Times-Italic', fontSize=11, spaceAfter=16, textColor=HexColor('#C8A44D'))
     body_style = ParagraphStyle('SpellBody', parent=styles['Normal'], fontName='Times-Roman', fontSize=11, leading=16, spaceAfter=8, textColor=HexColor('#1a1a1a'))
