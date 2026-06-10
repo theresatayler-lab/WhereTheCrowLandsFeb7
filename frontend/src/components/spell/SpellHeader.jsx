@@ -5,7 +5,7 @@ import { BrandIcon } from "../BrandIcon";
 /**
  * SpellHeader — Grimoire title page
  * Rose-and-crows divider, TC Phantasmagoria title,
- * guide attribution in Italiana, essence quote,
+ * guide attribution in Cinzel Decorative, essence quote,
  * framed-plate header image, optional tarot frontispiece.
  */
 export default function SpellHeader({
@@ -14,6 +14,7 @@ export default function SpellHeader({
   summaryLine,
   headerImageUrl = null,
   tarotImageUrl,
+  category = null,
   quickVisuals = null,
   iconRow = [],
   actions = null,
@@ -32,7 +33,7 @@ export default function SpellHeader({
       {/* Spell title — TC Phantasmagoria */}
       <h1 className="grimoire-manuscript-title">{title}</h1>
 
-      {/* Guide attribution — Italiana small caps */}
+      {/* Guide attribution — Cinzel Decorative small caps */}
       {guideLine ? (
         <p className="grimoire-guide-line">{guideLine}</p>
       ) : null}
@@ -44,7 +45,7 @@ export default function SpellHeader({
         </p>
       ) : null}
 
-      {/* Framed-plate header image — like an engraving plate in an antique book */}
+      {/* Framed vignette plate — chapter illustration (Brief §3.1) */}
       {headerImageUrl ? (
         <div className="grimoire-plate">
           <div className="grimoire-plate-frame">
@@ -54,10 +55,15 @@ export default function SpellHeader({
               className="grimoire-plate-img"
             />
           </div>
+          {category ? (
+            <p className="grimoire-plate-caption">
+              {`A WORKING OF ${category.toUpperCase()}`}
+            </p>
+          ) : null}
         </div>
       ) : null}
 
-      {/* Tarot frontispiece — AI-generated or Quick-tier CSS placeholder */}
+      {/* Tarot frontispiece — AI-generated or Quick-tier CSS placeholder (Brief §3.3) */}
       {tarotImageUrl ? (
         <div className="grimoire-frontispiece">
           <div className="grimoire-frontispiece-frame">

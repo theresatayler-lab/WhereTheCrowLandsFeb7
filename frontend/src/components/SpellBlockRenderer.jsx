@@ -1,19 +1,16 @@
 // SpellBlockRenderer — Renders blocks as ONE continuous flowing grimoire page
 // No cards, no boxes, no giant gaps. Text flows like a real book.
-// Typography: Crimson Text body, Italiana labels, TC Phantasmagoria titles.
+// Typography: Crimson Text body, Cinzel Decorative labels, TC Phantasmagoria titles.
 
 import React, { useState } from 'react';
 import { cn } from '../lib/utils';
+import { getGuideDivider } from '../assets/ornaments/index';
 
-// Ornamental flourish between major sections
-const Flourish = () => (
-  <div className="flex items-center justify-center py-4 opacity-60">
-    <img
-      src="/images/ornaments/divider-ornate-horizontal.png"
-      alt=""
-      className="h-4 w-auto"
-      aria-hidden="true"
-    />
+// Guide-aware ornamental flourish between major sections.
+// Cycles through the active guide's 3 SVG divider variants (Brief §3.4).
+const GuideFlourishDivider = ({ guideId, dividerIndex = 0 }) => (
+  <div className="flex items-center justify-center py-4 opacity-60 grimoire-divider-pulse">
+    {getGuideDivider(guideId, dividerIndex, { width: 240 })}
   </div>
 );
 
@@ -26,22 +23,29 @@ export const SpellBlockRenderer = ({
   initialLog = {}
 }) => {
   const blocks = spell?.blocks || [];
+  const effectiveGuideId = guideId || spell?.guide_id;
   // Essence line already shown in SpellHeader — don't repeat in cold_open
   const essenceLine = spell?.tarot_card?.essence || '';
+
+  // Track divider index to cycle through the guide's 3 variants
+  let dividerCount = 0;
 
   return (
     <div
       className="grimoire-flow"
       data-testid="spell-block-renderer"
-      data-guide={guideId || spell?.guide_id || undefined}
+      data-guide={effectiveGuideId || undefined}
     >
-      {blocks.map((block, index) => (
-        <React.Fragment key={block.block_id || index}>
-          {/* Only show a flourish before the stepper (main working) and closing */}
-          {index > 0 && ['stepper', 'closing'].includes(block.block_type) && <Flourish />}
-          <BlockContent block={block} essenceLine={essenceLine} />
-        </React.Fragment>
-      ))}
+      {blocks.map((block, index) => {
+        const showDivider = index > 0 && ['stepper', 'closing'].includes(block.block_type);
+        const currentDividerIndex = showDivider ? dividerCount++ : 0;
+        return (
+          <React.Fragment key={block.block_id || index}>
+            {showDivider && <GuideFlourishDivider guideId={effectiveGuideId} dividerIndex={currentDividerIndex} />}
+            <BlockContent block={block} essenceLine={essenceLine} />
+          </React.Fragment>
+        );
+      })}
     </div>
   );
 };

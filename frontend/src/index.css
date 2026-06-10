@@ -930,67 +930,122 @@ code {
     margin: 1rem auto 0;
   }
 
-  /* --- Framed Plate (header image — antique engraving plate) --- */
+  /* --- Framed Vignette Plate (header image — §3.1)
+     Double-rule gold frame like a Victorian natural history plate.
+     1px gold border + 8-12px navy mat + outer 1px gold hairline. --- */
   .grimoire-plate {
     display: flex;
-    justify-content: center;
-    margin: 1.5rem auto 1rem;
-    max-width: 420px;
+    flex-direction: column;
+    align-items: center;
+    margin: 1.5rem auto 0.5rem;
+    width: 100%;
   }
   .grimoire-plate-frame {
     width: 100%;
-    border: 2px solid var(--guide-accent-mid, rgba(200, 164, 77, 0.55));
-    padding: 6px;
-    background: rgba(200, 164, 77, 0.04);
-    box-shadow:
-      0 0 0 1px rgba(200, 164, 77, 0.15),
-      0 4px 16px rgba(0, 0, 0, 0.12);
+    max-height: 300px;
+    overflow: hidden;
+    border: 1px solid #C8A44D;
+    padding: 10px;
+    background: #0C1D2E;
+    box-shadow: 0 0 0 1px #C8A44D33, 0 4px 20px rgba(0, 0, 0, 0.2);
+  }
+  @media (min-width: 640px) {
+    .grimoire-plate-frame { max-height: 480px; }
   }
   .grimoire-plate-img {
     width: 100%;
     height: auto;
+    max-height: 460px;
     display: block;
+    object-fit: cover;
     filter: saturate(0.85);
   }
+  .grimoire-plate-caption {
+    margin-top: 0.5rem;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #A89872;
+    text-align: center;
+  }
 
-  /* --- Closing Seal (sigil — wax-seal position after closing block) --- */
+  /* --- Closing Seal (sigil — wax-seal, §3.2)
+     Circular crop, double gold ring, ink-reveal on scroll. --- */
   .grimoire-closing-seal {
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 2.5rem auto 1rem;
+  }
+  .grimoire-seal-ring {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid #C8A44D;
+    box-shadow: 0 0 0 6px #0C1D2E, 0 0 0 7px #C8A44D55;
+    display: flex;
+    align-items: center;
     justify-content: center;
-    margin: 2rem auto 1rem;
-    max-width: 160px;
+    background: #0C1D2E;
   }
   @media (min-width: 640px) {
-    .grimoire-closing-seal { max-width: 200px; }
+    .grimoire-seal-ring { width: 240px; height: 240px; }
   }
-  .grimoire-closing-seal img {
+  .grimoire-seal-ring img {
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: cover;
     display: block;
     opacity: 0.85;
     filter: saturate(0.7) contrast(1.1);
   }
+  .grimoire-seal-caption {
+    margin-top: 0.75rem;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #A89872;
+    text-align: center;
+  }
 
-  /* --- Tarot Frontispiece --- */
+  /* --- Guide divider pulse (candle-flicker animation, §3.4) --- */
+  .grimoire-divider-pulse svg {
+    animation: candleFlicker 3s ease-in-out infinite;
+  }
+  @keyframes candleFlicker {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 0.75; }
+  }
+  @media print {
+    .grimoire-divider-pulse svg { animation: none; opacity: 0.6; }
+  }
+
+  /* --- Tarot Frontispiece (§3.3 — larger, vellum mat, gold frame) --- */
   .grimoire-frontispiece {
     display: flex;
     justify-content: center;
-    margin: 1rem 0 0.5rem;
+    margin: 1.25rem 0 0.75rem;
   }
   .grimoire-frontispiece-frame {
-    width: 140px;
-    border: 1px solid var(--guide-accent-soft, rgba(200, 164, 77, 0.3));
-    padding: 3px;
-    background: rgba(200, 164, 77, 0.04);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    height: 256px;
+    width: auto;
+    max-width: 180px;
+    border: 1px solid #C8A44D;
+    padding: 12px;
+    background: #F3EFE8;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
   }
   @media (min-width: 640px) {
-    .grimoire-frontispiece-frame { width: 170px; }
+    .grimoire-frontispiece-frame { height: 340px; max-width: 240px; }
   }
   .grimoire-frontispiece-img {
     width: 100%;
-    height: auto;
+    height: 100%;
     display: block;
+    object-fit: cover;
   }
 
   /* --- Flowing Content Container --- */
