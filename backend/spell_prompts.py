@@ -235,7 +235,7 @@ def extract_spell_visual_tokens(spell_data: dict, persona_config: dict) -> dict:
     """
     import hashlib
     
-    persona_id = persona_config.get("archetype_id", "shigg")
+    persona_id = persona_config.get("archetype_id") or persona_config.get("name", "shigg").lower()
     
     # Extract text to analyze
     title = spell_data.get("title", "") or spell_data.get("tarot_card", {}).get("title", "")
@@ -923,7 +923,7 @@ def build_image_prompt(asset_type: str, asset_plan: dict, persona_config: dict, 
     V3.0: Adds artist style layer from image_style_matrix for visual variety.
     """
 
-    persona_id = persona_config.get("archetype_id", "shigg")
+    persona_id = persona_config.get("archetype_id") or persona_config.get("name", "shigg").lower()
     base_style = persona_config['visual_dna']['constants']['art_style']
     dall_e_rules = persona_config['visual_dna'].get('dall_e_rules', 'pen-and-ink illustration, NO text')
     avoid_list = persona_config['visual_dna']['avoid']
@@ -937,21 +937,38 @@ def build_image_prompt(asset_type: str, asset_plan: dict, persona_config: dict, 
 
     # V3.0: Detect intent and build artist style layer
     detected_intent = "protection"  # default
+    visual_tokens = None
     if spell_data:
         visual_tokens = extract_spell_visual_tokens(spell_data, persona_config)
         detected_intent = visual_tokens.get("detected_intent", "protection")
     style_layer = build_style_layer(persona_id, detected_intent)
     artist = get_artist_style(persona_id, detected_intent)
 
+    # V3.1: Visual continuity seed — shared across header/tarot/sigil so the
+    # three assets read as one suite rather than three unrelated images.
+    continuity = ""
+    if visual_tokens:
+        continuity = (
+            f"VISUAL CONTINUITY: this image belongs to a matched set sharing "
+            f"the motif of {visual_tokens['primary_motif']} and the palette "
+            f"{artist['palette_shift']} — keep linework weight and mood consistent across the set."
+        )
+
     if asset_type == "header_image":
         asset_info = asset_plan.get("header_image", {})
         header_scene = persona_config['visual_dna'].get('header_scene', asset_info.get('scene_description', 'mystical scene'))
+
+        motif_echo = ""
+        if visual_tokens:
+            motif_echo = f"Worked subtly into the scene: an echo of {visual_tokens['primary_motif']},"
 
         prompt = f"""{art_bible_prefix},
 {style_layer},
 A {asset_info.get('mood', 'contemplative')} atmospheric scene in the style of {artist['artist']}: {header_scene},
 featuring {', '.join(asset_info.get('key_elements', ['candle']))},
+{motif_echo}
 PALETTE: {artist['palette_shift']},
+{continuity}
 QUALITY: Should look like a fine art illustration or lithograph — visible artistic technique, NOT flat AI-generated imagery.
 {role_suffix},
 {dall_e_rules},
@@ -977,6 +994,7 @@ FOCAL ELEMENT: {primary_motif} — rendered with craft and detail as if for a li
 SUPPORTING ELEMENTS: {', '.join(secondary_motifs)}.
 GUIDE SIGNATURE (small, organic): {guide_signature}.
 PALETTE: Use this guide's palette — {artist['palette_shift']} — NOT generic gold-on-teal. Deep contrast, printmaking quality.
+{continuity}
 QUALITY: Should look like it belongs in a beautiful 1920s occult book, NOT like generic AI art.
 CONSTRAINTS: no text, no letters, no numbers, no banners, no photorealism, no 3D render, no oversaturated neon.
 {dall_e_rules},
@@ -1007,18 +1025,25 @@ AVOID: {', '.join(avoid_list)}"""
         primary_motif_str = persona_config.get('visual_dna', {}).get('constants', {}).get('primary_motif', 'crow, moon')
         sigil_motif = primary_motif_str.split(',')[0].strip()
 
-        prompt = f"""Ornate occult engraved linework sigil,
-High contrast BLACK AND WHITE sigil design,
+        # Weave the spell's own motif in alongside the guide's signature motif
+        spell_motif_line = ""
+        if visual_tokens:
+            spell_motif_line = f"Woven through the seal: {visual_tokens['primary_motif']},"
+
+        prompt = f"""Ornate occult engraved linework sigil in the tradition of Austin Osman Spare and art nouveau bookplates,
+Deep warm-black ink linework with ONE single antique gold accent detail (a thin gilded line or small gilded element) — otherwise no color,
 {asset_info.get('design_concept', f'{detected_intent} sigil incorporating {sigil_motif}')},
 Central symbol: {sigil_motif} rendered as geometric seal,
+{spell_motif_line}
 Supporting geometry: {category['composition']},
 elements: {', '.join(asset_info.get('elements', ['circle', 'line', sigil_motif]))},
 geometric and organic lines combined,
-PRINTABLE at small size, clear bold lines,
+{continuity}
+PRINTABLE at small size, clear bold lines, reads perfectly in pure black and white,
 magical seal or protective mark style,
 ultra-detailed engraved linework, symmetrical medallion,
 art nouveau border flourishes,
-BLACK AND WHITE ONLY, no color, no grey, no shading,
+no shading, no grey washes, no gradients,
 NO text, NO letters, NO words, NO signatures, NO watermarks,
 AVOID: {', '.join(avoid_list)}"""
 
@@ -1026,10 +1051,21 @@ AVOID: {', '.join(avoid_list)}"""
         divider_idx = int(asset_type.split("_")[1]) - 1 if "_" in asset_type else 0
         dividers = asset_plan.get("dividers", [{}])
         divider_info = dividers[divider_idx] if divider_idx < len(dividers) else dividers[0] if dividers else {}
-        
+
+        # Each guide's dividers carry their own ornamental vocabulary
+        guide_divider_motifs = {
+            "shigg": "botanical sprigs, small bird silhouettes, tea leaves and feathers",
+            "cathleen": "Celtic knotwork, interlaced cords, raven feather tips",
+            "katherine": "precise geometric lattice, astral points, fine compass linework",
+            "theresa": "stretched red thread, small keys, magnifying-glass curves",
+            "brenda": "unfurled letter ribbons, crow feathers, wax seal medallions",
+        }
+        guide_motif = guide_divider_motifs.get(persona_id, "scrollwork")
+
         prompt = f"""{art_bible_prefix},
 {base_style}, HORIZONTAL decorative divider,
-ornamental border featuring {divider_info.get('motif', 'scrollwork')},
+ornamental border featuring {divider_info.get('motif', guide_motif)},
+incorporating {guide_motif},
 HORIZONTAL orientation (wide, not tall), symmetrical,
 suitable for separating text sections in a book,
 elegant, art nouveau filigree, engraved texture,
@@ -1047,9 +1083,9 @@ def generate_all_image_prompts(asset_plan: dict, persona_config: dict, spell_tit
     V2.0: Now accepts spell_data for spell-specific tarot image generation
     """
     prompts = {
-        "header_image": build_image_prompt("header_image", asset_plan, persona_config, spell_title),
+        "header_image": build_image_prompt("header_image", asset_plan, persona_config, spell_title, spell_data),
         "tarot_card_image": build_image_prompt("tarot_card_image", asset_plan, persona_config, spell_title, spell_data),
-        "sigil": build_image_prompt("sigil", asset_plan, persona_config, spell_title),
+        "sigil": build_image_prompt("sigil", asset_plan, persona_config, spell_title, spell_data),
     }
     
     for i in range(3):

@@ -786,7 +786,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
         ? `data:image/png;base64,${generatedImages.header_image}`
         : quickVisuals?.page_gradient || undefined
     }>
-        <div ref={grimoireRef}>
+        <div ref={grimoireRef} data-guide={normalizedArchetypeId || undefined}>
         <SpellHeader
           title={spell?.tarot_card?.title || spell?.title || "Saved Spell"}
           guideLine={`${spell?.archetype_name || ""}${spell?.archetype_title ? " • " + spell.archetype_title : ""}`}

@@ -5082,7 +5082,7 @@ async def generate_personalized_spell(request: Request, body: PersonalizedSpellR
                 from image_provider import generate_image as gen_img, is_static_url, get_url_from_static
                 
                 # 1. Header image (static library)
-                header_prompt = build_image_prompt("header_image", asset_plan, persona_config, spell.get('title', 'Spell'))
+                header_prompt = build_image_prompt("header_image", asset_plan, persona_config, spell.get('title', 'Spell'), spell)
                 logging.info("Generating header image...")
                 header_result = await gen_img(
                     prompt=header_prompt,
@@ -5113,7 +5113,7 @@ async def generate_personalized_spell(request: Request, body: PersonalizedSpellR
                     asset_plan['tarot_card_image_generated'] = True
 
                 # 3. Sigil (static library)
-                sigil_prompt = build_image_prompt("sigil", asset_plan, persona_config, spell.get('title', 'Spell'))
+                sigil_prompt = build_image_prompt("sigil", asset_plan, persona_config, spell.get('title', 'Spell'), spell)
                 logging.info("Generating sigil...")
                 sigil_result = await gen_img(
                     prompt=sigil_prompt,
@@ -5977,7 +5977,7 @@ async def _generate_spell_background(job_id: str, request_data: dict, user_id: O
                 spell_title = spell_output.get('title', 'Spell')
                 
                 # Header image (scene)
-                header_prompt = build_image_prompt("header_image", {}, persona_cfg, spell_title)
+                header_prompt = build_image_prompt("header_image", {}, persona_cfg, spell_title, spell_output)
                 header_result = await gen_img(prompt=header_prompt, persona_id=persona_id, asset_type="header")
                 if header_result:
                     generated_images['header_image'] = header_result
