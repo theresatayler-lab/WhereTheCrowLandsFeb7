@@ -699,10 +699,10 @@ export const SpellRequest = () => {
           asset_plan: {
             ...prev.asset_plan,
             generated_assets: {
+              ...prev.asset_plan?.generated_assets,
               header_image: serverImages.header_image,
               tarot_card_image: serverImages.tarot_card_image,
               sigil: serverImages.sigil,
-              ...prev.asset_plan?.generated_assets,
             }
           }
         }));

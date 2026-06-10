@@ -6221,11 +6221,15 @@ async def save_spell_to_grimoire(request: SaveSpellRequest, user = Depends(get_c
     
     # Strip large base64 images from asset_plan before storing in document
     cleaned_asset_plan = strip_images_from_asset_plan(request.asset_plan)
-    
+
+    # Strip generated_images from spell_data (base64 images belong in GridFS, not the document)
+    cleaned_spell_data = dict(request.spell_data) if request.spell_data else {}
+    cleaned_spell_data.pop('generated_images', None)
+
     saved_spell = {
         'id': spell_id,
         'user_id': user['id'],
-        'spell_data': request.spell_data,
+        'spell_data': cleaned_spell_data,
         'archetype_id': request.archetype_id,
         'archetype_name': request.archetype_name,
         'archetype_title': request.archetype_title,
@@ -6285,17 +6289,21 @@ async def get_user_grimoire(user = Depends(get_current_user)):
         if storage_version >= 2 and 'image_refs' in spell:
             # V2 storage: fetch images from GridFS
             images = await image_storage.get_spell_images(spell.get('image_refs', {}))
-            
+
             # Reconstruct image_base64 and asset_plan with images
             spell['image_base64'] = images.get('header_image')
-            
+
             if spell.get('asset_plan'):
                 if 'generated_assets' not in spell['asset_plan']:
                     spell['asset_plan']['generated_assets'] = {}
                 spell['asset_plan']['generated_assets'].update(images)
-        
+
+            # Reconstruct generated_images inside spell_data for frontend compatibility
+            if spell.get('spell_data') and images:
+                spell['spell_data']['generated_images'] = images
+
         processed_spells.append(spell)
-    
+
     return processed_spells
 
 @api_router.get('/grimoire/spells/{spell_id}')
@@ -6314,15 +6322,19 @@ async def get_spell_by_id(spell_id: str, user = Depends(get_current_user)):
     if storage_version >= 2 and 'image_refs' in spell:
         # V2 storage: fetch images from GridFS
         images = await image_storage.get_spell_images(spell.get('image_refs', {}))
-        
+
         # Reconstruct image_base64 and asset_plan with images
         spell['image_base64'] = images.get('header_image')
-        
+
         if spell.get('asset_plan'):
             if 'generated_assets' not in spell['asset_plan']:
                 spell['asset_plan']['generated_assets'] = {}
             spell['asset_plan']['generated_assets'].update(images)
-    
+
+        # Reconstruct generated_images inside spell_data for frontend compatibility
+        if spell.get('spell_data') and images:
+            spell['spell_data']['generated_images'] = images
+
     return spell
 
 @api_router.delete('/grimoire/spells/{spell_id}')
