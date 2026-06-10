@@ -8,33 +8,13 @@ import { getCurrentArchetype, setCurrentArchetype } from '../components/Onboardi
 import { SpellLimitBanner } from '../components/UpgradePrompt';
 import HandcraftedMagicModal from '../components/HandcraftedMagicModal';
 import HandcraftedBanner from '../components/HandcraftedBanner';
+import SpellComicsRotation from '../components/spell/SpellComicsRotation';
 import { DarkSection, LightSection, GrandDivider, MysticalDivider, ElaborateCorner, PageHeader, OrnateCard, LightOrnateCard, StepperOrnament, BestiaryGlyph, ATMOSPHERIC_IMAGES } from '../components/OrnateElements';
 import { 
   ChevronRight, ChevronLeft, Check, Loader2
 } from 'lucide-react';
 import BrandIcon from '../components/BrandIcon';
 import { toast } from 'sonner';
-
-// ===== DERIVE VIDEOS FROM ARCHETYPES.JS (single source of truth) =====
-const getArchetypeVideo = (personaId) => {
-  // Map persona IDs (from PERSONAS) to archetype IDs (from ARCHETYPES)
-  const idMap = {
-    'shigg': 'shiggy',
-    'cathleen': 'kathleen',
-    'katherine': 'katherine',
-    'theresa': 'theresa',
-    'brenda': 'brenda'
-  };
-  const archetypeId = idMap[personaId] || personaId;
-  const archetype = ARCHETYPES.find(a => a.id === archetypeId);
-  return archetype?.video || null;
-};
-
-// Generic fallback video for non-persona spells - Silent Army video for magical workings
-const GENERIC_SPELL_VIDEO = '/videos/silent-army-spells.mp4';
-
-// Get all available videos for random selection (for choose_for_me fallback)
-const ALL_ARCHETYPE_VIDEOS = ARCHETYPES.filter(a => a.video).map(a => a.video);
 
 // ===== WIZARD CONFIGURATION =====
 
@@ -484,19 +464,7 @@ export const SpellRequest = () => {
     return true;
   };
 
-  // Helper to get video URL for loading overlay (always returns a video)
-  const getLoadingVideoUrl = () => {
-    const personaId = spellSpec.persona_id;
-    
-    // If specific persona selected (NOT choose_for_me), use their video
-    if (personaId && personaId !== 'choose_for_me') {
-      const video = getArchetypeVideo(personaId);
-      if (video) return video;
-    }
-    
-    // For "choose_for_me" or no selection, ALWAYS use the generic spell video
-    return GENERIC_SPELL_VIDEO;
-  };
+
 
   // Lazy load images after spell text is displayed
   const lazyLoadImages = async (assetPlan, archetypeId) => {
@@ -953,17 +921,8 @@ export const SpellRequest = () => {
             exit={{ opacity: 0 }}
             className="fixed inset-0 bg-navy-dark z-50 flex items-center justify-center overflow-hidden"
           >
-            {/* Background video - ALWAYS shows (uses fallback for choose_for_me) */}
-            <video
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="absolute inset-0 w-full h-full object-cover opacity-40"
-              style={{ filter: 'saturate(0.8) contrast(1.1)' }}
-            >
-              <source src={getLoadingVideoUrl()} type="video/mp4" />
-            </video>
+            {/* SpellComics rotation — guide-specific stills + videos crossfading */}
+            <SpellComicsRotation guideId={spellSpec.persona_id} />
             
             {/* Gradient overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-navy-dark via-navy-dark/70 to-navy-dark/50" />

@@ -781,16 +781,17 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
 
 
   return (
-    <SpellPageFrame backgroundImageUrl={
-      generatedImages.header_image
-        ? `data:image/png;base64,${generatedImages.header_image}`
-        : quickVisuals?.page_gradient || undefined
-    }>
+    <SpellPageFrame backgroundImageUrl={quickVisuals?.page_gradient || undefined}>
         <div ref={grimoireRef} data-guide={normalizedArchetypeId || undefined}>
         <SpellHeader
           title={spell?.tarot_card?.title || spell?.title || "Saved Spell"}
           guideLine={`${spell?.archetype_name || ""}${spell?.archetype_title ? " • " + spell.archetype_title : ""}`}
           summaryLine={spell?.tarot_card?.essence || ""}
+          headerImageUrl={
+            generatedImages.header_image
+              ? `data:image/png;base64,${generatedImages.header_image}`
+              : null
+          }
           tarotImageUrl={
             spell?.asset_plan?.generated_assets?.tarot_card_image
             || spell?.tarot_card_image
@@ -879,6 +880,16 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
             {spell.ethics_statement && (
               <div className="mt-4 p-3 bg-gold/5 border border-gold/20 rounded-sm">
                 <p className="font-montserrat text-xs text-navy-dark/70 italic text-center">{spell.ethics_statement}</p>
+              </div>
+            )}
+
+            {/* Closing Seal — sigil as wax-seal after the working */}
+            {(generatedAssets?.sigil || generatedImages.sigil) && (
+              <div className="grimoire-closing-seal">
+                <img
+                  src={`data:image/png;base64,${generatedAssets?.sigil || generatedImages.sigil}`}
+                  alt="Spell sigil"
+                />
               </div>
             )}
           </div>

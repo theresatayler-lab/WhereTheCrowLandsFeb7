@@ -417,7 +417,9 @@ code {
   .spell-block,
   [data-testid$="-block"],
   .grimoire-spoken,
-  .grimoire-frontispiece { page-break-inside: avoid; }
+  .grimoire-frontispiece,
+  .grimoire-plate,
+  .grimoire-closing-seal { page-break-inside: avoid; }
 
   /* Page margins */
   @page { margin: 0.6in; }
@@ -926,6 +928,47 @@ code {
     height: 1px;
     background: linear-gradient(to right, transparent, var(--guide-accent-soft, rgba(200, 164, 77, 0.4)), transparent);
     margin: 1rem auto 0;
+  }
+
+  /* --- Framed Plate (header image — antique engraving plate) --- */
+  .grimoire-plate {
+    display: flex;
+    justify-content: center;
+    margin: 1.5rem auto 1rem;
+    max-width: 420px;
+  }
+  .grimoire-plate-frame {
+    width: 100%;
+    border: 2px solid var(--guide-accent-mid, rgba(200, 164, 77, 0.55));
+    padding: 6px;
+    background: rgba(200, 164, 77, 0.04);
+    box-shadow:
+      0 0 0 1px rgba(200, 164, 77, 0.15),
+      0 4px 16px rgba(0, 0, 0, 0.12);
+  }
+  .grimoire-plate-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: saturate(0.85);
+  }
+
+  /* --- Closing Seal (sigil — wax-seal position after closing block) --- */
+  .grimoire-closing-seal {
+    display: flex;
+    justify-content: center;
+    margin: 2rem auto 1rem;
+    max-width: 160px;
+  }
+  @media (min-width: 640px) {
+    .grimoire-closing-seal { max-width: 200px; }
+  }
+  .grimoire-closing-seal img {
+    width: 100%;
+    height: auto;
+    display: block;
+    opacity: 0.85;
+    filter: saturate(0.7) contrast(1.1);
   }
 
   /* --- Tarot Frontispiece --- */

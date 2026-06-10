@@ -5,12 +5,14 @@ import { BrandIcon } from "../BrandIcon";
 /**
  * SpellHeader — Grimoire title page
  * Rose-and-crows divider, TC Phantasmagoria title,
- * guide attribution in Italiana, essence quote, optional tarot frontispiece.
+ * guide attribution in Italiana, essence quote,
+ * framed-plate header image, optional tarot frontispiece.
  */
 export default function SpellHeader({
   title,
   guideLine,
   summaryLine,
+  headerImageUrl = null,
   tarotImageUrl,
   quickVisuals = null,
   iconRow = [],
@@ -40,6 +42,19 @@ export default function SpellHeader({
         <p className="grimoire-essence-line">
           &ldquo;{summaryLine}&rdquo;
         </p>
+      ) : null}
+
+      {/* Framed-plate header image — like an engraving plate in an antique book */}
+      {headerImageUrl ? (
+        <div className="grimoire-plate">
+          <div className="grimoire-plate-frame">
+            <img
+              src={headerImageUrl}
+              alt={title || "Spell illustration"}
+              className="grimoire-plate-img"
+            />
+          </div>
+        </div>
       ) : null}
 
       {/* Tarot frontispiece — AI-generated or Quick-tier CSS placeholder */}
