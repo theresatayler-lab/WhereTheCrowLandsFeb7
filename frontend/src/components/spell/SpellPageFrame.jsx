@@ -6,17 +6,19 @@ import React from "react";
  * Sullivan-inspired: let the page breathe, ornament only at edges.
  */
 export default function SpellPageFrame({ children, backgroundImageUrl }) {
+  // Quick-tier CSS gradients still serve as subtle page atmosphere;
+  // AI-generated header images are now rendered as framed plates inside
+  // SpellHeader, not as faint backgrounds.
+  const isGradient = backgroundImageUrl &&
+    (backgroundImageUrl.startsWith("linear-gradient") || backgroundImageUrl.startsWith("radial-gradient"));
+
   return (
     <div className="spell-page-wrap bg-navy-dark" data-surface="dark">
-      {backgroundImageUrl ? (
+      {isGradient ? (
         <div
           className="spell-atmosphere"
           aria-hidden="true"
-          style={
-            backgroundImageUrl.startsWith("linear-gradient") || backgroundImageUrl.startsWith("radial-gradient")
-              ? { backgroundImage: backgroundImageUrl }
-              : { backgroundImage: `url(${backgroundImageUrl})`, backgroundSize: "cover", backgroundPosition: "center" }
-          }
+          style={{ backgroundImage: backgroundImageUrl }}
         />
       ) : null}
 
