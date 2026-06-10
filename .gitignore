@@ -245,3 +245,5 @@ frontend/node_modules/
 # Environment files
 *.env
 *.env.*
+design_assets/inbox/
+design_assets/processed/
