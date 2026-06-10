@@ -1023,6 +1023,51 @@ code {
     .grimoire-divider-pulse svg { animation: none; opacity: 0.6; }
   }
 
+  /* --- Quick Tier Header Medallion (§3.5 — CSS only, zero API calls) --- */
+  .grimoire-quick-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 1rem auto 0.5rem;
+  }
+  .grimoire-quick-header-medallion {
+    width: 100%;
+    max-width: 280px;
+    aspect-ratio: 16/9;
+    border-radius: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background-size: cover;
+  }
+  .grimoire-quick-header-medallion::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: inherit;
+    opacity: 0.12;
+    animation: medallionPulse 90s ease-in-out infinite;
+  }
+  @keyframes medallionPulse {
+    0%, 100% { opacity: 0.10; transform: scale(1); }
+    50% { opacity: 0.15; transform: scale(1.02); }
+  }
+  .grimoire-quick-header-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 1px solid #C8A44D;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #0C1D2E;
+    box-shadow: 0 0 20px rgba(200, 164, 77, 0.1);
+  }
+  @media (min-width: 640px) {
+    .grimoire-quick-header-icon { width: 72px; height: 72px; }
+  }
+
   /* --- Tarot Frontispiece (§3.3 — larger, vellum mat, gold frame) --- */
   .grimoire-frontispiece {
     display: flex;

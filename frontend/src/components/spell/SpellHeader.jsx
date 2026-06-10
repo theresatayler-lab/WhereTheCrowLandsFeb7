@@ -61,6 +61,28 @@ export default function SpellHeader({
             </p>
           ) : null}
         </div>
+      ) : quickVisuals?.header_pattern ? (
+        /* Quick tier: CSS medallion header with guide icon (Brief §3.5) */
+        <div className="grimoire-quick-header">
+          <div
+            className="grimoire-quick-header-medallion"
+            style={{ backgroundImage: quickVisuals.header_pattern }}
+          >
+            <div className="grimoire-quick-header-icon">
+              <img
+                src={`/icons/guides/guide-${quickVisuals.guide_id || 'shigg'}.png`}
+                alt=""
+                className="w-12 h-12 sm:w-16 sm:h-16"
+                style={{ filter: 'sepia(1) saturate(0.6) brightness(1.2)' }}
+              />
+            </div>
+          </div>
+          {category ? (
+            <p className="grimoire-plate-caption">
+              {`A WORKING OF ${category.toUpperCase()}`}
+            </p>
+          ) : null}
+        </div>
       ) : null}
 
       {/* Tarot frontispiece — AI-generated or Quick-tier CSS placeholder (Brief §3.3) */}
