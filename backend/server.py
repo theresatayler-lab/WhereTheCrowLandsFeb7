@@ -124,6 +124,10 @@ JWT_ALGORITHM = 'HS256'
 ANTHROPIC_API_KEY = os.environ.get('ANTHROPIC_API_KEY', '')
 STRIPE_API_KEY = os.environ.get('STRIPE_API_KEY', '')
 
+# Canonical set of subscription tiers that count as "paid" — Stripe sets 'pro'
+# or 'paid', spell_tiers.py uses 'premium'/'founding'. Accept all four.
+PAID_TIERS = frozenset(('pro', 'paid', 'premium', 'founding'))
+
 # Initialize Anthropic client (for all text generation)
 anthropic_client = anthropic.AsyncAnthropic(api_key=ANTHROPIC_API_KEY)
 
@@ -386,8 +390,7 @@ async def check_spell_generation_limit(user: dict) -> dict:
     subscription_tier = user.get('subscription_tier', 'free')
     subscription_status = user.get('subscription_status', 'free')
     
-    # Pro/paid users have unlimited spells (accept both 'pro' and 'paid')
-    if subscription_tier in ('paid', 'pro') or subscription_status in ('paid', 'pro'):
+    if subscription_tier in PAID_TIERS or subscription_status in PAID_TIERS:
         return {'can_generate': True, 'remaining': -1, 'limit': -1}
     
     # Free tier - limit to 3 spells
@@ -2586,7 +2589,7 @@ async def get_taxonomy():
 @api_router.post('/timeline/v2/events')
 async def create_timeline_event(event: dict, current_user: dict = Depends(get_current_user)):
     """Create a new timeline event (requires auth)"""
-    if current_user.get('subscription_tier') != 'pro':
+    if current_user.get('subscription_tier') not in PAID_TIERS:
         raise HTTPException(status_code=403, detail='Pro subscription required')
     result = await add_timeline_event(db, event)
     return {"success": True, "event": result}
@@ -2594,7 +2597,7 @@ async def create_timeline_event(event: dict, current_user: dict = Depends(get_cu
 @api_router.put('/timeline/v2/events/{event_id}')
 async def update_timeline_event_v2(event_id: str, updates: dict, current_user: dict = Depends(get_current_user)):
     """Update a timeline event (requires auth)"""
-    if current_user.get('subscription_tier') != 'pro':
+    if current_user.get('subscription_tier') not in PAID_TIERS:
         raise HTTPException(status_code=403, detail='Pro subscription required')
     result = await update_timeline_event(db, event_id, updates)
     if not result:
@@ -2604,7 +2607,7 @@ async def update_timeline_event_v2(event_id: str, updates: dict, current_user: d
 @api_router.delete('/timeline/v2/events/{event_id}')
 async def delete_timeline_event_v2(event_id: str, current_user: dict = Depends(get_current_user)):
     """Delete a timeline event (requires auth)"""
-    if current_user.get('subscription_tier') != 'pro':
+    if current_user.get('subscription_tier') not in PAID_TIERS:
         raise HTTPException(status_code=403, detail='Pro subscription required')
     success = await delete_timeline_event(db, event_id)
     if not success:
@@ -2636,7 +2639,7 @@ async def enhance_single_event(event_id: str, current_user: dict = Depends(get_c
     Enhance a single timeline event with DeepSeek research + Claude narrative.
     Requires Pro subscription.
     """
-    if current_user.get('subscription_tier') not in ('pro', 'paid'):
+    if current_user.get('subscription_tier') not in PAID_TIERS:
         raise HTTPException(status_code=403, detail='Pro subscription required for AI enhancement')
     
     # Get existing event
@@ -2680,7 +2683,7 @@ async def enhance_batch_events(
     """
     # Check admin key
     admin_key = os.environ.get('ADMIN_KEY')
-    if not admin_key or current_user.get('subscription_tier') != 'pro':
+    if not admin_key or current_user.get('subscription_tier') not in PAID_TIERS:
         raise HTTPException(status_code=403, detail='Admin access required')
     
     # Get events that haven't been enhanced
@@ -3513,7 +3516,7 @@ async def get_corrie_tarot_reading(request: Request, body: CorrieTarotRequest, u
     try:
         await check_and_increment_daily_usage()
         # Check if user is Pro
-        if user.get('subscription_tier', 'free') != 'paid':
+        if user.get('subscription_tier', 'free') not in PAID_TIERS:
             raise HTTPException(
                 status_code=403, 
                 detail={
@@ -3649,7 +3652,7 @@ async def get_cobbles_oracle_reading(request: Request, body: CobbleOracleRequest
         spread = ORACLE_SPREADS.get(body.spread_type, ORACLE_SPREADS["one_card"])
         
         # Check Pro status for advanced spreads
-        is_pro = user.get('subscription_tier', 'free') == 'paid'
+        is_pro = user.get('subscription_tier', 'free') in PAID_TIERS
         if spread.get("pro_only", False) and not is_pro:
             raise HTTPException(
                 status_code=403,
@@ -4887,7 +4890,7 @@ async def generate_personalized_spell(request: Request, body: PersonalizedSpellR
                 # Check for paid/pro status (accept both 'pro' and 'paid' as valid paid tiers)
                 tier = user_data.get('subscription_tier', 'free')
                 status = user_data.get('subscription_status', 'free')
-                is_paid = tier in ('pro', 'paid') or status in ('pro', 'paid')
+                is_paid = tier in PAID_TIERS or status in PAID_TIERS
                 if not is_paid:
                     spell_count = user_data.get('spell_generation_count', 0)
                     limit = 3  # Free tier limit
@@ -5272,7 +5275,7 @@ async def generate_spell_v2_endpoint(request: Request, body: SpellRequestV2, use
             if user_data:
                 tier = user_data.get('subscription_tier', 'free')
                 status = user_data.get('subscription_status', 'free')
-                is_paid = tier in ('pro', 'paid') or status in ('pro', 'paid')
+                is_paid = tier in PAID_TIERS or status in PAID_TIERS
                 if not is_paid:
                     spell_count = user_data.get('spell_generation_count', 0)
                     limit = 3
@@ -5458,7 +5461,7 @@ async def generate_spell_v3_endpoint(request: Request, body: SpellRequestV3, use
             if user_data:
                 tier = user_data.get('subscription_tier', 'free')
                 status = user_data.get('subscription_status', 'free')
-                is_paid = tier in ('pro', 'paid') or status in ('pro', 'paid')
+                is_paid = tier in PAID_TIERS or status in PAID_TIERS
                 if not is_paid:
                     limit = 3
                     spell_slot_claimed = await claim_spell_slot(user['id'], limit)
@@ -6058,7 +6061,7 @@ async def create_spell_job(request: Request, body: SpellRequestV3, background_ta
         if user_data:
             tier = user_data.get('subscription_tier', 'free')
             status = user_data.get('subscription_status', 'free')
-            is_paid = tier in ('pro', 'paid') or status in ('pro', 'paid')
+            is_paid = tier in PAID_TIERS or status in PAID_TIERS
             if not is_paid:
                 limit = 3
                 spell_count = user_data.get('spell_generation_count', 0)
@@ -6524,8 +6527,8 @@ async def get_subscription_status(user = Depends(get_current_user)):
         'spells_used': user.get('spell_generation_count', 0),
         'total_spells_generated': user.get('total_spells_generated', 0),
         'total_spells_saved': user.get('total_spells_saved', 0),
-        'can_save_spells': user.get('subscription_tier') in ('paid', 'pro'),
-        'can_download_pdf': user.get('subscription_tier') in ('paid', 'pro')
+        'can_save_spells': user.get('subscription_tier') in PAID_TIERS,
+        'can_download_pdf': user.get('subscription_tier') in PAID_TIERS
     }
 
 @api_router.post('/subscription/upgrade-manual')
