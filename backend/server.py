@@ -1032,6 +1032,88 @@ def normalize_multiselect_fields(spell_spec: dict) -> dict:
     return spell_spec
 
 
+# ── Smart Guide Routing (shared by V3 sync + async job) ─────────────────────
+
+GUIDE_KEYWORD_ROUTES = {
+    'shigg':     ['tea', 'kettle', 'bird', 'morning', 'domestic', 'kitchen', 'gentle', 'cozy', 'grief', 'loss', 'comfort', 'warm', 'nurture', 'heal', 'soothe', 'dawn', 'hearth'],
+    'cathleen':  ['protect', 'voice', 'song', 'courage', 'brave', 'shield', 'guard', 'ward', 'fierce', 'fire', 'sing', 'defend', 'celtic'],
+    'katherine': ['hidden', 'shadow', 'truth', 'reveal', 'thread', 'bind', 'sigil', 'precision', 'mirror', 'evidence', 'analyze', 'seance', 'victorian'],
+    'theresa':   ['family', 'secret', 'pattern', 'break', 'investigate', 'genealog', 'ancestor', 'uncover', 'detective', 'map', 'trace', 'notebook'],
+    'brenda':    ['memory', 'remember', 'letter', 'chronicle', 'heirloom', 'story', 'nostalg', 'crow', 'preserve', 'recipe', 'photo', 'keepsake'],
+}
+
+# Each category/feeling maps to a weighted candidate list: [(guide, weight), ...]
+# Primary guide gets ~50%, secondary ~30%, tertiary ~20%
+GUIDE_FEELING_ROUTES = {
+    'calm':             [('shigg', 50), ('brenda', 30), ('katherine', 20)],
+    'softened':         [('shigg', 50), ('brenda', 30), ('cathleen', 20)],
+    'protected':        [('cathleen', 50), ('katherine', 30), ('shigg', 20)],
+    'brave':            [('cathleen', 45), ('theresa', 35), ('katherine', 20)],
+    'energized':        [('cathleen', 40), ('theresa', 30), ('shigg', 30)],
+    'clear':            [('katherine', 40), ('theresa', 40), ('shigg', 20)],
+    'hidden':           [('katherine', 50), ('theresa', 30), ('brenda', 20)],
+    'revealed':         [('theresa', 45), ('katherine', 35), ('brenda', 20)],
+    'connected':        [('brenda', 50), ('shigg', 30), ('theresa', 20)],
+    'remembered':       [('brenda', 50), ('theresa', 30), ('shigg', 20)],
+    'understood':       [('theresa', 45), ('katherine', 35), ('brenda', 20)],
+    'liberated':        [('theresa', 45), ('katherine', 30), ('brenda', 25)],
+    'protection':       [('cathleen', 40), ('katherine', 35), ('shigg', 25)],
+    'baneful_justice':  [('katherine', 40), ('cathleen', 30), ('theresa', 30)],
+    'comfort_healing':  [('shigg', 40), ('brenda', 35), ('cathleen', 25)],
+    'clarity_truth':    [('theresa', 40), ('katherine', 35), ('shigg', 25)],
+    'releasing':        [('theresa', 35), ('katherine', 35), ('brenda', 30)],
+    'ancestral_work':   [('brenda', 35), ('theresa', 35), ('shigg', 30)],
+    'domestic_magic':   [('shigg', 55), ('cathleen', 30), ('brenda', 15)],
+    'courage_strength': [('cathleen', 45), ('theresa', 35), ('shigg', 20)],
+}
+
+ALL_GUIDES = ['shigg', 'cathleen', 'katherine', 'theresa', 'brenda']
+
+
+def route_to_guide(spell_spec: dict) -> tuple:
+    """Score all guides and weighted-random among top candidates. Returns (guide_id, reason)."""
+    intention = spell_spec.get('intention', spell_spec.get('user_query', '')).lower()
+    feeling = spell_spec.get('desired_feeling', '').lower()
+    categories = spell_spec.get('alchemize_categories', [])
+    if not categories and feeling:
+        categories = [feeling]
+
+    # ── Tier 1: Keyword scoring (all guides scored, not first-match-wins) ──
+    scores = {}
+    for guide, keywords in GUIDE_KEYWORD_ROUTES.items():
+        matches = [kw for kw in keywords if kw in intention]
+        if matches:
+            scores[guide] = (len(matches), matches)
+
+    if scores:
+        max_score = max(s[0] for s in scores.values())
+        # Top tier: guides within 1 match of the best scorer
+        top = {g: s for g, s in scores.items() if s[0] >= max(1, max_score - 1)}
+        guides = list(top.keys())
+        weights = [top[g][0] for g in guides]
+        selected = random.choices(guides, weights=weights, k=1)[0]
+        return selected, f"keyword score ({', '.join(f'{g}={top[g][0]}' for g in guides)}): {top[selected][1]}"
+
+    # ── Tier 2: Category/feeling-based weighted random ──
+    if categories:
+        # Merge weights from all selected categories
+        merged = {}
+        for cat in categories:
+            candidates = GUIDE_FEELING_ROUTES.get(cat.lower(), [])
+            for guide, weight in candidates:
+                merged[guide] = merged.get(guide, 0) + weight
+
+        if merged:
+            guides = list(merged.keys())
+            weights = [merged[g] for g in guides]
+            selected = random.choices(guides, weights=weights, k=1)[0]
+            return selected, f"category weighted: {', '.join(f'{g}={merged[g]}' for g in guides)} from {categories}"
+
+    # ── Tier 3: True random (not always shigg) ──
+    selected = random.choice(ALL_GUIDES)
+    return selected, f"random selection (no keyword/category match)"
+
+
 def transform_research_packet_to_origins(research_packet: dict, rich_research: dict = None) -> dict:
     """Transform archivist research_packet into research_origins format for the frontend.
     If rich_research (from parallel DeepSeek call) is available, use it for the full spec."""
@@ -5480,62 +5562,11 @@ async def generate_spell_v3_endpoint(request: Request, body: SpellRequestV3, use
         persona_id = spell_spec.get('persona_id', 'shigg')
         id_map = {'shiggy': 'shigg', 'kathleen': 'cathleen'}
         persona_id = id_map.get(persona_id, persona_id)
-        
-        routing_reason = None
-        
+
         if persona_id == 'choose_for_me' or persona_id == 'surprise':
-            # === V1.2: SMART GUIDE ROUTING ===
-            intention = spell_spec.get('intention', '').lower()
-            feeling = spell_spec.get('desired_feeling', 'calm').lower()
-            
-            # Keyword-based routing (highest priority)
-            keyword_routes = {
-                'shigg': ['tea', 'kettle', 'bird', 'morning', 'domestic', 'kitchen', 'gentle', 'cozy', 'grief', 'loss'],
-                'cathleen': ['protect', 'voice', 'song', 'courage', 'brave', 'shield', 'guard', 'strength', 'power'],
-                'katherine': ['hidden', 'shadow', 'truth', 'reveal', 'pattern', 'thread', 'bind', 'sigil', 'precision', 'secret'],
-                'theresa': ['family', 'secret', 'pattern', 'break', 'investigate', 'genealog', 'ancestor'],
-                'brenda': ['memory', 'remember', 'letter', 'ancestor', 'chronicle', 'family', 'heirloom']
-            }
-            
-            selected_guide = None
-            for guide, keywords in keyword_routes.items():
-                if any(kw in intention for kw in keywords):
-                    selected_guide = guide
-                    routing_reason = f"keyword match in intention: {[kw for kw in keywords if kw in intention]}"
-                    break
-            
-            # Feeling-based fallback
-            if not selected_guide:
-                feeling_routes = {
-                    # Legacy feelings (keep for backward compat with saved grimoire entries)
-                    'calm': 'shigg',
-                    'softened': 'shigg',
-                    'protected': 'cathleen',
-                    'brave': 'cathleen',
-                    'energized': 'cathleen',
-                    'clear': 'katherine',
-                    'hidden': 'katherine',
-                    'revealed': 'katherine',
-                    'connected': 'brenda',
-                    'remembered': 'brenda',
-                    'understood': 'theresa',
-                    'liberated': 'theresa',
-                    # New alchemize categories
-                    'protection': 'cathleen',
-                    'baneful_justice': 'katherine',
-                    'comfort_healing': 'shigg',
-                    'clarity_truth': 'theresa',
-                    'releasing': 'theresa',
-                    'ancestral_work': 'brenda',
-                    'domestic_magic': 'shigg',
-                    'courage_strength': 'cathleen',
-                }
-                selected_guide = feeling_routes.get(feeling, 'shigg')
-                routing_reason = f"feeling match: {feeling} → {selected_guide}"
-            
-            persona_id = selected_guide
+            persona_id, routing_reason = route_to_guide(spell_spec)
             logger.info(f"[GUIDE_ROUTING] Routed to {persona_id}: {routing_reason}")
-        
+
         spell_spec['persona_id'] = persona_id
         
         # Get guide config
@@ -5803,45 +5834,10 @@ async def _generate_spell_background(job_id: str, request_data: dict, user_id: O
         id_map = {'shiggy': 'shigg', 'kathleen': 'cathleen'}
         persona_id = id_map.get(persona_id, persona_id)
 
-        routing_reason = None
-
         if persona_id == 'choose_for_me' or persona_id == 'surprise':
-            intention = spell_spec.get('intention', '').lower()
-            feeling = spell_spec.get('desired_feeling', 'calm').lower()
-            
-            keyword_routes = {
-                'shigg': ['tea', 'kettle', 'bird', 'morning', 'domestic', 'kitchen', 'gentle', 'cozy', 'grief', 'loss'],
-                'cathleen': ['protect', 'voice', 'song', 'courage', 'brave', 'shield', 'guard', 'strength', 'power'],
-                'katherine': ['hidden', 'shadow', 'truth', 'reveal', 'pattern', 'thread', 'bind', 'sigil', 'precision', 'secret'],
-                'theresa': ['family', 'secret', 'pattern', 'break', 'investigate', 'genealog', 'ancestor'],
-                'brenda': ['memory', 'remember', 'letter', 'ancestor', 'chronicle', 'family', 'heirloom']
-            }
-            
-            selected_guide = None
-            for guide, keywords in keyword_routes.items():
-                if any(kw in intention for kw in keywords):
-                    selected_guide = guide
-                    routing_reason = f"keyword match: {[kw for kw in keywords if kw in intention]}"
-                    break
-            
-            if not selected_guide:
-                feeling_routes = {
-                    # Legacy feelings
-                    'calm': 'shigg', 'softened': 'shigg', 'connected': 'brenda',
-                    'protected': 'cathleen', 'brave': 'cathleen', 'energized': 'cathleen',
-                    'clear': 'katherine', 'hidden': 'katherine', 'revealed': 'theresa',
-                    # New alchemize categories
-                    'protection': 'cathleen', 'baneful_justice': 'katherine',
-                    'comfort_healing': 'shigg', 'clarity_truth': 'theresa',
-                    'releasing': 'theresa', 'ancestral_work': 'brenda',
-                    'domestic_magic': 'shigg', 'courage_strength': 'cathleen',
-                }
-                selected_guide = feeling_routes.get(feeling, 'shigg')
-                routing_reason = f"feeling match: {feeling}"
-            
-            persona_id = selected_guide
+            persona_id, routing_reason = route_to_guide(spell_spec)
             logger.info(f"[ASYNC_JOB] Routed to {persona_id}: {routing_reason}")
-        
+
         spell_spec['persona_id'] = persona_id
         guide_config = get_persona_config(persona_id) or get_persona_config('shigg')
         
