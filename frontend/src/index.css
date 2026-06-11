@@ -982,6 +982,15 @@ code {
     align-items: center;
     margin: 2.5rem auto 1rem;
   }
+  .grimoire-closing-seal[data-revealed="false"] .grimoire-seal-ring {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  .grimoire-closing-seal[data-revealed="true"] .grimoire-seal-ring {
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity 2s ease-out, transform 1.5s ease-out;
+  }
   .grimoire-seal-ring {
     width: 180px;
     height: 180px;

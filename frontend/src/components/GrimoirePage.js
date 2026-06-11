@@ -296,6 +296,32 @@ const PrintablesBlock = ({ tarotImageBase64, sigilImageBase64, spellTitle, tarot
   );
 };
 
+// Closing Seal with ink-reveal scroll animation (Brief §3.2)
+const SealReveal = ({ src }) => {
+  const ref = useRef(null);
+  const [revealed, setRevealed] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setRevealed(true); observer.disconnect(); } },
+      { threshold: 0.4 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div ref={ref} className="grimoire-closing-seal" data-revealed={revealed}>
+      <div className="grimoire-seal-ring">
+        <img src={src} alt="The seal of this working" />
+      </div>
+      <p className="grimoire-seal-caption">THE SEAL OF THIS WORKING</p>
+    </div>
+  );
+};
+
 // Section Header with Woodcut Icon
 const SectionHeader = ({ icon: Icon, brandIconName, title, iconPath, accentColor }) => (
   <h2 className={`font-cinzel text-xl text-crimson mb-4 flex items-center gap-2`}>
@@ -890,15 +916,9 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
 
             {/* Closing Seal — sigil as wax-seal after the working (Brief §3.2) */}
             {(generatedAssets?.sigil || generatedImages.sigil) && (
-              <div className="grimoire-closing-seal">
-                <div className="grimoire-seal-ring">
-                  <img
-                    src={`data:image/png;base64,${generatedAssets?.sigil || generatedImages.sigil}`}
-                    alt="The seal of this working"
-                  />
-                </div>
-                <p className="grimoire-seal-caption">THE SEAL OF THIS WORKING</p>
-              </div>
+              <SealReveal
+                src={`data:image/png;base64,${generatedAssets?.sigil || generatedImages.sigil}`}
+              />
             )}
           </div>
         ) : (
