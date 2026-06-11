@@ -233,41 +233,43 @@ const PrintablesBlock = ({ tarotImageBase64, sigilImageBase64, spellTitle, tarot
       </p>
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* Tarot Card - Front */}
+        {/* Tarot Card - Front (same 2:3 card size as the back) */}
         {tarotImageBase64 && (
           <div className="text-center">
             <p className="font-montserrat text-xs text-navy-dark/70 mb-2 uppercase tracking-wider">
               Tarot Card (Front)
             </p>
-            <img 
-              src={`data:image/png;base64,${tarotImageBase64}`}
-              alt={`${spellTitle} - Tarot Card Front`}
-              className="w-full max-w-[180px] mx-auto rounded-sm border border-gold/30 shadow-md"
-            />
+            <div className="w-full max-w-[180px] mx-auto aspect-[2/3] rounded-sm border border-gold/30 shadow-md overflow-hidden">
+              <img
+                src={`data:image/png;base64,${tarotImageBase64}`}
+                alt={`${spellTitle} - Tarot Card Front`}
+                className="w-full h-full object-cover"
+              />
+            </div>
           </div>
         )}
-        
+
         {/* Tarot Card - Back (Text version with essence) */}
         {tarotCard && (
           <div className="text-center">
             <p className="font-montserrat text-xs text-navy-dark/70 mb-2 uppercase tracking-wider">
               Tarot Card (Back)
             </p>
-            <div className="w-full max-w-[180px] mx-auto aspect-[2/3] rounded-sm border border-gold/30 shadow-md bg-gradient-to-br from-navy-dark via-navy-mid to-navy-dark p-3 flex flex-col justify-between">
+            <div className="w-full max-w-[180px] mx-auto aspect-[2/3] rounded-sm border border-gold/30 shadow-md bg-gradient-to-br from-navy-dark via-navy-mid to-navy-dark p-3 flex flex-col justify-between overflow-hidden">
               <div className="text-center">
                 <img src="/icons/ui/gold/icon-sparkles.png" alt="" className="w-6 h-6 mx-auto opacity-80" />
               </div>
-              <div className="text-center flex-1 flex flex-col justify-center">
-                <p className="font-cinzel text-xs text-gold-light mb-2">{tarotCard.title || spellTitle}</p>
+              <div className="text-center flex-1 flex flex-col justify-center min-h-0">
+                <p className="font-cinzel text-xs text-gold-light mb-2" style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{tarotCard.title || spellTitle}</p>
                 {tarotCard.essence && (
-                  <p className="font-montserrat text-[10px] text-muted-brass/80 italic leading-tight">
+                  <p className="font-montserrat text-[10px] text-muted-brass/80 italic leading-tight" style={{ display: '-webkit-box', WebkitLineClamp: 7, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
                     &ldquo;{tarotCard.essence}&rdquo;
                   </p>
                 )}
               </div>
               <div className="text-center">
                 {tarotCard.key_action && (
-                  <p className="font-montserrat text-[9px] text-gold/60 uppercase tracking-wider">
+                  <p className="font-montserrat text-[9px] text-gold/60 uppercase tracking-wider" style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
                     {tarotCard.key_action}
                   </p>
                 )}
@@ -781,7 +783,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
 
 
   return (
-    <SpellPageFrame backgroundImageUrl={quickVisuals?.page_gradient || undefined}>
+    <SpellPageFrame backgroundImageUrl={quickVisuals?.page_gradient || undefined} guideId={normalizedArchetypeId}>
         <div ref={grimoireRef} data-guide={normalizedArchetypeId || undefined}>
         <SpellHeader
           title={spell?.tarot_card?.title || spell?.title || "Saved Spell"}

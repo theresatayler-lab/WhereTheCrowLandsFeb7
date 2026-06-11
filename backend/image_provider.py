@@ -444,6 +444,11 @@ async def generate_image(
         logger.warning(f"No static divider for persona {persona_id}")
         return None
 
+    # Tarot cards are portrait (2:3) so the printable front pairs with the
+    # CSS-rendered card back at the same physical size
+    if asset_type == "tarot" and size == "1024x1024":
+        size = "1024x1536"
+
     # Check cache
     cache_key = get_cache_key(prompt, persona_id, asset_type, size)
     cached = get_cached_image(cache_key)

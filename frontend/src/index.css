@@ -859,7 +859,7 @@ code {
       0 1px 4px rgba(0, 0, 0, 0.12);
   }
 
-  /* Corner flourishes — Art Nouveau rose corners */
+  /* Corner flourishes — per-guide SVG ornaments (gold stroke) */
   .grimoire-corner {
     position: absolute;
     width: 48px;
@@ -867,6 +867,10 @@ code {
     opacity: 0.55;
     pointer-events: none;
     z-index: 2;
+  }
+  .grimoire-corner svg {
+    width: 100%;
+    height: 100%;
   }
   @media (min-width: 640px) {
     .grimoire-corner { width: 64px; height: 64px; }

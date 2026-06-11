@@ -665,6 +665,15 @@ def transform_blocks_to_array(spell_output: dict, guide_id: str = "shigg") -> di
     return spell_output
 
 
+def _truncate_words(text, limit: int) -> str:
+    """Truncate at a word boundary with an ellipsis — never mid-word."""
+    text = str(text).strip()
+    if len(text) <= limit:
+        return text
+    cut = text[:limit].rsplit(' ', 1)[0].rstrip(' ,;:-—')
+    return cut + '…'
+
+
 def _build_tarot_card(spell_output: dict, blocks: list, guide_id: str) -> dict:
     """Build tarot card preview data from spell blocks."""
     GUIDE_SYMBOLS = {
@@ -686,23 +695,23 @@ def _build_tarot_card(spell_output: dict, blocks: list, guide_id: str) -> dict:
             continue
         if bt == "cold_open" and not essence:
             val = c.get("greeting") or c.get("hook") or ""
-            essence = str(val)[:160]
+            essence = _truncate_words(val, 160)
         elif bt == "stepper" and not key_action:
             steps = c.get("steps") or []
             if steps and isinstance(steps, list) and isinstance(steps[0], dict):
                 val = steps[0].get("action") or steps[0].get("instruction") or ""
-                key_action = str(val)[:120]
+                key_action = _truncate_words(val, 120)
         elif bt == "closing" and not incantation:
             val = c.get("empowerment_line") or c.get("license_to_depart") or ""
-            incantation = str(val)[:120]
+            incantation = _truncate_words(val, 120)
         elif bt == "ward" and not incantation:
             val = c.get("activation_phrase") or ""
             if val:
-                incantation = str(val)[:120]
+                incantation = _truncate_words(val, 120)
         elif bt == "safety_note" and not warning:
             val = c.get("warning") or c.get("note") or ""
             if val:
-                warning = str(val)[:100]
+                warning = _truncate_words(val, 100)
 
     return {
         "symbol": GUIDE_SYMBOLS.get(guide_id, "✧"),
@@ -722,11 +731,16 @@ def _build_structured_content(block_type: str, block_name: str, raw_content: str
     import re
     
     if block_type == "cold_open":
-        return {
-            "greeting": raw_content[:200] if len(raw_content) > 200 else raw_content,
-            "scene_setting": "",
-            "hook": raw_content[200:] if len(raw_content) > 200 else ""
-        }
+        if len(raw_content) > 200:
+            split_idx = raw_content.rfind(' ', 0, 200)
+            if split_idx <= 0:
+                split_idx = 200
+            return {
+                "greeting": raw_content[:split_idx],
+                "scene_setting": "",
+                "hook": raw_content[split_idx:].lstrip()
+            }
+        return {"greeting": raw_content, "scene_setting": "", "hook": ""}
 
     elif block_type == "materials":
         # Try to parse materials from the plan, or create from content
