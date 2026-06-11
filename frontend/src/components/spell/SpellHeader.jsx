@@ -1,6 +1,7 @@
 import React from "react";
 import CrowlandsIcon from "../CrowlandsIcon";
 import { BrandIcon } from "../BrandIcon";
+import { getGuideOrnamentSet, CornerOrnaments, COLORS } from "../../assets/ornaments/index";
 
 /**
  * SpellHeader — Grimoire title page
@@ -16,9 +17,12 @@ export default function SpellHeader({
   tarotImageUrl,
   category = null,
   quickVisuals = null,
+  guideId = null,
   iconRow = [],
   actions = null,
 }) {
+  const ornaments = getGuideOrnamentSet(guideId);
+  const PlateCorner = ornaments?.Corner || CornerOrnaments.classic;
   return (
     <header className="grimoire-header-block">
       {/* Rose-and-crows divider */}
@@ -49,6 +53,16 @@ export default function SpellHeader({
       {headerImageUrl ? (
         <div className="grimoire-plate">
           <div className="grimoire-plate-frame">
+            {/* Per-guide corner ornaments on the plate frame (Brief §3.1/§4) */}
+            {["tl", "tr", "bl", "br"].map((pos) => (
+              <div
+                key={pos}
+                className={`grimoire-plate-corner grimoire-plate-corner--${pos}`}
+                aria-hidden="true"
+              >
+                <PlateCorner size={32} color={COLORS.gold} />
+              </div>
+            ))}
             <img
               src={headerImageUrl}
               alt={title || "Spell illustration"}

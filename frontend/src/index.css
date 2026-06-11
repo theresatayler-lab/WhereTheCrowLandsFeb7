@@ -421,6 +421,58 @@ code {
   .grimoire-plate,
   .grimoire-closing-seal { page-break-inside: avoid; }
 
+  /* ----- Grimoire print layout (Brief §3.6) ----- */
+  /* Animations off: dividers and ornaments print static */
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  /* Header plate = chapter opener: full content width, frame survives export */
+  .grimoire-plate-frame {
+    max-height: 4in;
+    border: 1px solid #C8A44D !important;
+    background: #0C1D2E !important;
+    box-shadow: 0 0 0 1px #C8A44D33 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .grimoire-plate-img { max-height: 3.8in; }
+
+  /* Tarot frontispiece = half-page plate, vellum mat + gold frame */
+  .grimoire-frontispiece-frame {
+    background: #F3EFE8 !important;
+    border: 1px solid #C8A44D !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .grimoire-frontispiece-img {
+    height: 4.5in !important;
+    max-width: none !important;
+  }
+
+  /* Sigil = full-page closing plate: centred seal on navy ground */
+  .grimoire-closing-seal {
+    page-break-before: always;
+    min-height: 8.5in;
+    justify-content: center;
+    background: #0C1D2E !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  /* Ink-reveal must not hide the seal in print */
+  .grimoire-closing-seal .grimoire-seal-ring {
+    opacity: 1 !important;
+    transform: none !important;
+    width: 4.5in !important;
+    height: 4.5in !important;
+  }
+  .grimoire-seal-caption {
+    font-family: 'Cinzel Decorative', 'Playfair Display', Georgia, serif !important;
+    font-size: 0.875rem !important;
+    color: #C8A44D !important;
+  }
+
   /* Page margins */
   @page { margin: 0.6in; }
 }
@@ -945,6 +997,7 @@ code {
     width: 100%;
   }
   .grimoire-plate-frame {
+    position: relative;
     width: 100%;
     max-height: 300px;
     overflow: hidden;
@@ -956,6 +1009,23 @@ code {
   @media (min-width: 640px) {
     .grimoire-plate-frame { max-height: 480px; }
   }
+  /* Per-guide corner ornaments on the plate frame (Brief §3.1) */
+  .grimoire-plate-corner {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    opacity: 0.7;
+    pointer-events: none;
+    z-index: 2;
+  }
+  .grimoire-plate-corner svg { width: 100%; height: 100%; }
+  @media (min-width: 640px) {
+    .grimoire-plate-corner { width: 32px; height: 32px; }
+  }
+  .grimoire-plate-corner--tl { top: 3px; left: 3px; }
+  .grimoire-plate-corner--tr { top: 3px; right: 3px; transform: scaleX(-1); }
+  .grimoire-plate-corner--bl { bottom: 3px; left: 3px; transform: scaleY(-1); }
+  .grimoire-plate-corner--br { bottom: 3px; right: 3px; transform: scale(-1, -1); }
   .grimoire-plate-img {
     width: 100%;
     height: auto;

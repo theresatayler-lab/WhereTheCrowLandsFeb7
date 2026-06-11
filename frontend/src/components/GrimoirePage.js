@@ -555,6 +555,11 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
       const hiddenEls = element.querySelectorAll('[data-pdf-hide]');
       hiddenEls.forEach(el => el.style.display = 'none');
 
+      // Force the closing seal visible — ink-reveal may not have fired yet
+      element.querySelectorAll('.grimoire-closing-seal').forEach(
+        el => el.setAttribute('data-revealed', 'true')
+      );
+
       await new Promise(resolve => setTimeout(resolve, 300));
 
       const captureWidth = 800;
@@ -831,6 +836,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
           }
           category={spell?.category || spell?.working_category}
           quickVisuals={quickVisuals}
+          guideId={normalizedArchetypeId}
         />
 
         <div className="pb-6">
