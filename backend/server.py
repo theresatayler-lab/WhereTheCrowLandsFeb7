@@ -5563,6 +5563,7 @@ async def generate_spell_v3_endpoint(request: Request, body: SpellRequestV3, use
         id_map = {'shiggy': 'shigg', 'kathleen': 'cathleen'}
         persona_id = id_map.get(persona_id, persona_id)
 
+        routing_reason = None
         if persona_id == 'choose_for_me' or persona_id == 'surprise':
             persona_id, routing_reason = route_to_guide(spell_spec)
             logger.info(f"[GUIDE_ROUTING] Routed to {persona_id}: {routing_reason}")
@@ -5834,6 +5835,7 @@ async def _generate_spell_background(job_id: str, request_data: dict, user_id: O
         id_map = {'shiggy': 'shigg', 'kathleen': 'cathleen'}
         persona_id = id_map.get(persona_id, persona_id)
 
+        routing_reason = None
         if persona_id == 'choose_for_me' or persona_id == 'surprise':
             persona_id, routing_reason = route_to_guide(spell_spec)
             logger.info(f"[ASYNC_JOB] Routed to {persona_id}: {routing_reason}")
