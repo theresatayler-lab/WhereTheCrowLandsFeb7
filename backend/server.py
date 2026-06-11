@@ -5994,15 +5994,41 @@ async def _generate_spell_background(job_id: str, request_data: dict, user_id: O
                     logging.info(f"[ASYNC_JOB] Generated {len(generated_images)} images for spell")
             except Exception as img_err:
                 logging.warning(f"[ASYNC_JOB] Image generation failed (non-fatal): {img_err}")
-        
-        # Update job with completed result
+
+        # Store images in GridFS to avoid 16MB document limit
+        _IMG_KEY_TO_REF = {
+            'header_image': ('header_image_id', 'header'),
+            'tarot_card_image': ('tarot_image_id', 'tarot'),
+            'sigil': ('sigil_image_id', 'sigil'),
+        }
+        job_image_refs = {}
+        if generated_images:
+            try:
+                for img_key, img_b64 in generated_images.items():
+                    if img_b64 and isinstance(img_b64, str) and len(img_b64) > 1000:
+                        ref_key, img_type = _IMG_KEY_TO_REF.get(img_key, (f'{img_key}_id', img_key))
+                        ref_id = await image_storage.store_image(img_b64, {
+                            'spell_id': job_id,
+                            'user_id': user_id or 'anonymous',
+                            'image_type': img_type
+                        })
+                        if ref_id:
+                            job_image_refs[ref_key] = ref_id
+                logging.info(f"[ASYNC_JOB] Stored {len(job_image_refs)} images in GridFS for job {job_id}")
+            except Exception as store_err:
+                logging.warning(f"[ASYNC_JOB] GridFS image storage failed (non-fatal): {store_err}")
+
+        # Strip base64 images from spell_output before persisting
+        cleaned_spell = dict(spell_output)
+        cleaned_spell.pop('generated_images', None)
+
+        # Update job with completed result (no large base64 data)
         result = {
-            'spell': spell_output,
+            'spell': cleaned_spell,
             'archetype': archetype_info,
             'metadata': metadata,
             'belief_mode': belief_mode,
             'research_origins': research_origins,
-            'generated_images': generated_images,
             'validation': {
                 'qa_passed': metadata.get('qa_passed', True),
                 'qa_errors': metadata.get('qa_errors', []),
@@ -6014,6 +6040,7 @@ async def _generate_spell_background(job_id: str, request_data: dict, user_id: O
             {'$set': {
                 'status': 'complete',
                 'result': result,
+                'image_refs': job_image_refs,
                 'completed_at': datetime.now(timezone.utc),
                 'updated_at': datetime.now(timezone.utc),
                 'generation_time_ms': total_ms
@@ -6131,7 +6158,19 @@ async def get_spell_job_status(job_id: str):
     }
     
     if job.get('status') == 'complete':
-        response['result'] = job.get('result')
+        result = job.get('result', {})
+        # Rehydrate images from GridFS
+        job_image_refs = job.get('image_refs', {})
+        if job_image_refs:
+            try:
+                images = await image_storage.get_spell_images(job_image_refs)
+                if images:
+                    result['generated_images'] = images
+                    if 'spell' in result:
+                        result['spell']['generated_images'] = images
+            except Exception as img_err:
+                logging.warning(f"[JOB_POLL] Failed to rehydrate images for {job_id}: {img_err}")
+        response['result'] = result
         response['generation_time_ms'] = job.get('generation_time_ms')
     elif job.get('status') == 'failed':
         response['error'] = job.get('error', 'Unknown error')
