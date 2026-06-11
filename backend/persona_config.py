@@ -23,9 +23,9 @@ CROWLANDS_ART_BIBLE = {
     ],
     "palette": {
         "primary": "deep navy (#0C1D2E)",
-        "secondary": "oxblood burgundy (#8b2232)",
+        "secondary": "oxblood burgundy (#8B2232)",
         "accent": "antique gold (#C8A44D)",
-        "neutral": "bone ivory (#f5f0e6)",
+        "neutral": "vellum (#F3EFE8)",
         "highlight": "burnished copper"
     },
     "motif_families": {

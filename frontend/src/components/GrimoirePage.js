@@ -54,7 +54,7 @@ const ARCHETYPE_STYLES = {
     borderColor: 'border-gold',
     accentColor: 'text-crimson',
     accentColorLight: 'text-gold',
-    bgAccent: 'bg-[#F3EFE8]', // Solid vellum - CONTRAST LOCKED
+    bgAccent: 'bg-vellum', // Solid vellum - CONTRAST LOCKED
     decorativeBorder: 'border-gold/30',
     headerGradient: 'from-gold/10 via-gold/5 to-transparent',
     cardGradient: 'from-navy-dark/95 via-navy-mid/90 to-navy-dark/95',
@@ -66,7 +66,7 @@ const ARCHETYPE_STYLES = {
     borderColor: 'border-crimson',
     accentColor: 'text-crimson',
     accentColorLight: 'text-crimson-bright',
-    bgAccent: 'bg-[#F3EFE8]', // Solid vellum - CONTRAST LOCKED
+    bgAccent: 'bg-vellum', // Solid vellum - CONTRAST LOCKED
     decorativeBorder: 'border-crimson/30',
     headerGradient: 'from-crimson/10 via-crimson/5 to-transparent',
     cardGradient: 'from-navy-dark/95 via-navy-mid/90 to-navy-dark/95',
@@ -78,7 +78,7 @@ const ARCHETYPE_STYLES = {
     borderColor: 'border-gold',
     accentColor: 'text-crimson',
     accentColorLight: 'text-gold-light',
-    bgAccent: 'bg-[#F3EFE8]', // Solid vellum - CONTRAST LOCKED
+    bgAccent: 'bg-vellum', // Solid vellum - CONTRAST LOCKED
     decorativeBorder: 'border-gold/30',
     headerGradient: 'from-gold/10 via-gold/5 to-transparent',
     cardGradient: 'from-navy-dark/95 via-navy-mid/90 to-navy-dark/95',
@@ -90,7 +90,7 @@ const ARCHETYPE_STYLES = {
     borderColor: 'border-crimson-bright',
     accentColor: 'text-crimson',
     accentColorLight: 'text-crimson-bright',
-    bgAccent: 'bg-[#F3EFE8]', // Solid vellum - CONTRAST LOCKED
+    bgAccent: 'bg-vellum', // Solid vellum - CONTRAST LOCKED
     decorativeBorder: 'border-crimson-bright/30',
     headerGradient: 'from-crimson/10 via-crimson/5 to-transparent',
     cardGradient: 'from-navy-dark/95 via-navy-mid/90 to-navy-dark/95',
@@ -102,7 +102,7 @@ const ARCHETYPE_STYLES = {
     borderColor: 'border-gold-dark',
     accentColor: 'text-crimson',
     accentColorLight: 'text-gold',
-    bgAccent: 'bg-[#F3EFE8]', // Solid vellum - CONTRAST LOCKED
+    bgAccent: 'bg-vellum', // Solid vellum - CONTRAST LOCKED
     decorativeBorder: 'border-gold-dark/30',
     headerGradient: 'from-gold/10 via-gold/5 to-transparent',
     cardGradient: 'from-navy-dark/95 via-navy-mid/90 to-navy-dark/95',
@@ -114,7 +114,7 @@ const ARCHETYPE_STYLES = {
     borderColor: 'border-gold',
     accentColor: 'text-crimson',
     accentColorLight: 'text-gold',
-    bgAccent: 'bg-[#F3EFE8]',
+    bgAccent: 'bg-vellum',
     decorativeBorder: 'border-gold/30',
     headerGradient: 'from-gold/10 via-gold/5 to-transparent',
     cardGradient: 'from-navy-dark/95 via-navy-mid/90 to-navy-dark/95',
@@ -125,7 +125,7 @@ const ARCHETYPE_STYLES = {
     borderColor: 'border-crimson',
     accentColor: 'text-crimson',
     accentColorLight: 'text-crimson-bright',
-    bgAccent: 'bg-[#F3EFE8]',
+    bgAccent: 'bg-vellum',
     decorativeBorder: 'border-crimson/30',
     headerGradient: 'from-crimson/10 via-crimson/5 to-transparent',
     cardGradient: 'from-navy-dark/95 via-navy-mid/90 to-navy-dark/95',
@@ -136,7 +136,7 @@ const ARCHETYPE_STYLES = {
     borderColor: 'border-gold',
     accentColor: 'text-crimson',
     accentColorLight: 'text-gold-light',
-    bgAccent: 'bg-[#F3EFE8]',
+    bgAccent: 'bg-vellum',
     decorativeBorder: 'border-gold/30',
     headerGradient: 'from-gold/10 via-gold/5 to-transparent',
     cardGradient: 'from-navy-dark/95 via-navy-mid/90 to-navy-dark/95',
@@ -147,7 +147,7 @@ const ARCHETYPE_STYLES = {
     borderColor: 'border-gold/50',
     accentColor: 'text-navy-dark/80',
     accentColorLight: 'text-navy-dark/50',
-    bgAccent: 'bg-[#F3EFE8]',
+    bgAccent: 'bg-vellum',
     decorativeBorder: 'border-gold/30',
     headerGradient: 'from-navy-mid/30 to-transparent',
     cardGradient: 'from-navy-dark/90 via-navy-mid/80 to-navy-dark/90',
@@ -886,7 +886,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                   </h3>
                   <div className="space-y-3">
                     {spell.sources.map((source, idx) => (
-                      <div key={idx} className="p-3 bg-[#F3EFE8] border border-gold/30 rounded-sm">
+                      <div key={idx} className="p-3 bg-vellum border border-gold/30 rounded-sm">
                         <p className="font-montserrat text-sm text-navy-dark">
                           <strong>{source.author}</strong>
                           {source.work && <>, <em>{source.work}</em></>}
@@ -942,7 +942,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
             {/* Cathleen's Suggested Ward - CONTRAST LOCKED: Solid vellum plate */}
         {spell.suggested_ward && (
           <section className="relative">
-            <div className="relative p-6 border-2 border-crimson/40 rounded-lg bg-[#F3EFE8] shadow-sm">
+            <div className="relative p-6 border-2 border-crimson/40 rounded-lg bg-vellum shadow-sm">
               <div className="flex items-center justify-between gap-3 mb-4">
                 <div className="flex items-center gap-3">
                   <div className="p-3 bg-gold/10 border border-gold/30 rounded-full">
@@ -1001,7 +1001,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
         {/* Cathleen's Concealment Suggestion - CONTRAST LOCKED: Solid vellum plate */}
         {spell.concealment_suggestion && (
           <section className="relative">
-            <div className="relative p-6 border-2 border-crimson/40 rounded-lg bg-[#F3EFE8] shadow-sm">
+            <div className="relative p-6 border-2 border-crimson/40 rounded-lg bg-vellum shadow-sm">
               <div className="flex items-center gap-3 mb-4">
                 <div className="p-3 bg-gold/10 border border-gold/30 rounded-full">
                   <BrandIcon name="key" size={24} />
@@ -1074,7 +1074,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                 return (
                   <div 
                     key={idx}
-                    className="flex items-start gap-3 p-3 bg-[#F3EFE8] border border-gold/30 rounded-sm shadow-sm"
+                    className="flex items-start gap-3 p-3 bg-vellum border border-gold/30 rounded-sm shadow-sm"
                   >
                     <div className="p-2 bg-gold/10 border border-gold/30 rounded-sm">
                       {material.icon ? (
@@ -1181,7 +1181,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
 
         {/* Spoken Words - CONTRAST LOCKED */}
         {spell.spoken_words && (
-          <section className="p-6 bg-[#F3EFE8] border border-gold/40 rounded-sm shadow-sm">
+          <section className="p-6 bg-vellum border border-gold/40 rounded-sm shadow-sm">
             <SectionHeader 
               brandIconName="feather" 
               title="Words of Power" 

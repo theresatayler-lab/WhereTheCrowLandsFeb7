@@ -450,10 +450,10 @@ CROWLANDS_ART_BIBLE = {
         "velvet silk sheen with faint parchment undertone"
     ],
     "palette": {
-        "primary": "midnight navy (#0e1629)",
-        "secondary": "oxblood burgundy (#8b2232)",
-        "accent": "antique gold (#d4a84b)",
-        "neutral": "bone ivory (#f5f0e6)"
+        "primary": "deep navy (#0C1D2E)",
+        "secondary": "oxblood burgundy (#8B2232)",
+        "accent": "antique gold (#C8A44D)",
+        "neutral": "vellum (#F3EFE8)"
     },
     "motif_families": {
         "british_folklore": ["crow", "magpie", "robin", "hare", "stag", "owl", "fox", "moth"],

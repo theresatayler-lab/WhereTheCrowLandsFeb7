@@ -238,7 +238,7 @@ export const TarotCardBorder = ({ children, className = '' }) => {
           padding: '3px',
         }}
       >
-        <div className="w-full h-full rounded-lg bg-[#F3EFE8]" />
+        <div className="w-full h-full rounded-lg bg-vellum" />
       </div>
       
       {/* Inner decorative border */}

@@ -459,7 +459,7 @@ export const GuidePortal = () => {
                           archetypeStyle={{
                             borderColor: `border-${guide.colors.border}`,
                             accentColor: `text-${guide.colors.accent}`,
-                            bgAccent: 'bg-[#F3EFE8]',
+                            bgAccent: 'bg-vellum',
                             textMuted: 'text-navy-dark/70'
                           }}
                         />
@@ -472,7 +472,7 @@ export const GuidePortal = () => {
                     archetypeStyle={{
                       borderColor: `border-${guide.colors.border}`,
                       accentColor: `text-${guide.colors.accent}`,
-                      bgAccent: 'bg-[#F3EFE8]',
+                      bgAccent: 'bg-vellum',
                       textMuted: 'text-navy-dark/70'
                     }}
                   />
