@@ -35,7 +35,7 @@ const NavDropdown = ({ label, brandIcon, items, isActive, onItemClick }) => {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="px-3 py-2 font-montserrat text-xs tracking-wider transition-all duration-300 flex items-center gap-1.5"
+        className="px-3 py-2 font-montserrat text-xs tracking-wider transition-colors duration-300 flex items-center gap-1.5"
         style={{
           color: isActive ? '#C8A44D' : 'rgba(243, 239, 232, 0.8)',
           backgroundColor: isActive ? 'rgba(200, 164, 77, 0.15)' : 'transparent',
@@ -75,7 +75,7 @@ const NavDropdown = ({ label, brandIcon, items, isActive, onItemClick }) => {
                 setIsOpen(false);
                 onItemClick?.();
               }}
-              className="flex items-center gap-3 px-5 py-2.5 font-montserrat text-xs tracking-wider transition-all relative"
+              className="flex items-center gap-3 px-5 py-2.5 font-montserrat text-xs tracking-wider transition-colors relative"
               style={{ color: 'rgba(243, 239, 232, 0.8)' }}
               onMouseEnter={(e) => { 
                 e.currentTarget.style.color = '#C8A44D'; 
@@ -199,7 +199,7 @@ export const Navigation = ({ user, onLogout }) => {
             <Link
               to="/"
               data-testid="nav-home"
-              className="px-3 py-2 font-montserrat text-xs tracking-wider transition-all duration-300 flex items-center gap-1.5"
+              className="px-3 py-2 font-montserrat text-xs tracking-wider transition-colors duration-300 flex items-center gap-1.5"
               style={{
                 color: location.pathname === '/' ? '#C8A44D' : 'rgba(243, 239, 232, 0.8)',
                 backgroundColor: location.pathname === '/' ? 'rgba(200, 164, 77, 0.15)' : 'transparent',
@@ -246,7 +246,7 @@ export const Navigation = ({ user, onLogout }) => {
                   key={link.to}
                   to={link.to}
                   data-testid={`nav-${link.label.toLowerCase().replace(' ', '-')}`}
-                  className="px-3 py-2 font-montserrat text-xs tracking-wider transition-all duration-300 flex items-center gap-1.5"
+                  className="px-3 py-2 font-montserrat text-xs tracking-wider transition-colors duration-300 flex items-center gap-1.5"
                   style={{
                     color: isActive ? '#C8A44D' : 'rgba(243, 239, 232, 0.8)',
                     backgroundColor: isActive ? 'rgba(200, 164, 77, 0.15)' : 'transparent',
@@ -267,7 +267,7 @@ export const Navigation = ({ user, onLogout }) => {
                 <Link
                   to="/profile"
                   data-testid="nav-profile"
-                  className="px-3 py-2 rounded-sm font-montserrat text-xs tracking-wider transition-all duration-300 flex items-center gap-1.5"
+                  className="px-3 py-2 rounded-sm font-montserrat text-xs tracking-wider transition-colors duration-300 flex items-center gap-1.5"
                   style={{ color: 'rgba(243, 239, 232, 0.8)' }}
                   onMouseEnter={(e) => { e.currentTarget.style.color = '#C8A44D'; e.currentTarget.style.backgroundColor = 'rgba(200, 164, 77, 0.1)'; }}
                   onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(243, 239, 232, 0.8)'; e.currentTarget.style.backgroundColor = 'transparent'; }}
@@ -278,7 +278,7 @@ export const Navigation = ({ user, onLogout }) => {
                 <Link
                   to="/upgrade"
                   data-testid="nav-upgrade"
-                  className="px-3 py-2 rounded-sm font-montserrat text-xs tracking-wider transition-all duration-300 flex items-center gap-1.5"
+                  className="px-3 py-2 rounded-sm font-montserrat text-xs tracking-wider transition-colors duration-300 flex items-center gap-1.5"
                   style={{ color: '#B94E6A' }}
                   onMouseEnter={(e) => { e.currentTarget.style.color = '#C8A44D'; e.currentTarget.style.backgroundColor = 'rgba(200, 164, 77, 0.1)'; }}
                   onMouseLeave={(e) => { e.currentTarget.style.color = '#B94E6A'; e.currentTarget.style.backgroundColor = 'transparent'; }}
@@ -289,7 +289,7 @@ export const Navigation = ({ user, onLogout }) => {
                 <button
                   onClick={onLogout}
                   data-testid="nav-logout"
-                  className="px-2 py-2 rounded-sm transition-all duration-300"
+                  className="px-2 py-2 rounded-sm transition-colors duration-300"
                   style={{ color: 'rgba(243, 239, 232, 0.5)' }}
                   onMouseEnter={(e) => { e.currentTarget.style.color = '#B94E6A'; e.currentTarget.style.backgroundColor = 'rgba(185, 78, 106, 0.1)'; }}
                   onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(243, 239, 232, 0.5)'; e.currentTarget.style.backgroundColor = 'transparent'; }}
@@ -302,7 +302,7 @@ export const Navigation = ({ user, onLogout }) => {
               <Link
                 to="/auth"
                 data-testid="nav-login"
-                className="ml-4 px-6 py-2.5 relative overflow-hidden font-cinzel text-xs tracking-[0.2em] uppercase transition-all duration-300 group"
+                className="ml-4 px-6 py-2.5 relative overflow-hidden font-cinzel text-xs tracking-[0.2em] uppercase transition-colors duration-300 group"
                 style={{
                   backgroundColor: '#B94E6A',
                   border: '2px solid #C8A44D',
@@ -323,14 +323,14 @@ export const Navigation = ({ user, onLogout }) => {
               <Link
                 to="/profile"
                 onClick={handleLinkClick}
-                className="p-2 rounded-sm text-muted-brass/80 hover:text-gold transition-all"
+                className="p-2 rounded-sm text-muted-brass/80 hover:text-gold transition-colors"
               >
                 <BrandIcon name="eye" size={20} />
               </Link>
             )}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-sm text-muted-brass/80 hover:text-gold transition-all"
+              className="p-2 rounded-sm text-muted-brass/80 hover:text-gold transition-colors"
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -355,7 +355,7 @@ export const Navigation = ({ user, onLogout }) => {
               <Link
                 to="/"
                 onClick={handleLinkClick}
-                className="flex items-center gap-3 px-4 py-3 font-montserrat text-sm transition-all"
+                className="flex items-center gap-3 px-4 py-3 font-montserrat text-sm transition-colors"
                 style={{
                   backgroundColor: location.pathname === '/' ? 'rgba(200, 164, 77, 0.15)' : 'transparent',
                   color: location.pathname === '/' ? '#C8A44D' : 'rgba(243, 239, 232, 0.8)',
@@ -371,7 +371,7 @@ export const Navigation = ({ user, onLogout }) => {
                 <div key={key}>
                   <button
                     onClick={() => setExpandedMobileSection(expandedMobileSection === key ? null : key)}
-                    className="w-full flex items-center justify-between px-4 py-3 font-montserrat text-sm transition-all"
+                    className="w-full flex items-center justify-between px-4 py-3 font-montserrat text-sm transition-colors"
                     style={{ color: '#C8A44D' }}
                   >
                     <span className="flex items-center gap-3">
@@ -397,7 +397,7 @@ export const Navigation = ({ user, onLogout }) => {
                             key={item.to}
                             to={item.to}
                             onClick={handleLinkClick}
-                            className="flex items-center gap-3 px-4 py-2.5 font-montserrat text-sm transition-all"
+                            className="flex items-center gap-3 px-4 py-2.5 font-montserrat text-sm transition-colors"
                             style={{
                               backgroundColor: isActive ? 'rgba(200, 164, 77, 0.15)' : 'transparent',
                               color: isActive ? '#C8A44D' : 'rgba(243, 239, 232, 0.7)',
@@ -422,7 +422,7 @@ export const Navigation = ({ user, onLogout }) => {
                     key={link.to}
                     to={link.to}
                     onClick={handleLinkClick}
-                    className="flex items-center gap-3 px-4 py-3 font-montserrat text-sm transition-all"
+                    className="flex items-center gap-3 px-4 py-3 font-montserrat text-sm transition-colors"
                     style={{
                       backgroundColor: isActive ? 'rgba(200, 164, 77, 0.15)' : 'transparent',
                       color: isActive ? '#C8A44D' : 'rgba(243, 239, 232, 0.8)',
@@ -444,7 +444,7 @@ export const Navigation = ({ user, onLogout }) => {
                   key={link.to}
                   to={link.to}
                   onClick={handleLinkClick}
-                  className="flex items-center gap-3 px-4 py-2.5 rounded-sm font-montserrat text-xs text-muted-brass/60 hover:bg-gold/5 hover:text-gold transition-all"
+                  className="flex items-center gap-3 px-4 py-2.5 rounded-sm font-montserrat text-xs text-muted-brass/60 hover:bg-gold/5 hover:text-gold transition-colors"
                 >
                   <BrandIcon name={link.brandIcon} size={18} variant="gold" opacity={0.8} />
                   <span>{link.label}</span>
@@ -458,7 +458,7 @@ export const Navigation = ({ user, onLogout }) => {
                   <Link
                     to="/upgrade"
                     onClick={handleLinkClick}
-                    className="flex items-center gap-3 px-4 py-3 rounded-sm font-montserrat text-sm text-crimson-bright hover:bg-crimson/10 transition-all"
+                    className="flex items-center gap-3 px-4 py-3 rounded-sm font-montserrat text-sm text-crimson-bright hover:bg-crimson/10 transition-colors"
                   >
                     <BrandIcon name="star" size={24} variant="pink" opacity={0.95} />
                     <span>Upgrade to Pro</span>
@@ -468,7 +468,7 @@ export const Navigation = ({ user, onLogout }) => {
                       onLogout();
                       handleLinkClick();
                     }}
-                    className="w-full flex items-center gap-3 px-4 py-3 rounded-sm font-montserrat text-sm text-muted-brass/60 hover:text-crimson hover:bg-crimson/10 transition-all"
+                    className="w-full flex items-center gap-3 px-4 py-3 rounded-sm font-montserrat text-sm text-muted-brass/60 hover:text-crimson hover:bg-crimson/10 transition-colors"
                   >
                     <LogOut className="w-5 h-5" />
                     <span>Logout</span>
@@ -479,7 +479,7 @@ export const Navigation = ({ user, onLogout }) => {
                   <Link
                     to="/auth"
                     onClick={handleLinkClick}
-                    className="flex items-center justify-center px-4 py-3 relative overflow-hidden rounded-sm font-montserrat text-sm tracking-widest uppercase transition-all"
+                    className="flex items-center justify-center px-4 py-3 relative overflow-hidden rounded-sm font-montserrat text-sm tracking-widest uppercase transition-colors"
                   >
                     <span className="absolute inset-0 border border-gold/50 rounded-sm" />
                     <span className="absolute inset-0.5 bg-gradient-to-r from-crimson-deep via-crimson to-crimson-deep rounded-sm" />

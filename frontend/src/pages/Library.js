@@ -651,9 +651,11 @@ const VictorianBookModal = ({ book, onClose }) => {
   
   const getArchetypeColor = (name) => {
     const colors = {
-      'Shigg': '#228B22',
-      'Cathleen': '#4169E1', 
-      'Katherine': '#800020',
+      'Shigg': '#D97706',
+      'Cathleen': '#0D9488',
+      'Katherine': '#7C3AED',
+      'Theresa': '#8B2232',
+      'Brenda': '#A89872',
       'All': '#C8A44D'
     };
     return colors[name] || '#C8A44D';
@@ -715,7 +717,7 @@ const VictorianBookModal = ({ book, onClose }) => {
             {/* Close button */}
             <button
               onClick={onClose}
-              className="absolute top-4 right-4 w-8 h-8 rounded-full bg-black/40 border border-gold/40 flex items-center justify-center hover:bg-black/60 hover:border-gold/60 transition-all"
+              className="absolute top-4 right-4 w-8 h-8 rounded-full bg-black/40 border border-gold/40 flex items-center justify-center hover:bg-black/60 hover:border-gold/60 transition-colors"
             >
               <X className="w-4 h-4 text-gold" />
             </button>
@@ -790,7 +792,7 @@ const VictorianBookModal = ({ book, onClose }) => {
                 href={book.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 w-full py-3 px-4 bg-gradient-to-r from-crimson-deep via-crimson to-crimson-deep border border-gold/40 text-cream rounded-sm font-cinzel text-sm tracking-wider uppercase hover:from-crimson hover:via-crimson-bright hover:to-crimson transition-all shadow-lg"
+                className="flex items-center justify-center gap-2 w-full py-3 px-4 bg-gradient-to-r from-crimson-deep via-crimson to-crimson-deep border border-gold/40 text-cream rounded-sm font-cinzel text-sm tracking-wider uppercase hover:from-crimson hover:via-crimson-bright hover:to-crimson transition-colors shadow-lg"
               >
                 <ExternalLink className="w-4 h-4" />
                 Find This Book
@@ -799,7 +801,7 @@ const VictorianBookModal = ({ book, onClose }) => {
               {/* Secondary: Copy link */}
               <button
                 onClick={copyLink}
-                className="flex items-center justify-center gap-2 w-full py-2.5 px-4 bg-parchment border border-gold/40 text-navy-dark rounded-sm font-montserrat text-xs tracking-wider uppercase hover:bg-gold/10 transition-all"
+                className="flex items-center justify-center gap-2 w-full py-2.5 px-4 bg-parchment border border-gold/40 text-navy-dark rounded-sm font-montserrat text-xs tracking-wider uppercase hover:bg-gold/10 transition-colors"
               >
                 {copied ? (
                   <>

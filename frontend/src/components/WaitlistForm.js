@@ -101,7 +101,7 @@ export const WaitlistForm = ({ source = 'homepage' }) => {
         <button
           type="submit"
           disabled={loading}
-          className="w-full px-6 py-3 bg-primary text-primary-foreground rounded-sm font-cinzel tracking-widest uppercase text-sm hover:bg-primary/90 transition-all flex items-center justify-center gap-2 disabled:opacity-50 min-h-[48px]"
+          className="w-full px-6 py-3 bg-primary text-primary-foreground rounded-sm font-cinzel tracking-widest uppercase text-sm hover:bg-primary/90 transition-colors flex items-center justify-center gap-2 disabled:opacity-50 min-h-[48px]"
         >
           {loading ? (
             <>

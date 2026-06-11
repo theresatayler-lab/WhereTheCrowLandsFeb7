@@ -387,7 +387,7 @@ export const GrimoireDownloader = ({ spells, userName }) => {
     <button
       onClick={downloadGrimoire}
       disabled={isGenerating || !spells || spells.length === 0}
-      className="px-4 py-2 bg-gold/20 text-gold border border-gold/40 rounded-sm font-montserrat tracking-widest uppercase text-xs hover:bg-gold/30 transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+      className="px-4 py-2 bg-gold/20 text-gold border border-gold/40 rounded-sm font-montserrat tracking-widest uppercase text-xs hover:bg-gold/30 transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
       data-testid="download-grimoire-btn"
     >
       {isGenerating ? (

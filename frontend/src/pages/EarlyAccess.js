@@ -64,8 +64,7 @@ const EarlyAccessPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4 sm:p-6 relative overflow-hidden"
-      style={{ background: '#0C1D2E' }}>
+    <div className="min-h-screen flex flex-col items-center justify-center p-4 sm:p-6 relative overflow-hidden bg-background">
       
       {/* Subtle background */}
       <div className="absolute inset-0 opacity-5" style={{

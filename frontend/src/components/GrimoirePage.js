@@ -376,7 +376,7 @@ const SaveWardButton = ({ ward, spellTitle }) => {
     <button
       onClick={handleSaveWard}
       disabled={isSaving}
-      className="flex items-center gap-1 px-3 py-1.5 bg-gold/10 hover:bg-gold/20 border border-gold/30 rounded-sm transition-all disabled:opacity-50"
+      className="flex items-center gap-1 px-3 py-1.5 bg-gold/10 hover:bg-gold/20 border border-gold/30 rounded-sm transition-colors disabled:opacity-50"
       title="Save ward to your grimoire"
       data-testid="save-ward-btn"
     >
@@ -1086,7 +1086,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
               />
               <button
                 onClick={() => setChecklistMode(!checklistMode)}
-                className={`px-3 py-1 rounded-sm text-xs font-montserrat tracking-wider transition-all ${
+                className={`px-3 py-1 rounded-sm text-xs font-montserrat tracking-wider transition-colors ${
                   checklistMode 
                     ? 'bg-crimson text-cream' 
                     : 'bg-gold/20 text-navy-dark/80 hover:bg-gold/30'
@@ -1113,7 +1113,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                   >
                     {/* Step number circle */}
                     <div 
-                      className={`absolute left-0 -translate-x-1/2 w-8 h-8 rounded-full flex items-center justify-center text-sm font-cinzel cursor-pointer transition-all ${
+                      className={`absolute left-0 -translate-x-1/2 w-8 h-8 rounded-full flex items-center justify-center text-sm font-cinzel cursor-pointer transition-colors ${
                         completedSteps.has(stepNum)
                           ? 'bg-crimson text-cream'
                           : `bg-gold/20 text-crimson border-2 border-gold/40`
@@ -1614,14 +1614,14 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
           <button
             onClick={saveToGrimoire}
             disabled={isSaving}
-            className="px-4 py-2 bg-crimson text-cream hover:bg-crimson-bright rounded-sm font-montserrat tracking-widest uppercase text-xs transition-all flex items-center gap-2 disabled:opacity-50"
+            className="px-4 py-2 bg-crimson text-cream hover:bg-crimson-bright rounded-sm font-montserrat tracking-widest uppercase text-xs transition-colors flex items-center gap-2 disabled:opacity-50"
           >
             <Save className={`w-4 h-4 ${isSaving ? 'animate-pulse' : ''}`} />
             {isSaving ? 'Saving...' : 'Save to Grimoire'}
           </button>
           <button
             onClick={copySpellToClipboard}
-            className="px-4 py-2 bg-transparent text-crimson border border-gold/40 rounded-sm font-montserrat tracking-widest uppercase text-xs hover:bg-gold/10 transition-all flex items-center gap-2"
+            className="px-4 py-2 bg-transparent text-crimson border border-gold/40 rounded-sm font-montserrat tracking-widest uppercase text-xs hover:bg-gold/10 transition-colors flex items-center gap-2"
           >
             <Copy className="w-4 h-4" />
             Copy Spell
@@ -1629,14 +1629,14 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
           <button
             onClick={downloadAsPdf}
             disabled={isGeneratingPdf}
-            className="px-4 py-2 bg-transparent text-crimson border border-gold/40 hover:bg-gold/10 rounded-sm font-montserrat tracking-widest uppercase text-xs transition-all flex items-center gap-2 disabled:opacity-50"
+            className="px-4 py-2 bg-transparent text-crimson border border-gold/40 hover:bg-gold/10 rounded-sm font-montserrat tracking-widest uppercase text-xs transition-colors flex items-center gap-2 disabled:opacity-50"
           >
             <Download className={`w-4 h-4 ${isGeneratingPdf ? 'animate-bounce' : ''}`} />
             {isGeneratingPdf ? 'Generating...' : 'Save as PDF'}
           </button>
           <button
             onClick={onNewSpell}
-            className="px-4 py-2 bg-crimson text-cream rounded-sm font-montserrat tracking-widest uppercase text-xs hover:bg-crimson-bright transition-all"
+            className="px-4 py-2 bg-crimson text-cream rounded-sm font-montserrat tracking-widest uppercase text-xs hover:bg-crimson-bright transition-colors"
           >
             New Spell
           </button>

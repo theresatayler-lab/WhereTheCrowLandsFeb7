@@ -421,7 +421,7 @@ export const GuidePortal = () => {
             </p>
             <div className="w-64 mx-auto bg-cream/10 rounded-full h-2">
               <div
-                className={`h-2 rounded-full bg-${guide.colors.accent} transition-all duration-1000`}
+                className={`h-2 rounded-full bg-${guide.colors.accent} transition-colors duration-1000`}
                 style={{ width: `${progress}%` }}
               />
             </div>

@@ -140,14 +140,14 @@ const WelcomeStep = ({ onContinue, onSkip }) => (
     <div className="flex flex-col sm:flex-row gap-4 justify-center">
       <button
         onClick={onContinue}
-        className="px-8 py-3 bg-primary text-primary-foreground rounded-sm font-montserrat tracking-widest uppercase text-sm hover:bg-primary/90 transition-all flex items-center justify-center gap-2"
+        className="px-8 py-3 bg-primary text-primary-foreground rounded-sm font-montserrat tracking-widest uppercase text-sm hover:bg-primary/90 transition-colors flex items-center justify-center gap-2"
       >
         <span>Choose a Guide</span>
         <ArrowRight className="w-4 h-4" />
       </button>
       <button
         onClick={onSkip}
-        className="px-8 py-3 bg-transparent text-muted-foreground border border-border rounded-sm font-montserrat tracking-widest uppercase text-sm hover:border-primary/30 hover:text-primary transition-all"
+        className="px-8 py-3 bg-transparent text-muted-foreground border border-border rounded-sm font-montserrat tracking-widest uppercase text-sm hover:border-primary/30 hover:text-primary transition-colors"
       >
         Continue Without a Guide
       </button>
@@ -189,21 +189,21 @@ const ArchetypeSelectionStep = ({ selectedArchetype, onSelect, onComplete, onSki
     <div className="flex flex-col sm:flex-row gap-3 justify-center border-t border-border pt-6">
       <button
         onClick={onBack}
-        className="px-6 py-2 bg-transparent text-muted-foreground border border-border rounded-sm font-montserrat tracking-widest uppercase text-xs hover:border-primary/30 transition-all"
+        className="px-6 py-2 bg-transparent text-muted-foreground border border-border rounded-sm font-montserrat tracking-widest uppercase text-xs hover:border-primary/30 transition-colors"
       >
         Back
       </button>
       <button
         onClick={onComplete}
         disabled={!selectedArchetype}
-        className="px-8 py-3 bg-primary text-primary-foreground rounded-sm font-montserrat tracking-widest uppercase text-sm hover:bg-primary/90 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+        className="px-8 py-3 bg-primary text-primary-foreground rounded-sm font-montserrat tracking-widest uppercase text-sm hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
       >
         <span>{selectedArchetype ? 'Begin with Guide' : 'Select a Guide'}</span>
         <ArrowRight className="w-4 h-4" />
       </button>
       <button
         onClick={onSkip}
-        className="px-6 py-2 bg-transparent text-muted-foreground border border-border rounded-sm font-montserrat tracking-widest uppercase text-xs hover:border-primary/30 transition-all"
+        className="px-6 py-2 bg-transparent text-muted-foreground border border-border rounded-sm font-montserrat tracking-widest uppercase text-xs hover:border-primary/30 transition-colors"
       >
         Skip for Now
       </button>
@@ -217,7 +217,7 @@ const ArchetypeCard = ({ archetype, isSelected, onSelect }) => {
       onClick={onSelect}
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
-      className={`text-left bg-card/50 border-2 rounded-sm overflow-hidden transition-all duration-300 ${
+      className={`text-left bg-card/50 border-2 rounded-sm overflow-hidden transition-colors duration-300 ${
         isSelected
           ? 'border-primary shadow-lg shadow-primary/20'
           : 'border-border hover:border-primary/30'

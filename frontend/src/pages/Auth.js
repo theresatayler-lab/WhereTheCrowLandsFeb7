@@ -179,7 +179,7 @@ export const Auth = ({ onLogin }) => {
                   <button
                     onClick={() => setIsLogin(!isLogin)}
                     data-testid="auth-toggle-button"
-                    className="font-montserrat text-sm text-crimson hover:text-crimson-bright transition-all underline underline-offset-4 decoration-gold/30 hover:decoration-gold"
+                    className="font-montserrat text-sm text-crimson hover:text-crimson-bright transition-colors underline underline-offset-4 decoration-gold/30 hover:decoration-gold"
                   >
                     {isLogin ? "Don't have an account? Join us" : 'Already a member? Enter here'}
                   </button>

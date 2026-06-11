@@ -153,7 +153,7 @@ const GuideCard = ({ archetype, index, isCurrentGuide, isExpanded, isBioExpanded
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.1 }}
-      className={`relative bg-white/90 border-2 rounded-sm overflow-hidden transition-all duration-300 ${
+      className={`relative bg-white/90 border-2 rounded-sm overflow-hidden transition-colors duration-300 ${
         isCurrentGuide ? 'border-crimson shadow-lg' : 'border-gold/40 hover:border-crimson/50'
       }`}
     >
@@ -167,8 +167,7 @@ const GuideCard = ({ archetype, index, isCurrentGuide, isExpanded, isBioExpanded
       
       {/* Image or Placeholder */}
       <div 
-        className="w-full h-56 flex items-center justify-center border-b border-gold/30 overflow-hidden relative"
-        style={{ backgroundColor: '#e8e4dc' }}
+        className="w-full h-56 flex items-center justify-center border-b border-gold/30 overflow-hidden relative bg-vellum"
       >
         {archetype.image ? (
           <>
@@ -213,8 +212,7 @@ const GuideCard = ({ archetype, index, isCurrentGuide, isExpanded, isBioExpanded
           <div className="flex items-start gap-4">
             {/* Portrait Image */}
             <div 
-              className="w-20 h-20 rounded-full overflow-hidden flex-shrink-0 border-2 border-gold/40"
-              style={{ backgroundColor: '#e8e4dc' }}
+              className="w-20 h-20 rounded-full overflow-hidden flex-shrink-0 border-2 border-gold/40 bg-vellum"
             >
               {archetype.image ? (
                 <img 
@@ -382,7 +380,7 @@ const GuideCard = ({ archetype, index, isCurrentGuide, isExpanded, isBioExpanded
         {archetype.id === 'kathleen' && (
           <button
             onClick={() => navigate('/ward-finder')}
-            className="w-full mt-3 px-4 py-2 bg-gold/10 text-navy-dark border border-gold/40 rounded-sm font-montserrat tracking-widest uppercase text-xs hover:bg-gold/20 transition-all flex items-center justify-center gap-2"
+            className="w-full mt-3 px-4 py-2 bg-gold/10 text-navy-dark border border-gold/40 rounded-sm font-montserrat tracking-widest uppercase text-xs hover:bg-gold/20 transition-colors flex items-center justify-center gap-2"
           >
             <BrandIcon name="pentagram" size={16} opacity={0.8} />
             <span>Find Your Ward</span>
@@ -393,7 +391,7 @@ const GuideCard = ({ archetype, index, isCurrentGuide, isExpanded, isBioExpanded
         {archetype.id === 'shiggy' && (
           <button
             onClick={() => navigate('/corrie-tarot')}
-            className="w-full mt-3 px-4 py-2 bg-primary/20 text-primary border border-primary/40 rounded-sm font-montserrat tracking-widest uppercase text-xs hover:bg-primary/30 transition-all flex items-center justify-center gap-2"
+            className="w-full mt-3 px-4 py-2 bg-primary/20 text-primary border border-primary/40 rounded-sm font-montserrat tracking-widest uppercase text-xs hover:bg-primary/30 transition-colors flex items-center justify-center gap-2"
           >
             <span className="text-base">📺</span>
             <span>What Would Corrie Do?</span>

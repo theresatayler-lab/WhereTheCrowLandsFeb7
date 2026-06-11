@@ -90,6 +90,20 @@ module.exports = {
         'silver-mist': '#A89872',
         'blue-grey': '#5A524E',
         'cream': '#F3EFE8',
+
+        // ============================================================================
+        // GUIDE TINT TOKENS — canonical per-guide accent colors
+        // ============================================================================
+        'guide-shigg': '#D97706',       // amber-600
+        'guide-shigg-light': '#F59E0B', // amber-500
+        'guide-cathleen': '#0D9488',    // teal-600
+        'guide-cathleen-light': '#2DD4BF', // teal-400
+        'guide-katherine': '#7C3AED',   // violet-600
+        'guide-katherine-light': '#A78BFA', // violet-400
+        'guide-theresa': '#8B2232',     // oxblood (investigator)
+        'guide-theresa-light': '#B94E6A', // ember pink
+        'guide-brenda': '#A89872',      // faded gold (chronicler)
+        'guide-brenda-light': '#C8A44D', // antique gold
       },
       fontFamily: {
         'italiana': ['Italiana', 'serif'],

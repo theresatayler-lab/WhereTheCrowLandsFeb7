@@ -6,7 +6,7 @@ export const GlassCard = ({ children, className = '', hover = true, onClick, tes
     <motion.div
       data-testid={testId}
       onClick={onClick}
-      className={`bg-card/50 backdrop-blur-md border border-border p-4 sm:p-6 md:p-8 rounded-sm transition-all duration-500 group relative ${
+      className={`bg-card/50 backdrop-blur-md border border-border p-4 sm:p-6 md:p-8 rounded-sm transition-colors duration-500 group relative ${
         className.includes('overflow-visible') ? '' : 'overflow-hidden'
       } ${
         hover ? 'hover:border-deep-blue/40 hover:-translate-y-1 hover:shadow-lg hover:shadow-deep-blue/10 cursor-pointer' : ''

@@ -290,7 +290,7 @@ export const Home = () => {
               <Link 
                 to="/spell-request" 
                 data-testid="hero-begin-journey-btn"
-                className="group relative px-8 py-3.5 overflow-hidden transition-all duration-300"
+                className="group relative px-8 py-3.5 overflow-hidden transition-colors duration-300"
                 style={{
                   backgroundColor: NOUVEAU_COLORS.emberPink,
                   border: `2px solid ${NOUVEAU_COLORS.emberPink}`,
@@ -424,7 +424,7 @@ export const Home = () => {
             <Link 
               to="/about" 
               data-testid="lineage-learn-story-link"
-              className="inline-flex items-center gap-3 font-cinzel text-sm tracking-widest uppercase transition-all py-2 px-6"
+              className="inline-flex items-center gap-3 font-cinzel text-sm tracking-widest uppercase transition-colors py-2 px-6"
               style={{ 
                 color: NOUVEAU_COLORS.emberPink,
                 border: `1px solid ${NOUVEAU_COLORS.emberPink}50`,

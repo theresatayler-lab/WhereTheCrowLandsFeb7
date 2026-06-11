@@ -108,7 +108,7 @@ const HandcraftedMagicModal = ({ isOpen, onClose }) => {
             {/* Grimoire Option */}
             <button
               onClick={() => setSelectedOption('grimoire')}
-              className="w-full p-4 text-left border border-gold/30 rounded-lg hover:border-gold/60 hover:bg-gold/5 transition-all group"
+              className="w-full p-4 text-left border border-gold/30 rounded-lg hover:border-gold/60 hover:bg-gold/5 transition-colors group"
             >
               <div className="flex items-start gap-3">
                 <BrandIcon name="grimoire" size={24} className="mt-1 flex-shrink-0" />
@@ -127,7 +127,7 @@ const HandcraftedMagicModal = ({ isOpen, onClose }) => {
             {/* Bespoke Option */}
             <button
               onClick={() => setSelectedOption('bespoke')}
-              className="w-full p-4 text-left border border-gold/30 rounded-lg hover:border-gold/60 hover:bg-gold/5 transition-all group"
+              className="w-full p-4 text-left border border-gold/30 rounded-lg hover:border-gold/60 hover:bg-gold/5 transition-colors group"
             >
               <div className="flex items-start gap-3">
                 <BrandIcon name="book" size={24} className="mt-1 flex-shrink-0" />

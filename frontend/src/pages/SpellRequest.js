@@ -114,7 +114,7 @@ const StepIndicator = ({ currentStep, totalSteps }) => (
   <div className="flex items-center justify-center gap-2 mb-6">
     {Array.from({ length: totalSteps }).map((_, i) => (
       <div key={i} className="flex items-center">
-        <div className={`w-8 h-8 rounded-full flex items-center justify-center font-cinzel text-sm transition-all ${
+        <div className={`w-8 h-8 rounded-full flex items-center justify-center font-cinzel text-sm transition-colors ${
           i < currentStep 
             ? 'bg-crimson text-cream' 
             : i === currentStep 
@@ -134,7 +134,7 @@ const StepIndicator = ({ currentStep, totalSteps }) => (
 const OptionCard = ({ selected, onClick, children, className = '', light = false }) => (
   <motion.button
     onClick={onClick}
-    className={`relative p-4 rounded-sm text-left transition-all ${
+    className={`relative p-4 rounded-sm text-left transition-colors ${
       light 
         ? selected 
           ? 'bg-crimson/10 border-2 border-gold shadow-md shadow-gold/10' 
@@ -1014,13 +1014,13 @@ export const SpellRequest = () => {
                       const isActive = idx === currentIdx;
                       return (
                         <div key={stage} className="flex items-center gap-2">
-                          <div className={`w-2.5 h-2.5 rounded-full transition-all duration-500 ${
+                          <div className={`w-2.5 h-2.5 rounded-full transition-colors duration-500 ${
                             isComplete ? 'bg-gold' :
                             isActive ? 'bg-gold animate-pulse shadow-[0_0_8px_rgba(200,164,77,0.6)]' :
                             'bg-cream/20'
                           }`} />
                           {idx < 3 && (
-                            <div className={`w-6 h-px transition-all duration-500 ${
+                            <div className={`w-6 h-px transition-colors duration-500 ${
                               isComplete ? 'bg-gold/60' : 'bg-cream/10'
                             }`} />
                           )}
@@ -1079,7 +1079,7 @@ export const SpellRequest = () => {
       {/* Meet Your Guides Section - Bottom of Page */}
       <DarkSection className="py-12 px-4 sm:px-6" variant="warm">
         <div className="max-w-5xl mx-auto">
-          <h2 className="font-cinzel text-2xl text-center mb-2" style={{ color: '#C8A44D' }}>
+          <h2 className="font-cinzel text-2xl text-center mb-2 text-gold">
             Meet Your Guides
           </h2>
           <p className="text-center text-cream/75 font-crimson-text mb-10">
@@ -1091,7 +1091,7 @@ export const SpellRequest = () => {
               <Link
                 key={persona.id}
                 to={`/guides/${persona.id}`}
-                className="group text-center p-4 rounded-lg border border-gold/20 hover:border-gold/50 transition-all bg-navy-mid hover:bg-navy-mid"
+                className="group text-center p-4 rounded-lg border border-gold/20 hover:border-gold/50 transition-colors bg-navy-mid hover:bg-navy-mid"
               >
                 {/* Guide avatar */}
                 <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-3 rounded-full overflow-hidden border-2 border-gold/30 group-hover:border-gold transition-colors flex items-center justify-center bg-navy-dark">

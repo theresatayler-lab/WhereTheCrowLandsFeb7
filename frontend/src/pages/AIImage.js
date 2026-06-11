@@ -69,7 +69,7 @@ const ARCHETYPE_STYLES = {
 const StyleCard = ({ style, isSelected, onSelect }) => (
   <motion.button
     onClick={() => onSelect(style.id)}
-    className={`relative p-4 rounded-sm text-left transition-all ${
+    className={`relative p-4 rounded-sm text-left transition-colors ${
       isSelected 
         ? 'bg-gradient-to-br ' + style.color + ' border-2 ' + style.borderColor + ' shadow-lg'
         : 'bg-navy-mid border border-gold/20 hover:border-gold/40'
@@ -364,7 +364,7 @@ export const AIImage = () => {
               <button
                 onClick={handleGenerate}
                 disabled={loading || !prompt.trim()}
-                className="w-full px-6 py-4 bg-gradient-to-r from-crimson-deep via-crimson to-crimson-deep text-cream rounded-sm font-montserrat tracking-wider uppercase text-sm hover:from-crimson hover:via-crimson-bright hover:to-crimson transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3 border border-gold/30"
+                className="w-full px-6 py-4 bg-gradient-to-r from-crimson-deep via-crimson to-crimson-deep text-cream rounded-sm font-montserrat tracking-wider uppercase text-sm hover:from-crimson hover:via-crimson-bright hover:to-crimson transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3 border border-gold/30"
               >
                 {loading ? (
                   <>
@@ -394,7 +394,7 @@ export const AIImage = () => {
                     <button
                       key={idx}
                       onClick={() => setPrompt(example)}
-                      className="w-full text-left px-3 py-2 bg-navy-dark border border-gold/20 rounded-sm font-montserrat text-xs text-cream/70 hover:border-gold/40 hover:text-cream transition-all"
+                      className="w-full text-left px-3 py-2 bg-navy-dark border border-gold/20 rounded-sm font-montserrat text-xs text-cream/70 hover:border-gold/40 hover:text-cream transition-colors"
                     >
                       {example}
                     </button>
@@ -428,14 +428,14 @@ export const AIImage = () => {
                     <div className="flex gap-3">
                       <button
                         onClick={handleDownload}
-                        className="flex-1 px-4 py-2 bg-gold/10 text-gold border border-gold/40 rounded-sm font-montserrat text-xs uppercase tracking-wider hover:bg-gold/20 transition-all flex items-center justify-center gap-2"
+                        className="flex-1 px-4 py-2 bg-gold/10 text-gold border border-gold/40 rounded-sm font-montserrat text-xs uppercase tracking-wider hover:bg-gold/20 transition-colors flex items-center justify-center gap-2"
                       >
                         <Download className="w-4 h-4" />
                         Download
                       </button>
                       <button
                         onClick={handleReset}
-                        className="px-4 py-2 bg-crimson/10 text-crimson-bright border border-crimson/40 rounded-sm font-montserrat text-xs uppercase tracking-wider hover:bg-crimson/20 transition-all flex items-center justify-center gap-2"
+                        className="px-4 py-2 bg-crimson/10 text-crimson-bright border border-crimson/40 rounded-sm font-montserrat text-xs uppercase tracking-wider hover:bg-crimson/20 transition-colors flex items-center justify-center gap-2"
                       >
                         <RotateCcw className="w-4 h-4" />
                         New
