@@ -97,20 +97,29 @@ STATIC_CORNER_ORNAMENTS = {
     "theresa_organic": "/images/borders/theresa-border-alt.png",
 }
 
-# Placeholder static images for library mode
+# Static fallback images — curated per guide, served from frontend/public
 STATIC_HEADERS = {
-    "shigg": [], "cathleen": [], "katherine": [],
-    "theresa": [], "brenda": [],
+    "shigg":     ["/images/static/headers/shigg-1.webp", "/images/static/headers/shigg-2.webp", "/images/static/headers/shigg-3.webp"],
+    "cathleen":  ["/images/static/headers/cathleen-1.webp", "/images/static/headers/cathleen-2.webp", "/images/static/headers/cathleen-3.webp"],
+    "katherine": ["/images/static/headers/katherine-1.webp", "/images/static/headers/katherine-2.webp", "/images/static/headers/katherine-3.webp"],
+    "theresa":   ["/images/static/headers/theresa-1.webp", "/images/static/headers/theresa-2.webp", "/images/static/headers/theresa-3.webp"],
+    "brenda":    ["/images/static/headers/brenda-1.webp", "/images/static/headers/brenda-2.webp", "/images/static/headers/brenda-3.webp"],
 }
 
 STATIC_TAROT = {
-    "shigg": [], "cathleen": [], "katherine": [],
-    "theresa": [], "brenda": [],
+    "shigg":     ["/images/static/tarot/shigg-1.webp", "/images/static/tarot/shigg-2.webp", "/images/static/tarot/shigg-3.webp"],
+    "cathleen":  ["/images/static/tarot/cathleen-1.webp", "/images/static/tarot/cathleen-2.webp", "/images/static/tarot/cathleen-3.webp"],
+    "katherine": ["/images/static/tarot/katherine-1.webp", "/images/static/tarot/katherine-2.webp", "/images/static/tarot/katherine-3.webp"],
+    "theresa":   ["/images/static/tarot/theresa-1.webp", "/images/static/tarot/theresa-2.webp", "/images/static/tarot/theresa-3.webp"],
+    "brenda":    ["/images/static/tarot/brenda-1.webp", "/images/static/tarot/brenda-2.webp", "/images/static/tarot/brenda-3.webp"],
 }
 
 STATIC_SIGILS = {
-    "shigg": [], "cathleen": [], "katherine": [],
-    "theresa": [], "brenda": [],
+    "shigg":     ["/images/static/sigils/shigg-1.webp", "/images/static/sigils/shigg-2.webp", "/images/static/sigils/shigg-3.webp"],
+    "cathleen":  ["/images/static/sigils/cathleen-1.webp", "/images/static/sigils/cathleen-2.webp", "/images/static/sigils/cathleen-3.webp"],
+    "katherine": ["/images/static/sigils/katherine-1.webp", "/images/static/sigils/katherine-2.webp", "/images/static/sigils/katherine-3.webp"],
+    "theresa":   ["/images/static/sigils/theresa-1.webp", "/images/static/sigils/theresa-2.webp", "/images/static/sigils/theresa-3.webp"],
+    "brenda":    ["/images/static/sigils/brenda-1.webp", "/images/static/sigils/brenda-2.webp", "/images/static/sigils/brenda-3.webp"],
 }
 
 
@@ -518,7 +527,14 @@ async def generate_image(
         result = await _generate_gemini(prompt, cache_key)
         if result:
             return result
-        return None
+
+    # Last resort: static fallback library (no API calls, always available)
+    static_fn = {"header": get_static_header, "tarot": get_static_tarot, "sigil": get_static_sigil}.get(asset_type)
+    if static_fn:
+        static_url = static_fn(persona_id)
+        if static_url:
+            logger.info(f"[STATIC] Using fallback {asset_type} for {persona_id}")
+            return f"STATIC_URL:{static_url}"
 
     return None
 

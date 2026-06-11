@@ -241,7 +241,7 @@ const PrintablesBlock = ({ tarotImageBase64, sigilImageBase64, spellTitle, tarot
             </p>
             <div className="w-full max-w-[180px] mx-auto aspect-[2/3] rounded-sm border border-gold/30 shadow-md overflow-hidden">
               <img
-                src={`data:image/png;base64,${tarotImageBase64}`}
+                src={tarotImageBase64?.startsWith('STATIC_URL:') ? tarotImageBase64.replace('STATIC_URL:', '') : `data:image/png;base64,${tarotImageBase64}`}
                 alt={`${spellTitle} - Tarot Card Front`}
                 className="w-full h-full object-cover"
               />
@@ -285,7 +285,7 @@ const PrintablesBlock = ({ tarotImageBase64, sigilImageBase64, spellTitle, tarot
               Sigil
             </p>
             <img 
-              src={`data:image/png;base64,${sigilImageBase64}`}
+              src={sigilImageBase64?.startsWith('STATIC_URL:') ? sigilImageBase64.replace('STATIC_URL:', '') : `data:image/png;base64,${sigilImageBase64}`}
               alt={`${spellTitle} - Sigil`}
               className="w-full max-w-[150px] mx-auto rounded-sm border border-gold/30 shadow-md bg-white"
             />
@@ -459,6 +459,14 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
   
   // Get V3 generated images (header, tarot) from spell data
   const generatedImages = spell?.generated_images || spell?.spell_data?.generated_images || {};
+
+  // Resolve image data to a displayable src (handles both base64 and STATIC_URL: paths)
+  const toImageSrc = (imgData) => {
+    if (!imgData) return null;
+    if (imgData.startsWith('STATIC_URL:')) return imgData.replace('STATIC_URL:', '');
+    if (imgData.startsWith('data:') || imgData.startsWith('http')) return imgData;
+    return `data:image/png;base64,${imgData}`;
+  };
 
   // Quick tier CSS visuals (static per-guide treatment, no AI images)
   const quickVisuals = spell?.quick_visuals || null;
@@ -815,15 +823,11 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
           title={spell?.tarot_card?.title || spell?.title || "Saved Spell"}
           guideLine={`${spell?.archetype_name || ""}${spell?.archetype_title ? " • " + spell.archetype_title : ""}`}
           summaryLine={spell?.tarot_card?.essence || ""}
-          headerImageUrl={
-            generatedImages.header_image
-              ? `data:image/png;base64,${generatedImages.header_image}`
-              : null
-          }
+          headerImageUrl={toImageSrc(generatedImages.header_image)}
           tarotImageUrl={
             spell?.asset_plan?.generated_assets?.tarot_card_image
             || spell?.tarot_card_image
-            || (generatedImages.tarot_card_image ? `data:image/png;base64,${generatedImages.tarot_card_image}` : null)
+            || toImageSrc(generatedImages.tarot_card_image)
           }
           category={spell?.category || spell?.working_category}
           quickVisuals={quickVisuals}
@@ -917,7 +921,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
             {/* Closing Seal — sigil as wax-seal after the working (Brief §3.2) */}
             {(generatedAssets?.sigil || generatedImages.sigil) && (
               <SealReveal
-                src={`data:image/png;base64,${generatedAssets?.sigil || generatedImages.sigil}`}
+                src={toImageSrc(generatedAssets?.sigil || generatedImages.sigil)}
               />
             )}
           </div>
