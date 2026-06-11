@@ -437,7 +437,7 @@ export const GuidePortal = () => {
             animate={{ opacity: 1, y: 0 }}
             className="max-w-4xl mx-auto px-4 pb-20"
           >
-            <SpellPageFrame>
+            <SpellPageFrame guideId={guideId}>
               {/* SpellBookView - Flippable card + Full ritual design */}
               <SpellBookView
                 tarotImageUrl={spellResult?.asset_plan?.generated_assets?.tarot_card_image || spellResult?.tarot_card_image || null}

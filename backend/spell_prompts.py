@@ -989,6 +989,7 @@ AVOID: {', '.join(avoid_list)}, generic stock photo look, oversaturated muddy co
             prompt = f"""{art_bible_prefix},
 {style_layer},
 STYLE: hand-rendered occult illustration, visible pen-and-ink cross-hatching like Aubrey Beardsley or Edward Sullivan, rich blacks and whites with selective color accents.
+FORMAT: PORTRAIT tarot card, vertical 2:3 composition, ornamental border running the full card edge like a printed tarot deck.
 COMPOSITION: {geometry} emblem or vignette (NOT a flat medallion, NOT a generic mandala).
 FOCAL ELEMENT: {primary_motif} — rendered with craft and detail as if for a limited-edition occult press.
 SUPPORTING ELEMENTS: {', '.join(secondary_motifs)}.
@@ -1012,6 +1013,7 @@ AVOID: {', '.join(avoid_list + forbidden)}"""
 {tarot_emblem if tarot_emblem else f'FOCAL ELEMENT: {focal}'},
 FRAMING: {framing},
 SUPPORTING SYMBOLS: {', '.join(symbols)},
+PORTRAIT tarot card, vertical 2:3 composition, ornamental border running the full card edge,
 centered composition, suitable for tarot/oracle card,
 medallion or seal style, symmetrical,
 {role_suffix},
