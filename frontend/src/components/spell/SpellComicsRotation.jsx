@@ -1,10 +1,18 @@
 // SpellComicsRotation — crossfade gallery for the spell generation loading screen.
-// Assets served from /spell_comics/ (public folder, lazy-loaded).
-// Guide pool first, then shared; stills ~8s crossfade, videos play once then advance.
+// Phase 1: Guide intro video (full-screen, plays once).
+// Phase 2: Guide-specific comic panels, then shared pool; stills ~8s, videos play once.
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 
-// ── Asset catalog (from MANIFEST.md) ──────────────────────────────────────────
+// ── Guide intro videos (play first, before comics) ──────────────────────────
+const GUIDE_INTRO_VIDEOS = {
+  cathleen:  '/images/guides/videos/cathleen-video.mp4',
+  shigg:     '/images/guides/videos/shigg-video.mp4',
+  katherine: '/images/guides/videos/katherine-video.mp4',
+  theresa:   '/images/guides/videos/theresa-video.mp4',
+};
+
+// ── Comic asset catalog (from MANIFEST.md) ───────────────────────────────────
 
 const GUIDE_ASSETS = {
   cathleen: [
@@ -82,7 +90,7 @@ function shuffle(arr) {
   return a;
 }
 
-function buildPlaylist(guideId) {
+function buildComicPlaylist(guideId) {
   const guidePool = GUIDE_ASSETS[guideId] || [];
   return [...shuffle(guidePool), ...shuffle(SHARED_ASSETS)];
 }
@@ -90,55 +98,92 @@ function buildPlaylist(guideId) {
 // ── Component ─────────────────────────────────────────────────────────────────
 
 export default function SpellComicsRotation({ guideId, className = '' }) {
-  const [playlist] = useState(() => buildPlaylist(guideId));
-  const [index, setIndex] = useState(0);
+  // Phase 1: guide intro video, Phase 2: comic rotation
+  const introSrc = GUIDE_INTRO_VIDEOS[guideId] || null;
+  const [phase, setPhase] = useState(introSrc ? 'intro' : 'comics');
+
+  const [comicPlaylist] = useState(() => buildComicPlaylist(guideId));
+  const [comicIndex, setComicIndex] = useState(0);
   const [fading, setFading] = useState(false);
-  const videoRef = useRef(null);
+
+  const introVideoRef = useRef(null);
+  const comicVideoRef = useRef(null);
   const timerRef = useRef(null);
 
-  const current = playlist[index % playlist.length];
-  const src = BASE_PATH + current.file;
+  // ── Phase 1: Intro video ──────────────────────────────────────────────────
 
-  const advance = useCallback(() => {
+  const handleIntroEnded = useCallback(() => {
     setFading(true);
     setTimeout(() => {
-      setIndex(i => (i + 1) % playlist.length);
+      setPhase('comics');
       setFading(false);
     }, CROSSFADE_MS);
-  }, [playlist.length]);
+  }, []);
+
+  useEffect(() => {
+    if (phase === 'intro' && introVideoRef.current) {
+      introVideoRef.current.play().catch(() => {});
+    }
+  }, [phase]);
+
+  // ── Phase 2: Comic rotation ───────────────────────────────────────────────
+
+  const current = comicPlaylist[comicIndex % comicPlaylist.length];
+  const comicSrc = current ? BASE_PATH + current.file : null;
+
+  const advanceComic = useCallback(() => {
+    setFading(true);
+    setTimeout(() => {
+      setComicIndex(i => (i + 1) % comicPlaylist.length);
+      setFading(false);
+    }, CROSSFADE_MS);
+  }, [comicPlaylist.length]);
 
   // Stills: advance after STILL_DURATION_MS
   useEffect(() => {
+    if (phase !== 'comics' || !current) return;
     if (current.type === 'still') {
-      timerRef.current = setTimeout(advance, STILL_DURATION_MS);
+      timerRef.current = setTimeout(advanceComic, STILL_DURATION_MS);
     }
     return () => clearTimeout(timerRef.current);
-  }, [index, current.type, advance]);
+  }, [phase, comicIndex, current, advanceComic]);
 
   // Videos: advance when playback ends
-  const handleVideoEnded = useCallback(() => {
-    advance();
-  }, [advance]);
+  const handleComicVideoEnded = useCallback(() => {
+    advanceComic();
+  }, [advanceComic]);
 
-  // Attach ended listener when video element mounts
   useEffect(() => {
-    const vid = videoRef.current;
-    if (vid && current.type === 'video') {
-      vid.addEventListener('ended', handleVideoEnded);
+    const vid = comicVideoRef.current;
+    if (phase === 'comics' && vid && current?.type === 'video') {
+      vid.addEventListener('ended', handleComicVideoEnded);
       vid.play().catch(() => {});
-      return () => vid.removeEventListener('ended', handleVideoEnded);
+      return () => vid.removeEventListener('ended', handleComicVideoEnded);
     }
-  }, [index, current.type, handleVideoEnded]);
+  }, [phase, comicIndex, current, handleComicVideoEnded]);
+
+  // ── Render ────────────────────────────────────────────────────────────────
 
   return (
     <div
       className={`absolute inset-0 overflow-hidden ${className}`}
       style={{ transition: `opacity ${CROSSFADE_MS}ms ease-in-out`, opacity: fading ? 0 : 0.4 }}
     >
-      {current.type === 'still' ? (
+      {phase === 'intro' && introSrc ? (
+        <video
+          key="intro"
+          ref={introVideoRef}
+          src={introSrc}
+          muted
+          playsInline
+          onEnded={handleIntroEnded}
+          className="absolute inset-0 w-full h-full object-cover"
+          style={{ filter: 'saturate(0.8) contrast(1.1)' }}
+        />
+      ) : current?.type === 'still' ? (
         <img
-          key={src}
-          src={src}
+          key={comicSrc}
+          src={comicSrc}
           alt=""
           loading="lazy"
           className="absolute inset-0 w-full h-full object-cover"
@@ -146,9 +191,9 @@ export default function SpellComicsRotation({ guideId, className = '' }) {
         />
       ) : (
         <video
-          key={src}
-          ref={videoRef}
-          src={src}
+          key={comicSrc}
+          ref={comicVideoRef}
+          src={comicSrc}
           muted
           playsInline
           className="absolute inset-0 w-full h-full object-cover"
