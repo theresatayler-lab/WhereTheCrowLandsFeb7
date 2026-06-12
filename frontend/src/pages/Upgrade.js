@@ -118,7 +118,7 @@ export const Upgrade = () => {
 
                 <Link
                   to="/spell-request"
-                  className="block w-full text-center px-6 py-3 bg-navy-dark/10 text-navy-dark border border-gold/40 rounded-sm font-montserrat tracking-widest uppercase text-xs hover:bg-navy-dark/20 transition-all"
+                  className="block w-full text-center px-6 py-3 bg-navy-dark/10 text-navy-dark border border-gold/40 rounded-sm font-montserrat tracking-widest uppercase text-xs hover:bg-navy-dark/20 transition-colors"
                 >
                   Current Plan
                 </Link>

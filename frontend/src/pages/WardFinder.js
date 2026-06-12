@@ -140,7 +140,7 @@ const WardCard = ({ ward, index, situation, onSave, isSaving, isSaved, isLight }
                     onSave(ward);
                   }}
                   disabled={isSaving || isSaved}
-                  className={`w-full px-4 py-2 rounded-sm font-montserrat text-sm transition-all flex items-center justify-center gap-2 ${
+                  className={`w-full px-4 py-2 rounded-sm font-montserrat text-sm transition-colors flex items-center justify-center gap-2 ${
                     isSaved 
                       ? 'bg-gold/20 text-gold border border-gold/30 cursor-default'
                       : isLight
@@ -385,7 +385,7 @@ const WardFinder = () => {
                   <button
                     type="submit"
                     disabled={isLoading || !situation.trim()}
-                    className="w-full px-6 py-4 bg-gradient-to-r from-crimson-deep via-crimson to-crimson-deep text-cream rounded-sm font-montserrat tracking-wider uppercase text-sm hover:from-crimson hover:via-crimson-bright hover:to-crimson transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3 border border-gold/30"
+                    className="w-full px-6 py-4 bg-gradient-to-r from-crimson-deep via-crimson to-crimson-deep text-cream rounded-sm font-montserrat tracking-wider uppercase text-sm hover:from-crimson hover:via-crimson-bright hover:to-crimson transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3 border border-gold/30"
                   >
                     {isLoading ? (
                       <>

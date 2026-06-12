@@ -6,7 +6,7 @@
 STACK:        React 18 + FastAPI + MongoDB + Multi-LLM
 GUIDES:       Shigg (amber), Cathleen (teal), Katherine (violet), Theresa (investigator), Brenda (chronicler)
 AI TEXT:      DeepSeek (research) → Claude Sonnet (writing) → direct Anthropic/DeepSeek clients
-AI IMAGES:    Gemini (std headers) → FAL Flux Pro (premium headers) → OpenAI GPT Image 1 (tarot/sigils) → Ideogram (premium sigils) → Static PNGs (dividers)
+AI IMAGES:    Gemini (std headers) → FAL Flux Pro (premium headers) → OpenAI GPT Image 1 (tarot/sigils) → Ideogram (premium sigils) → per-guide SVG ornaments (dividers, zero API)
 COLORS:       Deep Navy (#0C1D2E), Primary Navy (#102534), Card Teal (#123A3F), Vellum (#F3EFE8), Gold (#C8A44D), Ember Pink (#B94E6A), Oxblood (#8B2232)
 VISUAL BRIEF: design_assets/VISUAL_SYSTEM_BRIEF.md (canonical — read before touching any visual/image code)
 INDEPENDENCE: Site uses YOUR API keys only — zero Emergent dependencies
@@ -323,24 +323,24 @@ grep -r "emergentintegrations" backend/*.py  # Should return nothing
 - User authentication (JWT)
 - Invisible Helpers portal
 - Stripe payments (direct SDK, test mode)
-- Image provider routing: Gemini + FAL + OpenAI + Ideogram + static fallbacks
+- Image provider routing: Gemini + FAL + OpenAI + Ideogram + static fallbacks (45 curated WebPs, all 5 guides)
 - Artist style matrix (150 combinations)
-- Tier-aware image generation (standard/premium) in parallel
+- Tier-aware image generation (standard/premium) in parallel — sync AND async paths in parity
 - SpellComics loading screen rotation (47 curated assets, guide-specific)
-- Framed-plate header images + closing-seal sigils (layout wired, commit 878dadf)
+- Palette purge complete — canonical 10-color system, guide tint tokens in tailwind.config.js, zero deprecated hexes, zero transition-all
+- GUIDE_ORNAMENT_CONFIG — per-guide SVG corners + 3-variant divider cycling, all 5 guides incl. Brenda (§4)
+- Spell page layout — framed header plate w/ guide corner ornaments + caption, tarot frontispiece (340px, vellum mat), inline sigil seal w/ ink-reveal (§3.1–3.4)
+- Quick tier visuals — CSS medallion header + guide icon + guide dividers, zero API calls (§3.5)
+- PDF/print layout — chapter-opener plate, half-page tarot, full-page closing seal, static dividers (§3.6 print CSS; html2canvas path forces seal visible)
 - FAL queue API fix (PR #27) + premium tier gating fix (PAID_TIERS)
 - Image data flow: GridFS save, dual-path reconstruction on load
 
-### Gaps / Next Up (see VISUAL_SYSTEM_BRIEF.md §8 for implementation order)
-- Palette purge — deprecated hexes still in some components (in progress)
-- GUIDE_ORNAMENT_CONFIG — per-guide SVG dividers + corners (§4)
-- Spell page layout polish — plate caption, sigil seal styling, tarot frontispiece sizing (§3)
-- Quick tier visuals — CSS medallion header + guide icon + dividers (§3.5)
-- Static fallback libraries — populate STATIC_HEADERS/TAROT/SIGILS per guide (§6)
-- PDF/print layout — chapter opener, half-page tarot, full-page seal (§3.6)
+### Gaps / Next Up
 - ~35/94 timeline events have rich narratives
 - 98 broken connection references in timeline
-- Brenda missing custom border assets
+- Static fallback images live on main (commit 946b298) — merge with visual-recovery branch
+- SpellComics stage-matching polish (sc30 → WRITE step, sc45/46 → pre-generation) — optional
+- Licenses: add design_assets/inbox/LICENSES.txt noting pack purchase sources (local-only task)
 - Deploy to Railway/Render (migrate off Emergent hosting)
 
 ---

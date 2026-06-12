@@ -126,7 +126,7 @@ export const MyGrimoire = () => {
           <div className="max-w-4xl mx-auto">
             <button
               onClick={handleBackToList}
-              className="mb-6 px-4 py-2 bg-navy-mid text-gold border border-gold/30 rounded-sm font-montserrat tracking-widest uppercase text-xs hover:bg-gold/10 transition-all"
+              className="mb-6 px-4 py-2 bg-navy-mid text-gold border border-gold/30 rounded-sm font-montserrat tracking-widest uppercase text-xs hover:bg-gold/10 transition-colors"
             >
               ← Back to Grimoire
             </button>
@@ -269,7 +269,7 @@ export const MyGrimoire = () => {
               <div className="flex justify-center gap-4 mb-10">
                 <button
                   onClick={() => setActiveTab('spells')}
-                  className={`px-6 py-3 font-montserrat text-sm uppercase tracking-wider rounded-sm transition-all flex items-center gap-2 ${
+                  className={`px-6 py-3 font-montserrat text-sm uppercase tracking-wider rounded-sm transition-colors flex items-center gap-2 ${
                     activeTab === 'spells'
                       ? 'bg-gradient-to-r from-crimson-deep via-crimson to-crimson-deep text-cream border border-gold/30'
                       : 'bg-cream border-2 border-crimson/30 text-crimson hover:bg-crimson/5'
@@ -280,7 +280,7 @@ export const MyGrimoire = () => {
                 </button>
                 <button
                   onClick={() => setActiveTab('wards')}
-                  className={`px-6 py-3 font-montserrat text-sm uppercase tracking-wider rounded-sm transition-all flex items-center gap-2 ${
+                  className={`px-6 py-3 font-montserrat text-sm uppercase tracking-wider rounded-sm transition-colors flex items-center gap-2 ${
                     activeTab === 'wards'
                       ? 'bg-gradient-to-r from-gold-dark via-gold to-gold-dark text-navy-dark border border-crimson/30'
                       : 'bg-cream border-2 border-gold/50 text-crimson hover:bg-gold/5'
@@ -311,7 +311,7 @@ export const MyGrimoire = () => {
                       </p>
                       <a
                         href="/spell-request"
-                        className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-crimson-deep via-crimson to-crimson-deep text-cream rounded-sm font-montserrat tracking-widest uppercase text-xs hover:from-crimson hover:via-crimson-bright hover:to-crimson transition-all border border-gold/30"
+                        className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-crimson-deep via-crimson to-crimson-deep text-cream rounded-sm font-montserrat tracking-widest uppercase text-xs hover:from-crimson hover:via-crimson-bright hover:to-crimson transition-colors border border-gold/30"
                       >
                         <BrandIcon name="sparkles" size={16} className="inline-block" />
                         Create Your First Spell
@@ -326,7 +326,7 @@ export const MyGrimoire = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: index * 0.05 }}
-                        className="bg-cream/80 border-2 border-crimson/20 rounded-sm overflow-hidden hover:border-crimson/40 transition-all group"
+                        className="bg-cream/80 border-2 border-crimson/20 rounded-sm overflow-hidden hover:border-crimson/40 transition-colors group"
                       >
                         {/* Spell Image */}
                         {spell.image_base64 ? (
@@ -379,7 +379,7 @@ export const MyGrimoire = () => {
                             <button
                               onClick={() => handleDeleteSpell(spell.id)}
                               disabled={deleting === spell.id}
-                              className="px-3 py-2 bg-red-500/10 text-red-600 rounded-sm font-montserrat text-xs uppercase tracking-wider hover:bg-red-500/20 transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+                              className="px-3 py-2 bg-crimson/10 text-crimson rounded-sm font-montserrat text-xs uppercase tracking-wider hover:bg-crimson/20 transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
                             >
                               {deleting === spell.id ? (
                                 <Loader2 className="w-3 h-3 animate-spin" />
@@ -413,7 +413,7 @@ export const MyGrimoire = () => {
                       </p>
                       <a
                         href="/ward-finder"
-                        className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-gold-dark via-gold to-gold-dark text-navy-dark rounded-sm font-montserrat tracking-widest uppercase text-xs hover:from-gold hover:via-gold-light hover:to-gold transition-all border border-crimson/30"
+                        className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-gold-dark via-gold to-gold-dark text-navy-dark rounded-sm font-montserrat tracking-widest uppercase text-xs hover:from-gold hover:via-gold-light hover:to-gold transition-colors border border-crimson/30"
                       >
                         <BrandIcon name="pentagram" size={16} className="inline-block" />
                         Find Your Ward
@@ -428,7 +428,7 @@ export const MyGrimoire = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: index * 0.05 }}
-                        className="bg-cream/80 border-2 border-gold/30 rounded-sm overflow-hidden hover:border-gold/50 transition-all"
+                        className="bg-cream/80 border-2 border-gold/30 rounded-sm overflow-hidden hover:border-gold/50 transition-colors"
                       >
                         {/* Ward Header */}
                         <div className="p-5 bg-gold/10 border-b border-gold/20">
@@ -487,7 +487,7 @@ export const MyGrimoire = () => {
                           <button
                             onClick={() => handleDeleteWard(ward.id)}
                             disabled={deleting === ward.id}
-                            className="w-full mt-2 px-3 py-2 bg-red-500/10 text-red-600 rounded-sm font-montserrat text-xs uppercase tracking-wider hover:bg-red-500/20 transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+                            className="w-full mt-2 px-3 py-2 bg-crimson/10 text-crimson rounded-sm font-montserrat text-xs uppercase tracking-wider hover:bg-crimson/20 transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
                           >
                             {deleting === ward.id ? (
                               <Loader2 className="w-3 h-3 animate-spin" />

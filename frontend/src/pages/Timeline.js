@@ -327,10 +327,11 @@ const TAXONOMY_CATEGORIES = {
 const EVENT_CATEGORIES = ['Publication', 'Organization', 'Figure', 'Legal', 'Site', 'Ritual', 'Protest'];
 
 const GUIDE_COLORS = {
-  shigg: { color: "#4a6fa5", name: "Shigg" },
-  cathleen: { color: "#8b2232", name: "Cathleen" },
-  katherine: { color: "#C8A44D", name: "Katherine" },
-  theresa: { color: "#6b8e23", name: "Theresa" },
+  shigg: { color: "#D97706", name: "Shigg" },
+  cathleen: { color: "#0D9488", name: "Cathleen" },
+  katherine: { color: "#7C3AED", name: "Katherine" },
+  theresa: { color: "#8B2232", name: "Theresa" },
+  brenda: { color: "#A89872", name: "Brenda" },
 };
 
 // ============================================================================
@@ -512,7 +513,7 @@ const FilterPanel = ({ filters, setFilters, stats, isOpen, setIsOpen }) => {
                       <button
                         key={id}
                         onClick={() => toggleCategory(parseInt(id))}
-                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-montserrat transition-all ${
+                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-montserrat transition-colors ${
                           isActive
                             ? 'bg-gold/20 border-gold text-gold'
                             : 'bg-navy-dark border-gold/20 text-cream/85 hover:border-gold/40'
@@ -537,7 +538,7 @@ const FilterPanel = ({ filters, setFilters, stats, isOpen, setIsOpen }) => {
                       <button
                         key={id}
                         onClick={() => toggleGuide(id)}
-                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-montserrat transition-all ${
+                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-montserrat transition-colors ${
                           isActive
                             ? 'bg-gold/20 text-gold'
                             : 'bg-navy-dark text-cream/85 hover:border-gold/40'
@@ -724,7 +725,7 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick, allEvents
           <div className="flex items-start gap-3 flex-1">
             {/* Taxonomy Icon - CLICKABLE */}
             <button 
-              className="p-2 rounded-lg flex-shrink-0 hover:ring-2 hover:ring-gold/50 transition-all cursor-pointer"
+              className="p-2 rounded-lg flex-shrink-0 hover:ring-2 hover:ring-gold/50 transition-colors cursor-pointer"
               style={{ backgroundColor: `${taxonomyData.color}20` }}
               onClick={(e) => handleTaxonomyClick(e, primaryTaxonomy)}
               title={`Filter by ${taxonomyData.name}`}
@@ -770,7 +771,7 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick, allEvents
                     e.stopPropagation();
                     setShowNarrative(false);
                   }}
-                  className={`px-2 py-0.5 rounded text-xs font-montserrat transition-all ${
+                  className={`px-2 py-0.5 rounded text-xs font-montserrat transition-colors ${
                     !showNarrative 
                       ? 'bg-gold/20 text-gold border border-gold/40' 
                       : 'text-cream/50 hover:text-cream/85'
@@ -783,7 +784,7 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick, allEvents
                     e.stopPropagation();
                     setShowNarrative(true);
                   }}
-                  className={`px-2 py-0.5 rounded text-xs font-montserrat transition-all ${
+                  className={`px-2 py-0.5 rounded text-xs font-montserrat transition-colors ${
                     showNarrative 
                       ? 'bg-gold/20 text-gold border border-gold/40' 
                       : 'text-cream/50 hover:text-cream/85'
@@ -879,7 +880,7 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick, allEvents
                             return (
                               <button 
                                 key={i} 
-                                className="px-2 py-1 bg-navy-dark hover:bg-navy-dark hover:ring-1 hover:ring-gold/40 rounded text-xs text-cream/80 hover:text-cream font-montserrat transition-all cursor-pointer text-left"
+                                className="px-2 py-1 bg-navy-dark hover:bg-navy-dark hover:ring-1 hover:ring-gold/40 rounded text-xs text-cream/80 hover:text-cream font-montserrat transition-colors cursor-pointer text-left"
                                 onClick={(e) => handleFigureClick(e, figureName)}
                                 title={figureRole ? `${figureName}${figureDates ? ` (${figureDates})` : ''}: ${figureRole}` : `Search for ${figureName}`}
                               >
@@ -902,7 +903,7 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick, allEvents
                           {event.traditions.map((tradition, i) => (
                             <button 
                               key={i} 
-                              className="px-2 py-0.5 bg-gold/10 hover:bg-gold/25 border border-gold/20 hover:border-gold/50 rounded text-xs text-gold/80 hover:text-gold font-montserrat transition-all cursor-pointer"
+                              className="px-2 py-0.5 bg-gold/10 hover:bg-gold/25 border border-gold/20 hover:border-gold/50 rounded text-xs text-gold/80 hover:text-gold font-montserrat transition-colors cursor-pointer"
                               onClick={(e) => handleTraditionClick(e, tradition)}
                               title={`Filter by ${tradition.replace(/_/g, ' ')}`}
                             >
@@ -1062,7 +1063,7 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick, allEvents
                                   return (
                                     <button
                                       key={`exist-${i}`}
-                                      className="px-2 py-0.5 bg-crimson/20 hover:bg-crimson/30 border border-crimson/40 hover:border-crimson/60 rounded text-[11px] text-crimson-bright hover:text-cream font-montserrat transition-all cursor-pointer"
+                                      className="px-2 py-0.5 bg-crimson/20 hover:bg-crimson/30 border border-crimson/40 hover:border-crimson/60 rounded text-[11px] text-crimson-bright hover:text-cream font-montserrat transition-colors cursor-pointer"
                                       onClick={(e) => {
                                         e.stopPropagation();
                                         onNavigateToEvent?.(connectedEvent.id);
@@ -1100,7 +1101,7 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick, allEvents
                                   return (
                                     <button
                                       key={`exist-${i}`}
-                                      className="px-2 py-0.5 bg-gold/15 hover:bg-gold/25 border border-gold/40 hover:border-gold/60 rounded text-[11px] text-gold hover:text-gold font-montserrat transition-all cursor-pointer"
+                                      className="px-2 py-0.5 bg-gold/15 hover:bg-gold/25 border border-gold/40 hover:border-gold/60 rounded text-[11px] text-gold hover:text-gold font-montserrat transition-colors cursor-pointer"
                                       onClick={(e) => {
                                         e.stopPropagation();
                                         onNavigateToEvent?.(connectedEvent.id);
@@ -1177,7 +1178,7 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick, allEvents
                             return related.map((relEvent, i) => (
                               <button
                                 key={i}
-                                className="px-2 py-1 bg-navy-dark hover:bg-navy-dark border border-cream/10 hover:border-gold/30 rounded text-[11px] text-cream/60 hover:text-cream font-montserrat transition-all"
+                                className="px-2 py-1 bg-navy-dark hover:bg-navy-dark border border-cream/10 hover:border-gold/30 rounded text-[11px] text-cream/60 hover:text-cream font-montserrat transition-colors"
                                 onClick={(e) => {
                                   e.stopPropagation();
                                   onNavigateToEvent?.(relEvent.id);
@@ -1204,7 +1205,7 @@ const EventCard = ({ event, isExpanded, onToggle, view, onFilterClick, allEvents
                               href={link.url}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="inline-flex items-center gap-1 px-3 py-1.5 bg-gold/10 hover:bg-gold/20 border border-gold/30 rounded text-xs text-gold hover:text-gold-light font-montserrat transition-all"
+                              className="inline-flex items-center gap-1 px-3 py-1.5 bg-gold/10 hover:bg-gold/20 border border-gold/30 rounded text-xs text-gold hover:text-gold-light font-montserrat transition-colors"
                             >
                               <ExternalLink size={10} />
                               {link.title}
@@ -1267,7 +1268,7 @@ const ViewToggle = ({ view, setView }) => {
         <button
           key={id}
           onClick={() => setView(id)}
-          className={`flex items-center gap-2 px-3 py-1.5 rounded-md transition-all ${
+          className={`flex items-center gap-2 px-3 py-1.5 rounded-md transition-colors ${
             view === id
               ? 'bg-gold/20 text-gold'
               : 'text-cream/60 hover:text-cream/80'
@@ -1317,7 +1318,7 @@ const EraNav = ({ events, activeEra, setActiveEra }) => {
       <span className="font-montserrat text-xs text-cream/50 mr-2">Era:</span>
       <button
         onClick={() => setActiveEra(null)}
-        className={`px-3 py-1.5 rounded-full font-montserrat text-xs whitespace-nowrap transition-all ${
+        className={`px-3 py-1.5 rounded-full font-montserrat text-xs whitespace-nowrap transition-colors ${
           activeEra === null
             ? 'bg-gold text-navy-dark'
             : 'bg-navy-mid text-cream/85 hover:text-cream border border-gold/20'
@@ -1329,7 +1330,7 @@ const EraNav = ({ events, activeEra, setActiveEra }) => {
         <button
           key={key}
           onClick={() => setActiveEra(key)}
-          className={`px-3 py-1.5 rounded-full font-montserrat text-xs whitespace-nowrap transition-all border ${
+          className={`px-3 py-1.5 rounded-full font-montserrat text-xs whitespace-nowrap transition-colors border ${
             activeEra === key
               ? 'text-navy-dark'
               : 'bg-navy-mid text-cream/85 hover:text-cream border-gold/20'
@@ -1388,7 +1389,7 @@ const DecadeNav = ({ events, activeDecade, setActiveDecade, activeEra }) => {
     <div className="flex items-center gap-2 overflow-x-auto pb-2">
       <button
         onClick={() => setActiveDecade(null)}
-        className={`px-3 py-1.5 rounded-full font-montserrat text-sm whitespace-nowrap transition-all ${
+        className={`px-3 py-1.5 rounded-full font-montserrat text-sm whitespace-nowrap transition-colors ${
           activeDecade === null
             ? 'bg-gold text-navy-dark'
             : 'bg-navy-mid text-cream/85 hover:text-cream border border-gold/20'
@@ -1400,7 +1401,7 @@ const DecadeNav = ({ events, activeDecade, setActiveDecade, activeEra }) => {
         <button
           key={decade}
           onClick={() => setActiveDecade(decade)}
-          className={`px-3 py-1.5 rounded-full font-montserrat text-sm whitespace-nowrap transition-all ${
+          className={`px-3 py-1.5 rounded-full font-montserrat text-sm whitespace-nowrap transition-colors ${
             activeDecade === decade
               ? 'bg-gold text-navy-dark'
               : 'bg-navy-mid text-cream/85 hover:text-cream border border-gold/20'
@@ -1784,7 +1785,7 @@ export const Timeline = () => {
                     setActiveDecade(null);
                     toast.success("Filters cleared - showing all events");
                   }}
-                  className="px-4 py-2 bg-gold/20 hover:bg-gold/30 border border-gold/40 rounded-lg font-montserrat text-sm text-gold transition-all"
+                  className="px-4 py-2 bg-gold/20 hover:bg-gold/30 border border-gold/40 rounded-lg font-montserrat text-sm text-gold transition-colors"
                 >
                   Clear All Filters
                 </button>
@@ -1795,7 +1796,7 @@ export const Timeline = () => {
                     setActiveDecade(null);
                     toast.info("Showing Occult Revival era (most content)");
                   }}
-                  className="px-4 py-2 bg-crimson/20 hover:bg-crimson/30 border border-crimson/40 rounded-lg font-montserrat text-sm text-cream/80 transition-all"
+                  className="px-4 py-2 bg-crimson/20 hover:bg-crimson/30 border border-crimson/40 rounded-lg font-montserrat text-sm text-cream/80 transition-colors"
                 >
                   Browse Occult Revival
                 </button>

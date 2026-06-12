@@ -329,7 +329,7 @@ export const LightSection = ({
 
 export const LightOrnateCard = ({ children, className = '', hover = true }) => (
   <div 
-    className={`relative p-5 sm:p-6 ${hover ? 'transition-all duration-300 hover:shadow-lg' : ''} ${className}`}
+    className={`relative p-5 sm:p-6 ${hover ? 'transition-colors duration-300 hover:shadow-lg' : ''} ${className}`}
     style={{ 
       backgroundColor: NOUVEAU_COLORS.vellum,
       border: `1px solid ${NOUVEAU_COLORS.antiqueGold}80`,
@@ -383,7 +383,7 @@ export const CrowlandsInput = ({ value, onChange, placeholder, type = 'text', ro
     boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.03)',
   };
   
-  const baseClasses = `w-full px-4 py-3 font-crimson text-sm transition-all focus:outline-none ${className}`;
+  const baseClasses = `w-full px-4 py-3 font-crimson text-sm transition-colors focus:outline-none ${className}`;
   const focusStyles = `focus:border-[${NOUVEAU_COLORS.emberPink}] focus:ring-2 focus:ring-[${NOUVEAU_COLORS.emberPink}20]`;
   
   if (rows) {
@@ -415,7 +415,7 @@ export const CrowlandsChip = ({ label, selected, onClick }) => (
   <button
     type="button"
     onClick={onClick}
-    className={`relative px-4 py-2 font-montserrat text-sm transition-all ${
+    className={`relative px-4 py-2 font-montserrat text-sm transition-colors ${
       selected ? 'shadow-sm' : ''
     }`}
     style={{
@@ -507,7 +507,7 @@ export const PageBorderFrame = ({ children, className = '' }) => (
 // OrnateCard - dark theme card
 export const OrnateCard = ({ children, className = '', hover = true, onClick, ...props }) => (
   <div 
-    className={`relative p-5 sm:p-6 ${hover ? 'transition-all duration-300 hover:shadow-lg' : ''} ${className}`}
+    className={`relative p-5 sm:p-6 ${hover ? 'transition-colors duration-300 hover:shadow-lg' : ''} ${className}`}
     style={{ 
       backgroundColor: NOUVEAU_COLORS.celestialBlue,
       border: `1px solid ${NOUVEAU_COLORS.antiqueGold}40`,
@@ -544,7 +544,7 @@ export const StepperOrnament = ({ currentStep, totalSteps, className = '' }) => 
     {Array.from({ length: totalSteps }).map((_, i) => (
       <div key={i} className="flex items-center gap-2">
         <div 
-          className={`w-3 h-3 rounded-full border transition-all ${
+          className={`w-3 h-3 rounded-full border transition-colors ${
             i < currentStep ? 'border-transparent' : 'border-current'
           }`}
           style={{

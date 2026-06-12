@@ -54,7 +54,7 @@ const ARCHETYPE_STYLES = {
     borderColor: 'border-gold',
     accentColor: 'text-crimson',
     accentColorLight: 'text-gold',
-    bgAccent: 'bg-[#F3EFE8]', // Solid vellum - CONTRAST LOCKED
+    bgAccent: 'bg-vellum', // Solid vellum - CONTRAST LOCKED
     decorativeBorder: 'border-gold/30',
     headerGradient: 'from-gold/10 via-gold/5 to-transparent',
     cardGradient: 'from-navy-dark/95 via-navy-mid/90 to-navy-dark/95',
@@ -66,7 +66,7 @@ const ARCHETYPE_STYLES = {
     borderColor: 'border-crimson',
     accentColor: 'text-crimson',
     accentColorLight: 'text-crimson-bright',
-    bgAccent: 'bg-[#F3EFE8]', // Solid vellum - CONTRAST LOCKED
+    bgAccent: 'bg-vellum', // Solid vellum - CONTRAST LOCKED
     decorativeBorder: 'border-crimson/30',
     headerGradient: 'from-crimson/10 via-crimson/5 to-transparent',
     cardGradient: 'from-navy-dark/95 via-navy-mid/90 to-navy-dark/95',
@@ -78,7 +78,7 @@ const ARCHETYPE_STYLES = {
     borderColor: 'border-gold',
     accentColor: 'text-crimson',
     accentColorLight: 'text-gold-light',
-    bgAccent: 'bg-[#F3EFE8]', // Solid vellum - CONTRAST LOCKED
+    bgAccent: 'bg-vellum', // Solid vellum - CONTRAST LOCKED
     decorativeBorder: 'border-gold/30',
     headerGradient: 'from-gold/10 via-gold/5 to-transparent',
     cardGradient: 'from-navy-dark/95 via-navy-mid/90 to-navy-dark/95',
@@ -90,7 +90,7 @@ const ARCHETYPE_STYLES = {
     borderColor: 'border-crimson-bright',
     accentColor: 'text-crimson',
     accentColorLight: 'text-crimson-bright',
-    bgAccent: 'bg-[#F3EFE8]', // Solid vellum - CONTRAST LOCKED
+    bgAccent: 'bg-vellum', // Solid vellum - CONTRAST LOCKED
     decorativeBorder: 'border-crimson-bright/30',
     headerGradient: 'from-crimson/10 via-crimson/5 to-transparent',
     cardGradient: 'from-navy-dark/95 via-navy-mid/90 to-navy-dark/95',
@@ -102,7 +102,7 @@ const ARCHETYPE_STYLES = {
     borderColor: 'border-gold-dark',
     accentColor: 'text-crimson',
     accentColorLight: 'text-gold',
-    bgAccent: 'bg-[#F3EFE8]', // Solid vellum - CONTRAST LOCKED
+    bgAccent: 'bg-vellum', // Solid vellum - CONTRAST LOCKED
     decorativeBorder: 'border-gold-dark/30',
     headerGradient: 'from-gold/10 via-gold/5 to-transparent',
     cardGradient: 'from-navy-dark/95 via-navy-mid/90 to-navy-dark/95',
@@ -114,7 +114,7 @@ const ARCHETYPE_STYLES = {
     borderColor: 'border-gold',
     accentColor: 'text-crimson',
     accentColorLight: 'text-gold',
-    bgAccent: 'bg-[#F3EFE8]',
+    bgAccent: 'bg-vellum',
     decorativeBorder: 'border-gold/30',
     headerGradient: 'from-gold/10 via-gold/5 to-transparent',
     cardGradient: 'from-navy-dark/95 via-navy-mid/90 to-navy-dark/95',
@@ -125,7 +125,7 @@ const ARCHETYPE_STYLES = {
     borderColor: 'border-crimson',
     accentColor: 'text-crimson',
     accentColorLight: 'text-crimson-bright',
-    bgAccent: 'bg-[#F3EFE8]',
+    bgAccent: 'bg-vellum',
     decorativeBorder: 'border-crimson/30',
     headerGradient: 'from-crimson/10 via-crimson/5 to-transparent',
     cardGradient: 'from-navy-dark/95 via-navy-mid/90 to-navy-dark/95',
@@ -136,7 +136,7 @@ const ARCHETYPE_STYLES = {
     borderColor: 'border-gold',
     accentColor: 'text-crimson',
     accentColorLight: 'text-gold-light',
-    bgAccent: 'bg-[#F3EFE8]',
+    bgAccent: 'bg-vellum',
     decorativeBorder: 'border-gold/30',
     headerGradient: 'from-gold/10 via-gold/5 to-transparent',
     cardGradient: 'from-navy-dark/95 via-navy-mid/90 to-navy-dark/95',
@@ -147,7 +147,7 @@ const ARCHETYPE_STYLES = {
     borderColor: 'border-gold/50',
     accentColor: 'text-navy-dark/80',
     accentColorLight: 'text-navy-dark/50',
-    bgAccent: 'bg-[#F3EFE8]',
+    bgAccent: 'bg-vellum',
     decorativeBorder: 'border-gold/30',
     headerGradient: 'from-navy-mid/30 to-transparent',
     cardGradient: 'from-navy-dark/90 via-navy-mid/80 to-navy-dark/90',
@@ -241,7 +241,7 @@ const PrintablesBlock = ({ tarotImageBase64, sigilImageBase64, spellTitle, tarot
             </p>
             <div className="w-full max-w-[180px] mx-auto aspect-[2/3] rounded-sm border border-gold/30 shadow-md overflow-hidden">
               <img
-                src={`data:image/png;base64,${tarotImageBase64}`}
+                src={tarotImageBase64?.startsWith('STATIC_URL:') ? tarotImageBase64.replace('STATIC_URL:', '') : `data:image/png;base64,${tarotImageBase64}`}
                 alt={`${spellTitle} - Tarot Card Front`}
                 className="w-full h-full object-cover"
               />
@@ -285,7 +285,7 @@ const PrintablesBlock = ({ tarotImageBase64, sigilImageBase64, spellTitle, tarot
               Sigil
             </p>
             <img 
-              src={`data:image/png;base64,${sigilImageBase64}`}
+              src={sigilImageBase64?.startsWith('STATIC_URL:') ? sigilImageBase64.replace('STATIC_URL:', '') : `data:image/png;base64,${sigilImageBase64}`}
               alt={`${spellTitle} - Sigil`}
               className="w-full max-w-[150px] mx-auto rounded-sm border border-gold/30 shadow-md bg-white"
             />
@@ -293,6 +293,32 @@ const PrintablesBlock = ({ tarotImageBase64, sigilImageBase64, spellTitle, tarot
         )}
       </div>
     </section>
+  );
+};
+
+// Closing Seal with ink-reveal scroll animation (Brief §3.2)
+const SealReveal = ({ src }) => {
+  const ref = useRef(null);
+  const [revealed, setRevealed] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setRevealed(true); observer.disconnect(); } },
+      { threshold: 0.4 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div ref={ref} className="grimoire-closing-seal" data-revealed={revealed}>
+      <div className="grimoire-seal-ring">
+        <img src={src} alt="The seal of this working" />
+      </div>
+      <p className="grimoire-seal-caption">THE SEAL OF THIS WORKING</p>
+    </div>
   );
 };
 
@@ -376,7 +402,7 @@ const SaveWardButton = ({ ward, spellTitle }) => {
     <button
       onClick={handleSaveWard}
       disabled={isSaving}
-      className="flex items-center gap-1 px-3 py-1.5 bg-gold/10 hover:bg-gold/20 border border-gold/30 rounded-sm transition-all disabled:opacity-50"
+      className="flex items-center gap-1 px-3 py-1.5 bg-gold/10 hover:bg-gold/20 border border-gold/30 rounded-sm transition-colors disabled:opacity-50"
       title="Save ward to your grimoire"
       data-testid="save-ward-btn"
     >
@@ -433,6 +459,14 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
   
   // Get V3 generated images (header, tarot) from spell data
   const generatedImages = spell?.generated_images || spell?.spell_data?.generated_images || {};
+
+  // Resolve image data to a displayable src (handles both base64 and STATIC_URL: paths)
+  const toImageSrc = (imgData) => {
+    if (!imgData) return null;
+    if (imgData.startsWith('STATIC_URL:')) return imgData.replace('STATIC_URL:', '');
+    if (imgData.startsWith('data:') || imgData.startsWith('http')) return imgData;
+    return `data:image/png;base64,${imgData}`;
+  };
 
   // Quick tier CSS visuals (static per-guide treatment, no AI images)
   const quickVisuals = spell?.quick_visuals || null;
@@ -520,6 +554,11 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
       // Hide UI-only elements during capture
       const hiddenEls = element.querySelectorAll('[data-pdf-hide]');
       hiddenEls.forEach(el => el.style.display = 'none');
+
+      // Force the closing seal visible — ink-reveal may not have fired yet
+      element.querySelectorAll('.grimoire-closing-seal').forEach(
+        el => el.setAttribute('data-revealed', 'true')
+      );
 
       await new Promise(resolve => setTimeout(resolve, 300));
 
@@ -789,18 +828,15 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
           title={spell?.tarot_card?.title || spell?.title || "Saved Spell"}
           guideLine={`${spell?.archetype_name || ""}${spell?.archetype_title ? " • " + spell.archetype_title : ""}`}
           summaryLine={spell?.tarot_card?.essence || ""}
-          headerImageUrl={
-            generatedImages.header_image
-              ? `data:image/png;base64,${generatedImages.header_image}`
-              : null
-          }
+          headerImageUrl={toImageSrc(generatedImages.header_image)}
           tarotImageUrl={
             spell?.asset_plan?.generated_assets?.tarot_card_image
             || spell?.tarot_card_image
-            || (generatedImages.tarot_card_image ? `data:image/png;base64,${generatedImages.tarot_card_image}` : null)
+            || toImageSrc(generatedImages.tarot_card_image)
           }
           category={spell?.category || spell?.working_category}
           quickVisuals={quickVisuals}
+          guideId={normalizedArchetypeId}
         />
 
         <div className="pb-6">
@@ -856,7 +892,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                   </h3>
                   <div className="space-y-3">
                     {spell.sources.map((source, idx) => (
-                      <div key={idx} className="p-3 bg-[#F3EFE8] border border-gold/30 rounded-sm">
+                      <div key={idx} className="p-3 bg-vellum border border-gold/30 rounded-sm">
                         <p className="font-montserrat text-sm text-navy-dark">
                           <strong>{source.author}</strong>
                           {source.work && <>, <em>{source.work}</em></>}
@@ -890,15 +926,9 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
 
             {/* Closing Seal — sigil as wax-seal after the working (Brief §3.2) */}
             {(generatedAssets?.sigil || generatedImages.sigil) && (
-              <div className="grimoire-closing-seal">
-                <div className="grimoire-seal-ring">
-                  <img
-                    src={`data:image/png;base64,${generatedAssets?.sigil || generatedImages.sigil}`}
-                    alt="The seal of this working"
-                  />
-                </div>
-                <p className="grimoire-seal-caption">THE SEAL OF THIS WORKING</p>
-              </div>
+              <SealReveal
+                src={toImageSrc(generatedAssets?.sigil || generatedImages.sigil)}
+              />
             )}
           </div>
         ) : (
@@ -918,7 +948,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
             {/* Cathleen's Suggested Ward - CONTRAST LOCKED: Solid vellum plate */}
         {spell.suggested_ward && (
           <section className="relative">
-            <div className="relative p-6 border-2 border-crimson/40 rounded-lg bg-[#F3EFE8] shadow-sm">
+            <div className="relative p-6 border-2 border-crimson/40 rounded-lg bg-vellum shadow-sm">
               <div className="flex items-center justify-between gap-3 mb-4">
                 <div className="flex items-center gap-3">
                   <div className="p-3 bg-gold/10 border border-gold/30 rounded-full">
@@ -977,7 +1007,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
         {/* Cathleen's Concealment Suggestion - CONTRAST LOCKED: Solid vellum plate */}
         {spell.concealment_suggestion && (
           <section className="relative">
-            <div className="relative p-6 border-2 border-crimson/40 rounded-lg bg-[#F3EFE8] shadow-sm">
+            <div className="relative p-6 border-2 border-crimson/40 rounded-lg bg-vellum shadow-sm">
               <div className="flex items-center gap-3 mb-4">
                 <div className="p-3 bg-gold/10 border border-gold/30 rounded-full">
                   <BrandIcon name="key" size={24} />
@@ -1050,7 +1080,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                 return (
                   <div 
                     key={idx}
-                    className="flex items-start gap-3 p-3 bg-[#F3EFE8] border border-gold/30 rounded-sm shadow-sm"
+                    className="flex items-start gap-3 p-3 bg-vellum border border-gold/30 rounded-sm shadow-sm"
                   >
                     <div className="p-2 bg-gold/10 border border-gold/30 rounded-sm">
                       {material.icon ? (
@@ -1086,7 +1116,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
               />
               <button
                 onClick={() => setChecklistMode(!checklistMode)}
-                className={`px-3 py-1 rounded-sm text-xs font-montserrat tracking-wider transition-all ${
+                className={`px-3 py-1 rounded-sm text-xs font-montserrat tracking-wider transition-colors ${
                   checklistMode 
                     ? 'bg-crimson text-cream' 
                     : 'bg-gold/20 text-navy-dark/80 hover:bg-gold/30'
@@ -1113,7 +1143,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
                   >
                     {/* Step number circle */}
                     <div 
-                      className={`absolute left-0 -translate-x-1/2 w-8 h-8 rounded-full flex items-center justify-center text-sm font-cinzel cursor-pointer transition-all ${
+                      className={`absolute left-0 -translate-x-1/2 w-8 h-8 rounded-full flex items-center justify-center text-sm font-cinzel cursor-pointer transition-colors ${
                         completedSteps.has(stepNum)
                           ? 'bg-crimson text-cream'
                           : `bg-gold/20 text-crimson border-2 border-gold/40`
@@ -1157,7 +1187,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
 
         {/* Spoken Words - CONTRAST LOCKED */}
         {spell.spoken_words && (
-          <section className="p-6 bg-[#F3EFE8] border border-gold/40 rounded-sm shadow-sm">
+          <section className="p-6 bg-vellum border border-gold/40 rounded-sm shadow-sm">
             <SectionHeader 
               brandIconName="feather" 
               title="Words of Power" 
@@ -1614,14 +1644,14 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
           <button
             onClick={saveToGrimoire}
             disabled={isSaving}
-            className="px-4 py-2 bg-crimson text-cream hover:bg-crimson-bright rounded-sm font-montserrat tracking-widest uppercase text-xs transition-all flex items-center gap-2 disabled:opacity-50"
+            className="px-4 py-2 bg-crimson text-cream hover:bg-crimson-bright rounded-sm font-montserrat tracking-widest uppercase text-xs transition-colors flex items-center gap-2 disabled:opacity-50"
           >
             <Save className={`w-4 h-4 ${isSaving ? 'animate-pulse' : ''}`} />
             {isSaving ? 'Saving...' : 'Save to Grimoire'}
           </button>
           <button
             onClick={copySpellToClipboard}
-            className="px-4 py-2 bg-transparent text-crimson border border-gold/40 rounded-sm font-montserrat tracking-widest uppercase text-xs hover:bg-gold/10 transition-all flex items-center gap-2"
+            className="px-4 py-2 bg-transparent text-crimson border border-gold/40 rounded-sm font-montserrat tracking-widest uppercase text-xs hover:bg-gold/10 transition-colors flex items-center gap-2"
           >
             <Copy className="w-4 h-4" />
             Copy Spell
@@ -1629,14 +1659,14 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
           <button
             onClick={downloadAsPdf}
             disabled={isGeneratingPdf}
-            className="px-4 py-2 bg-transparent text-crimson border border-gold/40 hover:bg-gold/10 rounded-sm font-montserrat tracking-widest uppercase text-xs transition-all flex items-center gap-2 disabled:opacity-50"
+            className="px-4 py-2 bg-transparent text-crimson border border-gold/40 hover:bg-gold/10 rounded-sm font-montserrat tracking-widest uppercase text-xs transition-colors flex items-center gap-2 disabled:opacity-50"
           >
             <Download className={`w-4 h-4 ${isGeneratingPdf ? 'animate-bounce' : ''}`} />
             {isGeneratingPdf ? 'Generating...' : 'Save as PDF'}
           </button>
           <button
             onClick={onNewSpell}
-            className="px-4 py-2 bg-crimson text-cream rounded-sm font-montserrat tracking-widest uppercase text-xs hover:bg-crimson-bright transition-all"
+            className="px-4 py-2 bg-crimson text-cream rounded-sm font-montserrat tracking-widest uppercase text-xs hover:bg-crimson-bright transition-colors"
           >
             New Spell
           </button>

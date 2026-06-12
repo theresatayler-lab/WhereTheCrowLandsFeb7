@@ -425,7 +425,7 @@ const CorrieTarot = () => {
                       type="button"
                       disabled={spread.pro && !isPro}
                       onClick={() => setSpreadType(spread.id)}
-                      className={`relative p-4 rounded-sm border-2 transition-all ${
+                      className={`relative p-4 rounded-sm border-2 transition-colors ${
                         spreadType === spread.id
                           ? 'border-crimson bg-crimson/10'
                           : 'border-gold/30 bg-white/80 hover:border-gold/50'

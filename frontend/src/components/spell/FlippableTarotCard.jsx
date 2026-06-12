@@ -98,7 +98,7 @@ export default function FlippableTarotCard({
           <div 
             className="w-full h-full p-4 flex flex-col"
             style={{
-              background: "linear-gradient(180deg, #F5F0E6 0%, #E8E0D0 100%)",
+              background: "linear-gradient(180deg, #F3EFE8 0%, #E8E0D0 100%)",
               border: "3px solid #1a1a2e",
               borderRadius: "8px",
               boxShadow: "0 8px 32px rgba(0,0,0,0.4)",

@@ -2182,11 +2182,11 @@ class SpiritualAppAPITester:
                 return False
             
             # Verify specific colors from review request
-            if palette['primary'] != 'midnight navy (#0E2A2F)':
+            if palette['primary'] != 'deep navy (#0C1D2E)':
                 print(f"   ❌ Primary color incorrect: {palette['primary']}")
                 return False
-            
-            if palette['secondary'] != 'oxblood crimson (#8b2232)':
+
+            if palette['secondary'] != 'oxblood burgundy (#8B2232)':
                 print(f"   ❌ Secondary color incorrect: {palette['secondary']}")
                 return False
             

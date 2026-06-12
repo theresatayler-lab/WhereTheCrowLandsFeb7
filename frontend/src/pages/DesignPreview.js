@@ -295,7 +295,7 @@ const DesignPreview = () => {
 
           {/* CTA Button - Ember Pink */}
           <button
-            className="px-8 py-3 font-cinzel text-sm tracking-widest uppercase transition-all duration-300 hover:brightness-110"
+            className="px-8 py-3 font-cinzel text-sm tracking-widest uppercase transition-colors duration-300 hover:brightness-110"
             style={{
               backgroundColor: NOUVEAU_COLORS.emberPink,
               color: NOUVEAU_COLORS.vellum,
@@ -409,7 +409,7 @@ const DesignPreview = () => {
 
               {/* Textarea */}
               <textarea
-                className="w-full p-4 font-crimson text-base leading-relaxed mb-6 focus:outline-none transition-all"
+                className="w-full p-4 font-crimson text-base leading-relaxed mb-6 focus:outline-none transition-colors"
                 rows={3}
                 placeholder="In my own words, I seek..."
                 style={{
@@ -430,7 +430,7 @@ const DesignPreview = () => {
                 {['Myself', 'Family', 'Community', 'The vulnerable'].map((option, i) => (
                   <button
                     key={option}
-                    className="px-4 py-2 text-sm font-montserrat transition-all"
+                    className="px-4 py-2 text-sm font-montserrat transition-colors"
                     style={{
                       backgroundColor: i === 0 ? `${NOUVEAU_COLORS.antiqueGold}20` : 'transparent',
                       border: `1px solid ${i === 0 ? NOUVEAU_COLORS.antiqueGold : NOUVEAU_COLORS.mutedBrass}60`,
@@ -444,7 +444,7 @@ const DesignPreview = () => {
 
               {/* Primary CTA */}
               <button
-                className="w-full py-4 font-cinzel text-sm tracking-widest uppercase transition-all duration-300 hover:brightness-110"
+                className="w-full py-4 font-cinzel text-sm tracking-widest uppercase transition-colors duration-300 hover:brightness-110"
                 style={{
                   backgroundColor: NOUVEAU_COLORS.emberPink,
                   color: NOUVEAU_COLORS.vellum,

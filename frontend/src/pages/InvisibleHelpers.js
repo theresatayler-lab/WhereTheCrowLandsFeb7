@@ -70,7 +70,7 @@ const MAX_FREE_GENERATIONS = 3;
 // ============================================================================
 
 const CrowlandsInput = ({ value, onChange, placeholder, type = 'text', rows }) => {
-  const baseClasses = "w-full bg-white border-2 border-gold/40 focus:border-crimson focus:ring-2 focus:ring-crimson/20 rounded-sm px-4 py-3 text-navy-dark font-crimson text-sm placeholder:text-navy-dark/40 transition-all";
+  const baseClasses = "w-full bg-white border-2 border-gold/40 focus:border-crimson focus:ring-2 focus:ring-crimson/20 rounded-sm px-4 py-3 text-navy-dark font-crimson text-sm placeholder:text-navy-dark/40 transition-colors";
   
   if (rows) {
     return (
@@ -101,7 +101,7 @@ const CrowlandsChip = ({ label, selected, onClick }) => (
   <button
     type="button"
     onClick={onClick}
-    className={`relative px-4 py-2 rounded-sm font-montserrat text-sm transition-all border-2 ${
+    className={`relative px-4 py-2 rounded-sm font-montserrat text-sm transition-colors border-2 ${
       selected
         ? 'bg-crimson/10 border-crimson text-crimson shadow-sm'
         : 'bg-white border-gold/30 text-navy-dark hover:border-gold/60 hover:bg-gold/5'
@@ -736,7 +736,7 @@ export const InvisibleHelpers = () => {
                     <button
                       onClick={handleContinueToEmail}
                       disabled={!isFormValid()}
-                      className={`w-full py-4 font-cinzel text-sm tracking-wider uppercase transition-all flex items-center justify-center gap-2 ${
+                      className={`w-full py-4 font-cinzel text-sm tracking-wider uppercase transition-colors flex items-center justify-center gap-2 ${
                         isFormValid()
                           ? 'bg-crimson hover:bg-crimson-bright text-cream'
                           : 'bg-crimson/20 text-crimson/40 cursor-not-allowed'
@@ -791,7 +791,7 @@ export const InvisibleHelpers = () => {
                     <button
                       type="submit"
                       disabled={!email || !name.trim()}
-                      className={`w-full py-4 font-cinzel text-sm tracking-wider uppercase transition-all flex items-center justify-center gap-2 ${
+                      className={`w-full py-4 font-cinzel text-sm tracking-wider uppercase transition-colors flex items-center justify-center gap-2 ${
                         email && name.trim()
                           ? 'bg-crimson hover:bg-crimson-bright text-cream'
                           : 'bg-crimson/20 text-crimson/40 cursor-not-allowed'

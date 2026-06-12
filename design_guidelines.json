@@ -43,30 +43,32 @@
   },
   "colors": {
     "palette": {
-      "midnight_teal": "#0E2A2F",
-      "deep_obsidian": "#0A1F22",
+      "deep_navy": "#0C1D2E",
+      "primary_navy": "#102534",
+      "card_teal": "#123A3F",
       "vellum": "#F3EFE8",
       "antique_gold": "#C8A44D",
-      "muted_brass": "#9E8438",
+      "faded_gold": "#A89872",
       "ember_pink": "#B94E6A",
-      "rose_clay": "#C26A5A",
-      "celestial_blue": "#123A3F"
+      "oxblood": "#8B2232",
+      "ink_black": "#1A1A1A",
+      "warm_grey": "#5A524E"
     },
     "usage": {
-      "background_primary": "midnight_teal",
-      "background_secondary": "celestial_blue",
+      "background_primary": "deep_navy",
+      "background_secondary": "primary_navy",
       "text_primary": "vellum",
-      "text_secondary": "muted_brass",
+      "text_secondary": "faded_gold",
       "accent_primary": "antique_gold",
       "accent_secondary": "ember_pink",
       "border_default": "antique_gold (opacity 30%)"
     },
     "persona_schemes": {
-      "shigg": { "primary": "#4A5D23", "accent": "#D4B55D" },
-      "cathleen": { "primary": "#8B3A3A", "accent": "#E0C097" },
-      "katherine": { "primary": "#2F4F4F", "accent": "#A9A9A9" },
-      "theresa": { "primary": "#5D4037", "accent": "#D7CCC8" },
-      "brenda": { "primary": "#483D8B", "accent": "#E6E6FA" }
+      "shigg": { "primary": "#D97706", "accent": "#F59E0B" },
+      "cathleen": { "primary": "#0D9488", "accent": "#2DD4BF" },
+      "katherine": { "primary": "#7C3AED", "accent": "#A78BFA" },
+      "theresa": { "primary": "#8B2232", "accent": "#B94E6A" },
+      "brenda": { "primary": "#A89872", "accent": "#C8A44D" }
     }
   },
   "layout_strategy": {
@@ -83,7 +85,7 @@
   },
   "components": {
     "buttons": {
-      "ritual_primary": "bg-ember_pink text-vellum font-cinzel tracking-widest hover:bg-rose_clay transition-all duration-300 shadow-[0_0_15px_rgba(185,78,106,0.4)] border border-antique_gold/50",
+      "ritual_primary": "bg-ember_pink text-vellum font-cinzel tracking-widest hover:bg-rose_clay transition-colors duration-300 shadow-[0_0_15px_rgba(185,78,106,0.4)] border border-antique_gold/50",
       "ghost_gold": "bg-transparent border border-antique_gold text-antique_gold hover:bg-antique_gold/10 font-playfair tracking-wide"
     },
     "cards": {
@@ -102,7 +104,7 @@
     "effects": {
       "glow_gold": "drop-shadow-[0_0_8px_rgba(200,164,77,0.5)]",
       "glow_ember": "drop-shadow-[0_0_10px_rgba(185,78,106,0.6)]",
-      "vignette": "radial-gradient(circle at center, transparent 0%, #0E2A2F 100%)"
+      "vignette": "radial-gradient(circle at center, transparent 0%, #0C1D2E 100%)"
     }
   },
   "page_specifics": {

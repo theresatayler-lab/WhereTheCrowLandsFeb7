@@ -93,7 +93,7 @@ export default function SpellBookView({
                   e.stopPropagation();
                   setShowFullRitual(true);
                 }}
-                className="font-cinzel text-sm px-8 py-3 bg-ember/90 hover:bg-ember text-cream rounded-sm transition-all duration-300 border border-gold/30 hover:border-gold/50 shadow-lg hover:shadow-xl tracking-wider uppercase"
+                className="font-cinzel text-sm px-8 py-3 bg-ember/90 hover:bg-ember text-cream rounded-sm transition-colors duration-300 border border-gold/30 hover:border-gold/50 shadow-lg hover:shadow-xl tracking-wider uppercase"
                 data-testid="view-full-ritual-btn"
               >
                 View Full Ritual
@@ -264,7 +264,7 @@ function QuickSummaryCard({ title, essence, keyAction, timing, materials, guideN
     <div 
       className="relative overflow-hidden rounded-lg h-full"
       style={{
-        backgroundColor: '#F5F0E6',
+        backgroundColor: '#F3EFE8',
         backgroundImage: "url('/images/textures/parchment-texture.png')",
         backgroundSize: "cover",
         border: '2px solid #C8A44D',
@@ -390,7 +390,7 @@ function FullRitualContent({ children, title, spellNumber }) {
       <div 
         className="absolute inset-0 rounded-lg"
         style={{
-          backgroundColor: '#F5F0E6',
+          backgroundColor: '#F3EFE8',
           backgroundImage: "url('/images/textures/parchment-texture.png')",
           backgroundSize: "cover",
           border: '1px solid rgba(200,164,77,0.3)',

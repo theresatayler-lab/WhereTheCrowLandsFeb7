@@ -54,7 +54,7 @@ export const Rituals = () => {
           <button
             data-testid="category-all"
             onClick={() => setSelectedCategory(null)}
-            className={`px-4 sm:px-6 py-2 rounded-sm font-montserrat text-xs sm:text-sm tracking-wider transition-all duration-300 ${
+            className={`px-4 sm:px-6 py-2 rounded-sm font-montserrat text-xs sm:text-sm tracking-wider transition-colors duration-300 ${
               selectedCategory === null
                 ? 'bg-gradient-to-r from-gold-dark via-gold to-gold-dark text-navy-dark border border-crimson/30'
                 : 'bg-transparent text-gold border border-gold/30 hover:bg-gold/10'
@@ -67,7 +67,7 @@ export const Rituals = () => {
               key={category}
               data-testid={`category-${category.toLowerCase()}`}
               onClick={() => setSelectedCategory(category)}
-              className={`px-4 sm:px-6 py-2 rounded-sm font-montserrat text-xs sm:text-sm tracking-wider transition-all duration-300 ${
+              className={`px-4 sm:px-6 py-2 rounded-sm font-montserrat text-xs sm:text-sm tracking-wider transition-colors duration-300 ${
                 selectedCategory === category
                   ? 'bg-gradient-to-r from-gold-dark via-gold to-gold-dark text-navy-dark border border-crimson/30'
                   : 'bg-transparent text-gold border border-gold/30 hover:bg-gold/10'

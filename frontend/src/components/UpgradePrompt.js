@@ -27,7 +27,7 @@ export const UpgradePrompt = ({ feature, message, compact = false }) => {
       </p>
       <Link
         to="/upgrade"
-        className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-sm font-montserrat tracking-widest uppercase text-sm hover:bg-primary/90 transition-all">
+        className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-sm font-montserrat tracking-widest uppercase text-sm hover:bg-primary/90 transition-colors">
         <BrandIcon name="sparkles" size={16} className="inline-block" />
         Upgrade to Pro - $19/year
       </Link>
@@ -71,7 +71,7 @@ export const SpellLimitBanner = ({ remaining, total }) => {
           </p>
           <Link
             to="/upgrade"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-crimson-deep via-crimson to-crimson-deep text-cream rounded-sm font-montserrat tracking-widest uppercase text-xs hover:from-crimson hover:via-crimson-bright hover:to-crimson transition-all border border-gold/30"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-crimson-deep via-crimson to-crimson-deep text-cream rounded-sm font-montserrat tracking-widest uppercase text-xs hover:from-crimson hover:via-crimson-bright hover:to-crimson transition-colors border border-gold/30"
           >
             <BrandIcon name="sparkles" size={16} className="inline-block" />
             Upgrade to Pro - $19/year
@@ -92,7 +92,7 @@ export const SpellLimitBanner = ({ remaining, total }) => {
           </div>
           <div className="w-full h-2 bg-muted/30 rounded-full overflow-hidden">
             <div
-              className={`h-full transition-all ${
+              className={`h-full transition-colors ${
                 isLow ? 'bg-destructive' : 'bg-primary'
               }`}
               style={{ width: `${percentage}%` }}

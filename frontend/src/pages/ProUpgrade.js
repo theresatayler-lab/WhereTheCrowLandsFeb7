@@ -229,7 +229,7 @@ function PackageCard({ packageId, pkg, display, processing, onCheckout }) {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className={`relative p-6 rounded-2xl transition-all duration-300 ${
+      className={`relative p-6 rounded-2xl transition-colors duration-300 ${
         display?.highlight 
           ? 'bg-gradient-to-br from-gold/20 to-ember/20 border-2 border-gold/50' 
           : 'bg-navy-light/50 border border-gold/20 hover:border-gold/40'
@@ -272,7 +272,7 @@ function PackageCard({ packageId, pkg, display, processing, onCheckout }) {
             <button
               onClick={onCheckout}
               disabled={processing}
-              className={`font-cinzel text-sm px-6 py-2 rounded-lg transition-all ${
+              className={`font-cinzel text-sm px-6 py-2 rounded-lg transition-colors ${
                 processing
                   ? 'bg-gold/30 text-cream/50 cursor-wait'
                   : 'bg-gold text-navy-dark hover:bg-gold/90'
