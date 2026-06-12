@@ -539,8 +539,6 @@ code {
     position: absolute;
     inset: 0;
     pointer-events: none;
-    opacity: 0.14;
-    mix-blend-mode: soft-light;
   }
 
   /* Reading surface must be SOLID (no opacity behind text) */
@@ -1032,7 +1030,6 @@ code {
     max-height: 460px;
     display: block;
     object-fit: cover;
-    filter: saturate(0.85);
   }
   .grimoire-plate-caption {
     margin-top: 0.5rem;
@@ -1081,8 +1078,7 @@ code {
     height: 100%;
     object-fit: cover;
     display: block;
-    opacity: 0.85;
-    filter: saturate(0.7) contrast(1.1);
+    opacity: 1;
   }
   .grimoire-seal-caption {
     margin-top: 0.75rem;
