@@ -212,6 +212,9 @@ UI/Labels: Montserrat
 - Purple/violet gradients (except Katherine)
 - `transition: all` (breaks transforms)
 - Generic card grids
+- `mix-blend-mode` on page-level overlays (desaturates colors)
+- `filter: saturate()` on content images (mutes the palette)
+- Global opacity overlays or color screens on containers
 
 ---
 
@@ -334,6 +337,7 @@ grep -r "emergentintegrations" backend/*.py  # Should return nothing
 - PDF/print layout — chapter-opener plate, half-page tarot, full-page closing seal, static dividers (§3.6 print CSS; html2canvas path forces seal visible)
 - FAL queue API fix (PR #27) + premium tier gating fix (PAID_TIERS)
 - Image data flow: GridFS save, dual-path reconstruction on load
+- Color filter purge — removed all mix-blend-mode overlays, saturate filters, and opacity screens from spell/grimoire CSS
 
 ### Gaps / Next Up
 - SpellComics stage-matching polish (sc30 → WRITE step, sc45/46 → pre-generation) — optional
