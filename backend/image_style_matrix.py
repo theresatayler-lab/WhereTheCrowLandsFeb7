@@ -27,51 +27,51 @@ GUIDE_ARTIST_STYLES = {
         "gentle": {
             "artist": "Arthur Rackham",
             "style_tokens": "enchanted domestic watercolor, soft pen-and-ink detail, fairy-tale warmth, dappled light through windows, cozy interior glow",
-            "palette_shift": "warm amber wash, soft cream, tea-stain brown, gentle dove grey",
+            "palette_shift": "warm amber and honey gold, soft cream, gentle dove grey, copper highlights against light backgrounds",
         },
         "practical": {
             "artist": "Cicely Mary Barker",
             "style_tokens": "precise botanical illustration, naturalist field guide detail, pressed-flower delicacy, hedge-witch herbal accuracy",
-            "palette_shift": "sage green, parchment cream, ink black linework, muted burgundy accents",
+            "palette_shift": "sage green, parchment cream, amber-gold accents, ink black linework, warm copper details",
         },
         "intense": {
             "artist": "Remedios Varo",
             "style_tokens": "surreal domestic mysticism, alchemical kitchen interior, impossible architecture, dream-logic still life, transformative domestic space",
-            "palette_shift": "deep crow black, burnished gold, oxblood red, midnight navy undertones",
+            "palette_shift": "burnished copper-gold, deep crow black, amber fire accents, warm midnight undertones",
         },
     },
     "cathleen": {
         "gentle": {
             "artist": "Harry Clarke",
             "style_tokens": "Irish stained glass luminosity, jewel-toned devotional light, intricate Celtic line detail, candlelit warmth, sacred domestic space",
-            "palette_shift": "warm amber candlelight, soft crimson, dove grey, muted rose gold",
+            "palette_shift": "deep emerald green, warm amber candlelight, soft cream, dove grey, teal-green accents",
         },
         "practical": {
             "artist": "John Duncan",
             "style_tokens": "Celtic Revival mythic realism, Pre-Raphaelite boldness, warrior-saint iconography, standing stone ceremony, fierce protective energy",
-            "palette_shift": "deep crimson, antique gold, midnight blue, warm bronze",
+            "palette_shift": "rich emerald, antique gold, midnight blue, warm bronze, teal highlights",
         },
         "intense": {
             "artist": "Alphonse Mucha",
             "style_tokens": "Art Nouveau dark ceremonial, circular halo compositions, flowing dramatic drapery, Morrigan triple-aspect power, sovereign female authority",
-            "palette_shift": "oxblood burgundy, burnished gold, raven black, ember orange accents",
+            "palette_shift": "deep emerald-black, burnished gold, teal fire accents, ember orange touches",
         },
     },
     "katherine": {
         "gentle": {
             "artist": "Aubrey Beardsley",
             "style_tokens": "high-contrast black and white precision, Victorian pen-and-ink elegance, ornate border detail, measured restraint, quiet analytical beauty",
-            "palette_shift": "cool silver, soft steel grey, aged parchment, faded ink wash",
+            "palette_shift": "cool violet-grey, soft amethyst wash, aged parchment, faded ink with purple undertones",
         },
         "practical": {
             "artist": "Austin Osman Spare",
             "style_tokens": "ceremonial magic illustration, precise sigil construction, occult diagram accuracy, Thelemic craftsmanship, ritual tool still life",
-            "palette_shift": "steel grey, oxblood burgundy, midnight navy, crisp white highlights",
+            "palette_shift": "deep violet, midnight navy, crisp white highlights, purple-tinged shadows",
         },
         "intense": {
             "artist": "Hilma af Klint",
             "style_tokens": "abstract spiritual geometry, Golden Dawn diagrammatic vision, theosophical color theory, large-scale geometric revelation, hidden knowledge made visible",
-            "palette_shift": "polished silver, blood red wax seal, deep navy, stark black contrast",
+            "palette_shift": "rich violet, blood red wax seal, deep navy, stark amethyst-black contrast",
         },
     },
     "theresa": {

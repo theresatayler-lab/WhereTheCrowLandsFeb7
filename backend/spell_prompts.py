@@ -910,8 +910,20 @@ Each entry MUST include:
 
 
 # ============================================================================
-# IMAGE PROMPT BUILDERS (unchanged from previous version)
+# IMAGE PROMPT BUILDERS
 # ============================================================================
+
+# Guide color directives — each guide's signature accent MUST appear in images.
+# These override the artist palette_shift which often omits the guide's brand color.
+GUIDE_COLOR_DIRECTIVES = {
+    "shigg": "DOMINANT ACCENT: warm amber and burnished copper tones — this guide's color identity is amber/copper. At least one major element must read as warm amber or honey-gold, not brown.",
+    "cathleen": "DOMINANT ACCENT: deep emerald green and teal — this guide's color identity is teal/emerald. At least one major element must read as rich emerald or sea-green, not crimson.",
+    "katherine": "DOMINANT ACCENT: deep violet and purple — this guide's color identity is violet/amethyst. At least one major element must read as rich violet or purple, not grey.",
+    "theresa": "DOMINANT ACCENT: oxblood red and deep crimson — this guide's color identity is oxblood/crimson. At least one major element must read as rich burgundy-red.",
+    "brenda": "DOMINANT ACCENT: warm antique gold and aged sepia — this guide's color identity is gold/sepia. At least one major element must read as warm gold or honeyed parchment.",
+}
+
+ANTI_MUD = "CONTRAST RULE: image must have clear luminosity — at least 30% of the composition should be mid-to-light tones. Avoid all-dark muddy compositions. Use bright highlights and readable contrast against dark areas."
 
 def build_image_prompt(asset_type: str, asset_plan: dict, persona_config: dict, spell_title: str, spell_data: dict = None) -> str:
     """
@@ -930,6 +942,9 @@ def build_image_prompt(asset_type: str, asset_plan: dict, persona_config: dict, 
 
     # Get the global art bible - this is PREFIX (dominates the prompt)
     art_bible_prefix = get_art_bible_prompt_suffix()
+
+    # Guide color directive — ensures the guide's signature tint appears
+    guide_color = GUIDE_COLOR_DIRECTIVES.get(persona_id, GUIDE_COLOR_DIRECTIVES.get("shigg", ""))
 
     # Get asset role lock constraints
     role_lock = ASSET_ROLE_LOCKS.get(asset_type.split("_")[0], ASSET_ROLE_LOCKS.get("header", {}))
@@ -968,11 +983,13 @@ A {asset_info.get('mood', 'contemplative')} atmospheric scene in the style of {a
 featuring {', '.join(asset_info.get('key_elements', ['candle']))},
 {motif_echo}
 PALETTE: {artist['palette_shift']},
+{guide_color}
+{ANTI_MUD}
 {continuity}
 QUALITY: Should look like a fine art illustration or lithograph — visible artistic technique, NOT flat AI-generated imagery.
 {role_suffix},
 {dall_e_rules},
-AVOID: {', '.join(avoid_list)}, generic stock photo look, oversaturated muddy colors"""
+AVOID: {', '.join(avoid_list)}, generic stock photo look, all-dark muddy compositions"""
 
     elif asset_type == "tarot_card_image":
         asset_info = asset_plan.get("tarot_card_image", {})
@@ -994,12 +1011,13 @@ COMPOSITION: {geometry} emblem or vignette (NOT a flat medallion, NOT a generic 
 FOCAL ELEMENT: {primary_motif} — rendered with craft and detail as if for a limited-edition occult press.
 SUPPORTING ELEMENTS: {', '.join(secondary_motifs)}.
 GUIDE SIGNATURE (small, organic): {guide_signature}.
-PALETTE: Use this guide's palette — {artist['palette_shift']} — NOT generic gold-on-teal. Deep contrast, printmaking quality.
+PALETTE: {artist['palette_shift']}. {guide_color}
+{ANTI_MUD}
 {continuity}
 QUALITY: Should look like it belongs in a beautiful 1920s occult book, NOT like generic AI art.
 CONSTRAINTS: no text, no letters, no numbers, no banners, no photorealism, no 3D render, no oversaturated neon.
 {dall_e_rules},
-AVOID: {', '.join(avoid_list + forbidden)}"""
+AVOID: {', '.join(avoid_list + forbidden)}, all-dark muddy compositions"""
         else:
             # Fallback to old behavior if no spell_data provided
             tarot_emblem = persona_config['visual_dna'].get('tarot_emblem', '')
@@ -1016,10 +1034,12 @@ SUPPORTING SYMBOLS: {', '.join(symbols)},
 PORTRAIT tarot card, vertical 2:3 composition, ornamental border running the full card edge,
 centered composition, suitable for tarot/oracle card,
 medallion or seal style, symmetrical,
+{guide_color}
+{ANTI_MUD}
 {role_suffix},
 {dall_e_rules},
 MUST be visually DISTINCT from header image,
-AVOID: {', '.join(avoid_list)}"""
+AVOID: {', '.join(avoid_list)}, all-dark muddy compositions"""
 
     elif asset_type == "sigil":
         asset_info = asset_plan.get("sigil", {})
