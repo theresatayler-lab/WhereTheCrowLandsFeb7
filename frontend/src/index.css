@@ -688,12 +688,8 @@ code {
     font-size: 0.9375rem;
     line-height: 1.75;
     color: #2A2218;
-    text-align: justify;
-    -webkit-hyphens: auto;
-    -ms-hyphens: auto;
-    hyphens: auto;
+    text-align: left;
     overflow-wrap: break-word;
-    word-break: break-word;
   }
 
   /* Quote/affirmation styling */

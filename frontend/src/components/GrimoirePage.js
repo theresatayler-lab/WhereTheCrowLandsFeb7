@@ -189,10 +189,11 @@ const GeneratedDivider = ({ imageBase64, isLoading = false, className = '' }) =>
   );
 };
 
-// Printables Block - Shows tarot card (front & back) and sigil for printing
-const PrintablesBlock = ({ tarotImageBase64, sigilImageBase64, spellTitle, tarotCard, isLoading = false }) => {
-  // Show loading state if images are being generated
-  if (isLoading && !tarotImageBase64 && !sigilImageBase64) {
+// Printables Block - Tarot back + sigil only (tarot front is already the frontispiece)
+const PrintablesBlock = ({ sigilImageBase64, spellTitle, tarotCard, isLoading = false }) => {
+  const hasContent = sigilImageBase64 || tarotCard;
+
+  if (isLoading && !hasContent) {
     return (
       <section className="my-8 p-6 bg-gold/10 border-2 border-dashed border-gold/40 rounded-sm">
         <h3 className="font-cinzel text-lg text-crimson mb-4 text-center flex items-center justify-center gap-2">
@@ -200,13 +201,9 @@ const PrintablesBlock = ({ tarotImageBase64, sigilImageBase64, spellTitle, tarot
           Printable Elements
         </h3>
         <p className="font-montserrat text-xs text-navy-dark/70 text-center mb-4">
-          Generating your personalized tarot card and sigil...
+          Generating your personalized elements...
         </p>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="text-center">
-            <p className="font-montserrat text-xs text-navy-dark/70 mb-2 uppercase tracking-wider">Tarot Card</p>
-            <div className="w-full max-w-[180px] mx-auto aspect-[2/3] bg-gold/10 rounded-sm animate-pulse" />
-          </div>
+        <div className="flex flex-wrap justify-center gap-6">
           <div className="text-center">
             <p className="font-montserrat text-xs text-navy-dark/70 mb-2 uppercase tracking-wider">Card Back</p>
             <div className="w-full max-w-[180px] mx-auto aspect-[2/3] bg-gold/10 rounded-sm animate-pulse" />
@@ -219,9 +216,9 @@ const PrintablesBlock = ({ tarotImageBase64, sigilImageBase64, spellTitle, tarot
       </section>
     );
   }
-  
-  if (!tarotImageBase64 && !sigilImageBase64) return null;
-  
+
+  if (!hasContent) return null;
+
   return (
     <section className="my-8 p-6 bg-gold/10 border-2 border-dashed border-gold/40 rounded-sm">
       <h3 className="font-cinzel text-lg text-crimson mb-4 text-center flex items-center justify-center gap-2">
@@ -231,24 +228,8 @@ const PrintablesBlock = ({ tarotImageBase64, sigilImageBase64, spellTitle, tarot
       <p className="font-montserrat text-xs text-navy-dark/80 text-center mb-4">
         Right-click to save these images for your physical grimoire
       </p>
-      
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* Tarot Card - Front (same 2:3 card size as the back) */}
-        {tarotImageBase64 && (
-          <div className="text-center">
-            <p className="font-montserrat text-xs text-navy-dark/70 mb-2 uppercase tracking-wider">
-              Tarot Card (Front)
-            </p>
-            <div className="w-full max-w-[180px] mx-auto aspect-[2/3] rounded-sm border border-gold/30 shadow-md overflow-hidden">
-              <img
-                src={tarotImageBase64?.startsWith('STATIC_URL:') ? tarotImageBase64.replace('STATIC_URL:', '') : `data:image/png;base64,${tarotImageBase64}`}
-                alt={`${spellTitle} - Tarot Card Front`}
-                className="w-full h-full object-cover"
-              />
-            </div>
-          </div>
-        )}
 
+      <div className="flex flex-wrap justify-center gap-6">
         {/* Tarot Card - Back (Text version with essence) */}
         {tarotCard && (
           <div className="text-center">
@@ -262,14 +243,14 @@ const PrintablesBlock = ({ tarotImageBase64, sigilImageBase64, spellTitle, tarot
               <div className="text-center flex-1 flex flex-col justify-center min-h-0">
                 <p className="font-cinzel text-xs text-gold-light mb-2" style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{tarotCard.title || spellTitle}</p>
                 {tarotCard.essence && (
-                  <p className="font-montserrat text-[10px] text-muted-brass/80 italic leading-tight" style={{ display: '-webkit-box', WebkitLineClamp: 7, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                  <p className="font-crimson text-[10px] text-muted-brass/80 italic leading-tight" style={{ display: '-webkit-box', WebkitLineClamp: 7, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
                     &ldquo;{tarotCard.essence}&rdquo;
                   </p>
                 )}
               </div>
               <div className="text-center">
                 {tarotCard.key_action && (
-                  <p className="font-montserrat text-[9px] text-gold/60 uppercase tracking-wider" style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                  <p className="font-crimson text-[9px] text-gold/60 uppercase tracking-wider" style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
                     {tarotCard.key_action}
                   </p>
                 )}
@@ -277,14 +258,14 @@ const PrintablesBlock = ({ tarotImageBase64, sigilImageBase64, spellTitle, tarot
             </div>
           </div>
         )}
-        
+
         {/* Sigil */}
         {sigilImageBase64 && (
           <div className="text-center">
             <p className="font-montserrat text-xs text-navy-dark/70 mb-2 uppercase tracking-wider">
               Sigil
             </p>
-            <img 
+            <img
               src={sigilImageBase64?.startsWith('STATIC_URL:') ? sigilImageBase64.replace('STATIC_URL:', '') : `data:image/png;base64,${sigilImageBase64}`}
               alt={`${spellTitle} - Sigil`}
               className="w-full max-w-[150px] mx-auto rounded-sm border border-gold/30 shadow-md bg-white"
@@ -839,7 +820,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
           guideId={normalizedArchetypeId}
         />
 
-        <div className="pb-6">
+        <div className="pb-2">
 
         {/* BLOCKS-BASED SPELL RENDERING (V3) */}
         {spell.blocks && spell.blocks.length > 0 ? (
@@ -1492,9 +1473,8 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
         {/* Divider before printables */}
         <GeneratedDivider imageBase64={generatedAssets?.divider_3} isLoading={isLoadingImages} />
         
-        {/* Printables Block - Tarot Card (front & back) and Sigil */}
-        <PrintablesBlock 
-          tarotImageBase64={generatedAssets?.tarot_card_image || generatedImages.tarot_card_image}
+        {/* Printables Block - Tarot back + sigil (front is the frontispiece above) */}
+        <PrintablesBlock
           sigilImageBase64={generatedAssets?.sigil}
           spellTitle={spell.title}
           tarotCard={spell.tarot_card}
@@ -1654,7 +1634,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
             className="px-4 py-2 bg-transparent text-crimson border border-gold/40 rounded-sm font-montserrat tracking-widest uppercase text-xs hover:bg-gold/10 transition-colors flex items-center gap-2"
           >
             <Copy className="w-4 h-4" />
-            Copy Spell
+            Copy Working
           </button>
           <button
             onClick={downloadAsPdf}
@@ -1668,7 +1648,7 @@ export const GrimoirePage = ({ spell, archetype, imageBase64, assetPlan, onNewSp
             onClick={onNewSpell}
             className="px-4 py-2 bg-crimson text-cream rounded-sm font-montserrat tracking-widest uppercase text-xs hover:bg-crimson-bright transition-colors"
           >
-            New Spell
+            New Working
           </button>
         </div>
       </div>
