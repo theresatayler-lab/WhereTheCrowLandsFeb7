@@ -319,7 +319,7 @@ grep -r "emergentintegrations" backend/*.py  # Should return nothing
 ### Working
 - Spell generation (V3 blocks system) — all 5 guides
 - My Grimoire (save/retrieve) with GridFS image persistence
-- Interactive Timeline (94 events, 3 views)
+- Interactive Timeline (126 events, 3 views) — rich narratives for ALL events (timeline_narratives.py), zero broken connection refs
 - User authentication (JWT)
 - Invisible Helpers portal
 - Stripe payments (direct SDK, test mode)
@@ -336,9 +336,6 @@ grep -r "emergentintegrations" backend/*.py  # Should return nothing
 - Image data flow: GridFS save, dual-path reconstruction on load
 
 ### Gaps / Next Up
-- ~35/94 timeline events have rich narratives
-- 98 broken connection references in timeline
-- Static fallback images live on main (commit 946b298) — merge with visual-recovery branch
 - SpellComics stage-matching polish (sc30 → WRITE step, sc45/46 → pre-generation) — optional
 - Licenses: add design_assets/inbox/LICENSES.txt noting pack purchase sources (local-only task)
 - Deploy to Railway/Render (migrate off Emergent hosting)

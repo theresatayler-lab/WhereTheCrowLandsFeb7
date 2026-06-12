@@ -3627,6 +3627,16 @@ for event in ALL_TIMELINE_EVENTS:
                 event[key] = value
 
 # ============================================================================
+# APPLY RICH NARRATIVES - Editorial pass: longer expanded_context wins
+# ============================================================================
+from timeline_narratives import RICH_NARRATIVES
+
+for event in ALL_TIMELINE_EVENTS:
+    narrative = RICH_NARRATIVES.get(event.get("id"))
+    if narrative and len(narrative) > len(str(event.get("expanded_context", ""))):
+        event["expanded_context"] = narrative
+
+# ============================================================================
 # FIX BROKEN CONNECTION REFERENCES
 # ============================================================================
 from connection_fixes import EVENT_REF_FIXES, MOVEMENT_LABEL_FIXES
