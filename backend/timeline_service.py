@@ -23,7 +23,7 @@ EXPECTED_EVENT_COUNT = len(ALL_TIMELINE_EVENTS)
 # SERVICE FUNCTIONS
 # ============================================================================
 
-_ENRICHMENT_VERSION = 3  # Increment when enrichment data changes
+_ENRICHMENT_VERSION = 4  # Increment when enrichment data changes (v4: rich narratives for all 126 events)
 
 async def seed_timeline_data(db: AsyncIOMotorDatabase):
     """Seed initial timeline events - reseed if count or enrichment version mismatches"""
