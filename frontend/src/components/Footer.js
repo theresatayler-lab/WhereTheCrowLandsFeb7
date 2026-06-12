@@ -7,7 +7,7 @@ const SEAL_LOGO = "/images/brand/new-logo.png";
 export const Footer = () => {
   return (
     <footer 
-      className="mt-24 relative"
+      className="mt-12 relative"
       style={{
         background: '#0C1D2E',
       }}
@@ -36,10 +36,7 @@ export const Footer = () => {
                 src={SEAL_LOGO}
                 alt="Where The Crowlands Seal"
                 className="h-32 w-auto object-contain"
-                style={{ 
-                  filter: 'hue-rotate(-30deg) saturate(1.0) brightness(0.95)',
-                  opacity: 0.95,
-                }}
+                style={{ opacity: 0.95 }}
               />
             </div>
             <p className="font-crimson text-sm text-center md:text-left leading-relaxed" style={{ color: 'rgba(243, 239, 232, 0.7)' }}>
@@ -55,7 +52,7 @@ export const Footer = () => {
             </h4>
             <ul className="space-y-2">
               {[
-                { to: '/spell-request', label: 'Request a Spell' },
+                { to: '/spell-request', label: 'Craft a Working' },
                 { to: '/guides', label: 'Meet Your Guides' },
                 { to: '/deities', label: 'Deities' },
                 { to: '/figures', label: 'Historical Figures' },

@@ -924,9 +924,9 @@ export const SpellRequest = () => {
             {/* SpellComics rotation — guide-specific stills + videos crossfading */}
             <SpellComicsRotation guideId={spellSpec.persona_id} />
             
-            {/* Gradient overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-navy-dark via-navy-dark/70 to-navy-dark/50" />
-            <div className="absolute inset-0 bg-gradient-radial from-transparent via-transparent to-navy-dark" />
+            {/* Light vignette — lets SpellComics art read through */}
+            <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/80 via-transparent to-navy-dark/30" />
+            <div className="absolute inset-0 bg-gradient-radial from-transparent via-transparent to-navy-dark/50" />
             
             {/* Corner ornaments */}
             <ElaborateCorner className="absolute top-4 left-4 w-16 h-16 sm:w-24 sm:h-24" variant="gold" />
