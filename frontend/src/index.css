@@ -422,27 +422,36 @@ code {
   .grimoire-closing-seal { page-break-inside: avoid; }
 
   /* ----- Grimoire print layout (Brief §3.6) ----- */
-  /* Animations off: dividers and ornaments print static */
   *, *::before, *::after {
     animation: none !important;
     transition: none !important;
   }
 
-  /* Header plate = chapter opener: full content width, frame survives export */
+  /* Manuscript border renders as simple rule in print */
+  .grimoire-manuscript-page {
+    border: 1px solid rgba(200, 164, 77, 0.4) !important;
+  }
+
+  /* Header plate: full width, vellum mask renders */
   .grimoire-plate-frame {
     max-height: 4in;
-    border: 1px solid #C8A44D !important;
-    background: #0C1D2E !important;
-    box-shadow: 0 0 0 1px #C8A44D33 !important;
+    border: 1px solid rgba(200, 164, 77, 0.3) !important;
+    background: #F3EFE8 !important;
+    box-shadow: none !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .grimoire-plate-frame::after {
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
   .grimoire-plate-img { max-height: 3.8in; }
 
-  /* Tarot frontispiece = half-page plate, vellum mat + gold frame */
+  /* Tarot frontispiece: half-page, double border */
   .grimoire-frontispiece-frame {
+    height: auto !important;
+    max-width: 50% !important;
     background: #F3EFE8 !important;
-    border: 1px solid #C8A44D !important;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
@@ -451,30 +460,37 @@ code {
     max-width: none !important;
   }
 
-  /* Sigil = full-page closing plate: centred seal on navy ground */
+  /* Title rule and flanking glyphs render in print */
+  .grimoire-title-rule,
+  .grimoire-flanked-glyph,
+  .grimoire-flanked-rule,
+  .grimoire-divider-hairline {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .grimoire-flanked-glyph { display: block !important; }
+
+  /* Seal: full closing page */
   .grimoire-closing-seal {
     page-break-before: always;
     min-height: 8.5in;
     justify-content: center;
-    background: #0C1D2E !important;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
-  /* Ink-reveal must not hide the seal in print */
   .grimoire-closing-seal .grimoire-seal-ring {
     opacity: 1 !important;
     transform: none !important;
-    width: 4.5in !important;
-    height: 4.5in !important;
+    width: 4in !important;
+    height: 4in !important;
   }
   .grimoire-seal-caption {
-    font-family: 'Cinzel Decorative', 'Playfair Display', Georgia, serif !important;
-    font-size: 0.875rem !important;
-    color: #C8A44D !important;
+    font-family: 'Italiana', 'Cinzel', serif !important;
+    font-size: 0.75rem !important;
   }
 
   /* Page margins */
-  @page { margin: 0.6in; }
+  @page { margin: 0.75in; }
 }
 /* ============================================================
    CONDITIONAL ICON RENDERING
@@ -866,41 +882,46 @@ code {
      Set data-guide on the manuscript wrapper; grimoire classes pick up the
      guide's accent for labels, counters, bullets, rules, and drop caps. */
   [data-guide] {
-    --guide-accent-strong: rgba(200, 164, 77, 0.85);
-    --guide-accent-mid: rgba(200, 164, 77, 0.7);
-    --guide-accent-soft: rgba(200, 164, 77, 0.35);
+    --guide-accent-strong: #C8A44D;
+    --guide-accent-mid: rgba(200, 164, 77, 0.5);
+    --guide-accent-soft: rgba(200, 164, 77, 0.15);
+  }
+  [data-guide="shigg"] {
+    --guide-accent-strong: #D97706;
+    --guide-accent-mid: rgba(217, 119, 6, 0.5);
+    --guide-accent-soft: rgba(217, 119, 6, 0.15);
   }
   [data-guide="cathleen"], [data-guide="kathleen"] {
-    --guide-accent-strong: rgba(139, 34, 50, 0.9);
-    --guide-accent-mid: rgba(139, 34, 50, 0.75);
-    --guide-accent-soft: rgba(139, 34, 50, 0.35);
+    --guide-accent-strong: #0D9488;
+    --guide-accent-mid: rgba(13, 148, 136, 0.5);
+    --guide-accent-soft: rgba(13, 148, 136, 0.15);
   }
   [data-guide="katherine"] {
-    --guide-accent-strong: rgba(212, 181, 93, 0.9);
-    --guide-accent-mid: rgba(178, 149, 70, 0.8);
-    --guide-accent-soft: rgba(212, 181, 93, 0.4);
+    --guide-accent-strong: #7C3AED;
+    --guide-accent-mid: rgba(124, 58, 237, 0.5);
+    --guide-accent-soft: rgba(124, 58, 237, 0.15);
   }
   [data-guide="theresa"] {
-    --guide-accent-strong: rgba(185, 78, 106, 0.9);
-    --guide-accent-mid: rgba(185, 78, 106, 0.75);
-    --guide-accent-soft: rgba(185, 78, 106, 0.35);
+    --guide-accent-strong: #8B2232;
+    --guide-accent-mid: rgba(139, 34, 50, 0.5);
+    --guide-accent-soft: rgba(139, 34, 50, 0.15);
   }
   [data-guide="brenda"] {
-    --guide-accent-strong: rgba(168, 152, 114, 0.95);
-    --guide-accent-mid: rgba(146, 130, 92, 0.85);
-    --guide-accent-soft: rgba(168, 152, 114, 0.4);
+    --guide-accent-strong: #A89872;
+    --guide-accent-mid: rgba(168, 152, 114, 0.5);
+    --guide-accent-soft: rgba(168, 152, 114, 0.15);
   }
 
   /* --- Manuscript Page Frame --- */
   .grimoire-manuscript-page {
     position: relative;
     background: #F3EFE8;
-    border: 1px solid rgba(200, 164, 77, 0.35);
+    border: 2px solid var(--guide-accent-mid, rgba(200, 164, 77, 0.5));
     overflow: hidden;
     word-break: break-word;
     box-shadow:
-      inset 0 0 0 4px #F3EFE8,
-      inset 0 0 0 5px rgba(200, 164, 77, 0.18),
+      inset 0 0 0 5px #F3EFE8,
+      inset 0 0 0 6px rgba(200, 164, 77, 0.25),
       0 4px 24px rgba(0, 0, 0, 0.25),
       0 1px 4px rgba(0, 0, 0, 0.12);
   }
@@ -932,22 +953,42 @@ code {
     margin-bottom: 1.5rem;
   }
 
-  /* Spell title — TC Phantasmagoria, Mucha-scale */
+  /* Spell title — TC Phantasmagoria, large display, guide-colored */
   .grimoire-manuscript-title {
     font-family: 'TC Phantasmagoria', 'Cinzel Decorative', serif;
     font-weight: 400;
-    font-size: 1.5rem;
-    line-height: 1.2;
+    font-size: 1.75rem;
+    line-height: 1.15;
     letter-spacing: 0.04em;
-    color: #2A2218;
+    color: var(--guide-accent-strong, #2A2218);
     text-align: center;
     margin: 0 0 0.25rem;
   }
   @media (min-width: 640px) {
-    .grimoire-manuscript-title { font-size: 2rem; }
+    .grimoire-manuscript-title { font-size: 2.5rem; }
   }
   @media (min-width: 768px) {
-    .grimoire-manuscript-title { font-size: 2.25rem; }
+    .grimoire-manuscript-title { font-size: 3rem; }
+  }
+
+  /* Ornamental title rules — thin gold hairlines flanking the title block */
+  .grimoire-title-rule {
+    width: 60%;
+    max-width: 280px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #C8A44D, transparent);
+    margin: 0.75rem auto;
+    position: relative;
+  }
+  .grimoire-title-rule-diamond {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 6px;
+    height: 6px;
+    background: var(--guide-accent-strong, #C8A44D);
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
   }
 
   /* Guide attribution — Italiana small caps */
@@ -993,15 +1034,25 @@ code {
   .grimoire-plate-frame {
     position: relative;
     width: 100%;
-    max-height: 300px;
+    max-height: 240px;
     overflow: hidden;
-    border: 1px solid #C8A44D;
-    padding: 10px;
-    background: #0C1D2E;
-    box-shadow: 0 0 0 1px #C8A44D33, 0 4px 20px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(200, 164, 77, 0.3);
+    padding: 0;
+    background: #F3EFE8;
+  }
+  .grimoire-plate-frame::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 48px;
+    background: linear-gradient(transparent, #F3EFE8);
+    pointer-events: none;
+    z-index: 1;
   }
   @media (min-width: 640px) {
-    .grimoire-plate-frame { max-height: 480px; }
+    .grimoire-plate-frame { max-height: 360px; }
   }
   /* Per-guide corner ornaments on the plate frame (Brief §3.1) */
   .grimoire-plate-corner {
@@ -1055,19 +1106,19 @@ code {
     transition: opacity 2s ease-out, transform 1.5s ease-out;
   }
   .grimoire-seal-ring {
-    width: 180px;
-    height: 180px;
+    width: 200px;
+    height: 200px;
     border-radius: 50%;
     overflow: hidden;
-    border: 1px solid #C8A44D;
-    box-shadow: 0 0 0 6px #0C1D2E, 0 0 0 7px #C8A44D55;
+    border: 2px solid var(--guide-accent-mid, rgba(200, 164, 77, 0.5));
+    box-shadow: 0 0 0 5px #F3EFE8, 0 0 0 6px rgba(200, 164, 77, 0.25);
     display: flex;
     align-items: center;
     justify-content: center;
     background: #0C1D2E;
   }
   @media (min-width: 640px) {
-    .grimoire-seal-ring { width: 240px; height: 240px; }
+    .grimoire-seal-ring { width: 260px; height: 260px; }
   }
   .grimoire-seal-ring img {
     width: 100%;
@@ -1078,12 +1129,25 @@ code {
   }
   .grimoire-seal-caption {
     margin-top: 0.75rem;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.75rem;
-    letter-spacing: 0.1em;
+    font-family: 'Italiana', 'Cinzel', serif;
+    font-size: 0.625rem;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: #A89872;
+    color: var(--guide-accent-mid, rgba(200, 164, 77, 0.5));
     text-align: center;
+  }
+
+  /* --- Divider block with gold hairline accents --- */
+  .grimoire-divider-block {
+    margin: 2rem auto;
+    max-width: 384px;
+  }
+  @media (max-width: 639px) {
+    .grimoire-divider-block { max-width: 280px; }
+  }
+  .grimoire-divider-hairline {
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(200, 164, 77, 0.2), transparent);
   }
 
   /* --- Guide divider pulse (candle-flicker animation, §3.4) --- */
@@ -1143,23 +1207,37 @@ code {
     .grimoire-quick-header-icon { width: 72px; height: 72px; }
   }
 
-  /* --- Tarot Frontispiece (§3.3 — larger, vellum mat, gold frame) --- */
+  /* --- Tarot Frontispiece (§3.3 — double-rule border, guide accent) --- */
   .grimoire-frontispiece {
     display: flex;
-    justify-content: center;
-    margin: 1.25rem 0 0.75rem;
+    flex-direction: column;
+    align-items: center;
+    margin: 1.5rem 0 0.75rem;
   }
   .grimoire-frontispiece-frame {
-    height: 256px;
+    height: 280px;
     width: auto;
-    max-width: 180px;
-    border: 1px solid #C8A44D;
-    padding: 12px;
+    max-width: 190px;
+    border: 2px solid var(--guide-accent-mid, rgba(200, 164, 77, 0.5));
+    padding: 4px;
     background: #F3EFE8;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
   }
+  .grimoire-frontispiece-frame > img,
+  .grimoire-frontispiece-frame > .grimoire-frontispiece-img {
+    border: 1px solid rgba(200, 164, 77, 0.3);
+  }
+  .grimoire-frontispiece-label {
+    margin-top: 0.5rem;
+    font-family: 'Italiana', 'Cinzel', serif;
+    font-size: 0.625rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--guide-accent-mid, rgba(200, 164, 77, 0.5));
+    text-align: center;
+  }
   @media (min-width: 640px) {
-    .grimoire-frontispiece-frame { height: 340px; max-width: 240px; }
+    .grimoire-frontispiece-frame { height: 400px; max-width: 270px; }
   }
   .grimoire-frontispiece-img {
     width: 100%;
@@ -1197,6 +1275,43 @@ code {
   .grimoire-section-label.text-center::after {
     margin-left: auto;
     margin-right: auto;
+  }
+
+  /* --- Flanked Section Label — guide glyphs flanking section headers --- */
+  .grimoire-flanked-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  .grimoire-flanked-label .grimoire-section-label {
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .grimoire-flanked-label .grimoire-section-label::after {
+    display: none;
+  }
+  .grimoire-flanked-glyph {
+    color: var(--guide-accent-mid, rgba(200, 164, 77, 0.5));
+    opacity: 0.25;
+    flex-shrink: 0;
+    line-height: 0;
+  }
+  .grimoire-flanked-glyph svg {
+    width: 18px;
+    height: 18px;
+  }
+  @media (max-width: 639px) {
+    .grimoire-flanked-glyph svg { width: 16px; height: 16px; }
+  }
+  .grimoire-flanked-rule {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(200, 164, 77, 0.2));
+    min-width: 1rem;
+  }
+  .grimoire-flanked-label .grimoire-flanked-rule:last-of-type {
+    background: linear-gradient(to left, transparent, rgba(200, 164, 77, 0.2));
   }
 
   /* --- Inline List (materials, prompts) — tight with diamond bullets --- */

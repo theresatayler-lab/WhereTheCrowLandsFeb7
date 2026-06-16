@@ -34,13 +34,21 @@ export default function SpellHeader({
         />
       </div>
 
-      {/* Spell title — TC Phantasmagoria */}
+      {/* Ornamental rule above title */}
+      <div className="grimoire-title-rule">
+        <span className="grimoire-title-rule-diamond" />
+      </div>
+
+      {/* Spell title — TC Phantasmagoria, guide-colored */}
       <h1 className="grimoire-manuscript-title">{title}</h1>
 
-      {/* Guide attribution — Cinzel Decorative small caps */}
+      {/* Guide attribution — Italiana small caps */}
       {guideLine ? (
         <p className="grimoire-guide-line">{guideLine}</p>
       ) : null}
+
+      {/* Ornamental rule below title block */}
+      <div className="grimoire-title-rule" />
 
       {/* Essence quote — Crimson Text italic */}
       {summaryLine ? (
@@ -109,6 +117,7 @@ export default function SpellHeader({
               className="grimoire-frontispiece-img"
             />
           </div>
+          <p className="grimoire-frontispiece-label">Significator</p>
         </div>
       ) : quickVisuals?.tarot_placeholder_icon ? (
         <div className="grimoire-frontispiece">

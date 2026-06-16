@@ -4,13 +4,40 @@
 
 import React, { useState } from 'react';
 import { cn } from '../lib/utils';
-import { getGuideDivider } from '../assets/ornaments/index';
+import { getGuideDivider, getGlyph } from '../assets/ornaments/index';
 
-// Guide-aware ornamental flourish between major sections.
-// Cycles through the active guide's 3 SVG divider variants (Brief §3.4).
+const GUIDE_FLANKING_GLYPHS = {
+  shigg:     ['robin', 'wren'],
+  cathleen:  ['triquetra', 'raven'],
+  katherine: ['thread', 'mirror'],
+  theresa:   ['key', 'compass'],
+  brenda:    ['feather', 'crow'],
+};
+
+const FlankedSectionLabel = ({ label, guideId, centered = false }) => {
+  const glyphs = GUIDE_FLANKING_GLYPHS[guideId] || GUIDE_FLANKING_GLYPHS.shigg;
+  return (
+    <div className={cn("grimoire-flanked-label", centered && "justify-center")}>
+      <span className="grimoire-flanked-glyph hidden sm:block">
+        {getGlyph(glyphs[0], { size: 18, color: 'currentColor' })}
+      </span>
+      <span className="grimoire-flanked-rule" />
+      <span className="grimoire-section-label" style={{ marginBottom: 0 }}>{label}</span>
+      <span className="grimoire-flanked-rule" />
+      <span className="grimoire-flanked-glyph hidden sm:block">
+        {getGlyph(glyphs[1], { size: 18, color: 'currentColor' })}
+      </span>
+    </div>
+  );
+};
+
 const GuideFlourishDivider = ({ guideId, dividerIndex = 0 }) => (
-  <div className="flex items-center justify-center py-4 opacity-60 grimoire-divider-pulse">
-    {getGuideDivider(guideId, dividerIndex, { width: 240 })}
+  <div className="grimoire-divider-block">
+    <div className="grimoire-divider-hairline" />
+    <div className="flex items-center justify-center py-3 opacity-60 grimoire-divider-pulse">
+      {getGuideDivider(guideId, dividerIndex, { width: 300 })}
+    </div>
+    <div className="grimoire-divider-hairline" />
   </div>
 );
 
@@ -42,7 +69,7 @@ export const SpellBlockRenderer = ({
         return (
           <React.Fragment key={block.block_id || index}>
             {showDivider && <GuideFlourishDivider guideId={effectiveGuideId} dividerIndex={currentDividerIndex} />}
-            <BlockContent block={block} essenceLine={essenceLine} />
+            <BlockContent block={block} essenceLine={essenceLine} guideId={effectiveGuideId} />
           </React.Fragment>
         );
       })}
@@ -50,22 +77,21 @@ export const SpellBlockRenderer = ({
   );
 };
 
-// Route block to its renderer — no wrapping divs, no frames
-const BlockContent = ({ block, essenceLine = '' }) => {
+const BlockContent = ({ block, essenceLine = '', guideId }) => {
   const bt = block.block_type;
   const c = block.content || {};
 
   if (bt === 'cold_open') return <ColdOpen c={c} essenceLine={essenceLine} />;
-  if (bt === 'materials') return <Materials c={c} />;
-  if (bt === 'stepper') return <Stepper c={c} />;
-  if (bt === 'lore_vignette') return <LoreVignette c={c} />;
+  if (bt === 'materials') return <Materials c={c} guideId={guideId} />;
+  if (bt === 'stepper') return <Stepper c={c} guideId={guideId} />;
+  if (bt === 'lore_vignette') return <LoreVignette c={c} guideId={guideId} />;
   if (bt === 'choice') return <Choice c={c} />;
-  if (bt === 'closing') return <Closing c={c} />;
+  if (bt === 'closing') return <Closing c={c} guideId={guideId} />;
   if (bt === 'reflection' || bt === 'journal_prompt') return <Reflection c={c} />;
   if (bt === 'bird_oracle') return <BirdOracle c={c} />;
   if (bt === 'ward') return <Ward c={c} />;
   if (bt === 'song_prompt') return <SongPrompt c={c} />;
-  if (bt === 'evidence_card') return <EvidenceCard c={c} />;
+  if (bt === 'evidence_card') return <EvidenceCard c={c} guideId={guideId} />;
   if (bt === 'safety_note') return <SafetyNote c={c} />;
   if (bt === 'poetry_reading') return <PoetryReading c={c} />;
   if (bt === 'observation_task') return <ObservationTask c={c} />;
@@ -95,10 +121,9 @@ const ColdOpen = ({ c, essenceLine = '' }) => {
   );
 };
 
-// Materials — inline list, not a framed card
-const Materials = ({ c }) => (
+const Materials = ({ c, guideId }) => (
   <div className="my-4" data-testid="materials-block">
-    <p className="grimoire-section-label">Gather</p>
+    <FlankedSectionLabel label="Gather" guideId={guideId} />
     <ul className="grimoire-inline-list">
       {c.items?.map((item, i) => (
         <li key={i}>
@@ -116,10 +141,9 @@ const Materials = ({ c }) => (
   </div>
 );
 
-// Stepper — numbered steps, flowing naturally
-const Stepper = ({ c }) => (
+const Stepper = ({ c, guideId }) => (
   <div className="my-4" data-testid="stepper-block">
-    <p className="grimoire-section-label">The Working</p>
+    <FlankedSectionLabel label="The Working" guideId={guideId} />
     <ol className="grimoire-steps">
       {c.steps?.map((step, index) => (
         <li key={index}>
@@ -144,8 +168,7 @@ const Stepper = ({ c }) => (
   </div>
 );
 
-// Lore Vignette — just prose with a small tradition label
-const LoreVignette = ({ c }) => (
+const LoreVignette = ({ c, guideId }) => (
   <div className="my-4" data-testid="lore-vignette-block">
     {(c.era || c.tradition || c.title) && (
       <p className="grimoire-section-label text-center">
@@ -191,8 +214,7 @@ const Choice = ({ c }) => {
   );
 };
 
-// Closing — flowing farewell text
-const Closing = ({ c }) => (
+const Closing = ({ c, guideId }) => (
   <div className="my-4" data-testid="closing-block">
     {c.license_to_depart && (
       <p className="grimoire-body">{c.license_to_depart}</p>
@@ -283,8 +305,7 @@ const SongPrompt = ({ c }) => (
   </div>
 );
 
-// Evidence Card
-const EvidenceCard = ({ c }) => (
+const EvidenceCard = ({ c, guideId }) => (
   <div className="my-4" data-testid="evidence-card-block">
     {c.known?.length > 0 && (
       <div className="mb-1">
