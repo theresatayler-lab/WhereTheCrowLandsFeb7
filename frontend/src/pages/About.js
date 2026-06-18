@@ -184,6 +184,47 @@ export const About = () => {
         </div>
       </LightSection>
 
+      {/* Dark Section - The Creator */}
+      <DarkSection className="py-12 sm:py-16 px-4 sm:px-6">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.35 }}
+          >
+            <OrnateCard hover={false}>
+              <h2 className="font-cinzel text-xl sm:text-2xl text-gold-light mb-6 flex items-center gap-3">
+                <BrandIcon name="feather" size={28} opacity={0.85} />
+                The Creator
+              </h2>
+              <div className="space-y-4 font-montserrat text-sm sm:text-base text-cream/80 leading-relaxed">
+                <p>
+                  <strong className="text-gold-light font-cinzel text-base">Theresa Tayler</strong> is a journalist and storyteller behind Where the Crowlands&mdash;a
+                  living project rooted in London family history, wartime survival stories, and the long shadow
+                  of secrecy, identity, and belonging.
+                </p>
+                <p>
+                  Drawing on deep archival work and DNA discoveries, she traces the lives and voices that shaped
+                  her lineage across places like Spitalfields, Chelsea, and Romford, and asks what happens when
+                  the stories we inherit don&apos;t match the truth.
+                </p>
+                <p>
+                  Through the Where the Crowlands app, Theresa is building an AI-for-good experience: one that
+                  treats memory and ancestry with care, helps people make meaning without exploitation, and uses
+                  technology to support healing, context, and honest storytelling.
+                </p>
+                <p>
+                  A commission is the other door&mdash;each set of workings made by hand, with the same archival
+                  care: every one tells you plainly where it comes from, sources named.
+                </p>
+              </div>
+            </OrnateCard>
+          </motion.div>
+
+          <GrandDivider variant="eye" />
+        </div>
+      </DarkSection>
+
       {/* Dark Footer Section - Philosophy */}
       <DarkSection className="py-12 sm:py-16 px-4 sm:px-6" variant="warm">
         <ElaborateCorner className="absolute bottom-3 left-3 w-16 h-16 sm:w-20 sm:h-20 -rotate-90" variant="gold" />
